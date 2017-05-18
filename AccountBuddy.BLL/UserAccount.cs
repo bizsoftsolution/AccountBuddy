@@ -362,15 +362,9 @@ namespace AccountBuddy.BLL
             }
             if (RValue == true)
             {
-                if (ua.LoginId != LId)
+                if (ua.LoginId != LId || ua.Password!=pwd)
                 {
-                    ua.lstValidation.Add(new Validation() { Name = nameof(LoginId), Message = "Please Enter the Valid Login Id" });
-                    RValue = false;
-                }
-
-                if (ua.Password != pwd)
-                {
-                    ua.lstValidation.Add(new Validation() { Name = nameof(Password), Message = "Please Enter the Valid Password" });
+                    ua.lstValidation.Add(new Validation() { Name = nameof(LoginId), Message = "Please Enter the Valid User Id or Password" });
                     RValue = false;
                 }
             }
