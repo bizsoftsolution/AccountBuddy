@@ -103,6 +103,32 @@ namespace AccountBuddy.PL.frm.Master
                 }
             }
             
-        }        
+        }
+
+        private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = Common.AppLib.IsTextNumeric(e.Text);
+
+        }
+
+        private void txtMail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            String newText = String.Empty;
+
+            int AtCount = 0;
+            foreach (Char c in textBox.Text.ToCharArray())
+            {
+                if (Char.IsLetterOrDigit(c) || Char.IsControl(c) || (c == '.' || c == '_') || (c == '@' && AtCount == 0))
+                {
+                    newText += c;
+                    if (c == '@') AtCount += 1;
+                }
+            }
+            textBox.Text = newText;
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+        }
     }
 }
