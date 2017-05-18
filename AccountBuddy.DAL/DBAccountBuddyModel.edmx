@@ -1,0 +1,1539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBAccountBuddyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccountGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UnderGroupId" Type="int" />
+          <Property Name="GroupCode" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="CompanyDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="TelephoneNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMailId" Type="nvarchar" MaxLength="100" />
+          <Property Name="GSTNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="Logo" Type="image" />
+        </EntityType>
+        <EntityType Name="CreditLimitType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LimitType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EntityType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Entity" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="EntityTypeId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="ErrorBy" Type="int" />
+          <Property Name="ErrorAt" Type="datetime" />
+          <Property Name="ErrorMessage" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntryNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="JournalDate" Type="date" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Particular" Type="nvarchar(max)" />
+          <Property Name="HQNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="VoucherNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="JournalDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JournalId" Type="bigint" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="DrAmt" Type="money" Nullable="false" />
+          <Property Name="CrAmt" Type="money" Nullable="false" />
+          <Property Name="Particulars" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Ledger">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LedgerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PersonIncharge" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="TelephoneNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="EMailId" Type="nvarchar" MaxLength="100" />
+          <Property Name="GSTNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreditLimit" Type="smallint" />
+          <Property Name="CreditLimitTypeId" Type="int" />
+          <Property Name="CreditAmount" Type="float" />
+          <Property Name="OPDr" Type="money" />
+          <Property Name="OPCr" Type="money" />
+          <Property Name="LedgerCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="AccountGroupId" Type="int" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LedgerOpening">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="LedgerId" Type="int" />
+          <Property Name="AcYear" Type="nvarchar" MaxLength="20" />
+          <Property Name="DrAmt" Type="money" />
+          <Property Name="CrAmt" Type="money" />
+        </EntityType>
+        <EntityType Name="LogDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogMasterId" Type="bigint" />
+          <Property Name="RecordDetail" Type="nvarchar(max)" />
+          <Property Name="EntryBy" Type="int" />
+          <Property Name="EntryAt" Type="datetime" />
+          <Property Name="LogDetailTypeId" Type="int" />
+        </EntityType>
+        <EntityType Name="LogDetailType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LogMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntityId" Type="bigint" />
+          <Property Name="EntityTypeId" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="DeletedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntryNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PaymentDate" Type="date" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="PaymentMode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="ExtraCharge" Type="money" />
+          <Property Name="ChequeNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ChequeDate" Type="date" />
+          <Property Name="ClearDate" Type="date" />
+          <Property Name="Particulars" Type="nvarchar" MaxLength="500" />
+          <Property Name="PayTo" Type="nvarchar" MaxLength="50" />
+          <Property Name="VoucherNo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PaymentDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentId" Type="bigint" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Particular" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntryNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReceiptDate" Type="date" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="ReceiptMode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Particulars" Type="nvarchar" MaxLength="500" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Extracharge" Type="money" />
+          <Property Name="ChequeNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ChequeDate" Type="date" />
+          <Property Name="CleareDate" Type="date" />
+          <Property Name="ReceivedFrom" Type="nvarchar" MaxLength="50" />
+          <Property Name="VoucherNo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ReceiptDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReceiptId" Type="bigint" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Particulars" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="UserTypeId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LoginId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeOfUser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="UserTypeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserTypeId" Type="int" Nullable="false" />
+          <Property Name="UserTypeFormDetailId" Type="int" Nullable="false" />
+          <Property Name="IsViewForm" Type="bit" Nullable="false" />
+          <Property Name="AllowInsert" Type="bit" Nullable="false" />
+          <Property Name="AllowUpdate" Type="bit" Nullable="false" />
+          <Property Name="AllowDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserTypeFormDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="FormType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderNo" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AccountGroup_AccountGroup">
+          <End Role="AccountGroup" Type="Self.AccountGroup" Multiplicity="0..1" />
+          <End Role="AccountGroup1" Type="Self.AccountGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountGroup1">
+              <PropertyRef Name="UnderGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalDetail_Journal">
+          <End Role="Journal" Type="Self.Journal" Multiplicity="1" />
+          <End Role="JournalDetail" Type="Self.JournalDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JournalDetail">
+              <PropertyRef Name="JournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalDetail_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
+          <End Role="JournalDetail" Type="Self.JournalDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JournalDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ledger_AccountGroup">
+          <End Role="AccountGroup" Type="Self.AccountGroup" Multiplicity="1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ledger">
+              <PropertyRef Name="AccountGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ledger_CreditLimitType">
+          <End Role="CreditLimitType" Type="Self.CreditLimitType" Multiplicity="0..1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreditLimitType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ledger">
+              <PropertyRef Name="CreditLimitTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LedgerOpening_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="LedgerOpening" Type="Self.LedgerOpening" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LedgerOpening">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_LogDetailType">
+          <End Role="LogDetailType" Type="Self.LogDetailType" Multiplicity="0..1" />
+          <End Role="LogDetail" Type="Self.LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogDetailType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="LogDetailTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_LogMaster">
+          <End Role="LogMaster" Type="Self.LogMaster" Multiplicity="0..1" />
+          <End Role="LogDetail" Type="Self.LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="LogMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_UserAccount">
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
+          <End Role="LogDetail" Type="Self.LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="EntryBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogMaster_EntityType">
+          <End Role="EntityType" Type="Self.EntityType" Multiplicity="0..1" />
+          <End Role="LogMaster" Type="Self.LogMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EntityType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogMaster">
+              <PropertyRef Name="EntityTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogMaster_UserAccount">
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
+          <End Role="LogMaster" Type="Self.LogMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogMaster">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentDetail_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
+          <End Role="PaymentDetail" Type="Self.PaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentDetail_Payment">
+          <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
+          <End Role="PaymentDetail" Type="Self.PaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentDetail">
+              <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetail_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
+          <End Role="ReceiptDetail" Type="Self.ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetail_Receipt">
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1" />
+          <End Role="ReceiptDetail" Type="Self.ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="ReceiptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccount_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccount_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTypeDetail_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
+          <End Role="UserTypeDetail" Type="Self.UserTypeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTypeDetail">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTypeDetail_UserTypeFormDetail">
+          <End Role="UserTypeFormDetail" Type="Self.UserTypeFormDetail" Multiplicity="1" />
+          <End Role="UserTypeDetail" Type="Self.UserTypeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTypeFormDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTypeDetail">
+              <PropertyRef Name="UserTypeFormDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBAccountBuddyModelStoreContainer">
+          <EntitySet Name="AccountGroup" EntityType="Self.AccountGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyDetail" EntityType="Self.CompanyDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CreditLimitType" EntityType="Self.CreditLimitType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EntityType" EntityType="Self.EntityType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JournalDetail" EntityType="Self.JournalDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ledger" EntityType="Self.Ledger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LedgerOpening" EntityType="Self.LedgerOpening" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogDetail" EntityType="Self.LogDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogDetailType" EntityType="Self.LogDetailType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogMaster" EntityType="Self.LogMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentDetail" EntityType="Self.PaymentDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceiptDetail" EntityType="Self.ReceiptDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTypeDetail" EntityType="Self.UserTypeDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTypeFormDetail" EntityType="Self.UserTypeFormDetail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AccountGroup_AccountGroup" Association="Self.FK_AccountGroup_AccountGroup">
+            <End Role="AccountGroup" EntitySet="AccountGroup" />
+            <End Role="AccountGroup1" EntitySet="AccountGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalDetail_Journal" Association="Self.FK_JournalDetail_Journal">
+            <End Role="Journal" EntitySet="Journal" />
+            <End Role="JournalDetail" EntitySet="JournalDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalDetail_Ledger" Association="Self.FK_JournalDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="JournalDetail" EntitySet="JournalDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ledger_AccountGroup" Association="Self.FK_Ledger_AccountGroup">
+            <End Role="AccountGroup" EntitySet="AccountGroup" />
+            <End Role="Ledger" EntitySet="Ledger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ledger_CreditLimitType" Association="Self.FK_Ledger_CreditLimitType">
+            <End Role="CreditLimitType" EntitySet="CreditLimitType" />
+            <End Role="Ledger" EntitySet="Ledger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LedgerOpening_Ledger" Association="Self.FK_LedgerOpening_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="LedgerOpening" EntitySet="LedgerOpening" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_LogDetailType" Association="Self.FK_LogDetail_LogDetailType">
+            <End Role="LogDetailType" EntitySet="LogDetailType" />
+            <End Role="LogDetail" EntitySet="LogDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_LogMaster" Association="Self.FK_LogDetail_LogMaster">
+            <End Role="LogMaster" EntitySet="LogMaster" />
+            <End Role="LogDetail" EntitySet="LogDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_UserAccount" Association="Self.FK_LogDetail_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="LogDetail" EntitySet="LogDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogMaster_EntityType" Association="Self.FK_LogMaster_EntityType">
+            <End Role="EntityType" EntitySet="EntityType" />
+            <End Role="LogMaster" EntitySet="LogMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogMaster_UserAccount" Association="Self.FK_LogMaster_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="LogMaster" EntitySet="LogMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Ledger" Association="Self.FK_Payment_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentDetail_Ledger" Association="Self.FK_PaymentDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="PaymentDetail" EntitySet="PaymentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentDetail_Payment" Association="Self.FK_PaymentDetail_Payment">
+            <End Role="Payment" EntitySet="Payment" />
+            <End Role="PaymentDetail" EntitySet="PaymentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Ledger" Association="Self.FK_Receipt_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetail_Ledger" Association="Self.FK_ReceiptDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetail_Receipt" Association="Self.FK_ReceiptDetail_Receipt">
+            <End Role="Receipt" EntitySet="Receipt" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccount_CompanyDetail" Association="Self.FK_UserAccount_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="UserAccount" EntitySet="UserAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccount_UserType" Association="Self.FK_UserAccount_UserType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="UserAccount" EntitySet="UserAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTypeDetail_UserType" Association="Self.FK_UserTypeDetail_UserType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="UserTypeDetail" EntitySet="UserTypeDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTypeDetail_UserTypeFormDetail" Association="Self.FK_UserTypeDetail_UserTypeFormDetail">
+            <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetail" />
+            <End Role="UserTypeDetail" EntitySet="UserTypeDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBAccountBuddyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBAccountBuddyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountGroups" EntityType="DBAccountBuddyModel.AccountGroup" />
+          <EntitySet Name="CompanyDetails" EntityType="DBAccountBuddyModel.CompanyDetail" />
+          <EntitySet Name="CreditLimitTypes" EntityType="DBAccountBuddyModel.CreditLimitType" />
+          <EntitySet Name="EntityTypes" EntityType="DBAccountBuddyModel.EntityType" />
+          <EntitySet Name="ErrorLogs" EntityType="DBAccountBuddyModel.ErrorLog" />
+          <EntitySet Name="Journals" EntityType="DBAccountBuddyModel.Journal" />
+          <EntitySet Name="JournalDetails" EntityType="DBAccountBuddyModel.JournalDetail" />
+          <EntitySet Name="Ledgers" EntityType="DBAccountBuddyModel.Ledger" />
+          <EntitySet Name="LedgerOpenings" EntityType="DBAccountBuddyModel.LedgerOpening" />
+          <EntitySet Name="LogDetails" EntityType="DBAccountBuddyModel.LogDetail" />
+          <EntitySet Name="LogDetailTypes" EntityType="DBAccountBuddyModel.LogDetailType" />
+          <EntitySet Name="LogMasters" EntityType="DBAccountBuddyModel.LogMaster" />
+          <EntitySet Name="Payments" EntityType="DBAccountBuddyModel.Payment" />
+          <EntitySet Name="PaymentDetails" EntityType="DBAccountBuddyModel.PaymentDetail" />
+          <EntitySet Name="Receipts" EntityType="DBAccountBuddyModel.Receipt" />
+          <EntitySet Name="ReceiptDetails" EntityType="DBAccountBuddyModel.ReceiptDetail" />
+          <EntitySet Name="UserAccounts" EntityType="DBAccountBuddyModel.UserAccount" />
+          <EntitySet Name="UserTypes" EntityType="DBAccountBuddyModel.UserType" />
+          <EntitySet Name="UserTypeDetails" EntityType="DBAccountBuddyModel.UserTypeDetail" />
+          <EntitySet Name="UserTypeFormDetails" EntityType="DBAccountBuddyModel.UserTypeFormDetail" />
+          <AssociationSet Name="FK_AccountGroup_AccountGroup" Association="DBAccountBuddyModel.FK_AccountGroup_AccountGroup">
+            <End Role="AccountGroup" EntitySet="AccountGroups" />
+            <End Role="AccountGroup1" EntitySet="AccountGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ledger_AccountGroup" Association="DBAccountBuddyModel.FK_Ledger_AccountGroup">
+            <End Role="AccountGroup" EntitySet="AccountGroups" />
+            <End Role="Ledger" EntitySet="Ledgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccount_CompanyDetail" Association="DBAccountBuddyModel.FK_UserAccount_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ledger_CreditLimitType" Association="DBAccountBuddyModel.FK_Ledger_CreditLimitType">
+            <End Role="CreditLimitType" EntitySet="CreditLimitTypes" />
+            <End Role="Ledger" EntitySet="Ledgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogMaster_EntityType" Association="DBAccountBuddyModel.FK_LogMaster_EntityType">
+            <End Role="EntityType" EntitySet="EntityTypes" />
+            <End Role="LogMaster" EntitySet="LogMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalDetail_Journal" Association="DBAccountBuddyModel.FK_JournalDetail_Journal">
+            <End Role="Journal" EntitySet="Journals" />
+            <End Role="JournalDetail" EntitySet="JournalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalDetail_Ledger" Association="DBAccountBuddyModel.FK_JournalDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="JournalDetail" EntitySet="JournalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LedgerOpening_Ledger" Association="DBAccountBuddyModel.FK_LedgerOpening_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="LedgerOpening" EntitySet="LedgerOpenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Ledger" Association="DBAccountBuddyModel.FK_Payment_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentDetail_Ledger" Association="DBAccountBuddyModel.FK_PaymentDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Ledger" Association="DBAccountBuddyModel.FK_Receipt_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Receipt" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetail_Ledger" Association="DBAccountBuddyModel.FK_ReceiptDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_LogDetailType" Association="DBAccountBuddyModel.FK_LogDetail_LogDetailType">
+            <End Role="LogDetailType" EntitySet="LogDetailTypes" />
+            <End Role="LogDetail" EntitySet="LogDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_LogMaster" Association="DBAccountBuddyModel.FK_LogDetail_LogMaster">
+            <End Role="LogMaster" EntitySet="LogMasters" />
+            <End Role="LogDetail" EntitySet="LogDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_UserAccount" Association="DBAccountBuddyModel.FK_LogDetail_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="LogDetail" EntitySet="LogDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogMaster_UserAccount" Association="DBAccountBuddyModel.FK_LogMaster_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="LogMaster" EntitySet="LogMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentDetail_Payment" Association="DBAccountBuddyModel.FK_PaymentDetail_Payment">
+            <End Role="Payment" EntitySet="Payments" />
+            <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetail_Receipt" Association="DBAccountBuddyModel.FK_ReceiptDetail_Receipt">
+            <End Role="Receipt" EntitySet="Receipts" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccount_UserType" Association="DBAccountBuddyModel.FK_UserAccount_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTypeDetail_UserType" Association="DBAccountBuddyModel.FK_UserTypeDetail_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTypeDetail_UserTypeFormDetail" Association="DBAccountBuddyModel.FK_UserTypeDetail_UserTypeFormDetail">
+            <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
+            <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AccountGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UnderGroupId" Type="Int32" />
+          <Property Name="GroupCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AccountGroup1" Relationship="DBAccountBuddyModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup" ToRole="AccountGroup1" />
+          <NavigationProperty Name="AccountGroup2" Relationship="DBAccountBuddyModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup1" ToRole="AccountGroup" />
+          <NavigationProperty Name="Ledgers" Relationship="DBAccountBuddyModel.FK_Ledger_AccountGroup" FromRole="AccountGroup" ToRole="Ledger" />
+        </EntityType>
+        <EntityType Name="CompanyDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="UserAccounts" Relationship="DBAccountBuddyModel.FK_UserAccount_CompanyDetail" FromRole="CompanyDetail" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="CreditLimitType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LimitType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ledgers" Relationship="DBAccountBuddyModel.FK_Ledger_CreditLimitType" FromRole="CreditLimitType" ToRole="Ledger" />
+        </EntityType>
+        <EntityType Name="EntityType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Entity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LogMasters" Relationship="DBAccountBuddyModel.FK_LogMaster_EntityType" FromRole="EntityType" ToRole="LogMaster" />
+        </EntityType>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="EntityTypeId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="ErrorBy" Type="Int32" />
+          <Property Name="ErrorAt" Type="DateTime" Precision="3" />
+          <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JournalDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Particular" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HQNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JournalDetails" Relationship="DBAccountBuddyModel.FK_JournalDetail_Journal" FromRole="Journal" ToRole="JournalDetail" />
+        </EntityType>
+        <EntityType Name="JournalDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JournalId" Type="Int64" Nullable="false" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="DrAmt" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CrAmt" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Journal" Relationship="DBAccountBuddyModel.FK_JournalDetail_Journal" FromRole="JournalDetail" ToRole="Journal" />
+          <NavigationProperty Name="Ledger" Relationship="DBAccountBuddyModel.FK_JournalDetail_Ledger" FromRole="JournalDetail" ToRole="Ledger" />
+        </EntityType>
+        <EntityType Name="Ledger">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LedgerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PersonIncharge" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreditLimit" Type="Int16" />
+          <Property Name="CreditLimitTypeId" Type="Int32" />
+          <Property Name="CreditAmount" Type="Double" />
+          <Property Name="OPDr" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OPCr" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LedgerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="AccountGroupId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AccountGroup" Relationship="DBAccountBuddyModel.FK_Ledger_AccountGroup" FromRole="Ledger" ToRole="AccountGroup" />
+          <NavigationProperty Name="CreditLimitType" Relationship="DBAccountBuddyModel.FK_Ledger_CreditLimitType" FromRole="Ledger" ToRole="CreditLimitType" />
+          <NavigationProperty Name="JournalDetails" Relationship="DBAccountBuddyModel.FK_JournalDetail_Ledger" FromRole="Ledger" ToRole="JournalDetail" />
+          <NavigationProperty Name="LedgerOpenings" Relationship="DBAccountBuddyModel.FK_LedgerOpening_Ledger" FromRole="Ledger" ToRole="LedgerOpening" />
+          <NavigationProperty Name="Payments" Relationship="DBAccountBuddyModel.FK_Payment_Ledger" FromRole="Ledger" ToRole="Payment" />
+          <NavigationProperty Name="PaymentDetails" Relationship="DBAccountBuddyModel.FK_PaymentDetail_Ledger" FromRole="Ledger" ToRole="PaymentDetail" />
+          <NavigationProperty Name="Receipts" Relationship="DBAccountBuddyModel.FK_Receipt_Ledger" FromRole="Ledger" ToRole="Receipt" />
+          <NavigationProperty Name="ReceiptDetails" Relationship="DBAccountBuddyModel.FK_ReceiptDetail_Ledger" FromRole="Ledger" ToRole="ReceiptDetail" />
+        </EntityType>
+        <EntityType Name="LedgerOpening">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="LedgerId" Type="Int32" />
+          <Property Name="AcYear" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DrAmt" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CrAmt" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Ledger" Relationship="DBAccountBuddyModel.FK_LedgerOpening_Ledger" FromRole="LedgerOpening" ToRole="Ledger" />
+        </EntityType>
+        <EntityType Name="LogDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogMasterId" Type="Int64" />
+          <Property Name="RecordDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="Int32" />
+          <Property Name="EntryAt" Type="DateTime" Precision="3" />
+          <Property Name="LogDetailTypeId" Type="Int32" />
+          <NavigationProperty Name="LogDetailType" Relationship="DBAccountBuddyModel.FK_LogDetail_LogDetailType" FromRole="LogDetail" ToRole="LogDetailType" />
+          <NavigationProperty Name="LogMaster" Relationship="DBAccountBuddyModel.FK_LogDetail_LogMaster" FromRole="LogDetail" ToRole="LogMaster" />
+          <NavigationProperty Name="UserAccount" Relationship="DBAccountBuddyModel.FK_LogDetail_UserAccount" FromRole="LogDetail" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="LogDetailType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LogDetails" Relationship="DBAccountBuddyModel.FK_LogDetail_LogDetailType" FromRole="LogDetailType" ToRole="LogDetail" />
+        </EntityType>
+        <EntityType Name="LogMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityId" Type="Int64" />
+          <Property Name="EntityTypeId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EntityType" Relationship="DBAccountBuddyModel.FK_LogMaster_EntityType" FromRole="LogMaster" ToRole="EntityType" />
+          <NavigationProperty Name="LogDetails" Relationship="DBAccountBuddyModel.FK_LogDetail_LogMaster" FromRole="LogMaster" ToRole="LogDetail" />
+          <NavigationProperty Name="UserAccount" Relationship="DBAccountBuddyModel.FK_LogMaster_UserAccount" FromRole="LogMaster" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="PaymentMode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="RefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ExtraCharge" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ChequeNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ChequeDate" Type="DateTime" Precision="0" />
+          <Property Name="ClearDate" Type="DateTime" Precision="0" />
+          <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PayTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ledger" Relationship="DBAccountBuddyModel.FK_Payment_Ledger" FromRole="Payment" ToRole="Ledger" />
+          <NavigationProperty Name="PaymentDetails" Relationship="DBAccountBuddyModel.FK_PaymentDetail_Payment" FromRole="Payment" ToRole="PaymentDetail" />
+        </EntityType>
+        <EntityType Name="PaymentDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentId" Type="Int64" Nullable="false" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Particular" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ledger" Relationship="DBAccountBuddyModel.FK_PaymentDetail_Ledger" FromRole="PaymentDetail" ToRole="Ledger" />
+          <NavigationProperty Name="Payment" Relationship="DBAccountBuddyModel.FK_PaymentDetail_Payment" FromRole="PaymentDetail" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="ReceiptMode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Extracharge" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ChequeNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ChequeDate" Type="DateTime" Precision="0" />
+          <Property Name="CleareDate" Type="DateTime" Precision="0" />
+          <Property Name="ReceivedFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ledger" Relationship="DBAccountBuddyModel.FK_Receipt_Ledger" FromRole="Receipt" ToRole="Ledger" />
+          <NavigationProperty Name="ReceiptDetails" Relationship="DBAccountBuddyModel.FK_ReceiptDetail_Receipt" FromRole="Receipt" ToRole="ReceiptDetail" />
+        </EntityType>
+        <EntityType Name="ReceiptDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReceiptId" Type="Int64" Nullable="false" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ledger" Relationship="DBAccountBuddyModel.FK_ReceiptDetail_Ledger" FromRole="ReceiptDetail" ToRole="Ledger" />
+          <NavigationProperty Name="Receipt" Relationship="DBAccountBuddyModel.FK_ReceiptDetail_Receipt" FromRole="ReceiptDetail" ToRole="Receipt" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="UserTypeId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoginId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBAccountBuddyModel.FK_UserAccount_CompanyDetail" FromRole="UserAccount" ToRole="CompanyDetail" />
+          <NavigationProperty Name="LogDetails" Relationship="DBAccountBuddyModel.FK_LogDetail_UserAccount" FromRole="UserAccount" ToRole="LogDetail" />
+          <NavigationProperty Name="LogMasters" Relationship="DBAccountBuddyModel.FK_LogMaster_UserAccount" FromRole="UserAccount" ToRole="LogMaster" />
+          <NavigationProperty Name="UserType" Relationship="DBAccountBuddyModel.FK_UserAccount_UserType" FromRole="UserAccount" ToRole="UserType" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeOfUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserAccounts" Relationship="DBAccountBuddyModel.FK_UserAccount_UserType" FromRole="UserType" ToRole="UserAccount" />
+          <NavigationProperty Name="UserTypeDetails" Relationship="DBAccountBuddyModel.FK_UserTypeDetail_UserType" FromRole="UserType" ToRole="UserTypeDetail" />
+        </EntityType>
+        <EntityType Name="UserTypeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTypeId" Type="Int32" Nullable="false" />
+          <Property Name="UserTypeFormDetailId" Type="Int32" Nullable="false" />
+          <Property Name="IsViewForm" Type="Boolean" Nullable="false" />
+          <Property Name="AllowInsert" Type="Boolean" Nullable="false" />
+          <Property Name="AllowUpdate" Type="Boolean" Nullable="false" />
+          <Property Name="AllowDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserType" Relationship="DBAccountBuddyModel.FK_UserTypeDetail_UserType" FromRole="UserTypeDetail" ToRole="UserType" />
+          <NavigationProperty Name="UserTypeFormDetail" Relationship="DBAccountBuddyModel.FK_UserTypeDetail_UserTypeFormDetail" FromRole="UserTypeDetail" ToRole="UserTypeFormDetail" />
+        </EntityType>
+        <EntityType Name="UserTypeFormDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FormType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderNo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserTypeDetails" Relationship="DBAccountBuddyModel.FK_UserTypeDetail_UserTypeFormDetail" FromRole="UserTypeFormDetail" ToRole="UserTypeDetail" />
+        </EntityType>
+        <Association Name="FK_AccountGroup_AccountGroup">
+          <End Type="DBAccountBuddyModel.AccountGroup" Role="AccountGroup" Multiplicity="0..1" />
+          <End Type="DBAccountBuddyModel.AccountGroup" Role="AccountGroup1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountGroup1">
+              <PropertyRef Name="UnderGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ledger_AccountGroup">
+          <End Type="DBAccountBuddyModel.AccountGroup" Role="AccountGroup" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.Ledger" Role="Ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ledger">
+              <PropertyRef Name="AccountGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccount_CompanyDetail">
+          <End Type="DBAccountBuddyModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.UserAccount" Role="UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ledger_CreditLimitType">
+          <End Type="DBAccountBuddyModel.CreditLimitType" Role="CreditLimitType" Multiplicity="0..1" />
+          <End Type="DBAccountBuddyModel.Ledger" Role="Ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreditLimitType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ledger">
+              <PropertyRef Name="CreditLimitTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogMaster_EntityType">
+          <End Type="DBAccountBuddyModel.EntityType" Role="EntityType" Multiplicity="0..1" />
+          <End Type="DBAccountBuddyModel.LogMaster" Role="LogMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EntityType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogMaster">
+              <PropertyRef Name="EntityTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalDetail_Journal">
+          <End Type="DBAccountBuddyModel.Journal" Role="Journal" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.JournalDetail" Role="JournalDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JournalDetail">
+              <PropertyRef Name="JournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalDetail_Ledger">
+          <End Type="DBAccountBuddyModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.JournalDetail" Role="JournalDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JournalDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LedgerOpening_Ledger">
+          <End Type="DBAccountBuddyModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBAccountBuddyModel.LedgerOpening" Role="LedgerOpening" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LedgerOpening">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Ledger">
+          <End Type="DBAccountBuddyModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentDetail_Ledger">
+          <End Type="DBAccountBuddyModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_Ledger">
+          <End Type="DBAccountBuddyModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.Receipt" Role="Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetail_Ledger">
+          <End Type="DBAccountBuddyModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.ReceiptDetail" Role="ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_LogDetailType">
+          <End Type="DBAccountBuddyModel.LogDetailType" Role="LogDetailType" Multiplicity="0..1" />
+          <End Type="DBAccountBuddyModel.LogDetail" Role="LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogDetailType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="LogDetailTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_LogMaster">
+          <End Type="DBAccountBuddyModel.LogMaster" Role="LogMaster" Multiplicity="0..1" />
+          <End Type="DBAccountBuddyModel.LogDetail" Role="LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="LogMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_UserAccount">
+          <End Type="DBAccountBuddyModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="DBAccountBuddyModel.LogDetail" Role="LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="EntryBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogMaster_UserAccount">
+          <End Type="DBAccountBuddyModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="DBAccountBuddyModel.LogMaster" Role="LogMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogMaster">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentDetail_Payment">
+          <End Type="DBAccountBuddyModel.Payment" Role="Payment" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentDetail">
+              <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetail_Receipt">
+          <End Type="DBAccountBuddyModel.Receipt" Role="Receipt" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.ReceiptDetail" Role="ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="ReceiptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccount_UserType">
+          <End Type="DBAccountBuddyModel.UserType" Role="UserType" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.UserAccount" Role="UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTypeDetail_UserType">
+          <End Type="DBAccountBuddyModel.UserType" Role="UserType" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.UserTypeDetail" Role="UserTypeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTypeDetail">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTypeDetail_UserTypeFormDetail">
+          <End Type="DBAccountBuddyModel.UserTypeFormDetail" Role="UserTypeFormDetail" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.UserTypeDetail" Role="UserTypeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTypeFormDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTypeDetail">
+              <PropertyRef Name="UserTypeFormDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBAccountBuddyModelStoreContainer" CdmEntityContainer="DBAccountBuddyEntities">
+          <EntitySetMapping Name="AccountGroups">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.AccountGroup">
+              <MappingFragment StoreEntitySet="AccountGroup">
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="UnderGroupId" ColumnName="UnderGroupId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyDetails">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.CompanyDetail">
+              <MappingFragment StoreEntitySet="CompanyDetail">
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
+                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CreditLimitTypes">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.CreditLimitType">
+              <MappingFragment StoreEntitySet="CreditLimitType">
+                <ScalarProperty Name="LimitType" ColumnName="LimitType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntityTypes">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.EntityType">
+              <MappingFragment StoreEntitySet="EntityType">
+                <ScalarProperty Name="Entity" ColumnName="Entity" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ErrorLogs">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.ErrorLog">
+              <MappingFragment StoreEntitySet="ErrorLog">
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+                <ScalarProperty Name="ErrorAt" ColumnName="ErrorAt" />
+                <ScalarProperty Name="ErrorBy" ColumnName="ErrorBy" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="EntityTypeId" ColumnName="EntityTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Journals">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.Journal">
+              <MappingFragment StoreEntitySet="Journal">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="HQNo" ColumnName="HQNo" />
+                <ScalarProperty Name="Particular" ColumnName="Particular" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="JournalDate" ColumnName="JournalDate" />
+                <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JournalDetails">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.JournalDetail">
+              <MappingFragment StoreEntitySet="JournalDetail">
+                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="CrAmt" ColumnName="CrAmt" />
+                <ScalarProperty Name="DrAmt" ColumnName="DrAmt" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="JournalId" ColumnName="JournalId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ledgers">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.Ledger">
+              <MappingFragment StoreEntitySet="Ledger">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="AccountGroupId" ColumnName="AccountGroupId" />
+                <ScalarProperty Name="LedgerCode" ColumnName="LedgerCode" />
+                <ScalarProperty Name="OPCr" ColumnName="OPCr" />
+                <ScalarProperty Name="OPDr" ColumnName="OPDr" />
+                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+                <ScalarProperty Name="CreditLimitTypeId" ColumnName="CreditLimitTypeId" />
+                <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
+                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
+                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="PersonIncharge" ColumnName="PersonIncharge" />
+                <ScalarProperty Name="LedgerName" ColumnName="LedgerName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LedgerOpenings">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.LedgerOpening">
+              <MappingFragment StoreEntitySet="LedgerOpening">
+                <ScalarProperty Name="CrAmt" ColumnName="CrAmt" />
+                <ScalarProperty Name="DrAmt" ColumnName="DrAmt" />
+                <ScalarProperty Name="AcYear" ColumnName="AcYear" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogDetails">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.LogDetail">
+              <MappingFragment StoreEntitySet="LogDetail">
+                <ScalarProperty Name="LogDetailTypeId" ColumnName="LogDetailTypeId" />
+                <ScalarProperty Name="EntryAt" ColumnName="EntryAt" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="RecordDetail" ColumnName="RecordDetail" />
+                <ScalarProperty Name="LogMasterId" ColumnName="LogMasterId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogDetailTypes">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.LogDetailType">
+              <MappingFragment StoreEntitySet="LogDetailType">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogMasters">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.LogMaster">
+              <MappingFragment StoreEntitySet="LogMaster">
+                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="EntityTypeId" ColumnName="EntityTypeId" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="PayTo" ColumnName="PayTo" />
+                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="ClearDate" ColumnName="ClearDate" />
+                <ScalarProperty Name="ChequeDate" ColumnName="ChequeDate" />
+                <ScalarProperty Name="ChequeNo" ColumnName="ChequeNo" />
+                <ScalarProperty Name="ExtraCharge" ColumnName="ExtraCharge" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentDetails">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.PaymentDetail">
+              <MappingFragment StoreEntitySet="PaymentDetail">
+                <ScalarProperty Name="Particular" ColumnName="Particular" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receipts">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.Receipt">
+              <MappingFragment StoreEntitySet="Receipt">
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="ReceivedFrom" ColumnName="ReceivedFrom" />
+                <ScalarProperty Name="CleareDate" ColumnName="CleareDate" />
+                <ScalarProperty Name="ChequeDate" ColumnName="ChequeDate" />
+                <ScalarProperty Name="ChequeNo" ColumnName="ChequeNo" />
+                <ScalarProperty Name="Extracharge" ColumnName="Extracharge" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ReceiptMode" ColumnName="ReceiptMode" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceiptDetails">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.ReceiptDetail">
+              <MappingFragment StoreEntitySet="ReceiptDetail">
+                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccounts">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.UserAccount">
+              <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.UserType">
+              <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TypeOfUser" ColumnName="TypeOfUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypeDetails">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.UserTypeDetail">
+              <MappingFragment StoreEntitySet="UserTypeDetail">
+                <ScalarProperty Name="AllowDelete" ColumnName="AllowDelete" />
+                <ScalarProperty Name="AllowUpdate" ColumnName="AllowUpdate" />
+                <ScalarProperty Name="AllowInsert" ColumnName="AllowInsert" />
+                <ScalarProperty Name="IsViewForm" ColumnName="IsViewForm" />
+                <ScalarProperty Name="UserTypeFormDetailId" ColumnName="UserTypeFormDetailId" />
+                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypeFormDetails">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.UserTypeFormDetail">
+              <MappingFragment StoreEntitySet="UserTypeFormDetail">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="FormType" ColumnName="FormType" />
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,208 @@
+﻿<UserControl x:Class="AccountBuddy.PL.frm.Master.frmAccountGroup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AccountBuddy.PL.frm.Master"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="1200" Background="White" Loaded="UserControl_Loaded" Name="AccountGroup">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
+            <RowDefinition Height="{DynamicResource FormBodyHeight}"/>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
+        <!--#region Form Head -->
+        <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
+            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Account Group"/></TextBlock>
+        </Grid>
+        <!--#endregion-->
+        <!--#region Form Body-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--#region Form Left-->
+            <Grid Grid.Column="0" Margin="10,70,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
+                <!--#endregion-->
+                <!--#region Form Design-->
+                <Grid Grid.Row="0"  >
+                    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                            <TextBox  x:Name="txtStockGroupName" Text="{Binding GroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccountMultiple" Height="25" Width="25" />
+                                        <TextBlock Text="Group Name" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+                            <ComboBox x:Name="cmbUnder" IsEditable="True" SelectedValue="{Binding UnderGroupId,Mode=TwoWay}" Text="{Binding underGroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccountNetwork" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                        <TextBlock Text="Under"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </ComboBox>
+                        
+                            <TextBox x:Name="txtStockGroupCode" Text="{Binding GroupCode, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Sort" Height="25" Width="25" />
+                                        <TextBlock Text="Order Code" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Buttons-->
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE" Click="btnSave_Click" Margin="5 5" />
+                        <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE" Click="btnDelete_Click"  Margin="5 5" />
+                        <Button Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Click="btnClear_Click" Margin="5 5" />
+                    </StackPanel>
+                </Grid>
+                <!--#endregion-->
+
+            </Grid>
+            <!--#endregion-->
+            <!--#region Form Right-->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="565"/>
+                </Grid.RowDefinitions>
+                <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="603" Grid.RowSpan="2">
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Grid Name="Panel">
+                                            <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="False">
+                                                <Setter TargetName="Panel" Property="Background" Value="white" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
+
+                    <TabControl.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </TabControl.RenderTransform>
+                    <TabItem Header="Details" >
+
+                        <Grid Grid.Row="0" Margin="0,0,10,-20" >
+
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,8,0,517" Height="77">
+                                <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  TextChanged="txtSearch_TextChanged">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                            <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked"/>
+                                    <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked"  />
+                                    <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked"/>
+                                    <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <DataGrid x:Name="dgvAccount" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="0,105,7,38" SelectionChanged="dgvAccount_SelectionChanged"  >
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
+                                <DataGrid.Effect>
+                                    <DropShadowEffect/>
+                                </DataGrid.Effect>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Order No" FontWeight="Bold" Width="100" Binding="{Binding GroupCode}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Group Name" FontWeight="Bold" Width="200" Binding="{Binding GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Under" FontWeight="Bold" Width="200" Binding="{Binding underGroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                        </Grid>
+
+                    </TabItem>
+                    <TabItem Header="Report" >
+                        <Grid Grid.Row="0" Margin="0,0,4,-14">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="41*"/>
+                                <RowDefinition Height="245*"/>
+                            </Grid.RowDefinitions>
+                            <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,-4,0,8" Height="78" Width="350">
+                                <TextBox Name="txtSearchRpt" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                            <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <CheckBox Name="cbxCase1" Content="Case sensitive"  />
+                                    <RadioButton x:Name="rptStartWith1" GroupName="SearchType" Content="Start With" />
+                                    <RadioButton x:Name="rptContain1" GroupName="SearchType" Content="Contain" />
+                                    <RadioButton x:Name="rptEndWith1" GroupName="SearchType" Content="End With"  />
+                                </StackPanel>
+                            </StackPanel>-->
+
+
+                            <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="406"   Grid.Row="1" Margin="0,14,0,0">
+                                <rv:ReportViewer x:Name="RptAccount"/>
+                            </WindowsFormsHost>
+
+                        </Grid>
+                    </TabItem>
+                    <!--#region Search Box-->
+
+                    <!--#endregion-->
+
+
+                </TabControl>
+            </Grid>
+            <!--#endregion-->
+
+        </Grid>
+        <!--#endregion-->
+
+    </Grid>
+
+</UserControl>

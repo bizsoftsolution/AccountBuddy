@@ -1,0 +1,184 @@
+﻿<Controls:MetroWindow  x:Class="AccountBuddy.PL.frmHome"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AccountBuddy.PL"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Menu="clr-namespace:AccountBuddy.Common;assembly=AccountBuddy.Common"
+        xmlns:Master="clr-namespace:AccountBuddy.PL.frm.Master"
+        xmlns:Transaction="clr-namespace:AccountBuddy.PL.frm.Transaction"
+        xmlns:Report="clr-namespace:AccountBuddy.PL.frm.Report"
+        
+        mc:Ignorable="d"
+        Title="Account Buddy" Height="600" Width="1100"
+        BorderThickness="0" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
+                                        x:Name="MenuToggleButton" Height="Auto"/>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- data template used for the dialogs example, defines a View for a ViewModel of type DateTime  -->
+            <DataTemplate DataType="{x:Type system:DateTime}">
+                <StackPanel Margin="16">
+                    <TextBlock>England win the World Cup:</TextBlock>
+                    <TextBlock Margin="0 8 0 0" Text="{Binding }" />
+                    <TextBlock Margin="0 8 0 0" >You will never see that again.</TextBlock>
+                    <Button  Margin="0 8 0 0" IsDefault="True" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignFlatButton}">AWESOME</Button>
+                </StackPanel>
+            </DataTemplate>
+            <Thickness x:Key="mnuItemMargin">30,0,0,0</Thickness>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+        <materialDesign:DrawerHost Name="dhContent" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" Margin="0,1,0,-1">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <DockPanel MinWidth="212">
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                                    DockPanel.Dock="Top"
+                                    HorizontalAlignment="Right" Margin="16"
+                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+
+                    <StackPanel Orientation="Vertical">
+
+                        <ListBox SelectedIndex="0" PreviewMouseLeftButtonUp="ListBox_PreviewMouseLeftButtonUp">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="Menu:NavMenuItem">
+                                    <TextBlock Text="{Binding MenuName}" Margin="32 0 32 0" FontSize="16"  />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                            <Menu:NavMenuItem MenuName="Home">
+                                <Menu:NavMenuItem.Content>
+                                    <local:frmWelcome/>
+                                </Menu:NavMenuItem.Content>
+                            </Menu:NavMenuItem>
+                        </ListBox>
+
+
+                        <Expander Header="Master" FontWeight="Bold" FontSize="16">
+                            <ListBox SelectedIndex="0" PreviewMouseLeftButtonUp="ListBox_PreviewMouseLeftButtonUp">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="Menu:NavMenuItem">
+                                        <TextBlock Text="{Binding MenuName}" Margin="32 0 32 0" FontSize="16"  />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+                                <Menu:NavMenuItem MenuName="Company Setting" FormName="Company Setting">
+                                    <Menu:NavMenuItem.Content>
+                                        <Master:frmCompanySetting/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+
+                                <Menu:NavMenuItem MenuName="Account Group" FormName ="Account Group">
+                                    <Menu:NavMenuItem.Content>
+                                        <Master:frmAccountGroup/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+
+                                <Menu:NavMenuItem MenuName="Ledger" FormName="Ledger">
+                                    <Menu:NavMenuItem.Content>
+                                        <Master:frmLedger/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+                                
+                            </ListBox>
+                        </Expander>
+
+                        <Expander Header="Transaction" FontWeight="Bold" FontSize="16">
+
+                            <ListBox SelectedIndex="0" PreviewMouseLeftButtonUp="ListBox_PreviewMouseLeftButtonUp">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="BizMenu:BizMenuItem">
+                                        <TextBlock Text="{Binding MenuName}" Margin="32 0 32 0" FontSize="16"  />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+                                <Menu:NavMenuItem MenuName="Payment" FormName="Payment">
+                                    <Menu:NavMenuItem.Content>
+                                        <Transaction:frmPayment/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+
+                                <Menu:NavMenuItem MenuName="Receipt" FormName="Receipt">
+                                    <Menu:NavMenuItem.Content>
+                                        <Transaction:frmReceipt/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+                                <Menu:NavMenuItem MenuName="Journal" FormName="Journal">
+                                    <Menu:NavMenuItem.Content>
+                                        <Transaction:frmJournal/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+                                <Menu:NavMenuItem MenuName="Bank Reconcilation" FormName="Bank Reconciliation">
+                                    <Menu:NavMenuItem.Content>
+                                        <Transaction:frmBankReconcilation/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+                            </ListBox>
+
+                        </Expander>
+
+                        <Expander Header="Report" FontWeight="Bold" FontSize="16">
+                            <ListBox SelectedIndex="0" PreviewMouseLeftButtonUp="ListBox_PreviewMouseLeftButtonUp">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="BizMenu:BizMenuItem">
+                                        <TextBlock Text="{Binding MenuName}" Margin="32 0 32 0" FontSize="16"  />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+
+                                <Menu:NavMenuItem MenuName="Trial Balance" FormName="Trial Balance">
+                                    <Menu:NavMenuItem.Content>
+                                        <Report:frmTrialBalance/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+
+                                <Menu:NavMenuItem MenuName="Balance Sheet" FormName="Balance Sheet" >
+                                    <Menu:NavMenuItem.Content>
+                                        <Report:frmBalanceSheet/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+                                <Menu:NavMenuItem MenuName="Payment_Receipt" FormName="Activity Report">
+                                    <Menu:NavMenuItem.Content>
+                                        <Report:frmPaymentReceipt/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+                                <Menu:NavMenuItem MenuName="Income and Expenditure Account" FormName="Income and Expenditure Account">
+                                    <Menu:NavMenuItem.Content>
+                                        <Report:frmProfitLoss/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+                                <Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
+                                    <Menu:NavMenuItem.Content>
+                                        <Report:frmGeneralLedger/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+
+                            </ListBox>
+                        </Expander>
+
+                    </StackPanel>
+                </DockPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <DockPanel>
+                <Grid>
+                    <ContentControl Margin="16" Name="ccContent"/>
+                </Grid>
+            </DockPanel>
+        </materialDesign:DrawerHost>
+    </materialDesign:DialogHost>
+
+</Controls:MetroWindow>
