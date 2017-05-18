@@ -23,6 +23,8 @@ namespace AccountBuddy.PL
         public frmWelcome()
         {
             InitializeComponent();
+
+            //this is navven
         }
     }
 }
