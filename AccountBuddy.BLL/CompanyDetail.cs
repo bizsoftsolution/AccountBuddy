@@ -15,7 +15,7 @@ namespace AccountBuddy.BLL
 
         private static ObservableCollection<CompanyDetail> _toList;
         private static ObservableCollection<string> _AcYearList;
-
+        public List<BLL.Validation> lstValidation = new List<BLL.Validation>();
         private int _id;
         private string _CompanyName;
         private string _addressLine1;
@@ -30,6 +30,9 @@ namespace AccountBuddy.BLL
         private string _CityName;
         private int _UnderCompanyId;
         private string _CompanyType;
+        private string _UserId;
+        private string _Password;
+
         #endregion
 
         #region Property
@@ -94,6 +97,41 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public string UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+
+            set
+            {
+                if (_UserId != value)
+                {
+                    _UserId = value;
+                    NotifyPropertyChanged(nameof(UserId));
+                }
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return _Password;
+            }
+
+            set
+            {
+                if (_Password != value)
+                {
+                    _Password = value;
+                    NotifyPropertyChanged(nameof(Password));
+                }
+            }
+        }
+
         public string AddressLine1
         {
             get
@@ -295,9 +333,9 @@ namespace AccountBuddy.BLL
 
         public bool Save(bool isServerCall = false)
         {
+            if (!isValid()) return false;
             try
             {
-
                 CompanyDetail d = toList.Where(x => x.Id == Id).FirstOrDefault();
                 int i = 0;
                 if (d == null)
@@ -317,6 +355,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                lstValidation.Add(new Validation() { Name = string.Empty, Message = ex.Message });
                 return false;
 
             }
@@ -341,7 +380,39 @@ namespace AccountBuddy.BLL
             return false;
         }
 
-        
+        public bool isValid()
+        {
+            bool RValue = true;
+            lstValidation.Clear();
+
+            
+            if (string.IsNullOrWhiteSpace(CompanyName))
+            {
+                lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Required_Data, nameof(CompanyName)) });
+                RValue = false;
+            }
+            else if (toList.Where(x => x.CompanyName.ToLower() == CompanyName.ToLower() && x.Id != Id).Count() > 0)
+            {
+                lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Existing_Data, CompanyName) });
+                RValue = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(UserId))
+            {
+                lstValidation.Add(new Validation() { Name = nameof(UserId), Message = string.Format(Message.BLL.Required_Data, nameof(UserId)) });
+                RValue = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(Password))
+            {
+                lstValidation.Add(new Validation() { Name = nameof(Password), Message = string.Format(Message.BLL.Required_Data, nameof(Password)) });
+                RValue = false;
+            }
+            
+            return RValue;
+
+        }
+
 
         #endregion
     }

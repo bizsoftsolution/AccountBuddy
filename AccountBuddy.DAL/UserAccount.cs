@@ -28,11 +28,11 @@ namespace AccountBuddy.DAL
         public string LoginId { get; set; }
         public string Password { get; set; }
     
-        public virtual CompanyDetail CompanyDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LogDetail> LogDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LogMaster> LogMasters { get; set; }
         public virtual UserType UserType { get; set; }
+        public virtual CompanyDetail CompanyDetail { get; set; }
     }
 }

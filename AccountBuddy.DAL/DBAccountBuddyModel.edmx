@@ -22,7 +22,7 @@
           <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
           <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
           <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
-          <Property Name="CityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
           <Property Name="PostalCode" Type="nvarchar" MaxLength="10" />
           <Property Name="TelephoneNo" Type="nvarchar" MaxLength="50" />
           <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
@@ -609,7 +609,6 @@
       <Schema Namespace="DBAccountBuddyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DBAccountBuddyEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AccountGroups" EntityType="DBAccountBuddyModel.AccountGroup" />
-          <EntitySet Name="CompanyDetails" EntityType="DBAccountBuddyModel.CompanyDetail" />
           <EntitySet Name="CreditLimitTypes" EntityType="DBAccountBuddyModel.CreditLimitType" />
           <EntitySet Name="EntityTypes" EntityType="DBAccountBuddyModel.EntityType" />
           <EntitySet Name="ErrorLogs" EntityType="DBAccountBuddyModel.ErrorLog" />
@@ -635,10 +634,6 @@
           <AssociationSet Name="FK_Ledger_AccountGroup" Association="DBAccountBuddyModel.FK_Ledger_AccountGroup">
             <End Role="AccountGroup" EntitySet="AccountGroups" />
             <End Role="Ledger" EntitySet="Ledgers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserAccount_CompanyDetail" Association="DBAccountBuddyModel.FK_UserAccount_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="UserAccount" EntitySet="UserAccounts" />
           </AssociationSet>
           <AssociationSet Name="FK_Ledger_CreditLimitType" Association="DBAccountBuddyModel.FK_Ledger_CreditLimitType">
             <End Role="CreditLimitType" EntitySet="CreditLimitTypes" />
@@ -712,6 +707,11 @@
             <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
           </AssociationSet>
+          <EntitySet Name="CompanyDetails" EntityType="DBAccountBuddyModel.CompanyDetail" />
+          <AssociationSet Name="FK_UserAccount_CompanyDetail" Association="DBAccountBuddyModel.FK_UserAccount_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -724,23 +724,6 @@
           <NavigationProperty Name="AccountGroup1" Relationship="DBAccountBuddyModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup" ToRole="AccountGroup1" />
           <NavigationProperty Name="AccountGroup2" Relationship="DBAccountBuddyModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup1" ToRole="AccountGroup" />
           <NavigationProperty Name="Ledgers" Relationship="DBAccountBuddyModel.FK_Ledger_AccountGroup" FromRole="AccountGroup" ToRole="Ledger" />
-        </EntityType>
-        <EntityType Name="CompanyDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="TelephoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="UserAccounts" Relationship="DBAccountBuddyModel.FK_UserAccount_CompanyDetail" FromRole="CompanyDetail" ToRole="UserAccount" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -955,10 +938,10 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LoginId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CompanyDetail" Relationship="DBAccountBuddyModel.FK_UserAccount_CompanyDetail" FromRole="UserAccount" ToRole="CompanyDetail" />
           <NavigationProperty Name="LogDetails" Relationship="DBAccountBuddyModel.FK_LogDetail_UserAccount" FromRole="UserAccount" ToRole="LogDetail" />
           <NavigationProperty Name="LogMasters" Relationship="DBAccountBuddyModel.FK_LogMaster_UserAccount" FromRole="UserAccount" ToRole="LogMaster" />
           <NavigationProperty Name="UserType" Relationship="DBAccountBuddyModel.FK_UserAccount_UserType" FromRole="UserAccount" ToRole="UserType" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBAccountBuddyModel.FK_UserAccount_CompanyDetail" FromRole="UserAccount" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -1016,18 +999,6 @@
             </Principal>
             <Dependent Role="Ledger">
               <PropertyRef Name="AccountGroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserAccount_CompanyDetail">
-          <End Type="DBAccountBuddyModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
-          <End Type="DBAccountBuddyModel.UserAccount" Role="UserAccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserAccount">
-              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1247,6 +1218,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CompanyDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="UserAccounts" Relationship="DBAccountBuddyModel.FK_UserAccount_CompanyDetail" FromRole="CompanyDetail" ToRole="UserAccount" />
+        </EntityType>
+        <Association Name="FK_UserAccount_CompanyDetail">
+          <End Type="DBAccountBuddyModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.UserAccount" Role="UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1259,23 +1259,6 @@
                 <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
                 <ScalarProperty Name="UnderGroupId" ColumnName="UnderGroupId" />
                 <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CompanyDetails">
-            <EntityTypeMapping TypeName="DBAccountBuddyModel.CompanyDetail">
-              <MappingFragment StoreEntitySet="CompanyDetail">
-                <ScalarProperty Name="Logo" ColumnName="Logo" />
-                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
-                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
-                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1509,6 +1492,23 @@
                 <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
                 <ScalarProperty Name="FormType" ColumnName="FormType" />
                 <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyDetails">
+            <EntityTypeMapping TypeName="DBAccountBuddyModel.CompanyDetail">
+              <MappingFragment StoreEntitySet="CompanyDetail">
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
+                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

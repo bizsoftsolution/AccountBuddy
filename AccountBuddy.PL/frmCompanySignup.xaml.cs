@@ -21,11 +21,12 @@ namespace AccountBuddy.PL
     public partial class frmCompanySignup : MetroWindow
     {
         public BLL.CompanyDetail data = new BLL.CompanyDetail();
-
+        public bool isSaved = false;
         public frmCompanySignup()
         {
             InitializeComponent();
             this.DataContext = data;
+            isSaved = false;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -43,13 +44,17 @@ namespace AccountBuddy.PL
             if (data.Save() == true)
             {
                 MessageBox.Show("Saved");
-                data.Clear();
+                isSaved = true;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show(string.Join("\n", data.lstValidation.Select(x => x.Message).ToList()));
             }
         }
         private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             e.Handled = Common.AppLib.IsTextNumeric(e.Text);
-
         }
 
         private void txtMail_TextChanged(object sender, TextChangedEventArgs e)
@@ -70,6 +75,39 @@ namespace AccountBuddy.PL
             }
             textBox.Text = newText;
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+        }
+
+        private void txtPassword_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Cut ||
+                e.Command == ApplicationCommands.Copy ||
+                e.Command == ApplicationCommands.Paste)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            data.Password = txtPassword.Password;
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (isSaved==false && MessageBox.Show("Are you sure to close the signup?", "Close", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void txtMail_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtMail.Text !="" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
         }
     }
 }

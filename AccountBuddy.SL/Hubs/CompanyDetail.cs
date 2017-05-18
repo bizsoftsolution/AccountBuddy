@@ -72,9 +72,9 @@ namespace AccountBuddy.SL.Hubs
                     sgp.toCopy<DAL.CompanyDetail>(d);
 
                     DAL.UserAccount ua = new DAL.UserAccount();
-                    ua.LoginId = "Admin";
-                    ua.UserName = "Admin";
-                    ua.Password = "Admin";
+                    ua.LoginId = sgp.UserId;
+                    ua.UserName = sgp.UserId;
+                    ua.Password = sgp.Password;
                     ua.UserTypeId = 1;
                     d.UserAccounts.Add(ua);
 

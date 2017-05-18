@@ -6,9 +6,19 @@
         xmlns:local="clr-namespace:AccountBuddy.PL"
         xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"       
-     
+                   
+                   ShowMinButton="False"
+                   ShowMaxRestoreButton="False"
+                   
         mc:Ignorable="d"
-        Title="COMPANY SIGNUP" Height="400" Width="800" WindowStartupLocation="CenterScreen" >
+        Title="COMPANY SIGNUP" Height="420" Width="800" Closing="MetroWindow_Closing" WindowStartupLocation="CenterScreen" >
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="CommandBinding_Executed" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="Close" />
+    </Window.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
@@ -36,8 +46,8 @@
                 <!--#endregion-->
                 <!--#region Form Design-->
                 <Grid Grid.Row="0"  >
-                    <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                        <TextBox x:Name="txtCompanyName" Text="{Binding CompanyName, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+                    <StackPanel  Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                        <TextBox x:Name="txtCompanyName" TabIndex="1" Text="{Binding CompanyName, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -47,7 +57,7 @@
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
 
-                        <TextBox   x:Name="txtAddress1" FontWeight="Bold" FontSize="14" Text="{Binding AddressLine1, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
+                        <TextBox   x:Name="txtAddress1" TabIndex="2" FontWeight="Bold" FontSize="14" Text="{Binding AddressLine1, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal" Width="331">
                                     <materialDesign:PackIcon  Kind="AccountLocation" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -55,7 +65,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox   x:Name="txtAddress2" FontWeight="Bold" FontSize="14" Text="{Binding AddressLine2, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
+                        <TextBox   x:Name="txtAddress2" TabIndex="3" FontWeight="Bold" FontSize="14" Text="{Binding AddressLine2, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal" Width="331">
                                     <materialDesign:PackIcon  Kind="AccountLocation" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -63,7 +73,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox   x:Name="txtCityName" FontWeight="Bold" FontSize="14" Text="{Binding CityName, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
+                        <TextBox   x:Name="txtCityName" TabIndex="4" FontWeight="Bold" FontSize="14" Text="{Binding CityName, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal" Width="331">
                                     <materialDesign:PackIcon  Kind="AccountLocation" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -71,8 +81,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-
-                        <TextBox x:Name="txtPostalCode" PreviewTextInput="NumericOnly" Text="{Binding PostalCode,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+                        <TextBox x:Name="txtPostalCode" TabIndex="5" PreviewTextInput="NumericOnly" Text="{Binding PostalCode,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -96,10 +105,10 @@
 
             </Grid>
 
-            <Grid Grid.Column="1" Margin="20,0,20,119">
-                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+            <Grid Grid.Column="1" Margin="20,0,20,10">
+                <StackPanel  Orientation="Vertical" Margin="0,0,10,0">
 
-                    <TextBox x:Name="txtMobile" PreviewTextInput="NumericOnly" Text="{Binding MobileNo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" materialDesign:TransitionAssist.DisableTransitions="True">
+                    <TextBox x:Name="txtMobile" TabIndex="6"  PreviewTextInput="NumericOnly" Text="{Binding MobileNo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" materialDesign:TransitionAssist.DisableTransitions="True">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Width="331">
                                 <materialDesign:PackIcon Kind="Phone" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -108,7 +117,7 @@
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
 
-                    <TextBox   x:Name="txtTelephone" PreviewTextInput="NumericOnly" FontWeight="Bold" FontSize="14" Text="{Binding TelephoneNo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TransitionAssist.DisableTransitions="True" >
+                    <TextBox   x:Name="txtTelephone" TabIndex="7"  PreviewTextInput="NumericOnly" FontWeight="Bold" FontSize="14" Text="{Binding TelephoneNo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TransitionAssist.DisableTransitions="True" >
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Width="331">
                                 <materialDesign:PackIcon  Kind="PhoneClassic" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -117,7 +126,7 @@
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
 
-                    <TextBox   x:Name="txtMail" TextChanged="txtMail_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding EMailId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
+                    <TextBox   x:Name="txtMail" TabIndex="8"  TextChanged="txtMail_TextChanged" LostFocus="txtMail_LostFocus" FontWeight="Bold" FontSize="14" Text="{Binding EMailId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Width="329">
                                 <materialDesign:PackIcon  Kind="Email" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -125,7 +134,7 @@
                             </StackPanel>
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
-                    <TextBox   x:Name="txtGST" PreviewTextInput="NumericOnly" FontWeight="Bold" FontSize="14" Text="{Binding GSTNo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
+                    <TextBox   x:Name="txtGST" TabIndex="9"  PreviewTextInput="NumericOnly" FontWeight="Bold" FontSize="14" Text="{Binding GSTNo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Width="151">
                                 <materialDesign:PackIcon  Kind="CreditCardPlus" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -134,23 +143,21 @@
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
 
-                    <!--<TextBox   x:Name="txtUserName" FontWeight="Bold" FontSize="14" Text="{Binding UserId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" Height="56">
-                        <materialDesign:HintAssist.Hint>
-                            <StackPanel Orientation="Horizontal" >
-                                <materialDesign:PackIcon  Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                <TextBlock Text="Username" />
-
+                    <GroupBox Header="Login Credential" Margin="0,10,0,0"  >
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" >
+                                <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"/>
+                                <TextBlock Text="User Id" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="90"  />
+                                <TextBox   x:Name="txtUserName" Width="150" TabIndex="10" FontWeight="Bold" FontSize="14" Text="{Binding UserId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                             </StackPanel>
-                        </materialDesign:HintAssist.Hint>
-                    </TextBox>
-                    <TextBox   x:Name="txtPassword"  FontWeight="Bold" FontSize="14" Text="{Binding Password, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
-                        <materialDesign:HintAssist.Hint>
-                            <StackPanel Orientation="Horizontal" Width="151">
-                                <materialDesign:PackIcon  Kind="Lock" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                <TextBlock Text="Password" />
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"/>
+                                <TextBlock Text="Password" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="90"  />
+                                <PasswordBox x:Name="txtPassword" TabIndex="11" Width="150" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted"  PasswordChanged="txtPassword_PasswordChanged"  FontWeight="Bold" FontSize="14" />
                             </StackPanel>
-                        </materialDesign:HintAssist.Hint>
-                    </TextBox>-->
+                        </StackPanel>
+                    </GroupBox>
+                    
                 </StackPanel>
             </Grid>
             <!--#endregion-->

@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="4ba8de2c4d7b4c6099c97e9a68dc6e02" Name="Diagram1">
         <EntityTypeShape EntityType="DBAccountBuddyModel.AccountGroup" Width="1.5" PointX="0.75" PointY="7" />
-        <EntityTypeShape EntityType="DBAccountBuddyModel.CompanyDetail" Width="1.5" PointX="12.75" PointY="2.625" />
         <EntityTypeShape EntityType="DBAccountBuddyModel.CreditLimitType" Width="1.5" PointX="0.75" PointY="10.375" />
         <EntityTypeShape EntityType="DBAccountBuddyModel.EntityType" Width="1.5" PointX="15" PointY="3.5" />
         <EntityTypeShape EntityType="DBAccountBuddyModel.ErrorLog" Width="1.5" PointX="0.75" PointY="2.5" />
@@ -27,7 +26,6 @@
         <EntityTypeShape EntityType="DBAccountBuddyModel.UserTypeFormDetail" Width="1.5" PointX="15.75" PointY="11.125" />
         <AssociationConnector Association="DBAccountBuddyModel.FK_AccountGroup_AccountGroup" />
         <AssociationConnector Association="DBAccountBuddyModel.FK_Ledger_AccountGroup" />
-        <AssociationConnector Association="DBAccountBuddyModel.FK_UserAccount_CompanyDetail" />
         <AssociationConnector Association="DBAccountBuddyModel.FK_Ledger_CreditLimitType" />
         <AssociationConnector Association="DBAccountBuddyModel.FK_LogMaster_EntityType" />
         <AssociationConnector Association="DBAccountBuddyModel.FK_JournalDetail_Journal" />
@@ -46,6 +44,8 @@
         <AssociationConnector Association="DBAccountBuddyModel.FK_UserAccount_UserType" />
         <AssociationConnector Association="DBAccountBuddyModel.FK_UserTypeDetail_UserType" />
         <AssociationConnector Association="DBAccountBuddyModel.FK_UserTypeDetail_UserTypeFormDetail" />
+        <EntityTypeShape EntityType="DBAccountBuddyModel.CompanyDetail" Width="1.5" PointX="7.375" PointY="5" />
+        <AssociationConnector Association="DBAccountBuddyModel.FK_UserAccount_CompanyDetail" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

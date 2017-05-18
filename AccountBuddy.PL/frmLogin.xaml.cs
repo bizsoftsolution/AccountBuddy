@@ -21,6 +21,7 @@ namespace AccountBuddy.PL
     /// </summary>
     public partial class frmLogin : MetroWindow
     {
+        
         public frmLogin()
         {
             InitializeComponent();
