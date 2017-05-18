@@ -3,15 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AccountBuddy.PL"
+        xmlns:local="clr-namespace:AccountBuddy.PL"        
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         
         mc:Ignorable="d"
         Title="Login" Height="600" Width="800"
         BorderThickness="0" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen"
-        Background="#aaa"               
+        Background="#aaa"             
+                       
+                       Closing="MetroWindow_Closing"
                        >
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="CommandBinding_Executed" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="Close" />
+    </Window.InputBindings>
     <Window.Resources>
         <!-- Flat ComboBox -->
         <SolidColorBrush x:Key="ComboBoxNormalBorderBrush" Color="#e3e9ef" />

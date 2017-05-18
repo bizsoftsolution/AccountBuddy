@@ -30,6 +30,7 @@ namespace AccountBuddy.PL
             cmbCompany.DisplayMemberPath = "CompanyName";
 
             cmbYear.ItemsSource = BLL.CompanyDetail.AcYearList;
+            cmbYear.SelectedIndex = BLL.CompanyDetail.AcYearList.Count() - 1;
 
             onClientEvents();
             
@@ -48,7 +49,8 @@ namespace AccountBuddy.PL
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (BLL.UserAccount.Login(cmbYear.Text, cmbCompany.Text, txtUserId.Text, txtPassword.Password) == true)
+            string RValue = BLL.UserAccount.Login(cmbYear.Text, cmbCompany.Text, txtUserId.Text, txtPassword.Password);
+            if ( RValue =="")
             {
                 App.frmHome = new frmHome();
                 App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.Company.CompanyName);
@@ -62,7 +64,7 @@ namespace AccountBuddy.PL
             }
             else
             {
-                MessageBox.Show("Invalid User");
+                MessageBox.Show(RValue);
             }
         }
 
@@ -88,6 +90,19 @@ namespace AccountBuddy.PL
             {
                 e.Handled = true;
             }
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(MessageBox.Show("Are you sure to Exit?", "Exit", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+            {
+                e.Cancel = true;
+            }                        
         }
     }
 }

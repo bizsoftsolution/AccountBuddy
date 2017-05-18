@@ -175,18 +175,20 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Method
-        public static bool Login(string AccYear, String CompanyName, String LoginId, String Password)
+        public static string Login(string AccYear, String CompanyName, String LId, String Pwd)
         {
-            var ua = ABClientHub.FMCGHub.Invoke<UserAccount>("UserAccount_Login", AccYear, CompanyName, LoginId, Password).Result;
-            if (ua.Id != 0)
-            {
+            var ua = ABClientHub.FMCGHub.Invoke<UserAccount>("UserAccount_Login", AccYear, CompanyName, LId, Pwd).Result;
+            
+            if ( isValidLogin(ua,AccYear,CompanyName, LId,Pwd))
+            {                
                 User = ua;
                 Company = CompanyDetail.toList.Where(x => x.Id == ua.CompanyId).FirstOrDefault();
                 Type = UserType.toList.Where(x => x.Id == ua.UserTypeId).FirstOrDefault();
                 TypeDetails =new ObservableCollection<UserTypeDetail>( UserTypeDetail.ToList.Where(x => x.UserTypeId == ua.UserTypeId).ToList());
                 Data_Init();
+                return "";
             }
-            return ua.Id != 0;
+            return string.Join("\n", ua.lstValidation.Select(x => x.Message));
         }
 
         static void Data_Init()
@@ -329,6 +331,54 @@ namespace AccountBuddy.BLL
             return RValue;
 
         }
+
+        public static bool isValidLogin(UserAccount ua,string AccYear,string CompanyName,string LId, string pwd)
+        {
+            bool RValue = true;
+            ua.lstValidation.Clear();
+
+            if (string.IsNullOrWhiteSpace(AccYear))
+            {
+                ua.lstValidation.Add(new Validation() { Name = nameof(AccYear), Message = "Please Select the Account Year" });
+                RValue = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(CompanyName))
+            {
+                ua.lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = "Please Select the Company" });
+                RValue = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(LId))
+            {
+                ua.lstValidation.Add(new Validation() { Name = nameof(LoginId), Message = "Please Enter the Login Id" });
+                RValue = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(pwd))
+            {
+                ua.lstValidation.Add(new Validation() { Name = nameof(Password), Message = "Please Enter the Password" });
+                RValue = false;
+            }
+            if (RValue == true)
+            {
+                if (ua.LoginId != LId)
+                {
+                    ua.lstValidation.Add(new Validation() { Name = nameof(LoginId), Message = "Please Enter the Valid Login Id" });
+                    RValue = false;
+                }
+
+                if (ua.Password != pwd)
+                {
+                    ua.lstValidation.Add(new Validation() { Name = nameof(Password), Message = "Please Enter the Valid Password" });
+                    RValue = false;
+                }
+            }
+
+            return RValue;
+
+        }
+
 
         public static void Init()
         {
