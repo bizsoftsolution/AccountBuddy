@@ -35,9 +35,42 @@ namespace AccountBuddy.BLL
         private ObservableCollection<PaymentDetail> _PDetails;
 
         private string _SearchText;
+
+        private string _PayMode;
+        private static List<string> _PayModeList;
+
+        private bool _IsShowChequeDetail;
+        private bool _IsShowOnlineDetail;
+        private bool _IsShowTTDetail;
+
         #endregion
 
         #region  Property
+
+        public static List<string> PayModeList
+        {
+            get
+            {
+                if (_PayModeList == null)
+                {
+                    _PayModeList = new List<string>();
+                    _PayModeList.Add("Cash");
+                    _PayModeList.Add("Cheque");
+                    _PayModeList.Add("Online");
+                    _PayModeList.Add("TT");
+                }
+                return _PayModeList;
+            }
+            set
+            {
+                if (_PayModeList != value)
+                {
+                    _PayModeList = value;
+                }
+            }
+        }
+
+
         public long Id
         {
             get
@@ -263,7 +296,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string LedgerName
         {
             get
@@ -280,6 +312,24 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public string PayMode
+        {
+            get
+            {
+                return _PayMode;
+            }
+            set
+            {
+                if (_PayMode != value)
+                {
+                    _PayMode = value;
+                    IsShowChequeDetail = value == "Cheque";
+                    IsShowOnlineDetail = value == "Online";
+                    IsShowTTDetail = value == "TT";
+                    NotifyPropertyChanged(nameof(PayMode));
+                }
+            }
+        }
 
         public PaymentDetail PDetail
         {
@@ -331,6 +381,52 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public bool IsShowChequeDetail
+        {
+            get
+            {
+                return _IsShowChequeDetail;
+            }
+            set
+            {
+                if (_IsShowChequeDetail != value)
+                {
+                    _IsShowChequeDetail = value;
+                    NotifyPropertyChanged(nameof(IsShowChequeDetail));
+                }
+            }
+        }
+        public bool IsShowOnlineDetail
+        {
+            get
+            {
+                return _IsShowOnlineDetail;
+            }
+            set
+            {
+                if (_IsShowOnlineDetail != value)
+                {
+                    _IsShowOnlineDetail = value;
+                    NotifyPropertyChanged(nameof(IsShowOnlineDetail));
+                }
+            }
+        }
+        public bool IsShowTTDetail
+        {
+            get
+            {
+                return _IsShowTTDetail;
+            }
+            set
+            {
+                if (_IsShowTTDetail != value)
+                {
+                    _IsShowTTDetail = value;
+                    NotifyPropertyChanged(nameof(IsShowTTDetail));
+                }
+            }
+        }
+       
 
         #endregion
 
@@ -463,7 +559,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = ABClientHub.FMCGHub.Invoke<bool>("Find_PRef", RefNo, this).Result;
+                rv = ABClientHub.FMCGHub.Invoke<bool>("Find_PORef", EntryNo, this).Result;
             }
             catch (Exception ex)
             {

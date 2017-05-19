@@ -9,7 +9,7 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Purchase Order
+        #region Payment
 
         #region list
         public static List<BLL.Payment> _PPendingList;
@@ -99,7 +99,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Payment d = DB.Payments.Where(x => x.RefNo == SearchText).FirstOrDefault();
+                DAL.Payment d = DB.Payments.Where(x => x.EntryNo == SearchText).FirstOrDefault();
                 DB.Entry(d).Reload();
                 if (d != null)
                 {
@@ -164,7 +164,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_PORef(string RefNo, BLL.Payment PO)
 
         {
-            DAL.Payment d = DB.Payments.Where(x => x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.Payment d = DB.Payments.Where(x => x.EntryNo == RefNo & x.Id != PO.Id).FirstOrDefault();
             if (d == null)
             {
                 return false;
@@ -175,6 +175,7 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+
 
         #endregion
     }

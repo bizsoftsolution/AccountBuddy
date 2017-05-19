@@ -9,5 +9,6 @@ namespace AccountBuddy.BLL
 {
     public class Journal : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

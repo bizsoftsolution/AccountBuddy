@@ -9,5 +9,6 @@ namespace AccountBuddy.BLL
 {
     public class Receipt : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
