@@ -179,6 +179,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Vouchers\frmQuickPayment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -241,6 +245,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmReceipt.xaml.cs">
       <DependentUpon>frmReceipt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Vouchers\frmQuickPayment.xaml.cs">
+      <DependentUpon>frmQuickPayment.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

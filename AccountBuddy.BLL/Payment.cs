@@ -14,10 +14,10 @@ namespace AccountBuddy.BLL
         #region Fields
         private long _Id;
         private string _EntryNo;
-        private DateTime? _PaymentDate;
-        private int? _LedgerId;
+        private DateTime _PaymentDate;
+        private int _LedgerId;
         private string _PaymentMode;
-        private decimal? _Amount;
+        private decimal _Amount;
         private string _RefNo;
         private string _Status;
         private decimal? _ExtraCharge;
@@ -28,20 +28,25 @@ namespace AccountBuddy.BLL
         private string _PayTo;
         private string _VoucherNo;
         private string _LedgerName;
+                private string _AmountInwords;
+
 
         private Ledger _PLedger;
 
         private PaymentDetail _PDetail;
-        private ObservableCollection<PaymentDetail> _PDetails;
+
 
         private string _SearchText;
 
         private string _PayMode;
-        private static List<string> _PayModeList;
-
+        
         private bool _IsShowChequeDetail;
         private bool _IsShowOnlineDetail;
         private bool _IsShowTTDetail;
+
+        private ObservableCollection<PaymentDetail> _PDetails;
+        private static List<string> _PayModeList;
+        private static List<string> _StatusList;
 
         #endregion
 
@@ -66,6 +71,27 @@ namespace AccountBuddy.BLL
                 if (_PayModeList != value)
                 {
                     _PayModeList = value;
+                }
+            }
+        }
+        public static List<string> StatusList
+        {
+            get
+            {
+                if (_StatusList == null)
+                {
+                    _StatusList = new List<string>();
+                    _StatusList.Add("Proccess");
+                    _StatusList.Add("Completed");
+                    _StatusList.Add("Returned");
+                }
+                return _StatusList;
+            }
+            set
+            {
+                if (_StatusList != value)
+                {
+                    _StatusList = value;
                 }
             }
         }
@@ -101,7 +127,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public DateTime? PaymentDate
+        public DateTime PaymentDate
         {
             get
             {
@@ -116,7 +142,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? LedgerId
+        public int LedgerId
         {
             get
             {
@@ -146,7 +172,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? Amount
+        public decimal Amount
         {
             get
             {
@@ -335,7 +361,10 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_PDetail == null) _PDetail = new PaymentDetail();
+                if (_PDetail == null)
+                {                    
+                    _PDetail = new PaymentDetail();
+                }
                 return _PDetail;
             }
             set
@@ -426,15 +455,33 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-       
 
+        public string AmountInwords
+        {
+            get
+            {
+                if (_AmountInwords == null) _AmountInwords = "";
+                return _AmountInwords;
+            }
+            set
+            {
+                if (_AmountInwords != value)
+                {
+                    _AmountInwords = value;
+                    NotifyPropertyChanged(nameof(AmountInwords));
+                }
+            }
+        }
         #endregion
 
         public Ledger PLedger
         {
             get
             {
-                if (_PLedger == null) _PLedger = new Ledger();
+                if (_PLedger == null)
+                {
+                    _PLedger = new Ledger();
+                }
                 return _PLedger;
             }
             set
@@ -474,7 +521,7 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new Payment().toCopy<Payment>(this);
-            this.PDetail= new PaymentDetail();
+            ClearDetail();                      
             this.PDetails = new ObservableCollection<PaymentDetail>();
 
             PaymentDate = DateTime.Now;
@@ -524,14 +571,10 @@ namespace AccountBuddy.BLL
                 pod = new PaymentDetail();
                 PDetails.Add(pod);
             }
-            else
-            {
-                PDetail.Amount = pod.Amount;
-            }
+            
             PDetail.toCopy<PaymentDetail>(pod);
             ClearDetail();
-           
-
+            Amount = PDetails.Sum(x => x.Amount);
         }
 
         public void ClearDetail()
@@ -540,14 +583,14 @@ namespace AccountBuddy.BLL
             pod.toCopy<PaymentDetail>(PDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int LedgerId)
         {
-            PaymentDetail pod = PDetails.Where(x => x.LedgerName == PName).FirstOrDefault();
+            PaymentDetail pod = PDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
 
             if (pod != null)
             {
                 PDetails.Remove(pod);
-                //ItemAmount = PDetails.Sum(x => x.Amount);
+                Amount = PDetails.Sum(x => x.Amount);
             }
         }
         #endregion

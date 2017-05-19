@@ -96,7 +96,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string LedgerName
         {
             get
