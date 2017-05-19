@@ -211,9 +211,7 @@ namespace AccountBuddy.BLL
         public bool isValid()
         {
             bool RValue = true;
-
-
-
+            
             if (toList.Where(x => x.GroupName.ToLower() == GroupName.ToLower() && x.Id != Id).Count() > 0)
             {
                 RValue = false;

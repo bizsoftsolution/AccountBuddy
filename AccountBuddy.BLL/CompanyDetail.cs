@@ -396,19 +396,22 @@ namespace AccountBuddy.BLL
                 lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Existing_Data, CompanyName) });
                 RValue = false;
             }
-
-            if (string.IsNullOrWhiteSpace(UserId))
+            if (Id == 0)
             {
-                lstValidation.Add(new Validation() { Name = nameof(UserId), Message = string.Format(Message.BLL.Required_Data, nameof(UserId)) });
-                RValue = false;
+                if (string.IsNullOrWhiteSpace(UserId))
+                {
+                    lstValidation.Add(new Validation() { Name = nameof(UserId), Message = string.Format(Message.BLL.Required_Data, nameof(UserId)) });
+                    RValue = false;
+                }
+
+                if (string.IsNullOrWhiteSpace(Password))
+                {
+                    lstValidation.Add(new Validation() { Name = nameof(Password), Message = string.Format(Message.BLL.Required_Data, nameof(Password)) });
+                    RValue = false;
+                }
+
             }
 
-            if (string.IsNullOrWhiteSpace(Password))
-            {
-                lstValidation.Add(new Validation() { Name = nameof(Password), Message = string.Format(Message.BLL.Required_Data, nameof(Password)) });
-                RValue = false;
-            }
-            
             return RValue;
 
         }
