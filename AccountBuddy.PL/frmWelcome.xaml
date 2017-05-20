@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/homeBG.png"/>
+        </Grid.Background>
+
     </Grid>
 </UserControl>

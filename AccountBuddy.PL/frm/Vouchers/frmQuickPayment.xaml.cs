@@ -26,7 +26,7 @@ namespace AccountBuddy.PL.frm.Vouchers
             InitializeComponent();
             rptQuickPayment.SetDisplayMode(DisplayMode.PrintLayout);
         }
-        public void LoadReport(BLL.Payment data, string Payto)
+        public void LoadReport(BLL.Payment data)
         {
             try
             {
@@ -39,7 +39,6 @@ namespace AccountBuddy.PL.frm.Vouchers
                 PDList.Add(data.PDetail);
                 CList.Add(BLL.UserAccount.Company);
 
-
                 rptQuickPayment.Reset();
                 ReportDataSource data1 = new ReportDataSource("Payment", PList);
                 ReportDataSource data2 = new ReportDataSource("CompanyDetail", CList);
@@ -49,13 +48,11 @@ namespace AccountBuddy.PL.frm.Vouchers
                 rptQuickPayment.LocalReport.DataSources.Add(data2);
                 rptQuickPayment.LocalReport.DataSources.Add(data3);
                 rptQuickPayment.LocalReport.ReportPath = @"rpt\Transaction\rptPaymentVoucher.rdlc";
-
+                
                 ReportParameter[] par = new ReportParameter[1];
-                par[0] = new ReportParameter("PayTo", Payto.ToUpper());
+                par[0] = new ReportParameter("PayTo", "");
                 rptQuickPayment.LocalReport.SetParameters(par);
-
-
-
+                
                 rptQuickPayment.RefreshReport();
 
             }
