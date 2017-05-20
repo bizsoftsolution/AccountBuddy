@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Transaction"
              mc:Ignorable="d" 
              xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
-              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="600" d:DesignWidth="1100" Background="White">
 
 
@@ -99,8 +99,8 @@
 
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <TextBox Text="{Binding EntryNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Entry No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
-                        <TextBox Text="{Binding PayTo, Mode=TwoWay}" Width="385" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>                        
+                        <TextBox x:Name="txtEntryNo" Text="{Binding EntryNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Entry No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                        <TextBox x:Name="txtPayTo" Text="{Binding PayTo, Mode=TwoWay}" Width="385" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>                        
                     </StackPanel>
 
                     <GroupBox Margin="10,10,10,0" Header="Cheque Detail" Visibility="{Binding IsShowChequeDetail,Converter={StaticResource VisibilityConverter}}">
@@ -150,7 +150,7 @@
                         </StackPanel>
                     </GroupBox>
 
-                    <GroupBox Header="Narration" Margin="10,10,10,0">
+                    <GroupBox Header="Payment Particulrs" Margin="10,10,10,0">
                         <TextBox Text="{Binding Particulars, Mode=TwoWay}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
                     </GroupBox>
                     <GroupBox Header="Amount in Words" Margin="10,10,10,0">
@@ -170,10 +170,11 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox Text="{Binding PDetail.Amount, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="150" materialDesign:HintAssist.Hint="Amount" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
-                        <Button   Width="80" Height="30" x:Name="btnAdd" Content="ADD" Margin="10,0,0,0" Click="btnAdd_Click" />
+                        <TextBox Text="{Binding PDetail.Amount, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="100" materialDesign:HintAssist.Hint="Amount" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                        <Button   Width="65" Height="30" x:Name="btnAdd" Content="ADD" Margin="10,0,0,0" Click="btnAdd_Click" />
+                        <Button   Width="75" Height="30" x:Name="btnDClear" Content="CLEAR" Margin="10,0,0,0" Click="btnDClear_Click" />
                     </StackPanel>
-                    <GroupBox Header="Narration" Margin="10,10,10,0">
+                    <GroupBox Header="Details Particulars" Margin="10,10,10,0">
                         <TextBox Text="{Binding PDetail.Particular, Mode=TwoWay}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
                     </GroupBox>
                     <GroupBox Height="250" Margin="10,25,10,0" Header="Payment Details">

@@ -119,11 +119,8 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             frm.Vouchers.frmQuickPayment f = new Vouchers.frmQuickPayment();
-            string payto = "";
-
-
-
-            f.LoadReport(data, payto.ToString(), txtChequeNo.Text, lblAmountInWords.Text);
+           
+            f.LoadReport(data, txtPayTo.Text.ToString());
             f.ShowDialog();
         }
 
@@ -150,6 +147,11 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             catch (Exception ex) { }
 
+        }
+
+        private void btnDClear_Click(object sender, RoutedEventArgs e)
+        {
+            data.ClearDetail();
         }
     }
 }
