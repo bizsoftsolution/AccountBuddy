@@ -14,7 +14,7 @@
         
         mc:Ignorable="d"
         Title="Account Buddy" Height="600" Width="1100"
-        BorderThickness="0" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
+        BorderThickness="0" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="{x:Null}" Icon="Images/AB.ico" >
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
@@ -93,7 +93,7 @@
                                         <Master:frmLedger/>
                                     </Menu:NavMenuItem.Content>
                                 </Menu:NavMenuItem>
-                                
+
                             </ListBox>
                         </Expander>
 
