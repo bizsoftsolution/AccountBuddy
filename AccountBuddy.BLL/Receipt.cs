@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.BLL
 {
@@ -19,12 +20,14 @@ namespace AccountBuddy.BLL
         private decimal _Amount;
         private string _RefNo;
         private string _Status;
+        private bool _IsShowReturn;
+        private bool _IsShowComplete;
         private decimal? _ExtraCharge;
         private string _ChequeNo;
         private DateTime? _ChequeDate;
         private DateTime? _ClearDate;
         private string _Particulars;
-        private string _PayTo;
+        private string _ReceivedFrom;
         private string _VoucherNo;
         private string _LedgerName;
         private string _AmountInwords;
@@ -36,9 +39,7 @@ namespace AccountBuddy.BLL
 
 
         private string _SearchText;
-
-        private string _ReceivingMode;
-
+        
         private bool _IsShowChequeDetail;
         private bool _IsShowOnlineDetail;
         private bool _IsShowTTDetail;
@@ -168,6 +169,9 @@ namespace AccountBuddy.BLL
                 {
                     _ReceiptMode = value;
                     NotifyPropertyChanged(nameof(ReceiptMode));
+                    IsShowChequeDetail = value == "Cheque";
+                    IsShowOnlineDetail = value == "Online";
+                    IsShowTTDetail = value == "TT";
                 }
             }
         }
@@ -182,6 +186,7 @@ namespace AccountBuddy.BLL
                 if (_Amount != value)
                 {
                     _Amount = value;
+                    AmountInwords = value.ToCurrencyInWords();
                     NotifyPropertyChanged(nameof(Amount));
                 }
             }
@@ -212,10 +217,46 @@ namespace AccountBuddy.BLL
                 if (_Status != value)
                 {
                     _Status = value;
+                    IsShowComplete = value == "Completed";
+                    IsShowReturn = value == "Returned";
                     NotifyPropertyChanged(nameof(Status));
                 }
             }
         }
+
+        public bool IsShowComplete
+        {
+            get
+            {
+                return _IsShowComplete;
+            }
+            set
+            {
+                if (_IsShowComplete != value)
+                {
+                    _IsShowComplete = value;
+                    NotifyPropertyChanged(nameof(IsShowComplete));
+                }
+            }
+        }
+
+        public bool IsShowReturn
+        {
+            get
+            {
+                return _IsShowReturn;
+            }
+            set
+            {
+                if (_IsShowReturn != value)
+                {
+                    _IsShowReturn = value;
+                    NotifyPropertyChanged(nameof(IsShowReturn));
+                }
+            }
+        }
+
+
         public Nullable<decimal> ExtraCharge
         {
             get
@@ -291,18 +332,18 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string PayTo
+        public string ReceivedFrom
         {
             get
             {
-                return _PayTo;
+                return _ReceivedFrom;
             }
             set
             {
-                if (_PayTo != value)
+                if (_ReceivedFrom != value)
                 {
-                    _PayTo = value;
-                    NotifyPropertyChanged(nameof(PayTo));
+                    _ReceivedFrom = value;
+                    NotifyPropertyChanged(nameof(_ReceivedFrom));
                 }
             }
         }
@@ -337,24 +378,6 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public string ReceivingMode
-        {
-            get
-            {
-                return _ReceivingMode;
-            }
-            set
-            {
-                if (_ReceivingMode != value)
-                {
-                    _ReceivingMode = value;
-                    IsShowChequeDetail = value == "Cheque";
-                    IsShowOnlineDetail = value == "Online";
-                    IsShowTTDetail = value == "TT";
-                    NotifyPropertyChanged(nameof(ReceivingMode));
-                }
-            }
-        }
 
         public ReceiptDetail RDetail
         {
@@ -472,6 +495,155 @@ namespace AccountBuddy.BLL
             }
         }
         #endregion
+
+        public Ledger RLedger
+        {
+            get
+            {
+                if (_RLedger == null)
+                {
+                    _RLedger = new Ledger();
+                }
+                return _RLedger;
+            }
+            set
+            {
+                if (_RLedger != value)
+                {
+                    _RLedger = value;
+                    NotifyPropertyChanged(nameof(Ledger));
+                }
+            }
+        }
+
+
+        #region List
+        public static ObservableCollection<Ledger> LedgerList
+        {
+            get
+            {
+                return Ledger.toList;
+            }
+        }
+        #endregion
+
+        #region Master
+        public bool Save()
+        {
+            try
+            {
+                return ABClientHub.FMCGHub.Invoke<bool>("Receipt_Save", this).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public void Clear()
+        {
+            new Receipt().toCopy<Receipt>(this);
+            ClearDetail();
+            _RDetails = new ObservableCollection<ReceiptDetail>();
+
+            ReceiptDate = DateTime.Now;
+
+            NotifyAllPropertyChanged();
+        }
+
+        public bool Find()
+        {
+            try
+            {
+                Receipt po = ABClientHub.FMCGHub.Invoke<Receipt>("Receipt_Find", SearchText).Result;
+                if (po.Id == 0) return false;
+                po.toCopy<Receipt>(this);
+                this.RDetails = po.RDetails;
+                NotifyAllPropertyChanged();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool Delete()
+        {
+            try
+            {
+                return ABClientHub.FMCGHub.Invoke<bool>("Receipt_Delete", this.Id).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Detail
+
+        public void SaveDetail()
+        {
+
+            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == RDetail.LedgerId).FirstOrDefault();
+
+            if (pod == null)
+            {
+                pod = new ReceiptDetail();
+                RDetails.Add(pod);
+            }
+
+            RDetail.toCopy<ReceiptDetail>(pod);
+            ClearDetail();
+            Amount = RDetails.Sum(x => x.Amount);
+        }
+
+        public void ClearDetail()
+        {
+            ReceiptDetail pod = new ReceiptDetail();
+            pod.toCopy<ReceiptDetail>(RDetail);
+        }
+
+        public void DeleteDetail(int LedgerId)
+        {
+            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+
+            if (pod != null)
+            {
+                RDetails.Remove(pod);
+                Amount = RDetails.Sum(x => x.Amount);
+            }
+        }
+
+        public void FindDetail(int LedgerId)
+        {
+            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+
+            if (pod != null)
+            {
+                pod.toCopy<ReceiptDetail>(RDetail);
+            }
+        }
+
+        #endregion
+
+        public bool FindRefNo()
+        {
+            var rv = false;
+            try
+            {
+                rv = ABClientHub.FMCGHub.Invoke<bool>("Find_RRef", EntryNo, this).Result;
+            }
+            catch (Exception ex)
+            {
+                rv = true;
+            }
+            return rv;
+        }
+
+
+
         #region Property  Changed Event
 
         public event PropertyChangedEventHandler PropertyChanged;

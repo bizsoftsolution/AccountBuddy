@@ -5,8 +5,167 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Report"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+            d:DesignHeight="650" d:DesignWidth="1100" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </UserControl.Resources>
+
+
+
     <Grid>
-            
+        <Grid Margin="0,0,10,10">
+
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width ="1150" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}" >
+                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Trial Balance"/></TextBlock>
+            </Grid>
+            <Grid Grid.Row="1" >
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="29*"/>
+                        <RowDefinition Height="92*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"  >
+                            <DatePicker Name="dtpDateFrom" Width="191"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                        <TextBlock Text="Date From" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </DatePicker>
+                            <DatePicker Name="dtpDateTo" Width="191"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                        <TextBlock Text="Date To" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </DatePicker>
+                            <Button Width="80" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
+                        </StackPanel>
+
+
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="603" Grid.RowSpan="2">
+                            <TabControl.Resources>
+                                <Style TargetType="TabItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="TabItem">
+                                                <Grid Name="Panel">
+                                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Panel" Property="Background" Value="white" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabControl.Resources>
+
+                            <TabControl.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </TabControl.RenderTransform>
+                            <TabItem Header="Details" >
+
+                                <Grid Grid.Row="0" Margin="0,0,10,-20" >
+
+                                    <DataGrid x:Name="dgvTrialBalance" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,71,11" >
+                                        <DataGrid.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform AngleX="-0.283"/>
+                                                <RotateTransform/>
+                                                <TranslateTransform X="0.745"/>
+                                            </TransformGroup>
+                                        </DataGrid.RenderTransform>
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                            </Style>
+
+                                        </DataGrid.ColumnHeaderStyle>
+
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Ledger Name" FontWeight="Bold" Width="350" Binding="{Binding LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Credit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Debit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                </Grid>
+
+                            </TabItem>
+                            <TabItem Header="Report" >
+                                <Grid Grid.Row="0" Margin="0,0,4,-14">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="41*"/>
+                                        <RowDefinition Height="245*"/>
+                                    </Grid.RowDefinitions>
+                                    <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,-4,0,8" Height="78" Width="350">
+                                <TextBox Name="txtSearchRpt" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                            <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <CheckBox Name="cbxCase1" Content="Case sensitive"  />
+                                    <RadioButton x:Name="rptStartWith1" GroupName="SearchType" Content="Start With" />
+                                    <RadioButton x:Name="rptContain1" GroupName="SearchType" Content="Contain" />
+                                    <RadioButton x:Name="rptEndWith1" GroupName="SearchType" Content="End With"  />
+                                </StackPanel>
+                            </StackPanel>-->
+
+
+                                    <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="406"   Grid.Row="1" Margin="0,14,0,0">
+                                        <rv:ReportViewer x:Name="rptTrialBalance"/>
+                                    </WindowsFormsHost>
+
+                                </Grid>
+                            </TabItem>
+                            <!--#region Search Box-->
+
+                            <!--#endregion-->
+
+
+                        </TabControl>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

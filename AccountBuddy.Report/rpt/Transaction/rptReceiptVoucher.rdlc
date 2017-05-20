@@ -572,7 +572,7 @@
     <Height>2.19595in</Height>
     <Style />
   </Body>
-  <Width>6.5in</Width>
+  <Width>6.09375in</Width>
   <Page>
     <PageHeader>
       <Height>2.02557cm</Height>
@@ -600,7 +600,7 @@
           </Paragraphs>
           <rd:DefaultName>CompanyName</rd:DefaultName>
           <Top>0.39688cm</Top>
-          <Left>1.30323cm</Left>
+          <Left>0.78729cm</Left>
           <Height>0.83812cm</Height>
           <Width>13.90354cm</Width>
           <Style>
@@ -634,7 +634,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
           <Top>1.30556cm</Top>
-          <Left>1.30323cm</Left>
+          <Left>0.78729cm</Left>
           <Height>0.6cm</Height>
           <Width>13.90354cm</Width>
           <ZIndex>1</ZIndex>
