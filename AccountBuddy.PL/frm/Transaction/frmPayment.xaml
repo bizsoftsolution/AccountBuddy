@@ -80,8 +80,8 @@
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Vertical" Margin="0,25,0,0">
                     <StackPanel Orientation="Horizontal">
-                        <DatePicker x:Name="dtpPaymentDate" materialDesign:HintAssist.Hint="Date"  SelectedDate="{Binding PaymentDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,25,24" Width="100" FontWeight="Bold"  />
-                        <ComboBox x:Name="cmbPayMode" SelectedValue="{Binding PaymentMode, Mode=TwoWay}" ItemsSource="{Binding PayModeList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="125" Height="43" Margin="0,12,0,24">
+                        <DatePicker x:Name="dtpPaymentDate" materialDesign:HintAssist.Hint="Date"  SelectedDate="{Binding PaymentDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,0,0" Width="100" FontWeight="Bold"  />
+                        <ComboBox x:Name="cmbPayMode" SelectedValue="{Binding PaymentMode, Mode=TwoWay}" ItemsSource="{Binding PayModeList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="125" Height="43" Margin="10,0,0,0">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Pay Mode"/>
@@ -89,7 +89,7 @@
                             </materialDesign:HintAssist.Hint>
                           
                         </ComboBox>
-                        <ComboBox x:Name="cmbCreditAC" ItemsSource="{Binding LedgerList}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="LedgerName" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="10,0,20,10">
+                        <ComboBox x:Name="cmbCreditAC" ItemsSource="{Binding LedgerList}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="LedgerName" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Credit A/C"/>
@@ -98,55 +98,35 @@
                         </ComboBox>
 
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding PayTo, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
-                        <TextBox Text="{Binding EntryNo, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Entry No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
-                       
-
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <TextBox Text="{Binding EntryNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Entry No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                        <TextBox Text="{Binding PayTo, Mode=TwoWay}" Width="385" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>                        
                     </StackPanel>
 
                     <GroupBox Margin="10,10,10,0" Header="Cheque Detail" Visibility="{Binding IsShowChequeDetail,Converter={StaticResource VisibilityConverter}}">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <!--<ComboBox x:Name="cmbBankCheque" SelectedValue="{Binding PCheque.BankId, Mode=TwoWay}" ItemsSource="{Binding BankList}" SelectedValuePath="Id" DisplayMemberPath="BankName" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="0,12,0,24">
+                                <TextBox x:Name="txtChequeNo" Text="{Binding ChequeNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Cheque No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
+                                <DatePicker x:Name="dtpChequeDate" materialDesign:HintAssist.Hint="Cheque Date"  SelectedDate="{Binding ChequeDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,15,10,0" Width="100" FontWeight="Bold"  />                                
+                                <ComboBox SelectedValue="{Binding Status, Mode=TwoWay}" ItemsSource="{Binding StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="80" Margin="0,0,0,0">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Bank"/>
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </ComboBox>-->
-                                <TextBox x:Name="txtChequeNo" Text="{Binding PCheque.ChequeNo, Mode=TwoWay}" Width="73" materialDesign:HintAssist.Hint="Cheque No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
-                                <ComboBox x:Name="cmbChequeStatus"  SelectedValue="{Binding Status, Mode=TwoWay}" ItemsSource="{Binding StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="150" Height="43" Margin="0,12,0,24">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Cheque Status"/>
+                                            <TextBlock Text="Status"/>
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
                                 </ComboBox>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <DatePicker x:Name="dtpChequeIssueDate" materialDesign:HintAssist.Hint="Issue Date"  SelectedDate="{Binding PCheque.IssueDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,10,20,10" Width="120" FontWeight="Bold"  />
-                                <DatePicker x:Name="dtpChequeDate" materialDesign:HintAssist.Hint="Cheque Date"  SelectedDate="{Binding PCheque.ChequeDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,10,20,10" Width="120" FontWeight="Bold"  />
-                                <DatePicker x:Name="dtpChequeCollectionDate" materialDesign:HintAssist.Hint="Collection Date"  SelectedDate="{Binding PCheque.CollectionDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,10,10,10" Width="101" FontWeight="Bold" Visibility="{Binding PCheque.IsShowComplete,Converter={StaticResource VisibilityConverter}}"  />
-                                <DatePicker x:Name="dtpChequeReturnDate" materialDesign:HintAssist.Hint="Return Date"  SelectedDate="{Binding PCheque.ReturnDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,10,20,10" Width="91" FontWeight="Bold" Visibility="{Binding PCheque.IsShowReturn,Converter={StaticResource VisibilityConverter}}"  />
-                                <TextBox Text="{Binding PCheque.ReturnCharge, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="100" materialDesign:HintAssist.Hint="Return Charge" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,10,10,10" FontWeight="Bold" Visibility="{Binding PCheque.IsShowReturn,Converter={StaticResource VisibilityConverter}}" />
+                                <DatePicker x:Name="dtpChequeReturnDate" materialDesign:HintAssist.Hint="Return Date"  SelectedDate="{Binding ClearDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="10,15,0,0" Width="100" FontWeight="Bold" Visibility="{Binding IsShowReturn,Converter={StaticResource VisibilityConverter}}"  />
+                                <TextBox Text="{Binding ExtraCharge, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="80" materialDesign:HintAssist.Hint="Extra Charge" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold" Visibility="{Binding IsShowReturn,Converter={StaticResource VisibilityConverter}}" />
+                                <DatePicker x:Name="dtpChequeCollectionDate" materialDesign:HintAssist.Hint="Collection Date"  SelectedDate="{Binding ClearDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="10,15,0,0" Width="120" FontWeight="Bold" Visibility="{Binding IsShowComplete,Converter={StaticResource VisibilityConverter}}"  />
                             </StackPanel>
                         </StackPanel>
                     </GroupBox>
 
                     <GroupBox Margin="10,10,10,0" Header="Online" Visibility="{Binding IsShowOnlineDetail,Converter={StaticResource VisibilityConverter}}">
                         <StackPanel Orientation="Horizontal">
-                            <!--<ComboBox x:Name="cmbBankOnline" SelectedValue="{Binding POnline.BankId, Mode=TwoWay}" ItemsSource="{Binding BankList}" SelectedValuePath="Id" DisplayMemberPath="BankName" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="0,10,0,10">
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Bank"/>
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </ComboBox>-->
-                            <TextBox Text="{Binding POnline.RefNo, Mode=TwoWay}" Width="73" materialDesign:HintAssist.Hint="Ref. No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,10,20,10" FontWeight="Bold"/>
-                            <DatePicker x:Name="dtpTransactionDate" materialDesign:HintAssist.Hint="Transaction Date"  SelectedDate="{Binding POnline.TransactionDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,10,20,10" Width="150" FontWeight="Bold"  />
-                            <ComboBox x:Name="cmbOnlineStatus"  SelectedValue="{Binding Status, Mode=TwoWay}" ItemsSource="{Binding StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="150" Height="43" >
+                            <TextBox Text="{Binding RefNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Ref. No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
+                            <DatePicker materialDesign:HintAssist.Hint="Transaction Date"  SelectedDate="{Binding ClearDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,15,10,0" Width="120" FontWeight="Bold"  />
+                            <ComboBox SelectedValue="{Binding Status, Mode=TwoWay}" ItemsSource="{Binding StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="100" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Status"/>
@@ -158,19 +138,12 @@
 
                     <GroupBox Margin="10,10,10,0" Header="Telegraphic Transfer" Visibility="{Binding IsShowTTDetail,Converter={StaticResource VisibilityConverter}}">
                         <StackPanel Orientation="Horizontal">
-                            <!--<ComboBox x:Name="cmbBankTT" ItemsSource="{Binding BankList}" SelectedValuePath="Id" DisplayMemberPath="BankName" SelectedValue="{Binding POnline.BankId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="0,10,0,10">
+                            <TextBox Text="{Binding RefNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Ref. No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
+                            <DatePicker materialDesign:HintAssist.Hint="Transaction Date"  SelectedDate="{Binding ClearDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,15,10,0" Width="120" FontWeight="Bold"  />
+                            <ComboBox  SelectedValue="{Binding Status, Mode=TwoWay}" ItemsSource="{Binding StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="100" Margin="0,0,0,0">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Bank"/>
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </ComboBox>-->
-                            <TextBox Text="{Binding PTT.RefNo, Mode=TwoWay}" Width="73" materialDesign:HintAssist.Hint="Ref. No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,10,10,10" FontWeight="Bold"/>
-                            <DatePicker x:Name="dtpTransactionDateTT" materialDesign:HintAssist.Hint="Transaction Date"  SelectedDate="{Binding PTT.TransactionDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,10,20,10" Width="150" FontWeight="Bold"  />
-                            <ComboBox x:Name="cmbTTStatus"  SelectedValue="{Binding Status, Mode=TwoWay}" ItemsSource="{Binding StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="150" Height="43" Margin="0,12,0,24">
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text=" TT Status"/>
+                                        <TextBlock Text="Status"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </ComboBox>
@@ -178,7 +151,7 @@
                     </GroupBox>
 
                     <GroupBox Header="Narration" Margin="10,10,10,0">
-                        <TextBox Text="{Binding Narration, Mode=TwoWay}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
+                        <TextBox Text="{Binding Particulars, Mode=TwoWay}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
                     </GroupBox>
                     <GroupBox Header="Amount in Words" Margin="10,10,10,0">
                         <TextBlock x:Name="lblAmountInWords" Text="{Binding AmountInwords}"  Width="auto" FontWeight="Black" Margin="0,0,0,0" FontSize="17" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Height="auto"/>
@@ -190,21 +163,19 @@
             <Grid Grid.Column="1">
                 <StackPanel Orientation="Vertical" Margin="0,25,0,0">
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox x:Name="cmbDebitAC" ItemsSource="{Binding LedgerList}" SelectedValuePath="Id" DisplayMemberPath="LedgerName" SelectedValue="{Binding PDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="10,10,10,10" >
+                        <ComboBox x:Name="cmbDebitAC" ItemsSource="{Binding LedgerList}" SelectedValuePath="Id" DisplayMemberPath="LedgerName" Text="{Binding PDetail.LedgerName}" SelectedValue="{Binding PDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Debit A/C"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox Text="{Binding Amount, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Amount" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,10,10,10" FontWeight="Bold"/>
+                        <TextBox Text="{Binding PDetail.Amount, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="150" materialDesign:HintAssist.Hint="Amount" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                        <Button   Width="80" Height="30" x:Name="btnAdd" Content="ADD" Margin="10,0,0,0" Click="btnAdd_Click" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Button   Width="80" Height="30" x:Name="btnAdd" Content="ADD" Margin="150,10,10,10" Click="btnAdd_Click" />
-                        <Button   Width="90" Height="30" x:Name="btnRemove" Content="REMOVE" Margin="10,10,10,10" Click="btnRemove_Click" />
-
-
-                    </StackPanel>
+                    <GroupBox Header="Narration" Margin="10,10,10,0">
+                        <TextBox Text="{Binding PDetail.Particular, Mode=TwoWay}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
+                    </GroupBox>
                     <GroupBox Height="250" Margin="10,25,10,0" Header="Payment Details">
                         <DataGrid x:Name="dgvDetails" ItemsSource="{Binding PDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10"  >
                             <DataGrid.RenderTransform>
@@ -223,19 +194,28 @@
 
                             </DataGrid.ColumnHeaderStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="SNO" FontWeight="Bold" Width="40" Binding="{Binding SNo, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                <DataGridTextColumn Header="Account" FontWeight="Bold" Width="200" Binding="{Binding LedgerName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="100" Binding="{Binding Amount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="False"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Particulars" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="200" Binding="{Binding Particulars, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="False"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTemplateColumn Header="Delete" TextBlock.TextAlignment="Center"  Width="75">
+                                <DataGridTemplateColumn Header="Edit" TextBlock.TextAlignment="Center"  Width="75">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding LedgerName}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                            <Button   x:Name="btnEditDetail" Tag="{Binding LedgerId}" Click="btnEditDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                                <materialDesign:PackIcon Kind="Pencil" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Delete"  TextBlock.TextAlignment="Center"  Width="75">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="btnDeleteDetail" Tag="{Binding LedgerId}" Click="btnDeleteDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
                                                 <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
                                             </Button>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Header="Account" FontWeight="Bold" Width="300" Binding="{Binding LedgerName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="100" Binding="{Binding Amount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="False"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                
                             </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
@@ -248,7 +228,7 @@
                         <Button Click="btnDelete_Click" Width="80" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
                         <Button Click="btnClear_Click"  Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />
                         <Button Click="btnPrint_Click"  Width="80" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" />
-                        <TextBox Text="{Binding SearchText}" Width="100" materialDesign:HintAssist.Hint="Ref.Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                        <TextBox Text="{Binding SearchText}" Width="100" materialDesign:HintAssist.Hint="Entry No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
                         <Button Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" Margin="5 5" />
 
                     </StackPanel>

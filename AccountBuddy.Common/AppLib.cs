@@ -37,11 +37,9 @@ namespace AccountBuddy.Common
         }
 
         #region NumberToWords
-
-        public static string ToCurrencyInWords(this decimal? Number)
+        public static string ToCurrencyInWords(this decimal Number)
         {
-            if (Number == null) return "";
-
+            if (Number == 0) return "";
             string[] Nums = string.Format("{0:0.00}", Number).Split('.');
 
             int number1 = int.Parse(Nums[0]);
@@ -55,6 +53,12 @@ namespace AccountBuddy.Common
             return words;
 
         }
+        public static string ToCurrencyInWords(this decimal? Number)
+        {
+            if (Number == null) return "";
+            return Number.Value.ToCurrencyInWords();            
+        }
+
         public static string ToWords(this int number1)
         {
             if (number1 == 0)

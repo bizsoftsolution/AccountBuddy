@@ -20,6 +20,10 @@ namespace AccountBuddy.BLL
         private decimal _Amount;
         private string _RefNo;
         private string _Status;
+
+        private bool _IsShowReturn;
+        private bool _IsShowComplete;
+
         private decimal? _ExtraCharge;
         private string _ChequeNo;
         private DateTime? _ChequeDate;
@@ -28,7 +32,7 @@ namespace AccountBuddy.BLL
         private string _PayTo;
         private string _VoucherNo;
         private string _LedgerName;
-                private string _AmountInwords;
+        private string _AmountInwords;
 
 
         private Ledger _PLedger;
@@ -37,9 +41,7 @@ namespace AccountBuddy.BLL
 
 
         private string _SearchText;
-
-        private string _PayMode;
-        
+                
         private bool _IsShowChequeDetail;
         private bool _IsShowOnlineDetail;
         private bool _IsShowTTDetail;
@@ -168,6 +170,11 @@ namespace AccountBuddy.BLL
                 if (_PaymentMode != value)
                 {
                     _PaymentMode = value;
+
+                    IsShowChequeDetail = value == "Cheque";
+                    IsShowOnlineDetail = value == "Online";
+                    IsShowTTDetail = value == "TT";
+
                     NotifyPropertyChanged(nameof(PaymentMode));
                 }
             }
@@ -183,6 +190,7 @@ namespace AccountBuddy.BLL
                 if (_Amount != value)
                 {
                     _Amount = value;
+                    AmountInwords = value.ToCurrencyInWords();
                     NotifyPropertyChanged(nameof(Amount));
                 }
             }
@@ -213,10 +221,45 @@ namespace AccountBuddy.BLL
                 if (_Status != value)
                 {
                     _Status = value;
+                    IsShowComplete = value == "Completed";
+                    IsShowReturn = value == "Returned";
                     NotifyPropertyChanged(nameof(Status));
                 }
             }
         }
+
+        public bool IsShowComplete
+        {
+            get
+            {
+                return _IsShowComplete;
+            }
+            set
+            {
+                if (_IsShowComplete != value)
+                {
+                    _IsShowComplete = value;
+                    NotifyPropertyChanged(nameof(IsShowComplete));
+                }
+            }
+        }
+
+        public bool IsShowReturn
+        {
+            get
+            {
+                return _IsShowReturn;
+            }
+            set
+            {
+                if (_IsShowReturn != value)
+                {
+                    _IsShowReturn = value;
+                    NotifyPropertyChanged(nameof(IsShowReturn));
+                }
+            }
+        }
+
         public Nullable<decimal> ExtraCharge
         {
             get
@@ -337,26 +380,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public string PayMode
-        {
-            get
-            {
-                return _PayMode;
-            }
-            set
-            {
-                if (_PayMode != value)
-                {
-                    _PayMode = value;
-                    IsShowChequeDetail = value == "Cheque";
-                    IsShowOnlineDetail = value == "Online";
-                    IsShowTTDetail = value == "TT";
-                    NotifyPropertyChanged(nameof(PayMode));
-                }
-            }
-        }
-
+        
         public PaymentDetail PDetail
         {
             get
@@ -522,7 +546,7 @@ namespace AccountBuddy.BLL
         {
             new Payment().toCopy<Payment>(this);
             ClearDetail();                      
-            this.PDetails = new ObservableCollection<PaymentDetail>();
+            _PDetails = new ObservableCollection<PaymentDetail>();
 
             PaymentDate = DateTime.Now;
 
@@ -593,10 +617,21 @@ namespace AccountBuddy.BLL
                 Amount = PDetails.Sum(x => x.Amount);
             }
         }
+
+        public void FindDetail(int LedgerId)
+        {
+            PaymentDetail pod = PDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+
+            if (pod != null)
+            {
+                pod.toCopy<PaymentDetail>(PDetail);
+            }
+        }
+
         #endregion
 
 
-    
+
         public bool FindRefNo()
         {
             var rv = false;

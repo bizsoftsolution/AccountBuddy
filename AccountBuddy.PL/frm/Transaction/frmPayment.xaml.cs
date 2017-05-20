@@ -26,32 +26,23 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             InitializeComponent();
             this.DataContext = data;
+            data.Clear();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (data.Amount == 0)
-            {
-                MessageBox.Show("Enter Amount");
-            }
-            else if (data.LedgerId == null)
+            if (data.PDetail.LedgerId == 0)                
             {
                 MessageBox.Show("Enter LedgerName");
+            }
+            else if (data.PDetail.Amount == 0)
+            {
+                MessageBox.Show("Enter Amount");
             }
             else
             {
                 data.SaveDetail();
             }
-        }
-
-        private void btnRemove_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
-            }
-            catch (Exception ex) { }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -60,7 +51,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("Enter Entry No");
             }
-            else if (data.LedgerId == null)
+            else if (data.LedgerId == 0)
             {
                 MessageBox.Show("Enter LedgerName");
             }
@@ -114,17 +105,6 @@ namespace AccountBuddy.PL.frm.Transaction
             if (rv == false) MessageBox.Show(String.Format("Data Not Found"));
         }
 
-        private void OnDelete(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
-            }
-            catch (Exception ex) { }
-
-        }
-
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -145,6 +125,31 @@ namespace AccountBuddy.PL.frm.Transaction
 
             f.LoadReport(data, payto.ToString(), txtChequeNo.Text, lblAmountInWords.Text);
             f.ShowDialog();
+        }
+
+        private void btnEditDetail_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button btn = (Button)sender;
+                data.FindDetail((int)btn.Tag);
+            }
+            catch (Exception ex) { }
+
+        }
+
+        private void btnDeleteDetail_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if(MessageBox.Show("do you want to delete this detail?","Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    Button btn = (Button)sender;
+                    data.DeleteDetail((int)btn.Tag);
+                }                
+            }
+            catch (Exception ex) { }
+
         }
     }
 }
