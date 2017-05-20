@@ -26,30 +26,32 @@ namespace AccountBuddy.PL.frm.Vouchers
             InitializeComponent();
             rptQuickPayment.SetDisplayMode(DisplayMode.PrintLayout);
         }
-        public void LoadReport(BLL.Payment data, string Payto, string ChequeNo, string AmtInWords)
+        public void LoadReport(BLL.Payment data, string Payto)
         {
             try
             {
 
-                List<BLL.Payment> POList = new List<BLL.Payment>();
+                List<BLL.Payment> PList = new List<BLL.Payment>();
                 List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
+                List<BLL.PaymentDetail> PDList = new List<BLL.PaymentDetail>();
 
-                POList.Add(data);
+                PList.Add(data);
+                PDList.Add(data.PDetail);
                 CList.Add(BLL.UserAccount.Company);
 
 
                 rptQuickPayment.Reset();
-                ReportDataSource data1 = new ReportDataSource("Payment", POList);
+                ReportDataSource data1 = new ReportDataSource("Payment", PList);
                 ReportDataSource data2 = new ReportDataSource("CompanyDetail", CList);
+                ReportDataSource data3 = new ReportDataSource("PaymentDetail", PDList);
 
                 rptQuickPayment.LocalReport.DataSources.Add(data1);
                 rptQuickPayment.LocalReport.DataSources.Add(data2);
-                rptQuickPayment.LocalReport.ReportPath = @"rpt\Transaction\rptPaymentvoucher.rdlc";
+                rptQuickPayment.LocalReport.DataSources.Add(data3);
+                rptQuickPayment.LocalReport.ReportPath = @"rpt\Transaction\rptPaymentVoucher.rdlc";
 
-                ReportParameter[] par = new ReportParameter[3];
+                ReportParameter[] par = new ReportParameter[1];
                 par[0] = new ReportParameter("PayTo", Payto.ToUpper());
-                par[1] = new ReportParameter("ChequeNo", ChequeNo);
-                par[2] = new ReportParameter("AmtInwords", AmtInWords.ToUpper());
                 rptQuickPayment.LocalReport.SetParameters(par);
 
 

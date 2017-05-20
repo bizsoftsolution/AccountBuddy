@@ -20,7 +20,7 @@ namespace AccountBuddy.SL.Hubs
                 if (_PPendingList == null)
                 {
                     _PPendingList = new List<BLL.Payment>();
-                    foreach (var d1 in DB.Payments.OrderBy(x => x.RefNo).ToList())
+                    foreach (var d1 in DB.Payments.OrderBy(x => x.EntryNo).ToList())
                     {
                         BLL.Payment d2 = new BLL.Payment();
                         d1.toCopy<BLL.Payment>(d2);
@@ -172,10 +172,10 @@ namespace AccountBuddy.SL.Hubs
             return PPendingList.Where(x => x.PLedger.CompanyId== Caller.CompanyId).ToList();
         }
 
-        public bool Find_PORef(string RefNo, BLL.Payment PO)
+        public bool Find_PORef(string entryNo, BLL.Payment PO)
 
         {
-            DAL.Payment d = DB.Payments.Where(x => x.EntryNo == RefNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.Payment d = DB.Payments.Where(x => x.EntryNo == entryNo & x.Id != PO.Id).FirstOrDefault();
             if (d == null)
             {
                 return false;
