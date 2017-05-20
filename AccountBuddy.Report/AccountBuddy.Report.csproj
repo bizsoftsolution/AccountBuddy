@@ -49,6 +49,12 @@
     <EmbeddedResource Include="rpt\Master\RptLedger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptBalanceSheet.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptTrialBalance.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptJournalReceipt.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -68,6 +74,7 @@
   <ItemGroup>
     <None Include="Properties\DataSources\AccountBuddy.BLL.ABClientHub.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.AccountGroup.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.BalanceSheet.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.CompanyDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.CreditLimitType.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Journal.datasource" />
@@ -77,6 +84,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.PaymentDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Receipt.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.TrialBalance.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UserAccount.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UserType.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UserTypeDetail.datasource" />

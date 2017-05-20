@@ -24,26 +24,32 @@ namespace AccountBuddy.PL.frm.Report
         public frmTrialBalance()
         {
             InitializeComponent();
-                }
+            rptTrialBalance.SetDisplayMode(DisplayMode.PrintLayout);
+
+        }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             dgvTrialBalance.ItemsSource = BLL.TrialBalance.toList;
-
-           
         }
 
-       
+
         private void LoadReport()
         {
             try
             {
                 rptTrialBalance.Reset();
-                ReportDataSource data = new ReportDataSource("TrialBalance", BLL.TrialBalance.toList);
+                ReportDataSource data = new ReportDataSource("TrialBalance", dgvTrialBalance.ItemsSource);
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
                 rptTrialBalance.LocalReport.DataSources.Add(data);
                 rptTrialBalance.LocalReport.DataSources.Add(data1);
-                rptTrialBalance.LocalReport.ReportPath = @"rpt\master\rptTrialBalance.rdlc";
+                rptTrialBalance.LocalReport.ReportPath = @"rpt\Report\rptTrialBalance.rdlc";
+
+                ReportParameter[] par = new ReportParameter[2];
+                par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
+                par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
+                rptTrialBalance.LocalReport.SetParameters(par);
+
 
                 rptTrialBalance.RefreshReport();
 
@@ -56,7 +62,6 @@ namespace AccountBuddy.PL.frm.Report
 
         }
 
-       
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TabControl tc = sender as TabControl;
@@ -70,10 +75,20 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            DateTime dtFrom = dtpDateFrom.SelectedDate.Value;
-            DateTime dtTo = dtpDateTo.SelectedDate.Value;
 
-            dgvTrialBalance.ItemsSource = BLL.TrialBalance.toList.Where(x => x.VoucherPayDate >= dtFrom && x.VoucherPayDate <= dtTo || x.VoucherRecDate >= dtFrom && x.VoucherRecDate <= dtTo);
+            if (dtpDateFrom.SelectedDate != null && dtpDateTo.SelectedDate != null)
+            {
+                DateTime dtFrom = dtpDateFrom.SelectedDate.Value;
+                DateTime dtTo = dtpDateTo.SelectedDate.Value;
+
+                var list1 = BLL.TrialBalance.toList.Where(x => x.VoucherPayDate >= dtFrom || x.VoucherRecDate >= dtFrom).ToList();
+                var list2 = list1.Where(x => x.VoucherPayDate <= dtTo || x.VoucherRecDate <= dtTo).ToList();
+                dgvTrialBalance.ItemsSource = list2;
+            }
+            else
+            {
+                dgvTrialBalance.ItemsSource = BLL.TrialBalance.toList;
+            }
 
         }
     }

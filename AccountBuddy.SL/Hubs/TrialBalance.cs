@@ -26,7 +26,7 @@ namespace AccountBuddy.SL.Hubs
                 tb.GroupName = l.AccountGroup == null ? null : l.AccountGroup.GroupName;
                 tb.DrAmt = l.Payments.Sum(x => x.Amount);
                 tb.CrAmt = l.Receipts.Sum(x => x.Amount);
-                tb.VoucherPayDate = l.Payments.Select(X => X.PaymentDate).FirstOrDefault();
+                tb.VoucherPayDate = l.Payments.Select(x => x.PaymentDate).FirstOrDefault();
                 tb.VoucherRecDate = l.Receipts.Select(X => X.ReceiptDate).FirstOrDefault();
 
 
@@ -56,6 +56,9 @@ namespace AccountBuddy.SL.Hubs
             tb.LedgerName = "Total ";
             tb.DrAmt = TotDr;
             tb.CrAmt = TotCr;
+            tb.VoucherPayDate = DateTime.Today;
+            tb.VoucherRecDate = DateTime.Today;
+
             lstTrialBalance.Add(tb);
 
 
