@@ -2,14 +2,14 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox6">
+      <Textbox Name="Textbox3">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Voucher No :</Value>
+                <Value>Voucher No:</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>
@@ -20,11 +20,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>0.125in</Top>
-        <Left>3.61681in</Left>
-        <Height>0.25in</Height>
-        <Width>1.13542in</Width>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>0.17639cm</Top>
+        <Left>10.5537cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.34125cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -35,7 +35,39 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox7">
+      <Textbox Name="EntryNo">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!EntryNo.Value, "Receipt")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>EntryNo</rd:DefaultName>
+        <Top>0.17639cm</Top>
+        <Left>12.89495cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.27654cm</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox5">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
@@ -53,12 +85,12 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>0.375in</Top>
-        <Left>3.75223in</Left>
-        <Height>0.25in</Height>
-        <Width>1in</Width>
-        <ZIndex>1</ZIndex>
+        <rd:DefaultName>Textbox5</rd:DefaultName>
+        <Top>0.77639cm</Top>
+        <Left>10.5537cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.34125cm</Width>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -69,30 +101,26 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="PaymentDate">
+      <Textbox Name="ReceiptDate">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!PaymentDate.Value, "Payment")</Value>
-                <Style>
-                  <Format>dd-MM-yyyy</Format>
-                </Style>
+                <Value>=First(Fields!ReceiptDate.Value, "Receipt")</Value>
+                <Style />
               </TextRun>
             </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
+            <Style />
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>PaymentDate</rd:DefaultName>
-        <Top>0.375in</Top>
-        <Left>4.73834in</Left>
-        <Height>0.25in</Height>
-        <Width>1.01042in</Width>
-        <ZIndex>2</ZIndex>
+        <rd:DefaultName>ReceiptDate</rd:DefaultName>
+        <Top>0.77639cm</Top>
+        <Left>12.93023cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.24127cm</Width>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -107,29 +135,29 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.84375in</Width>
+              <Width>5.26778cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.6875in</Width>
+              <Width>6.1491cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>2.52431cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox10">
+                    <Textbox Name="Textbox7">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Debit A/C</Value>
+                              <Value>Credit A/C</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -138,7 +166,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox10</rd:DefaultName>
+                      <rd:DefaultName>Textbox7</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -154,14 +182,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox12">
+                    <Textbox Name="Textbox9">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Particulars</Value>
+                              <Value>Particular</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -170,7 +198,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox12</rd:DefaultName>
+                      <rd:DefaultName>Textbox9</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -186,7 +214,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox14">
+                    <Textbox Name="Textbox11">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -204,7 +232,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <rd:DefaultName>Textbox11</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -221,7 +249,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -336,12 +364,12 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>PaymentDetail</DataSetName>
-        <Top>0.625in</Top>
-        <Left>0.24875in</Left>
-        <Height>0.5in</Height>
-        <Width>5.53125in</Width>
-        <ZIndex>3</ZIndex>
+        <DataSetName>ReceiptDetail</DataSetName>
+        <Top>1.43729cm</Top>
+        <Left>1.23031cm</Left>
+        <Height>1.2cm</Height>
+        <Width>13.94119cm</Width>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -357,7 +385,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Pay To:</Value>
+                    <Value>Received From:</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -369,10 +397,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox16</rd:DefaultName>
-            <Top>0.17237in</Top>
-            <Left>0.35417in</Left>
+            <Top>0.11998in</Top>
+            <Left>0.09153in</Left>
             <Height>0.25in</Height>
-            <Width>1in</Width>
+            <Width>1.19792in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -402,85 +430,15 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox17</rd:DefaultName>
-            <Top>0.46403in</Top>
-            <Left>0.35417in</Left>
+            <Top>0.41164in</Top>
+            <Left>0.09153in</Left>
             <Height>0.25in</Height>
-            <Width>1in</Width>
+            <Width>1.19792in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
               </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="PayTo">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=First(Fields!PayTo.Value, "Payment")</Value>
-                    <Style />
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Left</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>PayTo</rd:DefaultName>
-            <Top>0.17237in</Top>
-            <Left>1.36806in</Left>
-            <Height>0.25in</Height>
-            <Width>3.1632in</Width>
-            <ZIndex>2</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <BottomBorder>
-                <Style>Solid</Style>
-              </BottomBorder>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Amount1">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=Sum(Fields!Amount.Value, "Payment")</Value>
-                    <Style />
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Left</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Amount1</rd:DefaultName>
-            <Top>0.46403in</Top>
-            <Left>1.38194in</Left>
-            <Height>0.25in</Height>
-            <Width>3.14931in</Width>
-            <ZIndex>3</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <BottomBorder>
-                <Style>Solid</Style>
-              </BottomBorder>
               <PaddingLeft>2pt</PaddingLeft>
               <PaddingRight>2pt</PaddingRight>
               <PaddingTop>2pt</PaddingTop>
@@ -504,11 +462,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox20</rd:DefaultName>
-            <Top>0.76959in</Top>
-            <Left>0.35417in</Left>
+            <Top>0.7172in</Top>
+            <Left>0.09153in</Left>
             <Height>0.25in</Height>
             <Width>2.31944in</Width>
-            <ZIndex>4</ZIndex>
+            <ZIndex>2</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -519,11 +477,77 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Textbox Name="ReceivedFrom">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Parameters!ReceivedFrom.Value</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>ReceivedFrom</rd:DefaultName>
+            <Top>0.30475cm</Top>
+            <Left>3.31047cm</Left>
+            <Height>0.6cm</Height>
+            <Width>10.04063cm</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <BottomBorder>
+                <Style>Solid</Style>
+              </BottomBorder>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Amount1">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Sum(Fields!Amount.Value, "Receipt")</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Amount1</rd:DefaultName>
+            <Top>1.01059cm</Top>
+            <Left>3.34575cm</Left>
+            <Height>0.6cm</Height>
+            <Width>10.00535cm</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <BottomBorder>
+                <Style>Solid</Style>
+              </BottomBorder>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
           <Line Name="Line1">
-            <Top>0.97445in</Top>
-            <Left>2.74306in</Left>
-            <Height>0in</Height>
-            <Width>1.7882in</Width>
+            <Top>2.39833cm</Top>
+            <Left>6.2297cm</Left>
+            <Height>0cm</Height>
+            <Width>7.1214cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -533,92 +557,28 @@
           </Line>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>1.125in</Top>
-        <Left>0.24875in</Left>
-        <Height>1.1932in</Height>
-        <Width>5.53125in</Width>
-        <ZIndex>4</ZIndex>
+        <Top>2.63729cm</Top>
+        <Left>1.23031cm</Left>
+        <Height>2.73375cm</Height>
+        <Width>13.94118cm</Width>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
           </Border>
         </Style>
       </Rectangle>
-      <Textbox Name="EntryNo">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!EntryNo.Value, "Payment")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>EntryNo</rd:DefaultName>
-        <Top>0.125in</Top>
-        <Left>4.73834in</Left>
-        <Height>0.25in</Height>
-        <Width>1in</Width>
-        <ZIndex>5</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
     </ReportItems>
-    <Height>2.39459in</Height>
+    <Height>2.19595in</Height>
     <Style />
   </Body>
-  <Width>6.25569in</Width>
+  <Width>6.5in</Width>
   <Page>
     <PageHeader>
-      <Height>0.89583in</Height>
+      <Height>2.02557cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Textbox Name="Textbox1">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>Payment Voucher</Value>
-                  <Style>
-                    <FontSize>16pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.42236in</Top>
-          <Left>1.43973in</Left>
-          <Height>0.30208in</Height>
-          <Width>3.1875in</Width>
-          <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
         <Textbox Name="CompanyName">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
@@ -639,10 +599,44 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>CompanyName</rd:DefaultName>
-          <Top>0.10292in</Top>
-          <Left>0.97098in</Left>
-          <Height>0.27778in</Height>
-          <Width>4.04167in</Width>
+          <Top>0.39688cm</Top>
+          <Left>1.30323cm</Left>
+          <Height>0.83812cm</Height>
+          <Width>13.90354cm</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox2">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>RECEIPT VOUCHER</Value>
+                  <Style>
+                    <FontSize>12pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>1.30556cm</Top>
+          <Left>1.30323cm</Left>
+          <Height>0.6cm</Height>
+          <Width>13.90354cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -662,7 +656,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1in</Height>
+      <Height>2.54cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -673,7 +667,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Payment Authorized By</Value>
+                  <Value>Receipt Authorized By</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -681,8 +675,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox22</rd:DefaultName>
-          <Top>0.06944in</Top>
-          <Left>0.26264in</Left>
+          <Top>0.01389in</Top>
+          <Left>0.51308in</Left>
           <Height>0.25in</Height>
           <Width>2.45833in</Width>
           <Style>
@@ -702,7 +696,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Payment Prepared By</Value>
+                  <Value>Receipt Prepared By</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -710,10 +704,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox22</rd:DefaultName>
-          <Top>0.06944in</Top>
-          <Left>3.32167in</Left>
+          <Top>0.01389in</Top>
+          <Left>3.57211in</Left>
           <Height>0.25in</Height>
-          <Width>2.45833in</Width>
+          <Width>2.40092in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -726,8 +720,8 @@
           </Style>
         </Textbox>
         <Line Name="Line2">
-          <Top>0.67708in</Top>
-          <Left>0.26264in</Left>
+          <Top>0.5in</Top>
+          <Left>0.49132in</Left>
           <Height>0in</Height>
           <Width>2.45833in</Width>
           <ZIndex>2</ZIndex>
@@ -738,10 +732,10 @@
           </Style>
         </Line>
         <Line Name="Line3">
-          <Top>0.67708in</Top>
-          <Left>3.32167in</Left>
+          <Top>0.5in</Top>
+          <Left>3.55035in</Left>
           <Height>0in</Height>
-          <Width>2.45833in</Width>
+          <Width>2.42268in</Width>
           <ZIndex>3</ZIndex>
           <Style>
             <Border>
@@ -756,91 +750,43 @@
         </Border>
       </Style>
     </PageFooter>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>2cm</LeftMargin>
+    <RightMargin>2cm</RightMargin>
+    <TopMargin>2cm</TopMargin>
+    <BottomMargin>2cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="FMCGBLL">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>d9654879-6efe-4935-96e3-01efb42c36f0</rd:DataSourceID>
-    </DataSource>
-    <DataSource Name="FMCGBLL1">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>8b2a0eb0-cb9b-4237-9c10-3b1f1bfa5631</rd:DataSourceID>
-    </DataSource>
     <DataSource Name="AccountBuddyBLL">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>a2e8fe82-714d-41ae-b60f-499e5ce716c6</rd:DataSourceID>
+      <rd:DataSourceID>aefd8d0a-e6fa-4478-b829-f7608682b40d</rd:DataSourceID>
     </DataSource>
     <DataSource Name="AccountBuddyBLL1">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>3d064491-bd91-49f9-9ebc-6b2ad2f36a39</rd:DataSourceID>
+      <rd:DataSourceID>22ce24df-5f37-4c93-b3a5-e47e97dd3e0d</rd:DataSourceID>
     </DataSource>
     <DataSource Name="AccountBuddyBLL2">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>b17e2a9f-68b3-46c6-bb5c-ccc0647d645e</rd:DataSourceID>
+      <rd:DataSourceID>dabccdb0-1f4a-4414-8af1-d88bee759e6e</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="PaymentDetail">
-      <Query>
-        <DataSourceName>AccountBuddyBLL</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="Amount">
-          <DataField>Amount</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Id">
-          <DataField>Id</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-        <Field Name="LedgerId">
-          <DataField>LedgerId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="LedgerName">
-          <DataField>LedgerName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Particular">
-          <DataField>Particular</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PaymentId">
-          <DataField>PaymentId</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-      </Fields>
-      <rd:DataSetInfo>
-        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
-        <rd:TableName>PaymentDetail</rd:TableName>
-        <rd:ObjectDataSourceType>AccountBuddy.BLL.PaymentDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
     <DataSet Name="CompanyDetail">
       <Query>
-        <DataSourceName>AccountBuddyBLL1</DataSourceName>
+        <DataSourceName>AccountBuddyBLL</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -911,9 +857,9 @@
         <rd:ObjectDataSourceType>AccountBuddy.BLL.CompanyDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
-    <DataSet Name="Payment">
+    <DataSet Name="Receipt">
       <Query>
-        <DataSourceName>AccountBuddyBLL2</DataSourceName>
+        <DataSourceName>AccountBuddyBLL1</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -973,29 +919,25 @@
           <DataField>Particulars</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="PaymentDate">
-          <DataField>PaymentDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="PaymentMode">
-          <DataField>PaymentMode</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PayMode">
-          <DataField>PayMode</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="PayTo">
           <DataField>PayTo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="PDetail">
-          <DataField>PDetail</DataField>
-          <rd:TypeName>AccountBuddy.BLL.PaymentDetail</rd:TypeName>
+        <Field Name="RDetail">
+          <DataField>RDetail</DataField>
+          <rd:TypeName>AccountBuddy.BLL.ReceiptDetail</rd:TypeName>
         </Field>
-        <Field Name="PLedger">
-          <DataField>PLedger</DataField>
-          <rd:TypeName>AccountBuddy.BLL.Ledger</rd:TypeName>
+        <Field Name="ReceiptDate">
+          <DataField>ReceiptDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ReceiptMode">
+          <DataField>ReceiptMode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ReceivingMode">
+          <DataField>ReceivingMode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="RefNo">
           <DataField>RefNo</DataField>
@@ -1016,19 +958,56 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
-        <rd:TableName>Payment</rd:TableName>
-        <rd:ObjectDataSourceType>AccountBuddy.BLL.Payment, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>Receipt</rd:TableName>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.Receipt, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="ReceiptDetail">
+      <Query>
+        <DataSourceName>AccountBuddyBLL2</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Amount">
+          <DataField>Amount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Id">
+          <DataField>Id</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="LedgerId">
+          <DataField>LedgerId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="LedgerName">
+          <DataField>LedgerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Particular">
+          <DataField>Particular</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ReceiptId">
+          <DataField>ReceiptId</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
+        <rd:TableName>ReceiptDetail</rd:TableName>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.ReceiptDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
   <ReportParameters>
-    <ReportParameter Name="PayTo">
+    <ReportParameter Name="ReceivedFrom">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
-  <rd:ReportID>72501fd1-4f00-46ad-a76b-efb23b20b414</rd:ReportID>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>e7003c52-1bd5-4996-98d3-b0e5f8d2e6c4</rd:ReportID>
 </Report>

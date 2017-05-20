@@ -28,7 +28,7 @@ namespace AccountBuddy.BLL
         private string _PayTo;
         private string _VoucherNo;
         private string _LedgerName;
-                private string _AmountInwords;
+        private string _AmountInwords;
 
 
         private Ledger _PLedger;
@@ -39,7 +39,7 @@ namespace AccountBuddy.BLL
         private string _SearchText;
 
         private string _PayMode;
-        
+
         private bool _IsShowChequeDetail;
         private bool _IsShowOnlineDetail;
         private bool _IsShowTTDetail;
@@ -362,7 +362,7 @@ namespace AccountBuddy.BLL
             get
             {
                 if (_PDetail == null)
-                {                    
+                {
                     _PDetail = new PaymentDetail();
                 }
                 return _PDetail;
@@ -521,7 +521,7 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new Payment().toCopy<Payment>(this);
-            ClearDetail();                      
+            ClearDetail();
             this.PDetails = new ObservableCollection<PaymentDetail>();
 
             PaymentDate = DateTime.Now;
@@ -571,7 +571,7 @@ namespace AccountBuddy.BLL
                 pod = new PaymentDetail();
                 PDetails.Add(pod);
             }
-            
+
             PDetail.toCopy<PaymentDetail>(pod);
             ClearDetail();
             Amount = PDetails.Sum(x => x.Amount);
@@ -596,7 +596,7 @@ namespace AccountBuddy.BLL
         #endregion
 
 
-    
+
         public bool FindRefNo()
         {
             var rv = false;

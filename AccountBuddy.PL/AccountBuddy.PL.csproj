@@ -179,7 +179,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Vouchers\frmQuickJournalVoucher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Vouchers\frmQuickPayment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Vouchers\frmQuickReceipt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -246,8 +254,14 @@
     <Compile Include="frm\Transaction\frmReceipt.xaml.cs">
       <DependentUpon>frmReceipt.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Vouchers\frmQuickJournalVoucher.xaml.cs">
+      <DependentUpon>frmQuickJournalVoucher.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Vouchers\frmQuickPayment.xaml.cs">
       <DependentUpon>frmQuickPayment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Vouchers\frmQuickReceipt.xaml.cs">
+      <DependentUpon>frmQuickReceipt.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

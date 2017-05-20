@@ -99,8 +99,8 @@
 
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding PayTo, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
-                        <TextBox Text="{Binding EntryNo, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Entry No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
+                        <TextBox x:Name="txtPayTo" Text="{Binding PayTo, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
+                        <TextBox x:Name="txtEntryNo" Text="{Binding EntryNo, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Entry No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
                        
 
                     </StackPanel>
