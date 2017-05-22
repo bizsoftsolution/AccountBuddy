@@ -11,42 +11,90 @@ namespace AccountBuddy.BLL
     {
         #region Fields
 
-        private string _LedgerName;
-        private string _GroupName;
+        private Ledger _Ledger;
+        private decimal? _CrAmt;
+        private decimal? _DrAmt;
+        private decimal _CrAmtOP;
+        private decimal _DrAmtOP;
         private decimal? _Amt;
 
-        private DateTime _VoucherPayDate;
-        private DateTime _VoucherRecDate;
+        private string _AccountName;
         #endregion
 
         #region Property
-        public string LedgerName
+        public Ledger Ledger
         {
             get
             {
-                return _LedgerName;
+                return _Ledger;
             }
             set
             {
-                if (_LedgerName != value)
+                if (_Ledger != value)
                 {
-                    _LedgerName = value;
-                    NotifyPropertyChanged(nameof(LedgerName));
+                    _Ledger = value;
+                    NotifyPropertyChanged(nameof(Ledger));
                 }
             }
         }
-        public string GroupName
+        public decimal? CrAmt
         {
             get
             {
-                return _GroupName;
+                return _CrAmt;
             }
             set
             {
-                if (_GroupName != value)
+                if (_CrAmt != value)
                 {
-                    _GroupName = value;
-                    NotifyPropertyChanged(nameof(GroupName));
+                    _CrAmt = value;
+                    NotifyPropertyChanged(nameof(CrAmt));
+                }
+            }
+        }
+        public decimal? DrAmt
+        {
+            get
+            {
+                return _DrAmt;
+            }
+            set
+            {
+                if (_DrAmt != value)
+                {
+                    _DrAmt = value;
+                    NotifyPropertyChanged(nameof(DrAmt));
+                }
+            }
+        }
+
+        public decimal CrAmtOP
+        {
+            get
+            {
+                return _CrAmtOP;
+            }
+            set
+            {
+                if (_CrAmtOP != value)
+                {
+                    _CrAmtOP = value;
+                    NotifyPropertyChanged(nameof(CrAmtOP));
+                }
+            }
+        }
+        public decimal DrAmtOP
+        {
+            get
+            {
+                return _DrAmtOP;
+            }
+            set
+            {
+                if (_DrAmtOP != value)
+                {
+                    _DrAmtOP = value;
+                    NotifyPropertyChanged(nameof(DrAmtOP));
                 }
             }
         }
@@ -66,53 +114,23 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public DateTime VoucherPayDate
+
+        public string AccountName
         {
             get
             {
-                return _VoucherPayDate;
+                return _AccountName;
             }
             set
             {
-                if (_VoucherPayDate != value)
+                if (_AccountName != value)
                 {
-                    _VoucherPayDate = value;
-                    NotifyPropertyChanged(nameof(VoucherPayDate));
+                    _AccountName = value;
+                    NotifyPropertyChanged(nameof(AccountName));
                 }
             }
         }
-        public DateTime VoucherRecDate
-        {
-            get
-            {
-                return _VoucherRecDate;
-            }
-            set
-            {
-                if (_VoucherRecDate != value)
-                {
-                    _VoucherRecDate = value;
-                    NotifyPropertyChanged(nameof(VoucherRecDate));
-                }
-            }
-        }
-        private static List<TrialBalance> _toList;
-
-        #endregion
-
-        public static List<TrialBalance> toList
-        {
-            get
-            {
-                if (_toList == null)
-                {
-                    _toList = ABClientHub.FMCGHub.Invoke<List<TrialBalance>>("PL_List").Result;
-                }
-
-                return _toList;
-            }
-        }
-
+        #endregion        
 
         #region Property  Changed Event
 
@@ -126,6 +144,15 @@ namespace AccountBuddy.BLL
         private void NotifyAllPropertyChanged()
         {
             foreach (var p in this.GetType().GetProperties()) NotifyPropertyChanged(p.Name);
+        }
+
+        #endregion
+
+        #region Methods
+
+        public static List<ProfitLoss> ToList(DateTime dtFrom, DateTime dtTo)
+        {
+            return ABClientHub.FMCGHub.Invoke<List<ProfitLoss>>("ProfitLoss_List", dtFrom, dtTo).Result;
         }
 
         #endregion

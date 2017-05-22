@@ -26,22 +26,30 @@ namespace AccountBuddy.PL.frm.Report
             InitializeComponent();
             rptBalanceSheet.SetDisplayMode(DisplayMode.PrintLayout);
 
+            int yy = BLL.UserAccount.Company.LoginAccYear;
+
+            DateTime? dtFrom = new DateTime(yy, 4, 1);
+            DateTime? dtTo = new DateTime(yy + 1, 3, 31);
+
+            dtpDateFrom.SelectedDate = dtFrom;
+            dtpDateTo.SelectedDate = dtTo;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvBalanceSheet.ItemsSource = BLL.BalanceSheet.toList;
-            dtpDateFrom.SelectedDate = DateTime.Today;
-            dtpDateTo.SelectedDate = DateTime.Today;
+            dgvBalanceSheet.ItemsSource = BLL.BalanceSheet.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
         }
 
 
         private void LoadReport()
         {
+            List<BLL.BalanceSheet> list = BLL.BalanceSheet.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            list = list.Select(x => new BLL.BalanceSheet()
+            { Ledger = x.LedgerList.AccountName, CrAmt = x.CrAmt, DrAmt = x.DrAmt, CrAmtOP = x.CrAmtOP, DrAmtOP = x.DrAmtOP }).ToList();
             try
             {
                 rptBalanceSheet.Reset();
-                ReportDataSource data = new ReportDataSource("BalanceSheet", dgvBalanceSheet.ItemsSource);
+                ReportDataSource data = new ReportDataSource("BalanceSheet", list);
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
                 rptBalanceSheet.LocalReport.DataSources.Add(data);
                 rptBalanceSheet.LocalReport.DataSources.Add(data1);
@@ -78,21 +86,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-
-            if (dtpDateFrom.SelectedDate != null && dtpDateTo.SelectedDate != null)
-            {
-                DateTime dtFrom = dtpDateFrom.SelectedDate.Value;
-                DateTime dtTo = dtpDateTo.SelectedDate.Value;
-
-                var list1 = BLL.BalanceSheet.toList.Where(x => x.VoucherPayDate >= dtFrom || x.VoucherRecDate >= dtFrom).ToList();
-                var list2 = list1.Where(x => x.VoucherPayDate <= dtTo || x.VoucherRecDate <= dtTo).ToList();
-                dgvBalanceSheet.ItemsSource = list2;
-            }
-            else
-            {
-                dgvBalanceSheet.ItemsSource = BLL.BalanceSheet.toList;
-            }
-
+            dgvBalanceSheet.ItemsSource = BLL.BalanceSheet.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
         }
     }
 }

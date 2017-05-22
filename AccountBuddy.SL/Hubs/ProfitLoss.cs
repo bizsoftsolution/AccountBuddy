@@ -2,98 +2,239 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Profit_Loss
+        #region Balance_Sheet
 
-        public List<BLL.ProfitLoss> PL_List()
+        public List<BLL.ProfitLoss> ProfitLoss_List(DateTime dtFrom, DateTime dtTo)
         {
             List<BLL.ProfitLoss> lstProfitLoss = new List<BLL.ProfitLoss>();
-            BLL.ProfitLoss bal = new BLL.ProfitLoss();
 
 
+            BLL.ProfitLoss tb = new BLL.ProfitLoss();
 
-            #region Assets
-            var l2 = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Income").ToList();
 
-            decimal TotInAmt = 0,CrAmt=0, DrAmt=0 ;
-            bal.LedgerName = "Income";
-            lstProfitLoss.Add(bal);
+            var lstLedgerIncome = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Income").ToList();
+            var lstLedgerLiability = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Expenses").ToList();
+            decimal  TotIn=0, TotEx=0;
+
+            #region Income
+
+            tb = new BLL.ProfitLoss();
+            tb.Ledger = new BLL.Ledger();
+            tb.Ledger.LedgerName = "  Income";
+            if (tb.Amt == 0)
+            {
+                tb.Amt = null;
+            }
+            lstProfitLoss.Add(tb);
+
 
             #region Ledger
-            foreach (var l in l2)
+
+            decimal OPDr, OPCr, PDr, PCr, RDr, RCr, JDr, JCr;
+
+            foreach (var l in lstLedgerIncome)
             {
-                bal = new BLL.ProfitLoss();
+                tb = new BLL.ProfitLoss();
+                tb.Ledger = new BLL.Ledger();
 
-                bal.LedgerName = string.Format("     {0}", l.LedgerName);
-                bal.GroupName = l.AccountGroup == null ? null : l.AccountGroup.GroupName;
-                DrAmt = l.Payments.Sum(x => x.Amount);
-                CrAmt = l.Receipts.Sum(x => x.Amount);
+                l.toCopy<BLL.Ledger>(tb.Ledger);
+                tb.Ledger.GroupCode = l.AccountGroup.GroupCode;
+                tb.Ledger.GroupName = l.AccountGroup.GroupName;
 
-                bal.Amt =Math.Abs(DrAmt-CrAmt);
-               
+                OPDr = l.OPDr ?? 0;
+                OPCr = l.OPCr ?? 0;
 
-                if (bal.Amt != 0 )
+                PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate < dtFrom).Sum(x => x.Amount);
+                PCr = l.Payments.Where(x => x.PaymentDate < dtFrom).Sum(x => x.Amount);
+
+                RDr = l.Receipts.Where(x => x.ReceiptDate < dtFrom).Sum(x => x.Amount);
+                RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate < dtFrom).Sum(x => x.Amount);
+
+                JDr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.DrAmt);
+                JCr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.CrAmt);
+
+                tb.DrAmtOP = OPDr + PDr + RDr + JDr;
+                tb.CrAmtOP = OPCr + PCr + RCr + JCr;
+
+
+                PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).Sum(x => x.Amount);
+                PCr = l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).Sum(x => x.Amount);
+
+                RDr = l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).Sum(x => x.Amount);
+                RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).Sum(x => x.Amount);
+
+                JDr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.DrAmt);
+                JCr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.CrAmt);
+
+
+
+                tb.DrAmt = tb.DrAmtOP + PDr + RDr + JDr;
+                tb.CrAmt = tb.CrAmtOP + PCr + RCr + JCr;
+
+
+                if (tb.DrAmtOP > tb.CrAmtOP)
                 {
-                    lstProfitLoss.Add(bal);
-                    TotInAmt += bal.Amt.Value;
-                 
+                    tb.DrAmtOP = tb.DrAmtOP - tb.CrAmtOP;
+                    tb.CrAmtOP = 0;
+                }
+                else
+                {
+                    tb.CrAmtOP = tb.CrAmtOP - tb.DrAmtOP;
+                    tb.DrAmtOP = 0;
+                }
+
+                if (tb.DrAmt > tb.CrAmt)
+                {
+                    tb.DrAmt = tb.DrAmt - tb.CrAmt;
+                    tb.CrAmt = 0;
+                    tb.Amt= tb.DrAmt - tb.CrAmt; 
+                }
+                else
+                {
+                    tb.CrAmt = tb.CrAmt - tb.DrAmt;
+                    tb.DrAmt = 0;
+                    tb.Amt = tb.CrAmt - tb.DrAmt;
+                }
+
+                if (tb.DrAmt != 0 || tb.CrAmt != 0)
+                {
+                    lstProfitLoss.Add(tb);
+                    TotIn += tb.Amt.Value;
+                   
                 }
             }
             #endregion
 
-
-            bal = new BLL.ProfitLoss();
-            bal.LedgerName = "Total Income";
-            bal.Amt = TotInAmt;
-             lstProfitLoss.Add(bal);
+            tb = new BLL.ProfitLoss();
+            tb.Ledger = new BLL.Ledger();
+            tb.Ledger.LedgerName = "  Total Income";
+            tb.Amt = TotIn;
+           
+            lstProfitLoss.Add(tb);
 
             #endregion
+
 
             #region Expenses
-            var l1 = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Expenses").ToList();
 
-            decimal TotExAmt = 0;
-            bal = new BLL.ProfitLoss();
-            bal.LedgerName = "Expense";
-
-            lstProfitLoss.Add(bal);
+            tb = new BLL.ProfitLoss();
+            tb.Ledger = new BLL.Ledger();
+            tb.Ledger.LedgerName = "  Expenses";
+            if(tb.Amt==0)
+            {
+                tb.Amt = null;
+            }
+            lstProfitLoss.Add(tb);
 
             #region Ledger
-            foreach (var l in l1)
-            {
-                bal = new BLL.ProfitLoss();
 
-                bal.LedgerName = string.Format("     {0}", l.LedgerName);
-                bal.GroupName = l.AccountGroup == null ? null : l.AccountGroup.GroupName;
-                DrAmt = l.Payments.Sum(x => x.Amount);
-               CrAmt = l.Receipts.Sum(x => x.Amount);
-                bal.Amt = Math.Abs(DrAmt - CrAmt);
-               
-                if (bal.Amt != 0 )
+            decimal OPInDr, OPInCr, PInDr, PInCr, RInDr, RInCr, JInDr, JInCr;
+
+            foreach (var l in lstLedgerLiability)
+            {
+                tb = new BLL.ProfitLoss();
+                tb.Ledger = new BLL.Ledger();
+
+                l.toCopy<BLL.Ledger>(tb.Ledger);
+                tb.Ledger.GroupCode = l.AccountGroup.GroupCode;
+                tb.Ledger.GroupName = l.AccountGroup.GroupName;
+
+                OPInDr = l.OPDr ?? 0;
+                OPInCr = l.OPCr ?? 0;
+
+                PInDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate < dtFrom).Sum(x => x.Amount);
+                PInCr = l.Payments.Where(x => x.PaymentDate < dtFrom).Sum(x => x.Amount);
+
+                RInDr = l.Receipts.Where(x => x.ReceiptDate < dtFrom).Sum(x => x.Amount);
+                RInCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate < dtFrom).Sum(x => x.Amount);
+
+                JInDr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.DrAmt);
+                JInCr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.CrAmt);
+
+                tb.DrAmtOP = OPInDr + PInDr + RInDr + JInDr;
+                tb.CrAmtOP = OPInCr + PInCr + RInCr + JInCr;
+
+
+                PInDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).Sum(x => x.Amount);
+                PInCr = l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).Sum(x => x.Amount);
+
+                RInDr = l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).Sum(x => x.Amount);
+                RInCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).Sum(x => x.Amount);
+
+                JInDr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.DrAmt);
+                JInCr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.CrAmt);
+
+
+
+                tb.DrAmt = tb.DrAmtOP + PInDr + RInDr + JInDr;
+                tb.CrAmt = tb.CrAmtOP + PInCr + RInCr + JInCr;
+
+
+                if (tb.DrAmtOP > tb.CrAmtOP)
                 {
-                    lstProfitLoss.Add(bal);
-                   TotExAmt+= bal.Amt.Value; ;
+                    tb.DrAmtOP = tb.DrAmtOP - tb.CrAmtOP;
+                    tb.CrAmtOP = 0;
+                }
+                else
+                {
+                    tb.CrAmtOP = tb.CrAmtOP - tb.DrAmtOP;
+                    tb.DrAmtOP = 0;
+                }
+
+                if (tb.DrAmt > tb.CrAmt)
+                {
+                    tb.Amt = tb.DrAmt - tb.CrAmt;
+                   
+                }
+                else
+                {
+                    tb.Amt = tb.CrAmt - tb.DrAmt;
+                    
+                }
+
+                if (tb.DrAmt != 0 || tb.CrAmt != 0)
+                {
+                    lstProfitLoss.Add(tb);
+                    TotEx +=tb.Amt.Value;
+
+                    
                 }
             }
             #endregion
 
 
-
-            bal = new BLL.ProfitLoss();
-            bal.LedgerName = "Total Expenses";
-            bal.Amt = TotExAmt;
-            lstProfitLoss.Add(bal);
-
-            bal = new BLL.ProfitLoss();
-            bal.LedgerName = "Surplus/Deficit";
-            bal.Amt =  Math.Abs(TotInAmt- TotExAmt);
-            lstProfitLoss.Add(bal);
+            tb = new BLL.ProfitLoss();
+            tb.Ledger = new BLL.Ledger();
+            tb.Ledger.LedgerName = "   Total Expenses";
+            tb.Amt = TotEx;
+           
+            lstProfitLoss.Add(tb);
 
             #endregion
+
+
+            tb = new BLL.ProfitLoss();
+            tb.Ledger = new BLL.Ledger();
+            tb.Ledger.LedgerName = "Surplus/Deficit";
+           if(TotIn>TotEx)
+            {
+                tb.Amt = TotIn - TotEx;
+            }
+           else
+
+            {
+                tb.Amt =  TotEx-TotIn;
+            }
+
+            lstProfitLoss.Add(tb);
+
+
 
             return lstProfitLoss;
         }

@@ -18,6 +18,7 @@ namespace AccountBuddy.BLL
         private decimal _CrAmtOP;
         private decimal _DrAmtOP;
 
+        private string _AccountName;
         #endregion
 
         #region Property
@@ -97,6 +98,23 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public string AccountName
+        {
+            get
+            {
+                return _AccountName;
+            }
+            set
+            {
+                if (_AccountName != value)
+                {
+                    _AccountName = value;
+                    NotifyPropertyChanged(nameof(AccountName));
+                }
+            }
+        }
+
 
         #endregion        
 

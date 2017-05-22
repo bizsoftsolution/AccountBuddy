@@ -26,11 +26,18 @@ namespace AccountBuddy.PL.frm.Report
             InitializeComponent();
             rptProfitLoss.SetDisplayMode(DisplayMode.PrintLayout);
 
+            int yy = BLL.UserAccount.Company.LoginAccYear;
+
+            DateTime? dtFrom = new DateTime(yy, 4, 1);
+            DateTime? dtTo = new DateTime(yy + 1, 3, 31);
+
+            dtpDateFrom.SelectedDate = dtFrom;
+            dtpDateTo.SelectedDate = dtTo;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvProfitLoss.ItemsSource = BLL.ProfitLoss.toList;
+            dgvProfitLoss.ItemsSource = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
         }
 
 
@@ -75,21 +82,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-
-            //if (dtpDateFrom.SelectedDate != null && dtpDateTo.SelectedDate != null)
-            //{
-            //    DateTime dtFrom = dtpDateFrom.SelectedDate.Value;
-            //    DateTime dtTo = dtpDateTo.SelectedDate.Value;
-
-            //    var list1 = BLL.ProfitLoss.toList.Where(x => x.VoucherPayDate >= dtFrom || x.VoucherRecDate >= dtFrom).ToList();
-            //    var list2 = list1.Where(x => x.VoucherPayDate <= dtTo || x.VoucherRecDate <= dtTo).ToList();
-            //    dgvProfitLoss.ItemsSource = list2;
-            //}
-            //else
-            //{
-            //    dgvProfitLoss.ItemsSource = BLL.ProfitLoss.toList;
-            //}
-
+            dgvProfitLoss.ItemsSource = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
         }
 
     }
