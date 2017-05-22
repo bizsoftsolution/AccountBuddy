@@ -41,7 +41,37 @@ namespace AccountBuddy.SL.Hubs
         public List<string> CompanyDetail_AcYearList()
         {
             List<string> AcYearList = new List<string>();
-            AcYearList.Add("2017 - 2018");
+
+            DateTime d =  DateTime.Now;
+            int YearFrom = d.Month < 4 ? d.Year - 1 : d.Year;
+            int YearTo = d.Month < 4 ? d.Year : d.Year + 1;
+
+            if (DB.Payments.Count() > 0)
+            {
+                d = DB.Payments.Min(x => x.PaymentDate);
+                int yy = YearFrom = d.Month < 4 ? d.Year - 1 : d.Year;
+                YearFrom = yy < YearFrom ? yy : YearFrom;
+            }
+
+            if (DB.Receipts.Count() > 0)
+            {
+                d = DB.Receipts.Min(x => x.ReceiptDate);
+                int yy = YearFrom = d.Month < 4 ? d.Year - 1 : d.Year;
+                YearFrom = yy < YearFrom ? yy : YearFrom;
+            }
+
+            if (DB.Journals.Count() > 0)
+            {
+                d = DB.Journals.Min(x => x.JournalDate);
+                int yy = YearFrom = d.Month < 4 ? d.Year - 1 : d.Year;
+                YearFrom = yy < YearFrom ? yy : YearFrom;
+            }
+
+            for(int n = YearFrom; n < YearTo; n++)
+            {
+                AcYearList.Add(string.Format("{0} - {1}",n,n+1));
+            }
+            
             return AcYearList;
         }
 
