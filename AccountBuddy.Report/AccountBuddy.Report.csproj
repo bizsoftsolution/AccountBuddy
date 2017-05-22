@@ -52,6 +52,9 @@
     <EmbeddedResource Include="rpt\Report\rptBalanceSheet.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptIncomeAndExpenditure.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Report\rptTrialBalance.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -82,6 +85,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.Ledger.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Payment.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.PaymentDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.ProfitLoss.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Receipt.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.TrialBalance.datasource" />

@@ -54,7 +54,7 @@
 
                     </Grid>
                     <Grid Grid.Row="1" Margin="0,0,70,0">
-                        <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="352" Margin="305,10,165,0">
+                        <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="352" Margin="305,10,165,0" BorderThickness="1" BorderBrush="Black">
                             <TabControl.Resources>
                                 <Style TargetType="TabItem">
                                     <Setter Property="Template">
@@ -108,7 +108,7 @@
                                         </DataGrid.ColumnHeaderStyle>
 
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Ledger Name" FontWeight="Bold" Width="350" Binding="{Binding LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding Ledger.AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                             <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
@@ -118,7 +118,7 @@
                             <TabItem Header="Report" FontSize="16">
                                 <Grid Grid.Row="0" >
 
-                                    <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="263" Margin="37,14,42,0">
+                                    <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="310" >
                                         <rv:ReportViewer x:Name="rptProfitLoss"/>
                                     </WindowsFormsHost>
 

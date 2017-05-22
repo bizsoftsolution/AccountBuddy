@@ -43,10 +43,14 @@ namespace AccountBuddy.PL.frm.Report
 
         private void LoadReport()
         {
+            List<BLL.TrialBalance> list = BLL.TrialBalance.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            list = list.Select(x => new BLL.TrialBalance()
+            { AccountName = x.Ledger.AccountName, CrAmt = x.CrAmt, DrAmt = x.DrAmt, CrAmtOP = x.CrAmtOP, DrAmtOP = x.DrAmtOP }).ToList();
+
             try
             {
                 rptTrialBalance.Reset();
-                ReportDataSource data = new ReportDataSource("TrialBalance", dgvTrialBalance.ItemsSource);
+                ReportDataSource data = new ReportDataSource("TrialBalance", list);
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
                 rptTrialBalance.LocalReport.DataSources.Add(data);
                 rptTrialBalance.LocalReport.DataSources.Add(data1);

@@ -9,61 +9,30 @@ namespace AccountBuddy.BLL
 {
     public class BalanceSheet : INotifyPropertyChanged
     {
-        private static List<BalanceSheet> _toList;
-
-        public static List<BalanceSheet> toList
-        {
-            get
-            {
-                if (_toList == null)
-                {
-                    _toList = ABClientHub.FMCGHub.Invoke<List<BalanceSheet>>("Balance_List").Result;
-                }
-
-                return _toList;
-            }
-        }
-
         #region Fields
 
-        private string _LedgerName;
-        private string _GroupName;
+        private Ledger _LedgerList;
         private decimal? _CrAmt;
         private decimal? _DrAmt;
-        private DateTime _VoucherPayDate;
-        private DateTime _VoucherRecDate;
-
-
+        private decimal? _CrAmtOP;
+        private decimal? _DrAmtOP;
+        private string _Ledger;
 
         #endregion
 
-        public string LedgerName
+        #region Property
+        public Ledger LedgerList
         {
             get
             {
-                return _LedgerName;
+                return _LedgerList;
             }
             set
             {
-                if (_LedgerName != value)
+                if (_LedgerList != value)
                 {
-                    _LedgerName = value;
-                    NotifyPropertyChanged(nameof(LedgerName));
-                }
-            }
-        }
-        public string GroupName
-        {
-            get
-            {
-                return _GroupName;
-            }
-            set
-            {
-                if (_GroupName != value)
-                {
-                    _GroupName = value;
-                    NotifyPropertyChanged(nameof(GroupName));
+                    _LedgerList = value;
+                    NotifyPropertyChanged(nameof(LedgerList));
                 }
             }
         }
@@ -98,37 +67,53 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public DateTime VoucherPayDate
+        public decimal? CrAmtOP
         {
             get
             {
-                return _VoucherPayDate;
+                return _CrAmtOP;
             }
             set
             {
-                if (_VoucherPayDate != value)
+                if (_CrAmtOP != value)
                 {
-                    _VoucherPayDate = value;
-                    NotifyPropertyChanged(nameof(VoucherPayDate));
+                    _CrAmtOP = value;
+                    NotifyPropertyChanged(nameof(CrAmtOP));
                 }
             }
         }
-        public DateTime VoucherRecDate
+        public decimal? DrAmtOP
         {
             get
             {
-                return _VoucherRecDate;
+                return _DrAmtOP;
             }
             set
             {
-                if (_VoucherRecDate != value)
+                if (_DrAmtOP != value)
                 {
-                    _VoucherRecDate = value;
-                    NotifyPropertyChanged(nameof(VoucherRecDate));
+                    _DrAmtOP = value;
+                    NotifyPropertyChanged(nameof(DrAmtOP));
+                }
+            }
+        }
+        public string  Ledger
+        {
+            get
+            {
+                return _Ledger;
+            }
+            set
+            {
+                if (_Ledger != value)
+                {
+                    _Ledger = value;
+                    NotifyPropertyChanged(nameof(_Ledger));
                 }
             }
         }
 
+        #endregion        
 
         #region Property  Changed Event
 
@@ -142,6 +127,15 @@ namespace AccountBuddy.BLL
         private void NotifyAllPropertyChanged()
         {
             foreach (var p in this.GetType().GetProperties()) NotifyPropertyChanged(p.Name);
+        }
+
+        #endregion
+
+        #region Methods
+
+        public static List<BalanceSheet> ToList(DateTime dtFrom, DateTime dtTo)
+        {
+            return ABClientHub.FMCGHub.Invoke<List<BalanceSheet>>("Balancesheet_List", dtFrom, dtTo).Result;
         }
 
         #endregion
