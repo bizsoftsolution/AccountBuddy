@@ -29,8 +29,9 @@ namespace AccountBuddy.SL.Hubs
             foreach (var l in lstLedger)
             {
                 tb = new BLL.TrialBalance();
+                tb.Ledger = new BLL.Ledger();
 
-                l.toCopy<BLL.Ledger>(tb.Ledger);
+                l.toCopy<BLL.Ledger>(tb.Ledger);                
                 tb.Ledger.GroupCode = l.AccountGroup.GroupCode;
                 tb.Ledger.GroupName = l.AccountGroup.GroupName;
 

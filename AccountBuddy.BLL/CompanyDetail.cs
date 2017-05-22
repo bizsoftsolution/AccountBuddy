@@ -14,6 +14,7 @@ namespace AccountBuddy.BLL
         #region Field
 
         private static ObservableCollection<CompanyDetail> _toList;
+        private int _LoginAccYear;
         private static ObservableCollection<string> _AcYearList;
         public List<BLL.Validation> lstValidation = new List<BLL.Validation>();
         private int _id;
@@ -78,6 +79,23 @@ namespace AccountBuddy.BLL
                 {
                     _id = value;
                     NotifyPropertyChanged(nameof(Id));
+                }
+            }
+        }
+
+        public int LoginAccYear
+        {
+            get
+            {
+                return _LoginAccYear;
+            }
+
+            set
+            {
+                if (_LoginAccYear != value)
+                {
+                    _LoginAccYear = value;
+                    NotifyPropertyChanged(nameof(LoginAccYear));
                 }
             }
         }

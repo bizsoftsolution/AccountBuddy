@@ -180,9 +180,14 @@ namespace AccountBuddy.BLL
             var ua = ABClientHub.FMCGHub.Invoke<UserAccount>("UserAccount_Login", AccYear, CompanyName, LId, Pwd).Result;
             
             if ( isValidLogin(ua,AccYear,CompanyName, LId,Pwd))
-            {                
+            {
+                DateTime d = DateTime.Now;
+                int yy = d.Month < 4 ? d.Year - 1 : d.Year;
+                int.TryParse(AccYear.Substring(0, 4),out yy);
+
                 User = ua;
                 Company = CompanyDetail.toList.Where(x => x.Id == ua.CompanyId).FirstOrDefault();
+                Company.LoginAccYear = yy;
                 Type = UserType.toList.Where(x => x.Id == ua.UserTypeId).FirstOrDefault();
                 TypeDetails =new ObservableCollection<UserTypeDetail>( UserTypeDetail.ToList.Where(x => x.UserTypeId == ua.UserTypeId).ToList());
                 Data_Init();

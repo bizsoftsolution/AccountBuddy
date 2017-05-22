@@ -124,7 +124,7 @@ namespace AccountBuddy.BLL
                 {
                     _LedgerName = value;
                     NotifyPropertyChanged(nameof(LedgerName));
-                    AccountName = string.Format("{0}-{1}", AccountCode, LedgerName);
+                    AccountName = string.Format("{0}{1}{2}", AccountCode, string.IsNullOrWhiteSpace(AccountCode)?"":"-", LedgerName);
                 }
             }
         }
@@ -447,7 +447,7 @@ namespace AccountBuddy.BLL
                 {
                     _AccountCode = value;
                     NotifyPropertyChanged(nameof(AccountCode));
-                    AccountName = string.Format("{0}-{1}", AccountCode, LedgerName);
+                    AccountName = string.Format("{0}{1}{2}", AccountCode, string.IsNullOrWhiteSpace(AccountCode) ? "" : "-", LedgerName);
                 }
             }
         }
