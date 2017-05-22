@@ -85,6 +85,7 @@ namespace AccountBuddy.PL.frm.Master
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
                     data.Clear();
+                    Grid_Refresh();
                 }
 
                 else
@@ -104,7 +105,7 @@ namespace AccountBuddy.PL.frm.Master
                 }
                 else
                 {
-                    if (MessageBox.Show(Message.PL.Delete_confirmation, "DELETE", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
                     {
                         if (data.Delete() == true)
                         {
@@ -243,7 +244,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 RptLedger.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).ToList());
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).OrderBy(x=>x.AccountName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);
@@ -325,6 +326,41 @@ namespace AccountBuddy.PL.frm.Master
             Int32 selectionLength = textBox.SelectionLength;
             textBox.Text = AppLib.NumericOnly(txtLedgerOP.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void dgvLedger_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var d = dgvLedger.SelectedItem as BLL.Ledger;
+            if (d != null)
+            {
+                data.Find(d.Id);
+            }
+        }
+
+        private void txtMail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            String newText = String.Empty;
+
+            int AtCount = 0;
+            foreach (Char c in textBox.Text.ToCharArray())
+            {
+                if (Char.IsLetterOrDigit(c) || Char.IsControl(c) || (c == '.' || c == '_') || (c == '@' && AtCount == 0))
+                {
+                    newText += c;
+                    if (c == '@') AtCount += 1;
+                }
+            }
+            textBox.Text = newText;
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+        }
+
+        private void txtMail_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
 
         }
     }

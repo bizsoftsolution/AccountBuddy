@@ -77,6 +77,7 @@ namespace AccountBuddy.PL.frm.Master
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
                     data.Clear();
+                    Grid_Refresh();
                 }
                 else
                 {
@@ -96,12 +97,13 @@ namespace AccountBuddy.PL.frm.Master
                 }
                 else
                 {
-                    if (MessageBox.Show(Message.PL.Delete_confirmation, "DELETE", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    if (MessageBox.Show(Message.PL.Delete_confirmation, "",MessageBoxButton.YesNo) != MessageBoxResult.No)
                     {
                         if (data.Delete() == true)
                         {
                             MessageBox.Show(Message.PL.Delete_Alert);
                             data.Clear();
+                            Grid_Refresh();
                         };
                     }
                 }
@@ -230,7 +232,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 RptAccount.Reset();
-                ReportDataSource data = new ReportDataSource("AccountGroup", BLL.AccountGroup.toList.Where(x => AccountGroup_Filter(x)).ToList());
+                ReportDataSource data = new ReportDataSource("AccountGroup", BLL.AccountGroup.toList.Where(x => AccountGroup_Filter(x)).OrderBy(x => x.GroupCode).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
                 RptAccount.LocalReport.DataSources.Add(data);
                 RptAccount.LocalReport.DataSources.Add(data1);
@@ -249,7 +251,8 @@ namespace AccountBuddy.PL.frm.Master
 
         private void onClientEvents()
         {
-            BLL.ABClientHub.FMCGHub.On<BLL.AccountGroup>("AccountGroup_Save", (Account) => {
+            BLL.ABClientHub.FMCGHub.On<BLL.AccountGroup>("AccountGroup_Save", (Account) =>
+            {
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -258,8 +261,10 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.ABClientHub.FMCGHub.On("AccountGroup_Delete", (Action<int>)((pk) => {
-                this.Dispatcher.Invoke((Action)(() => {
+            BLL.ABClientHub.FMCGHub.On("AccountGroup_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
                     BLL.AccountGroup agp = new BLL.AccountGroup();
                     agp.Find((int)pk);
                     agp.Delete((bool)true);
@@ -270,5 +275,13 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
+        private void dgvAccount_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var d = dgvAccount.SelectedItem as BLL.AccountGroup;
+            if (d != null)
+            {
+                data.Find(d.Id);
+            }
+        }
     }
 }

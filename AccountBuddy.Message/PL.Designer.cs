@@ -61,7 +61,7 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Record Removed.
+        ///   Looks up a localized string similar to Deleted Successfully.
         /// </summary>
         public static string Delete_Alert {
             get {

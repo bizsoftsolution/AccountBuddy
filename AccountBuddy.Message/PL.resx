@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Delete_Alert" xml:space="preserve">
-    <value>Record Removed</value>
+    <value>Deleted Successfully</value>
   </data>
   <data name="Delete_confirmation" xml:space="preserve">
     <value>Do you want to Delete this record?</value>

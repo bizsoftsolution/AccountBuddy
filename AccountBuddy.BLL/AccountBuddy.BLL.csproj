@@ -53,11 +53,13 @@
     <Compile Include="BalanceSheet.cs" />
     <Compile Include="CompanyDetail.cs" />
     <Compile Include="CreditLimitType.cs" />
+    <Compile Include="GeneralLedger.cs" />
     <Compile Include="Journal.cs" />
     <Compile Include="JournalDetail.cs" />
     <Compile Include="Ledger.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="PaymentDetail.cs" />
+    <Compile Include="PaymentReceipt.cs" />
     <Compile Include="ProfitLoss.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receipt.cs" />
