@@ -89,7 +89,7 @@
                             </materialDesign:HintAssist.Hint>
                           
                         </ComboBox>
-                        <ComboBox x:Name="cmbCreditAC" ItemsSource="{Binding LedgerList}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="LedgerName" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0">
+                        <ComboBox x:Name="cmbCreditAC" ItemsSource="{Binding LedgerList}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="AccountName" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Credit A/C"/>
@@ -163,7 +163,7 @@
             <Grid Grid.Column="1">
                 <StackPanel Orientation="Vertical" Margin="0,25,0,0">
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox x:Name="cmbDebitAC" ItemsSource="{Binding LedgerList}" SelectedValuePath="Id" DisplayMemberPath="LedgerName" Text="{Binding PDetail.LedgerName}" SelectedValue="{Binding PDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" >
+                        <ComboBox x:Name="cmbDebitAC" ItemsSource="{Binding LedgerList}" SelectedValuePath="Id" DisplayMemberPath="AccountName" Text="{Binding PDetail.LedgerName}" SelectedValue="{Binding PDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Debit A/C"/>

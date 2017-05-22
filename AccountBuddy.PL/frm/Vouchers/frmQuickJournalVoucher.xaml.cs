@@ -48,7 +48,7 @@ namespace AccountBuddy.PL.frm.Vouchers
                 rptQuickJournal.LocalReport.DataSources.Add(data1);
                 rptQuickJournal.LocalReport.DataSources.Add(data2);
                 rptQuickJournal.LocalReport.DataSources.Add(data3);
-                rptQuickJournal.LocalReport.ReportPath = @"rpt\Transaction\rptJournalVoucher.rdlc";
+                rptQuickJournal.LocalReport.ReportPath = @"rpt\Transaction\rptJournalReceipt.rdlc";
 
                 rptQuickJournal.RefreshReport();
 

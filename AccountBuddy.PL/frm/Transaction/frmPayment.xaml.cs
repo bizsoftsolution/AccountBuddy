@@ -64,7 +64,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("Enter Payment");
             }
-            else if (data.FindRefNo() == false)
+            else
             {
                 var rv = data.Save();
                 if (rv == true)
@@ -72,11 +72,6 @@ namespace AccountBuddy.PL.frm.Transaction
                     MessageBox.Show("Saved");
                     data.Clear();
                 }
-            }
-            else
-            {
-                MessageBox.Show("Entry Already Exist");
-
             }
         }
 

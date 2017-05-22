@@ -268,9 +268,7 @@
                                     <DropShadowEffect/>
                                 </DataGrid.Effect>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="AC Code" FontWeight="Bold" Width="100" Binding="{Binding AccountCode}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Group Name" FontWeight="Bold" Width="200" Binding="{Binding GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Ledger Name" FontWeight="Bold" Width="200" Binding="{Binding LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="100" Binding="{Binding AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header="Person Incharge" FontWeight="Bold" Width="200" Binding="{Binding PersonIncharge}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="Address Line 1" FontWeight="Bold" Width="200" Binding="{Binding AddressLine1}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="Address Line 2" FontWeight="Bold" Width="200" Binding="{Binding AddressLine2}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />

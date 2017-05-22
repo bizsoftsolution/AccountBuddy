@@ -40,6 +40,8 @@ namespace AccountBuddy.BLL
         private string _cityName;
         private string _creditLimitType;
         private AccountGroup _AccountGroup;
+        private string _AccountName;
+
         #endregion
 
         #region Property
@@ -61,7 +63,7 @@ namespace AccountBuddy.BLL
 
                 }
 
-                return _toList;
+                return new ObservableCollection<Ledger>(_toList.OrderBy(x=> x.AccountName));
             }
             set
             {
@@ -145,6 +147,24 @@ namespace AccountBuddy.BLL
                 {
                     _LedgerName = value;
                     NotifyPropertyChanged(nameof(LedgerName));
+                    AccountName = string.Format("{0}-{1}", AccountCode, LedgerName);
+                }
+            }
+        }
+
+        public string AccountName
+        {
+            get
+            {
+                return _AccountName;
+            }
+
+            set
+            {
+                if (_AccountName != value)
+                {
+                    _AccountName = value;
+                    NotifyPropertyChanged(nameof(AccountName));
                 }
             }
         }
@@ -450,6 +470,7 @@ namespace AccountBuddy.BLL
                 {
                     _AccountCode = value;
                     NotifyPropertyChanged(nameof(AccountCode));
+                    AccountName = string.Format("{0}-{1}", AccountCode, LedgerName);
                 }
             }
         }
