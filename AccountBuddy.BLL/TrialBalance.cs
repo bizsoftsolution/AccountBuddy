@@ -9,49 +9,34 @@ namespace AccountBuddy.BLL
 {
     public class TrialBalance:INotifyPropertyChanged
     {
+        
         #region Fields
 
-        private string _LedgerName;
-        private string _GroupName;
-        private decimal? _CrAmt;
-        private decimal? _DrAmt;
+        private Ledger _Ledger;
+        private decimal _CrAmt;
+        private decimal _DrAmt;
+        private decimal _CrAmtOP;
+        private decimal _DrAmtOP;
 
-        private DateTime _VoucherPayDate;
-        private DateTime _VoucherRecDate;
         #endregion
 
         #region Property
-        public string LedgerName
+        public Ledger Ledger
         {
             get
             {
-                return _LedgerName;
+                return _Ledger;
             }
             set
             {
-                if (_LedgerName != value)
+                if (_Ledger != value)
                 {
-                    _LedgerName = value;
-                    NotifyPropertyChanged(nameof(LedgerName));
+                    _Ledger = value;
+                    NotifyPropertyChanged(nameof(Ledger));
                 }
             }
         }
-        public string GroupName
-        {
-            get
-            {
-                return _GroupName;
-            }
-            set
-            {
-                if (_GroupName != value)
-                {
-                    _GroupName = value;
-                    NotifyPropertyChanged(nameof(GroupName));
-                }
-            }
-        }
-        public decimal? CrAmt
+        public decimal CrAmt
         {
             get
             {
@@ -66,7 +51,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? DrAmt
+        public decimal DrAmt
         {
             get
             {
@@ -81,53 +66,39 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public DateTime VoucherPayDate
-        {
-           get
-            {
-                return _VoucherPayDate;
-            }
-            set
-            {
-                if(_VoucherPayDate != value)
-                {
-                    _VoucherPayDate = value;
-                    NotifyPropertyChanged(nameof(VoucherPayDate));
-                }
-            }
-        }
-        public DateTime VoucherRecDate
+
+        public decimal CrAmtOP
         {
             get
             {
-                return _VoucherRecDate;
+                return _CrAmtOP;
             }
             set
             {
-                if (_VoucherRecDate != value)
+                if (_CrAmtOP != value)
                 {
-                    _VoucherRecDate = value;
-                    NotifyPropertyChanged(nameof(VoucherRecDate));
+                    _CrAmtOP = value;
+                    NotifyPropertyChanged(nameof(CrAmtOP));
                 }
             }
         }
-        private static List<TrialBalance> _toList;
-
-        #endregion
-
-        public static List<TrialBalance> toList
+        public decimal DrAmtOP
         {
             get
             {
-                if (_toList == null)
+                return _DrAmtOP;
+            }
+            set
+            {
+                if (_DrAmtOP != value)
                 {
-                    _toList = ABClientHub.FMCGHub.Invoke<List<TrialBalance>>("TrialBalance_List").Result;
+                    _DrAmtOP = value;
+                    NotifyPropertyChanged(nameof(DrAmtOP));
                 }
-
-                return _toList;
             }
         }
 
+        #endregion        
 
         #region Property  Changed Event
 
@@ -141,6 +112,15 @@ namespace AccountBuddy.BLL
         private void NotifyAllPropertyChanged()
         {
             foreach (var p in this.GetType().GetProperties()) NotifyPropertyChanged(p.Name);
+        }
+
+        #endregion
+
+        #region Methods
+
+        public static List<TrialBalance> ToList(DateTime dtFrom, DateTime dtTo)
+        {
+            return ABClientHub.FMCGHub.Invoke<List<TrialBalance>>("TrialBalance_List",dtFrom,dtTo).Result;        
         }
 
         #endregion

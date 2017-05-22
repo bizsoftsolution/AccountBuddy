@@ -25,12 +25,11 @@ namespace AccountBuddy.PL.frm.Report
         {
             InitializeComponent();
             rptTrialBalance.SetDisplayMode(DisplayMode.PrintLayout);
-
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvTrialBalance.ItemsSource = BLL.TrialBalance.toList;
+            
         }
 
 
@@ -76,19 +75,19 @@ namespace AccountBuddy.PL.frm.Report
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
 
-            if (dtpDateFrom.SelectedDate != null && dtpDateTo.SelectedDate != null)
-            {
-                DateTime dtFrom = dtpDateFrom.SelectedDate.Value;
-                DateTime dtTo = dtpDateTo.SelectedDate.Value;
+            //if (dtpDateFrom.SelectedDate != null && dtpDateTo.SelectedDate != null)
+            //{
+            //    DateTime dtFrom = dtpDateFrom.SelectedDate.Value;
+            //    DateTime dtTo = dtpDateTo.SelectedDate.Value;
 
-                var list1 = BLL.TrialBalance.toList.Where(x => x.VoucherPayDate >= dtFrom || x.VoucherRecDate >= dtFrom).ToList();
-                var list2 = list1.Where(x => x.VoucherPayDate <= dtTo || x.VoucherRecDate <= dtTo).ToList();
-                dgvTrialBalance.ItemsSource = list2;
-            }
-            else
-            {
-                dgvTrialBalance.ItemsSource = BLL.TrialBalance.toList;
-            }
+            //    var list1 = BLL.TrialBalance.toList.Where(x => x.VoucherPayDate >= dtFrom || x.VoucherRecDate >= dtFrom).ToList();
+            //    var list2 = list1.Where(x => x.VoucherPayDate <= dtTo || x.VoucherRecDate <= dtTo).ToList();
+            //    dgvTrialBalance.ItemsSource = list2;
+            //}
+            //else
+            //{
+            //    dgvTrialBalance.ItemsSource = BLL.TrialBalance.toList;
+            //}
 
         }
     }
