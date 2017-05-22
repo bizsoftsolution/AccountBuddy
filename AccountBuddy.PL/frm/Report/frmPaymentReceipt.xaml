@@ -17,16 +17,14 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid Margin="0,0,10,10">
+        <Grid Margin="0,0,0,10">
 
-            <Grid.ColumnDefinitions >
-                <ColumnDefinition Width ="1150" />
-            </Grid.ColumnDefinitions>
+         
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}" Margin="0,0,60,0" >
+            <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
                 <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Payment and Receipt"/></TextBlock>
             </Grid>
             <Grid Grid.Row="1" >
@@ -60,7 +58,7 @@
 
                     </Grid>
                     <Grid Grid.Row="1">
-                        <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="372" Margin="70,0,140,0">
+                        <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="352" Margin="310,0,205,0">
                             <TabControl.Resources>
                                 <Style TargetType="TabItem">
                                     <Setter Property="Template">
@@ -117,7 +115,7 @@
                                         </DataGrid.ColumnHeaderStyle>
 
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Ledger Name" FontWeight="Bold" Width="350" Binding="{Binding LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="250" Binding="{Binding LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                             <DataGridTextColumn Header="Credit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                             <DataGridTextColumn Header="Debit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         </DataGrid.Columns>

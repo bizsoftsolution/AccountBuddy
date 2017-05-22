@@ -151,6 +151,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmIncomeAndExpenditure.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmPaymentReceipt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -168,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Transaction\frmJournal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmLedgerOpening.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -233,6 +241,9 @@
     <Compile Include="frm\Report\frmGeneralLedger.xaml.cs">
       <DependentUpon>frmGeneralLedger.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Report\frmIncomeAndExpenditure.xaml.cs">
+      <DependentUpon>frmIncomeAndExpenditure.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Report\frmPaymentReceipt.xaml.cs">
       <DependentUpon>frmPaymentReceipt.xaml</DependentUpon>
     </Compile>
@@ -247,6 +258,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmJournal.xaml.cs">
       <DependentUpon>frmJournal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmLedgerOpening.xaml.cs">
+      <DependentUpon>frmLedgerOpening.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmPayment.xaml.cs">
       <DependentUpon>frmPayment.xaml</DependentUpon>

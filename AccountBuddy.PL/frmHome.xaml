@@ -93,7 +93,7 @@
                                         <Master:frmLedger/>
                                     </Menu:NavMenuItem.Content>
                                 </Menu:NavMenuItem>
-
+                                
                             </ListBox>
                         </Expander>
 
@@ -127,6 +127,12 @@
                                         <Transaction:frmBankReconcilation/>
                                     </Menu:NavMenuItem.Content>
                                 </Menu:NavMenuItem>
+                                <Menu:NavMenuItem MenuName="LedgerOpening" FormName="Ledger Opening">
+                                    <Menu:NavMenuItem.Content>
+                                        <Transaction:frmLedgerOpening/>
+                                    </Menu:NavMenuItem.Content>
+                                </Menu:NavMenuItem>
+
                             </ListBox>
 
                         </Expander>
@@ -158,7 +164,7 @@
                                 </Menu:NavMenuItem>
                                 <Menu:NavMenuItem MenuName="Income and Expenditure Account" FormName="Income and Expenditure Account">
                                     <Menu:NavMenuItem.Content>
-                                        <Report:frmProfitLoss/>
+                                        <Report:frmIncomeAndExpenditure/>
                                     </Menu:NavMenuItem.Content>
                                 </Menu:NavMenuItem>
                                 <Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
