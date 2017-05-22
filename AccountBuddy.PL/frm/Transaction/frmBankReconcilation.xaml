@@ -5,8 +5,142 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Transaction"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+               xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
+              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="600" d:DesignWidth="1100" Background="White" >
+
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- note you only need bring in these extra resource dictionaries when using non-default styles, so only bring them into your controls where the default style is not what you want -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Slider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+                <Setter Property="Margin" Value="0 8 0 8" />
+            </Style>
+
+            <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource MaterialDesignPasswordBox}">
+                <Setter Property="Margin" Value="0 8 0 8" />
+            </Style>
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignComboBox}">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="0 8 0 8" />
+            </Style>
+            <Style TargetType="{x:Type Viewbox}">
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Height" Value="18" />
+                <Setter Property="Margin" Value="0 0 8 0" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="{x:Type Slider}" BasedOn="{StaticResource MaterialDesignSlider}">
+                <Setter Property="Margin" Value="0 8 0 8" />
+            </Style>
+            <Style TargetType="{x:Type materialDesign:PackIcon}" BasedOn="{StaticResource {x:Type materialDesign:PackIcon}}">
+
+            </Style>
+            <Conversion:VisibilityConverter x:Key="VisibilityConverter"/>
+            <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="TextAlignment" Value="Right"/>
+            </Style>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <Grid Margin="0,0,10,10">
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="5" Margin="0,0,0,-15" />
+
+        <!--#region Heading-->
+        <Grid Grid.Row="0">
+            <StackPanel  Background="Black" Margin="0,0,-10,0">
+                <Grid Grid.Row="0" Height="25" Margin="0,0,10,0" >
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  TextAlignment="Center" FontSize="18" Width="512" Height="30" Margin="238,1,330,-1" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5" Text="Bank Reconcilation "/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <!--#endregion-->
+
+        <!--#region FormDesign-->
+        <Grid Grid.Row="1">
+
+            <Grid Grid.Column="0" >
+                <StackPanel Orientation="Vertical" >
+
+                    <StackPanel Orientation="Horizontal" >
+                        <DatePicker x:Name="dtpDateFrom" materialDesign:HintAssist.Hint="Date From"  SelectedDate="{Binding DateFrom}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,25,24" Width="150" FontWeight="Bold"  />
+                        <DatePicker x:Name="dtpDateTo" materialDesign:HintAssist.Hint="Date To"  SelectedDate="{Binding DateFrom}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,25,24" Width="150" FontWeight="Bold"  />
+                        <ComboBox x:Name="cmbAccountName"  ItemsSource="{Binding LedgerList}"  SelectedValue="{Binding LedgerName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="10,10,20,10">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Account Name"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </ComboBox>
+                        <ComboBox x:Name="cmbStatus"  ItemsSource="{Binding LedgerN}"  SelectedValue="{Binding LedgerName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="10,10,20,10">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Status"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </ComboBox>
+                        <StackPanel Orientation="Horizontal" Height="75" Width="135">
+                            <Button x:Name="btnSearch" Content="Search" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="90" Height="35"></Button>
+                        </StackPanel>
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+        <Grid Grid.Row="2">
+            <GroupBox  Visibility="{Binding IsShowCustomerDetail,Converter={StaticResource VisibilityConverter}}" Margin="10,0,10,115">
+                <DataGrid  ItemsSource="{Binding SRPendingList}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10" >
+                    <DataGrid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.283"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="0.745"/>
+                        </TransformGroup>
+                    </DataGrid.RenderTransform>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        </Style>
+
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ref. Code" FontWeight="Bold" Width="70" Binding="{Binding RefNo, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                        <DataGridTextColumn Header="Date" FontWeight="Bold" Width="120" Binding="{Binding SRDate, Mode=TwoWay,StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                        <DataGridTextColumn Header="Cheque No" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="80" Binding="{Binding TotalAmount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                        <DataGridTextColumn Header="Name" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="300" Binding="{Binding PaidAmount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                        <DataGridTextColumn Header="Particulars" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="100" Binding="{Binding BalanceAmount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                        <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="100" Binding="{Binding PayAmount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="False"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+            <StackPanel Margin="10,300,0,0" Orientation="Horizontal">
+                <TextBox Text="{Binding OPBalance, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Opening Balance" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
+                <TextBox Text="{Binding CLBalance, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Closing Balance" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
+                <TextBox Text="{Binding CLRBalance, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Cleared Balance" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
+                <TextBox Text="{Binding Difference, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Difference" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
+
+            </StackPanel>
+        </Grid>
+        <!--#endregion-->
     </Grid>
 </UserControl>
