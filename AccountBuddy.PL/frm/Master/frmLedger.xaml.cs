@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL.frm.Master
 {
@@ -50,7 +51,7 @@ namespace AccountBuddy.PL.frm.Master
             dgvLedger.ItemsSource = BLL.Ledger.toList;
 
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).Filter = Ledger_Filter;
-            CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.LedgerName), System.ComponentModel.ListSortDirection.Ascending));
+            CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.AccountName), System.ComponentModel.ListSortDirection.Ascending));
 
             cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList;
             cmbAccountGroupId.DisplayMemberPath = "GroupName";
@@ -174,6 +175,11 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
+        private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = Common.AppLib.IsTextNumeric(e.Text);
+        }
+
         #endregion
 
         #region Methods
@@ -274,5 +280,46 @@ namespace AccountBuddy.PL.frm.Master
         }
 
         #endregion
+
+        private void txtCreditAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtCreditAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+        }
+
+        private void txtLedgerOPDr_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtLedgerOPDr.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtLedgerOPCr_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtLedgerOPCr.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+
+        }
+
+        private void cmbAccountGroupId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var ag = cmbAccountGroupId.SelectedItem as AccountBuddy.BLL.AccountGroup;
+            try
+            {
+                data.GroupCode = ag.GroupCode;
+                data.LedgerCode = "";
+            }
+            catch (Exception ex) { }
+        }
     }
 }
