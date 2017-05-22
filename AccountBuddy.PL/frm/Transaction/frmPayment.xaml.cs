@@ -22,6 +22,7 @@ namespace AccountBuddy.PL.frm.Transaction
     public partial class frmPayment : UserControl
     {
         BLL.Payment data = new BLL.Payment();
+        public string FormName = "Payment";
         public frmPayment()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (data.PDetail.LedgerId == 0)                
+            if (data.PDetail.LedgerId == 0)
             {
                 MessageBox.Show("Enter LedgerName");
             }
@@ -47,7 +48,15 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.EntryNo == null)
+            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+            }
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
+            }
+            else if (data.EntryNo == null)
             {
                 MessageBox.Show("Enter Entry No");
             }
@@ -77,16 +86,23 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Do you want to delete?","DELETE", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+            if (!BLL.UserAccount.AllowDelete(FormName))
             {
-                var rv = data.Delete();
-                if (rv == true)
-                {
-                    MessageBox.Show("Deleted");
-                    data.Clear();
-                }
+                MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
             }
 
+            else
+            {
+                if (MessageBox.Show("Do you want to delete?", "DELETE", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    var rv = data.Delete();
+                    if (rv == true)
+                    {
+                        MessageBox.Show("Deleted");
+                        data.Clear();
+                    }
+                }
+            }
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -114,7 +130,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             frm.Vouchers.frmQuickPayment f = new Vouchers.frmQuickPayment();
-           
+
             f.LoadReport(data);
             f.ShowDialog();
         }
@@ -134,11 +150,11 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                if(MessageBox.Show("do you want to delete this detail?","Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("do you want to delete this detail?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     Button btn = (Button)sender;
                     data.DeleteDetail((int)btn.Tag);
-                }                
+                }
             }
             catch (Exception ex) { }
 
