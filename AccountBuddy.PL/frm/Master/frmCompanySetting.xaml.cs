@@ -57,8 +57,16 @@ namespace AccountBuddy.PL.frm.Master
 
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
-        {            
-            if (data.Save() == true) MessageBox.Show("Saved");
+        {
+            if (data.Save() == true)
+            {
+                MessageBox.Show(Message.PL.Saved_Alert);
+                App.frmHome.ShowWelcome();
+            }
+            else
+            {
+                MessageBox.Show(string.Join("\n", data.lstValidation.Select(x => x.Message).ToList()));
+            }
         }
 
         
@@ -96,7 +104,7 @@ namespace AccountBuddy.PL.frm.Master
                 {
                     MessageBox.Show(string.Format("You can not delete this user. atleast one {0} user required",u.UserTypeName));
                 }
-                else if (MessageBox.Show("Do you Delete this?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                else if (MessageBox.Show("Do you Delete this?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
 
                     if (u.Delete() == true) MessageBox.Show("Deleted");

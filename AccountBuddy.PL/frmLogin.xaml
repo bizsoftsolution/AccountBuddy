@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AccountBuddy.PL"        
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        
+        ShowMaxRestoreButton="False"
         mc:Ignorable="d"
         Title="Login" Height="700" Width="1000"
         BorderThickness="0" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen"             

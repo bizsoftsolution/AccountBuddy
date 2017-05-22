@@ -142,6 +142,6 @@
     <value>{0}, Already Exist.</value>
   </data>
   <data name="Saved_Alert" xml:space="preserve">
-    <value>Record Updated</value>
+    <value>Saved Successfully</value>
   </data>
 </root>

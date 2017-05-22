@@ -14,6 +14,7 @@ namespace AccountBuddy.BLL
         #region Fileds
         private static ObservableCollection<Ledger> _toList;
         private static List<string> _LedgerList;
+        private static List<string> _ACTypeList;
 
 
         private int _Id;
@@ -30,6 +31,7 @@ namespace AccountBuddy.BLL
         private int? _CreditLimitTypeId;
         private double _CreditAmount;
         private int? _AccountGroupId;
+        private decimal? _OPBal;
         private decimal? _OPDr;
         private decimal? _OPCr;
         private string _LedgerCode;
@@ -40,7 +42,7 @@ namespace AccountBuddy.BLL
         private string _cityName;
         private string _creditLimitType;
         private string _AccountName;
-
+        private string _ACType;
         #endregion
 
         #region Property
@@ -94,7 +96,29 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+
+        public static List<string> ACTypeList
+        {
+            get
+            {
+                if (_ACTypeList == null)
+                {
+                    _ACTypeList = new List<string>();
+                    _ACTypeList.Add("Debit");
+                    _ACTypeList.Add("Credit");                    
+                }
+                return _ACTypeList;
+            }
+            set
+            {
+                if (_ACTypeList != value)
+                {
+                    _ACTypeList = value;
+                }
+            }
+        }
+
+
         public int Id
         {
             get
@@ -145,6 +169,27 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public string ACType
+        {
+            get
+            {
+                return
+                    _ACType;
+            }
+
+            set
+            {
+                if (_ACType != value)
+                {
+                    _ACType = value;
+                    OPDr = value == "Debit" ? OPBal : 0;
+                    OPCr = value == "Credit" ? OPBal : 0;
+                    NotifyPropertyChanged(nameof(ACType));
+                }
+            }
+        }
+
 
         public string PersonIncharge
         {
@@ -350,6 +395,25 @@ namespace AccountBuddy.BLL
 
             }
         }
+
+        public decimal? OPBal
+        {
+            get
+            {
+                return _OPBal;
+            }
+            set
+            {
+                if (_OPBal != value)
+                {
+                    _OPBal = value;
+                    NotifyPropertyChanged(nameof(OPBal));
+                    OPDr = ACType == "Debit" ? OPBal : 0;
+                    OPCr = ACType == "Credit" ? OPBal : 0;
+                }
+            }
+        }
+
 
         public decimal? OPDr
         {

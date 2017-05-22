@@ -24,10 +24,13 @@ namespace AccountBuddy.PL
         public frmHome()
         {
             InitializeComponent();
-            ccContent.Content = new frmWelcome();
+            ShowWelcome();
             onClientEvents();
         }
-
+        public void ShowWelcome()
+        {
+            ccContent.Content = new frmWelcome();
+        }
         private void onClientEvents()
         {
             

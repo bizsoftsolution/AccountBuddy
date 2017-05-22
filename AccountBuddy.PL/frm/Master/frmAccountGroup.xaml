@@ -141,7 +141,7 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <DataGrid x:Name="dgvAccount" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="0,105,7,38" SelectionChanged="dgvAccount_SelectionChanged"  >
+                            <DataGrid x:Name="dgvAccount" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="0,105,7,38" SelectionChanged="dgvAccount_SelectionChanged"  >
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="FontWeight" Value="Bold" />

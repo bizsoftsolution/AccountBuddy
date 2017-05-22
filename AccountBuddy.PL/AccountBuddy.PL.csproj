@@ -208,6 +208,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Conversion\VisibilityConverter.cs" />
+    <Compile Include="CTRL\DataGridNumericColumn.cs" />
     <Compile Include="frmCompanySignup.xaml.cs">
       <DependentUpon>frmCompanySignup.xaml</DependentUpon>
     </Compile>

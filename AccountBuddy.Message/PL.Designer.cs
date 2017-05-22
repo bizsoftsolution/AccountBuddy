@@ -133,7 +133,7 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Record Updated.
+        ///   Looks up a localized string similar to Saved Successfully.
         /// </summary>
         public static string Saved_Alert {
             get {

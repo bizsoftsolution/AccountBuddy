@@ -8,7 +8,7 @@
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="1200" Background="White" Loaded="UserControl_Loaded">
-    <Grid>
+    <Grid Height="650" VerticalAlignment="Bottom">
         <Grid.RowDefinitions>
             <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
             <RowDefinition Height="{DynamicResource FormBodyHeight}"/>
@@ -128,52 +128,59 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <TextBox   x:Name="txtCreditLimits" PreviewTextInput="NumericOnly" FontWeight="Bold" FontSize="14" Text="{Binding CreditLimit, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal" Width="151">
-                                        <materialDesign:PackIcon  Kind="Calendar" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                        <TextBlock Text="Credit Limits" />
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </TextBox>
-                            <ComboBox   x:Name="cmbCreditLimitTypeId" FontWeight="Bold" FontSize="14" Text="{Binding CreditLimitTypeName, Mode=TwoWay}" SelectedValue="{Binding CreditLimitTypeId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal" Width="151">
-                                        <materialDesign:PackIcon  Kind="CashMultiple" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                        <TextBlock Text="Credit Limit Type" />
+                                                        
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox  Width="200"  x:Name="txtLedgerOP" TextAlignment="Right" TextChanged="txtLedgerOP_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding OPBal, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal" Width="151">
+                                            <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="Opening Balance" />
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                                <ComboBox Width="120" Margin="10,0,0,0" x:Name="cmbAccountType" FontWeight="Bold" FontSize="14" SelectedValue="{Binding ACType, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal" Width="150">
+                                            <materialDesign:PackIcon  Kind="ScaleBalance" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="AC Type" />
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
 
+                                </ComboBox>
+                            </StackPanel>
 
-                                    </StackPanel>
+                            <GroupBox Header="Credit" Margin="0,10,10,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Width="120"  x:Name="txtCreditAmount" TextAlignment="Right" TextChanged="txtCreditAmount_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding CreditAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Width="120">
+                                                <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                                <TextBlock Text="Amount" />
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+                                    <TextBox Width="80" Margin="10,0,0,0" TextAlignment="Right"  x:Name="txtCreditLimits" PreviewTextInput="NumericOnly" FontWeight="Bold" FontSize="14" Text="{Binding CreditLimit, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Width="80">
+                                                <materialDesign:PackIcon  Kind="Calendar" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                                <TextBlock Text="Limits" />
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+                                    <ComboBox Width="80" Margin="10,0,0,0"   x:Name="cmbCreditLimitTypeId" FontWeight="Bold" FontSize="14" Text="{Binding CreditLimitTypeName, Mode=TwoWay}" SelectedValue="{Binding CreditLimitTypeId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Width="80">
+                                                <materialDesign:PackIcon  Kind="CalendarMultiple" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                                <TextBlock Text="Type" />
+                                            </StackPanel>
 
-                                </materialDesign:HintAssist.Hint>
+                                        </materialDesign:HintAssist.Hint>
 
-                            </ComboBox>
-                            <TextBox   x:Name="txtCreditAmount" TextChanged="txtCreditAmount_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding CreditAmount, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal" Width="151">
-                                        <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                        <TextBlock Text="Credit Amount" />
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </TextBox>
+                                    </ComboBox>
+                                </StackPanel>
 
-                            <TextBox   x:Name="txtLedgerOPDr" TextChanged="txtLedgerOPDr_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding OPDr, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal" Width="151">
-                                        <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                        <TextBlock Text="Ledger OP.Dr" />
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </TextBox>
-
-                            <TextBox   x:Name="txtLedgerOPCr" TextChanged="txtLedgerOPCr_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding OPCr, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal" Width="151">
-                                        <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                        <TextBlock Text="Ledger OP.Cr" />
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </TextBox>
+                            </GroupBox>
+                            
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
@@ -251,13 +258,13 @@
                                 </TextBox>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked"  />
-                                    <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked"  />
-                                    <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" />
-                                    <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" />
+                                    <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  />
+                                    <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" />
+                                    <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" />
                                 </StackPanel>
                             </StackPanel>
 
-                            <DataGrid x:Name="dgvLedger" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="0,105,7,38" Grid.ColumnSpan="2" SelectionChanged="dgvLedger_SelectionChanged"  >
+                            <DataGrid x:Name="dgvLedger" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="0,105,7,38" Grid.ColumnSpan="2" SelectionChanged="dgvLedger_SelectionChanged"  >
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="FontWeight" Value="Bold" />

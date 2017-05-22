@@ -14,6 +14,7 @@
         Closing="MetroWindow_Closing"
         mc:Ignorable="d"
         Title="Account Buddy" Height="600" Width="1100"
+                       ShowMaxRestoreButton="False"
         BorderThickness="0" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Images/AB.ico" >
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>

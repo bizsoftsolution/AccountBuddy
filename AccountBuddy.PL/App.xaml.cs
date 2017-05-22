@@ -13,7 +13,7 @@ namespace AccountBuddy.PL
     /// </summary>
     public partial class App : Application
     {
-        public static Window frmHome;
+        public static frmHome frmHome;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
 

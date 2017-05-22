@@ -9,6 +9,8 @@
         xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"              
         mc:Ignorable="d"
                       WindowState="Maximized"
+                      ShowMaxRestoreButton="False"
+                      ShowMinButton="False"
         Title="User Type" Height="600" Width="1100" Loaded="UserControl_Loaded">
 
     <Window.Resources>

@@ -8,8 +8,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"       
 
         mc:Ignorable="d"
-                   
-                Title="User" Height="400" Width="350" WindowStartupLocation="CenterScreen" >
+                   ShowMaxRestoreButton="False"
+                   ShowMinButton="False"
+                Title="User Login" Height="400" Width="350" WindowStartupLocation="CenterScreen" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{DynamicResource FormHeadHeight}"/>

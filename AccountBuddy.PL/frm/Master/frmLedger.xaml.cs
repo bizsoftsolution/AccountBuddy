@@ -61,6 +61,8 @@ namespace AccountBuddy.PL.frm.Master
             cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
             cmbCreditLimitTypeId.SelectedValuePath = "Id";
             cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
+
+            cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -289,28 +291,7 @@ namespace AccountBuddy.PL.frm.Master
             textBox.Text = AppLib.NumericOnly(txtCreditAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
         }
-
-        private void txtLedgerOPDr_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtLedgerOPDr.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
-        }
-
-        private void txtLedgerOPCr_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtLedgerOPCr.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
-
-        }
-
+        
         private void cmbAccountGroupId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var ag = cmbAccountGroupId.SelectedItem as AccountBuddy.BLL.AccountGroup;
@@ -320,6 +301,31 @@ namespace AccountBuddy.PL.frm.Master
                 data.LedgerCode = "";
             }
             catch (Exception ex) { }
+        }
+
+        private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void rptContain_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void rptEndWith_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void txtLedgerOP_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtLedgerOP.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
         }
     }
 }
