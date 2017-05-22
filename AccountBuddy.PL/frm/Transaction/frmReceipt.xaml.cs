@@ -22,6 +22,7 @@ namespace AccountBuddy.PL.frm.Transaction
     public partial class frmReceipt : UserControl
     {
         BLL.Receipt data = new BLL.Receipt();
+        public String FormName = "Receipt";
         public frmReceipt()
         {
             InitializeComponent();
@@ -47,7 +48,15 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.EntryNo == null)
+            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+            }
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
+            }
+            else if(data.EntryNo == null)
             {
                 MessageBox.Show("Enter Entry No");
             }
@@ -82,16 +91,22 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Do you want to delete?", "DELETE", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (!BLL.UserAccount.AllowDelete(FormName))
             {
-                var rv = data.Delete();
-                if (rv == true)
+                MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+            }
+            else
+            {
+                if (MessageBox.Show("Do you want to delete?", "DELETE", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("Deleted");
-                    data.Clear();
+                    var rv = data.Delete();
+                    if (rv == true)
+                    {
+                        MessageBox.Show("Deleted");
+                        data.Clear();
+                    }
                 }
             }
-
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)

@@ -39,7 +39,6 @@ namespace AccountBuddy.BLL
         private int? _CompanyId;
         private string _cityName;
         private string _creditLimitType;
-        private AccountGroup _AccountGroup;
         private string _AccountName;
 
         #endregion
@@ -57,13 +56,14 @@ namespace AccountBuddy.BLL
                         var l1 = ABClientHub.FMCGHub.Invoke<List<Ledger>>("Ledger_List").Result;
                         _toList = new ObservableCollection<Ledger>(l1);
                     }
+                    _toList = new ObservableCollection<Ledger>(_toList.OrderBy(x => x.AccountName));
                 }
                 catch (Exception ex)
                 {
 
                 }
 
-                return new ObservableCollection<Ledger>(_toList.OrderBy(x=> x.AccountName));
+                return _toList;
             }
             set
             {
@@ -94,30 +94,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public AccountGroup AccountGroup
-        {            
-
-            set
-            {
-                if (_AccountGroup != value)
-                {
-                    _AccountGroup = value;
-                    if (value != null)
-                    {
-                        GroupCode = value.GroupCode;
-                        GroupName = value.GroupName;
-                        String str = toList.Where(x => x.AccountGroupId == value.Id).Max(x => LedgerCode);
-                        int n = 0;
-                        int.TryParse(str,out n);
-
-                        LedgerCode = string.Format("{0:00}", n + 1);
-                    }
-                    NotifyPropertyChanged(nameof(AccountGroup));
-                }
-            }
-        }
-
+        
         public int Id
         {
             get

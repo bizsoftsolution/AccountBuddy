@@ -24,7 +24,7 @@ namespace AccountBuddy.PL.frm.Master
     {
         #region Field
 
-        public static string FormName = "AccountGroup";
+        public static string FormName = "Account Group";
         BLL.AccountGroup data = new BLL.AccountGroup();
 
         #endregion
@@ -51,7 +51,7 @@ namespace AccountBuddy.PL.frm.Master
             dgvAccount.ItemsSource = BLL.AccountGroup.toList;
 
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Filter = AccountGroup_Filter;
-            CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupName), System.ComponentModel.ListSortDirection.Ascending));
+            CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
             cmbUnder.ItemsSource = BLL.AccountGroup.toList;
             cmbUnder.SelectedValuePath = "Id";
             cmbUnder.DisplayMemberPath = "GroupName";
