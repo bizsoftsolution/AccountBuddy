@@ -160,12 +160,12 @@
                 <StackPanel Orientation="Horizontal" Height="43" Margin="0,10,0,0" >
                     <materialDesign:PackIcon Kind="Calendar" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,17,0,0"   />
                     <TextBlock Text="Year" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="68"  />
-                    <ComboBox  x:Name="cmbYear" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="25,9,0,0"  />
+                    <ComboBox  x:Name="cmbYear" Style="{StaticResource ComboBoxFlatStyle}" IsEditable="True" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="25,9,0,0"  />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Height="42"  >
                     <materialDesign:PackIcon Kind="Office" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,17,0,0"  />
                     <TextBlock Text="Company" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="68"  />
-                    <ComboBox x:Name="cmbCompany" IsEditable="True"  Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="25,11,0,0" OverridesDefaultStyle="True"/>
+                    <ComboBox x:Name="cmbCompany" Style="{StaticResource ComboBoxFlatStyle}" IsEditable="True"  Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="25,11,0,0" OverridesDefaultStyle="True"/>
 
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Height="38" >
