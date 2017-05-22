@@ -75,7 +75,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             else
             {
-                MessageBox.Show("RefNo Already Exist");
+                MessageBox.Show("Entry Already Exist");
 
             }
         }
@@ -120,7 +120,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             frm.Vouchers.frmQuickPayment f = new Vouchers.frmQuickPayment();
            
-            f.LoadReport(data, txtPayTo.Text.ToString());
+            f.LoadReport(data);
             f.ShowDialog();
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AccountBuddy.Common;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -21,71 +22,15 @@ namespace AccountBuddy.BLL
         private string _Status;
 
         private string _AmountInwords;
-
-        private Ledger _JLedger;
-
         private JournalDetail _JDetail;
-
+        
         private string _SearchText;
 
-        private string _PayMode;
-
-        private bool _IsShowChequeDetail;
-        private bool _IsShowOnlineDetail;
-        private bool _IsShowTTDetail;
-
         private ObservableCollection<JournalDetail> _JDetails;
-        private static List<string> _PayModeList;
-        private static List<string> _StatusList;
-       
+
         #endregion
 
         #region Property
-
-        public static List<string> PayModeList
-        {
-            get
-            {
-                if (_PayModeList == null)
-                {
-                    _PayModeList = new List<string>();
-                    _PayModeList.Add("Cash");
-                    _PayModeList.Add("Cheque");
-                    _PayModeList.Add("Online");
-                    _PayModeList.Add("TT");
-                }
-                return _PayModeList;
-            }
-            set
-            {
-                if (_PayModeList != value)
-                {
-                    _PayModeList = value;
-                }
-            }
-        }
-        public static List<string> StatusList
-        {
-            get
-            {
-                if (_StatusList == null)
-                {
-                    _StatusList = new List<string>();
-                    _StatusList.Add("Proccess");
-                    _StatusList.Add("Completed");
-                    _StatusList.Add("Returned");
-                }
-                return _StatusList;
-            }
-            set
-            {
-                if (_StatusList != value)
-                {
-                    _StatusList = value;
-                }
-            }
-        }
-
 
         public long Id
         {
@@ -102,7 +47,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string EntryNo
         {
             get
@@ -148,7 +92,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string Particular
         {
             get
@@ -163,8 +106,7 @@ namespace AccountBuddy.BLL
                     NotifyPropertyChanged(nameof(Particular));
                 }
             }
-        }
-
+        }    
         public string HQNo
         {
             get
@@ -180,7 +122,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string VoucherNo
         {
             get
@@ -264,53 +205,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public bool IsShowChequeDetail
-        {
-            get
-            {
-                return _IsShowChequeDetail;
-            }
-            set
-            {
-                if (_IsShowChequeDetail != value)
-                {
-                    _IsShowChequeDetail = value;
-                    NotifyPropertyChanged(nameof(IsShowChequeDetail));
-                }
-            }
-        }
-        public bool IsShowOnlineDetail
-        {
-            get
-            {
-                return _IsShowOnlineDetail;
-            }
-            set
-            {
-                if (_IsShowOnlineDetail != value)
-                {
-                    _IsShowOnlineDetail = value;
-                    NotifyPropertyChanged(nameof(IsShowOnlineDetail));
-                }
-            }
-        }
-        public bool IsShowTTDetail
-        {
-            get
-            {
-                return _IsShowTTDetail;
-            }
-            set
-            {
-                if (_IsShowTTDetail != value)
-                {
-                    _IsShowTTDetail = value;
-                    NotifyPropertyChanged(nameof(IsShowTTDetail));
-                }
-            }
-        }
-
+        
         public string AmountInwords
         {
             get
@@ -328,8 +223,16 @@ namespace AccountBuddy.BLL
             }
         }
 
+        #region List
+        public static ObservableCollection<Ledger> LedgerList
+        {
+            get
+            {
+                return Ledger.toList;
+            }
+        }
         #endregion
-
+        #endregion
 
         #region Property  Changed Event
 
@@ -344,6 +247,107 @@ namespace AccountBuddy.BLL
         private void NotifyAllPropertyChanged()
         {
             foreach (var p in this.GetType().GetProperties()) NotifyPropertyChanged(p.Name);
+        }
+
+        #endregion
+
+        #region Master
+        public bool Save()
+        {
+            try
+            {
+                return ABClientHub.FMCGHub.Invoke<bool>("Journal_Save", this).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public void Clear()
+        {
+            new Journal().toCopy<Journal>(this);
+            ClearDetail();
+            _JDetails = new ObservableCollection<JournalDetail>();
+
+            JournalDate = DateTime.Now;
+
+            NotifyAllPropertyChanged();
+        }
+
+        public bool Find()
+        {
+            try
+            {
+                Journal po = ABClientHub.FMCGHub.Invoke<Journal>("Journal_Find", SearchText).Result;
+                if (po.Id == 0) return false;
+                po.toCopy<Journal>(this);
+                this.JDetails = po.JDetails;
+                NotifyAllPropertyChanged();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool Delete()
+        {
+            try
+            {
+                return ABClientHub.FMCGHub.Invoke<bool>("Journal_Delete", this.Id).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Detail
+
+        public void SaveDetail()
+        {
+
+            JournalDetail pod = JDetails.Where(x => x.LedgerId == JDetail.LedgerId).FirstOrDefault();
+
+            if (pod == null)
+            {
+                pod = new JournalDetail();
+                JDetails.Add(pod);
+            }
+
+            JDetail.toCopy<JournalDetail>(pod);
+            ClearDetail();
+            Amount = JDetails.Sum(x => x.DrAmt) - JDetails.Sum(x => x.CrAmt);
+        }
+
+        public void ClearDetail()
+        {
+            JournalDetail pod = new JournalDetail();
+            pod.toCopy<JournalDetail>(JDetail);
+        }
+
+        public void DeleteDetail(int LedgerId)
+        {
+            JournalDetail pod = JDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+
+            if (pod != null)
+            {
+                JDetails.Remove(pod);
+                Amount = JDetails.Sum(x => x.DrAmt) - JDetails.Sum(x=> x.CrAmt);
+            }
+        }
+
+        public void FindDetail(int LedgerId)
+        {
+            JournalDetail pod = JDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+
+            if (pod != null)
+            {
+                pod.toCopy<JournalDetail>(JDetail);
+            }
         }
 
         #endregion

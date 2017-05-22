@@ -18,7 +18,7 @@ namespace AccountBuddy.BLL
         private decimal _DrAmt;
         private decimal _CrAmt;
         private string _Particular;
-
+        private Ledger _JLedger;
         private string _LedgerName;
 
         #endregion
@@ -134,7 +134,22 @@ namespace AccountBuddy.BLL
             }
         }
 
-
+        public Ledger JLedger
+        {
+            get
+            {
+                if (_JLedger == null) _JLedger = new Ledger();
+                return _JLedger;
+            }
+            set
+            {
+                if (_JLedger != value)
+                {
+                    _JLedger = value;
+                    NotifyPropertyChanged(nameof(JLedger));
+                }
+            }
+        }
 
         #endregion
 

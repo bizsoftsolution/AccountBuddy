@@ -26,7 +26,7 @@ namespace AccountBuddy.PL.frm.Vouchers
             InitializeComponent();
             rptQuickJournal.SetDisplayMode(DisplayMode.PrintLayout);
         }
-        public void LoadReport(BLL.Journal data, string Payto)
+        public void LoadReport(BLL.Journal data)
         {
             try
             {
