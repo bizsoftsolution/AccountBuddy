@@ -170,7 +170,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox Text="{Binding RDetail.Amount, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="100" materialDesign:HintAssist.Hint="Amount" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                        <TextBox x:Name="txtAmount" TextChanged="txtAmount_TextChanged" Text="{Binding RDetail.Amount, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="100" materialDesign:HintAssist.Hint="Amount" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                         <Button   Width="65" Height="30" x:Name="btnAdd" Content="ADD" Margin="10,0,0,0" Click="btnAdd_Click" />
                         <Button   Width="75" Height="30" x:Name="btnDClear" Content="CLEAR" Margin="10,0,0,0" Click="btnDClear_Click" />
                     </StackPanel>

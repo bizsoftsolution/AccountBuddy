@@ -283,8 +283,8 @@
                                     <DataGridTextColumn Header="Credit Limit" FontWeight="Bold" Width="200" Binding="{Binding CreditLimit}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="Credit Type" FontWeight="Bold" Width="200" Binding="{Binding CreditLimitType}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="Credit Amount" FontWeight="Bold" Width="200" Binding="{Binding CreditAmount}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="OP.CR" FontWeight="Bold" Width="200" Binding="{Binding OPCr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="OP.DR" FontWeight="Bold" Width="200" Binding="{Binding OPDr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Opening Debit" FontWeight="Bold" Width="200" Binding="{Binding OPDr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Opening Credit" FontWeight="Bold" Width="200" Binding="{Binding OPCr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 

@@ -84,8 +84,8 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox Text="{Binding JDetail.DrAmt, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="100" materialDesign:HintAssist.Hint="Amount Dr" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
-                        <TextBox Text="{Binding JDetail.CrAmt, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="100" materialDesign:HintAssist.Hint="Amount Cr" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                        <TextBox x:Name="txtAmountDr" TextChanged="txtAmountDr_TextChanged" Text="{Binding JDetail.DrAmt, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="100" materialDesign:HintAssist.Hint="Amount Dr" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                        <TextBox x:Name="txtAmountCr" TextChanged="txtAmountCr_TextChanged" Text="{Binding JDetail.CrAmt, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="100" materialDesign:HintAssist.Hint="Amount Cr" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                     <Button   Width="65" Height="30" x:Name="btnAdd" Content="ADD" Margin="10,0,0,0" Click="btnAdd_Click" />
                         <Button   Width="75" Height="30" x:Name="btnDClear" Content="CLEAR" Margin="10,0,0,0" Click="btnDClear_Click" />
                     </StackPanel>

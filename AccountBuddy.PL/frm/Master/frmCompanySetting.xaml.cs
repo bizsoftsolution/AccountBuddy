@@ -50,6 +50,7 @@ namespace AccountBuddy.PL.frm.Master
                     BLL.UserAccount u = new BLL.UserAccount();
                     ua.toCopy<BLL.UserAccount>(u);
                     BLL.UserAccount.toList.Add(u);
+                    ua.Save(true);
                 });
 
             });
