@@ -48,7 +48,8 @@ namespace AccountBuddy.Common
             String words = "";
 
             words = string.Format("{0} {1}{2} ", number1.ToWords(), CurrencyName1, number1 > 1 ? "S" : "");
-            if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2, number2 > 1 ? "S" : "");
+           // if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2, number2 > 1 ? "S" : "");
+            if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
             words = string.Format("{0} ONLY", words);
             return words;
 
@@ -101,7 +102,8 @@ namespace AccountBuddy.Common
                 {
                     words += tensMap[number1 / 10];
                     if ((number1 % 10) > 0)
-                        words += "-" + unitsMap[number1 % 10];
+                        // words += "-" + unitsMap[number1 % 10];
+                        words +=  unitsMap[number1 % 10];
                 }
             }
             return words.ToUpper();

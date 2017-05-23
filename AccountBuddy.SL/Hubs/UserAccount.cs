@@ -41,6 +41,7 @@ namespace AccountBuddy.SL.Hubs
                                    .Where(x => x.CompanyDetail.CompanyName == CompanyName
 
                                                 && x.LoginId == LoginId
+                                                
                                                 && x.Password == Password)
                                    .FirstOrDefault();
             if (ua != null)
@@ -52,6 +53,7 @@ namespace AccountBuddy.SL.Hubs
                 ua.toCopy<BLL.UserAccount>(u);
             }
 
+           
             return u;
         }
 

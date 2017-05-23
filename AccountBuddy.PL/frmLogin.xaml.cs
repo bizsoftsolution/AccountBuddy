@@ -50,7 +50,9 @@ namespace AccountBuddy.PL
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+           
             string RValue = BLL.UserAccount.Login(cmbYear.Text, cmbCompany.Text, txtUserId.Text, txtPassword.Password);
+        
             if ( RValue =="")
             {
                 App.frmHome = new frmHome();

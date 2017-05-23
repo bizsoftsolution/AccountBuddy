@@ -42,9 +42,8 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-
+                
                 DAL.Payment d = DB.Payments.Where(x => x.Id == PO.Id).FirstOrDefault();
-
                 if (d == null)
                 {
 
