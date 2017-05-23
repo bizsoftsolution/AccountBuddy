@@ -30,7 +30,12 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            TabControl tc = sender as TabControl;
 
+            if (tc.SelectedIndex == 1)
+            {
+                LoadReport();
+            }        
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -104,7 +109,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);
-                RptLedger.LocalReport.ReportPath = @"rpt\master\RptLedger.rdlc";
+                RptLedger.LocalReport.ReportPath = @"rpt\Transaction\rptLedgerOpening.rdlc";
 
                 RptLedger.RefreshReport();
 
