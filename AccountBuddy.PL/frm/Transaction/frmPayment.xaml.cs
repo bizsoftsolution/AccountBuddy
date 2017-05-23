@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AccountBuddy.Common;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace AccountBuddy.PL.frm.Transaction
 {
@@ -28,7 +29,11 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
+          
+            
         }
+
+       
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -73,12 +78,16 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("Enter Payment");
             }
+            else if (data.FindEntryNo())
+            {
+                MessageBox.Show("Entry No Already Exist");
+            }
             else
             {
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show("Saved");
+                    MessageBox.Show(Message.PL.Saved_Alert);
                     data.Clear();
                 }
             }
@@ -173,6 +182,16 @@ namespace AccountBuddy.PL.frm.Transaction
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
             textBox.Text = AppLib.NumericOnly(txtAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtChequeNo.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }

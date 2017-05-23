@@ -628,12 +628,12 @@ namespace AccountBuddy.BLL
 
         #endregion
 
-        public bool FindRefNo()
+        public bool FindEntryNo()
         {
             var rv = false;
             try
             {
-                rv = ABClientHub.FMCGHub.Invoke<bool>("Find_RRef", EntryNo, this).Result;
+                rv = ABClientHub.FMCGHub.Invoke<bool>("Find_REntryNo", EntryNo, this).Result;
             }
             catch (Exception ex)
             {

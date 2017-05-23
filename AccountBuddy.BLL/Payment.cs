@@ -632,12 +632,12 @@ namespace AccountBuddy.BLL
 
 
 
-        public bool FindRefNo()
+        public bool FindEntryNo()
         {
             var rv = false;
             try
             {
-                rv = ABClientHub.FMCGHub.Invoke<bool>("Find_PORef", EntryNo, this).Result;
+                rv = ABClientHub.FMCGHub.Invoke<bool>("Find_EntryNo", EntryNo, this).Result;
             }
             catch (Exception ex)
             {

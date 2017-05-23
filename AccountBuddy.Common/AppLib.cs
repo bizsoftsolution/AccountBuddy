@@ -12,7 +12,7 @@ namespace AccountBuddy.Common
     public static class AppLib
     {
         public static string CurrencyName1 = "RINGGIT";
-        public static string CurrencyName2 = "CENT";
+        public static string CurrencyName2 = "SEN";
         public static void toCopy<T>(this object objSource, T objDestination)
         {
             var l1 = objSource.GetType().GetProperties().Where(x => x.PropertyType.Namespace != "System.Collections.Generic").ToList();

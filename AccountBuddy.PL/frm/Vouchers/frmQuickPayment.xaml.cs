@@ -33,16 +33,14 @@ namespace AccountBuddy.PL.frm.Vouchers
 
                 List<BLL.Payment> PList = new List<BLL.Payment>();
                 List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
-                List<BLL.PaymentDetail> PDList = new List<BLL.PaymentDetail>();
-
+            
                 PList.Add(data);
-                PDList.Add(data.PDetail);
-                CList.Add(BLL.UserAccount.Company);
+                  CList.Add(BLL.UserAccount.Company);
 
                 rptQuickPayment.Reset();
                 ReportDataSource data1 = new ReportDataSource("Payment", PList);
                 ReportDataSource data2 = new ReportDataSource("CompanyDetail", CList);
-                ReportDataSource data3 = new ReportDataSource("PaymentDetail", PDList);
+                ReportDataSource data3 = new ReportDataSource("PDetails", data.PDetails);
 
                 rptQuickPayment.LocalReport.DataSources.Add(data1);
                 rptQuickPayment.LocalReport.DataSources.Add(data2);
@@ -50,7 +48,8 @@ namespace AccountBuddy.PL.frm.Vouchers
                 rptQuickPayment.LocalReport.ReportPath = @"rpt\Transaction\rptPaymentVoucher.rdlc";
                 
                 ReportParameter[] par = new ReportParameter[1];
-                par[0] = new ReportParameter("PayTo", "");
+                par[0] = new ReportParameter("AmountInWords", data.AmountInwords);
+                
                 rptQuickPayment.LocalReport.SetParameters(par);
                 
                 rptQuickPayment.RefreshReport();

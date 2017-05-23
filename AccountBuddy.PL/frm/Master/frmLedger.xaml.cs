@@ -111,6 +111,7 @@ namespace AccountBuddy.PL.frm.Master
                         {
                             MessageBox.Show(Message.PL.Delete_Alert);
                             data.Clear();
+                            Grid_Refresh();
                         };
                     }
                 }

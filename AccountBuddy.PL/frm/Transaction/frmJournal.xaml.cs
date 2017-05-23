@@ -70,7 +70,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show("Saved");
+                    MessageBox.Show(Message.PL.Saved_Alert);
                     data.Clear();
                 }
             }
