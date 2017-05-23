@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Transaction"
              xmlns:CTRL="clr-namespace:AccountBuddy.PL.CTRL"
+             xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-              d:DesignHeight="600" d:DesignWidth="800" Background="White" Loaded="UserControl_Loaded" >
+              d:DesignHeight="400" d:DesignWidth="800" Background="White" Loaded="UserControl_Loaded" >
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -87,7 +88,10 @@
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Row="1">
-                            <DataGrid x:Name="dgvLedger" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="0" >
+                            <DataGrid x:Name="dgvLedger" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="0" CurrentCellChanged="dgvLedger_CurrentCellChanged" BeginningEdit="dgvLedger_BeginningEdit" CellEditEnding="dgvLedger_CellEditEnding" >
+                                 <DataGrid.Resources>
+                                    <Conversion:SumValues x:Key="SumValues" />
+                                </DataGrid.Resources>
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="FontWeight" Value="Bold" />
@@ -99,13 +103,20 @@
                                 </DataGrid.Effect>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <CTRL:DataGridNumericColumn  Header="Debit Opening" FontWeight="Bold"  Width="200"  Binding="{Binding OPDr,StringFormat={}{0:N2}}"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Credit Opening" CellStyle="{StaticResource RightCell}" FontWeight="Bold" Width="200" Binding="{Binding OPCr,StringFormat={}{0:N2}}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>                                    
+                                    <CTRL:DataGridNumericColumn  Header="Debit Opening" FontWeight="Bold"  Width="200"  Binding="{Binding OPDr,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <CTRL:DataGridNumericColumn  Header="Credit Opening" FontWeight="Bold"  Width="200"  Binding="{Binding OPCr,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
                         <Grid Grid.Row="2">
-                            <Button Name="btnSave" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" >Save</Button>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75*"/>
+                                <ColumnDefinition Width="25*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Name="lblMsg" FontWeight="Bold" FontSize="18" Foreground="Blue" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
+                            <Button  Grid.Column="1" Name="btnSave" Click="btnSave_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" >Save</Button>
+                            
                         </Grid>
                     </Grid>
                 </TabItem>

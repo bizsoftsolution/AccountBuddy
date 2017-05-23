@@ -427,6 +427,10 @@ namespace AccountBuddy.BLL
                 {
                     _OPDr = value;
                     NotifyPropertyChanged(nameof(OPDr));
+                    if(value!=null && value != 0)
+                    {
+                        OPCr = 0;
+                    }
                 }
 
             }
@@ -444,6 +448,10 @@ namespace AccountBuddy.BLL
                 {
                     _OPCr = value;
                     NotifyPropertyChanged(nameof(OPCr));
+                    if (value != null && value != 0)
+                    {
+                        OPDr = 0;
+                    }
                 }
 
             }

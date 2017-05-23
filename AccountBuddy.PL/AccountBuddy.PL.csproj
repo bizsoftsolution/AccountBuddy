@@ -207,6 +207,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Conversion\SumValues.cs" />
     <Compile Include="Conversion\VisibilityConverter.cs" />
     <Compile Include="CTRL\DataGridNumericColumn.cs" />
     <Compile Include="frmCompanySignup.xaml.cs">
