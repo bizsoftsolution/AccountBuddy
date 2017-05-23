@@ -23,6 +23,8 @@ namespace AccountBuddy.BLL
 
         private bool _IsShowReturn;
         private bool _IsShowComplete;
+        private bool _IsLedgerEditable = true;
+
 
         private decimal? _ExtraCharge;
         private string _ChequeNo;
@@ -41,7 +43,7 @@ namespace AccountBuddy.BLL
 
 
         private string _SearchText;
-                
+
         private bool _IsShowChequeDetail;
         private bool _IsShowOnlineDetail;
         private bool _IsShowTTDetail;
@@ -49,6 +51,7 @@ namespace AccountBuddy.BLL
         private ObservableCollection<PaymentDetail> _PDetails;
         private static List<string> _PayModeList;
         private static List<string> _StatusList;
+     
 
         #endregion
 
@@ -175,6 +178,22 @@ namespace AccountBuddy.BLL
                     IsShowOnlineDetail = value == "Online";
                     IsShowTTDetail = value == "TT";
 
+                    if (value == "Cash")
+                    {
+                        LedgerName = "Cash Account";
+                        LedgerId = BLL.Ledger.toList.Where(x => x.LedgerName == "Cash Account").Select(x => x.Id).FirstOrDefault();
+                        IsLedgerEditable = false;
+                           
+                    }
+                    else
+                    {
+                        IsLedgerEditable = true;
+                        LedgerId = 0;
+
+                    }
+
+
+
                     NotifyPropertyChanged(nameof(PaymentMode));
                 }
             }
@@ -227,6 +246,23 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public bool IsLedgerEditable
+        {
+            get
+            {
+                return _IsLedgerEditable;
+            }
+            set
+            {
+                if (_IsLedgerEditable != value)
+                {
+                    _IsLedgerEditable = value;
+                    NotifyPropertyChanged(nameof(IsLedgerEditable));
+                }
+            }
+        }
+
 
         public bool IsShowComplete
         {
@@ -380,13 +416,13 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+
         public PaymentDetail PDetail
         {
             get
             {
                 if (_PDetail == null)
-                {                    
+                {
                     _PDetail = new PaymentDetail();
                 }
                 return _PDetail;
@@ -518,7 +554,6 @@ namespace AccountBuddy.BLL
             }
         }
 
-
         #region List
         public static ObservableCollection<Ledger> LedgerList
         {
@@ -526,7 +561,30 @@ namespace AccountBuddy.BLL
             {
                 return Ledger.toList;
             }
+            
+
         }
+
+      
+        public static ObservableCollection<Ledger> CashLedgerList
+        {
+            get
+            {
+                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroupId == 41 && x.LedgerName == "Cash Account").ToList());
+            }
+
+        }
+
+        public static ObservableCollection<Ledger> BLedgerList
+        {
+            get
+            {
+                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroupId == 41).ToList());
+            }
+
+        }
+
+
         #endregion
 
         #region Master
@@ -545,7 +603,7 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new Payment().toCopy<Payment>(this);
-            ClearDetail();                      
+            ClearDetail();
             _PDetails = new ObservableCollection<PaymentDetail>();
 
             PaymentDate = DateTime.Now;
@@ -595,7 +653,7 @@ namespace AccountBuddy.BLL
                 pod = new PaymentDetail();
                 PDetails.Add(pod);
             }
-            
+
             PDetail.toCopy<PaymentDetail>(pod);
             ClearDetail();
             Amount = PDetails.Sum(x => x.Amount);

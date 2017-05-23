@@ -92,7 +92,7 @@
                     <GroupBox Header="Details Particulars" Margin="10,10,10,0">
                         <TextBox Text="{Binding JDetail.Particular, Mode=TwoWay}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
                     </GroupBox>
-                    <GroupBox Height="250" Margin="10,25,10,0" Header="Journal Details">
+                    <GroupBox Height="204" Margin="10,25,10,0" Header="Journal Details">
                         <DataGrid x:Name="dgvDetails" ItemsSource="{Binding JDetails}" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10"  >
                             <DataGrid.RenderTransform>
                                 <TransformGroup>
@@ -135,11 +135,14 @@
                         </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
+                <StackPanel>
+                    <TextBlock Grid.Column="0" Name="lblMsg" FontWeight="Bold" FontSize="18" Foreground="Blue" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
 
+                </StackPanel>
 
+               
 
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="250,0">
                         <Button Click="btnSave_Click" Width="80" Height="30" x:Name="btnSave" Content="SAVE"   Margin="5 5" />
                         <Button Click="btnDelete_Click" Width="80" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
                         <Button Click="btnClear_Click"  Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />

@@ -89,9 +89,7 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <DataGrid x:Name="dgvLedger" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="0" CurrentCellChanged="dgvLedger_CurrentCellChanged" BeginningEdit="dgvLedger_BeginningEdit" CellEditEnding="dgvLedger_CellEditEnding" >
-                                 <DataGrid.Resources>
-                                    <Conversion:SumValues x:Key="SumValues" />
-                                </DataGrid.Resources>
+                                 
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="FontWeight" Value="Bold" />
