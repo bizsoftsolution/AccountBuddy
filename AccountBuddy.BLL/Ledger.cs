@@ -58,7 +58,7 @@ namespace AccountBuddy.BLL
                         var l1 = ABClientHub.FMCGHub.Invoke<List<Ledger>>("Ledger_List").Result;
                         _toList = new ObservableCollection<Ledger>(l1);
                     }
-                    _toList = new ObservableCollection<Ledger>(_toList.OrderBy(x => x.AccountName));
+                  
                 }
                 catch (Exception ex)
                 {
@@ -485,7 +485,7 @@ namespace AccountBuddy.BLL
                 if (_GroupCode != value)
                 {
                     _GroupCode = value;
-                    AccountCode = string.Format("{0}{1}{2}",GroupCode,LedgerCode==""?"":"-",LedgerCode);
+                    AccountCode = string.Format("{0}{1}{2}",GroupCode, string.IsNullOrWhiteSpace(LedgerCode) ? "":"-",LedgerCode);
                     NotifyPropertyChanged(nameof(GroupCode));
                 }
             }

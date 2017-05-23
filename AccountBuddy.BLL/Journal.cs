@@ -303,6 +303,19 @@ namespace AccountBuddy.BLL
                 return false;
             }
         }
+
+
+        public bool FindEntryNo()
+        {
+            try
+            {
+                return ABClientHub.FMCGHub.Invoke<bool>("FindEntryNo", EntryNo, this).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         #endregion
 
         #region Detail

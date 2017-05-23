@@ -172,7 +172,7 @@ namespace AccountBuddy.SL.Hubs
             return RPendingList.Where(x => x.RLedger.CompanyId == Caller.CompanyId).ToList();
         }
 
-        public bool Find_RRef(string entryNo, BLL.Receipt PO)
+        public bool Find_REntryNo(string entryNo, BLL.Receipt PO)
 
         {
             DAL.Receipt d = DB.Receipts.Where(x => x.EntryNo == entryNo & x.Id != PO.Id).FirstOrDefault();

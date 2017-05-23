@@ -106,7 +106,7 @@ namespace AccountBuddy.SL.Hubs
 
                 Clients.Clients(OtherLoginClientsOnGroup).Ledger_Save(led);
 
-                return led.Id;
+                return led.Id=d.Id;
             }
             catch (Exception ex) { }
             return 0;

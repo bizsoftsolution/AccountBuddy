@@ -23,6 +23,7 @@ namespace AccountBuddy.PL.frm.Transaction
     {
         BLL.Journal data = new BLL.Journal();
         public string FormName = "Journal";
+        decimal drAmt = 0, crAmt = 0, DiffAmt=0;
         public frmJournal()
         {
             InitializeComponent();
@@ -44,11 +45,23 @@ namespace AccountBuddy.PL.frm.Transaction
             else
             {
                 data.SaveDetail();
+                FindDiff();
             }
+        }
+
+        private void FindDiff()
+        {
+            var l1 = data.JDetails;
+            drAmt= l1.Sum(x => x.CrAmt);
+            crAmt = l1.Sum(x => x.DrAmt);
+
+            lblMsg.Text = string.Format("Total Debit Balance : {0:N2}, Total Credit Balance : {1:N2}, Difference : {2:N2}", drAmt, crAmt, Math.Abs(drAmt - crAmt));
+            lblMsg.Foreground = drAmt == crAmt ? new SolidColorBrush(Color.FromRgb(0, 0, 255)) : new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            DiffAmt = Math.Abs(drAmt - crAmt);
             if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
@@ -63,14 +76,25 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             else if (data.JDetails.Count == 0)
             {
-                MessageBox.Show("Enter Journal");
+                MessageBox.Show("Enter Details");
+
             }
+            else if ( DiffAmt!= 0)
+            {
+                MessageBox.Show("Difference between Credit and Debit Should be Zero");
+
+            }
+            else if(data.FindEntryNo())
+            {
+                MessageBox.Show("Entry No Already Exist!..");
+            }
+
             else
             {
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show("Saved");
+                    MessageBox.Show(Message.PL.Saved_Alert);
                     data.Clear();
                 }
             }

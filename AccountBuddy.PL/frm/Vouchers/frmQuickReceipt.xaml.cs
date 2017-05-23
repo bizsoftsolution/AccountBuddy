@@ -26,24 +26,22 @@ namespace AccountBuddy.PL.frm.Vouchers
             InitializeComponent();
             rptQuickReceipt.SetDisplayMode(DisplayMode.PrintLayout);
         }
-        public void LoadReport(BLL.Receipt data, string ReceivedFrom)
+        public void LoadReport(BLL.Receipt data)
         {
             try
             {
 
                 List<BLL.Receipt> RList = new List<BLL.Receipt>();
                 List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
-                List<BLL.ReceiptDetail> RDList = new List<BLL.ReceiptDetail>();
-
+             
                 RList.Add(data);
-                RDList.Add(data.RDetail);
                 CList.Add(BLL.UserAccount.Company);
 
 
                 rptQuickReceipt.Reset();
                 ReportDataSource data1 = new ReportDataSource("Receipt", RList);
                 ReportDataSource data2 = new ReportDataSource("CompanyDetail", CList);
-                ReportDataSource data3 = new ReportDataSource("ReceiptDetail", RDList);
+                ReportDataSource data3 = new ReportDataSource("RDetails", data.RDetails);
 
                 rptQuickReceipt.LocalReport.DataSources.Add(data1);
                 rptQuickReceipt.LocalReport.DataSources.Add(data2);
@@ -51,7 +49,7 @@ namespace AccountBuddy.PL.frm.Vouchers
                 rptQuickReceipt.LocalReport.ReportPath = @"rpt\Transaction\rptReceiptVoucher.rdlc";
 
                 ReportParameter[] par = new ReportParameter[1];
-                par[0] = new ReportParameter("ReceivedFrom", ReceivedFrom);
+                par[0] = new ReportParameter("AmountInWords", data.AmountInwords);
                 rptQuickReceipt.LocalReport.SetParameters(par);
 
 

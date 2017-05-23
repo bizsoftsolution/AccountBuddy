@@ -181,7 +181,7 @@ namespace AccountBuddy.SL.Hubs
             return JPendingList.Where(x => x.JDetail.JLedger.CompanyId == Caller.CompanyId).ToList();
         }
 
-        public bool Find_PORef(string entryNo, BLL.Journal PO)
+        public bool Find_JEntryNo(string entryNo, BLL.Payment PO)
 
         {
             DAL.Journal d = DB.Journals.Where(x => x.EntryNo == entryNo & x.Id != PO.Id).FirstOrDefault();
@@ -195,6 +195,7 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+
 
 
         #endregion

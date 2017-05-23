@@ -86,7 +86,6 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-
                 BLL.CompanyDetail b = ListCompany.Where(x => x.Id == sgp.Id).FirstOrDefault();
                 DAL.CompanyDetail d = DB.CompanyDetails.Where(x => x.Id == sgp.Id).FirstOrDefault();
 
@@ -95,6 +94,7 @@ namespace AccountBuddy.SL.Hubs
 
                     b = new BLL.CompanyDetail();
                     ListCompany.Add(b);
+
 
                     d = new DAL.CompanyDetail();
                     DB.CompanyDetails.Add(d);
@@ -108,9 +108,17 @@ namespace AccountBuddy.SL.Hubs
                     ua.UserTypeId = 1;
                     d.UserAccounts.Add(ua);
 
-                    DB.SaveChanges();
+                     DB.SaveChanges();
                     d.toCopy<BLL.CompanyDetail>(b);
-                    sgp.Id = d.Id;                                       
+                    sgp.Id = d.Id;
+
+                    DAL.Ledger Led = new DAL.Ledger();
+                    Led.LedgerName = "Cash Account";
+                    Led.AccountGroupId = 41;
+                    Led.CompanyId = d.Id;
+                    DB.Ledgers.Add(Led);
+
+                    DB.SaveChanges();
 
                     // LogDetailStore(sgp, LogDetailType.INSERT);
                 }

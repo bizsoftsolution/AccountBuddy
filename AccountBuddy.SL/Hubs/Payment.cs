@@ -172,7 +172,7 @@ namespace AccountBuddy.SL.Hubs
             return PPendingList.Where(x => x.PLedger.CompanyId== Caller.CompanyId).ToList();
         }
 
-        public bool Find_PORef(string entryNo, BLL.Payment PO)
+        public bool Find_EntryNo(string entryNo, BLL.Payment PO)
 
         {
             DAL.Payment d = DB.Payments.Where(x => x.EntryNo == entryNo & x.Id != PO.Id).FirstOrDefault();

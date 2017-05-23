@@ -89,7 +89,7 @@
                             </materialDesign:HintAssist.Hint>
 
                         </ComboBox>
-                        <ComboBox x:Name="cmbDebitAC" ItemsSource="{Binding LedgerList}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="AccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0">
+                        <ComboBox x:Name="cmbDebitAC" IsEnabled="{Binding IsLedgerEditable}" IsEditable="{Binding IsLedgerEditable}" ItemsSource="{Binding LedgerList}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" SelectedValuePath="Id" DisplayMemberPath="AccountName"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Debit A/C"/>
@@ -99,14 +99,14 @@
 
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <TextBox x:Name="txtEntryNo" Text="{Binding EntryNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Entry No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                        <TextBox x:Name="txtEntryNo" Text="{Binding EntryNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Entry Code"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                         <TextBox x:Name="txtReceivedFrom" Text="{Binding ReceivedFrom, Mode=TwoWay}" Width="385" materialDesign:HintAssist.Hint="Received From" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                     </StackPanel>
 
                     <GroupBox Margin="10,10,10,0" Header="Cheque Detail" Visibility="{Binding IsShowChequeDetail,Converter={StaticResource VisibilityConverter}}">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <TextBox x:Name="txtChequeNo" Text="{Binding ChequeNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Cheque No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
+                                <TextBox x:Name="txtChequeNo" TextChanged="txtChequeNo_TextChanged" Text="{Binding ChequeNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Cheque No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
                                 <DatePicker x:Name="dtpChequeDate" materialDesign:HintAssist.Hint="Cheque Date"  SelectedDate="{Binding ChequeDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,15,10,0" Width="100" FontWeight="Bold"  />
                                 <ComboBox SelectedValue="{Binding Status, Mode=TwoWay}" ItemsSource="{Binding StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="80" Margin="0,0,0,0">
                                     <materialDesign:HintAssist.Hint>
@@ -229,7 +229,7 @@
                         <Button Click="btnDelete_Click" Width="80" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
                         <Button Click="btnClear_Click"  Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />
                         <Button Click="btnPrint_Click"  Width="80" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" />
-                        <TextBox Text="{Binding SearchText}" Width="100" materialDesign:HintAssist.Hint="Entry No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                        <TextBox Text="{Binding SearchText}" Width="100" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
                         <Button Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" Margin="5 5" />
 
                     </StackPanel>

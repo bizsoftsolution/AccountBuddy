@@ -73,20 +73,20 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("Enter Receipt");
             }
-            else if (data.FindRefNo() == false)
+            else if (data.FindEntryNo())
+            {
+                MessageBox.Show("Entry No Already Exist");
+            }
+            else 
             {
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show("Saved");
+                    MessageBox.Show(Message.PL.Saved_Alert);
                     data.Clear();
                 }
             }
-            else
-            {
-                MessageBox.Show("RefNo Already Exist");
-
-            }
+            
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -135,7 +135,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             frm.Vouchers.frmQuickReceipt f = new Vouchers.frmQuickReceipt();
 
-            f.LoadReport(data, txtReceivedFrom.Text.ToString());
+            f.LoadReport(data);
             f.ShowDialog();
         }
 
@@ -175,6 +175,16 @@ namespace AccountBuddy.PL.frm.Transaction
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
             textBox.Text = AppLib.NumericOnly(txtAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtChequeNo.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
