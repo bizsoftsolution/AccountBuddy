@@ -60,8 +60,7 @@ namespace AccountBuddy.PL.frm.Report
                 par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
                 par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
                 rptTrialBalance.LocalReport.SetParameters(par);
-
-
+                
                 rptTrialBalance.RefreshReport();
 
             }
