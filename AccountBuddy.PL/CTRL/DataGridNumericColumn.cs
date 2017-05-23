@@ -21,13 +21,26 @@ namespace AccountBuddy.PL.CTRL
         {
             try
             {
-                Convert.ToInt32(e.Text);
+
+                var txt = e.OriginalSource as TextBox;
+
+                if (e.Text.EndsWith("."))
+                {
+
+                    e.Handled = txt.Text.Contains(".");
+                }
+                else
+                {
+                    Convert.ToDecimal(e.Text);
+                }
+                
             }
             catch
             {
                 // Show some kind of error message if you want
 
                 // Set handled to true
+                
                 e.Handled = true;
             }
         }
