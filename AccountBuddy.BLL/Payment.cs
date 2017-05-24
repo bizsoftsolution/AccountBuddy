@@ -180,7 +180,7 @@ namespace AccountBuddy.BLL
 
                     if (value == "Cash")
                     {
-                        LedgerName = "Cash Account";
+                        //LedgerName = "Cash Account";
                         LedgerId = BLL.Ledger.toList.Where(x => x.LedgerName == "Cash Account").Select(x => x.Id).FirstOrDefault();
                         IsLedgerEditable = false;
                            
