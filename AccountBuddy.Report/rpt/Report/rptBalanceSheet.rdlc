@@ -112,7 +112,7 @@
               <TextRun>
                 <Value>=Parameters!DateTo.Value</Value>
                 <Style>
-                  <Format>d</Format>
+                  <Format>dd-MM-yyyy</Format>
                 </Style>
               </TextRun>
             </TextRuns>

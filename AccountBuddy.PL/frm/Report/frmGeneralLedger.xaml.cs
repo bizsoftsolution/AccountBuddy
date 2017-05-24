@@ -47,32 +47,38 @@ namespace AccountBuddy.PL.frm.Report
 
         private void LoadReport()
         {
-            List<BLL.GeneralLedger> list = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-            list = list.Select(x => new BLL.GeneralLedger()
-            { AccountName = x.Ledger.AccountName, CrAmt = x.CrAmt, DrAmt = x.DrAmt}).ToList();
-
             try
             {
-                rptGeneralLedger.Reset();
-                ReportDataSource data = new ReportDataSource("GeneralLedger", list);
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
-                rptGeneralLedger.LocalReport.DataSources.Add(data);
-                rptGeneralLedger.LocalReport.DataSources.Add(data1);
-                rptGeneralLedger.LocalReport.ReportPath = @"rpt\Report\rptGeneralLedger.rdlc";
+                List<BLL.GeneralLedger> list = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                list = list.Select(x => new BLL.GeneralLedger()
+                { AccountName = x.Ledger.AccountName, CrAmt = x.CrAmt, DrAmt = x.DrAmt, BalAmt=x.BalAmt, EDate=x.EDate, EntryNo=x.EntryNo, EType=x.EType, Ledger=x.Ledger, RefNo=x.RefNo }).ToList();
 
-                ReportParameter[] par = new ReportParameter[2];
-                par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
-                par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
-                rptGeneralLedger.LocalReport.SetParameters(par);
+                try
+                {
+                    rptGeneralLedger.Reset();
+                    ReportDataSource data = new ReportDataSource("GeneralLedger", list);
+                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
+                    rptGeneralLedger.LocalReport.DataSources.Add(data);
+                    rptGeneralLedger.LocalReport.DataSources.Add(data1);
+                    rptGeneralLedger.LocalReport.ReportPath = @"rpt\Report\rptGeneralLedger.rdlc";
 
-                rptGeneralLedger.RefreshReport();
+                    ReportParameter[] par = new ReportParameter[2];
+                    par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
+                    par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
+                    rptGeneralLedger.LocalReport.SetParameters(par);
 
+                    rptGeneralLedger.RefreshReport();
+
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
 
             }
-
 
         }
 
