@@ -41,13 +41,13 @@ namespace AccountBuddy.PL.frm.Report
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvGeneralLedger.ItemsSource = BLL.GeneralLedger.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            
         }
 
 
         private void LoadReport()
         {
-            List<BLL.GeneralLedger> list = BLL.GeneralLedger.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            List<BLL.GeneralLedger> list = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             list = list.Select(x => new BLL.GeneralLedger()
             { AccountName = x.Ledger.AccountName, CrAmt = x.CrAmt, DrAmt = x.DrAmt, CrAmtOP = x.CrAmtOP, DrAmtOP = x.DrAmtOP }).ToList();
 
@@ -89,7 +89,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            dgvGeneralLedger.ItemsSource = BLL.GeneralLedger.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            if(cmbAccountName.SelectedValue!=null) dgvGeneralLedger.ItemsSource = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
         }
 
     }
