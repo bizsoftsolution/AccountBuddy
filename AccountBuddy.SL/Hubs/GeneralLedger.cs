@@ -14,23 +14,23 @@ namespace AccountBuddy.SL.Hubs
             List<BLL.GeneralLedger> lstGeneralLedger = new List<BLL.GeneralLedger>();
 
 
-            BLL.GeneralLedger tb = new BLL.GeneralLedger();
+            BLL.GeneralLedger gl = new BLL.GeneralLedger();
 
             var lstLedger = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && x.Id == LedgerId).ToList();
             decimal TotDr = 0, TotCr = 0;
             
             #region Ledger
 
-            decimal OPDr, OPCr, PDr, PCr, RDr, RCr, JDr, JCr;
-
+            decimal OPDr, OPCr, PDr, PCr, RDr, RCr, JDr, JCr,BalAmt;
+            BalAmt = 0;
             foreach (var l in lstLedger)
             {
-                tb = new BLL.GeneralLedger();
-                tb.Ledger = new BLL.Ledger();
+                gl = new BLL.GeneralLedger();
+                gl.Ledger = new BLL.Ledger();
 
-                l.toCopy<BLL.Ledger>(tb.Ledger);
-                tb.Ledger.GroupCode = l.AccountGroup.GroupCode;
-                tb.Ledger.GroupName = l.AccountGroup.GroupName;
+                l.toCopy<BLL.Ledger>(gl.Ledger);
+                gl.Ledger.GroupCode = l.AccountGroup.GroupCode;
+                gl.Ledger.GroupName = l.AccountGroup.GroupName;
 
                 OPDr = l.OPDr ?? 0;
                 OPCr = l.OPCr ?? 0;
@@ -44,63 +44,122 @@ namespace AccountBuddy.SL.Hubs
                 JDr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.DrAmt);
                 JCr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.CrAmt);
 
-                tb.DrAmtOP = OPDr + PDr + RDr + JDr;
-                tb.CrAmtOP = OPCr + PCr + RCr + JCr;
+                gl.DrAmt = OPDr + PDr + RDr + JDr;
+                gl.CrAmt = OPCr + PCr + RCr + JCr;
 
-
-                PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).Sum(x => x.Amount);
-                PCr = l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).Sum(x => x.Amount);
-
-                RDr = l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).Sum(x => x.Amount);
-                RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).Sum(x => x.Amount);
-
-                JDr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.DrAmt);
-                JCr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.CrAmt);
-
-
-
-                tb.DrAmt = tb.DrAmtOP + PDr + RDr + JDr;
-                tb.CrAmt = tb.CrAmtOP + PCr + RCr + JCr;
-
-
-                if (tb.DrAmtOP > tb.CrAmtOP)
+                if (gl.DrAmt > gl.CrAmt)
                 {
-                    tb.DrAmtOP = tb.DrAmtOP - tb.CrAmtOP;
-                    tb.CrAmtOP = 0;
+                    gl.DrAmt = gl.DrAmt - gl.CrAmt;
+                    gl.CrAmt = 0;                    
                 }
                 else
                 {
-                    tb.CrAmtOP = tb.CrAmtOP - tb.DrAmtOP;
-                    tb.DrAmtOP = 0;
+                    gl.CrAmt = gl.CrAmt - gl.DrAmt;
+                    gl.DrAmt = 0;                    
+                }
+                BalAmt += (gl.DrAmt - gl.CrAmt);
+                gl.BalAmt = BalAmt;
+
+                gl.Ledger = new BLL.Ledger();
+                gl.Ledger.LedgerName = string.Format("Balance {0}", l.LedgerName);
+                lstGeneralLedger.Add(gl);
+
+                foreach(var pd in  l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).ToList())
+                {
+                    gl = new BLL.GeneralLedger();
+                    gl.Ledger = new BLL.Ledger();
+                    pd.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
+                    gl.EId = pd.Payment.Id;
+                    gl.EType = 'P';
+                    gl.EDate = pd.Payment.PaymentDate;
+                    gl.RefNo = pd.Payment.PaymentMode == "Cheque" ? pd.Payment.ChequeNo : pd.Payment.RefNo;
+                    gl.EntryNo = pd.Payment.EntryNo;
+                    gl.DrAmt = pd.Amount;
+                    gl.CrAmt = 0;
+                    BalAmt += (gl.DrAmt - gl.CrAmt);
+                    gl.BalAmt = BalAmt;
+                    lstGeneralLedger.Add(gl);
                 }
 
-                if (tb.DrAmt > tb.CrAmt)
+
+                foreach (var p in l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).ToList())
                 {
-                    tb.DrAmt = tb.DrAmt - tb.CrAmt;
-                    tb.CrAmt = 0;
-                }
-                else
-                {
-                    tb.CrAmt = tb.CrAmt - tb.DrAmt;
-                    tb.DrAmt = 0;
+                    gl = new BLL.GeneralLedger();
+                    gl.Ledger = new BLL.Ledger();
+                    p.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
+                    gl.EId = p.Id;
+                    gl.EType = 'P';
+                    gl.EDate = p.PaymentDate;
+                    gl.RefNo = p.PaymentMode == "Cheque" ? p.ChequeNo : p.RefNo;
+                    gl.EntryNo = p.EntryNo;
+                    gl.DrAmt = 0;
+                    gl.CrAmt = p.Amount;
+                    BalAmt += (gl.DrAmt - gl.CrAmt);
+                    gl.BalAmt = BalAmt;
+                    lstGeneralLedger.Add(gl);
                 }
 
-                if (tb.DrAmt != 0 || tb.CrAmt != 0)
+                foreach (var r in l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).ToList())
                 {
-                    lstGeneralLedger.Add(tb);
-                    TotDr += tb.DrAmt;
-                    TotCr += tb.CrAmt;
+                    gl = new BLL.GeneralLedger();
+                    gl.Ledger = new BLL.Ledger();
+                    r.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
+                    gl.EId = r.Id;
+                    gl.EType = 'R';
+                    gl.EDate = r.ReceiptDate;
+                    gl.RefNo = r.ReceiptMode== "Cheque" ? r.ChequeNo : r.RefNo;
+                    gl.EntryNo = r.EntryNo;
+                    gl.DrAmt = r.Amount;
+                    gl.CrAmt = 0;
+                    BalAmt += (gl.DrAmt - gl.CrAmt);
+                    gl.BalAmt = BalAmt;
+                    lstGeneralLedger.Add(gl);
                 }
+                foreach(var rd in l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).ToList())
+                {
+                    gl = new BLL.GeneralLedger();
+                    gl.Ledger = new BLL.Ledger();
+                    rd.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
+                    gl.EId = rd.Receipt.Id;
+                    gl.EType = 'R';
+                    gl.EDate = rd.Receipt.ReceiptDate;
+                    gl.RefNo = rd.Receipt.ReceiptMode == "Cheque" ? rd.Receipt.ChequeNo : rd.Receipt.RefNo;
+                    gl.EntryNo = rd.Receipt.EntryNo;
+                    gl.DrAmt = 0;
+                    gl.CrAmt = rd.Amount; 
+                    BalAmt += (gl.DrAmt - gl.CrAmt);
+                    gl.BalAmt = BalAmt;
+                    lstGeneralLedger.Add(gl);
+                }
+
+                foreach(var jd in l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).ToList())
+                {
+                    gl = new BLL.GeneralLedger();
+                    gl.Ledger = new BLL.Ledger();
+                    jd.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
+                    gl.EId = jd.Journal.Id;
+                    gl.EType = 'J';
+                    gl.EDate = jd.Journal.JournalDate;
+                    gl.RefNo = "";
+                    gl.EntryNo = jd.Journal.EntryNo;
+                    gl.DrAmt = jd.DrAmt;
+                    gl.CrAmt = jd.CrAmt;
+                    BalAmt += (gl.DrAmt - gl.CrAmt);
+                    gl.BalAmt = BalAmt;
+                    lstGeneralLedger.Add(gl);
+                }                                
+                gl = new BLL.GeneralLedger();
+                gl.Ledger = new BLL.Ledger();
+                gl.Ledger.LedgerName = "Total";
+                gl.DrAmt = lstGeneralLedger.Sum(x=> x.DrAmt);
+                gl.CrAmt = lstGeneralLedger.Sum(x=>x.CrAmt);
+                gl.BalAmt = BalAmt;
+                lstGeneralLedger.Add(gl);
+
             }
             #endregion
 
-            tb = new BLL.GeneralLedger();
-            tb.Ledger = new BLL.Ledger();
-            tb.Ledger.LedgerName = "Total";
-            tb.DrAmt = TotDr;
-            tb.CrAmt = TotCr;
-            lstGeneralLedger.Add(tb);
-
+            
             return lstGeneralLedger;
         }
 

@@ -8,7 +8,6 @@
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
               d:DesignHeight="600" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
-
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -19,13 +18,12 @@
     <Grid>
         <Grid Margin="0,0,0,10">
 
-         
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Payment and Receipt"/></TextBlock>
+                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Receip and Payment Report"/></TextBlock>
             </Grid>
             <Grid Grid.Row="1" >
 
@@ -35,8 +33,16 @@
                         <RowDefinition Height="92*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"  >
-                            <DatePicker Name="dtpDateFrom" Width="191"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10" >
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"   >
+                            <ComboBox x:Name="cmbAccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="0,0,0,0" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Account Name"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </ComboBox>
+
+                            <DatePicker Name="dtpDateFrom" Width="150"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,0,0" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
@@ -44,7 +50,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </DatePicker>
-                            <DatePicker Name="dtpDateTo" Width="191"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10">
+                            <DatePicker Name="dtpDateTo" Width="150"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,0,0">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
@@ -52,13 +58,13 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </DatePicker>
-                            <Button Width="97" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
+                            <Button Width="122" Height="27" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="15 5" />
                         </StackPanel>
 
 
                     </Grid>
-                    <Grid Grid.Row="1">
-                        <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="352" Margin="310,0,205,0">
+                    <Grid Grid.Row="1" Margin="0,0,70,0">
+                        <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="377" Margin="310,0,90,0" BorderThickness="1" BorderBrush="Black" >
                             <TabControl.Resources>
                                 <Style TargetType="TabItem">
                                     <Setter Property="Template">
@@ -93,11 +99,11 @@
                                     <TranslateTransform/>
                                 </TransformGroup>
                             </TabControl.RenderTransform>
-                            <TabItem Header="Details" >
+                            <TabItem Header="Details" FontSize="16">
 
                                 <Grid Grid.Row="0" Margin="0,0,10,-20" >
 
-                                    <DataGrid x:Name="dgvPaymentReceipt" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,37,11" >
+                                    <DataGrid x:Name="dgvReceiptAndPayment" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5">
                                         <DataGrid.RenderTransform>
                                             <TransformGroup>
                                                 <ScaleTransform/>
@@ -115,20 +121,21 @@
                                         </DataGrid.ColumnHeaderStyle>
 
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="250" Binding="{Binding LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                            <DataGridTextColumn Header="Credit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                            <DataGridTextColumn Header="Debit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Date" FontWeight="Bold" Width="100" Binding="{Binding EDate,StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Entry No" FontWeight="Bold" Width="100" Binding="{Binding EntryNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Cheque/Ref No" FontWeight="Bold" Width="120" Binding="{Binding RefNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding Ledger.AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
 
                                 </Grid>
 
                             </TabItem>
-                            <TabItem Header="Report" >
-                                <Grid Grid.Row="0" Margin="0,0,4,-14">
+                            <TabItem Header="Report" FontSize="16">
+                                <Grid Grid.Row="0">
 
-
-                                    <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="350" Margin="10,0">
+                                    <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top"  Height="330">
                                         <rv:ReportViewer x:Name="rptPaymentReceipt"/>
                                     </WindowsFormsHost>
 
@@ -137,8 +144,6 @@
                             <!--#region Search Box-->
 
                             <!--#endregion-->
-
-
                         </TabControl>
                     </Grid>
                 </Grid>

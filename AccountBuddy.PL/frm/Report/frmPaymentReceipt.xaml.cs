@@ -25,21 +25,34 @@ namespace AccountBuddy.PL.frm.Report
         {
             InitializeComponent();
             rptPaymentReceipt.SetDisplayMode(DisplayMode.PrintLayout);
+            int yy = BLL.UserAccount.Company.LoginAccYear;
 
+            DateTime? dtFrom = new DateTime(yy, 4, 1);
+            DateTime? dtTo = new DateTime(yy + 1, 3, 31);
+
+            dtpDateFrom.SelectedDate = dtFrom;
+            dtpDateTo.SelectedDate = dtTo;
+
+            cmbAccountName.ItemsSource = BLL.Ledger.toList;
+            cmbAccountName.DisplayMemberPath = "AccountName";
+            cmbAccountName.SelectedValuePath = "Id";
         }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
 
         private void LoadReport()
         {
+            List<BLL.ReceiptAndPayment> list = BLL.ReceiptAndPayment.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            list = list.Select(x => new BLL.ReceiptAndPayment()
+            { AccountName = x.Ledger.AccountName, Amount = x.Amount}).ToList();
+
             try
             {
                 rptPaymentReceipt.Reset();
-                ReportDataSource data = new ReportDataSource("PaymentReceipt", dgvPaymentReceipt.ItemsSource);
+                ReportDataSource data = new ReportDataSource("ReceiptAndPayment", list);
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
                 rptPaymentReceipt.LocalReport.DataSources.Add(data);
                 rptPaymentReceipt.LocalReport.DataSources.Add(data1);
@@ -49,7 +62,6 @@ namespace AccountBuddy.PL.frm.Report
                 par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
                 par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
                 rptPaymentReceipt.LocalReport.SetParameters(par);
-
 
                 rptPaymentReceipt.RefreshReport();
 
@@ -75,22 +87,9 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-
-            //if (dtpDateFrom.SelectedDate != null && dtpDateTo.SelectedDate != null)
-            //{
-            //    DateTime dtFrom = dtpDateFrom.SelectedDate.Value;
-            //    DateTime dtTo = dtpDateTo.SelectedDate.Value;
-
-            //    var list1 = BLL.TrialBalance.toList.Where(x => x.VoucherPayDate >= dtFrom || x.VoucherRecDate >= dtFrom).ToList();
-            //    var list2 = list1.Where(x => x.VoucherPayDate <= dtTo || x.VoucherRecDate <= dtTo).ToList();
-            //    dgvPaymentReceipt.ItemsSource = list2;
-            //}
-            //else
-            //{
-            //    dgvPaymentReceipt.ItemsSource = BLL.TrialBalance.toList;
-            //}
-
+            dgvReceiptAndPayment.ItemsSource = BLL.ReceiptAndPayment.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
         }
+
 
     }
 }

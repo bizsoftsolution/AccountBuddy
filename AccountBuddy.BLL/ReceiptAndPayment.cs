@@ -7,18 +7,16 @@ using System.Threading.Tasks;
 
 namespace AccountBuddy.BLL
 {
-    public class GeneralLedger: INotifyPropertyChanged
+    public class ReceiptAndPayment : INotifyPropertyChanged
     {
         #region Fields
         private long _EId;
         private Char _EType;
         private DateTime? _EDate;
-        private String _EntryNo;        
+        private String _EntryNo;
         private string _RefNo;
         private Ledger _Ledger;
-        private decimal _CrAmt;
-        private decimal _DrAmt;
-        private decimal _BalAmt;
+        private decimal _Amount;
         private string _AccountName;
 
         #endregion
@@ -99,7 +97,7 @@ namespace AccountBuddy.BLL
                     NotifyPropertyChanged(nameof(EntryNo));
                 }
             }
-        }   
+        }
         public Ledger Ledger
         {
             get
@@ -115,52 +113,22 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal CrAmt
+        public decimal Amount
         {
             get
             {
-                return _CrAmt;
+                return _Amount;
             }
             set
             {
-                if (_CrAmt != value)
+                if (_Amount != value)
                 {
-                    _CrAmt = value;
-                    NotifyPropertyChanged(nameof(CrAmt));
+                    _Amount = value;
+                    NotifyPropertyChanged(nameof(Amount));
                 }
             }
         }
-        public decimal DrAmt
-        {
-            get
-            {
-                return _DrAmt;
-            }
-            set
-            {
-                if (_DrAmt != value)
-                {
-                    _DrAmt = value;
-                    NotifyPropertyChanged(nameof(DrAmt));
-                }
-            }
-        }
-        public decimal BalAmt
-        {
-            get
-            {
-                return _BalAmt;
-            }
-            set
-            {
-                if (_BalAmt != value)
-                {
-                    _BalAmt = value;
-                    NotifyPropertyChanged(nameof(BalAmt));
-                }
-            }
-        }
-
+       
         public string AccountName
         {
             get
@@ -196,9 +164,9 @@ namespace AccountBuddy.BLL
 
         #region Methods
 
-        public static List<GeneralLedger> ToList(int LedgerId, DateTime dtFrom, DateTime dtTo)
+        public static List<ReceiptAndPayment> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo)
         {
-            return ABClientHub.FMCGHub.Invoke<List<GeneralLedger>>("GeneralLedger_List",LedgerId, dtFrom, dtTo).Result;
+            return ABClientHub.FMCGHub.Invoke<List<ReceiptAndPayment>>("ReceiptAndPayment_List", LedgerId, dtFrom, dtTo).Result;
         }
 
         #endregion

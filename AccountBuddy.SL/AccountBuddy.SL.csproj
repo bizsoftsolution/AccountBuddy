@@ -161,6 +161,7 @@
     <Compile Include="Hubs\Receipt.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Hubs\ReceiptAndPayment.cs" />
     <Compile Include="Hubs\Report.cs" />
     <Compile Include="Hubs\SLUser.cs" />
     <Compile Include="Hubs\TrialBalance.cs" />
