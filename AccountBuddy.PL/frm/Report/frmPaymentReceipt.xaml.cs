@@ -45,32 +45,38 @@ namespace AccountBuddy.PL.frm.Report
 
         private void LoadReport()
         {
-            List<BLL.ReceiptAndPayment> list = BLL.ReceiptAndPayment.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-            list = list.Select(x => new BLL.ReceiptAndPayment()
-            { AccountName = x.Ledger.AccountName, Amount = x.Amount}).ToList();
+            try
+            {
+                List<BLL.ReceiptAndPayment> list = BLL.ReceiptAndPayment.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                list = list.Select(x => new BLL.ReceiptAndPayment()
+                { AccountName = x.Ledger.AccountName, Amount = x.Amount , EDate=x.EDate, EntryNo=x.EntryNo, EType=x.EType, Ledger=x.Ledger, RefNo=x.RefNo}).ToList();
 
             try
             {
                 rptPaymentReceipt.Reset();
                 ReportDataSource data = new ReportDataSource("ReceiptAndPayment", list);
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
                 rptPaymentReceipt.LocalReport.DataSources.Add(data);
                 rptPaymentReceipt.LocalReport.DataSources.Add(data1);
                 rptPaymentReceipt.LocalReport.ReportPath = @"rpt\Report\rptPaymentReceipt.rdlc";
 
-                ReportParameter[] par = new ReportParameter[2];
-                par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
-                par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
-                rptPaymentReceipt.LocalReport.SetParameters(par);
+                    ReportParameter[] par = new ReportParameter[2];
+                    par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
+                    par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
+                    rptPaymentReceipt.LocalReport.SetParameters(par);
 
-                rptPaymentReceipt.RefreshReport();
+                    rptPaymentReceipt.RefreshReport();
 
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
 
             }
-
 
         }
 

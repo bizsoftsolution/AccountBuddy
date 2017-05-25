@@ -51,7 +51,7 @@ namespace AccountBuddy.BLL
         private ObservableCollection<PaymentDetail> _PDetails;
         private static List<string> _PayModeList;
         private static List<string> _StatusList;
-     
+
 
         #endregion
 
@@ -158,6 +158,7 @@ namespace AccountBuddy.BLL
                 if (_LedgerId != value)
                 {
                     _LedgerId = value;
+                   
                     NotifyPropertyChanged(nameof(LedgerId));
                 }
             }
@@ -180,17 +181,11 @@ namespace AccountBuddy.BLL
 
                     if (value == "Cash")
                     {
-                        //LedgerName = "Cash Account";
-                        LedgerId = BLL.Ledger.toList.Where(x => x.LedgerName == "Cash Account").Select(x => x.Id).FirstOrDefault();
+                        LedgerId = Ledger.toList.Where(x => x.LedgerName == "Cash Account").Select(x => x.Id).FirstOrDefault();
                         IsLedgerEditable = false;
-                           
-                    }
-                    else
-                    {
-                        IsLedgerEditable = true;
-                        LedgerId = 0;
 
                     }
+                  
 
 
 
@@ -559,13 +554,15 @@ namespace AccountBuddy.BLL
         {
             get
             {
+              
+                
                 return Ledger.toList;
             }
-            
+
 
         }
 
-      
+
         public static ObservableCollection<Ledger> CashLedgerList
         {
             get
