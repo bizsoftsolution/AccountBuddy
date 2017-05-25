@@ -35,7 +35,7 @@ namespace AccountBuddy.PL.frm.Vouchers
                 List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
             
                 PList.Add(data);
-                  CList.Add(BLL.UserAccount.Company);
+                  CList.Add(BLL.UserAccount.User.UserType.Company);
 
                 rptQuickPayment.Reset();
                 ReportDataSource data1 = new ReportDataSource("Payment", PList);

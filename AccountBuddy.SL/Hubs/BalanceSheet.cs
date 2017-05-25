@@ -18,8 +18,8 @@ namespace AccountBuddy.SL.Hubs
             BLL.BalanceSheet tb = new BLL.BalanceSheet();
 
 
-            var lstLedgerAssets = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName=="Assets").ToList();
-            var lstLedgerLiability= DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Liabilities").ToList();
+            var lstLedgerAssets = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName=="Assets").ToList();
+            var lstLedgerLiability= DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Liabilities").ToList();
             decimal TotAssDr = 0, TotAssCr = 0, TotLiDr=0, TotLiCr=0;
 
             #region Assets
@@ -45,9 +45,7 @@ namespace AccountBuddy.SL.Hubs
                 tb.LedgerList = new BLL.Ledger();
 
                 l.toCopy<BLL.Ledger>(tb.LedgerList);
-                tb.LedgerList.GroupCode = l.AccountGroup.GroupCode;
-                tb.LedgerList.GroupName = l.AccountGroup.GroupName;
-
+                
                 OPDr = l.OPDr ?? 0;
                 OPCr = l.OPCr ?? 0;
 
@@ -141,10 +139,7 @@ namespace AccountBuddy.SL.Hubs
                 tb = new BLL.BalanceSheet();
                 tb.LedgerList = new BLL.Ledger();
 
-                l.toCopy<BLL.Ledger>(tb.LedgerList);
-                tb.LedgerList.GroupCode = l.AccountGroup.GroupCode;
-                tb.LedgerList.GroupName = l.AccountGroup.GroupName;
-
+                l.toCopy<BLL.Ledger>(tb.LedgerList);                
                 OPInDr = l.OPDr ?? 0;
                 OPInCr = l.OPCr ?? 0;
 

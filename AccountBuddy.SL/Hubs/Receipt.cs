@@ -169,7 +169,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Receipt> Receipt_RPendingList()
         {
-            return RPendingList.Where(x => x.RLedger.CompanyId == Caller.CompanyId).ToList();
+            return RPendingList.Where(x => x.RLedger.AccountGroup.Company.Id == Caller.CompanyId).ToList();
         }
 
         public bool Find_REntryNo(string entryNo, BLL.Receipt PO)

@@ -17,7 +17,7 @@ namespace AccountBuddy.SL.Hubs
 
             BLL.TrialBalance tb = new BLL.TrialBalance();
 
-            var lstLedger = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId).ToList();
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
             decimal TotDr = 0, TotCr = 0;
 
 
@@ -32,9 +32,7 @@ namespace AccountBuddy.SL.Hubs
                 tb.Ledger = new BLL.Ledger();
 
                 l.toCopy<BLL.Ledger>(tb.Ledger);                
-                tb.Ledger.GroupCode = l.AccountGroup.GroupCode;
-                tb.Ledger.GroupName = l.AccountGroup.GroupName;
-
+                
                 OPDr = l.OPDr ?? 0;
                 OPCr = l.OPCr ?? 0;
 

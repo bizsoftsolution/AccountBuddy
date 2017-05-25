@@ -88,46 +88,28 @@ namespace AccountBuddy.SL.Hubs
             {
                 BLL.CompanyDetail b = ListCompany.Where(x => x.Id == sgp.Id).FirstOrDefault();
                 DAL.CompanyDetail d = DB.CompanyDetails.Where(x => x.Id == sgp.Id).FirstOrDefault();
-
+                
                 if (d == null)
                 {
 
                     b = new BLL.CompanyDetail();
                     ListCompany.Add(b);
 
-
                     d = new DAL.CompanyDetail();
                     DB.CompanyDetails.Add(d);
 
                     sgp.toCopy<DAL.CompanyDetail>(d);
-
-                    DAL.UserAccount ua = new DAL.UserAccount();
-                    ua.LoginId = sgp.UserId;
-                    ua.UserName = sgp.UserId;
-                    ua.Password = sgp.Password;
-                    ua.UserTypeId = 1;
-                    d.UserAccounts.Add(ua);
-
-                     DB.SaveChanges();
+             
+                    DB.SaveChanges();
                     d.toCopy<BLL.CompanyDetail>(b);
                     sgp.Id = d.Id;
-
-                    DAL.Ledger Led = new DAL.Ledger();
-                    Led.LedgerName = "Cash Account";
-                    Led.AccountGroupId = 41;
-                    Led.CompanyId = d.Id;
-                    DB.Ledgers.Add(Led);
-
-                    DB.SaveChanges();
-
-                    // LogDetailStore(sgp, LogDetailType.INSERT);
+                    if (d.Id != 0) CompanySetup(sgp);
                 }
                 else
                 {
                     sgp.toCopy<BLL.CompanyDetail>(b);
                     sgp.toCopy<DAL.CompanyDetail>(d);
-                    DB.SaveChanges();
-                    // LogDetailStore(sgp, LogDetailType.UPDATE);
+                    DB.SaveChanges();                    
                 }
 
                 Clients.Others.CompanyDetail_Save(sgp);
@@ -136,6 +118,52 @@ namespace AccountBuddy.SL.Hubs
             }
             catch (Exception ex) { }
             return 0;
+        }
+
+        public void CompanyDetail_Delete(int pk)
+        {
+            try
+            {
+                var d = DB.CompanyDetails.Where(x => x.Id == pk).FirstOrDefault();
+                if (d != null)
+                {                    
+                    DB.CompanyDetails.Remove(d);
+                    DB.SaveChanges();
+                    LogDetailStore(d.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail()), LogDetailType.DELETE);                   
+                }
+
+                Clients.Clients(OtherLoginClientsOnGroup).CompanyDetail_Delete(pk);
+                Clients.All.delete(pk);
+            }
+            catch (Exception ex) { }
+        }
+
+        private void CompanySetup(BLL.CompanyDetail sgp)
+        {
+            DAL.UserAccount ua = new DAL.UserAccount();
+            ua.LoginId = sgp.UserId;
+            ua.UserName = sgp.UserId;
+            ua.Password = sgp.Password;
+
+            DAL.UserType ut = new DAL.UserType();
+            ut.TypeOfUser = "Administrator";
+            ut.CompanyId = sgp.Id;
+            ut.UserAccounts.Add(ua);
+            
+
+            foreach(var utfd in DB.UserTypeFormDetails)
+            {
+                DAL.UserTypeDetail utd = new DAL.UserTypeDetail();
+                utd.UserTypeFormDetailId = utfd.Id;
+                utd.IsViewForm = true;
+                utd.AllowInsert = true;
+                utd.AllowUpdate = true;
+                utd.AllowDelete = true;
+                ut.UserTypeDetails.Add(utd);
+            }
+
+            DB.UserTypes.Add(ut);
+            DB.SaveChanges();
         }
 
         #endregion

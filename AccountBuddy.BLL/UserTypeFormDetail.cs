@@ -17,6 +17,12 @@ namespace AccountBuddy.BLL
         private string _FormName;
         private string _FormType;
         private string _OrderNo;
+        private bool _IsInsert;
+        private bool _IsUpdate;
+        private bool _IsDelete;
+        private bool _IsMenu;
+        private string _Description;
+
         private static ObservableCollection<UserTypeFormDetail> _toList;
 
         #endregion
@@ -85,6 +91,86 @@ namespace AccountBuddy.BLL
                     NotifyPropertyChanged(nameof(OrderNo));
                 }
 
+            }
+        }
+
+        public bool IsInsert
+        {
+            get
+            {
+                return _IsInsert;
+            }
+            set
+            {
+                if (_IsInsert != value)
+                {
+                    _IsInsert = value;
+                    NotifyPropertyChanged(nameof(IsInsert));
+                }
+            }
+        }
+
+        public bool IsUpdate
+        {
+            get
+            {
+                return _IsUpdate;
+            }
+            set
+            {
+                if (_IsUpdate != value)
+                {
+                    _IsUpdate = value;
+                    NotifyPropertyChanged(nameof(IsUpdate));
+                }
+            }
+        }
+
+        public bool IsDelete
+        {
+            get
+            {
+                return _IsDelete;
+            }
+            set
+            {
+                if (_IsDelete != value)
+                {
+                    _IsDelete = value;
+                    NotifyPropertyChanged(nameof(IsDelete));
+                }
+            }
+        }
+
+        public bool IsMenu
+        {
+            get
+            {
+                return _IsMenu;
+            }
+            set
+            {
+                if (_IsMenu != value)
+                {
+                    _IsMenu = value;
+                    NotifyPropertyChanged(nameof(IsMenu));
+                }
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                if (_Description != value)
+                {
+                    _Description = value;
+                    NotifyPropertyChanged(nameof(Description));
+                }
             }
         }
 

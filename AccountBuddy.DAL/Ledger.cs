@@ -18,7 +18,6 @@ namespace AccountBuddy.DAL
         public Ledger()
         {
             this.JournalDetails = new HashSet<JournalDetail>();
-            this.LedgerOpenings = new HashSet<LedgerOpening>();
             this.Payments = new HashSet<Payment>();
             this.PaymentDetails = new HashSet<PaymentDetail>();
             this.Receipts = new HashSet<Receipt>();
@@ -42,14 +41,11 @@ namespace AccountBuddy.DAL
         public Nullable<decimal> OPCr { get; set; }
         public string LedgerCode { get; set; }
         public int AccountGroupId { get; set; }
-        public int CompanyId { get; set; }
     
         public virtual AccountGroup AccountGroup { get; set; }
         public virtual CreditLimitType CreditLimitType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JournalDetail> JournalDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LedgerOpening> LedgerOpenings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

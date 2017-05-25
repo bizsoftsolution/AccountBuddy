@@ -16,7 +16,7 @@ namespace AccountBuddy.SL.Hubs
 
             BLL.GeneralLedger gl = new BLL.GeneralLedger();
 
-            var lstLedger = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && x.Id == LedgerId).ToList();
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == LedgerId).ToList();
             decimal TotDr = 0, TotCr = 0;
             
             #region Ledger
@@ -29,8 +29,6 @@ namespace AccountBuddy.SL.Hubs
                 gl.Ledger = new BLL.Ledger();
 
                 l.toCopy<BLL.Ledger>(gl.Ledger);
-                gl.Ledger.GroupCode = l.AccountGroup.GroupCode;
-                gl.Ledger.GroupName = l.AccountGroup.GroupName;
 
                 OPDr = l.OPDr ?? 0;
                 OPCr = l.OPCr ?? 0;

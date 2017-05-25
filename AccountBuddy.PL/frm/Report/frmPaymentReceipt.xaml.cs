@@ -25,7 +25,7 @@ namespace AccountBuddy.PL.frm.Report
         {
             InitializeComponent();
             rptPaymentReceipt.SetDisplayMode(DisplayMode.PrintLayout);
-            int yy = BLL.UserAccount.Company.LoginAccYear;
+            int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
 
             DateTime? dtFrom = new DateTime(yy, 4, 1);
             DateTime? dtTo = new DateTime(yy + 1, 3, 31);
@@ -53,7 +53,7 @@ namespace AccountBuddy.PL.frm.Report
             {
                 rptPaymentReceipt.Reset();
                 ReportDataSource data = new ReportDataSource("ReceiptAndPayment", list);
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptPaymentReceipt.LocalReport.DataSources.Add(data);
                 rptPaymentReceipt.LocalReport.DataSources.Add(data1);
                 rptPaymentReceipt.LocalReport.ReportPath = @"rpt\Report\rptPaymentReceipt.rdlc";

@@ -18,8 +18,8 @@ namespace AccountBuddy.SL.Hubs
             BLL.ProfitLoss tb = new BLL.ProfitLoss();
 
 
-            var lstLedgerIncome = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Income").ToList();
-            var lstLedgerLiability = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Expenses").ToList();
+            var lstLedgerIncome = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Income").ToList();
+            var lstLedgerLiability = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Expenses").ToList();
             decimal  TotIn=0, TotEx=0;
 
             #region Income
@@ -44,9 +44,7 @@ namespace AccountBuddy.SL.Hubs
                 tb.Ledger = new BLL.Ledger();
 
                 l.toCopy<BLL.Ledger>(tb.Ledger);
-                tb.Ledger.GroupCode = l.AccountGroup.GroupCode;
-                tb.Ledger.GroupName = l.AccountGroup.GroupName;
-
+                
                 OPDr = l.OPDr ?? 0;
                 OPCr = l.OPCr ?? 0;
 
@@ -142,8 +140,6 @@ namespace AccountBuddy.SL.Hubs
                 tb.Ledger = new BLL.Ledger();
 
                 l.toCopy<BLL.Ledger>(tb.Ledger);
-                tb.Ledger.GroupCode = l.AccountGroup.GroupCode;
-                tb.Ledger.GroupName = l.AccountGroup.GroupName;
 
                 OPInDr = l.OPDr ?? 0;
                 OPInCr = l.OPCr ?? 0;

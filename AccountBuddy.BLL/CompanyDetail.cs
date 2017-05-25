@@ -21,16 +21,14 @@ namespace AccountBuddy.BLL
         private string _CompanyName;
         private string _addressLine1;
         private string _addressLine2;
+        private string _CityName;
         private string _postalCode;
         private string _telephoneNo;
         private string _mobileNo;
         private string _eMailId;
         private string _gstNo;
         private byte[] _logo;
-
-        private string _CityName;
-        private int _UnderCompanyId;
-        private string _CompanyType;
+        private bool _IsActive;
         private string _UserId;
         private string _Password;
 
@@ -112,6 +110,23 @@ namespace AccountBuddy.BLL
                 {
                     _CompanyName = value;
                     NotifyPropertyChanged(nameof(CompanyName));
+                }
+            }
+        }
+
+        public bool IsActive
+        {
+            get
+            {
+                return _IsActive;
+            }
+
+            set
+            {
+                if (_IsActive != value)
+                {
+                    _IsActive = value;
+                    NotifyPropertyChanged(nameof(IsActive));
                 }
             }
         }
@@ -297,39 +312,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public int UnderCompanyId
-        {
-            get
-            {
-                return _UnderCompanyId;
-            }
-            set
-            {
-                if (_UnderCompanyId != value)
-                {
-                    _UnderCompanyId = value;
-                    NotifyPropertyChanged(nameof(UnderCompanyId));
-                }
-            }
-        }
-
-        public string CompanyType
-        {
-            get
-            {
-                return _CompanyType;
-            }
-            set
-            {
-                if (_CompanyType != value)
-                {
-                    _CompanyType = value;
-                    NotifyPropertyChanged(nameof(CompanyType));
-                }
-            }
-        }
-
-        #endregion
+           #endregion
 
         #region Property  Changed Event
 
@@ -434,6 +417,18 @@ namespace AccountBuddy.BLL
 
         }
 
+        public bool Delete(bool isServerCall = false)
+        {
+            var d = toList.Where(x => x.Id == Id).FirstOrDefault();
+            if (d != null)
+            {
+                toList.Remove(d);
+                if (isServerCall == false) ABClientHub.FMCGHub.Invoke<int>("CompanyDetail_Delete", this.Id);
+                return true;
+            }
+
+            return false;
+        }
 
         #endregion
     }

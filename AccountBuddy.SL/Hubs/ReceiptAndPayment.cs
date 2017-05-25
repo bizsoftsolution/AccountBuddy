@@ -16,7 +16,7 @@ namespace AccountBuddy.SL.Hubs
 
             BLL.ReceiptAndPayment rp = new BLL.ReceiptAndPayment();
 
-            var lstLedger = DB.Ledgers.Where(x => x.CompanyId == Caller.CompanyId && (LedgerId==null || x.Id == LedgerId)).ToList();
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && (LedgerId==null || x.Id == LedgerId)).ToList();
             
             #region Ledger
 

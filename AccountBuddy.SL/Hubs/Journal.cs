@@ -178,7 +178,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Journal> Journal_JPendingList()
         {
-            return JPendingList.Where(x => x.JDetail.JLedger.CompanyId == Caller.CompanyId).ToList();
+            return JPendingList.Where(x => x.JDetail.JLedger.AccountGroup.Company.Id == Caller.CompanyId).ToList();
         }
 
         public bool Find_JEntryNo(string entryNo, BLL.Payment PO)

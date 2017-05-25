@@ -10,35 +10,19 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
         #region UserAccount
-        public static List<BLL.UserAccount> _UserAccountList;
-        public static List<BLL.UserAccount> UserAccountList
+
+        private BLL.UserAccount UserAccountDAL_BLL(DAL.UserAccount d)
         {
-            get
-            {
-                if (_UserAccountList == null)
-                {
-                    _UserAccountList = DB.UserAccounts.Select(x => new BLL.UserAccount()
-                    {
-                        Id = x.Id,
-                        UserName = x.UserName,
-                        LoginId = x.LoginId,
-                        Password = x.Password,
-                        UserTypeId = x.UserTypeId,
-                        UserTypeName = x.UserType.TypeOfUser,
-                        CompanyId = x.CompanyId
-                    }
-                    ).ToList();
-                }
-                return _UserAccountList;
-            }
+            BLL.UserAccount b = d.toCopy<BLL.UserAccount>(new BLL.UserAccount());
+            b.UserType = UserTypeDAL_BLL(d.UserType);
+            return b;
         }
         
         public BLL.UserAccount UserAccount_Login(string AccYear, String CompanyName, String LoginId, String Password)
         {
-            BLL.UserAccount u = new BLL.UserAccount();
 
             DAL.UserAccount ua = DB.UserAccounts
-                                   .Where(x => x.CompanyDetail.CompanyName == CompanyName
+                                   .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
 
                                                 && x.LoginId == LoginId
                                                 
@@ -46,59 +30,57 @@ namespace AccountBuddy.SL.Hubs
                                    .FirstOrDefault();
             if (ua != null)
             {
-                Groups.Add(Context.ConnectionId, ua.CompanyId.ToString());
-                Caller.CompanyId = ua.CompanyId;
+                Groups.Add(Context.ConnectionId, ua.UserType.CompanyId.ToString());
+                Caller.CompanyId = ua.UserType.CompanyId;
                 Caller.UserId = ua.Id;
                 Caller.AccYear = AccYear;
-                ua.toCopy<BLL.UserAccount>(u);
+                BLL.UserAccount u = UserAccountDAL_BLL(ua);
+                int yy = DateTime.Now.Month < 4 ? DateTime.Now.Year - 1 : DateTime.Now.Year;
+                int.TryParse(AccYear.Substring(0, 4), out yy);
+                u.UserType.Company.LoginAccYear = yy;
+                return u;
+            }
+            else
+            {
+                return new BLL.UserAccount();
             }
 
-           
-            return u;
+            
         }
 
         public List<BLL.UserAccount> UserAccount_List()
         {
-            return UserAccountList.Where(x => x.CompanyId == Caller.CompanyId).ToList();
+            return DB.UserAccounts.Where(x => x.UserType.CompanyDetail.Id == Caller.CompanyId).ToList()
+                                  .Select(x=> UserAccountDAL_BLL(x)).ToList();
         }
 
-        public int UserAccount_Save(BLL.UserAccount UserAccount)
+        public int UserAccount_Save(BLL.UserAccount ua)
         {
             try
             {
-                UserAccount.CompanyId = Caller.CompanyId;
-
-                BLL.UserAccount b = UserAccountList.Where(x => x.Id == UserAccount.Id).FirstOrDefault();
-                DAL.UserAccount d = DB.UserAccounts.Where(x => x.Id == UserAccount.Id).FirstOrDefault();
+                DAL.UserAccount d = DB.UserAccounts.Where(x => x.Id == ua.Id).FirstOrDefault();
 
                 if (d == null)
                 {
-
-                    b = new BLL.UserAccount();
-                    UserAccountList.Add(b);
-
                     d = new DAL.UserAccount();
                     DB.UserAccounts.Add(d);
 
-                    UserAccount.toCopy<DAL.UserAccount>(d);
+                    ua.toCopy<DAL.UserAccount>(d);
                     DB.SaveChanges();
-                    d.toCopy<BLL.UserAccount>(b);
 
-                    DB.SaveChanges();
-                    UserAccount.Id = d.Id;
-                    LogDetailStore(UserAccount, LogDetailType.INSERT);
+                    ua.Id = d.Id;
+                    LogDetailStore(ua, LogDetailType.INSERT);
                 }
                 else
                 {
-                    UserAccount.toCopy<BLL.UserAccount>(b);
-                    UserAccount.toCopy<DAL.UserAccount>(d);
+                    ua.toCopy<DAL.UserAccount>(d);
                     DB.SaveChanges();
-                    LogDetailStore(UserAccount, LogDetailType.UPDATE);
+                    LogDetailStore(ua, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).UserAccount_Save(UserAccount);
+                Clients.Clients(OtherLoginClientsOnGroup).UserAccount_Save(ua);
 
-                return UserAccount.Id;
+                return ua.Id;
             }
             catch (Exception ex) { }
             return 0;
@@ -108,23 +90,18 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                BLL.UserAccount b = UserAccountList.Where(x => x.Id == pk).FirstOrDefault();
-                if (b != null)
+                var d = DB.UserAccounts.Where(x => x.Id == pk).FirstOrDefault();
+                if (d != null)
                 {
-                    var d = DB.UserAccounts.Where(x => x.Id == pk).FirstOrDefault();
-
                     DB.UserAccounts.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(b, LogDetailType.DELETE);
-                    UserAccountList.Remove(b);
+                    LogDetailStore(d.toCopy<BLL.UserAccount>(new BLL.UserAccount()), LogDetailType.DELETE);                    
                 }
-
                 Clients.Clients(OtherLoginClientsOnGroup).UserAccount_Delete(pk);
                 Clients.All.delete(pk);
             }
             catch (Exception ex) { }
         }
-
         
         #endregion
     }

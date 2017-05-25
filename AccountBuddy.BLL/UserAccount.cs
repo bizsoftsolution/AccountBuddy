@@ -13,21 +13,17 @@ namespace AccountBuddy.BLL
     {
         #region Field
 
-        public static UserAccount User = new UserAccount();
-        public static CompanyDetail Company = new CompanyDetail();
-        public static UserType Type = new UserType();
-        public static ObservableCollection<UserTypeDetail> TypeDetails = new ObservableCollection<UserTypeDetail>();
-
+        public static UserAccount User = new UserAccount();        
+        
         private static ObservableCollection<UserAccount> _toList;
         public List<BLL.Validation> lstValidation = new List<BLL.Validation>();
 
-        private int _id;
-        private int _companyId;
-        private int _userTypeId;
+        private int _id;        
         private string _userName;
         private string _loginId;
         private string _password;
-        private string _UserTypeName;
+        private int _UserTypeId;
+        private UserType _UserType;
         #endregion
 
         #region Property
@@ -62,36 +58,6 @@ namespace AccountBuddy.BLL
                 {
                     _id = value;
                     NotifyPropertyChanged(nameof(Id));
-                }
-            }
-        }
-        public int CompanyId
-        {
-            get
-            {
-                return _companyId;
-            }
-            set
-            {
-                if (_companyId != value)
-                {
-                    _companyId = value;
-                    NotifyPropertyChanged(nameof(CompanyId));
-                }
-            }
-        }
-        public int UserTypeId
-        {
-            get
-            {
-                return _userTypeId;
-            }
-            set
-            {
-                if (_userTypeId != value)
-                {
-                    _userTypeId = value;
-                    NotifyPropertyChanged(nameof(UserTypeId));
                 }
             }
         }
@@ -140,19 +106,33 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public string UserTypeName
+        public int UserTypeId
         {
             get
             {
-                return _UserTypeName;
+                return _UserTypeId;
             }
             set
             {
-                if (_UserTypeName != value)
+                if (_UserTypeId != value)
                 {
-                    _UserTypeName = value;
-                    NotifyPropertyChanged(nameof(UserTypeName));
+                    _UserTypeId = value;
+                    NotifyPropertyChanged(nameof(UserTypeId));
+                }
+            }
+        }
+        public UserType UserType
+        {
+            get
+            {
+                return _UserType;
+            }
+            set
+            {
+                if (_UserType != value)
+                {
+                    _UserType = value;
+                    NotifyPropertyChanged(nameof(UserType));
                 }
             }
         }
@@ -182,16 +162,8 @@ namespace AccountBuddy.BLL
             if ( isValidLogin(ua,AccYear,CompanyName, LId,Pwd))
             {
                 try
-                {
-                    DateTime d = DateTime.Now;
-                    int yy = d.Month < 4 ? d.Year - 1 : d.Year;
-                    int.TryParse(AccYear.Substring(0, 4), out yy);
-
-                    User = ua;
-                    Company = CompanyDetail.toList.Where(x => x.Id == ua.CompanyId).FirstOrDefault();
-                    Company.LoginAccYear = yy;
-                    Type = UserType.toList.Where(x => x.Id == ua.UserTypeId).FirstOrDefault();
-                    TypeDetails = new ObservableCollection<UserTypeDetail>(UserTypeDetail.ToList.Where(x => x.UserTypeId == ua.UserTypeId).ToList());
+                {                    
+                    User = ua;        
                     Data_Init();
                     return "";
                 }
@@ -213,7 +185,7 @@ namespace AccountBuddy.BLL
         public static bool AllowFormShow(string FormName)
         {
             bool rv = true;
-            var t = TypeDetails.Where(x => x.FormName == FormName).FirstOrDefault();
+            var t =  User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == FormName).FirstOrDefault();
             if (t != null) rv = t.IsViewForm;
             return rv;
         }
@@ -221,7 +193,7 @@ namespace AccountBuddy.BLL
         public static bool AllowInsert(string FormName)
         {
             bool rv = true;
-            var t = TypeDetails.Where(x => x.FormName == FormName).FirstOrDefault();
+            var t = User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == FormName).FirstOrDefault();
             if (t != null) rv = t.AllowInsert;
             return rv;
         }
@@ -229,7 +201,7 @@ namespace AccountBuddy.BLL
         public static bool AllowUpdate(string FormName)
         {
             bool rv = true;
-            var t = TypeDetails.Where(x => x.FormName == FormName).FirstOrDefault();
+            var t = User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == FormName).FirstOrDefault();
             if (t != null) rv = t.AllowUpdate;
             return rv;
         }
@@ -237,7 +209,7 @@ namespace AccountBuddy.BLL
         public static bool AllowDelete(string FormName)
         {
             bool rv = true;
-            var t = TypeDetails.Where(x => x.FormName == FormName).FirstOrDefault();
+            var t = User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == FormName).FirstOrDefault();
             if (t != null) rv = t.AllowDelete;
             return rv;
         }
@@ -333,13 +305,11 @@ namespace AccountBuddy.BLL
                 lstValidation.Add(new Validation() { Name = nameof(Password), Message = string.Format(Message.BLL.Required_Data, nameof(Password)) });
                 RValue = false;
             }
-            if (string.IsNullOrWhiteSpace(UserTypeName))
+            if (UserType ==null)
             {
-                lstValidation.Add(new Validation() { Name = nameof(UserTypeName), Message = string.Format(Message.BLL.Required_Data, nameof(UserTypeName)) });
+                lstValidation.Add(new Validation() { Name = nameof(UserType), Message = string.Format(Message.BLL.Required_Data, nameof(UserType)) });
                 RValue = false;
             }
-
-
             return RValue;
 
         }

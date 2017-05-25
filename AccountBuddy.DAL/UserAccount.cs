@@ -22,7 +22,6 @@ namespace AccountBuddy.DAL
         }
     
         public int Id { get; set; }
-        public int CompanyId { get; set; }
         public int UserTypeId { get; set; }
         public string UserName { get; set; }
         public string LoginId { get; set; }
@@ -33,6 +32,5 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LogMaster> LogMasters { get; set; }
         public virtual UserType UserType { get; set; }
-        public virtual CompanyDetail CompanyDetail { get; set; }
     }
 }

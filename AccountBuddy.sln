@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountBuddy.BLL", "AccountBuddy.BLL\AccountBuddy.BLL.csproj", "{76991D67-FB80-4181-A9F1-A12280FB4327}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountBuddy.PL", "AccountBuddy.PL\AccountBuddy.PL.csproj", "{D8616E9B-4C24-488B-A56D-E283FC0531CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountBuddy.SL", "AccountBuddy.SL\AccountBuddy.SL.csproj", "{56456998-439D-49E0-9DCE-2611DEE182E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountBuddy.PLAPK", "AccountBuddy.PLAPK\AccountBuddy.PLAPK.csproj", "{EBD64DC4-A981-4EF1-9320-08EB51ECB3DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,12 @@ Global
 		{56456998-439D-49E0-9DCE-2611DEE182E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56456998-439D-49E0-9DCE-2611DEE182E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56456998-439D-49E0-9DCE-2611DEE182E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBD64DC4-A981-4EF1-9320-08EB51ECB3DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBD64DC4-A981-4EF1-9320-08EB51ECB3DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBD64DC4-A981-4EF1-9320-08EB51ECB3DD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EBD64DC4-A981-4EF1-9320-08EB51ECB3DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBD64DC4-A981-4EF1-9320-08EB51ECB3DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBD64DC4-A981-4EF1-9320-08EB51ECB3DD}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

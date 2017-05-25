@@ -25,6 +25,11 @@ namespace AccountBuddy.DAL
         public string FormType { get; set; }
         public string OrderNo { get; set; }
         public bool IsActive { get; set; }
+        public bool IsInsert { get; set; }
+        public bool IsUpdate { get; set; }
+        public bool IsDelete { get; set; }
+        public bool IsMenu { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserTypeDetail> UserTypeDetails { get; set; }

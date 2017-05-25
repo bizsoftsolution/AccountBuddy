@@ -13,6 +13,7 @@
           <Property Name="GroupName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="UnderGroupId" Type="int" />
           <Property Name="GroupCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CompanyDetail">
           <Key>
@@ -29,6 +30,7 @@
           <Property Name="EMailId" Type="nvarchar" MaxLength="100" />
           <Property Name="GSTNo" Type="nvarchar" MaxLength="20" />
           <Property Name="Logo" Type="image" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -100,17 +102,6 @@
           <Property Name="OPCr" Type="money" />
           <Property Name="LedgerCode" Type="nvarchar" MaxLength="10" />
           <Property Name="AccountGroupId" Type="int" Nullable="false" />
-          <Property Name="CompanyId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LedgerOpening">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="LedgerId" Type="int" />
-          <Property Name="AcYear" Type="nvarchar" MaxLength="20" />
-          <Property Name="DrAmt" Type="money" />
-          <Property Name="CrAmt" Type="money" />
         </EntityType>
         <EntityType Name="LogDetail">
           <Key>
@@ -209,7 +200,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CompanyId" Type="int" Nullable="false" />
           <Property Name="UserTypeId" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LoginId" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -222,6 +212,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TypeOfUser" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserTypeDetail">
           <Key>
@@ -244,6 +235,11 @@
           <Property Name="FormType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="OrderNo" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsInsert" Type="bit" Nullable="false" />
+          <Property Name="IsUpdate" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="IsMenu" Type="bit" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <Association Name="FK_AccountGroup_AccountGroup">
           <End Role="AccountGroup" Type="Self.AccountGroup" Multiplicity="0..1" />
@@ -254,6 +250,18 @@
             </Principal>
             <Dependent Role="AccountGroup1">
               <PropertyRef Name="UnderGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountGroup_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
+          <End Role="AccountGroup" Type="Self.AccountGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountGroup">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -302,18 +310,6 @@
             </Principal>
             <Dependent Role="Ledger">
               <PropertyRef Name="CreditLimitTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LedgerOpening_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
-          <End Role="LedgerOpening" Type="Self.LedgerOpening" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LedgerOpening">
-              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -449,18 +445,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserAccount_CompanyDetail">
-          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
-          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserAccount">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserAccount_UserType">
           <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
           <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
@@ -470,6 +454,18 @@
             </Principal>
             <Dependent Role="UserAccount">
               <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserType_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
+          <End Role="UserType" Type="Self.UserType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserType">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -506,7 +502,6 @@
           <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JournalDetail" EntityType="Self.JournalDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ledger" EntityType="Self.Ledger" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LedgerOpening" EntityType="Self.LedgerOpening" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogDetail" EntityType="Self.LogDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogDetailType" EntityType="Self.LogDetailType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogMaster" EntityType="Self.LogMaster" Schema="dbo" store:Type="Tables" />
@@ -521,6 +516,10 @@
           <AssociationSet Name="FK_AccountGroup_AccountGroup" Association="Self.FK_AccountGroup_AccountGroup">
             <End Role="AccountGroup" EntitySet="AccountGroup" />
             <End Role="AccountGroup1" EntitySet="AccountGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountGroup_CompanyDetail" Association="Self.FK_AccountGroup_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="AccountGroup" EntitySet="AccountGroup" />
           </AssociationSet>
           <AssociationSet Name="FK_JournalDetail_Journal" Association="Self.FK_JournalDetail_Journal">
             <End Role="Journal" EntitySet="Journal" />
@@ -537,10 +536,6 @@
           <AssociationSet Name="FK_Ledger_CreditLimitType" Association="Self.FK_Ledger_CreditLimitType">
             <End Role="CreditLimitType" EntitySet="CreditLimitType" />
             <End Role="Ledger" EntitySet="Ledger" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LedgerOpening_Ledger" Association="Self.FK_LedgerOpening_Ledger">
-            <End Role="Ledger" EntitySet="Ledger" />
-            <End Role="LedgerOpening" EntitySet="LedgerOpening" />
           </AssociationSet>
           <AssociationSet Name="FK_LogDetail_LogDetailType" Association="Self.FK_LogDetail_LogDetailType">
             <End Role="LogDetailType" EntitySet="LogDetailType" />
@@ -586,13 +581,13 @@
             <End Role="Receipt" EntitySet="Receipt" />
             <End Role="ReceiptDetail" EntitySet="ReceiptDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserAccount_CompanyDetail" Association="Self.FK_UserAccount_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
-            <End Role="UserAccount" EntitySet="UserAccount" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserAccount_UserType" Association="Self.FK_UserAccount_UserType">
             <End Role="UserType" EntitySet="UserType" />
             <End Role="UserAccount" EntitySet="UserAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserType_CompanyDetail" Association="Self.FK_UserType_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="UserType" EntitySet="UserType" />
           </AssociationSet>
           <AssociationSet Name="FK_UserTypeDetail_UserType" Association="Self.FK_UserTypeDetail_UserType">
             <End Role="UserType" EntitySet="UserType" />
@@ -615,7 +610,6 @@
           <EntitySet Name="Journals" EntityType="DBAccountBuddyModel.Journal" />
           <EntitySet Name="JournalDetails" EntityType="DBAccountBuddyModel.JournalDetail" />
           <EntitySet Name="Ledgers" EntityType="DBAccountBuddyModel.Ledger" />
-          <EntitySet Name="LedgerOpenings" EntityType="DBAccountBuddyModel.LedgerOpening" />
           <EntitySet Name="LogDetails" EntityType="DBAccountBuddyModel.LogDetail" />
           <EntitySet Name="LogDetailTypes" EntityType="DBAccountBuddyModel.LogDetailType" />
           <EntitySet Name="LogMasters" EntityType="DBAccountBuddyModel.LogMaster" />
@@ -626,7 +620,6 @@
           <EntitySet Name="UserAccounts" EntityType="DBAccountBuddyModel.UserAccount" />
           <EntitySet Name="UserTypes" EntityType="DBAccountBuddyModel.UserType" />
           <EntitySet Name="UserTypeDetails" EntityType="DBAccountBuddyModel.UserTypeDetail" />
-          <EntitySet Name="UserTypeFormDetails" EntityType="DBAccountBuddyModel.UserTypeFormDetail" />
           <AssociationSet Name="FK_AccountGroup_AccountGroup" Association="DBAccountBuddyModel.FK_AccountGroup_AccountGroup">
             <End Role="AccountGroup" EntitySet="AccountGroups" />
             <End Role="AccountGroup1" EntitySet="AccountGroups" />
@@ -650,10 +643,6 @@
           <AssociationSet Name="FK_JournalDetail_Ledger" Association="DBAccountBuddyModel.FK_JournalDetail_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
             <End Role="JournalDetail" EntitySet="JournalDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LedgerOpening_Ledger" Association="DBAccountBuddyModel.FK_LedgerOpening_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="LedgerOpening" EntitySet="LedgerOpenings" />
           </AssociationSet>
           <AssociationSet Name="FK_Payment_Ledger" Association="DBAccountBuddyModel.FK_Payment_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
@@ -703,14 +692,19 @@
             <End Role="UserType" EntitySet="UserTypes" />
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
           </AssociationSet>
+          <EntitySet Name="UserTypeFormDetails" EntityType="DBAccountBuddyModel.UserTypeFormDetail" />
           <AssociationSet Name="FK_UserTypeDetail_UserTypeFormDetail" Association="DBAccountBuddyModel.FK_UserTypeDetail_UserTypeFormDetail">
             <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
           </AssociationSet>
           <EntitySet Name="CompanyDetails" EntityType="DBAccountBuddyModel.CompanyDetail" />
-          <AssociationSet Name="FK_UserAccount_CompanyDetail" Association="DBAccountBuddyModel.FK_UserAccount_CompanyDetail">
+          <AssociationSet Name="FK_AccountGroup_CompanyDetail" Association="DBAccountBuddyModel.FK_AccountGroup_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="AccountGroup" EntitySet="AccountGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserType_CompanyDetail" Association="DBAccountBuddyModel.FK_UserType_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="UserType" EntitySet="UserTypes" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
@@ -721,9 +715,11 @@
           <Property Name="GroupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="UnderGroupId" Type="Int32" />
           <Property Name="GroupCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AccountGroup1" Relationship="DBAccountBuddyModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup" ToRole="AccountGroup1" />
           <NavigationProperty Name="AccountGroup2" Relationship="DBAccountBuddyModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup1" ToRole="AccountGroup" />
           <NavigationProperty Name="Ledgers" Relationship="DBAccountBuddyModel.FK_Ledger_AccountGroup" FromRole="AccountGroup" ToRole="Ledger" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBAccountBuddyModel.FK_AccountGroup_CompanyDetail" FromRole="AccountGroup" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -800,26 +796,13 @@
           <Property Name="OPCr" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="LedgerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="AccountGroupId" Type="Int32" Nullable="false" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AccountGroup" Relationship="DBAccountBuddyModel.FK_Ledger_AccountGroup" FromRole="Ledger" ToRole="AccountGroup" />
           <NavigationProperty Name="CreditLimitType" Relationship="DBAccountBuddyModel.FK_Ledger_CreditLimitType" FromRole="Ledger" ToRole="CreditLimitType" />
           <NavigationProperty Name="JournalDetails" Relationship="DBAccountBuddyModel.FK_JournalDetail_Ledger" FromRole="Ledger" ToRole="JournalDetail" />
-          <NavigationProperty Name="LedgerOpenings" Relationship="DBAccountBuddyModel.FK_LedgerOpening_Ledger" FromRole="Ledger" ToRole="LedgerOpening" />
           <NavigationProperty Name="Payments" Relationship="DBAccountBuddyModel.FK_Payment_Ledger" FromRole="Ledger" ToRole="Payment" />
           <NavigationProperty Name="PaymentDetails" Relationship="DBAccountBuddyModel.FK_PaymentDetail_Ledger" FromRole="Ledger" ToRole="PaymentDetail" />
           <NavigationProperty Name="Receipts" Relationship="DBAccountBuddyModel.FK_Receipt_Ledger" FromRole="Ledger" ToRole="Receipt" />
           <NavigationProperty Name="ReceiptDetails" Relationship="DBAccountBuddyModel.FK_ReceiptDetail_Ledger" FromRole="Ledger" ToRole="ReceiptDetail" />
-        </EntityType>
-        <EntityType Name="LedgerOpening">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="LedgerId" Type="Int32" />
-          <Property Name="AcYear" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DrAmt" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CrAmt" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="Ledger" Relationship="DBAccountBuddyModel.FK_LedgerOpening_Ledger" FromRole="LedgerOpening" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="LogDetail">
           <Key>
@@ -933,7 +916,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <Property Name="UserTypeId" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LoginId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -941,7 +923,6 @@
           <NavigationProperty Name="LogDetails" Relationship="DBAccountBuddyModel.FK_LogDetail_UserAccount" FromRole="UserAccount" ToRole="LogDetail" />
           <NavigationProperty Name="LogMasters" Relationship="DBAccountBuddyModel.FK_LogMaster_UserAccount" FromRole="UserAccount" ToRole="LogMaster" />
           <NavigationProperty Name="UserType" Relationship="DBAccountBuddyModel.FK_UserAccount_UserType" FromRole="UserAccount" ToRole="UserType" />
-          <NavigationProperty Name="CompanyDetail" Relationship="DBAccountBuddyModel.FK_UserAccount_CompanyDetail" FromRole="UserAccount" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -950,8 +931,10 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeOfUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="UserAccounts" Relationship="DBAccountBuddyModel.FK_UserAccount_UserType" FromRole="UserType" ToRole="UserAccount" />
           <NavigationProperty Name="UserTypeDetails" Relationship="DBAccountBuddyModel.FK_UserTypeDetail_UserType" FromRole="UserType" ToRole="UserTypeDetail" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBAccountBuddyModel.FK_UserType_CompanyDetail" FromRole="UserType" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="UserTypeDetail">
           <Key>
@@ -966,17 +949,6 @@
           <Property Name="AllowDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="UserType" Relationship="DBAccountBuddyModel.FK_UserTypeDetail_UserType" FromRole="UserTypeDetail" ToRole="UserType" />
           <NavigationProperty Name="UserTypeFormDetail" Relationship="DBAccountBuddyModel.FK_UserTypeDetail_UserTypeFormDetail" FromRole="UserTypeDetail" ToRole="UserTypeFormDetail" />
-        </EntityType>
-        <EntityType Name="UserTypeFormDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="FormType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OrderNo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="UserTypeDetails" Relationship="DBAccountBuddyModel.FK_UserTypeDetail_UserTypeFormDetail" FromRole="UserTypeFormDetail" ToRole="UserTypeDetail" />
         </EntityType>
         <Association Name="FK_AccountGroup_AccountGroup">
           <End Type="DBAccountBuddyModel.AccountGroup" Role="AccountGroup" Multiplicity="0..1" />
@@ -1046,18 +1018,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="JournalDetail">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LedgerOpening_Ledger">
-          <End Type="DBAccountBuddyModel.Ledger" Role="Ledger" Multiplicity="0..1" />
-          <End Type="DBAccountBuddyModel.LedgerOpening" Role="LedgerOpening" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LedgerOpening">
               <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1206,6 +1166,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UserTypeFormDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FormType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderNo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsInsert" Type="Boolean" Nullable="false" />
+          <Property Name="IsUpdate" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="IsMenu" Type="Boolean" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserTypeDetails" Relationship="DBAccountBuddyModel.FK_UserTypeDetail_UserTypeFormDetail" FromRole="UserTypeFormDetail" ToRole="UserTypeDetail" />
+        </EntityType>
         <Association Name="FK_UserTypeDetail_UserTypeFormDetail">
           <End Type="DBAccountBuddyModel.UserTypeFormDetail" Role="UserTypeFormDetail" Multiplicity="1" />
           <End Type="DBAccountBuddyModel.UserTypeDetail" Role="UserTypeDetail" Multiplicity="*" />
@@ -1233,16 +1209,30 @@
           <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="UserAccounts" Relationship="DBAccountBuddyModel.FK_UserAccount_CompanyDetail" FromRole="CompanyDetail" ToRole="UserAccount" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="AccountGroups" Relationship="DBAccountBuddyModel.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
+          <NavigationProperty Name="UserTypes" Relationship="DBAccountBuddyModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
         </EntityType>
-        <Association Name="FK_UserAccount_CompanyDetail">
+        <Association Name="FK_AccountGroup_CompanyDetail">
           <End Type="DBAccountBuddyModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
-          <End Type="DBAccountBuddyModel.UserAccount" Role="UserAccount" Multiplicity="*" />
+          <End Type="DBAccountBuddyModel.AccountGroup" Role="AccountGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyDetail">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserAccount">
+            <Dependent Role="AccountGroup">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserType_CompanyDetail">
+          <End Type="DBAccountBuddyModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBAccountBuddyModel.UserType" Role="UserType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserType">
               <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1256,6 +1246,7 @@
           <EntitySetMapping Name="AccountGroups">
             <EntityTypeMapping TypeName="DBAccountBuddyModel.AccountGroup">
               <MappingFragment StoreEntitySet="AccountGroup">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
                 <ScalarProperty Name="UnderGroupId" ColumnName="UnderGroupId" />
                 <ScalarProperty Name="GroupName" ColumnName="GroupName" />
@@ -1320,7 +1311,6 @@
           <EntitySetMapping Name="Ledgers">
             <EntityTypeMapping TypeName="DBAccountBuddyModel.Ledger">
               <MappingFragment StoreEntitySet="Ledger">
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="AccountGroupId" ColumnName="AccountGroupId" />
                 <ScalarProperty Name="LedgerCode" ColumnName="LedgerCode" />
                 <ScalarProperty Name="OPCr" ColumnName="OPCr" />
@@ -1337,17 +1327,6 @@
                 <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
                 <ScalarProperty Name="PersonIncharge" ColumnName="PersonIncharge" />
                 <ScalarProperty Name="LedgerName" ColumnName="LedgerName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LedgerOpenings">
-            <EntityTypeMapping TypeName="DBAccountBuddyModel.LedgerOpening">
-              <MappingFragment StoreEntitySet="LedgerOpening">
-                <ScalarProperty Name="CrAmt" ColumnName="CrAmt" />
-                <ScalarProperty Name="DrAmt" ColumnName="DrAmt" />
-                <ScalarProperty Name="AcYear" ColumnName="AcYear" />
-                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1458,7 +1437,6 @@
                 <ScalarProperty Name="LoginId" ColumnName="LoginId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1466,6 +1444,7 @@
           <EntitySetMapping Name="UserTypes">
             <EntityTypeMapping TypeName="DBAccountBuddyModel.UserType">
               <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="TypeOfUser" ColumnName="TypeOfUser" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1488,6 +1467,11 @@
           <EntitySetMapping Name="UserTypeFormDetails">
             <EntityTypeMapping TypeName="DBAccountBuddyModel.UserTypeFormDetail">
               <MappingFragment StoreEntitySet="UserTypeFormDetail">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsUpdate" ColumnName="IsUpdate" />
+                <ScalarProperty Name="IsInsert" ColumnName="IsInsert" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
                 <ScalarProperty Name="FormType" ColumnName="FormType" />
@@ -1499,6 +1483,7 @@
           <EntitySetMapping Name="CompanyDetails">
             <EntityTypeMapping TypeName="DBAccountBuddyModel.CompanyDetail">
               <MappingFragment StoreEntitySet="CompanyDetail">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Logo" ColumnName="Logo" />
                 <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
                 <ScalarProperty Name="EMailId" ColumnName="EMailId" />

@@ -25,11 +25,13 @@ namespace AccountBuddy.DAL
         public string GroupName { get; set; }
         public Nullable<int> UnderGroupId { get; set; }
         public string GroupCode { get; set; }
+        public int CompanyId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountGroup> AccountGroup1 { get; set; }
         public virtual AccountGroup AccountGroup2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ledger> Ledgers { get; set; }
+        public virtual CompanyDetail CompanyDetail { get; set; }
     }
 }

@@ -90,9 +90,6 @@
     <Compile Include="Ledger.cs">
       <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="LedgerOpening.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="LogDetail.cs">
       <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
     </Compile>
@@ -142,6 +139,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Account Buddy Clean DB Query.sql" />
     <Content Include="DBAccountBuddyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBAccountBuddyModel.edmx</DependentUpon>

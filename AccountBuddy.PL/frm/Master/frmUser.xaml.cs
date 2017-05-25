@@ -50,7 +50,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (BLL.UserAccount.User.Id == data.Id)
                 {
                     BLL.UserAccount.User.UserName = data.UserName;
-                    App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.Company.CompanyName);
+                    App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
                 }
                 this.Close();
             }

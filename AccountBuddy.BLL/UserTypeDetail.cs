@@ -11,72 +11,38 @@ namespace AccountBuddy.BLL
     public class UserTypeDetail : INotifyPropertyChanged
     {
         #region Field
-        private static ObservableCollection<UserTypeDetail> _toList;
 
         private int _id;
-        private int _userTypeId;
-        private int _userTypeFormDetailId;
+        private int _userTypeId;        
         private bool _isViewForm;
         private bool _allowInsert;
         private bool _allowUpdate;
         private bool _allowDelete;
-        private string _FormName;
-        private string _FormType;
+        private int _UserTypeFormDetailId;
+        private BLL.UserTypeFormDetail _UserTypeFormDetail;
+
         private bool _IsNotReport;
-        private string _UserTypeName;
         #endregion
 
         #region Property
-
-        public static ObservableCollection<UserTypeDetail> ToList
+        
+        public BLL.UserTypeFormDetail UserTypeFormDetail
         {
             get
             {
-                if (_toList == null)
-                {
-                    _toList = new ObservableCollection<UserTypeDetail>( ABClientHub.FMCGHub.Invoke<List<UserTypeDetail>>("UserTypeDetail_List").Result);
-                }
-                return _toList;
+                return _UserTypeFormDetail;
             }
             set
             {
-                _toList = value;
-            }
-        }
-        public string FormName
-        {
-            get
-            {
-
-                return _FormName;
-            }
-            set
-            {
-                if (_FormName != value)
+                if (_UserTypeFormDetail != value)
                 {
-                    _FormName = value;
-                    NotifyPropertyChanged(nameof(FormName));
+                    _UserTypeFormDetail = value;
+                    NotifyPropertyChanged(nameof(UserTypeFormDetail));
+                    IsNotReport = value.FormType != "Report";
                 }
             }
         }
-        public string FormType
-        {
-            get
-            {
-
-                return _FormType;
-            }
-            set
-            {
-                if (_FormType != value)
-                {
-                    _FormType = value;
-                    IsNotReport = value != "Report";
-                    NotifyPropertyChanged(nameof(FormType));
-                }
-            }
-        }
-
+     
         public bool IsNotReport
         {
             get
@@ -91,25 +57,7 @@ namespace AccountBuddy.BLL
                     NotifyPropertyChanged(nameof(IsNotReport));
                 }
             }
-        }
-
-        public string UserTypeName
-        {
-            get
-            {
-
-                return _UserTypeName;
-            }
-            set
-            {
-                if (_UserTypeName != value)
-                {
-                    _UserTypeName = value;
-                    NotifyPropertyChanged(nameof(UserTypeName));
-                }
-            }
-        }
-
+        }      
 
         public int Id
         {
@@ -126,6 +74,21 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public int UserTypeFormDetailId
+        {
+            get
+            {
+                return _UserTypeFormDetailId;
+            }
+            set
+            {
+                if (_UserTypeFormDetailId != value)
+                {
+                    _UserTypeFormDetailId = value;
+                    NotifyPropertyChanged(nameof(UserTypeFormDetailId));
+                }
+            }
+        }
         public int UserTypeId
         {
             get
@@ -138,21 +101,6 @@ namespace AccountBuddy.BLL
                 {
                     _userTypeId = value;
                     NotifyPropertyChanged(nameof(UserTypeId));
-                }
-            }
-        }
-        public int UserTypeFormDetailId
-        {
-            get
-            {
-                return _userTypeFormDetailId;
-            }
-            set
-            {
-                if (_userTypeFormDetailId != value)
-                {
-                    _userTypeFormDetailId = value;
-                    NotifyPropertyChanged(nameof(UserTypeFormDetailId));
                 }
             }
         }

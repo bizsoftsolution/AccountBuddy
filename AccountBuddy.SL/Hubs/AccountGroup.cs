@@ -25,9 +25,8 @@ namespace AccountBuddy.SL.Hubs
                         {
                             Id = x.Id,
                             GroupCode = x.GroupCode,
-                            GroupName = x.GroupName,
-                            UnderGroupId = x.UnderGroupId == null ? 0 : (int)x.UnderGroupId,
-                            underGroupName = x.AccountGroup2.GroupName
+                            GroupName = x.GroupName
+                            
                         }).
                         OrderBy(x => x.GroupCode).ToList())
                     {

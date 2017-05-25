@@ -570,18 +570,16 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroupId == 41 && x.LedgerName == "Cash Account").ToList());
+                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash AC").ToList());
             }
-
         }
 
         public static ObservableCollection<Ledger> BLedgerList
         {
             get
             {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroupId == 41).ToList());
-            }
-
+                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Back AC").ToList());
+            }       
         }
 
 

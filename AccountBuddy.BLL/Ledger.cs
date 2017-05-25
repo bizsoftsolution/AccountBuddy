@@ -12,37 +12,34 @@ namespace AccountBuddy.BLL
     public class Ledger : INotifyPropertyChanged
     {
         #region Fileds
+
         private static ObservableCollection<Ledger> _toList;
         private static List<string> _LedgerList;
         private static List<string> _ACTypeList;
 
-
         private int _Id;
         private string _LedgerName;
+        private AccountGroup _AccountGroup;
         private string _PersonIncharge;
         private string _AddressLine1;
         private string _AddressLine2;
-        private int? _CityId;
+        private string _cityName;
         private string _TelephoneNo;
         private string _MobileNo;
         private string _EMailId;
         private string _GSTNo;
         private short _CreditLimit;
-        private int? _CreditLimitTypeId;
         private double _CreditAmount;
-        private int? _AccountGroupId;
-        private decimal? _OPBal;
+        private CreditLimitType _CreditLimitType;        
         private decimal? _OPDr;
         private decimal? _OPCr;
         private string _LedgerCode;
+
         private string _GroupCode;
-        private string _AccountCode;
-        private string _GroupName;
-        private int? _CompanyId;
-        private string _cityName;
-        private string _creditLimitType;
         private string _AccountName;
         private string _ACType;
+        private decimal? _OPBal;
+
         #endregion
 
         #region Property
@@ -50,50 +47,12 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                try
-                {
-                    if (_toList == null)
-                    {
-                        _toList = new ObservableCollection<Ledger>();
-                        var l1 = ABClientHub.FMCGHub.Invoke<List<Ledger>>("Ledger_List").Result;
-                        _toList = new ObservableCollection<Ledger>(l1);
-                    }
-                  
-                }
-                catch (Exception ex)
-                {
-
-                }
-
+                if (_toList == null) _toList = new ObservableCollection<Ledger>(ABClientHub.FMCGHub.Invoke<List<Ledger>>("Ledger_List").Result);
                 return _toList;
             }
             set
             {
                 _toList = value;
-            }
-        }
-
-
-        public static List<string> LedgerList
-        {
-            get
-            {
-                if (_LedgerList == null)
-                {
-                    _LedgerList = new List<string>();
-                    _LedgerList.Add("Supplier");
-                    _LedgerList.Add("Ledger");
-                    _LedgerList.Add("Customer");
-                    _LedgerList.Add("Bank");
-                }
-                return _LedgerList;
-            }
-            set
-            {
-                if (_LedgerList != value)
-                {
-                    _LedgerList = value;
-                }
             }
         }
 
@@ -117,7 +76,74 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public string GroupCode
+        {
+            get
+            {
+                return _GroupCode;
+            }
 
+            set
+            {
+                if (_GroupCode != value)
+                {
+                    _GroupCode = value;
+                    NotifyPropertyChanged(nameof(GroupCode));
+                }
+            }
+        }
+        public string AccountName
+        {
+            get
+            {
+                return _AccountName;
+            }
+
+            set
+            {
+                if (_AccountName != value)
+                {
+                    _AccountName = value;
+                    NotifyPropertyChanged(nameof(AccountName));
+                }
+            }
+        }
+        public string ACType
+        {
+            get
+            {
+                return
+                    _ACType;
+            }
+
+            set
+            {
+                if (_ACType != value)
+                {
+                    _ACType = value;
+                    OPDr = value == "Debit" ? OPBal : 0;
+                    OPCr = value == "Credit" ? OPBal : 0;
+                    NotifyPropertyChanged(nameof(ACType));
+                }
+            }
+        }
+        public decimal? OPBal
+        {
+            get
+            {
+                return _OPBal;
+            }
+            set
+            {
+                if (_OPBal != value)
+                {
+                    _OPBal = value;
+                    NotifyPropertyChanged(nameof(OPBal));
+                    OPDr = ACType == "Debit" ? OPBal : 0;
+                    OPCr = ACType == "Credit" ? OPBal : 0;
+                }
+            }
+        }
 
         public int Id
         {
@@ -148,49 +174,27 @@ namespace AccountBuddy.BLL
                 {
                     _LedgerName = value;
                     NotifyPropertyChanged(nameof(LedgerName));
-                    AccountName = string.Format("{0}{1}{2}", AccountCode, string.IsNullOrWhiteSpace(AccountCode)?"":"-", LedgerName);
+                    SetAccountName();
                 }
             }
         }
-
-        public string AccountName
+        public AccountGroup AccountGroup
         {
             get
             {
-                return _AccountName;
+                return _AccountGroup;
             }
-
             set
             {
-                if (_AccountName != value)
+                if (_AccountGroup != value)
                 {
-                    _AccountName = value;
-                    NotifyPropertyChanged(nameof(AccountName));
+                    _AccountGroup = value;                    
+                    NotifyPropertyChanged(nameof(AccountGroup));
+                    SetAccountName();
                 }
+
             }
         }
-
-        public string ACType
-        {
-            get
-            {
-                return
-                    _ACType;
-            }
-
-            set
-            {
-                if (_ACType != value)
-                {
-                    _ACType = value;
-                    OPDr = value == "Debit" ? OPBal : 0;
-                    OPCr = value == "Credit" ? OPBal : 0;
-                    NotifyPropertyChanged(nameof(ACType));
-                }
-            }
-        }
-
-
         public string PersonIncharge
         {
             get
@@ -208,7 +212,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string AddressLine1
         {
             get
@@ -226,7 +229,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string AddressLine2
         {
             get
@@ -243,23 +245,21 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? CityId
+        public string CityName
         {
             get
             {
-                return _CityId;
+                return _cityName;
             }
             set
             {
-                if (_CityId != value)
+                if (_cityName != value)
                 {
-                    _CityId = value;
-                    NotifyPropertyChanged(nameof(CityId));
+                    _cityName = value;
+                    NotifyPropertyChanged(nameof(CityName));
                 }
-
             }
         }
-
         public string TelephoneNo
         {
             get
@@ -276,7 +276,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string MobileNo
         {
             get
@@ -293,7 +292,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string GSTNo
         {
             get
@@ -310,7 +308,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string EMailId
         {
             get
@@ -327,41 +324,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public short CreditLimit
-        {
-            get
-            {
-                return _CreditLimit;
-            }
-
-            set
-            {
-                if (_CreditLimit != value)
-                {
-                    _CreditLimit = value;
-                    NotifyPropertyChanged(nameof(CreditLimit));
-                }
-            }
-        }
-
-        public int? CreditLimitTypeId
-        {
-            get
-            {
-                return _CreditLimitTypeId;
-            }
-            set
-            {
-                if (_CreditLimitTypeId != value)
-                {
-                    _CreditLimitTypeId = value;
-                    NotifyPropertyChanged(nameof(CreditLimitTypeId));
-                }
-
-            }
-        }
-
         public double CreditAmount
         {
             get
@@ -378,64 +340,37 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public int? AccountGroupId
+        public short CreditLimit
         {
             get
             {
-                return _AccountGroupId;
+                return _CreditLimit;
             }
+
             set
             {
-                if (_AccountGroupId != value)
+                if (_CreditLimit != value)
                 {
-                    _AccountGroupId = value;
-                    NotifyPropertyChanged(nameof(AccountGroupId));
+                    _CreditLimit = value;
+                    NotifyPropertyChanged(nameof(CreditLimit));
                 }
-
             }
         }
-
-        public decimal? OPBal
+        public CreditLimitType CreditLimitType
         {
             get
             {
-                return _OPBal;
+                return _CreditLimitType;
             }
             set
             {
-                if (_OPBal != value)
+                if (_CreditLimitType != value)
                 {
-                    _OPBal = value;
-                    NotifyPropertyChanged(nameof(OPBal));
-                    OPDr = ACType == "Debit" ? OPBal : 0;
-                    OPCr = ACType == "Credit" ? OPBal : 0;
+                    _CreditLimitType = value;
+                    NotifyPropertyChanged(nameof(BLL.CreditLimitType));
                 }
             }
         }
-
-
-        public decimal? OPDr
-        {
-            get
-            {
-                return _OPDr;
-            }
-            set
-            {
-                if (_OPDr != value)
-                {
-                    _OPDr = value;
-                    NotifyPropertyChanged(nameof(OPDr));
-                    if(value!=null && value != 0)
-                    {
-                        OPCr = 0;
-                    }
-                }
-
-            }
-        }
-
         public decimal? OPCr
         {
             get
@@ -456,6 +391,26 @@ namespace AccountBuddy.BLL
 
             }
         }
+        public decimal? OPDr
+        {
+            get
+            {
+                return _OPDr;
+            }
+            set
+            {
+                if (_OPDr != value)
+                {
+                    _OPDr = value;
+                    NotifyPropertyChanged(nameof(OPDr));
+                    if (value != null && value != 0)
+                    {
+                        OPCr = 0;
+                    }
+                }
+
+            }
+        }
 
         public string LedgerCode
         {
@@ -468,109 +423,11 @@ namespace AccountBuddy.BLL
                 if (_LedgerCode != value)
                 {
                     _LedgerCode = value;
-                    AccountCode = string.Format("{0}{1}{2}", GroupCode, LedgerCode == "" ? "" : "-", LedgerCode);
                     NotifyPropertyChanged(nameof(LedgerCode));
                 }
             }
         }
-
-        public string GroupCode
-        {
-            get
-            {
-                return _GroupCode;
-            }
-            set
-            {
-                if (_GroupCode != value)
-                {
-                    _GroupCode = value;
-                    AccountCode = string.Format("{0}{1}{2}",GroupCode, string.IsNullOrWhiteSpace(LedgerCode) ? "":"-",LedgerCode);
-                    NotifyPropertyChanged(nameof(GroupCode));
-                }
-            }
-        }
-
-        public string GroupName
-        {
-            get
-            {
-                return _GroupName;
-            }
-            set
-            {
-                if (_GroupName != value)
-                {
-                    _GroupName = value;                    
-                    NotifyPropertyChanged(nameof(GroupName));
-                }
-            }
-        }
-
-        public string AccountCode
-        {
-            get
-            {
-                return _AccountCode;
-            }
-            set
-            {
-                if (_AccountCode != value)
-                {
-                    _AccountCode = value;
-                    NotifyPropertyChanged(nameof(AccountCode));
-                    AccountName = string.Format("{0}{1}{2}", AccountCode, string.IsNullOrWhiteSpace(AccountCode) ? "" : "-", LedgerName);
-                }
-            }
-        }
-
-        public int? CompanyId
-        {
-            get
-            {
-                return _CompanyId;
-            }
-            set
-            {
-                if (_CompanyId != value)
-                {
-                    _CompanyId = value;
-                    NotifyPropertyChanged(nameof(CompanyId));
-                }
-
-            }
-        }
-
-        public string CityName
-        {
-            get
-            {
-                return _cityName;
-            }
-            set
-            {
-                if (_cityName != value)
-                {
-                    _cityName = value;
-                    NotifyPropertyChanged(nameof(CityName));
-                }
-            }
-        }
-        public string CreditLimitType
-        {
-            get
-            {
-                return _creditLimitType;
-            }
-            set
-            {
-                if (_creditLimitType != value)
-                {
-                    _creditLimitType = value;
-                    NotifyPropertyChanged(nameof(CreditLimitType));
-                }
-            }
-        }
+        
         #endregion
 
         #region Property  Changed Event
@@ -668,6 +525,12 @@ namespace AccountBuddy.BLL
         public static void Init()
         {
             _toList = null;
+        }
+
+        private void SetAccountName()
+        {
+            var AccountCode = string.Format("{0}{1}{2}", AccountGroup.GroupCode,  string.IsNullOrWhiteSpace( LedgerCode)? "" : "-", LedgerCode);
+            AccountName = string.Format("{0}{1}{2}", AccountCode, string.IsNullOrWhiteSpace(AccountCode) ? "" : "-", LedgerName);
         }
 
         #endregion

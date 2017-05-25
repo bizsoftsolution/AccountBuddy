@@ -22,6 +22,7 @@ namespace AccountBuddy.PL.frm.Master
     /// </summary>
     public partial class frmCompanySetting : UserControl
     {
+        public static string FormName = nameof(frmCompanySetting);
         BLL.CompanyDetail data = new BLL.CompanyDetail();
 
         public frmCompanySetting()
@@ -74,10 +75,10 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            data.Find(BLL.UserAccount.Company.Id);
+            data.Find(BLL.UserAccount.User.UserType.Company.Id);
 
             var lstUser = BLL.UserAccount.toList;
-            dgvWarehouse.ItemsSource = lstUser;            
+            dgvUsers.ItemsSource = lstUser;            
             gbxLoginUser.Visibility = BLL.UserAccount.AllowFormShow("User Account") ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -89,7 +90,7 @@ namespace AccountBuddy.PL.frm.Master
         
         private void btnEditUser_Click(object sender, RoutedEventArgs e)
         {
-            var u = dgvWarehouse.SelectedItem as BLL.UserAccount;
+            var u = dgvUsers.SelectedItem as BLL.UserAccount;
 
             frmUser f = new frmUser();
             u.toCopy<BLL.UserAccount>(f.data);
@@ -98,17 +99,16 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
         {
-            var u = dgvWarehouse.SelectedItem as BLL.UserAccount;
+            var u = dgvUsers.SelectedItem as BLL.UserAccount;
             if (u != null)
             {
-                if(u.UserTypeId==1 && BLL.UserAccount.toList.Where(x=> x.UserTypeId == 1).Count() == 1)
+                if(BLL.UserAccount.toList.Count() == 1)
                 {
-                    MessageBox.Show(string.Format("You can not delete this user. atleast one {0} user required",u.UserTypeName));
+                    MessageBox.Show(string.Format("You can not delete this user. atleast one user required"));
                 }
                 else if (MessageBox.Show("Do you Delete this?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-
-                    if (u.Delete() == true) MessageBox.Show("Deleted");
+                    if (u.Delete() == true) MessageBox.Show(Message.PL.Delete_Alert);
                 }
             }
             
@@ -144,6 +144,25 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
 
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+                if (!BLL.UserAccount.AllowDelete(FormName))
+                {
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                }
+                else
+                {
+                    if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    {
+                        if (data.Delete() == true)
+                        {
+                            MessageBox.Show(Message.PL.Delete_Alert);
+                        };
+                    }
+                }
+            
         }
     }
 }

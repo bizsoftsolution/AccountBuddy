@@ -246,7 +246,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 RptLedger.Reset();
                 ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).OrderBy(x=>x.AccountName).ToList());
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);
                 RptLedger.LocalReport.ReportPath = @"rpt\master\RptLedger.rdlc";
@@ -294,16 +294,7 @@ namespace AccountBuddy.PL.frm.Master
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
         }
         
-        private void cmbAccountGroupId_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var ag = cmbAccountGroupId.SelectedItem as AccountBuddy.BLL.AccountGroup;
-            try
-            {
-                data.GroupCode = ag.GroupCode;
-                data.LedgerCode = "";
-            }
-            catch (Exception ex) { }
-        }
+       
 
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
         {

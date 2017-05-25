@@ -18,8 +18,9 @@ namespace AccountBuddy.BLL
         private int _id;
         private string _groupName;
         private string _groupCode;
-        private int? _underGroupId;
-        private string _underGroupName;
+        private AccountGroup _UnderAccountGroup;
+        private CompanyDetail _Company;
+        
         #endregion
 
         #region Property
@@ -64,7 +65,7 @@ namespace AccountBuddy.BLL
                     NotifyPropertyChanged(nameof(Id));
                 }
             }
-        }
+        }        
         public string GroupName
         {
             get
@@ -95,37 +96,39 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? UnderGroupId
+
+        public AccountGroup UnderAccountGroup
         {
             get
             {
-                return _underGroupId;
+                return _UnderAccountGroup;
             }
             set
             {
-                if (_underGroupId != value)
+                if (_UnderAccountGroup != value)
                 {
-                    _underGroupId = value;
-                    NotifyPropertyChanged(nameof(UnderGroupId));
+                    _UnderAccountGroup = value;
+                    NotifyPropertyChanged(nameof(UnderAccountGroup));
                 }
             }
         }
 
-        public string underGroupName
+        public CompanyDetail Company
         {
             get
             {
-                return _underGroupName;
+                return _Company;
             }
             set
             {
-                if (_underGroupName != value)
+                if (_Company != value)
                 {
-                    _underGroupName = value;
-                    NotifyPropertyChanged(nameof(underGroupName));
+                    _Company = value;
+                    NotifyPropertyChanged(nameof(Company));
                 }
             }
         }
+
         #endregion
 
         #region Property  Changed Event

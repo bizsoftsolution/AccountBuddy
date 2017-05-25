@@ -35,7 +35,7 @@ namespace AccountBuddy.PL.frm.Vouchers
                 List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
              
                 RList.Add(data);
-                CList.Add(BLL.UserAccount.Company);
+                CList.Add(BLL.UserAccount.User.UserType.Company);
 
 
                 rptQuickReceipt.Reset();

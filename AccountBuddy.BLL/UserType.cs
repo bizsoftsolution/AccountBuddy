@@ -19,9 +19,9 @@ namespace AccountBuddy.BLL
         private int _id;
         private string _typeOfUser;
         private string _description;
-
-        private ObservableCollection<UserTypeDetail> _UserTypeDetails;
-        
+        private int _CompanyId;
+        private CompanyDetail _Company;
+        private ObservableCollection<UserTypeDetail> _UserTypeDetails;        
         
         #endregion
 
@@ -86,6 +86,38 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public int CompanyId
+        {
+            get
+            {
+                return _CompanyId;
+            }
+            set
+            {
+                if (_CompanyId != value)
+                {
+                    _CompanyId = value;
+                    NotifyPropertyChanged(nameof(CompanyId));
+                }
+
+            }
+        }
+        public CompanyDetail Company
+        {
+            get
+            {
+                return _Company;
+            }
+            set
+            {
+                if (_Company != value)
+                {
+                    _Company = value;
+                    NotifyPropertyChanged(nameof(Company));
+                }
+            }
+        }
+
 
         public ObservableCollection<UserTypeDetail> UserTypeDetails
         {
@@ -162,10 +194,9 @@ namespace AccountBuddy.BLL
             foreach(var d in UserTypeFormDetail.toList)
             {
                 UserTypeDetail utd = new UserTypeDetail();
-                UserTypeDetails.Add(utd);
-                utd.UserTypeFormDetailId = d.Id;
-                utd.FormName = d.FormName;
-                utd.FormType = d.FormType;             
+                utd.UserTypeFormDetail = d.toCopy<BLL.UserTypeFormDetail>(new UserTypeFormDetail());
+                utd.UserTypeFormDetailId = utd.UserTypeFormDetail.Id;
+                UserTypeDetails.Add(utd);             
             }
             NotifyAllPropertyChanged();
         }

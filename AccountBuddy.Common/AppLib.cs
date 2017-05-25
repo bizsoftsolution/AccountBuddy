@@ -13,7 +13,7 @@ namespace AccountBuddy.Common
     {
         public static string CurrencyName1 = "RINGGIT";
         public static string CurrencyName2 = "SEN";
-        public static void toCopy<T>(this object objSource, T objDestination)
+        public static T toCopy<T>(this object objSource, T objDestination)
         {
             var l1 = objSource.GetType().GetProperties().Where(x => x.PropertyType.Namespace != "System.Collections.Generic").ToList();
 
@@ -27,6 +27,7 @@ namespace AccountBuddy.Common
                 catch (Exception ex) { }
                 
             }
+            return objDestination;
         }
 
         public static void MutateVerbose<TField>(this INotifyPropertyChanged instance, ref TField field, TField newValue, Action<PropertyChangedEventArgs> raise, [CallerMemberName] string propertyName = null)

@@ -17,7 +17,8 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CompanyDetail()
         {
-            this.UserAccounts = new HashSet<UserAccount>();
+            this.AccountGroups = new HashSet<AccountGroup>();
+            this.UserTypes = new HashSet<UserType>();
         }
     
         public int Id { get; set; }
@@ -31,8 +32,11 @@ namespace AccountBuddy.DAL
         public string EMailId { get; set; }
         public string GSTNo { get; set; }
         public byte[] Logo { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserAccount> UserAccounts { get; set; }
+        public virtual ICollection<AccountGroup> AccountGroups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserType> UserTypes { get; set; }
     }
 }

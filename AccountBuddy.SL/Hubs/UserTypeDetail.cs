@@ -3,46 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
-    {
-        #region UserTypeDetail
-        public static List<BLL.UserTypeDetail> _listUserTypeDetail;
-        public static List<BLL.UserTypeDetail> ListUserTypeDetail
+    {        
+        private BLL.UserTypeDetail UserTypeDetailDAL_BLL(DAL.UserTypeDetail d)
         {
-            get
-            {
-                if (_listUserTypeDetail == null)
-                {
-                    _listUserTypeDetail = DB.UserTypeDetails.Select(x => new BLL.UserTypeDetail()
-                    {
-                        Id = x.Id,
-                        UserTypeId = x.UserTypeId,
-                        UserTypeFormDetailId = x.UserTypeFormDetailId,
-                        IsViewForm = x.IsViewForm,
-                        AllowDelete = x.AllowDelete,
-                        AllowInsert = x.AllowInsert,
-                        AllowUpdate = x.AllowUpdate,
-                        FormName = x.UserTypeFormDetail.FormName,
-                        UserTypeName = x.UserType.TypeOfUser
-
-                    }
-                    ).ToList();
-                }
-                return _listUserTypeDetail;
-            }
-            set
-            {
-                _listUserTypeDetail = value;
-            }
-        }
-
-        public List<BLL.UserTypeDetail> UserTypeDetail_List()
-        {
-            return ListUserTypeDetail;
-        }
-        #endregion
+            BLL.UserTypeDetail b = d.toCopy<BLL.UserTypeDetail>(new BLL.UserTypeDetail());
+            b.UserTypeFormDetail = d.UserTypeFormDetail.toCopy<BLL.UserTypeFormDetail>(new BLL.UserTypeFormDetail());
+            return b;
+        }                
     }
 }

@@ -26,7 +26,7 @@ namespace AccountBuddy.PL.frm.Report
             InitializeComponent();
             rptProfitLoss.SetDisplayMode(DisplayMode.PrintLayout);
 
-            int yy = BLL.UserAccount.Company.LoginAccYear;
+            int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
 
             DateTime? dtFrom = new DateTime(yy, 4, 1);
             DateTime? dtTo = new DateTime(yy + 1, 3, 31);
@@ -47,7 +47,7 @@ namespace AccountBuddy.PL.frm.Report
             {
                 rptProfitLoss.Reset();
                 ReportDataSource data = new ReportDataSource("ProfitLoss", dgvProfitLoss.ItemsSource);
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptProfitLoss.LocalReport.DataSources.Add(data);
                 rptProfitLoss.LocalReport.DataSources.Add(data1);
                 rptProfitLoss.LocalReport.ReportPath = @"rpt\Report\rptProfitLoss.rdlc";

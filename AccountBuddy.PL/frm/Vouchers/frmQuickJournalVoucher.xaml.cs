@@ -37,7 +37,7 @@ namespace AccountBuddy.PL.frm.Vouchers
 
                 JList.Add(data);
                 JDList.Add(data.JDetail);
-                CList.Add(BLL.UserAccount.Company);
+                CList.Add(BLL.UserAccount.User.UserType.Company);
 
 
                 rptQuickJournal.Reset();

@@ -168,7 +168,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Payment> Payment_PPendingList()
         {
-            return PPendingList.Where(x => x.PLedger.CompanyId== Caller.CompanyId).ToList();
+            return PPendingList.Where(x => x.PLedger.AccountGroup.Company.Id == Caller.CompanyId).ToList();
         }
 
         public bool Find_EntryNo(string entryNo, BLL.Payment PO)

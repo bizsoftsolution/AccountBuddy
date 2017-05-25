@@ -11,6 +11,7 @@
                       WindowState="Maximized"
                       ShowMaxRestoreButton="False"
                       ShowMinButton="False"
+                      ResizeMode="NoResize"
         Title="User Type" Height="600" Width="1100" Loaded="UserControl_Loaded">
 
     <Window.Resources>
@@ -76,7 +77,7 @@
                                     <DropShadowEffect/>
                                 </DataGrid.Effect>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn  FontWeight="Bold" Width="250" Binding="{Binding FormName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                                    <DataGridTextColumn  FontWeight="Bold" Width="220" Binding="{Binding UserTypeFormDetail.Description}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                                         <DataGridTextColumn.Header>
                                             <Grid Width="230">
                                                 <TextBlock>Form Name</TextBlock>
@@ -95,11 +96,11 @@
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn TextBlock.TextAlignment="Center"  Width="75">
                                         <DataGridTemplateColumn.Header>
-                                            <CheckBox x:Name="ckbAllAllowInsert" Checked="ckbAllAllowInsert_Checked" Unchecked="ckbAllAllowInsert_Unchecked" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" ToolTip="Allow to Create the New Records" >Create</CheckBox>
+                                            <CheckBox x:Name="ckbAllAllowInsert" Checked="ckbAllAllowInsert_Checked" Unchecked="ckbAllAllowInsert_Unchecked" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" ToolTip="Allow to Create the New Records" >Create</CheckBox>
                                         </DataGridTemplateColumn.Header>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox x:Name="ckbAllowInsert" Tag="{Binding}"  Visibility="{Binding IsNotReport,Converter={StaticResource VisibilityConverter}}" Checked="ckbAllowInsert_Checked" Unchecked="ckbAllowInsert_Unchecked" IsChecked="{Binding AllowInsert}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" ></CheckBox>
+                                                <CheckBox x:Name="ckbAllowInsert" Tag="{Binding}"  Visibility="{Binding UserTypeFormDetail.IsInsert,Converter={StaticResource VisibilityConverter}}" Checked="ckbAllowInsert_Checked" Unchecked="ckbAllowInsert_Unchecked" IsChecked="{Binding AllowInsert}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" ></CheckBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -110,7 +111,7 @@
                                         
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox x:Name="ckbAllowUpdate" Tag="{Binding}"  Checked="ckbAllowUpdate_Checked" Unchecked="ckbAllowUpdate_Unchecked" Visibility="{Binding IsNotReport,Converter={StaticResource VisibilityConverter}}"  IsChecked="{Binding AllowUpdate}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" ></CheckBox>
+                                                <CheckBox x:Name="ckbAllowUpdate" Tag="{Binding}"  Checked="ckbAllowUpdate_Checked" Unchecked="ckbAllowUpdate_Unchecked" Visibility="{Binding UserTypeFormDetail.IsUpdate,Converter={StaticResource VisibilityConverter}}"  IsChecked="{Binding AllowUpdate}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" ></CheckBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -120,7 +121,7 @@
                                         </DataGridTemplateColumn.Header>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox x:Name="ckbAllowDelete" Tag="{Binding}"  Checked="ckbAllowDelete_Checked" Unchecked="ckbAllowDelete_Unchecked" Visibility="{Binding IsNotReport,Converter={StaticResource VisibilityConverter}}"  IsChecked="{Binding AllowDelete}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" ></CheckBox>
+                                                <CheckBox x:Name="ckbAllowDelete" Tag="{Binding}"  Checked="ckbAllowDelete_Checked" Unchecked="ckbAllowDelete_Unchecked" Visibility="{Binding UserTypeFormDetail.IsDelete,Converter={StaticResource VisibilityConverter}}"  IsChecked="{Binding AllowDelete}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" ></CheckBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>

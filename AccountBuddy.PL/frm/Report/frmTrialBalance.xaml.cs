@@ -26,7 +26,7 @@ namespace AccountBuddy.PL.frm.Report
             InitializeComponent();
             rptTrialBalance.SetDisplayMode(DisplayMode.PrintLayout);
 
-            int yy = BLL.UserAccount.Company.LoginAccYear;
+            int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
 
             DateTime? dtFrom=new DateTime(yy,4,1);
             DateTime? dtTo =new DateTime(yy+1,3,31);
@@ -51,7 +51,7 @@ namespace AccountBuddy.PL.frm.Report
             {
                 rptTrialBalance.Reset();
                 ReportDataSource data = new ReportDataSource("TrialBalance", list);
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptTrialBalance.LocalReport.DataSources.Add(data);
                 rptTrialBalance.LocalReport.DataSources.Add(data1);
                 rptTrialBalance.LocalReport.ReportPath = @"rpt\Report\rptTrialBalance.rdlc";
