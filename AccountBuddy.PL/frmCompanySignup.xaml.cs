@@ -21,12 +21,12 @@ namespace AccountBuddy.PL
     public partial class frmCompanySignup : MetroWindow
     {
         public BLL.CompanyDetail data = new BLL.CompanyDetail();
-        public bool isSaved = false;
+        public bool IsForcedClose = false;
         public frmCompanySignup()
         {
             InitializeComponent();
             this.DataContext = data;
-            isSaved = false;
+            IsForcedClose = false;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -44,7 +44,7 @@ namespace AccountBuddy.PL
             if (data.Save() == true)
             {
                 MessageBox.Show("Saved");
-                isSaved = true;
+                IsForcedClose = true;
                 Close();
             }
             else
@@ -99,7 +99,7 @@ namespace AccountBuddy.PL
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (isSaved==false && MessageBox.Show("Are you sure to close the signup?", "Close", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+            if (IsForcedClose==false && MessageBox.Show("Are you sure to close the signup?", "Close", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
             {
                 e.Cancel = true;
             }

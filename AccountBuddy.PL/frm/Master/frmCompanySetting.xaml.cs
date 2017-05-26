@@ -60,7 +60,15 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.Save() == true)
+            if (data.Id == 0 && !BLL.CompanyDetail.UserPermission.AllowInsert)
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+            }
+            else if (data.Id != 0 && !BLL.CompanyDetail.UserPermission.AllowUpdate)
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
+            }
+            else if (data.Save() == true)
             {
                 MessageBox.Show(Message.PL.Saved_Alert);
                 App.frmHome.ShowWelcome();
@@ -78,8 +86,21 @@ namespace AccountBuddy.PL.frm.Master
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
 
             var lstUser = BLL.UserAccount.toList;
-            dgvUsers.ItemsSource = lstUser;            
-            gbxLoginUser.Visibility = BLL.UserAccount.AllowFormShow("User Account") ? Visibility.Visible : Visibility.Collapsed;
+            dgvUsers.ItemsSource = lstUser;
+            
+            if (BLL.UserAccount.UserPermission.IsViewForm)
+            {
+                gbxLoginUser.Visibility = Visibility.Visible;
+                btnNewUser.Visibility = BLL.UserAccount.UserPermission.AllowInsert ? Visibility.Visible : Visibility.Collapsed;
+                dgvUsers.Columns[0].Visibility = BLL.UserAccount.UserPermission.AllowUpdate ? Visibility.Visible : Visibility.Collapsed;
+                dgvUsers.Columns[1].Visibility = BLL.UserAccount.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            }
+            else
+            {
+                gbxLoginUser.Visibility = Visibility.Collapsed;
+            }
+            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;            
         }
 
         private void btnNewUser_Click(object sender, RoutedEventArgs e)
@@ -148,21 +169,15 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-                if (!BLL.UserAccount.AllowDelete(FormName))
+            if (!BLL.CompanyDetail.UserPermission.AllowDelete)
+                MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+            else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                if (data.Delete() == true)
                 {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                    MessageBox.Show(Message.PL.Delete_Alert);
+                    App.frmHome.IsForcedClose = true;
+                    App.frmHome.Close();
                 }
-                else
-                {
-                    if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
-                    {
-                        if (data.Delete() == true)
-                        {
-                            MessageBox.Show(Message.PL.Delete_Alert);
-                        };
-                    }
-                }
-            
         }
     }
 }

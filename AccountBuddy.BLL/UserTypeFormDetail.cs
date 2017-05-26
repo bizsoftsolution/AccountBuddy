@@ -17,6 +17,7 @@ namespace AccountBuddy.BLL
         private string _FormName;
         private string _FormType;
         private string _OrderNo;
+        private bool _IsActive;
         private bool _IsInsert;
         private bool _IsUpdate;
         private bool _IsDelete;
@@ -91,6 +92,22 @@ namespace AccountBuddy.BLL
                     NotifyPropertyChanged(nameof(OrderNo));
                 }
 
+            }
+        }
+
+        public bool IsActive
+        {
+            get
+            {
+                return _IsActive;
+            }
+            set
+            {
+                if (_IsActive != value)
+                {
+                    _IsActive = value;
+                    NotifyPropertyChanged(nameof(IsActive));
+                }
             }
         }
 

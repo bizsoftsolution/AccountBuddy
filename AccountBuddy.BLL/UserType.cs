@@ -13,6 +13,10 @@ namespace AccountBuddy.BLL
     {
         #region Field
 
+        private static UserTypeDetail _UserPermission;
+        private bool _IsReadOnly;
+        private bool _IsEnabled;
+
         private static ObservableCollection<UserType> _toList;
         public List<BLL.Validation> lstValidation = new List<BLL.Validation>();
         
@@ -21,11 +25,65 @@ namespace AccountBuddy.BLL
         private string _description;
         private int _CompanyId;
         private CompanyDetail _Company;
-        private ObservableCollection<UserTypeDetail> _UserTypeDetails;        
-        
+        private ObservableCollection<UserTypeDetail> _UserTypeDetails;
+
         #endregion
 
         #region Property
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmUser.ToString()).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
+
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return _IsReadOnly;
+            }
+
+            set
+            {
+                if (_IsReadOnly != value)
+                {
+                    _IsReadOnly = value;
+                    IsEnabled = !value;
+                    NotifyPropertyChanged(nameof(IsReadOnly));
+                }
+            }
+        }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+
+            set
+            {
+                if (_IsEnabled != value)
+                {
+                    _IsEnabled = value;
+                    NotifyPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
 
         public static ObservableCollection<UserType> toList
         {
@@ -198,6 +256,7 @@ namespace AccountBuddy.BLL
                 utd.UserTypeFormDetailId = utd.UserTypeFormDetail.Id;
                 UserTypeDetails.Add(utd);             
             }
+            IsReadOnly = !UserPermission.AllowInsert;
             NotifyAllPropertyChanged();
         }
 
@@ -207,6 +266,7 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 d.toCopy<UserType>(this);
+                IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }
 

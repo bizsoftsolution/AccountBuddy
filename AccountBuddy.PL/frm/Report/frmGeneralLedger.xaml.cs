@@ -57,7 +57,7 @@ namespace AccountBuddy.PL.frm.Report
             {
                 rptGeneralLedger.Reset();
                 ReportDataSource data = new ReportDataSource("GeneralLedger", list);
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                 rptGeneralLedger.LocalReport.DataSources.Add(data);
                 rptGeneralLedger.LocalReport.DataSources.Add(data1);
                 rptGeneralLedger.LocalReport.ReportPath = @"rpt\Report\rptGeneralLedger.rdlc";

@@ -45,7 +45,9 @@ namespace AccountBuddy.PL.frm.Master
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             dgvDetail.ItemsSource = BLL.UserType.toList;
-            Clear();      
+            Clear();
+            btnSave.Visibility = (BLL.UserType.UserPermission.AllowInsert || BLL.UserType.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.UserType.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }
 
 
@@ -94,11 +96,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvDetail_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvDetail.SelectedItem as BLL.UserType;
-            if (d != null)
-            {
-                data.Find(d.Id);
-            }
+            ViewForm();
         }
 
 
@@ -140,42 +138,42 @@ namespace AccountBuddy.PL.frm.Master
 
         private void ckbAllViewForm_Checked(object sender, RoutedEventArgs e)
         {
-            foreach(var d in data.UserTypeDetails) d.IsViewForm = true;
-        }
-
-        private void ckbAllViewForm_Unchecked(object sender, RoutedEventArgs e)
-        {
-            foreach (var d in data.UserTypeDetails) d.IsViewForm = false;
+            if(ckbAllViewForm.IsFocused) foreach(var d in data.UserTypeDetails.Where(x=> x.UserTypeFormDetail.IsActive).ToList()) d.IsViewForm = true;
         }
 
         private void ckbAllAllowInsert_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var d in data.UserTypeDetails.Where(x=> x.IsNotReport).ToList()) d.AllowInsert = true;
-        }
-
-        private void ckbAllAllowInsert_Unchecked(object sender, RoutedEventArgs e)
-        {
-            foreach (var d in data.UserTypeDetails.Where(x => x.IsNotReport).ToList()) d.AllowInsert = false;
+            if (ckbAllAllowInsert.IsFocused) foreach (var d in data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsInsert).ToList()) d.AllowInsert = true;
         }
 
         private void ckbAllAllowUpdate_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var d in data.UserTypeDetails.Where(x => x.IsNotReport).ToList()) d.AllowUpdate = true;
-        }
-
-        private void ckbAllAllowUpdate_Unchecked(object sender, RoutedEventArgs e)
-        {
-            foreach (var d in data.UserTypeDetails.Where(x => x.IsNotReport).ToList()) d.AllowUpdate =false;
+            if (ckbAllAllowUpdate.IsFocused) foreach (var d in data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsUpdate).ToList()) d.AllowUpdate = true;
         }
 
         private void ckbAllAllowDelete_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var d in data.UserTypeDetails.Where(x => x.IsNotReport).ToList()) d.AllowDelete = true;
+           if(ckbAllAllowDelete.IsFocused) foreach (var d in data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsDelete).ToList()) d.AllowDelete = true;
         }
 
+        private void ckbAllViewForm_Unchecked(object sender, RoutedEventArgs e)
+        {
+           if(ckbAllViewForm.IsFocused) foreach (var d in data.UserTypeDetails) d.IsViewForm = false;
+        }
+
+        private void ckbAllAllowInsert_Unchecked(object sender, RoutedEventArgs e)
+        {
+           if(ckbAllAllowInsert.IsFocused) foreach (var d in data.UserTypeDetails.ToList()) d.AllowInsert = false;
+        }
+
+        private void ckbAllAllowUpdate_Unchecked(object sender, RoutedEventArgs e)
+        {
+           if(ckbAllAllowUpdate.IsFocused) foreach (var d in data.UserTypeDetails.ToList()) d.AllowUpdate =false;
+        }
+        
         private void ckbAllAllowDelete_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (var d in data.UserTypeDetails.Where(x => x.IsNotReport).ToList()) d.AllowDelete = false;
+            if (ckbAllAllowDelete.IsFocused) foreach (var d in data.UserTypeDetails.ToList()) d.AllowDelete = false;
         }
 
         private void ckbViewForm_Checked(object sender, RoutedEventArgs e)
@@ -184,17 +182,8 @@ namespace AccountBuddy.PL.frm.Master
             {
                 var d = ((CheckBox) sender).Tag as BLL.UserTypeDetail;
                 if (d != null) d.IsViewForm = true;
+                if(data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && !x.IsViewForm).Count() == 0)    ckbAllViewForm.IsChecked = true;
             }catch(Exception ex) { }
-        }
-
-        private void ckbViewForm_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var d = ((CheckBox)sender).Tag as BLL.UserTypeDetail;
-                if (d != null) d.IsViewForm = false;
-            }
-            catch (Exception ex) { }
         }
 
         private void ckbAllowInsert_Checked(object sender, RoutedEventArgs e)
@@ -203,16 +192,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 var d = ((CheckBox)sender).Tag as BLL.UserTypeDetail;
                 if (d != null) d.AllowInsert = true;
-            }
-            catch (Exception ex) { }
-        }
-
-        private void ckbAllowInsert_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var d = ((CheckBox)sender).Tag as BLL.UserTypeDetail;
-                if (d != null) d.AllowInsert = false;
+                if (data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsInsert && x.AllowInsert == false).Count() == 0) ckbAllAllowInsert.IsChecked = true;
             }
             catch (Exception ex) { }
         }
@@ -222,17 +202,8 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 var d = ((CheckBox)sender).Tag as BLL.UserTypeDetail;
-                if (d != null) d.AllowUpdate= true;
-            }
-            catch (Exception ex) { }
-        }
-
-        private void ckbAllowUpdate_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var d = ((CheckBox)sender).Tag as BLL.UserTypeDetail;
-                if (d != null) d.AllowUpdate = false;
+                if (d != null) d.AllowUpdate = true;
+                if(data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsUpdate && x.AllowUpdate == false).Count() == 0) ckbAllAllowUpdate.IsChecked = true;
             }
             catch (Exception ex) { }
         }
@@ -242,19 +213,77 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 var d = ((CheckBox)sender).Tag as BLL.UserTypeDetail;
-                if (d != null) d.AllowDelete= true;
+                if (d != null) d.AllowDelete = true;
+                if (data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsDelete && x.AllowDelete == false).Count() == 0) ckbAllAllowDelete.IsChecked = true;
             }
             catch (Exception ex) { }
         }
 
+
+        private void ckbViewForm_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var d = ((CheckBox)sender).Tag as BLL.UserTypeDetail;
+                if (d != null) d.IsViewForm = false;
+                ckbAllViewForm.IsChecked = false;
+            }
+            catch (Exception ex) { }
+        }
+
+        
+        private void ckbAllowInsert_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var d = ((CheckBox)sender).Tag as BLL.UserTypeDetail;
+                if (d != null) d.AllowInsert = false;
+                ckbAllAllowInsert.IsChecked = false;
+            }
+            catch (Exception ex) { }
+        }
+
+        
+        private void ckbAllowUpdate_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var d = ((CheckBox)sender).Tag as BLL.UserTypeDetail;
+                if (d != null) d.AllowUpdate = false;
+                ckbAllAllowUpdate.IsChecked = false;
+            }
+            catch (Exception ex) { }
+        }
+
+       
         private void ckbAllowDelete_Unchecked(object sender, RoutedEventArgs e)
         {
             try
             {
                 var d = ((CheckBox)sender).Tag as BLL.UserTypeDetail;
                 if (d != null) d.AllowDelete = false;
+                ckbAllAllowDelete.IsChecked = false;
             }
             catch (Exception ex) { }
+        }
+
+        private void dgvDetail_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ViewForm();
+        }
+        void ViewForm()
+        {
+            var d = dgvDetail.SelectedItem as BLL.UserType;
+            if (d != null)
+            {
+                if (data.Find(d.Id))
+                {
+                    ckbAllViewForm.IsChecked = data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && !x.IsViewForm).Count() == 0;
+                    ckbAllAllowInsert.IsChecked = data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsInsert && x.AllowInsert == false).Count() == 0;
+                    ckbAllAllowUpdate.IsChecked = data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsUpdate && x.AllowUpdate == false).Count() == 0;
+                    ckbAllAllowDelete.IsChecked = data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsDelete && x.AllowDelete == false).Count() == 0;
+                }
+            }
         }
     }
 }
