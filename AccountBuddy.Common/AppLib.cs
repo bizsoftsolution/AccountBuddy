@@ -11,6 +11,15 @@ namespace AccountBuddy.Common
 {
     public static class AppLib
     {
+
+        public enum Forms
+        {
+            frmCompanySetting,
+            frmUser,
+            frmUserType,
+            frmAccountGroups
+        }
+
         public static string CurrencyName1 = "RINGGIT";
         public static string CurrencyName2 = "SEN";
         public static T toCopy<T>(this object objSource, T objDestination)

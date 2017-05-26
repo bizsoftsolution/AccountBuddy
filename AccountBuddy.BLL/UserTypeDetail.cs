@@ -20,8 +20,7 @@ namespace AccountBuddy.BLL
         private bool _allowDelete;
         private int _UserTypeFormDetailId;
         private BLL.UserTypeFormDetail _UserTypeFormDetail;
-
-        private bool _IsNotReport;
+        
         #endregion
 
         #region Property
@@ -37,27 +36,12 @@ namespace AccountBuddy.BLL
                 if (_UserTypeFormDetail != value)
                 {
                     _UserTypeFormDetail = value;
-                    NotifyPropertyChanged(nameof(UserTypeFormDetail));
-                    IsNotReport = value.FormType != "Report";
+                    NotifyPropertyChanged(nameof(UserTypeFormDetail));                    
                 }
             }
         }
      
-        public bool IsNotReport
-        {
-            get
-            {
-                return _IsNotReport;
-            }
-            set
-            {
-                if (_IsNotReport != value)
-                {
-                    _IsNotReport = value;
-                    NotifyPropertyChanged(nameof(IsNotReport));
-                }
-            }
-        }      
+        
 
         public int Id
         {
@@ -116,6 +100,12 @@ namespace AccountBuddy.BLL
                 {
                     _isViewForm = value;
                     NotifyPropertyChanged(nameof(IsViewForm));
+                    if (value == false)
+                    {
+                        AllowInsert = false;
+                        AllowUpdate = false;
+                        AllowDelete = false;
+                    }
                 }
             }
         }
