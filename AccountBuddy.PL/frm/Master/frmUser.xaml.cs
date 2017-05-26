@@ -26,7 +26,7 @@ namespace AccountBuddy.PL.frm.Master
             InitializeComponent();
 
             this.DataContext = data;
-
+            btnUserTypeSetting.Visibility = BLL.UserType.UserPermission.IsViewForm ? Visibility.Visible : Visibility.Collapsed;
             cmbUserType.ItemsSource = BLL.UserType.toList;
             cmbUserType.DisplayMemberPath = "TypeOfUser";
             cmbUserType.SelectedValuePath = "Id";

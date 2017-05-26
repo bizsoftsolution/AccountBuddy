@@ -14,6 +14,11 @@ namespace AccountBuddy.BLL
         #region Field
 
         private static ObservableCollection<CompanyDetail> _toList;
+
+        private static UserTypeDetail _UserPermission;
+        private bool _IsReadOnly;
+        private bool _IsEnabled;
+
         private int _LoginAccYear;
         private static ObservableCollection<string> _AcYearList;
         public List<BLL.Validation> lstValidation = new List<BLL.Validation>();
@@ -35,6 +40,25 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Property
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType==null?new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmCompanySetting.ToString()).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
+
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
 
         public static ObservableCollection<CompanyDetail> toList
         {
@@ -61,6 +85,41 @@ namespace AccountBuddy.BLL
                 }
 
                 return _AcYearList;
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return _IsReadOnly;
+            }
+
+            set
+            {
+                if (_IsReadOnly != value)
+                {
+                    _IsReadOnly = value;
+                    IsEnabled = !value;
+                    NotifyPropertyChanged(nameof(IsReadOnly));
+                }
+            }
+        }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+
+            set
+            {
+                if (_IsEnabled != value)
+                {
+                    _IsEnabled = value;
+                    NotifyPropertyChanged(nameof(IsEnabled));
+                }
             }
         }
 
@@ -365,8 +424,10 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new CompanyDetail().toCopy<CompanyDetail>(this);
-            NotifyAllPropertyChanged();
+           new CompanyDetail().toCopy<CompanyDetail>(this);
+           IsReadOnly = !UserPermission.AllowInsert;
+           
+           NotifyAllPropertyChanged();
         }
 
         public bool Find(int pk)
@@ -375,6 +436,7 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 d.toCopy<CompanyDetail>(this);
+                IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }
 

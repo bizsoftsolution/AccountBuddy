@@ -21,11 +21,13 @@ namespace AccountBuddy.PL
     /// </summary>
     public partial class frmHome : MetroWindow
     {
+        public bool IsForcedClose = false;
         public frmHome()
         {
             InitializeComponent();
             ShowWelcome();
             onClientEvents();
+            IsForcedClose = false;
         }
         public void ShowWelcome()
         {
@@ -69,10 +71,7 @@ namespace AccountBuddy.PL
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Are you sure to Exit?", "Exit", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
-            {
-                e.Cancel = true;
-            }
+            if (!IsForcedClose && MessageBox.Show("Are you sure to Exit?", "Exit", MessageBoxButton.YesNo) != MessageBoxResult.Yes) e.Cancel = true;
         }
     }
 }

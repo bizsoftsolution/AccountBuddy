@@ -126,8 +126,8 @@ namespace AccountBuddy.SL.Hubs
             {
                 var d = DB.CompanyDetails.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null)
-                {                    
-                    DB.CompanyDetails.Remove(d);
+                {
+                    d.IsActive = false;
                     DB.SaveChanges();
                     LogDetailStore(d.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail()), LogDetailType.DELETE);                   
                 }

@@ -55,7 +55,7 @@ namespace AccountBuddy.PL.frm.Report
             {
                 rptPaymentReceipt.Reset();
                 ReportDataSource data = new ReportDataSource("ReceiptAndPayment", list);
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                 rptPaymentReceipt.LocalReport.DataSources.Add(data);
                 rptPaymentReceipt.LocalReport.DataSources.Add(data1);
                 rptPaymentReceipt.LocalReport.ReportPath = @"rpt\Report\rptPaymentReceipt.rdlc";

@@ -13,8 +13,13 @@ namespace AccountBuddy.BLL
     {
         #region Field
 
-        public static UserAccount User = new UserAccount();        
-        
+        public static UserAccount User = new UserAccount();
+
+        private static UserTypeDetail _UserPermission;
+        private bool _IsReadOnly;
+        private bool _IsEnabled;
+
+
         private static ObservableCollection<UserAccount> _toList;
         public List<BLL.Validation> lstValidation = new List<BLL.Validation>();
 
@@ -27,6 +32,60 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Property
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmUser.ToString()).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
+
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return _IsReadOnly;
+            }
+
+            set
+            {
+                if (_IsReadOnly != value)
+                {
+                    _IsReadOnly = value;
+                    IsEnabled = !value;
+                    NotifyPropertyChanged(nameof(IsReadOnly));
+                }
+            }
+        }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+
+            set
+            {
+                if (_IsEnabled != value)
+                {
+                    _IsEnabled = value;
+                    NotifyPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
 
         public static ObservableCollection<UserAccount> toList
         {
@@ -249,7 +308,13 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new UserAccount().toCopy<UserAccount>(this);
+
+            this.UserName = "";
+            this.LoginId = "";
+            this.Password = "";
+            this.UserTypeId = 0;
+            this.UserType = null;
+            IsReadOnly = !UserPermission.AllowInsert;
             NotifyAllPropertyChanged();
         }
 
@@ -259,6 +324,7 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 d.toCopy<UserAccount>(this);
+                IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }
 
@@ -359,6 +425,7 @@ namespace AccountBuddy.BLL
         public static void Init()
         {
             _toList = null;
+            UserPermission = null;
         }
         #endregion
     }
