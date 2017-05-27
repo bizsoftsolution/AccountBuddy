@@ -46,7 +46,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Save() == true)
             {
-                MessageBox.Show("Saved");
+                MessageBox.Show(Message.PL.Saved_Alert);
                 if (BLL.UserAccount.User.Id == data.Id)
                 {
                     BLL.UserAccount.User.UserName = data.UserName;

@@ -37,13 +37,14 @@ namespace AccountBuddy.PL
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            txtPassword.Password = "";            
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (data.Save() == true)
             {
-                MessageBox.Show("Saved");
+                MessageBox.Show(Message.PL.Saved_Alert);
                 IsForcedClose = true;
                 Close();
             }

@@ -22,7 +22,7 @@ namespace AccountBuddy.PL.frm.Master
     /// </summary>
     public partial class frmCompanySetting : UserControl
     {
-        public static string FormName = nameof(frmCompanySetting);
+        //public static string FormName = nameof(frmCompanySetting);
         BLL.CompanyDetail data = new BLL.CompanyDetail();
 
         public frmCompanySetting()
@@ -62,11 +62,11 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Id == 0 && !BLL.CompanyDetail.UserPermission.AllowInsert)
             {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, lblHead.Text));
             }
             else if (data.Id != 0 && !BLL.CompanyDetail.UserPermission.AllowUpdate)
             {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, lblHead.Text));
             }
             else if (data.Save() == true)
             {
@@ -170,7 +170,7 @@ namespace AccountBuddy.PL.frm.Master
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (!BLL.CompanyDetail.UserPermission.AllowDelete)
-                MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyDelete, lblHead.Text));
             else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
                 if (data.Delete() == true)
                 {

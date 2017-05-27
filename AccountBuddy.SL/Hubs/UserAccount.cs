@@ -58,6 +58,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
+                
                 DAL.UserAccount d = DB.UserAccounts.Where(x => x.Id == ua.Id).FirstOrDefault();
 
                 if (d == null)

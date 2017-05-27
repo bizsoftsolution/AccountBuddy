@@ -63,6 +63,10 @@ namespace AccountBuddy.PL.frm.Master
             cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
 
             cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
+
+            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -245,7 +249,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 RptLedger.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).OrderBy(x=>x.AccountName).ToList());
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).Select(x => new { x.AccountName, x.AddressLine1, x.AddressLine2, x.CityName, x.CreditAmount, x.CreditLimit, CreditLimitTypeName=x.CreditLimitType.LimitType, x.OPCr, x.OPDr }).OrderBy(x => x.AccountName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);
@@ -293,9 +297,7 @@ namespace AccountBuddy.PL.frm.Master
             textBox.Text = AppLib.NumericOnly(txtCreditAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
         }
-        
-       
-
+    
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
         {
             Grid_Refresh();

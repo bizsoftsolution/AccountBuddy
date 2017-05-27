@@ -36,7 +36,7 @@
                 <Grid Grid.Row="0"  >
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                            <TextBox  x:Name="txtStockGroupName" Text="{Binding GroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
+                            <TextBox  x:Name="txtStockGroupName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding GroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="AccountMultiple" Height="25" Width="25" />
@@ -44,7 +44,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <ComboBox x:Name="cmbUnder" IsEditable="True" SelectedValue="{Binding UnderGroupId,Mode=TwoWay}" Text="{Binding underGroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14">
+                            <ComboBox x:Name="cmbUnder"  IsEditable="{Binding IsReadOnly,Mode=OneWay}" SelectedValue="{Binding UnderGroupId,Mode=TwoWay}" SelectedItem="{Binding UnderAccountGroup,Mode=TwoWay}" Text="{Binding UnderAccountGroup.GroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="AccountNetwork" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -52,8 +52,8 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </ComboBox>
-                        
-                            <TextBox x:Name="txtStockGroupCode" Text="{Binding GroupCode, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
+
+                            <TextBox x:Name="txtStockGroupCode" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding GroupCode, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Sort" Height="25" Width="25" />
@@ -82,10 +82,10 @@
             <!--#region Form Right-->
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="110"/>
-                    <RowDefinition Height="565"/>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="603" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1">
+                <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Auto"  Margin="20"  Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1">
                     <TabControl.Resources>
                         <Style TargetType="TabItem">
                             <Setter Property="Template">
@@ -122,70 +122,59 @@
                     </TabControl.RenderTransform>
                     <TabItem Header="Details" FontSize="16">
 
-                        <Grid Grid.Row="0" Margin="0,0,10,-20" >
-
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,8,0,517" Height="77">
-                                <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  TextChanged="txtSearch_TextChanged">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                            <TextBlock Text="Search Text" FontWeight="Bold"/>
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </TextBox>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                    <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked"/>
-                                    <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked"  />
-                                    <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked"/>
-                                    <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" />
+                        <Grid Grid.Row="0" Margin="0,0,10,20" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="130"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="top" Margin="20" >
+                                    <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  TextChanged="txtSearch_TextChanged">
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5"/>
+                                        <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked"  Margin="5"/>
+                                        <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Margin="5"/>
+                                        <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Margin="5"/>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
 
-                            <DataGrid x:Name="dgvAccount" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="15,105,7,40" SelectionChanged="dgvAccount_SelectionChanged" MouseDoubleClick="dgvAccount_MouseDoubleClick" >
-                                <DataGrid.ColumnHeaderStyle>
-                                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                                        <Setter Property="FontWeight" Value="Bold" />
-                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                    </Style>
-                                </DataGrid.ColumnHeaderStyle>
-                                <DataGrid.Effect>
-                                    <DropShadowEffect/>
-                                </DataGrid.Effect>
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Order No" FontWeight="Bold" Width="100" Binding="{Binding GroupCode}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Group Name" FontWeight="Bold" Width="200" Binding="{Binding GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Under" FontWeight="Bold" Width="200" Binding="{Binding underGroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <StackPanel>
+                                    <DataGrid x:Name="dgvAccount" Height="350" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" SelectionChanged="dgvAccount_SelectionChanged" MouseDoubleClick="dgvAccount_MouseDoubleClick" Margin="10">
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGrid.ColumnHeaderStyle>
+                                       
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Order Code" FontWeight="Bold" Width="100" Binding="{Binding GroupCode}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Group Name" FontWeight="Bold" Width="200" Binding="{Binding GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Under" FontWeight="Bold" Width="200" Binding="{Binding UnderAccountGroup.GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
 
+                                </StackPanel>
+
+                            </Grid>
+                
                         </Grid>
 
                     </TabItem>
                     <TabItem Header="Report" FontSize="16">
                         <Grid Grid.Row="0" Margin="0,0,4,-14">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="41*"/>
-                                <RowDefinition Height="245*"/>
-                            </Grid.RowDefinitions>
-                            <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,-4,0,8" Height="78" Width="350">
-                                <TextBox Name="txtSearchRpt" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" >
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                            <TextBlock Text="Search Text" FontWeight="Bold"/>
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </TextBox>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                    <CheckBox Name="cbxCase1" Content="Case sensitive"  />
-                                    <RadioButton x:Name="rptStartWith1" GroupName="SearchType" Content="Start With" />
-                                    <RadioButton x:Name="rptContain1" GroupName="SearchType" Content="Contain" />
-                                    <RadioButton x:Name="rptEndWith1" GroupName="SearchType" Content="End With"  />
-                                </StackPanel>
-                            </StackPanel>-->
-
-
-                            <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="406"   Grid.Row="1" Margin="0,14,0,0">
+                            
+         
+                            <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  Grid.Row="1" Margin="20">
                                 <rv:ReportViewer x:Name="RptAccount"/>
                             </WindowsFormsHost>
 
