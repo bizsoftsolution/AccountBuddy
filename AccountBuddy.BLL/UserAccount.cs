@@ -38,7 +38,7 @@ namespace AccountBuddy.BLL
             {
                 if (_UserPermission == null)
                 {
-                    _UserPermission = UserAccount.User.UserType==null?new UserTypeDetail(): UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmUser.ToString()).FirstOrDefault();
+                    _UserPermission = UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmUser.ToString()).FirstOrDefault();
                 }
                 return _UserPermission;
             }
@@ -422,13 +422,10 @@ namespace AccountBuddy.BLL
         }
 
 
-        static void Init()
+        public static void Init()
         {
             _toList = null;
             UserPermission = null;
-            CompanyDetail.UserPermission = null;
-            UserType.UserPermission = null;
-            
         }
         #endregion
     }

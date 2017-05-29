@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Master"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"                        
-                 xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
-         
+             
              d:DesignHeight="400" d:DesignWidth="800" Background="white" Loaded="UserControl_Loaded">
 
 
@@ -20,7 +19,7 @@
         <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="3" />
         <!--#region Form Head -->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-            <TextBlock x:Name="lblHead" Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Company Detail"/></TextBlock>
+            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Company Detail"/></TextBlock>
         </Grid>
         <!--#endregion-->
         <!--#region Form Body-->
@@ -125,7 +124,7 @@
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="10" Click="btnSave_Click"  />
+                        <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="10" Click="btnSave_Click" />
                         <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"  Margin="10" Click="btnDelete_Click" />
                     </StackPanel>
 

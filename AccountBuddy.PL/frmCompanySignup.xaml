@@ -9,7 +9,7 @@
                    
                    ShowMinButton="False"
                    ShowMaxRestoreButton="False"
-                   ResizeMode="NoResize"
+                   
         mc:Ignorable="d"
         Title="COMPANY SIGNUP" Height="420" Width="800" Closing="MetroWindow_Closing" WindowStartupLocation="CenterScreen" >
     <Window.CommandBindings>

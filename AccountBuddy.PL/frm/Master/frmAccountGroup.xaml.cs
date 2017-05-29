@@ -38,7 +38,8 @@ namespace AccountBuddy.PL.frm.Master
 
             RptAccount.SetDisplayMode(DisplayMode.PrintLayout);
             onClientEvents();
-           
+
+
         }
 
         #endregion
@@ -54,11 +55,6 @@ namespace AccountBuddy.PL.frm.Master
             cmbUnder.ItemsSource = BLL.AccountGroup.toList;
             cmbUnder.SelectedValuePath = "Id";
             cmbUnder.DisplayMemberPath = "GroupName";
-
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-
-        
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -236,7 +232,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 RptAccount.Reset();
-                ReportDataSource data = new ReportDataSource("AccountGroup", BLL.AccountGroup.toList.Where(x => AccountGroup_Filter(x)).Select(x=>new {x.GroupCode, x.GroupName, underGroupName=x.UnderAccountGroup.GroupName }).OrderBy(x => x.GroupCode).ToList());
+                ReportDataSource data = new ReportDataSource("AccountGroup", BLL.AccountGroup.toList.Where(x => AccountGroup_Filter(x)).OrderBy(x => x.GroupCode).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptAccount.LocalReport.DataSources.Add(data);
                 RptAccount.LocalReport.DataSources.Add(data1);
@@ -287,7 +283,5 @@ namespace AccountBuddy.PL.frm.Master
                 data.Find(d.Id);
             }
         }
-
-
     }
 }

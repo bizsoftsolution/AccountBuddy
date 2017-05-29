@@ -25,9 +25,9 @@
         <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
         
         <!--#region Form Head -->
-        <!--<Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
+        <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
             <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="User Type"/></TextBlock>
-        </Grid>-->
+        </Grid>
         <!--#endregion-->
         
         <!--#region Form Body-->

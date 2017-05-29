@@ -30,9 +30,7 @@ namespace AccountBuddy.BLL
         private string _GSTNo;
         private short _CreditLimit;
         private double _CreditAmount;
-        private CreditLimitType _CreditLimitType;
-        private string _CreditLimitTypeName;
-
+        private CreditLimitType _CreditLimitType;        
         private decimal? _OPDr;
         private decimal? _OPCr;
         private string _LedgerCode;
@@ -42,69 +40,9 @@ namespace AccountBuddy.BLL
         private string _ACType;
         private decimal? _OPBal;
 
-        private static UserTypeDetail _UserPermission;
-        private bool _IsReadOnly;
-        private bool _IsEnabled;
-
         #endregion
 
         #region Property
-        public static UserTypeDetail UserPermission
-        {
-            get
-            {
-                if (_UserPermission == null)
-                {
-                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmLedger.ToString()).FirstOrDefault();
-                }
-                return _UserPermission;
-            }
-
-            set
-            {
-                if (_UserPermission != value)
-                {
-                    _UserPermission = value;
-                }
-            }
-        }
-
-
-        public bool IsReadOnly
-        {
-            get
-            {
-                return _IsReadOnly;
-            }
-
-            set
-            {
-                if (_IsReadOnly != value)
-                {
-                    _IsReadOnly = value;
-                    IsEnabled = !value;
-                    NotifyPropertyChanged(nameof(IsReadOnly));
-                }
-            }
-        }
-
-        public bool IsEnabled
-        {
-            get
-            {
-                return _IsEnabled;
-            }
-
-            set
-            {
-                if (_IsEnabled != value)
-                {
-                    _IsEnabled = value;
-                    NotifyPropertyChanged(nameof(IsEnabled));
-                }
-            }
-        }
-
         public static ObservableCollection<Ledger> toList
         {
             get
@@ -126,7 +64,7 @@ namespace AccountBuddy.BLL
                 {
                     _ACTypeList = new List<string>();
                     _ACTypeList.Add("Debit");
-                    _ACTypeList.Add("Credit");
+                    _ACTypeList.Add("Credit");                    
                 }
                 return _ACTypeList;
             }
@@ -250,8 +188,8 @@ namespace AccountBuddy.BLL
             {
                 if (_AccountGroup != value)
                 {
-                    _AccountGroup = value;
-                    NotifyPropertyChanged(nameof(BLL.AccountGroup));
+                    _AccountGroup = value;                    
+                    NotifyPropertyChanged(nameof(AccountGroup));
                     SetAccountName();
                 }
 
@@ -433,21 +371,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string CreditLimitTypeName
-        {
-            get
-            {
-                return _CreditLimitTypeName;
-            }
-            set
-            {
-                if (_CreditLimitTypeName != value)
-                {
-                    _CreditLimitTypeName = value;
-                    NotifyPropertyChanged(nameof(CreditLimitTypeName));
-                }
-            }
-        }
         public decimal? OPCr
         {
             get
@@ -504,7 +427,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
+        
         #endregion
 
         #region Property  Changed Event
@@ -560,8 +483,6 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new Ledger().toCopy<Ledger>(this);
-            IsReadOnly = !UserPermission.AllowInsert;
-
             NotifyAllPropertyChanged();
         }
 
@@ -571,8 +492,6 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 d.toCopy<Ledger>(this);
-                IsReadOnly = !UserPermission.AllowUpdate;
-
                 return true;
             }
 
@@ -610,17 +529,9 @@ namespace AccountBuddy.BLL
 
         private void SetAccountName()
         {
-            try
-            {
-                var AccountCode = string.Format("{0}{1}{2}", string.IsNullOrWhiteSpace(AccountGroup.GroupCode) ? "" : AccountGroup.GroupCode, string.IsNullOrWhiteSpace(LedgerCode) ? "" : "-", LedgerCode);
-                AccountName = string.Format("{0}{1}{2}", AccountCode, string.IsNullOrWhiteSpace(AccountCode) ? "" : "-", LedgerName);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            var AccountCode = string.Format("{0}{1}{2}", AccountGroup.GroupCode,  string.IsNullOrWhiteSpace( LedgerCode)? "" : "-", LedgerCode);
+            AccountName = string.Format("{0}{1}{2}", AccountCode, string.IsNullOrWhiteSpace(AccountCode) ? "" : "-", LedgerName);
         }
-
 
         #endregion
 
