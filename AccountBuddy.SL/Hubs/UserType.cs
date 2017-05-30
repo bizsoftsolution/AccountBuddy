@@ -15,8 +15,13 @@ namespace AccountBuddy.SL.Hubs
         private BLL.UserType UserTypeDAL_BLL(DAL.UserType d)
         {
             BLL.UserType b = d.toCopy<BLL.UserType>(new BLL.UserType());
-            b.UserTypeDetails =new ObservableCollection<BLL.UserTypeDetail>(d.UserTypeDetails.Select(x => UserTypeDetailDAL_BLL(x)).ToList());
-            b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+
+            if (d!=null)
+            {
+                b.UserTypeDetails = new ObservableCollection<BLL.UserTypeDetail>(d.UserTypeDetails.Select(x => UserTypeDetailDAL_BLL(x)).ToList());
+                b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+               
+            }
             return b;
         }
      

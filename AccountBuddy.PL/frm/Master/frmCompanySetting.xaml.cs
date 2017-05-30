@@ -172,6 +172,7 @@ namespace AccountBuddy.PL.frm.Master
             if (!BLL.CompanyDetail.UserPermission.AllowDelete)
                 MessageBox.Show(string.Format(Message.PL.DenyDelete, lblHead.Text));
             else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                
                 if (data.Delete() == true)
                 {
                     MessageBox.Show(Message.PL.Delete_Alert);
