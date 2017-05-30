@@ -201,7 +201,11 @@ namespace AccountBuddy.PL.frm.Transaction
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
-            cmbCreditAC.ItemsSource =BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts");
+            cmbDebitAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts");
+            cmbDebitAC.SelectedValuePath = "Id";
+            cmbDebitAC.DisplayMemberPath = "AccountName";
+
+            cmbCreditAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts");
             cmbCreditAC.SelectedValuePath = "Id";
             cmbCreditAC.DisplayMemberPath = "AccountName";
 
