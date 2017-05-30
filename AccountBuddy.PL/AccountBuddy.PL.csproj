@@ -214,6 +214,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmLedgerOpeningPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmPayment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -298,6 +302,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmLedgerOpening.xaml.cs">
       <DependentUpon>frmLedgerOpening.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmLedgerOpeningPrint.xaml.cs">
+      <DependentUpon>frmLedgerOpeningPrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmPayment.xaml.cs">
       <DependentUpon>frmPayment.xaml</DependentUpon>
@@ -387,6 +394,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Print.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Pdf.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Print Preview.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
