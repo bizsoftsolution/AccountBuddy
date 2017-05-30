@@ -21,7 +21,7 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmReceipt : UserControl
     {
-        BLL.Receipt data = new BLL.Receipt();
+        public BLL.Receipt data = new BLL.Receipt();
         public String FormName = "Receipt";
         public frmReceipt()
         {

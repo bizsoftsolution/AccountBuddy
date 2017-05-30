@@ -33,6 +33,12 @@ namespace AccountBuddy.PL
         {
             ccContent.Content = new frmWelcome();
         }
+
+        public void ShowForm(object o)
+        {
+            ccContent.Content = o;
+        }
+
         private void onClientEvents()
         {
             

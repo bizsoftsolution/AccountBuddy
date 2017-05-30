@@ -20,6 +20,7 @@ namespace AccountBuddy.BLL
         private decimal _DrAmt;
         private decimal _BalAmt;
         private string _AccountName;
+        private string _Particular;
 
         #endregion
 
@@ -173,6 +174,22 @@ namespace AccountBuddy.BLL
                 {
                     _AccountName = value;
                     NotifyPropertyChanged(nameof(AccountName));
+                }
+            }
+        }
+
+        public string Particular
+        {
+            get
+            {
+                return _Particular;
+            }
+            set
+            {
+                if (_Particular != value)
+                {
+                    _Particular = value;
+                    NotifyPropertyChanged(nameof(Particular));
                 }
             }
         }

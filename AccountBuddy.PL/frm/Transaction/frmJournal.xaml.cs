@@ -21,7 +21,7 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmJournal : UserControl
     {
-        BLL.Journal data = new BLL.Journal();
+        public BLL.Journal data = new BLL.Journal();
         public string FormName = "Journal";
         decimal drAmt = 0, crAmt = 0, DiffAmt=0;
         public frmJournal()
