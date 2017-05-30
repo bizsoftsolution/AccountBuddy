@@ -37,7 +37,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             InitializeComponent();
             this.DataContext = data;
-
+            data.Clear();
             RptLedger.SetDisplayMode(DisplayMode.PrintLayout);
             onClientEvents();
         }
@@ -54,7 +54,7 @@ namespace AccountBuddy.PL.frm.Master
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.AccountName), System.ComponentModel.ListSortDirection.Ascending));
 
             cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList;
-            cmbAccountGroupId.DisplayMemberPath = "GroupName";
+            cmbAccountGroupId.DisplayMemberPath = "GroupNameWithCode";
             cmbAccountGroupId.SelectedValuePath = "Id";
 
 

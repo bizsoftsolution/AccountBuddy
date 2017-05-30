@@ -17,6 +17,7 @@ namespace AccountBuddy.BLL
      
         private int _id;
         private string _groupName;
+        private string _groupNameWithCode;
         private string _groupCode;
         private int? _underGroupId;
         private int _companyId;
@@ -60,7 +61,7 @@ namespace AccountBuddy.BLL
                     {
                         _toList = new ObservableCollection<AccountGroup>();
                         var l1 = ABClientHub.FMCGHub.Invoke<List<AccountGroup>>("accountGroup_List").Result;
-                        _toList = new ObservableCollection<AccountGroup>(l1);
+                        _toList = new ObservableCollection<AccountGroup>(l1.OrderBy(x=> x.GroupNameWithCode));
                     }
                 }
                 catch (Exception ex)
@@ -103,6 +104,7 @@ namespace AccountBuddy.BLL
                 {
                     _groupName = value;
                     NotifyPropertyChanged(nameof(GroupName));
+                    SetGroupNameWithCode();
                 }
             }
         }
@@ -118,6 +120,22 @@ namespace AccountBuddy.BLL
                 {
                     _groupCode = value;
                     NotifyPropertyChanged(nameof(GroupCode));
+                    SetGroupNameWithCode();
+                }
+            }
+        }
+        public string GroupNameWithCode
+        {
+            get
+            {
+                return _groupNameWithCode;
+            }
+            set
+            {
+                if (_groupNameWithCode != value)
+                {
+                    _groupNameWithCode = value;
+                    NotifyPropertyChanged(nameof(GroupNameWithCode));
                 }
             }
         }
@@ -210,9 +228,9 @@ namespace AccountBuddy.BLL
                 if (_IsReadOnly != value)
                 {
                     _IsReadOnly = value;
-                    IsEnabled = !value;
                     NotifyPropertyChanged(nameof(IsReadOnly));
                 }
+                IsEnabled = !value;
             }
         }
 
@@ -305,9 +323,10 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 d.toCopy<AccountGroup>(this);
+                IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }
-
+            
             return false;
         }
 
@@ -341,6 +360,10 @@ namespace AccountBuddy.BLL
             _toList = null;
         }
 
+        void SetGroupNameWithCode()
+        {
+            GroupNameWithCode = string.Format("{0}{1}{2}", GroupCode, string.IsNullOrWhiteSpace(GroupCode) ? "" : "-", GroupName);
+        }
         #endregion
     }
 }

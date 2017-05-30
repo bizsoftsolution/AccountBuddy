@@ -82,10 +82,10 @@ namespace AccountBuddy.BLL
             {
                 if (_IsReadOnly != value)
                 {
-                    _IsReadOnly = value;
-                    IsEnabled = !value;
+                    _IsReadOnly = value;                    
                     NotifyPropertyChanged(nameof(IsReadOnly));
                 }
+                IsEnabled = !value;
             }
         }
 
@@ -480,6 +480,8 @@ namespace AccountBuddy.BLL
                     if (value != null && value != 0)
                     {
                         OPDr = 0;
+                        OPBal = value;
+                        ACType = "Credit";
                     }
                 }
 
@@ -500,6 +502,8 @@ namespace AccountBuddy.BLL
                     if (value != null && value != 0)
                     {
                         OPCr = 0;
+                        OPBal = value;
+                        ACType = "Debit";
                     }
                 }
 
