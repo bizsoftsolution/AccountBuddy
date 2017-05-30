@@ -125,6 +125,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            lblMsg.Text = "";
         }
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
@@ -188,6 +189,14 @@ namespace AccountBuddy.PL.frm.Transaction
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
             data.Clear();
+
+
+            cmbDebitAC.ItemsSource = BLL.Ledger.toList;
+            cmbDebitAC.SelectedValuePath = "Id";
+            cmbDebitAC.DisplayMemberPath = "AccountName";
+
+
+            
         }
 
         private void txtAmountDr_TextChanged(object sender, TextChangedEventArgs e)

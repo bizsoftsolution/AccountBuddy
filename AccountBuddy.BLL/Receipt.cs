@@ -197,17 +197,7 @@ namespace AccountBuddy.BLL
                     IsShowOnlineDetail = value == "Online";
                     IsShowTTDetail = value == "TT";
 
-                    if (value == "Cash")
-                    {
-                        LedgerName = "Cash Account";
-                        LedgerId = BLL.Ledger.toList.Where(x => x.LedgerName == "Cash Account").Select(x => x.Id).FirstOrDefault();
-                        _IsLedgerEditable = false;
-                    }
-                    else
-                    {
-                        _IsLedgerEditable = true;
-                        LedgerId = 0;
-                    }
+                   
 
                 }
             }

@@ -58,6 +58,7 @@ namespace AccountBuddy.PL.frm.Master
             cmbAccountGroupId.SelectedValuePath = "Id";
 
 
+
             cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
             cmbCreditLimitTypeId.SelectedValuePath = "Id";
             cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";

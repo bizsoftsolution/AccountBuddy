@@ -73,7 +73,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("select Paymode");
             }
-
+            
             else if (data.PDetails.Count == 0)
             {
                 MessageBox.Show("Enter Payment");
@@ -200,6 +200,11 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+
+            cmbCreditAC.ItemsSource =BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts");
+            cmbCreditAC.SelectedValuePath = "Id";
+            cmbCreditAC.DisplayMemberPath = "AccountName";
+
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 

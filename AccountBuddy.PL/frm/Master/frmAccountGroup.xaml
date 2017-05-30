@@ -44,7 +44,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <ComboBox x:Name="cmbUnder"  IsEditable="True" IsEnabled="{Binding IsEnabled}" SelectedValue="{Binding UnderGroupId,Mode=TwoWay}" SelectedItem="{Binding UnderAccountGroup,Mode=TwoWay}" Text="{Binding UnderAccountGroup.GroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" >
+                            <ComboBox x:Name="cmbUnder"  IsEditable="True"  SelectedValue="{Binding UnderGroupId,Mode=TwoWay}" SelectedItem="{Binding UnderAccountGroup,Mode=TwoWay}" Text="{Binding UnderAccountGroup.GroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="AccountNetwork" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
