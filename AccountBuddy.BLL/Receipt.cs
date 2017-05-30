@@ -595,7 +595,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return Ledger.toList;
+                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts").ToList());
             }
         }
         public static ObservableCollection<Ledger> CashLedgerList
