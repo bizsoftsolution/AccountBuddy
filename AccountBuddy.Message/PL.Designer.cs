@@ -61,6 +61,15 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not delete this Record!.
+        /// </summary>
+        public static string Cant_Delete_Alert {
+            get {
+                return ResourceManager.GetString("Cant_Delete_Alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deleted Successfully.
         /// </summary>
         public static string Delete_Alert {

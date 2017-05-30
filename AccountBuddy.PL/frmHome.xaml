@@ -154,7 +154,18 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
 
+                                    <Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmGeneralLedger/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
 
+                                    <Menu:NavMenuItem MenuName="Payment_Receipt" FormName="Activity Report">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmPaymentReceipt/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    
                                     <Menu:NavMenuItem MenuName="Trial Balance" FormName="Trial Balance">
                                         <Menu:NavMenuItem.Content>
                                             <Report:frmTrialBalance/>
@@ -171,18 +182,7 @@
                                             <Report:frmIncomeAndExpenditure/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                    <Menu:NavMenuItem MenuName="Payment_Receipt" FormName="Activity Report">
-                                        <Menu:NavMenuItem.Content>
-                                            <Report:frmPaymentReceipt/>
-                                        </Menu:NavMenuItem.Content>
-                                    </Menu:NavMenuItem>
-
-                                    <Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
-                                        <Menu:NavMenuItem.Content>
-                                            <Report:frmGeneralLedger/>
-                                        </Menu:NavMenuItem.Content>
-                                    </Menu:NavMenuItem>
-
+                                    
                                 </ListBox>
                             </Expander>
 
