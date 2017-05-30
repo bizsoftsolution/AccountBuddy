@@ -8,7 +8,7 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Balance_Sheet
+        #region Profit_Loss
 
         public List<BLL.ProfitLoss> ProfitLoss_List(DateTime dtFrom, DateTime dtTo)
         {
@@ -43,8 +43,9 @@ namespace AccountBuddy.SL.Hubs
                 tb = new BLL.ProfitLoss();
                 tb.Ledger = new BLL.Ledger();
 
-                l.toCopy<BLL.Ledger>(tb.Ledger);
-                
+                //l.toCopy<BLL.Ledger>(tb.Ledger);
+                tb.Ledger = LedgerDAL_BLL(l);
+
                 OPDr = l.OPDr ?? 0;
                 OPCr = l.OPCr ?? 0;
 
@@ -139,7 +140,7 @@ namespace AccountBuddy.SL.Hubs
                 tb = new BLL.ProfitLoss();
                 tb.Ledger = new BLL.Ledger();
 
-                l.toCopy<BLL.Ledger>(tb.Ledger);
+                tb.Ledger= LedgerDAL_BLL(l);
 
                 OPInDr = l.OPDr ?? 0;
                 OPInCr = l.OPCr ?? 0;

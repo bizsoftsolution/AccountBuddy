@@ -26,9 +26,8 @@ namespace AccountBuddy.SL.Hubs
             foreach (var l in lstLedger)
             {
                 gl = new BLL.GeneralLedger();
-                gl.Ledger = new BLL.Ledger();
-
-                l.toCopy<BLL.Ledger>(gl.Ledger);
+               
+                gl.Ledger = LedgerDAL_BLL(l);
 
                 OPDr = l.OPDr ?? 0;
                 OPCr = l.OPCr ?? 0;
@@ -66,6 +65,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
+                    gl.Ledger = LedgerDAL_BLL(pd.Ledger);
                     pd.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
                     gl.EId = pd.Payment.Id;
                     gl.EType = 'P';
@@ -84,7 +84,8 @@ namespace AccountBuddy.SL.Hubs
                 {
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
-                    p.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
+                    gl.Ledger = LedgerDAL_BLL(p.Ledger);
+
                     gl.EId = p.Id;
                     gl.EType = 'P';
                     gl.EDate = p.PaymentDate;
@@ -101,7 +102,8 @@ namespace AccountBuddy.SL.Hubs
                 {
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
-                    r.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
+                    gl.Ledger = LedgerDAL_BLL(r.Ledger);
+
                     gl.EId = r.Id;
                     gl.EType = 'R';
                     gl.EDate = r.ReceiptDate;
@@ -117,7 +119,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
-                    rd.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
+                    gl.Ledger = LedgerDAL_BLL(rd.Ledger);
                     gl.EId = rd.Receipt.Id;
                     gl.EType = 'R';
                     gl.EDate = rd.Receipt.ReceiptDate;
@@ -134,7 +136,8 @@ namespace AccountBuddy.SL.Hubs
                 {
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
-                    jd.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
+                    gl.Ledger = LedgerDAL_BLL(jd.Ledger);
+
                     gl.EId = jd.Journal.Id;
                     gl.EType = 'J';
                     gl.EDate = jd.Journal.JournalDate;

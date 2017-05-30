@@ -12,7 +12,7 @@ namespace AccountBuddy.SL.Hubs
 
         #region Ledger
 
-        private BLL.Ledger LedterDAL_BLL(DAL.Ledger ledgerFrom)
+        private BLL.Ledger LedgerDAL_BLL(DAL.Ledger ledgerFrom)
         {
             BLL.Ledger ledgerTo = ledgerFrom.toCopy<BLL.Ledger>(new BLL.Ledger());
 
@@ -28,13 +28,13 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.Ledger> Ledger_List()
         {
             return DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
-                             .Select(x => LedterDAL_BLL(x)).ToList();
+                             .Select(x => LedgerDAL_BLL(x)).ToList();
         }
 
         public List<BLL.Ledger> CashLedger_List()
         {
             return DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.AccountGroup.GroupName=="Bank Accounts" || x.AccountGroup.GroupName== "Cash-in-Hand").ToList()
-                             .Select(x => LedterDAL_BLL(x)).ToList();
+                             .Select(x => LedgerDAL_BLL(x)).ToList();
         }
 
         public int Ledger_Save(BLL.Ledger led)
@@ -78,7 +78,7 @@ namespace AccountBuddy.SL.Hubs
                 {                    
                     DB.Ledgers.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(LedterDAL_BLL(d) , LogDetailType.DELETE);
+                    LogDetailStore(LedgerDAL_BLL(d) , LogDetailType.DELETE);
                 }
 
                 Clients.Clients(OtherLoginClientsOnGroup).Ledger_Delete(pk);
