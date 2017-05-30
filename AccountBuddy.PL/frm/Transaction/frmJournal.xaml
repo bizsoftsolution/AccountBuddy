@@ -77,7 +77,7 @@
                     <TextBox x:Name="txtEntryNo" IsReadOnly="{Binding IsReadOnly}"  Text="{Binding EntryNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <ComboBox x:Name="cmbDebitAC"  ItemsSource="{Binding LedgerList}" SelectedValuePath="Id" DisplayMemberPath="AccountName" IsEditable="True" Text="{Binding JDetail.LedgerName}" SelectedValue="{Binding JDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" >
+                    <ComboBox x:Name="cmbDebitAC"  IsEditable="True" Text="{Binding JDetail.LedgerName}" SelectedValue="{Binding JDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" >
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Account Name"/>

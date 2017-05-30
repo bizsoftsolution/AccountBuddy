@@ -89,7 +89,7 @@
                             </materialDesign:HintAssist.Hint>
                           
                         </ComboBox>
-                        <ComboBox x:Name="cmbCreditAC" IsReadOnly="{Binding IsReadOnly}" ItemsSource="{Binding CashLedgerList}" SelectedValuePath="Id" DisplayMemberPath="AccountName" SelectedValue="{Binding LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True">
+                        <ComboBox x:Name="cmbCreditAC" IsReadOnly="{Binding IsReadOnly}"   SelectedValue="{Binding LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Credit A/C"/>
