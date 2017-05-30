@@ -23,6 +23,28 @@ namespace AccountBuddy.PL.frm.Transaction
         public frmBankReconcilation()
         {
             InitializeComponent();
+          
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            if (cmbAccountName.SelectedValue != null) dgvDetails.ItemsSource = BLL.BankReconcilation.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
+
+            DateTime? dtFrom = new DateTime(yy, 4, 1);
+            DateTime? dtTo = new DateTime(yy + 1, 3, 31);
+
+            dtpDateFrom.SelectedDate = dtFrom;
+            dtpDateTo.SelectedDate = dtTo;
+
+            cmbAccountName.ItemsSource = BLL.Ledger.toList;
+            cmbAccountName.DisplayMemberPath = "AccountName";
+            cmbAccountName.SelectedValuePath = "Id";
         }
     }
 }

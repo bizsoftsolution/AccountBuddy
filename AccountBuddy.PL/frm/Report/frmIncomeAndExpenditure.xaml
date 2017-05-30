@@ -88,9 +88,9 @@
                                     <TranslateTransform/>
                                 </TransformGroup>
                             </TabControl.RenderTransform>
-                            <TabItem Header="Details" FontSize="16">
+                            <TabItem Header="Details" FontSize="16" FontWeight="Bold">
                                 <Grid Grid.Row="0"  >
-                                    <DataGrid x:Name="dgvProfitLoss" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5"  >
+                                    <DataGrid x:Name="dgvProfitLoss" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  >
                                         <DataGrid.RenderTransform>
                                             <TransformGroup>
                                                 <ScaleTransform/>

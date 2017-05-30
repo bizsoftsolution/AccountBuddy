@@ -17,24 +17,36 @@ namespace AccountBuddy.Common
             frmCompanySetting,
             frmUser,
             frmUserType,
-            frmAccountGroups
+            frmAccountGroup, 
+            frmLedger, 
+            frmPayment, 
+            frmReceipt, 
+            frmJournal
         }
 
         public static string CurrencyName1 = "RINGGIT";
         public static string CurrencyName2 = "SEN";
         public static T toCopy<T>(this object objSource, T objDestination)
         {
-            var l1 = objSource.GetType().GetProperties().Where(x => x.PropertyType.Namespace != "System.Collections.Generic").ToList();
-
-            foreach (var pFrom in l1)
+            try
             {
-                try
+
+                var l1 = objSource.GetType().GetProperties().Where(x => x.PropertyType.Namespace != "System.Collections.Generic").ToList();
+
+                foreach (var pFrom in l1)
                 {
-                    var pTo = objDestination.GetType().GetProperties().Where(x => x.Name == pFrom.Name).FirstOrDefault();
-                    pTo.SetValue(objDestination, pFrom.GetValue(objSource));
+                    try
+                    {
+                        var pTo = objDestination.GetType().GetProperties().Where(x => x.Name == pFrom.Name).FirstOrDefault();
+                        pTo.SetValue(objDestination, pFrom.GetValue(objSource));
+                    }
+                    catch (Exception ex) { }
+
                 }
-                catch (Exception ex) { }
-                
+            }
+            catch(Exception ex)
+            {
+
             }
             return objDestination;
         }

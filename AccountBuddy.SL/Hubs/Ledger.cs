@@ -30,7 +30,13 @@ namespace AccountBuddy.SL.Hubs
             return DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => LedterDAL_BLL(x)).ToList();
         }
-        
+
+        public List<BLL.Ledger> CashLedger_List()
+        {
+            return DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.AccountGroup.GroupName=="Bank Accounts" || x.AccountGroup.GroupName== "Cash-in-Hand").ToList()
+                             .Select(x => LedterDAL_BLL(x)).ToList();
+        }
+
         public int Ledger_Save(BLL.Ledger led)
         {
             try

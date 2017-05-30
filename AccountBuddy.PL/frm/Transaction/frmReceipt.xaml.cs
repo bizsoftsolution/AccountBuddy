@@ -188,5 +188,13 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+
+            data.Clear();
+        }
     }
 }

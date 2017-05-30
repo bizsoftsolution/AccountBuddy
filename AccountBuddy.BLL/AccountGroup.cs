@@ -14,16 +14,42 @@ namespace AccountBuddy.BLL
     {
         #region Fields
         private static ObservableCollection<AccountGroup> _toList;
-
+     
         private int _id;
         private string _groupName;
         private string _groupCode;
+        private int? _underGroupId;
+        private int _companyId;
         private AccountGroup _UnderAccountGroup;
         private CompanyDetail _Company;
-        
+        private string _underGroupName;
+
+        private static UserTypeDetail _UserPermission;
+        private bool _IsReadOnly;
+        private bool _IsEnabled;
         #endregion
 
         #region Property
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmAccountGroup.ToString()).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
+
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
+
         public static ObservableCollection<AccountGroup> toList
         {
             get
@@ -49,7 +75,6 @@ namespace AccountBuddy.BLL
                 _toList = value;
             }
         }
-
 
         public int Id
         {
@@ -96,7 +121,36 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
+        public int CompanyId
+        {
+            get
+            {
+                return _companyId;
+            }
+            set
+            {
+                if (_companyId != value)
+                {
+                    _companyId = value;
+                    NotifyPropertyChanged(nameof(CompanyId));
+                }
+            }
+        }
+        public int? UnderGroupId
+        {
+            get
+            {
+                return _underGroupId;
+            }
+            set
+            {
+                if (_underGroupId != value)
+                {
+                    _underGroupId = value;
+                    NotifyPropertyChanged(nameof(UnderGroupId));
+                }
+            }
+        }
         public AccountGroup UnderAccountGroup
         {
             get
@@ -108,11 +162,10 @@ namespace AccountBuddy.BLL
                 if (_UnderAccountGroup != value)
                 {
                     _UnderAccountGroup = value;
-                    NotifyPropertyChanged(nameof(UnderAccountGroup));
+                    NotifyPropertyChanged(nameof(BLL.AccountGroup));
                 }
             }
         }
-
         public CompanyDetail Company
         {
             get
@@ -129,6 +182,57 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public string underGroupName
+        {
+            get
+            {
+                return _underGroupName;
+            }
+            set
+            {
+                if (_underGroupName != value)
+                {
+                    _underGroupName = value;
+                    NotifyPropertyChanged(nameof(underGroupName));
+                }
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return _IsReadOnly;
+            }
+
+            set
+            {
+                if (_IsReadOnly != value)
+                {
+                    _IsReadOnly = value;
+                    IsEnabled = !value;
+                    NotifyPropertyChanged(nameof(IsReadOnly));
+                }
+            }
+        }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+
+            set
+            {
+                if (_IsEnabled != value)
+                {
+                    _IsEnabled = value;
+                    NotifyPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
+       
         #endregion
 
         #region Property  Changed Event
@@ -182,8 +286,17 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new AccountGroup().toCopy<AccountGroup>(this);
-            NotifyAllPropertyChanged();
+            try
+            {
+                new AccountGroup().toCopy<AccountGroup>(this);
+                IsReadOnly = !UserPermission.AllowInsert;
+
+                NotifyAllPropertyChanged();
+            }
+           catch(Exception ex)
+            {
+
+            }
         }
 
         public bool Find(int pk)

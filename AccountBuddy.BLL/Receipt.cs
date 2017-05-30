@@ -49,10 +49,32 @@ namespace AccountBuddy.BLL
         private ObservableCollection<ReceiptDetail> _RDetails;
         private static List<string> _ReceiptModeList;
         private static List<string> _StatusList;
-
+        private static UserTypeDetail _UserPermission;
+        private bool _IsReadOnly;
+        private bool _IsEnabled;
         #endregion
 
-        #region  Property
+        #region Property
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmReceipt.ToString()).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
+
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
+
 
         public static List<string> ReceiptModeList
         {
@@ -509,6 +531,42 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return _IsReadOnly;
+            }
+
+            set
+            {
+                if (_IsReadOnly != value)
+                {
+                    _IsReadOnly = value;
+                    IsEnabled = !value;
+                    NotifyPropertyChanged(nameof(IsReadOnly));
+                }
+            }
+        }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+
+            set
+            {
+                if (_IsEnabled != value)
+                {
+                    _IsEnabled = value;
+                    NotifyPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
+
         #endregion
 
         public Ledger RLedger
@@ -540,6 +598,13 @@ namespace AccountBuddy.BLL
                 return Ledger.toList;
             }
         }
+        public static ObservableCollection<Ledger> CashLedgerList
+        {
+            get
+            {
+                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList());
+            }
+        }
         #endregion
 
         #region Master
@@ -562,6 +627,7 @@ namespace AccountBuddy.BLL
             _RDetails = new ObservableCollection<ReceiptDetail>();
 
             ReceiptDate = DateTime.Now;
+            IsReadOnly = !UserPermission.AllowInsert;
 
             NotifyAllPropertyChanged();
         }

@@ -27,10 +27,31 @@ namespace AccountBuddy.BLL
         private string _SearchText;
 
         private ObservableCollection<JournalDetail> _JDetails;
-
+        private static UserTypeDetail _UserPermission;
+        private bool _IsReadOnly;
+        private bool _IsEnabled;
         #endregion
 
         #region Property
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmJournal.ToString()).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
+
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
 
         public long Id
         {
@@ -223,6 +244,43 @@ namespace AccountBuddy.BLL
             }
         }
 
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return _IsReadOnly;
+            }
+
+            set
+            {
+                if (_IsReadOnly != value)
+                {
+                    _IsReadOnly = value;
+                    IsEnabled = !value;
+                    NotifyPropertyChanged(nameof(IsReadOnly));
+                }
+            }
+        }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+
+            set
+            {
+                if (_IsEnabled != value)
+                {
+                    _IsEnabled = value;
+                    NotifyPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
+
+
         #region List
         public static ObservableCollection<Ledger> LedgerList
         {
@@ -271,6 +329,7 @@ namespace AccountBuddy.BLL
             _JDetails = new ObservableCollection<JournalDetail>();
 
             JournalDate = DateTime.Now;
+            IsReadOnly = !UserPermission.AllowInsert;
 
             NotifyAllPropertyChanged();
         }
@@ -283,6 +342,8 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.toCopy<Journal>(this);
                 this.JDetails = po.JDetails;
+                IsReadOnly = !UserPermission.AllowInsert;
+
                 NotifyAllPropertyChanged();
                 return true;
             }

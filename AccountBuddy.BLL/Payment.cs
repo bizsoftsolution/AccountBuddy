@@ -52,10 +52,31 @@ namespace AccountBuddy.BLL
         private static List<string> _PayModeList;
         private static List<string> _StatusList;
 
-
+        private static UserTypeDetail _UserPermission;
+        private bool _IsReadOnly;
+        private bool _IsEnabled;
         #endregion
 
-        #region  Property
+        #region Property
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmPayment.ToString()).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
+
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
 
         public static List<string> PayModeList
         {
@@ -179,13 +200,7 @@ namespace AccountBuddy.BLL
                     IsShowOnlineDetail = value == "Online";
                     IsShowTTDetail = value == "TT";
 
-                    if (value == "Cash")
-                    {
-                        LedgerId = Ledger.toList.Where(x => x.LedgerName == "Cash Account").Select(x => x.Id).FirstOrDefault();
-                        IsLedgerEditable = false;
-
-                    }
-                  
+                 
 
 
 
@@ -527,6 +542,42 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return _IsReadOnly;
+            }
+
+            set
+            {
+                if (_IsReadOnly != value)
+                {
+                    _IsReadOnly = value;
+                    IsEnabled = !value;
+                    NotifyPropertyChanged(nameof(IsReadOnly));
+                }
+            }
+        }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+
+            set
+            {
+                if (_IsEnabled != value)
+                {
+                    _IsEnabled = value;
+                    NotifyPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
+
         #endregion
 
         public Ledger PLedger
@@ -554,9 +605,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-              
-                
-                return Ledger.toList;
+              return Ledger.toList;
             }
 
 
@@ -567,7 +616,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash AC").ToList());
+                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName== "Bank Accounts").ToList());
             }
         }
 
@@ -602,6 +651,7 @@ namespace AccountBuddy.BLL
             _PDetails = new ObservableCollection<PaymentDetail>();
 
             PaymentDate = DateTime.Now;
+            IsReadOnly = !UserPermission.AllowInsert;
 
             NotifyAllPropertyChanged();
         }
@@ -614,6 +664,8 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.toCopy<Payment>(this);
                 this.PDetails = po.PDetails;
+                IsReadOnly = !UserPermission.AllowInsert;
+
                 NotifyAllPropertyChanged();
                 return true;
             }

@@ -91,19 +91,12 @@
                                     <TranslateTransform/>
                                 </TransformGroup>
                             </TabControl.RenderTransform>
-                            <TabItem Header="Details" FontSize="16">
+                            <TabItem Header="Details" FontSize="16" FontWeight="Bold">
 
-                                <Grid Grid.Row="0" Margin="0,0,10,-20" >
+                                <Grid Grid.Row="0">
 
-                                    <DataGrid x:Name="dgvTrialBalance" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5">
-                                        <DataGrid.RenderTransform>
-                                            <TransformGroup>
-                                                <ScaleTransform/>
-                                                <SkewTransform AngleX="-0.283"/>
-                                                <RotateTransform/>
-                                                <TranslateTransform X="0.745"/>
-                                            </TransformGroup>
-                                        </DataGrid.RenderTransform>
+                                    <DataGrid x:Name="dgvTrialBalance" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20">
+                                 
                                         <DataGrid.ColumnHeaderStyle>
                                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                                 <Setter Property="FontWeight" Value="Bold" />
@@ -113,7 +106,7 @@
                                         </DataGrid.ColumnHeaderStyle>
 
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding Ledger.AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding  Ledger.AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                             <DataGridTextColumn Header="Debit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                             <DataGridTextColumn Header="Credit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>                                                                                       
                                             <DataGridTextColumn Header="Previous Balance Dr"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmtOP, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
@@ -124,10 +117,10 @@
                                 </Grid>
 
                             </TabItem>
-                            <TabItem Header="Report" FontSize="16">
+                            <TabItem Header="Report" FontSize="16" FontWeight="Bold">
                                 <Grid Grid.Row="0">
 
-                                    <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top"  Height="330">
+                                    <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="20">
                                         <rv:ReportViewer x:Name="rptTrialBalance"/>
                                     </WindowsFormsHost>
 

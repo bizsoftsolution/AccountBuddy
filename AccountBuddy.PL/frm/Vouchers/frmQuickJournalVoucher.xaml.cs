@@ -43,7 +43,7 @@ namespace AccountBuddy.PL.frm.Vouchers
                 rptQuickJournal.Reset();
                 ReportDataSource data1 = new ReportDataSource("Journal", JList);
                 ReportDataSource data2 = new ReportDataSource("CompanyDetail", CList);
-                ReportDataSource data3 = new ReportDataSource("JournalDetail", JDList);
+                ReportDataSource data3 = new ReportDataSource("JDetails", data.JDetails);
 
                 rptQuickJournal.LocalReport.DataSources.Add(data1);
                 rptQuickJournal.LocalReport.DataSources.Add(data2);

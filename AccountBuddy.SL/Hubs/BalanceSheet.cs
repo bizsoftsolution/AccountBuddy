@@ -18,15 +18,15 @@ namespace AccountBuddy.SL.Hubs
             BLL.BalanceSheet tb = new BLL.BalanceSheet();
 
 
-            var lstLedgerAssets = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName=="Assets").ToList();
-            var lstLedgerLiability= DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Liabilities").ToList();
+            var lstLedgerAssets = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName=="Assets" || x.AccountGroup.AccountGroup2.GroupName=="Assets").ToList();
+            var lstLedgerLiability= DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Liabilities" && x.AccountGroup.AccountGroup2.GroupName == "Liabilities").ToList();
             decimal TotAssDr = 0, TotAssCr = 0, TotLiDr=0, TotLiCr=0;
 
             #region Assets
 
             tb = new BLL.BalanceSheet();
             tb.LedgerList = new BLL.Ledger();
-            tb.LedgerList.LedgerName = "  Assets";
+            tb.LedgerList.AccountName = "  Assets";
             tb.CrAmt = null;
             tb.DrAmt = null;
             tb.CrAmtOP = null;
@@ -110,7 +110,7 @@ namespace AccountBuddy.SL.Hubs
 
             tb = new BLL.BalanceSheet();
             tb.LedgerList = new BLL.Ledger();
-            tb.LedgerList.LedgerName = "  Total Assets";
+            tb.LedgerList.AccountName = "  Total Assets";
             tb.DrAmt = TotAssDr;
             tb.CrAmt = TotAssCr;
             lstBalanceSheet.Add(tb);
@@ -122,7 +122,7 @@ namespace AccountBuddy.SL.Hubs
 
             tb = new BLL.BalanceSheet();
             tb.LedgerList = new BLL.Ledger();
-            tb.LedgerList.LedgerName = "  Liablities";
+            tb.LedgerList.AccountName = "  Liablities";
             tb.CrAmt = null;
             tb.DrAmt = null;
             tb.CrAmtOP = null;
@@ -205,7 +205,7 @@ namespace AccountBuddy.SL.Hubs
 
             tb = new BLL.BalanceSheet();
             tb.LedgerList = new BLL.Ledger();
-            tb.LedgerList.LedgerName =  "   Total Liabilities";
+            tb.LedgerList.AccountName =  "   Total Liabilities";
             tb.DrAmt =TotLiDr;
             tb.CrAmt = TotLiCr;
             lstBalanceSheet.Add(tb);
@@ -215,7 +215,7 @@ namespace AccountBuddy.SL.Hubs
 
             tb = new BLL.BalanceSheet();
             tb.LedgerList = new BLL.Ledger();
-            tb.LedgerList.LedgerName = "Total";
+            tb.LedgerList.AccountName = "Total";
             tb.DrAmt = TotLiDr+TotAssDr;
             tb.CrAmt = TotLiCr+TotAssCr;
             lstBalanceSheet.Add(tb);

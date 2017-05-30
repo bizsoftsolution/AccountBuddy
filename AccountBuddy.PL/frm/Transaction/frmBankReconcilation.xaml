@@ -8,7 +8,7 @@
                xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
               xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="600" d:DesignWidth="1100" Background="White" >
+             d:DesignHeight="600" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
 
 
     <UserControl.Resources>
@@ -80,7 +80,7 @@
 
                     <StackPanel Orientation="Horizontal" >
                         <DatePicker x:Name="dtpDateFrom" materialDesign:HintAssist.Hint="Date From"  SelectedDate="{Binding DateFrom}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,25,24" Width="150" FontWeight="Bold"  />
-                        <DatePicker x:Name="dtpDateTo" materialDesign:HintAssist.Hint="Date To"  SelectedDate="{Binding DateFrom}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,25,24" Width="150" FontWeight="Bold"  />
+                        <DatePicker x:Name="dtpDateTo" materialDesign:HintAssist.Hint="Date To"  SelectedDate="{Binding DateTo}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,25,24" Width="150" FontWeight="Bold"  />
                         <ComboBox x:Name="cmbAccountName"  ItemsSource="{Binding LedgerList}"  SelectedValue="{Binding LedgerName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="10,10,20,10">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
@@ -88,15 +88,17 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <ComboBox x:Name="cmbStatus"  ItemsSource="{Binding LedgerN}"  SelectedValue="{Binding LedgerName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="10,10,20,10">
+                        <ComboBox x:Name="cmbStatus"    Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="10,10,20,10">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Status"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <ComboBoxItem>Completed</ComboBoxItem>
+                            <ComboBoxItem>Returned</ComboBoxItem>
                         </ComboBox>
                         <StackPanel Orientation="Horizontal" Height="75" Width="135">
-                            <Button x:Name="btnSearch" Content="Search" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="90" Height="35"></Button>
+                            <Button x:Name="btnSearch" Content="Search" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="90" Height="35" Click="btnSearch_Click"></Button>
                         </StackPanel>
                     </StackPanel>
 
@@ -107,15 +109,8 @@
         </Grid>
         <Grid Grid.Row="2">
             <GroupBox  Visibility="{Binding IsShowCustomerDetail,Converter={StaticResource VisibilityConverter}}" Margin="10,0,10,115">
-                <DataGrid  ItemsSource="{Binding SRPendingList}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10" >
-                    <DataGrid.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform AngleX="-0.283"/>
-                            <RotateTransform/>
-                            <TranslateTransform X="0.745"/>
-                        </TransformGroup>
-                    </DataGrid.RenderTransform>
+                <DataGrid x:Name="dgvDetails"  ItemsSource="{Binding SRPendingList}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10" >
+
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="FontWeight" Value="Bold" />
@@ -124,6 +119,14 @@
 
                     </DataGrid.ColumnHeaderStyle>
                     <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Status"  TextBlock.TextAlignment="Center"  Width="75">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox x:Name="ckbStatus" Tag="{Binding LedgerId}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                    </CheckBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTextColumn Header="Ref. Code" FontWeight="Bold" Width="70" Binding="{Binding RefNo, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                         <DataGridTextColumn Header="Date" FontWeight="Bold" Width="120" Binding="{Binding SRDate, Mode=TwoWay,StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                         <DataGridTextColumn Header="Cheque No" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="80" Binding="{Binding TotalAmount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>

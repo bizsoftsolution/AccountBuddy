@@ -91,11 +91,11 @@
                                     <TranslateTransform/>
                                 </TransformGroup>
                             </TabControl.RenderTransform>
-                            <TabItem Header="Details" FontSize="16">
+                            <TabItem Header="Details" FontSize="16" FontWeight="Bold">
 
-                                <Grid Grid.Row="0" Margin="0,0,10,-20" >
+                                <Grid Grid.Row="0"  >
 
-                                    <DataGrid x:Name="dgvBalanceSheet" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="0,0,3,32" >
+                                    <DataGrid x:Name="dgvBalanceSheet" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="10,10,13,32" >
                                         <DataGrid.RenderTransform>
                                             <TransformGroup>
                                                 <ScaleTransform/>
@@ -124,11 +124,11 @@
                                 </Grid>
 
                             </TabItem>
-                            <TabItem Header="Report" FontSize="16">
-                                <Grid Grid.Row="0" Margin="0,0,4,-14">
+                            <TabItem Header="Report" FontSize="16" FontWeight="Bold">
+                                <Grid Grid.Row="0" >
 
 
-                                    <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top"  Height="329">
+                                    <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="20">
                                         <rv:ReportViewer x:Name="rptBalanceSheet"/>
                                     </WindowsFormsHost>
 

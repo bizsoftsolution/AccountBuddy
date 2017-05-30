@@ -10,75 +10,39 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
         #region Account Group
-
-        #region list
-        public static List<BLL.AccountGroup> _accountGroupList;
-        public static List<BLL.AccountGroup> accountGroupList
+        BLL.AccountGroup AccountGroupDAL_BLL(DAL.AccountGroup d)
         {
-            get
-            {
-                if (_accountGroupList == null)
-                {
-                    _accountGroupList = new List<BLL.AccountGroup>();
-                    foreach (var d1 in DB.AccountGroups.Where(x=> x.GroupName!="Primary").
-                        Select(x => new BLL.AccountGroup()
-                        {
-                            Id = x.Id,
-                            GroupCode = x.GroupCode,
-                            GroupName = x.GroupName
-                            
-                        }).
-                        OrderBy(x => x.GroupCode).ToList())
-                    {
-                        BLL.AccountGroup d2 = new BLL.AccountGroup();
-                        d1.toCopy<BLL.AccountGroup>(d2);
-                        _accountGroupList.Add(d2);
-                    }
-
-                }
-                return _accountGroupList;
-            }
-            set
-            {
-                _accountGroupList = value;
-            }
-
+            BLL.AccountGroup b = d.toCopy<BLL.AccountGroup>(new BLL.AccountGroup());
+            b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+            b.UnderAccountGroup = d.AccountGroup2==null?new BLL.AccountGroup() : AccountGroupDAL_BLL(d.AccountGroup2);            
+            return b;
         }
-        #endregion
-
         public List<BLL.AccountGroup> accountGroup_List()
         {
-            return accountGroupList;
+            return DB.AccountGroups.Where(x => x.CompanyId == Caller.CompanyId && x.GroupName != "Primary").ToList()
+                               .Select(x => AccountGroupDAL_BLL(x)).ToList();
         }
 
         public int AccountGroup_Save(BLL.AccountGroup agp)
         {
             try
             {
-
-                BLL.AccountGroup b = accountGroupList.Where(x => x.Id == agp.Id).FirstOrDefault();
+                agp.CompanyId = Caller.CompanyId;                
                 DAL.AccountGroup d = DB.AccountGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
                 {
-
-                    b = new BLL.AccountGroup();
-                    accountGroupList.Add(b);
-
                     d = new DAL.AccountGroup();
                     DB.AccountGroups.Add(d);
 
                     agp.toCopy<DAL.AccountGroup>(d);
                     DB.SaveChanges();
-                    d.toCopy<BLL.AccountGroup>(b);
 
-                    DB.SaveChanges();
                     agp.Id = d.Id;
                     LogDetailStore(agp, LogDetailType.INSERT);
                 }
                 else
                 {
-                    agp.toCopy<BLL.AccountGroup>(b);
                     agp.toCopy<DAL.AccountGroup>(d);
                     DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
@@ -96,15 +60,13 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                BLL.AccountGroup b = accountGroupList.Where(x => x.Id == pk).FirstOrDefault();
-                if (b != null)
-                {
-                    var d = DB.AccountGroups.Where(x => x.Id == pk).FirstOrDefault();
+                var d = DB.AccountGroups.Where(x => x.Id == pk).FirstOrDefault();
 
+                if (d != null)
+                {                
                     DB.AccountGroups.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(b, LogDetailType.DELETE);
-                    accountGroupList.Remove(b);
+                    LogDetailStore(d.toCopy<BLL.AccountGroup>(new BLL.AccountGroup()), LogDetailType.DELETE);                   
                 }
 
                 Clients.Clients(OtherLoginClientsOnGroup).SAccountGroup_Delete(pk);
