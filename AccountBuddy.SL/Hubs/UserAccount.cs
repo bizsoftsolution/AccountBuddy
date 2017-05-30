@@ -94,6 +94,13 @@ namespace AccountBuddy.SL.Hubs
                 var d = DB.UserAccounts.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null)
                 {
+                    var ld=DB.LogDetails.Where(x => x.LogMaster.EntityTypeId == pk);
+                    DB.LogDetails.RemoveRange(ld);
+                    DB.SaveChanges();
+
+                    DB.LogMasters.RemoveRange(DB.LogMasters.Where(x => x.EntityTypeId == pk));
+                    DB.SaveChanges();
+
                     DB.UserAccounts.Remove(d);
                     DB.SaveChanges();
                     LogDetailStore(d.toCopy<BLL.UserAccount>(new BLL.UserAccount()), LogDetailType.DELETE);                    

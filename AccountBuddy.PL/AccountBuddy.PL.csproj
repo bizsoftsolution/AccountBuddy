@@ -51,10 +51,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>BED880EE7F593E37807CBE1774FE76748CAC3789</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2BE2116D64DBEA984D182EF60B187348A602F5B1</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AccountBuddy.PL_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
