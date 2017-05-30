@@ -24,7 +24,7 @@ namespace AccountBuddy.SL.Hubs
 
             return ledgerTo;
         }
-        
+
         public List<BLL.Ledger> Ledger_List()
         {
             return DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
@@ -33,7 +33,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Ledger> CashLedger_List()
         {
-            return DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.AccountGroup.GroupName=="Bank Accounts" || x.AccountGroup.GroupName== "Cash-in-Hand").ToList()
+            return DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.AccountGroup.GroupName == "Bank Accounts" || x.AccountGroup.GroupName == "Cash-in-Hand").ToList()
                              .Select(x => LedgerDAL_BLL(x)).ToList();
         }
 
@@ -63,30 +63,45 @@ namespace AccountBuddy.SL.Hubs
 
                 Clients.Clients(OtherLoginClientsOnGroup).Ledger_Save(led);
 
-                return led.Id=d.Id;
+                return led.Id = d.Id;
             }
             catch (Exception ex) { }
             return 0;
         }
 
-        public void Ledger_Delete(int pk)
+        public bool Ledger_Delete(int pk)
         {
+            var rv = false;
             try
             {
                 var d = DB.Ledgers.Where(x => x.Id == pk).FirstOrDefault();
-                if (d != null)
-                {                    
-                    DB.Ledgers.Remove(d);
-                    DB.SaveChanges();
-                    LogDetailStore(LedgerDAL_BLL(d) , LogDetailType.DELETE);
+                if (d.Payments != null && d.PaymentDetails != null && d.Receipts != null && d.ReceiptDetails != null && d.JournalDetails != null)
+                {
+                    if (d != null)
+                    {
+                        DB.Ledgers.Remove(d);
+                        DB.SaveChanges();
+                        LogDetailStore(LedgerDAL_BLL(d), LogDetailType.DELETE);
+                    }
+
+                    Clients.Clients(OtherLoginClientsOnGroup).Ledger_Delete(pk);
+                    Clients.All.delete(pk);
+
+                    rv = true;
+                }
+                else
+                {
+                    rv = false;
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).Ledger_Delete(pk);
-                Clients.All.delete(pk);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                rv = false;
+            }
+            return rv;
         }
-        
+
         #endregion
     }
 }

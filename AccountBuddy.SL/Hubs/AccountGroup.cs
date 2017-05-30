@@ -14,7 +14,7 @@ namespace AccountBuddy.SL.Hubs
         {
             BLL.AccountGroup b = d.toCopy<BLL.AccountGroup>(new BLL.AccountGroup());
             b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
-            b.UnderAccountGroup = d.AccountGroup2==null?new BLL.AccountGroup() : AccountGroupDAL_BLL(d.AccountGroup2);            
+            b.UnderAccountGroup = d.AccountGroup2 == null ? new BLL.AccountGroup() : AccountGroupDAL_BLL(d.AccountGroup2);
             return b;
         }
         public List<BLL.AccountGroup> accountGroup_List()
@@ -27,7 +27,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                agp.CompanyId = Caller.CompanyId;                
+                agp.CompanyId = Caller.CompanyId;
                 DAL.AccountGroup d = DB.AccountGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
@@ -56,23 +56,36 @@ namespace AccountBuddy.SL.Hubs
             return 0;
         }
 
-        public void AccountGroup_Delete(int pk)
+        public bool AccountGroup_Delete(int pk)
         {
+            var rv = false;
             try
             {
                 var d = DB.AccountGroups.Where(x => x.Id == pk).FirstOrDefault();
+                if (d.Ledgers != null)
+                {
+                    if (d != null)
+                    {
+                        DB.AccountGroups.Remove(d);
+                        DB.SaveChanges();
+                        LogDetailStore(d.toCopy<BLL.AccountGroup>(new BLL.AccountGroup()), LogDetailType.DELETE);
+                    }
 
-                if (d != null)
-                {                
-                    DB.AccountGroups.Remove(d);
-                    DB.SaveChanges();
-                    LogDetailStore(d.toCopy<BLL.AccountGroup>(new BLL.AccountGroup()), LogDetailType.DELETE);                   
+                    Clients.Clients(OtherLoginClientsOnGroup).SAccountGroup_Delete(pk);
+                    Clients.All.delete(pk);
+                    rv = true;
+                }
+                else
+                {
+                    rv = false;
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).SAccountGroup_Delete(pk);
-                Clients.All.delete(pk);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                rv = false;
+            }
+            return rv;
         }
 
 
