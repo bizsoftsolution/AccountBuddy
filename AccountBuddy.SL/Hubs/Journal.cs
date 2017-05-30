@@ -121,7 +121,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Journal d = DB.Journals.Where(x => x.EntryNo == SearchText).FirstOrDefault();
+                DAL.Journal d = DB.Journals.Where(x => x.EntryNo == SearchText&& x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
                 DB.Entry(d).Reload();
                 if (d != null)
                 {
@@ -184,7 +184,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_JEntryNo(string entryNo, BLL.Payment PO)
 
         {
-            DAL.Journal d = DB.Journals.Where(x => x.EntryNo == entryNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.Journal d = DB.Journals.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
             if (d == null)
             {
                 return false;

@@ -109,7 +109,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Payment d = DB.Payments.Where(x => x.EntryNo == SearchText).FirstOrDefault();
+                DAL.Payment d = DB.Payments.Where(x => x.EntryNo == SearchText && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
                 DB.Entry(d).Reload();
                 if (d != null)
                 {
@@ -174,7 +174,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_EntryNo(string entryNo, BLL.Payment PO)
 
         {
-            DAL.Payment d = DB.Payments.Where(x => x.EntryNo == entryNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.Payment d = DB.Payments.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
             if (d == null)
             {
                 return false;

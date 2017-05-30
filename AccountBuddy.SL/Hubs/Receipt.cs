@@ -110,7 +110,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Receipt d = DB.Receipts.Where(x => x.EntryNo == SearchText).FirstOrDefault();
+                DAL.Receipt d = DB.Receipts.Where(x => x.EntryNo == SearchText && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
                 DB.Entry(d).Reload();
                 if (d != null)
                 {
@@ -175,7 +175,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_REntryNo(string entryNo, BLL.Receipt PO)
 
         {
-            DAL.Receipt d = DB.Receipts.Where(x => x.EntryNo == entryNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.Receipt d = DB.Receipts.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
             if (d == null)
             {
                 return false;

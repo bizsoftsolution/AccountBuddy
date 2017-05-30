@@ -65,7 +65,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
-                    gl.Ledger = LedgerDAL_BLL(pd.Ledger);
+                    gl.Ledger = LedgerDAL_BLL(pd.Payment.Ledger);
                     pd.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
                     gl.EId = pd.Payment.Id;
                     gl.EType = 'P';
@@ -82,44 +82,51 @@ namespace AccountBuddy.SL.Hubs
 
                 foreach (var p in l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).ToList())
                 {
-                    gl = new BLL.GeneralLedger();
-                    gl.Ledger = new BLL.Ledger();
-                    gl.Ledger = LedgerDAL_BLL(p.Ledger);
+                    foreach(var pd in p.PaymentDetails)
+                    {
+                        gl = new BLL.GeneralLedger();
+                        gl.Ledger = new BLL.Ledger();
+                        gl.Ledger = LedgerDAL_BLL(pd.Ledger);
 
-                    gl.EId = p.Id;
-                    gl.EType = 'P';
-                    gl.EDate = p.PaymentDate;
-                    gl.RefNo = p.PaymentMode == "Cheque" ? p.ChequeNo : p.RefNo;
-                    gl.EntryNo = p.EntryNo;
-                    gl.DrAmt = 0;
-                    gl.CrAmt = p.Amount;
-                    BalAmt += (gl.DrAmt - gl.CrAmt);
-                    gl.BalAmt = BalAmt;
-                    lstGeneralLedger.Add(gl);
+                        gl.EId = p.Id;
+                        gl.EType = 'P';
+                        gl.EDate = p.PaymentDate;
+                        gl.RefNo = p.PaymentMode == "Cheque" ? p.ChequeNo : p.RefNo;
+                        gl.EntryNo = p.EntryNo;
+                        gl.DrAmt = 0;
+                        gl.CrAmt = pd.Amount;
+                        BalAmt += (gl.DrAmt - gl.CrAmt);
+                        gl.BalAmt = BalAmt;
+                        lstGeneralLedger.Add(gl);
+                    }                    
                 }
 
                 foreach (var r in l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).ToList())
                 {
-                    gl = new BLL.GeneralLedger();
-                    gl.Ledger = new BLL.Ledger();
-                    gl.Ledger = LedgerDAL_BLL(r.Ledger);
+                    foreach(var rd in r.ReceiptDetails)
+                    {
+                        gl = new BLL.GeneralLedger();
+                        gl.Ledger = new BLL.Ledger();
+                        gl.Ledger = LedgerDAL_BLL(rd.Ledger);
 
-                    gl.EId = r.Id;
-                    gl.EType = 'R';
-                    gl.EDate = r.ReceiptDate;
-                    gl.RefNo = r.ReceiptMode== "Cheque" ? r.ChequeNo : r.RefNo;
-                    gl.EntryNo = r.EntryNo;
-                    gl.DrAmt = r.Amount;
-                    gl.CrAmt = 0;
-                    BalAmt += (gl.DrAmt - gl.CrAmt);
-                    gl.BalAmt = BalAmt;
-                    lstGeneralLedger.Add(gl);
+                        gl.EId = r.Id;
+                        gl.EType = 'R';
+                        gl.EDate = r.ReceiptDate;
+                        gl.RefNo = r.ReceiptMode == "Cheque" ? r.ChequeNo : r.RefNo;
+                        gl.EntryNo = r.EntryNo;
+                        gl.DrAmt = rd.Amount;
+                        gl.CrAmt = 0;
+                        BalAmt += (gl.DrAmt - gl.CrAmt);
+                        gl.BalAmt = BalAmt;
+                        lstGeneralLedger.Add(gl);
+                    }
+                    
                 }
                 foreach(var rd in l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).ToList())
                 {
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
-                    gl.Ledger = LedgerDAL_BLL(rd.Ledger);
+                    gl.Ledger = LedgerDAL_BLL(rd.Receipt.Ledger);
                     gl.EId = rd.Receipt.Id;
                     gl.EType = 'R';
                     gl.EDate = rd.Receipt.ReceiptDate;
@@ -136,6 +143,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
+                    
                     gl.Ledger = LedgerDAL_BLL(jd.Ledger);
 
                     gl.EId = jd.Journal.Id;
