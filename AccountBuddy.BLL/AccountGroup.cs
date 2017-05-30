@@ -332,12 +332,20 @@ namespace AccountBuddy.BLL
 
         public bool Delete(bool isServerCall = false)
         {
+            var rv = false;
             var d = toList.Where(x => x.Id == Id).FirstOrDefault();
             if (d != null)
             {
-                toList.Remove(d);
-                if (isServerCall == false) ABClientHub.FMCGHub.Invoke<int>("AccountGroup_Delete", this.Id);
-                return true;
+               
+                if (isServerCall == false)
+                {
+                    rv = ABClientHub.FMCGHub.Invoke<bool>("AccountGroup_Delete", this.Id).Result;
+                    if(rv==true)
+                    {
+                        toList.Remove(d);
+                    }
+                }
+                return rv;
             }
 
             return false;
@@ -362,7 +370,7 @@ namespace AccountBuddy.BLL
 
         void SetGroupNameWithCode()
         {
-            GroupNameWithCode = string.Format("{0}{1}{2}", GroupCode, string.IsNullOrWhiteSpace(GroupCode) ? "" : "-", GroupName);
+            GroupNameWithCode = GroupName;// string.Format("{0}{1}{2}", GroupCode, string.IsNullOrWhiteSpace(GroupCode) ? "" : "-", GroupName);
         }
         #endregion
     }

@@ -82,7 +82,7 @@ namespace AccountBuddy.BLL
             {
                 if (_IsReadOnly != value)
                 {
-                    _IsReadOnly = value;                    
+                    _IsReadOnly = value;
                     NotifyPropertyChanged(nameof(IsReadOnly));
                 }
                 IsEnabled = !value;
@@ -581,8 +581,6 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new Ledger().toCopy<Ledger>(this);
-            IsReadOnly = !UserPermission.AllowInsert;
-
             NotifyAllPropertyChanged();
         }
 
@@ -602,15 +600,21 @@ namespace AccountBuddy.BLL
 
         public bool Delete(bool isServerCall = false)
         {
+            var rv = false;
             var d = toList.Where(x => x.Id == Id).FirstOrDefault();
             if (d != null)
             {
-                toList.Remove(d);
-                if (isServerCall == false) ABClientHub.FMCGHub.Invoke<int>("Ledger_Delete", this.Id);
-                return true;
+
+                if (isServerCall == false)
+                {
+                    rv = ABClientHub.FMCGHub.Invoke<bool>("Ledger_Delete", this.Id).Result;
+                    if (rv == true) toList.Remove(d);
+
+                }
+                return rv;
             }
 
-            return false;
+            return rv;
         }
 
         public bool isValid()
@@ -633,8 +637,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                var AccountCode = string.Format("{0}{1}{2}", string.IsNullOrWhiteSpace(AccountGroup.GroupCode) ? "" : AccountGroup.GroupCode, string.IsNullOrWhiteSpace(LedgerCode) ? "" : "-", LedgerCode);
-                AccountName = string.Format("{0}{1}{2}", AccountCode, string.IsNullOrWhiteSpace(AccountCode) ? "" : "-", LedgerName);
+                AccountName = string.Format("{0}{1}{2}{3}{4}", AccountGroup.GroupCode, string.IsNullOrWhiteSpace(AccountGroup.GroupCode) ? "" : "-", LedgerCode,string.IsNullOrWhiteSpace(LedgerCode)?"":"-",LedgerName);
             }
             catch (Exception ex)
             {
