@@ -58,7 +58,7 @@ namespace AccountBuddy.SL.Hubs
                 gl.BalAmt = BalAmt;
 
                 gl.Ledger = new BLL.Ledger();
-                gl.Ledger.LedgerName = string.Format("Balance {0}", l.LedgerName);
+                gl.Particular = string.Format("Balance {0}", l.LedgerName);
                 lstGeneralLedger.Add(gl);
 
                 foreach(var pd in  l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).ToList())
@@ -66,7 +66,7 @@ namespace AccountBuddy.SL.Hubs
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
                     gl.Ledger = LedgerDAL_BLL(pd.Payment.Ledger);
-                    pd.Ledger.toCopy<BLL.Ledger>(gl.Ledger);
+                    gl.Particular = pd.Particular;
                     gl.EId = pd.Payment.Id;
                     gl.EType = 'P';
                     gl.EDate = pd.Payment.PaymentDate;
@@ -87,7 +87,7 @@ namespace AccountBuddy.SL.Hubs
                         gl = new BLL.GeneralLedger();
                         gl.Ledger = new BLL.Ledger();
                         gl.Ledger = LedgerDAL_BLL(pd.Ledger);
-
+                        gl.Particular = pd.Particular;
                         gl.EId = p.Id;
                         gl.EType = 'P';
                         gl.EDate = p.PaymentDate;
@@ -108,7 +108,7 @@ namespace AccountBuddy.SL.Hubs
                         gl = new BLL.GeneralLedger();
                         gl.Ledger = new BLL.Ledger();
                         gl.Ledger = LedgerDAL_BLL(rd.Ledger);
-
+                        gl.Particular = rd.Particulars;
                         gl.EId = r.Id;
                         gl.EType = 'R';
                         gl.EDate = r.ReceiptDate;
@@ -127,6 +127,7 @@ namespace AccountBuddy.SL.Hubs
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
                     gl.Ledger = LedgerDAL_BLL(rd.Receipt.Ledger);
+                    gl.Particular = rd.Particulars;
                     gl.EId = rd.Receipt.Id;
                     gl.EType = 'R';
                     gl.EDate = rd.Receipt.ReceiptDate;
@@ -144,8 +145,8 @@ namespace AccountBuddy.SL.Hubs
                     gl = new BLL.GeneralLedger();
                     gl.Ledger = new BLL.Ledger();
                     
-                    gl.Ledger = LedgerDAL_BLL(jd.Ledger);
-
+                    gl.Ledger = LedgerDAL_BLL(jd.Journal.JournalDetails.Where(x=> (jd.DrAmt!=0 && x.CrAmt!=0) || (jd.CrAmt!=0 && x.DrAmt!=0) ).FirstOrDefault().Ledger);
+                    gl.Particular = jd.Particulars;
                     gl.EId = jd.Journal.Id;
                     gl.EType = 'J';
                     gl.EDate = jd.Journal.JournalDate;
@@ -159,7 +160,7 @@ namespace AccountBuddy.SL.Hubs
                 }                                
                 gl = new BLL.GeneralLedger();
                 gl.Ledger = new BLL.Ledger();
-                gl.Ledger.LedgerName = "Total";
+                gl.Particular = "Total";
                 gl.DrAmt = lstGeneralLedger.Sum(x=> x.DrAmt);
                 gl.CrAmt = lstGeneralLedger.Sum(x=>x.CrAmt);
                 gl.BalAmt = BalAmt;

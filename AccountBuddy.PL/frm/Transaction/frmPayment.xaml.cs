@@ -22,7 +22,7 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmPayment : UserControl
     {
-        BLL.Payment data = new BLL.Payment();
+        public BLL.Payment data = new BLL.Payment();
         public string FormName = "Payment";
         public frmPayment()
         {

@@ -87,5 +87,23 @@ namespace AccountBuddy.PL.frm.Report
         {
             dgvTrialBalance.ItemsSource = BLL.TrialBalance.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
         }
+
+        private void dgvTrialBalance_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var tb = dgvTrialBalance.SelectedItem as BLL.TrialBalance;
+            if (tb != null)
+            {
+                frmGeneralLedger frm = new frmGeneralLedger();
+                App.frmHome.ShowForm(frm);
+
+                System.Windows.Forms.Application.DoEvents();
+                frm.cmbAccountName.SelectedValue = tb.Ledger.Id;
+                frm.dtpDateFrom.SelectedDate = dtpDateFrom.SelectedDate;
+                frm.dtpDateTo.SelectedDate = dtpDateTo.SelectedDate;
+                System.Windows.Forms.Application.DoEvents();
+                frm.dgvGeneralLedger.ItemsSource = BLL.GeneralLedger.ToList((int)tb.Ledger.Id, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            }
+
+        }
     }
 }

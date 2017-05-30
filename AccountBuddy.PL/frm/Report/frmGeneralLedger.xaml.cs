@@ -98,5 +98,39 @@ namespace AccountBuddy.PL.frm.Report
             if(cmbAccountName.SelectedValue!=null) dgvGeneralLedger.ItemsSource = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
         }
 
+        private void dgvGeneralLedger_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var gl = dgvGeneralLedger.SelectedItem as BLL.GeneralLedger;
+            if (gl != null)
+            {
+                if(gl.EType == 'P')
+                {
+                    Transaction.frmPayment f = new Transaction.frmPayment();                    
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+                else if (gl.EType == 'R')
+                {
+                    Transaction.frmReceipt f = new Transaction.frmReceipt();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+                else if (gl.EType == 'J')
+                {
+                    Transaction.frmJournal f = new Transaction.frmJournal();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+            }
+        }
     }
 }
