@@ -29,10 +29,8 @@ namespace AccountBuddy.SL.Hubs
             foreach (var l in lstLedger)
             {
                 tb = new BLL.TrialBalance();
-                tb.Ledger = new BLL.Ledger();
-                
-                 l.toCopy<BLL.Ledger>(tb.Ledger);
-                
+                tb.Ledger = LedgerDAL_BLL(l);
+
                 OPDr = l.OPDr ?? 0;
                 OPCr = l.OPCr ?? 0;
 

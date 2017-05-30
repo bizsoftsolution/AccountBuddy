@@ -26,7 +26,9 @@ namespace AccountBuddy.SL.Hubs
                 {
                     rp = new BLL.ReceiptAndPayment();
                     rp.Ledger = new BLL.Ledger();
-                    pd.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
+                    // pd.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
+
+                    rp.Ledger = LedgerDAL_BLL(l);
                     rp.EId = pd.Payment.Id;
                     rp.EType = 'P';
                     rp.EDate = pd.Payment.PaymentDate;
@@ -41,7 +43,9 @@ namespace AccountBuddy.SL.Hubs
                 {
                     rp = new BLL.ReceiptAndPayment();
                     rp.Ledger = new BLL.Ledger();
-                    p.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
+                    //p.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
+
+                    rp.Ledger = LedgerDAL_BLL(l);
                     rp.EId = p.Id;
                     rp.EType = 'P';
                     rp.EDate = p.PaymentDate;
@@ -55,7 +59,8 @@ namespace AccountBuddy.SL.Hubs
                 {
                     rp = new BLL.ReceiptAndPayment();
                     rp.Ledger = new BLL.Ledger();
-                    r.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
+                    rp.Ledger= LedgerDAL_BLL(l);
+
                     rp.EId = r.Id;
                     rp.EType = 'R';
                     rp.EDate = r.ReceiptDate;
@@ -68,7 +73,8 @@ namespace AccountBuddy.SL.Hubs
                 {
                     rp = new BLL.ReceiptAndPayment();
                     rp.Ledger = new BLL.Ledger();
-                    rd.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
+                    rp.Ledger = LedgerDAL_BLL(l);
+
                     rp.EId = rd.Receipt.Id;
                     rp.EType = 'R';
                     rp.EDate = rd.Receipt.ReceiptDate;
