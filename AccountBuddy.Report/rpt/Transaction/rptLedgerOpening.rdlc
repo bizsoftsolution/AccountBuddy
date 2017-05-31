@@ -164,7 +164,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!OPDr.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -182,6 +184,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -196,7 +199,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!OPCr.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -214,6 +219,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -243,7 +249,7 @@
         <Top>0.34078cm</Top>
         <Left>0.60537cm</Left>
         <Height>1.2cm</Height>
-        <Width>15.02474cm</Width>
+        <Width>15.02473cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>

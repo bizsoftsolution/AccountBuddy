@@ -168,7 +168,7 @@
                     <Value>=Sum(Fields!CrAmt.Value, "JDetails")</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
-                      <Format>0.00;(0.00)</Format>
+                      <Format>'RM' 0.00;('RM' 0.00)</Format>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -191,6 +191,7 @@
               <PaddingRight>2pt</PaddingRight>
               <PaddingTop>2pt</PaddingTop>
               <PaddingBottom>2pt</PaddingBottom>
+              <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
             </Style>
           </Textbox>
           <Textbox Name="Textbox9">
@@ -203,7 +204,7 @@
                     <Value>=Sum(Fields!DrAmt.Value, "JDetails")</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
-                      <Format>0.00;(0.00)</Format>
+                      <Format>'RM' 0.00;('RM' 0.00)</Format>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -225,6 +226,7 @@
               <PaddingRight>2pt</PaddingRight>
               <PaddingTop>2pt</PaddingTop>
               <PaddingBottom>2pt</PaddingBottom>
+              <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
             </Style>
           </Textbox>
         </ReportItems>

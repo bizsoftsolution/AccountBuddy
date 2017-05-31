@@ -136,6 +136,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
+
             Export(rptBalanceSheet.LocalReport);
             Print();
         }
@@ -147,12 +148,12 @@ namespace AccountBuddy.PL.frm.Report
                 string deviceInfo =
              @"<DeviceInfo>
                 <OutputFormat>EMF</OutputFormat>
-                <PageWidth>8.5in</PageWidth>
-                <PageHeight>11in</PageHeight>
-                <MarginTop>0in</MarginTop>
-                <MarginLeft>0in</MarginLeft>
-                <MarginRight>0in</MarginRight>
-                <MarginBottom>0in</MarginBottom>
+                <PageWidth>29.7cm</PageWidth>
+                <PageHeight>21cm</PageHeight>
+                <MarginTop>2cm</MarginTop>
+                <MarginLeft>2cm</MarginLeft>
+                <MarginRight>2cm</MarginRight>
+                <MarginBottom>2cm</MarginBottom>
             </DeviceInfo>";
                 Warning[] warnings;
                 m_streams = new List<Stream>();
@@ -180,6 +181,7 @@ namespace AccountBuddy.PL.frm.Report
                 {
                     printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
                     m_currentPageIndex = 0;
+                    printDoc.DefaultPageSettings.Landscape=true;
                     printDoc.Print();
                 }
             }

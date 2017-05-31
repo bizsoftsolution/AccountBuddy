@@ -136,7 +136,7 @@
                                             <Transaction:frmBankReconcilation/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                    <Menu:NavMenuItem MenuName="LedgerOpening" FormName="Ledger Opening">
+                                    <Menu:NavMenuItem MenuName="Ledger Opening" FormName="Ledger Opening">
                                         <Menu:NavMenuItem.Content>
                                             <Transaction:frmLedgerOpening/>
                                         </Menu:NavMenuItem.Content>
