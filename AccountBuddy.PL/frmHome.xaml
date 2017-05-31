@@ -179,7 +179,7 @@
                                     </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Income and Expenditure Account" FormName="Income and Expenditure Account">
                                         <Menu:NavMenuItem.Content>
-                                            <Report:frmIncomeAndExpenditure/>
+                                            <Report:frmProfitLoss/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
                                     

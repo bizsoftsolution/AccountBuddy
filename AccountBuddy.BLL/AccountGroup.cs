@@ -31,6 +31,14 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Property
+
+        public string AccountPath
+        {
+            get
+            {
+                return UnderAccountGroup==null ? "" : UnderAccountGroup.AccountPath + "/" + _groupName;
+            }
+        }
         public static UserTypeDetail UserPermission
         {
             get
@@ -180,7 +188,8 @@ namespace AccountBuddy.BLL
                 if (_UnderAccountGroup != value)
                 {
                     _UnderAccountGroup = value;
-                    NotifyPropertyChanged(nameof(BLL.AccountGroup));
+                    NotifyPropertyChanged(nameof(UnderAccountGroup));
+                    NotifyPropertyChanged(nameof(AccountPath));
                 }
             }
         }
