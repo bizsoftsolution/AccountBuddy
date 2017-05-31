@@ -68,6 +68,7 @@
     <EmbeddedResource Include="rpt\Report\rptTrialBalance.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptBankReconciliation.rdlc" />
     <EmbeddedResource Include="rpt\Transaction\rptJournalReceipt.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -91,6 +92,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.ABClientHub.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.AccountGroup.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.BalanceSheet.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.BankReconcilation.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.CompanyDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.CreditLimitType.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralLedger.datasource" />
