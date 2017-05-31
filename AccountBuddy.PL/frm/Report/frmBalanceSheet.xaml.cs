@@ -148,12 +148,12 @@ namespace AccountBuddy.PL.frm.Report
                 string deviceInfo =
              @"<DeviceInfo>
                 <OutputFormat>EMF</OutputFormat>
-                <PageWidth>29.7cm</PageWidth>
-                <PageHeight>21cm</PageHeight>
-                <MarginTop>2cm</MarginTop>
-                <MarginLeft>2cm</MarginLeft>
-                <MarginRight>2cm</MarginRight>
-                <MarginBottom>2cm</MarginBottom>
+                <PageWidth>11.6in</PageWidth>
+                <PageHeight>8.2</PageHeight>
+                <MarginTop>0.7in</MarginTop>
+                <MarginLeft>0.7in</MarginLeft>
+                <MarginRight>0.7in</MarginRight>
+                <MarginBottom>0.7in</MarginBottom>
             </DeviceInfo>";
                 Warning[] warnings;
                 m_streams = new List<Stream>();
@@ -181,7 +181,7 @@ namespace AccountBuddy.PL.frm.Report
                 {
                     printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
                     m_currentPageIndex = 0;
-                    printDoc.DefaultPageSettings.Landscape=true;
+                printDoc.DefaultPageSettings.Landscape=true;
                     printDoc.Print();
                 }
             }

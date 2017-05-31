@@ -266,12 +266,12 @@ namespace AccountBuddy.PL.frm.Transaction
                 string deviceInfo =
              @"<DeviceInfo>
                 <OutputFormat>EMF</OutputFormat>
-                <PageWidth>8.5in</PageWidth>
-                <PageHeight>11in</PageHeight>
-                <MarginTop>0in</MarginTop>
-                <MarginLeft>0in</MarginLeft>
-                <MarginRight>0in</MarginRight>
-                <MarginBottom>0in</MarginBottom>
+                <PageWidth>11.6in</PageWidth>
+                <PageHeight>8.2</PageHeight>
+                <MarginTop>0.7in</MarginTop>
+                <MarginLeft>0.7in</MarginLeft>
+                <MarginRight>0.7in</MarginRight>
+                <MarginBottom>0.7in</MarginBottom>
             </DeviceInfo>";
                 Warning[] warnings;
                 m_streams = new List<Stream>();
@@ -299,6 +299,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 {
                     printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
                     m_currentPageIndex = 0;
+                    printDoc.DefaultPageSettings.Landscape = true;
                     printDoc.Print();
                 }
             }
