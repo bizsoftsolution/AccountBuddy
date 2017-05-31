@@ -24,7 +24,7 @@
             <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
                 <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Income And Expenditure"/></TextBlock>
             </Grid>
-            <Border BorderBrush="Black" BorderThickness="1" />
+            <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
 
             <Grid Grid.Row="1" >
 
@@ -59,9 +59,9 @@
                     </Grid>
                     <Grid Grid.Row="1">
 
-                        <Grid Grid.Row="0" Margin="155,0,115,0"  >
+                        <Grid Grid.Row="0" Margin="10,0,10,0"  >
 
-                            <DataGrid x:Name="dgvIncomeExpenditure" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="150,10,150,10" >
+                            <DataGrid x:Name="dgvIncomeExpenditure" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20,10,20,10" >
                                 <DataGrid.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -79,11 +79,11 @@
                                 </DataGrid.ColumnHeaderStyle>
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding Ledger.AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="400" Binding="{Binding Ledger.AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header="Debit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="Credit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Previous Balance Dr"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmtOP, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Previous Balance Cr"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmtOP, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Previous Balance Dr"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="150" Binding="{Binding DrAmtOP, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Previous Balance Cr"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="150" Binding="{Binding CrAmtOP, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 

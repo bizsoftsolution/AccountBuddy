@@ -25,7 +25,7 @@ namespace AccountBuddy.BLL
         private decimal? _ExtraCharge;
         private string _ChequeNo;
         private DateTime? _ChequeDate;
-        private DateTime? _ClearDate;
+        private DateTime? _CleareDate;
         private string _Particulars;
         private string _ReceivedFrom;
         private string _VoucherNo;
@@ -195,10 +195,7 @@ namespace AccountBuddy.BLL
                     NotifyPropertyChanged(nameof(ReceiptMode));
                     IsShowChequeDetail = value == "Cheque";
                     IsShowOnlineDetail = value == "Online";
-                    IsShowTTDetail = value == "TT";
-
-                   
-
+                    IsShowTTDetail = value == "TT";                    
                 }
             }
         }
@@ -329,18 +326,18 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public Nullable<System.DateTime> ClearDate
+        public Nullable<System.DateTime> CleareDate
         {
             get
             {
-                return _ClearDate;
+                return _CleareDate;
             }
             set
             {
-                if (_ClearDate != value)
+                if (_CleareDate != value)
                 {
-                    _ClearDate = value;
-                    NotifyPropertyChanged(nameof(ClearDate));
+                    _CleareDate = value;
+                    NotifyPropertyChanged(nameof(CleareDate));
                 }
             }
         }

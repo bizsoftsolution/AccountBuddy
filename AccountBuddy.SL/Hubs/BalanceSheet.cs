@@ -54,6 +54,7 @@ namespace AccountBuddy.SL.Hubs
 
         List<BLL.BalanceSheet> BalanceSheetByGroupName(DAL.AccountGroup ag, DateTime dtFrom,DateTime dtTo,string Prefix,ref decimal TotalDr, ref decimal TotalCr, ref decimal TotalDrOP, ref decimal TotalCrOP)
         {
+            decimal GTotalDr = 0, GTotalCr = 0, GTotalDrOP = 0, GTotalCrOP = 0;
             List<BLL.BalanceSheet> lstBalanceSheet = new List<BLL.BalanceSheet>();
             decimal total = 0;
             GetLedgerTotal(ag,ref total);
@@ -74,7 +75,7 @@ namespace AccountBuddy.SL.Hubs
 
             foreach (var uag in ag.AccountGroup1)
             {
-                lstBalanceSheet.AddRange(BalanceSheetByGroupName(uag, dtFrom, dtTo,Prefix+ "     ",ref TotalDr, ref TotalCr, ref TotalDrOP, ref TotalCrOP));
+                lstBalanceSheet.AddRange(BalanceSheetByGroupName(uag, dtFrom, dtTo,Prefix+ "     ",ref GTotalDr, ref GTotalCr, ref GTotalDrOP, ref GTotalCrOP));
             }
 
             decimal OPDr = 0 , OPCr = 0 , Dr = 0 , Cr = 0;           
@@ -95,47 +96,52 @@ namespace AccountBuddy.SL.Hubs
                 {
                     tb.LedgerList.AccountGroup.GroupCode = Prefix + "     " + tb.LedgerList.AccountGroup.GroupCode;                    
                     lstBalanceSheet.Add(tb);
-                    TotalDr += tb.DrAmt??0;
-                    TotalCr += tb.CrAmt ?? 0;
+                    GTotalDr += tb.DrAmt??0;
+                    GTotalCr += tb.CrAmt ?? 0;
 
-                    TotalDrOP += tb.DrAmtOP ?? 0;
-                    TotalCrOP += tb.CrAmtOP ?? 0;                    
+                    GTotalDrOP += tb.DrAmtOP ?? 0;
+                    GTotalCrOP += tb.CrAmtOP ?? 0;                    
                 }
             }
 
-            if (TotalDr > TotalCr)
+            if (GTotalDr > GTotalCr)
             {
-                TotalDr = Math.Abs(TotalDr - TotalCr);
-                TotalCr = 0;
+                GTotalDr = Math.Abs(GTotalDr - GTotalCr);
+                GTotalCr = 0;
             }
             else
             {
-                TotalCr = Math.Abs(TotalDr - TotalCr);
-                TotalDr = 0;
+                GTotalCr = Math.Abs(GTotalDr - GTotalCr);
+                GTotalDr = 0;
             }
 
-            if (TotalDrOP > TotalCrOP)
+            if (GTotalDrOP > GTotalCrOP)
             {
-                TotalDrOP = Math.Abs(TotalDrOP - TotalCrOP);
-                TotalCrOP = 0;
+                GTotalDrOP = Math.Abs(GTotalDrOP - GTotalCrOP);
+                GTotalCrOP = 0;
             }
             else
             {
-                TotalCrOP = Math.Abs(TotalDrOP - TotalCrOP);
-                TotalDrOP = 0;
+                GTotalCrOP = Math.Abs(GTotalDrOP - GTotalCrOP);
+                GTotalDrOP = 0;
             }
 
 
             tb = new BLL.BalanceSheet();
             tb.LedgerList = new BLL.Ledger();
             tb.LedgerList.AccountName = Prefix + "Total " + ag.GroupName;
-            tb.CrAmt = TotalCr;
-            tb.DrAmt = TotalDr;
-            tb.CrAmtOP = TotalCrOP;
-            tb.DrAmtOP = TotalDrOP;
+            tb.CrAmt = GTotalCr;
+            tb.DrAmt = GTotalDr;
+            tb.CrAmtOP = GTotalCrOP;
+            tb.DrAmtOP = GTotalDrOP;
 
 
             lstBalanceSheet.Add(tb);
+
+            TotalDr += GTotalDr;
+            TotalCr += GTotalCr;
+            TotalDrOP += GTotalDrOP;
+            TotalCrOP += GTotalCrOP;
 
             return lstBalanceSheet;
         }       
