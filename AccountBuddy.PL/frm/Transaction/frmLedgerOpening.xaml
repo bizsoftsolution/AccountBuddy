@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-              d:DesignHeight="400" d:DesignWidth="800" Background="White" Loaded="UserControl_Loaded" >
+              d:DesignHeight="600" d:DesignWidth="800" Background="White" Loaded="UserControl_Loaded" >
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -25,12 +25,12 @@
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
             <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Ledger Opening"/></TextBlock>
         </Grid>
-        <Grid Grid.Row="1" Margin="200,0,200,0">
+        <Grid Grid.Row="1" >
 
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"/>
-                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="400"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
@@ -51,57 +51,65 @@
                         </StackPanel>
                     </StackPanel>
 
-                   
+
 
                     <WindowsFormsHost Visibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"    Margin="470,65,-165,-25">
                         <rv:ReportViewer x:Name="RptLedger"/>
                     </WindowsFormsHost>
                 </Grid>
                 <Grid Grid.Row="1" >
-                    <DataGrid x:Name="dgvLedger" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="10" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"    CurrentCellChanged="dgvLedger_CurrentCellChanged" BeginningEdit="dgvLedger_BeginningEdit" CellEditEnding="dgvLedger_CellEditEnding" >
-                        
-                        <DataGrid.ColumnHeaderStyle>
-                            <Style TargetType="{x:Type DataGridColumnHeader}">
-                                <Setter Property="FontWeight" Value="Bold" />
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            </Style>
-                        </DataGrid.ColumnHeaderStyle>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" >
+                        <StackPanel >
+                            <DataGrid Margin="100,0,100,50"  x:Name="dgvLedger" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto"  ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"    CurrentCellChanged="dgvLedger_CurrentCellChanged" BeginningEdit="dgvLedger_BeginningEdit" CellEditEnding="dgvLedger_CellEditEnding"  Height="250">
 
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                            <CTRL:DataGridNumericColumn  Header="Debit Opening" FontWeight="Bold"  Width="200"  Binding="{Binding OPDr,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                            <CTRL:DataGridNumericColumn  Header="Credit Opening" FontWeight="Bold"  Width="200"  Binding="{Binding OPCr,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <CTRL:DataGridNumericColumn  Header="Debit Opening" FontWeight="Bold"  Width="200"  Binding="{Binding OPDr,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <CTRL:DataGridNumericColumn  Header="Credit Opening" FontWeight="Bold"  Width="200"  Binding="{Binding OPCr,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                        </StackPanel>
+
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <TextBlock  Name="lblMsg" FontWeight="Bold" FontSize="18" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" Text=""/>
+
+                    </Grid>
                 </Grid>
-                <Grid Grid.Row="2">
 
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Grid.Column="0" Name="lblMsg" FontWeight="Bold" FontSize="18" Foreground="Blue" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
-                        <Button  Grid.Column="1" Name="btnSave" Click="btnSave_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,0,25,0" >Save</Button>
-                        <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF">
-                            <materialDesign:PackIcon Kind="FilePdf" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
-
+                <Grid Grid.Row="2" >
+                    <StackPanel Orientation="Horizontal" Margin="100,0,0,0" VerticalAlignment="Top">
+                        <Button   Name="btnSave" Click="btnSave_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,0,25,0" Width="134" >
+                            SAVE
                         </Button>
-                        <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click">
-                            <materialDesign:PackIcon Kind="Printer" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
-
+                        <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                            PDF
+                        </Button>
+                        <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                            PRINT
                         </Button>
                         <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
-                            <materialDesign:PackIcon Kind="Printer3d" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
-
+                            PRINT PREVIEW
                         </Button>
                     </StackPanel>
-                   
                 </Grid>
             </Grid>
-
-
-            <!--#region Search Box-->
-
-            <!--#endregion-->
-
         </Grid>
+
+
+
 
     </Grid>
 </UserControl>

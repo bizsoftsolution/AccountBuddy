@@ -15,9 +15,8 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid>
+  <Grid>
         <Grid Margin="0,0,0,10">
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
@@ -25,15 +24,18 @@
             <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
                 <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Trial Balance"/></TextBlock>
             </Grid>
+            <Border BorderBrush="Black" BorderThickness="1" />
+
             <Grid Grid.Row="1" >
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="29*"/>
-                        <RowDefinition Height="92*"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="100*"/>
+                        <RowDefinition Height="20*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="286,40,225,39" Width="589"  >
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Width="489"  >
                             <DatePicker Name="dtpDateFrom" Width="191"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
@@ -42,7 +44,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </DatePicker>
-                            <DatePicker Name="dtpDateTo" Width="191"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10">
+                            <DatePicker Name="dtpDateTo" Width="135"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
@@ -50,88 +52,56 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </DatePicker>
-                            <Button Width="122" Height="27" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
+                            <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
                         </StackPanel>
 
 
                     </Grid>
-                    <Grid Grid.Row="1" Margin="0,0,70,0">
-                        <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="377" Margin="310,0,90,0" BorderThickness="1" BorderBrush="Black" >
-                            <TabControl.Resources>
-                                <Style TargetType="TabItem">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="TabItem">
-                                                <Grid Name="Panel">
-                                                    <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        ContentSource="Header"
-                                        Margin="10,2"/>
-                                                </Grid>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsSelected" Value="True">
-                                                        <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
-                                                    </Trigger>
-                                                    <Trigger Property="IsSelected" Value="False">
-                                                        <Setter TargetName="Panel" Property="Background" Value="white" />
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </TabControl.Resources>
+                    <Grid Grid.Row="1" Margin="185,0,240,0">
 
-                            <TabControl.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </TabControl.RenderTransform>
-                            <TabItem Header="Details" FontSize="16" FontWeight="Bold">
+                        <Grid Grid.Row="0" Margin="10"  >
+                            <DataGrid x:Name="dgvTrialBalance" MouseDoubleClick="dgvTrialBalance_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20">
 
-                                <Grid Grid.Row="0">
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                    </Style>
 
-                                    <DataGrid x:Name="dgvTrialBalance" MouseDoubleClick="dgvTrialBalance_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20">
-                                 
-                                        <DataGrid.ColumnHeaderStyle>
-                                            <Style TargetType="{x:Type DataGridColumnHeader}">
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                            </Style>
+                                </DataGrid.ColumnHeaderStyle>
 
-                                        </DataGrid.ColumnHeaderStyle>
-
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding  Ledger.AccountName,Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                            <DataGridTextColumn Header="Debit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                            <DataGridTextColumn Header="Credit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>                                                                                       
-                                            <DataGridTextColumn Header="Previous Balance Dr"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmtOP, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                            <DataGridTextColumn Header="Previous Balance Cr"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmtOP, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-
-                                </Grid>
-
-                            </TabItem>
-                            <TabItem Header="Report" FontSize="16" FontWeight="Bold">
-                                <Grid Grid.Row="0">
-
-                                    <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="20">
-                                        <rv:ReportViewer x:Name="rptTrialBalance"/>
-                                    </WindowsFormsHost>
-
-                                </Grid>
-                            </TabItem>
-                            <!--#region Search Box-->
-
-                            <!--#endregion-->
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding  Ledger.AccountName,Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Debit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Credit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Previous Balance Dr"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmtOP, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Previous Balance Cr"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmtOP, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
 
 
-                        </TabControl>
+                        </Grid>
+
+
+
+                        <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
+                            <rv:ReportViewer x:Name="rptViewer"/>
+                        </WindowsFormsHost>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <StackPanel Orientation="Horizontal" Margin="350,24,300,23" VerticalAlignment="Center">
+                            
+                            <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                PDF
+                            </Button>
+                            <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                                PRINT
+                            </Button>
+                            <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                PRINT PREVIEW
+                            </Button>
+                        </StackPanel>
+
                     </Grid>
                 </Grid>
             </Grid>

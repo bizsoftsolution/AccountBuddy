@@ -25,7 +25,8 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmLedgerOpening : UserControl
     {
-        List<BLL.Ledger> lstLedgerOld = new List<BLL.Ledger>(); private int m_currentPageIndex;
+        List<BLL.Ledger> lstLedgerOld = new List<BLL.Ledger>();
+        private int m_currentPageIndex;
         private IList<Stream> m_streams;
 
         public frmLedgerOpening()
@@ -48,13 +49,13 @@ namespace AccountBuddy.PL.frm.Transaction
             if (tc.SelectedIndex == 1)
             {
                 LoadReport();
-            }        
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             dgvLedger.ItemsSource = BLL.Ledger.toList;
-            lstLedgerOld = BLL.Ledger.toList.Select(x=> new BLL.Ledger() {Id= x.Id,OPDr=x.OPDr,OPCr=x.OPCr }).ToList();
+            lstLedgerOld = BLL.Ledger.toList.Select(x => new BLL.Ledger() { Id = x.Id, OPDr = x.OPDr, OPCr = x.OPCr }).ToList();
             BLL.Ledger data = new BLL.Ledger();
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).Filter = Ledger_Filter;
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.AccountName), System.ComponentModel.ListSortDirection.Ascending));
@@ -143,7 +144,7 @@ namespace AccountBuddy.PL.frm.Transaction
             decimal crAmt = l1.Sum(x => x.OPCr ?? 0);
 
             lblMsg.Text = string.Format("Total Debit Balance : {0:N2}, Total Credit Balance : {1:N2}\nDifference : {2:N2}", drAmt, crAmt, Math.Abs(drAmt - crAmt));
-            lblMsg.Foreground = drAmt==crAmt? new SolidColorBrush(Color.FromRgb( 0,0,255)):new SolidColorBrush(Color.FromRgb(255, 0, 0));
+            lblMsg.Foreground = drAmt == crAmt ? new SolidColorBrush(Color.FromRgb(0, 0, 255)) : new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -168,7 +169,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void rptContain_Checked(object sender, RoutedEventArgs e)
         {
             Grid_Refresh();
-        } 
+        }
 
         private void rptEndWith_Checked(object sender, RoutedEventArgs e)
         {
@@ -202,10 +203,10 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            foreach(var l1 in BLL.Ledger.toList)
+            foreach (var l1 in BLL.Ledger.toList)
             {
                 var l2 = lstLedgerOld.Where(x => x.Id == l1.Id).FirstOrDefault();
-                if(l1.OPDr != l2.OPDr || l1.OPCr != l2.OPCr)
+                if (l1.OPDr != l2.OPDr || l1.OPCr != l2.OPCr)
                 {
                     l1.Save();
                 }
@@ -219,6 +220,7 @@ namespace AccountBuddy.PL.frm.Transaction
             FindDiff();
         }
 
+        #region Button Events
         private void btnExport_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -238,20 +240,18 @@ namespace AccountBuddy.PL.frm.Transaction
 
                 SaveFileDialog1.ShowDialog();
                 string file = string.Format(@"{0}.pdf", SaveFileDialog1.FileName);
-                FileStream fs = new FileStream(file,  
+                FileStream fs = new FileStream(file,
                    FileMode.Create);
                 fs.Write(bytes, 0, bytes.Length);
                 fs.Close();
 
-                MessageBox.Show("Completed Exporting" );
+                MessageBox.Show("Completed Exporting");
             }
             catch (Exception ex)
             {
             }
 
         }
-
-      
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
@@ -283,6 +283,7 @@ namespace AccountBuddy.PL.frm.Transaction
             catch (Exception ex)
             { }
         }
+
         private void Print()
         {
             try
@@ -307,6 +308,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
 
         }
+
         private void PrintPage(object sender, PrintPageEventArgs ev)
         {
             Metafile pageImage = new
@@ -336,6 +338,6 @@ namespace AccountBuddy.PL.frm.Transaction
             f.ShowDialog();
         }
 
-        
+        #endregion
     }
 }

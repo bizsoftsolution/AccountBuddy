@@ -182,7 +182,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmBalanceSheetPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmGeneralLedger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Report\frmGeneralLedgerPrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -190,7 +198,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmIncomeAndExpenditurePrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmPaymentReceipt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Report\frmPaymentReceiptPrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -199,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Report\frmTrialBalance.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Report\frmTrialBalancePrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -279,20 +299,35 @@
     <Compile Include="frm\Report\frmBalanceSheet.xaml.cs">
       <DependentUpon>frmBalanceSheet.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Report\frmBalanceSheetPrint.xaml.cs">
+      <DependentUpon>frmBalanceSheetPrint.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Report\frmGeneralLedger.xaml.cs">
       <DependentUpon>frmGeneralLedger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmGeneralLedgerPrint.xaml.cs">
+      <DependentUpon>frmGeneralLedgerPrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmIncomeAndExpenditure.xaml.cs">
       <DependentUpon>frmIncomeAndExpenditure.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Report\frmIncomeAndExpenditurePrint.xaml.cs">
+      <DependentUpon>frmIncomeAndExpenditurePrint.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Report\frmPaymentReceipt.xaml.cs">
       <DependentUpon>frmPaymentReceipt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmPaymentReceiptPrint.xaml.cs">
+      <DependentUpon>frmPaymentReceiptPrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmProfitLoss.xaml.cs">
       <DependentUpon>frmProfitLoss.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmTrialBalance.xaml.cs">
       <DependentUpon>frmTrialBalance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmTrialBalancePrint.xaml.cs">
+      <DependentUpon>frmTrialBalancePrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmBankReconcilation.xaml.cs">
       <DependentUpon>frmBankReconcilation.xaml</DependentUpon>
