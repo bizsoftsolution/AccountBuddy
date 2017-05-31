@@ -22,6 +22,7 @@ namespace AccountBuddy.Common
             frmPayment, 
             frmReceipt, 
             frmJournal
+           
         }
 
         public static string CurrencyName1 = "RINGGIT";

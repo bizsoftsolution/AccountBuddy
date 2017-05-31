@@ -83,6 +83,11 @@ namespace AccountBuddy.BLL
                 {
                     _DrAmt = value;
                     NotifyPropertyChanged(nameof(DrAmt));
+                    if(value!=0)
+                    {
+                        CrAmt = 0;
+
+                    }
                 }
             }
         }
@@ -98,11 +103,15 @@ namespace AccountBuddy.BLL
                 {
                     _CrAmt = value;
                     NotifyPropertyChanged(nameof(CrAmt));
+                    if(value!=0)
+                    {
+                        DrAmt = 0;
+                    }
                 }
             }
         }
 
-        public string Particular
+        public string Particulars
         {
             get
             {
@@ -113,7 +122,7 @@ namespace AccountBuddy.BLL
                 if (_Particular != value)
                 {
                     _Particular = value;
-                    NotifyPropertyChanged(nameof(Particular));
+                    NotifyPropertyChanged(nameof(Particulars));
                 }
             }
         }

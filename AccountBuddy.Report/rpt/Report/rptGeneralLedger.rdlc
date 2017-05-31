@@ -6,28 +6,28 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.02375cm</Width>
+              <Width>1.57742cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.1825cm</Width>
+              <Width>2.19037cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.76458cm</Width>
+              <Width>2.00011cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>5.96729cm</Width>
+              <Width>4.09286cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.27271cm</Width>
+              <Width>3.3583cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.05021cm</Width>
+              <Width>3.13847cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.89146cm</Width>
+              <Width>3.11201cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3.74701cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -81,7 +81,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox5</rd:DefaultName>
@@ -107,13 +109,28 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Cheque/RefNo</Value>
+                              <Value>Cheque/</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>RefNo</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox13</rd:DefaultName>
@@ -145,7 +162,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox7</rd:DefaultName>
@@ -171,13 +190,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Particular</Value>
+                              <Value>Particulars</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox1</rd:DefaultName>
@@ -346,7 +367,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>EDate</rd:DefaultName>
@@ -376,7 +399,9 @@
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>RefNo</rd:DefaultName>
@@ -406,7 +431,9 @@
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>AccountName</rd:DefaultName>
@@ -436,7 +463,9 @@
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Particular</rd:DefaultName>
@@ -463,7 +492,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!DrAmt.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -481,6 +512,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -495,7 +527,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!CrAmt.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -513,6 +547,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -528,7 +563,7 @@
                             <TextRun>
                               <Value>=Fields!BalAmt.Value</Value>
                               <Style>
-                                <Format>'₹'0.00;('₹'0.00)</Format>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -547,7 +582,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
-                        <rd:FormatSymbolCulture>en-IN</rd:FormatSymbolCulture>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -580,9 +615,9 @@
         </TablixRowHierarchy>
         <DataSetName>GeneralLedger</DataSetName>
         <Top>0.82847cm</Top>
-        <Left>0.92287cm</Left>
+        <Left>0.3175cm</Left>
         <Height>1.2cm</Height>
-        <Width>23.6525cm</Width>
+        <Width>23.21655cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -607,7 +642,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox19</rd:DefaultName>
         <Top>0.05208cm</Top>
-        <Left>0.92287cm</Left>
+        <Left>0.3175cm</Left>
         <Height>0.6cm</Height>
         <Width>2.07667cm</Width>
         <ZIndex>1</ZIndex>
@@ -639,7 +674,7 @@
         </Paragraphs>
         <rd:DefaultName>DateFrom</rd:DefaultName>
         <Top>0.05208cm</Top>
-        <Left>2.99953cm</Left>
+        <Left>2.36453cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
         <ZIndex>2</ZIndex>
@@ -671,7 +706,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox21</rd:DefaultName>
         <Top>0.05208cm</Top>
-        <Left>17.86912cm</Left>
+        <Left>16.91662cm</Left>
         <Height>0.6cm</Height>
         <Width>1.60042cm</Width>
         <ZIndex>3</ZIndex>
@@ -703,7 +738,7 @@
         </Paragraphs>
         <rd:DefaultName>DateTo</rd:DefaultName>
         <Top>0.05208cm</Top>
-        <Left>19.57537cm</Left>
+        <Left>18.62287cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
         <ZIndex>4</ZIndex>

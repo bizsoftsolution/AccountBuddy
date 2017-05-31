@@ -83,6 +83,10 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
+                    if(MessageBox.Show("Do you want to print Voucher?","Confirmation", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+                    {
+                        Print();
+                    }
                     data.Clear();
                 }
             }
@@ -102,8 +106,16 @@ namespace AccountBuddy.PL.frm.Transaction
                     var rv = data.Delete();
                     if (rv == true)
                     {
-                        MessageBox.Show("Deleted");
+                        MessageBox.Show(Message.PL.Delete_Alert);
                         data.Clear();
+                        if (data.Id != 0)
+                        {
+                            btnPrint.IsEnabled = true;
+                        }
+                        else
+                        {
+                            btnPrint.IsEnabled = false;
+                        }
                     }
                 }
             }
@@ -112,11 +124,27 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            if (data.Id != 0)
+            {
+                btnPrint.IsEnabled = true;
+            }
+            else
+            {
+                btnPrint.IsEnabled = false;
+            }
         }
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
+            if(data.Id!=0)
+            {
+                btnPrint.IsEnabled = true;
+            }
+            else
+            {
+                btnPrint.IsEnabled = false;
+            }
             if (rv == false) MessageBox.Show(String.Format("Data Not Found"));
         }
 
@@ -133,12 +161,18 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
+
+            Print();
+        }
+
+        private void Print()
+        {
+
             frm.Vouchers.frmQuickReceipt f = new Vouchers.frmQuickReceipt();
 
             f.LoadReport(data);
             f.ShowDialog();
         }
-
         private void btnEditDetail_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -204,6 +238,16 @@ namespace AccountBuddy.PL.frm.Transaction
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
             data.Clear();
+
+            if(data.Id!=0)
+            {
+                btnPrint.IsEnabled = true;
+            }
+            else
+            {
+                btnPrint.IsEnabled = false;
+            }
+            
         }
     }
 }

@@ -88,8 +88,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>0.17639cm</Top>
-        <Left>9.70703cm</Left>
+        <Top>0.24695cm</Top>
+        <Left>18.64051cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
         <ZIndex>2</ZIndex>
@@ -122,8 +122,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DateTo</rd:DefaultName>
-        <Top>0.17639cm</Top>
-        <Left>12.24231cm</Left>
+        <Top>0.24695cm</Top>
+        <Left>21.17579cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
         <ZIndex>3</ZIndex>
@@ -141,19 +141,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>4.05757cm</Width>
+              <Width>9.10168cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3.71708cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3.21438cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3.71708cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3.24083cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -373,7 +373,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!DrAmt.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -391,6 +393,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -405,7 +408,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!CrAmt.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -423,6 +428,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -437,7 +443,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!DrAmtOP.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -455,6 +463,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -469,7 +478,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!CrAmtOP.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -487,8 +498,10 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -518,7 +531,7 @@
         <Top>0.95278cm</Top>
         <Left>0.68474cm</Left>
         <Height>1.2cm</Height>
-        <Width>14.05757cm</Width>
+        <Width>22.99105cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -530,7 +543,7 @@
     <Height>0.96078in</Height>
     <Style />
   </Body>
-  <Width>6.05208in</Width>
+  <Width>9.70833in</Width>
   <Page>
     <PageHeader>
       <Height>1.82562cm</Height>
@@ -558,7 +571,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox11</rd:DefaultName>
           <Top>0.99342cm</Top>
-          <Left>1.08162cm</Left>
+          <Left>6.11864cm</Left>
           <Height>0.6cm</Height>
           <Width>12.42188cm</Width>
           <Style>
@@ -592,9 +605,9 @@
           </Paragraphs>
           <rd:DefaultName>CompanyName</rd:DefaultName>
           <Top>0.08474cm</Top>
-          <Left>1.08162cm</Left>
+          <Left>1.51371cm</Left>
           <Height>0.83812cm</Height>
-          <Width>12.42188cm</Width>
+          <Width>21.63174cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -637,8 +650,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox13</rd:DefaultName>
-          <Top>0.07056cm</Top>
-          <Left>9.70703cm</Left>
+          <Top>0.10583cm</Top>
+          <Left>0.68474cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <Style>
@@ -666,8 +679,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>0.03528cm</Top>
-          <Left>12.20703cm</Left>
+          <Top>0.07055cm</Top>
+          <Left>3.18474cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <ZIndex>1</ZIndex>
@@ -688,8 +701,8 @@
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
     <LeftMargin>2cm</LeftMargin>
     <RightMargin>2cm</RightMargin>
     <TopMargin>2cm</TopMargin>
