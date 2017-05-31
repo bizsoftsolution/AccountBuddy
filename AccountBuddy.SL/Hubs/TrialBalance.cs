@@ -65,9 +65,26 @@ namespace AccountBuddy.SL.Hubs
 
         public decimal GetLedgerBalance(int LedgerId)
         {
+            return GetLedgerBalance(DB.Ledgers.Where(x=> x.Id==LedgerId).FirstOrDefault());            
+        }
+
+        public decimal GetLedgerBalance(DAL.Ledger l)
+        {
             decimal OPDr = 0, OPCr = 0, Dr = 0, Cr = 0;
-            LedgerBalance(DB.Ledgers.Where(x=> x.Id==LedgerId).FirstOrDefault() , DateTime.Now, DateTime.Now, ref OPDr, ref OPCr, ref Dr, ref Cr);
+            LedgerBalance(l, DateTime.Now, DateTime.Now, ref OPDr, ref OPCr, ref Dr, ref Cr);
             return Dr + Cr;
+        }
+
+        public void GetLedgerTotal(DAL.AccountGroup ag,ref decimal total)
+        {            
+            foreach(var l in ag.Ledgers)
+            {
+                total += GetLedgerBalance(l);
+            }
+            foreach(var ag1 in ag.AccountGroup1)
+            {
+                GetLedgerTotal(ag1,ref total);
+            }
         }
 
         public List<BLL.TrialBalance> TrialBalance_List(DateTime dtFrom, DateTime dtTo)
