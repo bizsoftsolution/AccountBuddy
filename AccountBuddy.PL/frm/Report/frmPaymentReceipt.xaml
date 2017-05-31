@@ -70,7 +70,7 @@
 
                         <Grid Grid.Row="0"  >
 
-                            <DataGrid x:Name="dgvReceiptAndPayment" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" Margin="100,10,100,10">
+                            <DataGrid x:Name="dgvReceiptAndPayment" MouseDoubleClick="dgvReceiptAndPayment_MouseDoubleClick" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" Margin="100,10,100,10">
                                <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="FontWeight" Value="Bold" />
