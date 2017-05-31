@@ -168,6 +168,7 @@
                     <Value>=Sum(Fields!CrAmt.Value, "JDetails")</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
+                      <Format>0.00;(0.00)</Format>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -202,6 +203,7 @@
                     <Value>=Sum(Fields!DrAmt.Value, "JDetails")</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
+                      <Format>0.00;(0.00)</Format>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -363,7 +365,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Dr Amt</Value>
+                              <Value>Cr Amt</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -423,21 +425,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Particular">
+                    <Textbox Name="Particulars">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Particular.Value</Value>
+                              <Value>=Fields!Particulars.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Particular</rd:DefaultName>
+                      <rd:DefaultName>Particulars</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -461,7 +463,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!DrAmt.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -477,27 +481,30 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="DrAmt1">
+                    <Textbox Name="CrAmt">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!DrAmt.Value</Value>
-                              <Style />
+                              <Value>=Fields!CrAmt.Value</Value>
+                              <Style>
+                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>DrAmt1</rd:DefaultName>
+                      <rd:DefaultName>CrAmt</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -507,6 +514,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -765,6 +773,13 @@
       </ConnectionProperties>
       <rd:DataSourceID>f82592e1-e22a-4365-84c1-da01dd119a92</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="AccountBuddyBLL4">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>b6bc5e5f-6c6d-44cd-8dc8-dfe8b6e95baf</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="CompanyDetail">
@@ -887,7 +902,7 @@
     </DataSet>
     <DataSet Name="JDetails">
       <Query>
-        <DataSourceName>AccountBuddyBLL3</DataSourceName>
+        <DataSourceName>AccountBuddyBLL4</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -919,8 +934,8 @@
           <DataField>LedgerName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Particular">
-          <DataField>Particular</DataField>
+        <Field Name="Particulars">
+          <DataField>Particulars</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
