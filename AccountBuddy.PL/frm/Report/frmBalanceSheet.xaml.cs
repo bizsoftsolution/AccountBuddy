@@ -126,7 +126,7 @@ namespace AccountBuddy.PL.frm.Report
                 fs.Write(bytes, 0, bytes.Length);
                 fs.Close();
 
-                MessageBox.Show("Completed Exporting");
+               // MessageBox.Show("Completed Exporting");
             }
             catch (Exception ex)
             {
