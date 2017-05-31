@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-              d:DesignHeight="400" d:DesignWidth="800" Background="White" Loaded="UserControl_Loaded" >
+              d:DesignHeight="600" d:DesignWidth="800" Background="White" Loaded="UserControl_Loaded" >
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -25,119 +25,91 @@
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
             <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Ledger Opening"/></TextBlock>
         </Grid>
-        <Grid Grid.Row="1" Margin="200,50,200,0">
-            <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="275" BorderBrush="Black" BorderThickness="1">
-                <TabControl.Resources>
-                    <Style TargetType="TabItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="TabItem">
-                                    <Grid Name="Panel">
-                                        <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        ContentSource="Header"
-                                        Margin="10,2"/>
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="False">
-                                            <Setter TargetName="Panel" Property="Background" Value="white" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.Resources>
+        <Grid Grid.Row="1" >
 
-                <TabControl.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </TabControl.RenderTransform>
-                <TabItem Header="Details" >
-
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="100"/>
-                            <RowDefinition Height="320"/>
-                            <RowDefinition Height="50"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Grid.Row="0" Height="76">
-                                <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                            <TextBlock Text="Search Text" FontWeight="Bold"/>
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </TextBox>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                    <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked"  />
-                                    <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  />
-                                    <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" />
-                                    <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Grid.Row="0" Height="76" >
+                        <TextBox Name="txtSearch" Width="300"  Margin="0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                    <TextBlock Text="Search Text" FontWeight="Bold"/>
                                 </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="0,0,0,125">
-                            <DataGrid x:Name="dgvLedger" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="10,10,10,53" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"    CurrentCellChanged="dgvLedger_CurrentCellChanged" BeginningEdit="dgvLedger_BeginningEdit" CellEditEnding="dgvLedger_CellEditEnding" >
-                                 
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked"  />
+                            <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  />
+                            <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" />
+                            <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" />
+                        </StackPanel>
+                    </StackPanel>
+
+
+
+                    <WindowsFormsHost Visibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"    Margin="470,65,-165,-25">
+                        <rv:ReportViewer x:Name="RptLedger"/>
+                    </WindowsFormsHost>
+                </Grid>
+                <Grid Grid.Row="1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" >
+                        <StackPanel >
+                            <DataGrid Margin="100,0,100,50"  x:Name="dgvLedger" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto"  ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"    CurrentCellChanged="dgvLedger_CurrentCellChanged" BeginningEdit="dgvLedger_BeginningEdit" CellEditEnding="dgvLedger_CellEditEnding"  Height="250">
+
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="FontWeight" Value="Bold" />
                                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                     </Style>
                                 </DataGrid.ColumnHeaderStyle>
-                                <DataGrid.Effect>
-                                    <DropShadowEffect/>
-                                </DataGrid.Effect>
+
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <CTRL:DataGridNumericColumn  Header="Debit Opening" FontWeight="Bold"  Width="200"  Binding="{Binding OPDr,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <CTRL:DataGridNumericColumn  Header="Credit Opening" FontWeight="Bold"  Width="200"  Binding="{Binding OPCr,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="75*"/>
-                                <ColumnDefinition Width="25*"/>
-                            </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Name="lblMsg" FontWeight="Bold" FontSize="18" Foreground="Blue" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
-                            <Button  Grid.Column="1" Name="btnSave" Click="btnSave_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" >Save</Button>
-                            
-                        </Grid>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Report" >
-                    <Grid Grid.Row="0" Margin="0,0,4,-14">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="41*"/>
-                            <RowDefinition Height="245*"/>
-                        </Grid.RowDefinitions>
-
-                        <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="406"   Grid.Row="1" Margin="0,14,0,0">
-                            <rv:ReportViewer x:Name="RptLedger"/>
-                        </WindowsFormsHost>
+                        </StackPanel>
 
                     </Grid>
-                </TabItem>
-                <!--#region Search Box-->
+                    <Grid Grid.Row="1">
+                        <TextBlock  Name="lblMsg" FontWeight="Bold" FontSize="18" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" Text=""/>
 
-                <!--#endregion-->
+                    </Grid>
+                </Grid>
 
-
-            </TabControl>
+                <Grid Grid.Row="2" >
+                    <StackPanel Orientation="Horizontal" Margin="100,0,0,0" VerticalAlignment="Top">
+                        <Button   Name="btnSave" Click="btnSave_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,0,25,0" Width="134" >
+                            SAVE
+                        </Button>
+                        <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                            PDF
+                        </Button>
+                        <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                            PRINT
+                        </Button>
+                        <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                            PRINT PREVIEW
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
         </Grid>
-        
+
+
+
+
     </Grid>
 </UserControl>

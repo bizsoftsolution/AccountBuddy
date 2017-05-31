@@ -26,7 +26,7 @@ namespace AccountBuddy.SL.Hubs
 
             tb = new BLL.ProfitLoss();
             tb.Ledger = new BLL.Ledger();
-            tb.Ledger.LedgerName = "  Income";
+            tb.Ledger.AccountName = "  Income";
             if (tb.Amt == 0)
             {
                 tb.Amt = null;
@@ -112,7 +112,7 @@ namespace AccountBuddy.SL.Hubs
 
             tb = new BLL.ProfitLoss();
             tb.Ledger = new BLL.Ledger();
-            tb.Ledger.LedgerName = "  Total Income";
+            tb.Ledger.AccountName = "  Total Income";
             tb.Amt = TotIn;
            
             lstProfitLoss.Add(tb);
@@ -124,7 +124,7 @@ namespace AccountBuddy.SL.Hubs
 
             tb = new BLL.ProfitLoss();
             tb.Ledger = new BLL.Ledger();
-            tb.Ledger.LedgerName = "  Expenses";
+            tb.Ledger.AccountName = "  Expenses";
             if(tb.Amt==0)
             {
                 tb.Amt = null;
@@ -208,7 +208,7 @@ namespace AccountBuddy.SL.Hubs
 
             tb = new BLL.ProfitLoss();
             tb.Ledger = new BLL.Ledger();
-            tb.Ledger.LedgerName = "   Total Expenses";
+            tb.Ledger.AccountName = "   Total Expenses";
             tb.Amt = TotEx;
            
             lstProfitLoss.Add(tb);
@@ -218,7 +218,7 @@ namespace AccountBuddy.SL.Hubs
 
             tb = new BLL.ProfitLoss();
             tb.Ledger = new BLL.Ledger();
-            tb.Ledger.LedgerName = "Surplus/Deficit";
+            tb.Ledger.AccountName        = "Surplus/Deficit";
            if(TotIn>TotEx)
             {
                 tb.Amt = TotIn - TotEx;
