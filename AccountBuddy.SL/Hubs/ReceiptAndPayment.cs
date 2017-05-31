@@ -28,7 +28,7 @@ namespace AccountBuddy.SL.Hubs
                     rp.Ledger = new BLL.Ledger();
                     // pd.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
 
-                    rp.Ledger = LedgerDAL_BLL(l);
+                    rp.Ledger = LedgerDAL_BLL(pd.Ledger);
                     rp.EId = pd.Payment.Id;
                     rp.EType = 'P';
                     rp.EDate = pd.Payment.PaymentDate;
@@ -41,39 +41,45 @@ namespace AccountBuddy.SL.Hubs
 
                 foreach (var p in l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).ToList())
                 {
-                    rp = new BLL.ReceiptAndPayment();
-                    rp.Ledger = new BLL.Ledger();
-                    //p.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
+                    foreach(var pd in p.PaymentDetails)
+                    {
+                        rp = new BLL.ReceiptAndPayment();
+                        rp.Ledger = new BLL.Ledger();
+                        //p.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
 
-                    rp.Ledger = LedgerDAL_BLL(l);
-                    rp.EId = p.Id;
-                    rp.EType = 'P';
-                    rp.EDate = p.PaymentDate;
-                    rp.RefNo = p.PaymentMode == "Cheque" ? p.ChequeNo : p.RefNo;
-                    rp.EntryNo = p.EntryNo;
-                    rp.Amount = p.Amount;
-                    lstReceiptAndPayment.Add(rp);
+                        rp.Ledger = LedgerDAL_BLL(pd.Ledger);
+                        rp.EId = p.Id;
+                        rp.EType = 'P';
+                        rp.EDate = p.PaymentDate;
+                        rp.RefNo = p.PaymentMode == "Cheque" ? p.ChequeNo : p.RefNo;
+                        rp.EntryNo = p.EntryNo;
+                        rp.Amount = pd.Amount;
+                        lstReceiptAndPayment.Add(rp);
+                    }                    
                 }
 
                 foreach (var r in l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).ToList())
                 {
-                    rp = new BLL.ReceiptAndPayment();
-                    rp.Ledger = new BLL.Ledger();
-                    rp.Ledger= LedgerDAL_BLL(l);
-
-                    rp.EId = r.Id;
-                    rp.EType = 'R';
-                    rp.EDate = r.ReceiptDate;
-                    rp.RefNo = r.ReceiptMode == "Cheque" ? r.ChequeNo : r.RefNo;
-                    rp.EntryNo = r.EntryNo;
-                    rp.Amount = r.Amount;
-                    lstReceiptAndPayment.Add(rp);
+                    foreach(var rd in r.ReceiptDetails)
+                    {
+                        rp = new BLL.ReceiptAndPayment();
+                        rp.Ledger = new BLL.Ledger();
+                        rp.Ledger = LedgerDAL_BLL(rd.Ledger);
+                        rp.EId = r.Id;
+                        rp.EType = 'R';
+                        rp.EDate = r.ReceiptDate;
+                        rp.RefNo = r.ReceiptMode == "Cheque" ? r.ChequeNo : r.RefNo;
+                        rp.EntryNo = r.EntryNo;
+                        rp.Amount = rd.Amount;
+                        lstReceiptAndPayment.Add(rp);
+                    }
+                    
                 }
                 foreach (var rd in l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).ToList())
                 {
                     rp = new BLL.ReceiptAndPayment();
                     rp.Ledger = new BLL.Ledger();
-                    rp.Ledger = LedgerDAL_BLL(l);
+                    rp.Ledger = LedgerDAL_BLL(rd.Receipt.Ledger);
 
                     rp.EId = rd.Receipt.Id;
                     rp.EType = 'R';

@@ -230,5 +230,40 @@ namespace AccountBuddy.PL.frm.Report
         }
 
         #endregion
+
+        private void dgvReceiptAndPayment_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var rp = dgvReceiptAndPayment.SelectedItem as BLL.ReceiptAndPayment;
+            if (rp != null)
+            {
+                if (rp.EType == 'P')
+                {
+                    Transaction.frmPayment f = new Transaction.frmPayment();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = rp.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+                else if (rp.EType == 'R')
+                {
+                    Transaction.frmReceipt f = new Transaction.frmReceipt();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = rp.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+                else if (rp.EType == 'J')
+                {
+                    Transaction.frmJournal f = new Transaction.frmJournal();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = rp.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+            }
+        }
     }
 }
