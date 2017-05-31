@@ -14,13 +14,13 @@ namespace AccountBuddy.BLL
         private Ledger _Ledger;
         private decimal? _CrAmt;
         private decimal? _DrAmt;
-        private decimal _CrAmtOP;
-        private decimal _DrAmtOP;
+        private decimal? _CrAmtOP;
+        private decimal? _DrAmtOP;
         private decimal? _Amt;
 
         private string _AccountName;
         #endregion
-
+        
         #region Property
         public Ledger Ledger
         {
@@ -68,7 +68,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public decimal CrAmtOP
+        public decimal? CrAmtOP
         {
             get
             {
@@ -83,7 +83,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal DrAmtOP
+        public decimal? DrAmtOP
         {
             get
             {

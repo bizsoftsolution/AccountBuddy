@@ -13,216 +13,139 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.BalanceSheet> Balancesheet_List(DateTime dtFrom, DateTime dtTo)
         {
             List<BLL.BalanceSheet> lstBalanceSheet = new List<BLL.BalanceSheet>();
+            var l1 = DB.AccountGroups.Where(x => x.CompanyId==Caller.CompanyId && ( x.GroupName == "Assets" || x.GroupName == "Liabilities")).ToList();
+            decimal GTotalDr = 0, GTotalCr = 0, GTotalDrOP = 0, GTotalCrOP = 0;
+            foreach (var ag in l1)
+            {
+                decimal TotalDr = 0, TotalCr = 0, TotalDrOP = 0, TotalCrOP = 0;
+                lstBalanceSheet.AddRange(BalanceSheetByGroupName(ag,dtFrom,dtTo,"", ref TotalDr, ref TotalCr, ref TotalDrOP, ref TotalCrOP));
+
+                GTotalDr += TotalDr;
+                GTotalCr += TotalCr;
+                GTotalDrOP += TotalDrOP;
+                GTotalCrOP += TotalCrOP;
+
+            }
 
 
             BLL.BalanceSheet tb = new BLL.BalanceSheet();
-
-
-            var lstLedgerAssets = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName=="Assets" || x.AccountGroup.AccountGroup2.GroupName=="Assets").ToList();
-            var lstLedgerLiability= DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == "Liabilities" && x.AccountGroup.AccountGroup2.GroupName == "Liabilities").ToList();
-            decimal TotAssDr = 0, TotAssCr = 0, TotLiDr=0, TotLiCr=0;
-
-            #region Assets
-
-            tb = new BLL.BalanceSheet();
             tb.LedgerList = new BLL.Ledger();
-            tb.LedgerList.AccountName = "  Assets";
-            tb.CrAmt = null;
-            tb.DrAmt = null;
-            tb.CrAmtOP = null;
-            tb.DrAmtOP = null;
-
+            tb.LedgerList.AccountName = "Total ";
+            tb.CrAmt = GTotalCr;
+            tb.DrAmt = GTotalDr;
+            tb.CrAmtOP = GTotalCrOP;
+            tb.DrAmtOP = GTotalDrOP;
             lstBalanceSheet.Add(tb);
 
-
-            #region Ledger
-
-            decimal OPDr, OPCr, PDr, PCr, RDr, RCr, JDr, JCr;
-
-            foreach (var l in lstLedgerAssets)
-            {
-                tb = new BLL.BalanceSheet();
-                tb.LedgerList = LedgerDAL_BLL(l);
-
-                OPDr = l.OPDr ?? 0;
-                OPCr = l.OPCr ?? 0;
-
-                PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate < dtFrom).Sum(x => x.Amount);
-                PCr = l.Payments.Where(x => x.PaymentDate < dtFrom).Sum(x => x.Amount);
-
-                RDr = l.Receipts.Where(x => x.ReceiptDate < dtFrom).Sum(x => x.Amount);
-                RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate < dtFrom).Sum(x => x.Amount);
-
-                JDr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.DrAmt);
-                JCr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.CrAmt);
-
-                tb.DrAmtOP = OPDr + PDr + RDr + JDr;
-                tb.CrAmtOP = OPCr + PCr + RCr + JCr;
-
-
-                PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).Sum(x => x.Amount);
-                PCr = l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).Sum(x => x.Amount);
-
-                RDr = l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).Sum(x => x.Amount);
-                RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).Sum(x => x.Amount);
-
-                JDr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.DrAmt);
-                JCr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.CrAmt);
-
-
-
-                tb.DrAmt = tb.DrAmtOP + PDr + RDr + JDr;
-                tb.CrAmt = tb.CrAmtOP + PCr + RCr + JCr;
-
-
-                if (tb.DrAmtOP > tb.CrAmtOP)
-                {
-                    tb.DrAmtOP = tb.DrAmtOP - tb.CrAmtOP;
-                    tb.CrAmtOP = 0;
-                }
-                else
-                {
-                    tb.CrAmtOP = tb.CrAmtOP - tb.DrAmtOP;
-                    tb.DrAmtOP = 0;
-                }
-
-                if (tb.DrAmt > tb.CrAmt)
-                {
-                    tb.DrAmt = tb.DrAmt - tb.CrAmt;
-                    tb.CrAmt = null;
-                }
-                else
-                {
-                    tb.CrAmt = tb.CrAmt - tb.DrAmt;
-                    tb.DrAmt = null;
-                }
-
-                if (tb.DrAmt != 0 || tb.CrAmt != 0)
-                {
-                    lstBalanceSheet.Add(tb);
-                    TotAssDr += tb.DrAmt==null?0:tb.DrAmt.Value;
-                    TotAssCr += tb.CrAmt==null?0:tb.CrAmt.Value;
-                }
-            }
-            #endregion
-
-            tb = new BLL.BalanceSheet();
-            tb.LedgerList = new BLL.Ledger();
-            tb.LedgerList.AccountName = "  Total Assets";
-            tb.DrAmt = TotAssDr;
-            tb.CrAmt = TotAssCr;
-            lstBalanceSheet.Add(tb);
-
-            #endregion
-
-
-            #region Liabilities
-
-            tb = new BLL.BalanceSheet();
-            tb.LedgerList = new BLL.Ledger();
-            tb.LedgerList.AccountName = "  Liablities";
-            tb.CrAmt = null;
-            tb.DrAmt = null;
-            tb.CrAmtOP = null;
-            tb.DrAmtOP = null;
-
-            lstBalanceSheet.Add(tb);
-           
-            #region Ledger
-
-            decimal OPInDr, OPInCr, PInDr, PInCr, RInDr, RInCr, JInDr, JInCr;
-
-            foreach (var l in lstLedgerLiability)
-            {
-                tb = new BLL.BalanceSheet();
-                tb.LedgerList = new BLL.Ledger();
-
-                l.toCopy<BLL.Ledger>(tb.LedgerList);                
-                OPInDr = l.OPDr ?? 0;
-                OPInCr = l.OPCr ?? 0;
-
-                PInDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate < dtFrom).Sum(x => x.Amount);
-                PInCr = l.Payments.Where(x => x.PaymentDate < dtFrom).Sum(x => x.Amount);
-
-                RInDr = l.Receipts.Where(x => x.ReceiptDate < dtFrom).Sum(x => x.Amount);
-                RInCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate < dtFrom).Sum(x => x.Amount);
-
-                JInDr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.DrAmt);
-                JInCr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.CrAmt);
-
-                tb.DrAmtOP = OPInDr + PInDr + RInDr + JInDr;
-                tb.CrAmtOP = OPInCr + PInCr + RInCr + JInCr;
-
-
-                PInDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).Sum(x => x.Amount);
-                PInCr = l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).Sum(x => x.Amount);
-
-                RInDr = l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).Sum(x => x.Amount);
-                RInCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).Sum(x => x.Amount);
-
-                JInDr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.DrAmt);
-                JInCr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.CrAmt);
-
-
-
-                tb.DrAmt = tb.DrAmtOP + PInDr + RInDr + JInDr;
-                tb.CrAmt = tb.CrAmtOP + PInCr + RInCr + JInCr;
-
-
-                if (tb.DrAmtOP > tb.CrAmtOP)
-                {
-                    tb.DrAmtOP = tb.DrAmtOP - tb.CrAmtOP;
-                    tb.CrAmtOP = 0;
-                }
-                else
-                {
-                    tb.CrAmtOP = tb.CrAmtOP - tb.DrAmtOP;
-                    tb.DrAmtOP = 0;
-                }
-
-                if (tb.DrAmt > tb.CrAmt)
-                {
-                    tb.DrAmt = tb.DrAmt - tb.CrAmt;
-                    tb.CrAmt = null;
-                }
-                else
-                {
-                    tb.CrAmt = tb.CrAmt - tb.DrAmt;
-                    tb.DrAmt = null;
-                }
-
-                if (tb.DrAmt != 0 || tb.CrAmt != 0)
-                {
-                    lstBalanceSheet.Add(tb);
-                    TotLiDr += tb.DrAmt==null?0:(decimal)tb.DrAmt;
-                    TotLiCr += tb.CrAmt==null ? 0 :(decimal) tb.DrAmt;
-                }
-            }
-            #endregion
 
 
             tb = new BLL.BalanceSheet();
             tb.LedgerList = new BLL.Ledger();
-            tb.LedgerList.AccountName =  "   Total Liabilities";
-            tb.DrAmt =TotLiDr;
-            tb.CrAmt = TotLiCr;
+            tb.LedgerList.AccountName = "Balance";
+            tb.CrAmt = GTotalCr>GTotalDr?Math.Abs(GTotalDr-GTotalCr):0;
+            tb.DrAmt = GTotalCr < GTotalDr ? Math.Abs(GTotalDr - GTotalCr) : 0; ;
+            tb.CrAmtOP = GTotalCrOP > GTotalDrOP ? Math.Abs(GTotalDrOP - GTotalCrOP) : 0; 
+            tb.DrAmtOP = GTotalCrOP < GTotalDrOP ? Math.Abs(GTotalDrOP - GTotalCrOP) : 0;
             lstBalanceSheet.Add(tb);
-
-            #endregion
-
-
-            tb = new BLL.BalanceSheet();
-            tb.LedgerList = new BLL.Ledger();
-            tb.LedgerList.AccountName = "Total";
-            tb.DrAmt = TotLiDr+TotAssDr;
-            tb.CrAmt = TotLiCr+TotAssCr;
-            lstBalanceSheet.Add(tb);
-
 
 
             return lstBalanceSheet;
         }
 
-        #endregion
+        List<BLL.BalanceSheet> BalanceSheetByGroupName(DAL.AccountGroup ag, DateTime dtFrom,DateTime dtTo,string Prefix,ref decimal TotalDr, ref decimal TotalCr, ref decimal TotalDrOP, ref decimal TotalCrOP)
+        {
+            decimal GTotalDr = 0, GTotalCr = 0, GTotalDrOP = 0, GTotalCrOP = 0;
+            List<BLL.BalanceSheet> lstBalanceSheet = new List<BLL.BalanceSheet>();
+            decimal total = 0;
+            GetLedgerTotal(ag,ref total);
+            if (total == 0) return lstBalanceSheet;
+
+            BLL.BalanceSheet tb = new BLL.BalanceSheet();
+
+            tb = new BLL.BalanceSheet();
+            tb.LedgerList = new BLL.Ledger();
+            tb.LedgerList.AccountName = Prefix + ag.GroupName;
+            tb.CrAmt = null;
+            tb.DrAmt = null;
+            tb.CrAmtOP = null;
+            tb.DrAmtOP = null;
+
+            lstBalanceSheet.Add(tb);
+
+
+            foreach (var uag in ag.AccountGroup1)
+            {
+                lstBalanceSheet.AddRange(BalanceSheetByGroupName(uag, dtFrom, dtTo,Prefix+ "     ",ref GTotalDr, ref GTotalCr, ref GTotalDrOP, ref GTotalCrOP));
+            }
+
+            decimal OPDr = 0 , OPCr = 0 , Dr = 0 , Cr = 0;           
+
+            foreach (var l in ag.Ledgers)
+            {
+                tb = new BLL.BalanceSheet();
+                tb.LedgerList = LedgerDAL_BLL(l);
+
+                LedgerBalance(l, dtFrom, dtTo,ref OPDr, ref OPCr, ref Dr, ref Cr);                
+
+                tb.DrAmt = Dr;
+                tb.CrAmt = Cr;
+                tb.DrAmtOP = OPDr;
+                tb.CrAmtOP = OPCr;
+                
+                if (tb.DrAmt != 0 || tb.CrAmt != 0)
+                {
+                    tb.LedgerList.AccountGroup.GroupCode = Prefix + "     " + tb.LedgerList.AccountGroup.GroupCode;                    
+                    lstBalanceSheet.Add(tb);
+                    GTotalDr += tb.DrAmt??0;
+                    GTotalCr += tb.CrAmt ?? 0;
+
+                    GTotalDrOP += tb.DrAmtOP ?? 0;
+                    GTotalCrOP += tb.CrAmtOP ?? 0;                    
+                }
+            }
+
+            if (GTotalDr > GTotalCr)
+            {
+                GTotalDr = Math.Abs(GTotalDr - GTotalCr);
+                GTotalCr = 0;
+            }
+            else
+            {
+                GTotalCr = Math.Abs(GTotalDr - GTotalCr);
+                GTotalDr = 0;
+            }
+
+            if (GTotalDrOP > GTotalCrOP)
+            {
+                GTotalDrOP = Math.Abs(GTotalDrOP - GTotalCrOP);
+                GTotalCrOP = 0;
+            }
+            else
+            {
+                GTotalCrOP = Math.Abs(GTotalDrOP - GTotalCrOP);
+                GTotalDrOP = 0;
+            }
+
+
+            tb = new BLL.BalanceSheet();
+            tb.LedgerList = new BLL.Ledger();
+            tb.LedgerList.AccountName = Prefix + "Total " + ag.GroupName;
+            tb.CrAmt = GTotalCr;
+            tb.DrAmt = GTotalDr;
+            tb.CrAmtOP = GTotalCrOP;
+            tb.DrAmtOP = GTotalDrOP;
+
+
+            lstBalanceSheet.Add(tb);
+
+            TotalDr += GTotalDr;
+            TotalCr += GTotalCr;
+            TotalDrOP += GTotalDrOP;
+            TotalCrOP += GTotalCrOP;
+
+            return lstBalanceSheet;
+        }       
+
+            #endregion
     }
 }

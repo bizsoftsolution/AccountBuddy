@@ -8,82 +8,108 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Trial_Balance
+        void LedgerBalance(DAL.Ledger l, DateTime dtFrom, DateTime dtTo, ref decimal OPDr,ref decimal OPCr, ref decimal Dr, ref decimal Cr)
+        {
+            decimal PDr, PCr, RDr, RCr, JDr, JCr;
+
+            OPDr = l.OPDr ?? 0;
+            OPCr = l.OPCr ?? 0;
+
+            PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate < dtFrom).Sum(x => x.Amount);
+            PCr = l.Payments.Where(x => x.PaymentDate < dtFrom).Sum(x => x.Amount);
+
+            RDr = l.Receipts.Where(x => x.ReceiptDate < dtFrom).Sum(x => x.Amount);
+            RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate < dtFrom).Sum(x => x.Amount);
+
+            JDr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.DrAmt);
+            JCr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.CrAmt);
+
+            OPDr = OPDr + PDr + RDr + JDr;
+            OPCr = OPCr + PCr + RCr + JCr;
+
+
+            PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).Sum(x => x.Amount);
+            PCr = l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).Sum(x => x.Amount);
+
+            RDr = l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).Sum(x => x.Amount);
+            RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).Sum(x => x.Amount);
+
+            JDr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.DrAmt);
+            JCr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.CrAmt);
+
+            Dr = OPDr + PDr + RDr + JDr;
+            Cr = OPCr + PCr + RCr + JCr;
+
+            if (OPDr > OPCr)
+            {
+                OPDr = Math.Abs(OPDr - OPCr);
+                OPCr = 0;
+            }
+            else
+            {
+                OPCr = Math.Abs(OPDr - OPCr);
+                OPDr = 0;
+            }
+
+            if (Dr > Cr)
+            {
+                Dr = Math.Abs(Dr - Cr);
+                Cr = 0;
+            }
+            else
+            {
+                Cr = Math.Abs(Dr-Cr);
+                Dr = 0;
+            }
+        }
+
+        public decimal GetLedgerBalance(int LedgerId)
+        {
+            return GetLedgerBalance(DB.Ledgers.Where(x=> x.Id==LedgerId).FirstOrDefault());            
+        }
+
+        public decimal GetLedgerBalance(DAL.Ledger l)
+        {
+            decimal OPDr = 0, OPCr = 0, Dr = 0, Cr = 0;
+            LedgerBalance(l, DateTime.Now, DateTime.Now, ref OPDr, ref OPCr, ref Dr, ref Cr);
+            return Dr + Cr;
+        }
+
+        public void GetLedgerTotal(DAL.AccountGroup ag,ref decimal total)
+        {            
+            foreach(var l in ag.Ledgers)
+            {
+                total += GetLedgerBalance(l);
+            }
+            foreach(var ag1 in ag.AccountGroup1)
+            {
+                GetLedgerTotal(ag1,ref total);
+            }
+        }
 
         public List<BLL.TrialBalance> TrialBalance_List(DateTime dtFrom, DateTime dtTo)
         {
             List<BLL.TrialBalance> lstTrialBalance = new List<BLL.TrialBalance>();
-
-
             BLL.TrialBalance tb = new BLL.TrialBalance();
 
             var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
             decimal TotDr = 0, TotCr = 0, TotOPCr = 0, TotOPDr = 0;
-
-
-
-            #region Ledger
-
-            decimal OPDr, OPCr, PDr, PCr, RDr, RCr, JDr, JCr;
-
+                    
             foreach (var l in lstLedger)
             {
                 tb = new BLL.TrialBalance();
                 tb.Ledger = LedgerDAL_BLL(l);
 
-                OPDr = l.OPDr ?? 0;
-                OPCr = l.OPCr ?? 0;
+                decimal OPDr=0, OPCr=0,Dr=0,Cr=0;
+                LedgerBalance(l, dtFrom, dtTo,ref OPDr, ref OPCr, ref Dr, ref Cr);
 
-                PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate < dtFrom).Sum(x => x.Amount);
-                PCr = l.Payments.Where(x => x.PaymentDate < dtFrom).Sum(x => x.Amount);
+                tb.DrAmtOP = OPDr;
+                tb.CrAmtOP = OPCr;
+                
+                tb.DrAmt = Dr;
+                tb.CrAmt = Cr;
 
-                RDr = l.Receipts.Where(x => x.ReceiptDate < dtFrom).Sum(x => x.Amount);
-                RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate < dtFrom).Sum(x => x.Amount);
-
-                JDr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.DrAmt);
-                JCr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.CrAmt);
-
-                tb.DrAmtOP = OPDr + PDr + RDr + JDr;
-                tb.CrAmtOP = OPCr + PCr + RCr + JCr;
-
-
-                PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).Sum(x => x.Amount);
-                PCr = l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).Sum(x => x.Amount);
-
-                RDr = l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).Sum(x => x.Amount);
-                RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).Sum(x => x.Amount);
-
-                JDr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.DrAmt);
-                JCr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.CrAmt);
-
-
-
-                tb.DrAmt = tb.DrAmtOP + PDr + RDr + JDr;
-                tb.CrAmt = tb.CrAmtOP + PCr + RCr + JCr;
-
-
-                if (tb.DrAmtOP > tb.CrAmtOP)
-                {
-                    tb.DrAmtOP = tb.DrAmtOP - tb.CrAmtOP;
-                    tb.CrAmtOP = 0;
-                }
-                else
-                {
-                    tb.CrAmtOP = tb.CrAmtOP - tb.DrAmtOP;
-                    tb.DrAmtOP = 0;
-                }
-
-                if (tb.DrAmt > tb.CrAmt)
-                {
-                    tb.DrAmt = tb.DrAmt - tb.CrAmt;
-                    tb.CrAmt = 0;
-                }
-                else
-                {
-                    tb.CrAmt = tb.CrAmt - tb.DrAmt;
-                    tb.DrAmt = 0;
-                }
-
+                
                 if (tb.DrAmt != 0 || tb.CrAmt != 0)
                 {
                     lstTrialBalance.Add(tb);
@@ -91,11 +117,9 @@ namespace AccountBuddy.SL.Hubs
                     TotCr += tb.CrAmt;
                     TotOPCr += tb.CrAmtOP;
                     TotOPDr += tb.DrAmtOP;
-
                 }
             }
-            #endregion
-
+        
             tb = new BLL.TrialBalance();
             tb.Ledger = new BLL.Ledger();
             tb.Ledger.AccountName = "Total";
@@ -107,9 +131,5 @@ namespace AccountBuddy.SL.Hubs
 
             return lstTrialBalance;
         }
-
-        #endregion
-
-
     }
 }

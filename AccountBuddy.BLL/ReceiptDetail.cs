@@ -14,7 +14,7 @@ namespace AccountBuddy.BLL
         private long _ReceipttId;
         private int _LedgerId;
         private decimal _Amount;
-        private string _Particular;
+        private string _Particulars;
 
         private string _LedgerName;
 
@@ -81,18 +81,18 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string Particular
+        public string Particulars
         {
             get
             {
-                return _Particular;
+                return _Particulars;
             }
             set
             {
-                if (_Particular != value)
+                if (_Particulars != value)
                 {
-                    _Particular = value;
-                    NotifyPropertyChanged(nameof(Particular));
+                    _Particulars = value;
+                    NotifyPropertyChanged(nameof(Particulars));
                 }
             }
         }

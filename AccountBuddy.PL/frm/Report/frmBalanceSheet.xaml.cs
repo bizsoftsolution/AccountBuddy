@@ -221,5 +221,32 @@ namespace AccountBuddy.PL.frm.Report
         }
 
         #endregion
+
+        private void dgvBalanceSheet_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var bs = dgvBalanceSheet.SelectedItem as BLL.BalanceSheet;
+                if (bs != null)
+                {
+                    if (bs.LedgerList.Id != 0)
+                    {
+                        frmGeneralLedger frm = new frmGeneralLedger();
+                        App.frmHome.ShowForm(frm);
+
+                        System.Windows.Forms.Application.DoEvents();
+                        frm.cmbAccountName.SelectedValue = bs.LedgerList.Id;
+                        frm.dtpDateFrom.SelectedDate = dtpDateFrom.SelectedDate;
+                        frm.dtpDateTo.SelectedDate = dtpDateTo.SelectedDate;
+                        System.Windows.Forms.Application.DoEvents();
+                        frm.dgvGeneralLedger.ItemsSource = BLL.GeneralLedger.ToList((int)bs.LedgerList.Id, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+
+                    }
+                }
+            }catch(Exception ex)
+            {
+
+            }
+        }
     }
 }

@@ -52,98 +52,111 @@
 
     </UserControl.Resources>
 
-    <Grid Margin="0,0,10,10">
+    <Grid>
+        <Grid Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
 
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="5" Margin="0,0,0,-15" />
-
-        <!--#region Heading-->
-        <Grid Grid.Row="0">
-            <StackPanel  Background="Black" Margin="0,0,-10,0">
-                <Grid Grid.Row="0" Height="25" Margin="0,0,10,0" >
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  TextAlignment="Center" FontSize="18" Width="512" Height="30" Margin="238,1,330,-1" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5" Text="Bank Reconcilation "/>
-                </Grid>
-            </StackPanel>
-        </Grid>
-        <!--#endregion-->
-
-        <!--#region FormDesign-->
-        <Grid Grid.Row="1">
-
-            <Grid Grid.Column="0" >
-                <StackPanel Orientation="Vertical" >
-
-                    <StackPanel Orientation="Horizontal" >
-                        <DatePicker x:Name="dtpDateFrom" materialDesign:HintAssist.Hint="Date From"  SelectedDate="{Binding DateFrom}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,25,24" Width="150" FontWeight="Bold"  />
-                        <DatePicker x:Name="dtpDateTo" materialDesign:HintAssist.Hint="Date To"  SelectedDate="{Binding DateTo}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,25,24" Width="150" FontWeight="Bold"  />
-                        <ComboBox x:Name="cmbAccountName"  ItemsSource="{Binding LedgerList}"  SelectedValue="{Binding LedgerName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="10,10,20,10">
-                            <materialDesign:HintAssist.Hint>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Account Name"/>
-                                </StackPanel>
-                            </materialDesign:HintAssist.Hint>
-                        </ComboBox>
-                        <ComboBox x:Name="cmbStatus"    Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Height="43" Margin="10,10,20,10">
-                            <materialDesign:HintAssist.Hint>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Status"/>
-                                </StackPanel>
-                            </materialDesign:HintAssist.Hint>
-                            <ComboBoxItem>Completed</ComboBoxItem>
-                            <ComboBoxItem>Returned</ComboBoxItem>
-                        </ComboBox>
-                        <StackPanel Orientation="Horizontal" Height="75" Width="135">
-                            <Button x:Name="btnSearch" Content="Search" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="90" Height="35" Click="btnSearch_Click"></Button>
-                        </StackPanel>
-                    </StackPanel>
-
-                </StackPanel>
-
+            <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
+                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Bank Reconciliation"/></TextBlock>
             </Grid>
 
+            <Grid Grid.Row="1" >
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="100*"/>
+                        <RowDefinition Height="20*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"  >
+
+                            <ComboBox x:Name="cmbAccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="10" Height="40" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Account Name"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </ComboBox>
+
+                            <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                        <TextBlock Text="Date From" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </DatePicker>
+                            <DatePicker Name="dtpDateTo" Width="135"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                        <TextBlock Text="Date To" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </DatePicker>
+                            <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
+                        </StackPanel>
+
+
+                    </Grid>
+                    <Grid Grid.Row="1">
+
+                        <Grid Grid.Row="0"  >
+
+                            <DataGrid x:Name="dgvBankReconciliation" BorderBrush="Black" BorderThickness="1" MouseDoubleClick="dgvBankReconciliation_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False"  Background="White" Foreground="Black" Margin="20,20,20,40" >
+
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                    </Style>
+
+                                </DataGrid.ColumnHeaderStyle>
+
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="Status" TextBlock.TextAlignment="Center"  Width="75">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox   x:Name="ckbStatus"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                                </CheckBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Date" FontWeight="Bold" Width="100" Binding="{Binding EDate,StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Entry No" FontWeight="Bold" Width="70" Binding="{Binding EntryNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Cheque/Ref No" FontWeight="Bold" Width="120" Binding="{Binding RefNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="200" Binding="{Binding Ledger.AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Particular" FontWeight="Bold" Width="200" Binding="{Binding Particular}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Debit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Credit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Balance"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding BalAmt, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                        </Grid>
+
+
+
+                        <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
+                            <rv:ReportViewer x:Name="rptViewer"/>
+                        </WindowsFormsHost>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <StackPanel Orientation="Horizontal" Margin="350,24,300,23" VerticalAlignment="Center">
+
+                            <Button  Grid.Column="1" Name="btnSave" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="150,0,25,0"  Click="btnExport_Click" ToolTip="SAVE" Width="134">
+                                SAVE
+                            </Button>
+                            </StackPanel>
+
+                    </Grid>
+                </Grid>
+            </Grid>
         </Grid>
-        <Grid Grid.Row="2">
-            <GroupBox  Visibility="{Binding IsShowCustomerDetail,Converter={StaticResource VisibilityConverter}}" Margin="10,0,10,115">
-                <DataGrid x:Name="dgvDetails"  ItemsSource="{Binding SRPendingList}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10" >
-
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="FontWeight" Value="Bold" />
-                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                        </Style>
-
-                    </DataGrid.ColumnHeaderStyle>
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Status"  TextBlock.TextAlignment="Center"  Width="75">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox x:Name="ckbStatus" Tag="{Binding LedgerId}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
-                                    </CheckBox>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Ref. Code" FontWeight="Bold" Width="70" Binding="{Binding RefNo, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                        <DataGridTextColumn Header="Date" FontWeight="Bold" Width="120" Binding="{Binding SRDate, Mode=TwoWay,StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                        <DataGridTextColumn Header="Cheque No" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="80" Binding="{Binding TotalAmount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                        <DataGridTextColumn Header="Name" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="300" Binding="{Binding PaidAmount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                        <DataGridTextColumn Header="Particulars" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="100" Binding="{Binding BalanceAmount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                        <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="100" Binding="{Binding PayAmount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="False"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </GroupBox>
-            <StackPanel Margin="10,300,0,0" Orientation="Horizontal">
-                <TextBox Text="{Binding OPBalance, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Opening Balance" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
-                <TextBox Text="{Binding CLBalance, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Closing Balance" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
-                <TextBox Text="{Binding CLRBalance, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Cleared Balance" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
-                <TextBox Text="{Binding Difference, Mode=TwoWay}" Width="150" materialDesign:HintAssist.Hint="Difference" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,20,24" FontWeight="Bold"/>
-
-            </StackPanel>
-        </Grid>
-        <!--#endregion-->
     </Grid>
 </UserControl>

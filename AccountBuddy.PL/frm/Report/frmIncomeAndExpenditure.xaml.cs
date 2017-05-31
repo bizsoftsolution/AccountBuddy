@@ -44,7 +44,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvProfitLoss.ItemsSource = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            dgvIncomeExpenditure.ItemsSource = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             LoadReport();
         }
 
@@ -53,7 +53,7 @@ namespace AccountBuddy.PL.frm.Report
         {
             List<BLL.ProfitLoss> list = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             list = list.Select(x => new BLL.ProfitLoss ()
-            {  AccountName= x.Ledger.AccountName,Amt=x.Amt }).ToList();
+            {  AccountName= x.Ledger.AccountName,CrAmt=x.CrAmt, CrAmtOP=x.CrAmtOP, DrAmt=x.DrAmt, DrAmtOP=x.DrAmtOP}).ToList();
 
             try
             {
@@ -85,7 +85,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            dgvProfitLoss.ItemsSource = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            dgvIncomeExpenditure.ItemsSource = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             LoadReport();
         }
 

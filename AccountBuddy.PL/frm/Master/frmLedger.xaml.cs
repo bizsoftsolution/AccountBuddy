@@ -53,10 +53,10 @@ namespace AccountBuddy.PL.frm.Master
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).Filter = Ledger_Filter;
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.AccountName), System.ComponentModel.ListSortDirection.Ascending));
 
-            cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList;
-            cmbAccountGroupId.DisplayMemberPath = "GroupNameWithCode";
+            cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.ToList();
+            cmbAccountGroupId.DisplayMemberPath = "GroupName";
             cmbAccountGroupId.SelectedValuePath = "Id";
-
+           
 
 
             cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;

@@ -44,7 +44,7 @@ namespace AccountBuddy.PL.frm.Report
         {
             List<BLL.ProfitLoss> list = BLL.ProfitLoss.ToList(dtFrom,dtTo);
             list = list.Select(x => new BLL.ProfitLoss()
-            { AccountName = x.Ledger.AccountName, Amt = x.Amt }).ToList();
+            { AccountName = x.Ledger.AccountName, CrAmt=x.CrAmt, DrAmt=x.DrAmt, DrAmtOP=x.DrAmtOP, CrAmtOP=x.CrAmtOP }).ToList();
 
             try
             {

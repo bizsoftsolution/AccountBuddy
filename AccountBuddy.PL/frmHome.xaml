@@ -160,7 +160,7 @@
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
 
-                                    <Menu:NavMenuItem MenuName="Payment_Receipt" FormName="Activity Report">
+                                    <Menu:NavMenuItem MenuName="Receipt and Payment Report" FormName="Receipt Payment Report">
                                         <Menu:NavMenuItem.Content>
                                             <Report:frmPaymentReceipt/>
                                         </Menu:NavMenuItem.Content>
