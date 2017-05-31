@@ -255,5 +255,25 @@ namespace AccountBuddy.PL.frm.Transaction
             MessageBox.Show("Saved");
             App.frmHome.ShowWelcome();
         }
+
+        private void ckbStatus_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var d = ((CheckBox)sender).Tag as BLL.BankReconcilation;
+                if (d != null) d.IsCompleted = true;                
+            }
+            catch (Exception ex) { }
+        }
+
+        private void ckbStatus_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var d = ((CheckBox)sender).Tag as BLL.BankReconcilation;
+                if (d != null) d.IsCompleted = false;
+            }
+            catch (Exception ex) { }
+        }
     }
 }

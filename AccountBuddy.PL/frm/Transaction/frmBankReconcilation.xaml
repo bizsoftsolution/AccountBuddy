@@ -122,7 +122,7 @@
                                     <DataGridTemplateColumn Header="Status" TextBlock.TextAlignment="Center"  Width="75">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox   x:Name="ckbStatus" IsChecked="{Binding IsCompleted}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                                <CheckBox Checked="ckbStatus_Checked" Tag="{Binding}" Unchecked="ckbStatus_Unchecked" x:Name="ckbStatus" IsChecked="{Binding IsCompleted}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
                                                 </CheckBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
