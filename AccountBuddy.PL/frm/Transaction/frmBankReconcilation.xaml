@@ -78,7 +78,7 @@
                             <ComboBox x:Name="cmbAccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="10" Height="40" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Account Name"/>
+                                        <TextBlock Text="Back Account"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </ComboBox>
@@ -122,7 +122,7 @@
                                     <DataGridTemplateColumn Header="Status" TextBlock.TextAlignment="Center"  Width="75">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox   x:Name="ckbStatus"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                                <CheckBox   x:Name="ckbStatus" IsChecked="{Binding IsCompleted}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
                                                 </CheckBox>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -134,7 +134,6 @@
                                     <DataGridTextColumn Header="Particular" FontWeight="Bold" Width="200" Binding="{Binding Particular}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header="Debit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding DrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="Credit Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding CrAmt, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Balance"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding BalAmt, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 
@@ -149,7 +148,7 @@
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal" Margin="350,24,300,23" VerticalAlignment="Center">
 
-                            <Button  Grid.Column="1" Name="btnSave" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="150,0,25,0"  Click="btnExport_Click" ToolTip="SAVE" Width="134">
+                            <Button  Grid.Column="1" Name="btnSave" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="150,0,25,0"  Click="btnSave_Click" ToolTip="SAVE" Width="134">
                                 SAVE
                             </Button>
                             </StackPanel>

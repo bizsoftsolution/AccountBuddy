@@ -131,7 +131,7 @@
                                             <Transaction:frmJournal/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                    <Menu:NavMenuItem MenuName="Bank Reconcilation" FormName="Bank Reconciliation">
+                                    <Menu:NavMenuItem MenuName="Bank Reconciliation" FormName="Bank Reconciliation">
                                         <Menu:NavMenuItem.Content>
                                             <Transaction:frmBankReconcilation/>
                                         </Menu:NavMenuItem.Content>

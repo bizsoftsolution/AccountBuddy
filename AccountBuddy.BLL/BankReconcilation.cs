@@ -17,10 +17,10 @@ namespace AccountBuddy.BLL
         private string _RefNo;
         private Ledger _Ledger;
         private decimal _CrAmt;
-        private decimal _DrAmt;
-        private decimal _BalAmt;
+        private decimal _DrAmt;        
         private string _AccountName;
         private string _Particular;
+        private bool _IsCompleted;
 
         #endregion
 
@@ -38,6 +38,22 @@ namespace AccountBuddy.BLL
                 {
                     _EId = value;
                     NotifyPropertyChanged(nameof(EId));
+                }
+            }
+        }
+
+        public bool IsCompleted
+        {
+            get
+            {
+                return _IsCompleted;
+            }
+            set
+            {
+                if (_IsCompleted != value)
+                {
+                    _IsCompleted = value;
+                    NotifyPropertyChanged(nameof(IsCompleted));
                 }
             }
         }
@@ -146,21 +162,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal BalAmt
-        {
-            get
-            {
-                return _BalAmt;
-            }
-            set
-            {
-                if (_BalAmt != value)
-                {
-                    _BalAmt = value;
-                    NotifyPropertyChanged(nameof(BalAmt));
-                }
-            }
-        }
+        
 
         public string AccountName
         {

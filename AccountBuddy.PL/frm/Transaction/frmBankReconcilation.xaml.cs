@@ -35,70 +35,22 @@ namespace AccountBuddy.PL.frm.Transaction
             dtpDateFrom.SelectedDate = dtFrom;
             dtpDateTo.SelectedDate = dtTo;
 
-            cmbAccountName.ItemsSource = BLL.Ledger.toList;
+            cmbAccountName.ItemsSource = BLL.Ledger.toList.Where(x=> x.AccountGroup.GroupName=="Bank Accounts").ToList();
             cmbAccountName.DisplayMemberPath = "AccountName";
             cmbAccountName.SelectedValuePath = "Id";
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //LoadReport();
+            
         }
 
-
-        //private void LoadReport()
-        //{
-        //    try
-        //    {
-        //        List<BLL.GeneralLedger> list = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-        //        list = list.Select(x => new BLL.GeneralLedger()
-        //        { AccountName = x.Ledger.AccountName, Particular = x.Particular, CrAmt = x.CrAmt, DrAmt = x.DrAmt, BalAmt = x.BalAmt, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
-
-        //        try
-        //        {
-        //            rptViewer.Reset();
-        //            ReportDataSource data = new ReportDataSource("GeneralLedger", list);
-        //            ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
-        //            rptViewer.LocalReport.DataSources.Add(data);
-        //            rptViewer.LocalReport.DataSources.Add(data1);
-        //            rptViewer.LocalReport.ReportPath = @"rpt\Report\rptGeneralLedger.rdlc";
-
-        //            ReportParameter[] par = new ReportParameter[2];
-        //            par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
-        //            par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
-        //            rptViewer.LocalReport.SetParameters(par);
-
-        //            rptViewer.RefreshReport();
-
-        //        }
-        //        catch (Exception ex)
-        //        {
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //    }
-
-        //}
-
-        //private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    TabControl tc = sender as TabControl;
-
-        //    if (tc.SelectedIndex == 1)
-        //    {
-        //        LoadReport();
-        //    }
-
-        //}
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             if (cmbAccountName.SelectedValue == null)
             {
-                MessageBox.Show("Enter AccountName..");
+                MessageBox.Show("Enter Bank Account..");
                 cmbAccountName.Focus();
             }
             else
@@ -272,5 +224,36 @@ namespace AccountBuddy.PL.frm.Transaction
         }
 
         #endregion
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            var l1 = dgvBankReconciliation.ItemsSource;
+
+            foreach(var d in l1)
+            {
+                var b = d as BLL.BankReconcilation;
+                if (b != null)
+                {
+                    if (b.EType == 'P')
+                    {
+                        BLL.Payment p = new BLL.Payment();
+                        p.SearchText = b.EntryNo;
+                        p.Find();
+                        p.Status = b.IsCompleted ? "Completed" : "Proccess";
+                        p.Save();
+                    }
+                    else if (b.EType == 'R')
+                    {
+                        BLL.Receipt R = new BLL.Receipt();
+                        R.SearchText = b.EntryNo;
+                        R.Find();
+                        R.Status = b.IsCompleted ? "Completed" : "Proccess";
+                        R.Save();
+                    }
+                }
+            }
+            MessageBox.Show("Saved");
+            App.frmHome.ShowWelcome();
+        }
     }
 }

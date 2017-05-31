@@ -17,51 +17,13 @@ namespace AccountBuddy.SL.Hubs
             BLL.BankReconcilation gl = new BLL.BankReconcilation();
 
             var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == LedgerId ).ToList();
-            decimal TotDr = 0, TotCr = 0;
 
             #region Ledger
-
-            decimal OPDr, OPCr, PDr, PCr, RDr, RCr, JDr, JCr, BalAmt;
-            BalAmt = 0;
+            
             foreach (var l in lstLedger)
             {
-                gl = new BLL.BankReconcilation();
-
-                gl.Ledger = LedgerDAL_BLL(l);
-
-                OPDr = l.OPDr ?? 0;
-                OPCr = l.OPCr ?? 0;
-
-                PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate < dtFrom).Sum(x => x.Amount);
-                PCr = l.Payments.Where(x => x.PaymentDate < dtFrom).Sum(x => x.Amount);
-
-                RDr = l.Receipts.Where(x => x.ReceiptDate < dtFrom).Sum(x => x.Amount);
-                RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate < dtFrom).Sum(x => x.Amount);
-
-                JDr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.DrAmt);
-                JCr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.CrAmt);
-
-                gl.DrAmt = OPDr + PDr + RDr + JDr;
-                gl.CrAmt = OPCr + PCr + RCr + JCr;
-
-                if (gl.DrAmt > gl.CrAmt)
-                {
-                    gl.DrAmt = gl.DrAmt - gl.CrAmt;
-                    gl.CrAmt = 0;
-                }
-                else
-                {
-                    gl.CrAmt = gl.CrAmt - gl.DrAmt;
-                    gl.DrAmt = 0;
-                }
-                BalAmt += (gl.DrAmt - gl.CrAmt);
-                gl.BalAmt = BalAmt;
-
-                gl.Ledger = new BLL.Ledger();
-                gl.Particular = string.Format("Balance {0}", l.LedgerName);
-                lstBankReconcilation.Add(gl);
-
-                foreach (var pd in l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).ToList())
+                
+                foreach (var pd in l.PaymentDetails.Where(x => x.Payment.Status== "Proccess" && x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).ToList())
                 {
                     gl = new BLL.BankReconcilation();
                     gl.Ledger = new BLL.Ledger();
@@ -74,13 +36,11 @@ namespace AccountBuddy.SL.Hubs
                     gl.EntryNo = pd.Payment.EntryNo;
                     gl.DrAmt = pd.Amount;
                     gl.CrAmt = 0;
-                    BalAmt += (gl.DrAmt - gl.CrAmt);
-                    gl.BalAmt = BalAmt;
+
                     lstBankReconcilation.Add(gl);
                 }
 
-
-                foreach (var p in l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).ToList())
+                foreach (var p in l.Payments.Where(x => x.Status == "Proccess" && x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).ToList())
                 {
                     foreach (var pd in p.PaymentDetails)
                     {
@@ -95,13 +55,11 @@ namespace AccountBuddy.SL.Hubs
                         gl.EntryNo = p.EntryNo;
                         gl.DrAmt = 0;
                         gl.CrAmt = pd.Amount;
-                        BalAmt += (gl.DrAmt - gl.CrAmt);
-                        gl.BalAmt = BalAmt;
                         lstBankReconcilation.Add(gl);
                     }
                 }
 
-                foreach (var r in l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).ToList())
+                foreach (var r in l.Receipts.Where(x => x.Status == "Proccess" && x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).ToList())
                 {
                     foreach (var rd in r.ReceiptDetails)
                     {
@@ -116,13 +74,11 @@ namespace AccountBuddy.SL.Hubs
                         gl.EntryNo = r.EntryNo;
                         gl.DrAmt = rd.Amount;
                         gl.CrAmt = 0;
-                        BalAmt += (gl.DrAmt - gl.CrAmt);
-                        gl.BalAmt = BalAmt;
                         lstBankReconcilation.Add(gl);
                     }
 
                 }
-                foreach (var rd in l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).ToList())
+                foreach (var rd in l.ReceiptDetails.Where(x => x.Receipt.Status == "Proccess" && x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).ToList())
                 {
                     gl = new BLL.BankReconcilation();
                     gl.Ledger = new BLL.Ledger();
@@ -135,37 +91,8 @@ namespace AccountBuddy.SL.Hubs
                     gl.EntryNo = rd.Receipt.EntryNo;
                     gl.DrAmt = 0;
                     gl.CrAmt = rd.Amount;
-                    BalAmt += (gl.DrAmt - gl.CrAmt);
-                    gl.BalAmt = BalAmt;
                     lstBankReconcilation.Add(gl);
-                }
-
-                foreach (var jd in l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).ToList())
-                {
-                    gl = new BLL.BankReconcilation();
-                    gl.Ledger = new BLL.Ledger();
-
-                    gl.Ledger = LedgerDAL_BLL(jd.Journal.JournalDetails.Where(x => (jd.DrAmt != 0 && x.CrAmt != 0) || (jd.CrAmt != 0 && x.DrAmt != 0)).FirstOrDefault().Ledger);
-                    gl.Particular = jd.Particulars;
-                    gl.EId = jd.Journal.Id;
-                    gl.EType = 'J';
-                    gl.EDate = jd.Journal.JournalDate;
-                    gl.RefNo = "";
-                    gl.EntryNo = jd.Journal.EntryNo;
-                    gl.DrAmt = jd.DrAmt;
-                    gl.CrAmt = jd.CrAmt;
-                    BalAmt += (gl.DrAmt - gl.CrAmt);
-                    gl.BalAmt = BalAmt;
-                    lstBankReconcilation.Add(gl);
-                }
-                gl = new BLL.BankReconcilation();
-                gl.Ledger = new BLL.Ledger();
-                gl.Particular = "Total";
-                gl.DrAmt = lstBankReconcilation.Sum(x => x.DrAmt);
-                gl.CrAmt = lstBankReconcilation.Sum(x => x.CrAmt);
-                gl.BalAmt = BalAmt;
-                lstBankReconcilation.Add(gl);
-
+                }               
             }
             #endregion
 
