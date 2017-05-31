@@ -14,12 +14,40 @@ namespace AccountBuddy.SL.Hubs
         {
             List<BLL.BalanceSheet> lstBalanceSheet = new List<BLL.BalanceSheet>();
             var l1 = DB.AccountGroups.Where(x => x.CompanyId==Caller.CompanyId && ( x.GroupName == "Assets" || x.GroupName == "Liabilities")).ToList();
-            
+            decimal GTotalDr = 0, GTotalCr = 0, GTotalDrOP = 0, GTotalCrOP = 0;
             foreach (var ag in l1)
             {
                 decimal TotalDr = 0, TotalCr = 0, TotalDrOP = 0, TotalCrOP = 0;
-                lstBalanceSheet.AddRange(BalanceSheetByGroupName(ag,dtFrom,dtTo,"", ref TotalDr, ref TotalCr, ref TotalDrOP, ref TotalCrOP));                
+                lstBalanceSheet.AddRange(BalanceSheetByGroupName(ag,dtFrom,dtTo,"", ref TotalDr, ref TotalCr, ref TotalDrOP, ref TotalCrOP));
+
+                GTotalDr += TotalDr;
+                GTotalCr += TotalCr;
+                GTotalDrOP += TotalDrOP;
+                GTotalCrOP += TotalCrOP;
+
             }
+
+
+            BLL.BalanceSheet tb = new BLL.BalanceSheet();
+            tb.LedgerList = new BLL.Ledger();
+            tb.LedgerList.AccountName = "Total ";
+            tb.CrAmt = GTotalCr;
+            tb.DrAmt = GTotalDr;
+            tb.CrAmtOP = GTotalCrOP;
+            tb.DrAmtOP = GTotalDrOP;
+            lstBalanceSheet.Add(tb);
+
+
+
+            tb = new BLL.BalanceSheet();
+            tb.LedgerList = new BLL.Ledger();
+            tb.LedgerList.AccountName = "Balance";
+            tb.CrAmt = GTotalCr>GTotalDr?Math.Abs(GTotalDr-GTotalCr):0;
+            tb.DrAmt = GTotalCr < GTotalDr ? Math.Abs(GTotalDr - GTotalCr) : 0; ;
+            tb.CrAmtOP = GTotalCrOP > GTotalDrOP ? Math.Abs(GTotalDrOP - GTotalCrOP) : 0; 
+            tb.DrAmtOP = GTotalCrOP < GTotalDrOP ? Math.Abs(GTotalDrOP - GTotalCrOP) : 0;
+            lstBalanceSheet.Add(tb);
+
 
             return lstBalanceSheet;
         }
@@ -27,7 +55,9 @@ namespace AccountBuddy.SL.Hubs
         List<BLL.BalanceSheet> BalanceSheetByGroupName(DAL.AccountGroup ag, DateTime dtFrom,DateTime dtTo,string Prefix,ref decimal TotalDr, ref decimal TotalCr, ref decimal TotalDrOP, ref decimal TotalCrOP)
         {
             List<BLL.BalanceSheet> lstBalanceSheet = new List<BLL.BalanceSheet>();
-            if (ag.AccountGroup1.Count() == 0 && ag.Ledgers.Count() == 0) return lstBalanceSheet;
+            decimal total = 0;
+            GetLedgerTotal(ag,ref total);
+            if (total == 0) return lstBalanceSheet;
 
             BLL.BalanceSheet tb = new BLL.BalanceSheet();
 
