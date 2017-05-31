@@ -222,6 +222,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmBankReconciliationPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmJournal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -324,6 +328,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmBankReconcilation.xaml.cs">
       <DependentUpon>frmBankReconcilation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmBankReconciliationPrint.xaml.cs">
+      <DependentUpon>frmBankReconciliationPrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmJournal.xaml.cs">
       <DependentUpon>frmJournal.xaml</DependentUpon>

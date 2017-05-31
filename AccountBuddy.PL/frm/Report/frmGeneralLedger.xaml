@@ -14,18 +14,19 @@
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
     </UserControl.Resources>
-
+   
     <Grid>
         <Grid Margin="0,0,0,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
+
             <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
                 <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="General Ledger"/></TextBlock>
             </Grid>
-            <Border BorderBrush="Black" BorderThickness="1" />
-
+            
             <Grid Grid.Row="1" >
 
                 <Grid>
