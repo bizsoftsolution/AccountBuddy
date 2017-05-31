@@ -196,6 +196,10 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbDebitAC.SelectedValuePath = "Id";
             cmbDebitAC.DisplayMemberPath = "AccountName";
 
+            cmbCreditAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts");
+            cmbCreditAC.SelectedValuePath = "Id";
+            cmbCreditAC.DisplayMemberPath = "AccountName";
+
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 

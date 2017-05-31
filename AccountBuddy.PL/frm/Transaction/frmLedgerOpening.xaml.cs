@@ -13,6 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using Microsoft.Win32;
+using System.Drawing.Printing;
+using System.Drawing.Imaging;
 
 namespace AccountBuddy.PL.frm.Transaction
 {
@@ -22,12 +26,22 @@ namespace AccountBuddy.PL.frm.Transaction
     public partial class frmLedgerOpening : UserControl
     {
         List<BLL.Ledger> lstLedgerOld = new List<BLL.Ledger>();
+        private int m_currentPageIndex;
+        private IList<Stream> m_streams;
+
         public frmLedgerOpening()
         {
             InitializeComponent();
             RptLedger.SetDisplayMode(DisplayMode.PrintLayout);
         }
-
+        private Stream CreateStream(string name,
+    string fileNameExtension, Encoding encoding,
+    string mimeType, bool willSeek)
+        {
+            Stream stream = new MemoryStream();
+            m_streams.Add(stream);
+            return stream;
+        }
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TabControl tc = sender as TabControl;
@@ -35,17 +49,19 @@ namespace AccountBuddy.PL.frm.Transaction
             if (tc.SelectedIndex == 1)
             {
                 LoadReport();
-            }        
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             dgvLedger.ItemsSource = BLL.Ledger.toList;
-            lstLedgerOld = BLL.Ledger.toList.Select(x=> new BLL.Ledger() {Id= x.Id,OPDr=x.OPDr,OPCr=x.OPCr }).ToList();
+            lstLedgerOld = BLL.Ledger.toList.Select(x => new BLL.Ledger() { Id = x.Id, OPDr = x.OPDr, OPCr = x.OPCr }).ToList();
             BLL.Ledger data = new BLL.Ledger();
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).Filter = Ledger_Filter;
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.AccountName), System.ComponentModel.ListSortDirection.Ascending));
             FindDiff();
+
+            LoadReport();
         }
         private bool Ledger_Filter(object obj)
         {
@@ -128,7 +144,7 @@ namespace AccountBuddy.PL.frm.Transaction
             decimal crAmt = l1.Sum(x => x.OPCr ?? 0);
 
             lblMsg.Text = string.Format("Total Debit Balance : {0:N2}, Total Credit Balance : {1:N2}\nDifference : {2:N2}", drAmt, crAmt, Math.Abs(drAmt - crAmt));
-            lblMsg.Foreground = drAmt==crAmt? new SolidColorBrush(Color.FromRgb( 0,0,255)):new SolidColorBrush(Color.FromRgb(255, 0, 0));
+            lblMsg.Foreground = drAmt == crAmt ? new SolidColorBrush(Color.FromRgb(0, 0, 255)) : new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -187,10 +203,10 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            foreach(var l1 in BLL.Ledger.toList)
+            foreach (var l1 in BLL.Ledger.toList)
             {
                 var l2 = lstLedgerOld.Where(x => x.Id == l1.Id).FirstOrDefault();
-                if(l1.OPDr != l2.OPDr || l1.OPCr != l2.OPCr)
+                if (l1.OPDr != l2.OPDr || l1.OPCr != l2.OPCr)
                 {
                     l1.Save();
                 }
@@ -203,5 +219,125 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             FindDiff();
         }
+
+        #region Button Events
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string extension;
+
+                byte[] bytes = RptLedger.LocalReport.Render(
+                   "PDF", null, out mimeType, out encoding,
+                    out extension,
+                   out streamids, out warnings);
+
+                SaveFileDialog SaveFileDialog1 = new SaveFileDialog();
+
+                SaveFileDialog1.ShowDialog();
+                string file = string.Format(@"{0}.pdf", SaveFileDialog1.FileName);
+                FileStream fs = new FileStream(file,
+                   FileMode.Create);
+                fs.Write(bytes, 0, bytes.Length);
+                fs.Close();
+
+                MessageBox.Show("Completed Exporting");
+            }
+            catch (Exception ex)
+            {
+            }
+
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            Export(RptLedger.LocalReport);
+            Print();
+        }
+
+        private void Export(LocalReport report)
+        {
+            try
+            {
+                string deviceInfo =
+             @"<DeviceInfo>
+                <OutputFormat>EMF</OutputFormat>
+                <PageWidth>8.5in</PageWidth>
+                <PageHeight>11in</PageHeight>
+                <MarginTop>0in</MarginTop>
+                <MarginLeft>0in</MarginLeft>
+                <MarginRight>0in</MarginRight>
+                <MarginBottom>0in</MarginBottom>
+            </DeviceInfo>";
+                Warning[] warnings;
+                m_streams = new List<Stream>();
+                report.Render("Image", deviceInfo, CreateStream,
+                  out warnings);
+                foreach (Stream stream in m_streams)
+                    stream.Position = 0;
+            }
+            catch (Exception ex)
+            { }
+        }
+
+        private void Print()
+        {
+            try
+            {
+                if (m_streams == null || m_streams.Count == 0)
+                    throw new Exception("Error: no stream to print.");
+                PrintDocument printDoc = new PrintDocument();
+                if (!printDoc.PrinterSettings.IsValid)
+                {
+                    throw new Exception("Error: cannot find the default printer.");
+                }
+                else
+                {
+                    printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
+                    m_currentPageIndex = 0;
+                    printDoc.Print();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+        private void PrintPage(object sender, PrintPageEventArgs ev)
+        {
+            Metafile pageImage = new
+           Metafile(m_streams[m_currentPageIndex]);
+
+            // Adjust rectangular area with printer margins.
+            System.Drawing.Rectangle adjustedRect = new System.Drawing.Rectangle(
+            ev.PageBounds.Left - (int)ev.PageSettings.HardMarginX,
+            ev.PageBounds.Top - (int)ev.PageSettings.HardMarginY,
+            ev.PageBounds.Width,
+            ev.PageBounds.Height);
+
+            // Draw a white background for the report
+            ev.Graphics.FillRectangle(System.Drawing.Brushes.White, adjustedRect);
+
+            // Draw the report content
+            ev.Graphics.DrawImage(pageImage, adjustedRect);
+
+            // Prepare for the next page. Make sure we haven't hit the end.
+            m_currentPageIndex++;
+            ev.HasMorePages = (m_currentPageIndex < m_streams.Count);
+        }
+
+        private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
+        {
+            frmLedgerOpeningPrint f = new frmLedgerOpeningPrint();
+            f.ShowDialog();
+        }
+
+        #endregion
     }
 }

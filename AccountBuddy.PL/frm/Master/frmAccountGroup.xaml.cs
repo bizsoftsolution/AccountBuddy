@@ -37,6 +37,7 @@ namespace AccountBuddy.PL.frm.Master
             this.DataContext = data;
             data.Clear();
             RptAccount.SetDisplayMode(DisplayMode.PrintLayout);
+         
             onClientEvents();
            
         }

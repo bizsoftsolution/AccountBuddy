@@ -162,7 +162,7 @@
             <Grid Grid.Column="1">
                 <StackPanel Orientation="Vertical" Margin="0,25,0,0">
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox x:Name="cmbDebitAC" IsReadOnly="{Binding IsReadOnly}" ItemsSource="{Binding LedgerList}" SelectedValuePath="Id" DisplayMemberPath="AccountName" Text="{Binding PDetail.LedgerName}" SelectedValue="{Binding PDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True">
+                        <ComboBox x:Name="cmbDebitAC" IsReadOnly="{Binding IsReadOnly}"  Text="{Binding PDetail.LedgerName}" SelectedValue="{Binding PDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Debit A/C"/>
