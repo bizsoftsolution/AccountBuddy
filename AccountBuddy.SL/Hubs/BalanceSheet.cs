@@ -47,66 +47,20 @@ namespace AccountBuddy.SL.Hubs
                 lstBalanceSheet.AddRange(BalanceSheetByGroupName(uag, dtFrom, dtTo,Prefix+ "     ",ref TotalDr, ref TotalCr, ref TotalDrOP, ref TotalCrOP));
             }
 
-            decimal OPDr, OPCr, PDr, PCr, RDr, RCr, JDr, JCr;            
+            decimal OPDr = 0 , OPCr = 0 , Dr = 0 , Cr = 0;           
 
             foreach (var l in ag.Ledgers)
             {
                 tb = new BLL.BalanceSheet();
                 tb.LedgerList = LedgerDAL_BLL(l);
 
-                OPDr = l.OPDr ?? 0;
-                OPCr = l.OPCr ?? 0;
+                LedgerBalance(l, dtFrom, dtTo,ref OPDr, ref OPCr, ref Dr, ref Cr);                
 
-                PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate < dtFrom).Sum(x => x.Amount);
-                PCr = l.Payments.Where(x => x.PaymentDate < dtFrom).Sum(x => x.Amount);
-
-                RDr = l.Receipts.Where(x => x.ReceiptDate < dtFrom).Sum(x => x.Amount);
-                RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate < dtFrom).Sum(x => x.Amount);
-
-                JDr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.DrAmt);
-                JCr = l.JournalDetails.Where(x => x.Journal.JournalDate < dtFrom).Sum(x => x.CrAmt);
-
-                tb.DrAmtOP = OPDr + PDr + RDr + JDr;
-                tb.CrAmtOP = OPCr + PCr + RCr + JCr;
-
-
-                PDr = l.PaymentDetails.Where(x => x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).Sum(x => x.Amount);
-                PCr = l.Payments.Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).Sum(x => x.Amount);
-
-                RDr = l.Receipts.Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).Sum(x => x.Amount);
-                RCr = l.ReceiptDetails.Where(x => x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).Sum(x => x.Amount);
-
-                JDr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.DrAmt);
-                JCr = l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).Sum(x => x.CrAmt);
-
-
-
-                tb.DrAmt = tb.DrAmtOP + PDr + RDr + JDr;
-                tb.CrAmt = tb.CrAmtOP + PCr + RCr + JCr;
-
-
-                if (tb.DrAmtOP > tb.CrAmtOP)
-                {
-                    tb.DrAmtOP = tb.DrAmtOP - tb.CrAmtOP;
-                    tb.CrAmtOP = 0;
-                }
-                else
-                {
-                    tb.CrAmtOP = tb.CrAmtOP - tb.DrAmtOP;
-                    tb.DrAmtOP = 0;
-                }
-
-                if (tb.DrAmt > tb.CrAmt)
-                {
-                    tb.DrAmt = tb.DrAmt - tb.CrAmt;
-                    tb.CrAmt = null;
-                }
-                else
-                {
-                    tb.CrAmt = tb.CrAmt - tb.DrAmt;
-                    tb.DrAmt = null;
-                }
-
+                tb.DrAmt = Dr;
+                tb.CrAmt = Cr;
+                tb.DrAmtOP = OPDr;
+                tb.CrAmtOP = OPCr;
+                
                 if (tb.DrAmt != 0 || tb.CrAmt != 0)
                 {
                     tb.LedgerList.AccountGroup.GroupCode = Prefix + "     " + tb.LedgerList.AccountGroup.GroupCode;                    
@@ -115,8 +69,7 @@ namespace AccountBuddy.SL.Hubs
                     TotalCr += tb.CrAmt ?? 0;
 
                     TotalDrOP += tb.DrAmtOP ?? 0;
-                    TotalCrOP += tb.CrAmtOP ?? 0;
-                    
+                    TotalCrOP += tb.CrAmtOP ?? 0;                    
                 }
             }
 

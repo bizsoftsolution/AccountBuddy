@@ -8,8 +8,6 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Trial_Balance
-
         void LedgerBalance(DAL.Ledger l, DateTime dtFrom, DateTime dtTo, ref decimal OPDr,ref decimal OPCr, ref decimal Dr, ref decimal Cr)
         {
             decimal PDr, PCr, RDr, RCr, JDr, JCr;
@@ -75,18 +73,11 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.TrialBalance> TrialBalance_List(DateTime dtFrom, DateTime dtTo)
         {
             List<BLL.TrialBalance> lstTrialBalance = new List<BLL.TrialBalance>();
-
-
             BLL.TrialBalance tb = new BLL.TrialBalance();
 
             var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
             decimal TotDr = 0, TotCr = 0, TotOPCr = 0, TotOPDr = 0;
-
-
-
-            #region Ledger
-
-
+                    
             foreach (var l in lstLedger)
             {
                 tb = new BLL.TrialBalance();
@@ -111,8 +102,7 @@ namespace AccountBuddy.SL.Hubs
                     TotOPDr += tb.DrAmtOP;
                 }
             }
-            #endregion
-
+        
             tb = new BLL.TrialBalance();
             tb.Ledger = new BLL.Ledger();
             tb.Ledger.AccountName = "Total";
@@ -124,9 +114,5 @@ namespace AccountBuddy.SL.Hubs
 
             return lstTrialBalance;
         }
-
-        #endregion
-
-
     }
 }
