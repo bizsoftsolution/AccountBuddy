@@ -252,7 +252,7 @@ namespace AccountBuddy.BLL
                 if (_AccountGroup != value)
                 {
                     _AccountGroup = value;
-                    NotifyPropertyChanged(nameof(BLL.AccountGroup));
+                    NotifyPropertyChanged(nameof(AccountGroup));
                     SetAccountName();
                 }
 

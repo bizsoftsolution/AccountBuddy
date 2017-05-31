@@ -160,7 +160,7 @@
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
 
-                                    <Menu:NavMenuItem MenuName="Payment_Receipt" FormName="Activity Report">
+                                    <Menu:NavMenuItem MenuName="Receipt and Payment Report" FormName="Receipt Payment Report">
                                         <Menu:NavMenuItem.Content>
                                             <Report:frmPaymentReceipt/>
                                         </Menu:NavMenuItem.Content>
@@ -179,7 +179,7 @@
                                     </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Income and Expenditure Account" FormName="Income and Expenditure Account">
                                         <Menu:NavMenuItem.Content>
-                                            <Report:frmProfitLoss/>
+                                            <Report:frmIncomeAndExpenditure/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
                                     

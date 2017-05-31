@@ -20,7 +20,7 @@ namespace AccountBuddy.BLL
 
         private string _AccountName;
         #endregion
-
+        
         #region Property
         public Ledger Ledger
         {
