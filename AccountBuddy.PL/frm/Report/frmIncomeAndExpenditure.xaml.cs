@@ -217,5 +217,33 @@ namespace AccountBuddy.PL.frm.Report
         }
 
         #endregion
+
+        private void dgvIncomeExpenditure_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var PL = dgvIncomeExpenditure.SelectedItem as BLL.ProfitLoss;
+                if (PL != null)
+                {
+                    if (PL.Ledger.Id != 0)
+                    {
+                        frmGeneralLedger frm = new frmGeneralLedger();
+                        App.frmHome.ShowForm(frm);
+
+                        System.Windows.Forms.Application.DoEvents();
+                        frm.cmbAccountName.SelectedValue = PL.Ledger.Id;
+                        frm.dtpDateFrom.SelectedDate = dtpDateFrom.SelectedDate;
+                        frm.dtpDateTo.SelectedDate = dtpDateTo.SelectedDate;
+                        System.Windows.Forms.Application.DoEvents();
+                        frm.dgvGeneralLedger.ItemsSource = BLL.GeneralLedger.ToList((int)PL.Ledger.Id, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }
