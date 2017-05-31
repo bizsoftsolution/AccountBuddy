@@ -190,12 +190,12 @@ namespace AccountBuddy.SL.Hubs
             AccountSetup_Income(pr);
             AccountSetup_Expense(pr);
 
-            DAL.Ledger PL = new DAL.Ledger();
-            PL.LedgerName = "Profit & Loss A/C";
-            PL.AccountGroupId = pr.Id;
+            //DAL.Ledger PL = new DAL.Ledger();
+            //PL.LedgerName = "Profit & Loss A/C";
+            //PL.AccountGroupId = pr.Id;
            
-            DB.Ledgers.Add(PL);
-            DB.SaveChanges();
+            //DB.Ledgers.Add(PL);
+            //DB.SaveChanges();
         }
 
         void AccountSetup_Asset(DAL.AccountGroup pr)

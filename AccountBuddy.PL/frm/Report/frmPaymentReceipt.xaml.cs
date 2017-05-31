@@ -216,9 +216,17 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
-            frmPaymentReceiptPrint f = new frmPaymentReceiptPrint();
-            f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-            f.ShowDialog();
+            if (dgvReceiptAndPayment.Items.Count!=0)
+            {
+                frmPaymentReceiptPrint f = new frmPaymentReceiptPrint();
+                f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                f.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Enter AccountName");
+            }
+          
         }
 
         #endregion
