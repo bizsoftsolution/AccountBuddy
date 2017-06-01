@@ -89,14 +89,12 @@ namespace AccountBuddy.Common
 
             try
             {
-
                 if (number1 == 0)
                     return "Zero";
 
                 if (number1 < 0)
                     return "minus " + ToWords(Math.Abs(number1));
 
-                
                 if ((number1 / 1000000) > 0)
                 {
                     words += ToWords(number1 / 1000000) + " Million ";
@@ -124,15 +122,16 @@ namespace AccountBuddy.Common
                     var tensMap = new[] { "Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
 
                     if (number1 < 20)
-                        words += unitsMap[number1];
+                        words +=  unitsMap[number1];
                     else
                     {
-                        words += tensMap[number1 / 10];
+                        words +=  tensMap[number1 / 10];
                         if ((number1 % 10) > 0)
                             // words += "-" + unitsMap[number1 % 10];
                             words += " " + unitsMap[number1 % 10];
                     }
                 }
+                
             }
             catch(Exception ex)
             {
