@@ -66,8 +66,7 @@
             <StackPanel  Background="Black">
                 <Grid Grid.Row="0" Height="25" Margin="0,0,10,0" >
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  TextAlignment="Center" FontSize="18" Width="512" Height="30" Margin="238,1,330,-1" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5" Text="Payment "/>
-                    <CheckBox FontWeight="Bold" Foreground="White" HorizontalAlignment="Right"> Auto Print</CheckBox>
-                </Grid>
+                      </Grid>
             </StackPanel>
         </Grid>
         <!--#endregion-->
