@@ -30,7 +30,9 @@ namespace AccountBuddy.SL.Hubs
                         Logo = x.Logo,
                         MobileNo = x.MobileNo,
                         PostalCode = x.PostalCode,
-                        TelephoneNo = x.TelephoneNo
+                        TelephoneNo = x.TelephoneNo, 
+                        CompanyType=x.CompanyType, 
+                        IsActive=x.IsActive.Value
                     }
                     ).ToList();
                 }

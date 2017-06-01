@@ -63,6 +63,9 @@ namespace AccountBuddy.PL.frm.Master
 
             var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
             dgvWarehouse.ItemsSource = lstCompany;
+
+            var lstWareHouse = lstCompany.Where(x => x.UnderCompanyId == BLL.UserAccount.User.UserType.CompanyId);
+            dgvDealer.ItemsSource = lstWareHouse;
         }
         private void Grid_Refresh()
         {
@@ -97,6 +100,21 @@ namespace AccountBuddy.PL.frm.Master
             }
 
         }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (!BLL.CompanyDetail.UserPermission.AllowDelete)
+                MessageBox.Show(string.Format(Message.PL.DenyDelete, lblHead.Text));
+            else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+
+                if (data.Delete() == true)
+                {
+                    MessageBox.Show(Message.PL.Delete_Alert);
+                    App.frmHome.IsForcedClose = true;
+                    App.frmHome.Close();
+                }
+        }
+
 
         private void btnNewWareHouse_Click(object sender, RoutedEventArgs e)
         {

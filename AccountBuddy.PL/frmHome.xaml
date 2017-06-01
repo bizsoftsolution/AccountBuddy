@@ -97,9 +97,9 @@
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
 
-                                    <Menu:NavMenuItem MenuName="Ledger" FormName="Ledger">
+                                    <Menu:NavMenuItem MenuName="Customer" FormName="Customer">
                                         <Menu:NavMenuItem.Content>
-                                            <Master:frmLedger/>
+                                            <Master:frmCustomer/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
 
