@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         ShowMaxRestoreButton="False"
         mc:Ignorable="d"
-        Title="Login" Height="700" Width="1000"
+        Title="Login123" Height="700" Width="1000"
         BorderThickness="0" GlowBrush="Black" ResizeMode="NoResize" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen"             
                        
                        Closing="MetroWindow_Closing" Icon="Images/AB1.ico"
