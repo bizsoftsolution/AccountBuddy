@@ -35,14 +35,14 @@ namespace AccountBuddy.PL.frm.Transaction
             dtpDateFrom.SelectedDate = dtFrom;
             dtpDateTo.SelectedDate = dtTo;
 
-            cmbAccountName.ItemsSource = BLL.Ledger.toList.Where(x=> x.AccountGroup.GroupName=="Bank Accounts").ToList();
-            cmbAccountName.DisplayMemberPath = "AccountName";
-            cmbAccountName.SelectedValuePath = "Id";
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
+            cmbAccountName.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Bank Accounts").ToList();
+            cmbAccountName.DisplayMemberPath = "AccountName";
+            cmbAccountName.SelectedValuePath = "Id";
         }
 
 

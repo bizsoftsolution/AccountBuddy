@@ -240,7 +240,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TabControl.RenderTransform>
-                    <TabItem Header="Details" FontSize="16" FontWeight="Bold">
+                    <TabItem Header="Details" FontSize="16">
 
                         <Grid Grid.Row="0" Margin="0,0,10,-20" >
                            
@@ -261,7 +261,7 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <DataGrid x:Name="dgvLedger" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="0,105,7,38" Grid.ColumnSpan="2" SelectionChanged="dgvLedger_SelectionChanged" MouseDoubleClick="dgvLedger_MouseDoubleClick" >
+                            <DataGrid x:Name="dgvLedger" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="20" Grid.ColumnSpan="2" SelectionChanged="dgvLedger_SelectionChanged" MouseDoubleClick="dgvLedger_MouseDoubleClick" >
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="FontWeight" Value="Bold" />
@@ -286,7 +286,7 @@
                         </Grid>
 
                     </TabItem>
-                    <TabItem Header="Report" FontSize="16" FontWeight="Bold">
+                    <TabItem Header="Report" FontSize="16">
                         <Grid Grid.Row="0" Margin="0,0,4,-14">
                                           <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="550"  Margin="20">
                                 <rv:ReportViewer x:Name="RptLedger"/>
