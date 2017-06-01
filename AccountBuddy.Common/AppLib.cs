@@ -120,13 +120,13 @@ namespace AccountBuddy.Common
                 var tensMap = new[] { "Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
 
                 if (number1 < 20)
-                    words += unitsMap[number1];
+                    words +=string.Format("{0}", unitsMap[number1]);
                 else
                 {
-                    words += tensMap[number1 / 10];
+                    words = string.Format("{0} {1}", tensMap[number1 / 10]); 
                     if ((number1 % 10) > 0)
                         // words += "-" + unitsMap[number1 % 10];
-                        words +=  unitsMap[number1 % 10];
+                        words +=  " " unitsMap[number1 % 10];
                 }
             }
             return words.ToUpper();
@@ -161,5 +161,13 @@ namespace AccountBuddy.Common
             Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
             return regex.IsMatch(s);
         }
+
+        #region Print
+
+
+        #endregion
+
+
+
     }
 }

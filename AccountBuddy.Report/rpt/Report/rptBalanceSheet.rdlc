@@ -141,7 +141,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>8.12272cm</Width>
+              <Width>7.13818cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>3.71708cm</Width>
@@ -150,10 +150,10 @@
               <Width>3.21438cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.18674cm</Width>
+              <Width>3.71591cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.37312cm</Width>
+              <Width>3.8285cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -674,7 +674,9 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>

@@ -137,19 +137,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.69678cm</Width>
+              <Width>7.22053cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.08208cm</Width>
+              <Width>2.92333cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.91774cm</Width>
+              <Width>3.02356cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.63771cm</Width>
+              <Width>3.87584cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.82292cm</Width>
+              <Width>4.11396cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -691,9 +691,9 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>0.21167cm</Top>
+          <Top>0.17639cm</Top>
           <Left>3.35312cm</Left>
-          <Height>0.6cm</Height>
+          <Height>0.63528cm</Height>
           <Width>2.01965cm</Width>
           <ZIndex>1</ZIndex>
           <Style>

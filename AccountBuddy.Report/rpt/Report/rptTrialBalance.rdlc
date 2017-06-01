@@ -514,7 +514,7 @@
         <Top>1.09333cm</Top>
         <Left>0.39042cm</Left>
         <Height>1.2cm</Height>
-        <Width>20.66333cm</Width>
+        <Width>20.66334cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -681,7 +681,7 @@
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
           <Top>0.07056cm</Top>
-          <Left>3.37077cm</Left>
+          <Left>3.30021cm</Left>
           <Height>0.6cm</Height>
           <Width>2.01965cm</Width>
           <ZIndex>1</ZIndex>
