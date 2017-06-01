@@ -13,10 +13,10 @@ namespace AccountBuddy.DAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DBAccountBuddyEntities : DbContext
+    public partial class DBFMCGEntities : DbContext
     {
-        public DBAccountBuddyEntities()
-            : base("name=DBAccountBuddyEntities")
+        public DBFMCGEntities()
+            : base("name=Entities")
         {
         }
     
@@ -26,7 +26,9 @@ namespace AccountBuddy.DAL
         }
     
         public virtual DbSet<AccountGroup> AccountGroups { get; set; }
+        public virtual DbSet<CompanyDetail> CompanyDetails { get; set; }
         public virtual DbSet<CreditLimitType> CreditLimitTypes { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<EntityType> EntityTypes { get; set; }
         public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
         public virtual DbSet<Journal> Journals { get; set; }
@@ -43,6 +45,5 @@ namespace AccountBuddy.DAL
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<UserTypeFormDetail> UserTypeFormDetails { get; set; }
-        public virtual DbSet<CompanyDetail> CompanyDetails { get; set; }
     }
 }

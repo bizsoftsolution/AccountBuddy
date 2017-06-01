@@ -52,103 +52,104 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountGroup.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CompanyDetail.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CreditLimitType.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBAccountBuddyModel.Context.cs">
+    <Compile Include="Customer.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBFMCGModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBAccountBuddyModel.Context.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBAccountBuddyModel.cs">
+    <Compile Include="DBFMCGModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBAccountBuddyModel.Designer.cs">
+    <Compile Include="DBFMCGModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBAccountBuddyModel.edmx</DependentUpon>
+      <DependentUpon>DBFMCGModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="EntityType.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ErrorLog.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Journal.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="JournalDetail.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Ledger.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="LogDetail.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="LogDetailType.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="LogMaster.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Payment.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PaymentDetail.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receipt.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReceiptDetail.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserAccount.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserType.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserTypeDetail.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserTypeFormDetail.cs">
-      <DependentUpon>DBAccountBuddyModel.tt</DependentUpon>
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="DBAccountBuddyModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBAccountBuddyModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="DBAccountBuddyModel.edmx.diagram">
-      <DependentUpon>DBAccountBuddyModel.edmx</DependentUpon>
+    <EntityDeploy Include="DBFMCGModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DBFMCGModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DBFMCGModel.edmx.diagram">
+      <DependentUpon>DBFMCGModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account Buddy Clean DB Query.sql" />
-    <Content Include="DBAccountBuddyModel.Context.tt">
+    <Content Include="DBFMCGModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBAccountBuddyModel.edmx</DependentUpon>
-      <LastGenOutput>DBAccountBuddyModel.Context.cs</LastGenOutput>
+      <DependentUpon>DBFMCGModel.edmx</DependentUpon>
+      <LastGenOutput>DBFMCGModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DBAccountBuddyModel.tt">
+    <Content Include="DBFMCGModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBAccountBuddyModel.edmx</DependentUpon>
-      <LastGenOutput>DBAccountBuddyModel.cs</LastGenOutput>
+      <DependentUpon>DBFMCGModel.edmx</DependentUpon>
+      <LastGenOutput>DBFMCGModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

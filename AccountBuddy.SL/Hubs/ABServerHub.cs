@@ -23,7 +23,7 @@ namespace AccountBuddy.SL.Hubs
 
         #region Field
 
-        private static DAL.DBAccountBuddyEntities DB = new DAL.DBAccountBuddyEntities();
+        private static  DAL.DBFMCGEntities DB = new DAL.DBFMCGEntities();
 
         private static List<SLUser> UserList = new List<SLUser>();
         private static List<DAL.EntityType> _entityTypeList;
@@ -40,7 +40,6 @@ namespace AccountBuddy.SL.Hubs
                 if (_entityTypeList == null)
                 {
                     _entityTypeList = DB.EntityTypes.ToList();
-
                 }
                 return _entityTypeList;
             }
@@ -262,4 +261,5 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
     }
+   
 }
