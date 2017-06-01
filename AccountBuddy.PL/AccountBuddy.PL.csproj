@@ -166,6 +166,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmLedger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -286,6 +290,9 @@
     </Compile>
     <Compile Include="frm\Master\frmCompanySetting.xaml.cs">
       <DependentUpon>frmCompanySetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmCustomer.xaml.cs">
+      <DependentUpon>frmCustomer.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmLedger.xaml.cs">
       <DependentUpon>frmLedger.xaml</DependentUpon>
