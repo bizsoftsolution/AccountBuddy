@@ -33,6 +33,8 @@ namespace AccountBuddy.DAL
         public string GSTNo { get; set; }
         public byte[] Logo { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public Nullable<int> UnderCompanyId { get; set; }
+        public string CompanyType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountGroup> AccountGroups { get; set; }

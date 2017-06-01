@@ -110,7 +110,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<Ledger>(ABClientHub.FMCGHub.Invoke<List<Ledger>>("Ledger_List").Result);
+                if (_toList == null) _toList = new ObservableCollection<Ledger>(FMCGHubClient.FMCGHub.Invoke<List<Ledger>>("Ledger_List").Result);
                 return _toList;
             }
             set
@@ -564,7 +564,7 @@ namespace AccountBuddy.BLL
                 this.toCopy<Ledger>(d);
                 if (isServerCall == false)
                 {
-                    var i = ABClientHub.FMCGHub.Invoke<int>("Ledger_Save", this).Result;
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Ledger_Save", this).Result;
                     d.Id = i;
                 }
 
@@ -607,7 +607,7 @@ namespace AccountBuddy.BLL
 
                 if (isServerCall == false)
                 {
-                    rv = ABClientHub.FMCGHub.Invoke<bool>("Ledger_Delete", this.Id).Result;
+                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("Ledger_Delete", this.Id).Result;
                     if (rv == true) toList.Remove(d);
 
                 }

@@ -636,7 +636,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return ABClientHub.FMCGHub.Invoke<bool>("Payment_Save", this).Result;
+                return FMCGHubClient.FMCGHub.Invoke<bool>("Payment_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -660,7 +660,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Payment po = ABClientHub.FMCGHub.Invoke<Payment>("Payment_Find", SearchText).Result;
+                Payment po = FMCGHubClient.FMCGHub.Invoke<Payment>("Payment_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Payment>(this);
                 this.PDetails = po.PDetails;
@@ -679,7 +679,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return ABClientHub.FMCGHub.Invoke<bool>("Payment_Delete", this.Id).Result;
+                return FMCGHubClient.FMCGHub.Invoke<bool>("Payment_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -742,7 +742,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = ABClientHub.FMCGHub.Invoke<bool>("Find_EntryNo", EntryNo, this).Result;
+                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_EntryNo", EntryNo, this).Result;
             }
             catch (Exception ex)
             {

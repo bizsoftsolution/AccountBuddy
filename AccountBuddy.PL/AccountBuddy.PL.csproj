@@ -451,6 +451,10 @@
   <ItemGroup>
     <Resource Include="Images\ABHomeBG1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fmcgbck.jpg" />
+    <Resource Include="Images\fmcg_logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

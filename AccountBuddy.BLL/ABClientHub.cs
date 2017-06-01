@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AccountBuddy.BLL
 {
-    public static class ABClientHub
+    public static class FMCGHubClient
     {
         #region Field
         private static HubConnection _hubCon;

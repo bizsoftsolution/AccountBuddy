@@ -91,7 +91,7 @@ namespace AccountBuddy.BLL
             {
                 if (_toList == null)
                 {
-                    _toList =new ObservableCollection<UserType>( ABClientHub.FMCGHub.Invoke<List<UserType>>("UserType_List").Result);
+                    _toList =new ObservableCollection<UserType>( FMCGHubClient.FMCGHub.Invoke<List<UserType>>("UserType_List").Result);
                 }
 
                 return _toList;
@@ -231,7 +231,7 @@ namespace AccountBuddy.BLL
                 this.toCopy<UserType>(d);
                 if (isServerCall == false)
                 {
-                    var i = ABClientHub.FMCGHub.Invoke<int>("userType_Save", this).Result;
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("userType_Save", this).Result;
                     d.Id = i;
                 }
 
@@ -279,7 +279,7 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 toList.Remove(d);
-                if (isServerCall == false) ABClientHub.FMCGHub.Invoke<int>("userType_Delete", this.Id);
+                if (isServerCall == false) FMCGHubClient.FMCGHub.Invoke<int>("userType_Delete", this.Id);
                 return true;
             }
 

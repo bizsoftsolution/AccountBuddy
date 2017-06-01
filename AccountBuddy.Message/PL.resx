@@ -144,6 +144,21 @@
   <data name="Existing_Data" xml:space="preserve">
     <value>{0}, Already Exist.</value>
   </data>
+  <data name="Login_CompanyName_Validation" xml:space="preserve">
+    <value>Enter Company!</value>
+  </data>
+  <data name="Login_Dealer_Validation" xml:space="preserve">
+    <value>Enter Dealer !</value>
+  </data>
+  <data name="Login_Password_Validation" xml:space="preserve">
+    <value>Enter Password !</value>
+  </data>
+  <data name="Login_UserName_validation" xml:space="preserve">
+    <value>Enter Username !</value>
+  </data>
+  <data name="Login_Warehouse_Validation" xml:space="preserve">
+    <value>Enter warehouse !</value>
+  </data>
   <data name="Saved_Alert" xml:space="preserve">
     <value>Saved Successfully</value>
   </data>

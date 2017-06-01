@@ -599,7 +599,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return ABClientHub.FMCGHub.Invoke<bool>("Receipt_Save", this).Result;
+                return FMCGHubClient.FMCGHub.Invoke<bool>("Receipt_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -623,7 +623,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Receipt po = ABClientHub.FMCGHub.Invoke<Receipt>("Receipt_Find", SearchText).Result;
+                Receipt po = FMCGHubClient.FMCGHub.Invoke<Receipt>("Receipt_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Receipt>(this);
                 this.RDetails = po.RDetails;
@@ -640,7 +640,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return ABClientHub.FMCGHub.Invoke<bool>("Receipt_Delete", this.Id).Result;
+                return FMCGHubClient.FMCGHub.Invoke<bool>("Receipt_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -701,7 +701,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = ABClientHub.FMCGHub.Invoke<bool>("Find_REntryNo", EntryNo, this).Result;
+                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_REntryNo", EntryNo, this).Result;
             }
             catch (Exception ex)
             {

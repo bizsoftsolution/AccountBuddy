@@ -217,7 +217,7 @@ namespace AccountBuddy.BLL
 
         public static List<BankReconcilation> ToList(int LedgerId, DateTime dtFrom, DateTime dtTo)
         {
-            return ABClientHub.FMCGHub.Invoke<List<BankReconcilation>>("BankReconcilation_List", LedgerId, dtFrom, dtTo).Result;
+            return FMCGHubClient.FMCGHub.Invoke<List<BankReconcilation>>("BankReconcilation_List", LedgerId, dtFrom, dtTo).Result;
         }
 
         #endregion

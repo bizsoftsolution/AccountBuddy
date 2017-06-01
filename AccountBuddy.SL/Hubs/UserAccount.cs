@@ -36,7 +36,7 @@ namespace AccountBuddy.SL.Hubs
                 Caller.AccYear = AccYear;
                 BLL.UserAccount u = UserAccountDAL_BLL(ua);
                 int yy = DateTime.Now.Month < 4 ? DateTime.Now.Year - 1 : DateTime.Now.Year;
-                int.TryParse(AccYear.Substring(0, 4), out yy);
+                if(AccYear.Length>4) int.TryParse(AccYear.Substring(0, 4), out yy);
                 u.UserType.Company.LoginAccYear = yy;
                 return u;
             }

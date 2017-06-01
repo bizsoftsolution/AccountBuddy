@@ -115,7 +115,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void onClientEvents()
         {
-            BLL.ABClientHub.FMCGHub.On<BLL.UserType>("userType_Save", (rv) => {
+            BLL.FMCGHubClient.FMCGHub.On<BLL.UserType>("userType_Save", (rv) => {
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -124,7 +124,7 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.ABClientHub.FMCGHub.On("userType_Delete", (Action<int>)((pk) => {
+            BLL.FMCGHubClient.FMCGHub.On("userType_Delete", (Action<int>)((pk) => {
                 this.Dispatcher.Invoke((Action)(() => {
                     BLL.UserType d = new BLL.UserType();
                     d.Find((int)pk);

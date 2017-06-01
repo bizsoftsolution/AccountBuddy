@@ -93,7 +93,7 @@ namespace AccountBuddy.BLL
             {
                 if (_toList == null)
                 {
-                    var l1 = ABClientHub.FMCGHub.Invoke<List<UserAccount>>("UserAccount_List").Result;
+                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<UserAccount>>("UserAccount_List").Result;
                     _toList = new ObservableCollection<UserAccount>(l1);
                 }
 
@@ -216,7 +216,7 @@ namespace AccountBuddy.BLL
         #region Method
         public static string Login(string AccYear, String CompanyName, String LId, String Pwd)
         {
-            var ua = ABClientHub.FMCGHub.Invoke<UserAccount>("UserAccount_Login", AccYear, CompanyName, LId, Pwd).Result;
+            var ua = FMCGHubClient.FMCGHub.Invoke<UserAccount>("UserAccount_Login", AccYear, CompanyName, LId, Pwd).Result;
             
             if ( isValidLogin(ua,AccYear,CompanyName, LId,Pwd))
             {
@@ -291,7 +291,7 @@ namespace AccountBuddy.BLL
                 if (isServerCall == false)
                 {
 
-                    var i = ABClientHub.FMCGHub.Invoke<int>("UserAccount_Save", this).Result;
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("UserAccount_Save", this).Result;
                     d.Id = i;
                 }
 
@@ -337,7 +337,7 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 toList.Remove(d);
-                if (isServerCall == false) ABClientHub.FMCGHub.Invoke<int>("UserAccount_Delete", this.Id);
+                if (isServerCall == false) FMCGHubClient.FMCGHub.Invoke<int>("UserAccount_Delete", this.Id);
                 return true;
             }
 
@@ -385,11 +385,11 @@ namespace AccountBuddy.BLL
             bool RValue = true;
             ua.lstValidation.Clear();
 
-            if (string.IsNullOrWhiteSpace(AccYear))
-            {
-                ua.lstValidation.Add(new Validation() { Name = nameof(AccYear), Message = "Please Select the Account Year" });
-                RValue = false;
-            }
+            //if (string.IsNullOrWhiteSpace(AccYear))
+            //{
+            //    ua.lstValidation.Add(new Validation() { Name = nameof(AccYear), Message = "Please Select the Account Year" });
+            //    RValue = false;
+            //}
 
             if (string.IsNullOrWhiteSpace(CompanyName))
             {

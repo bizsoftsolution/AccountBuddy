@@ -68,7 +68,7 @@ namespace AccountBuddy.BLL
                     if (_toList == null)
                     {
                         _toList = new ObservableCollection<AccountGroup>();
-                        var l1 = ABClientHub.FMCGHub.Invoke<List<AccountGroup>>("accountGroup_List").Result;
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<AccountGroup>>("accountGroup_List").Result;
                         _toList = new ObservableCollection<AccountGroup>(l1.OrderBy(x=> x.GroupNameWithCode));
                     }
                 }
@@ -297,7 +297,7 @@ namespace AccountBuddy.BLL
                 this.toCopy<AccountGroup>(d);
                 if (isServerCall == false)
                 {
-                    var i = ABClientHub.FMCGHub.Invoke<int>("AccountGroup_Save", this).Result;
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("AccountGroup_Save", this).Result;
                     d.Id = i;
                 }
 
@@ -348,7 +348,7 @@ namespace AccountBuddy.BLL
                
                 if (isServerCall == false)
                 {
-                    rv = ABClientHub.FMCGHub.Invoke<bool>("AccountGroup_Delete", this.Id).Result;
+                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("AccountGroup_Delete", this.Id).Result;
                     if(rv==true)
                     {
                         toList.Remove(d);

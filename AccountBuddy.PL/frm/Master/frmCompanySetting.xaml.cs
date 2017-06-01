@@ -35,7 +35,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void onClientEvents()
         {
-            BLL.ABClientHub.FMCGHub.On<BLL.CompanyDetail>("CompanyDetail_Save", (cs) =>
+            BLL.FMCGHubClient.FMCGHub.On<BLL.CompanyDetail>("CompanyDetail_Save", (cs) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -44,7 +44,7 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.ABClientHub.FMCGHub.On<BLL.UserAccount>("UserAccount_Save", (ua) =>
+            BLL.FMCGHubClient.FMCGHub.On<BLL.UserAccount>("UserAccount_Save", (ua) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {

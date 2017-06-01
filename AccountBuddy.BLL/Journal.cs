@@ -314,7 +314,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return ABClientHub.FMCGHub.Invoke<bool>("Journal_Save", this).Result;
+                return FMCGHubClient.FMCGHub.Invoke<bool>("Journal_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -338,7 +338,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Journal po = ABClientHub.FMCGHub.Invoke<Journal>("Journal_Find", SearchText).Result;
+                Journal po = FMCGHubClient.FMCGHub.Invoke<Journal>("Journal_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Journal>(this);
                 this.JDetails = po.JDetails;
@@ -357,7 +357,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return ABClientHub.FMCGHub.Invoke<bool>("Journal_Delete", this.Id).Result;
+                return FMCGHubClient.FMCGHub.Invoke<bool>("Journal_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -370,7 +370,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return ABClientHub.FMCGHub.Invoke<bool>("FindEntryNo", EntryNo, this).Result;
+                return FMCGHubClient.FMCGHub.Invoke<bool>("FindEntryNo", EntryNo, this).Result;
             }
             catch (Exception ex)
             {

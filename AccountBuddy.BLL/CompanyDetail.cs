@@ -37,6 +37,9 @@ namespace AccountBuddy.BLL
         private string _UserId;
         private string _Password;
 
+        private int _UnderCompanyId;
+        private string _CompanyType;
+
         #endregion
 
         #region Property
@@ -66,7 +69,7 @@ namespace AccountBuddy.BLL
             {
                 if (_toList == null)
                 {
-                    var l1 = ABClientHub.FMCGHub.Invoke<List<CompanyDetail>>("CompanyDetail_List").Result;
+                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<CompanyDetail>>("CompanyDetail_List").Result;
                     _toList = new ObservableCollection<CompanyDetail>(l1);
                 }
 
@@ -80,7 +83,7 @@ namespace AccountBuddy.BLL
             {
                 if (_AcYearList == null)
                 {
-                    var l1 = ABClientHub.FMCGHub.Invoke<List<string>>("CompanyDetail_AcYearList").Result;
+                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<string>>("CompanyDetail_AcYearList").Result;
                     _AcYearList = new ObservableCollection<string>(l1);
                 }
 
@@ -119,6 +122,38 @@ namespace AccountBuddy.BLL
                 {
                     _IsEnabled = value;
                     NotifyPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
+
+        public int UnderCompanyId
+        {
+            get
+            {
+                return _UnderCompanyId;
+            }
+            set
+            {
+                if (_UnderCompanyId != value)
+                {
+                    _UnderCompanyId = value;
+                    NotifyPropertyChanged(nameof(UnderCompanyId));
+                }
+            }
+        }
+
+        public string CompanyType
+        {
+            get
+            {
+                return _CompanyType;
+            }
+            set
+            {
+                if (_CompanyType != value)
+                {
+                    _CompanyType = value;
+                    NotifyPropertyChanged(nameof(CompanyType));
                 }
             }
         }
@@ -407,7 +442,7 @@ namespace AccountBuddy.BLL
                 this.toCopy<CompanyDetail>(d);
                 if (isServerCall == false)
                 {
-                    i = ABClientHub.FMCGHub.Invoke<int>("CompanyDetail_Save", this).Result;
+                    i = FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Save", this).Result;
                     d.Id = i;
                 }
 
@@ -485,7 +520,7 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 toList.Remove(d);
-                if (isServerCall == false) ABClientHub.FMCGHub.Invoke<int>("CompanyDetail_Delete", this.Id);
+                if (isServerCall == false) FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Delete", this.Id);
                 return true;
             }
 

@@ -31,6 +31,8 @@
           <Property Name="GSTNo" Type="nvarchar" MaxLength="20" />
           <Property Name="Logo" Type="image" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="UnderCompanyId" Type="int" />
+          <Property Name="CompanyType" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -658,6 +660,8 @@
           <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="AccountGroups" Relationship="Self.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
           <NavigationProperty Name="UserTypes" Relationship="Self.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
+          <Property Name="UnderCompanyId" Type="Int32" />
+          <Property Name="CompanyType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -1307,6 +1311,8 @@
           <EntitySetMapping Name="CompanyDetails">
             <EntityTypeMapping TypeName="DBFMCGModel.CompanyDetail">
               <MappingFragment StoreEntitySet="CompanyDetail">
+                <ScalarProperty Name="CompanyType" ColumnName="CompanyType" />
+                <ScalarProperty Name="UnderCompanyId" ColumnName="UnderCompanyId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />

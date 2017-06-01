@@ -142,6 +142,51 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter Company!.
+        /// </summary>
+        public static string Login_CompanyName_Validation {
+            get {
+                return ResourceManager.GetString("Login_CompanyName_Validation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Dealer !.
+        /// </summary>
+        public static string Login_Dealer_Validation {
+            get {
+                return ResourceManager.GetString("Login_Dealer_Validation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Password !.
+        /// </summary>
+        public static string Login_Password_Validation {
+            get {
+                return ResourceManager.GetString("Login_Password_Validation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Username !.
+        /// </summary>
+        public static string Login_UserName_validation {
+            get {
+                return ResourceManager.GetString("Login_UserName_validation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter warehouse !.
+        /// </summary>
+        public static string Login_Warehouse_Validation {
+            get {
+                return ResourceManager.GetString("Login_Warehouse_Validation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saved Successfully.
         /// </summary>
         public static string Saved_Alert {

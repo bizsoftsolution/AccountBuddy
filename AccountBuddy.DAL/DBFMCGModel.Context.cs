@@ -16,7 +16,7 @@ namespace AccountBuddy.DAL
     public partial class DBFMCGEntities : DbContext
     {
         public DBFMCGEntities()
-            : base("name=Entities")
+            : base("name=DBFMCGEntities")
         {
         }
     
