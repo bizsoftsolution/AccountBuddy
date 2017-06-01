@@ -12,6 +12,7 @@ namespace AccountBuddy.BLL
     public class CompanyDetail : INotifyPropertyChanged
     {
         #region Field
+        bool isServerCall = false;
 
         private static ObservableCollection<CompanyDetail> _toList;
 
@@ -524,6 +525,18 @@ namespace AccountBuddy.BLL
                 return true;
             }
 
+            return false;
+        }
+        public bool DeleteWareHouse(int Id)
+        {
+            var c = toList.Where(x => x.Id == Id).FirstOrDefault();
+
+            if (c != null)
+            {
+                toList.Remove(c);
+                if (isServerCall == false) FMCGHubClient.FMCGHub.Invoke<int>("Company_Delete", c.Id);
+                return true;
+            }
             return false;
         }
 

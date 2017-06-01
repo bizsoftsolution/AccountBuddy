@@ -22,9 +22,8 @@ namespace AccountBuddy.PL.frm.Master
     /// </summary>
     public partial class frmCompanySetting : UserControl
     {
-        //public static string FormName = nameof(frmCompanySetting);
         BLL.CompanyDetail data = new BLL.CompanyDetail();
-
+        public string FormName = "CompanySetting";
         public frmCompanySetting()
         {
             InitializeComponent();
@@ -37,6 +36,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             BLL.FMCGHubClient.FMCGHub.On<BLL.CompanyDetail>("CompanyDetail_Save", (cs) =>
             {
+
                 this.Dispatcher.Invoke(() =>
                 {
                     cs.Save(true);
@@ -46,101 +46,205 @@ namespace AccountBuddy.PL.frm.Master
 
             BLL.FMCGHubClient.FMCGHub.On<BLL.UserAccount>("UserAccount_Save", (ua) =>
             {
+
                 this.Dispatcher.Invoke(() =>
                 {
                     BLL.UserAccount u = new BLL.UserAccount();
                     ua.toCopy<BLL.UserAccount>(u);
                     BLL.UserAccount.toList.Add(u);
-                    ua.Save(true);
                 });
 
             });
         }
-
-
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            if (data.Id == 0 && !BLL.CompanyDetail.UserPermission.AllowInsert)
-            {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, lblHead.Text));
-            }
-            else if (data.Id != 0 && !BLL.CompanyDetail.UserPermission.AllowUpdate)
-            {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, lblHead.Text));
-            }
-            else if (data.Save() == true)
-            {
-                MessageBox.Show(Message.PL.Saved_Alert);
-                App.frmHome.ShowWelcome();
-            }
-            else
-            {
-                MessageBox.Show(string.Join("\n", data.lstValidation.Select(x => x.Message).ToList()));
-            }
-        }
-
-        
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
-
-            var lstUser = BLL.UserAccount.toList;
-            dgvUsers.ItemsSource = lstUser;
             
-            if (BLL.UserAccount.UserPermission.IsViewForm)
+
+            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
+            dgvWarehouse.ItemsSource = lstCompany;
+        }
+        private void Grid_Refresh()
+        {
+            try
             {
-                gbxLoginUser.Visibility = Visibility.Visible;
-                btnNewUser.Visibility = BLL.UserAccount.UserPermission.AllowInsert ? Visibility.Visible : Visibility.Collapsed;
-                dgvUsers.Columns[0].Visibility = BLL.UserAccount.UserPermission.AllowUpdate ? Visibility.Visible : Visibility.Collapsed;
-                dgvUsers.Columns[1].Visibility = BLL.UserAccount.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+                CollectionViewSource.GetDefaultView(dgvWarehouse.ItemsSource).Refresh();
+                CollectionViewSource.GetDefaultView(dgvDealer.ItemsSource).Refresh();
+            }
+            catch (Exception ex) { };
+
+        }
+
+        #region ButtonEvents
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (!BLL.UserAccount.AllowInsert(FormName))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+            }
+            else if (!BLL.UserAccount.AllowUpdate(FormName))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
             else
             {
-                gbxLoginUser.Visibility = Visibility.Collapsed;
+                if (data.Save() == true)
+                {
+                    MessageBox.Show(Message.PL.Saved_Alert);
+                    //   App.frmHome.ShowWelcome();
+                }
             }
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;            
+
         }
 
-        private void btnNewUser_Click(object sender, RoutedEventArgs e)
+        private void btnNewWareHouse_Click(object sender, RoutedEventArgs e)
         {
-            frmUser f = new frmUser();
-            f.ShowDialog();            
-        }
-        
-        private void btnEditUser_Click(object sender, RoutedEventArgs e)
-        {
-            var u = dgvUsers.SelectedItem as BLL.UserAccount;
-
-            frmUser f = new frmUser();
-            u.toCopy<BLL.UserAccount>(f.data);
+            frmCompanySignup f = new frmCompanySignup();
+            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
+            f.data.CompanyType = "Warehouse";
             f.ShowDialog();
+            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
+            dgvWarehouse.ItemsSource = lstCompany;
         }
 
-        private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
+        private void btnNewDealer_Click(object sender, RoutedEventArgs e)
         {
-            var u = dgvUsers.SelectedItem as BLL.UserAccount;
-            if (u != null)
+            var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+            if (cm != null)
             {
-                if(BLL.UserAccount.toList.Count() == 1)
+                frmCompanySignup f = new frmCompanySignup();
+                f.data.UnderCompanyId = cm.Id;
+                f.data.CompanyType = "Dealer";
+                f.ShowDialog();
+                List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
+                if (cm != null)
                 {
-                    MessageBox.Show(string.Format("You can not delete this user. atleast one user required"));
+                    lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == cm.Id).ToList();
                 }
-                else if (MessageBox.Show("Do you Delete this?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                dgvDealer.ItemsSource = lstCompany;
+            }
+        }
+
+        private void btnEditWarehouse_Click(object sender, RoutedEventArgs e)
+        {
+            var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+
+            frmCompanySignup f = new frmCompanySignup();
+            cm.toCopy<BLL.CompanyDetail>(f.data);
+            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
+            f.data.CompanyType = "Warehouse";
+            f.ShowDialog();
+            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
+            dgvWarehouse.ItemsSource = lstCompany;
+        }
+
+        private void btnDeleteWarehouse_Click(object sender, RoutedEventArgs e)
+        {
+            var d = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+            data = d;
+            if (d.Id != 0)
+            {
+                if (!BLL.UserAccount.AllowDelete(FormName))
                 {
-                    if (u.Delete() == true) MessageBox.Show(Message.PL.Delete_Alert);
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                }
+                else
+                {
+                    if (MessageBox.Show(Message.PL.Delete_confirmation, "DELETE", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    {
+                        if (data.DeleteWareHouse(d.Id))
+                        {
+                            MessageBox.Show(Message.PL.Delete_Alert);
+                            Grid_Refresh();
+                        }
+
+
+                    }
                 }
             }
-            
+            else
+            {
+                MessageBox.Show("No Records to Delete");
+            }
+
         }
 
+        private void btnEditDealer_Click(object sender, RoutedEventArgs e)
+        {
+            var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+            var cmd = dgvDealer.SelectedItem as BLL.CompanyDetail;
+            if (cm != null)
+            {
+                frmCompanySignup f = new frmCompanySignup();
+                cmd.toCopy<BLL.CompanyDetail>(f.data);
+                f.data.UnderCompanyId = cm.Id;
+                f.data.CompanyType = "Dealer";
+                f.ShowDialog();
+                List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
+                if (cm != null)
+                {
+                    lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == cm.Id).ToList();
+                }
+                dgvDealer.ItemsSource = lstCompany;
+            }
+        }
+
+        private void btnDeleteDealer_Click(object sender, RoutedEventArgs e)
+        {
+            var d = dgvDealer.SelectedItem as BLL.CompanyDetail;
+            data = d;
+            if (d.Id != 0)
+            {
+                if (!BLL.UserAccount.AllowDelete(FormName))
+                {
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                }
+                else
+                {
+                    if (MessageBox.Show(Message.PL.Delete_confirmation, "DELETE", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    {
+                        if (data.DeleteWareHouse(d.Id))
+                        {
+                            MessageBox.Show(Message.PL.Delete_Alert);
+                            Grid_Refresh();
+                        }
+
+
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Records to Delete");
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        private void dgvWarehouse_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+            List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
+            if (cm != null)
+            {
+                lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == cm.Id).ToList();
+            }
+            dgvDealer.ItemsSource = lstCompany;
+        }
+
+        #endregion
+
+        #region Numeric Only
         private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             e.Handled = Common.AppLib.IsTextNumeric(e.Text);
-
         }
+        #endregion
 
+        #region Mail Validation
         private void txtMail_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -164,21 +268,8 @@ namespace AccountBuddy.PL.frm.Master
         private void txtMail_LostFocus(object sender, RoutedEventArgs e)
         {
             if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
-
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            if (!BLL.CompanyDetail.UserPermission.AllowDelete)
-                MessageBox.Show(string.Format(Message.PL.DenyDelete, lblHead.Text));
-            else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
-                
-                if (data.Delete() == true)
-                {
-                    MessageBox.Show(Message.PL.Delete_Alert);
-                    App.frmHome.IsForcedClose = true;
-                    App.frmHome.Close();
-                }
-        }
+        #endregion
     }
 }
