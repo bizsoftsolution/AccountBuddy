@@ -80,12 +80,12 @@
             </Grid>
             <!--#endregion-->
             <!--#region Form Right-->
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" Margin="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="150"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Auto"  Margin="20"  Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1">
+                <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Auto"  Margin="0"  Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1" >
                     <TabControl.Resources>
                         <Style TargetType="TabItem">
                             <Setter Property="Template">

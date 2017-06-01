@@ -78,7 +78,7 @@
                             <ComboBox x:Name="cmbAccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="10" Height="40" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Back Account"/>
+                                        <TextBlock Text="Bank Account"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </ComboBox>

@@ -85,49 +85,58 @@ namespace AccountBuddy.Common
 
         public static string ToWords(this int number1)
         {
-            if (number1 == 0)
-                return "Zero";
-
-            if (number1 < 0)
-                return "minus " + ToWords(Math.Abs(number1));
-
             string words = "";
 
-            if ((number1 / 1000000) > 0)
+            try
             {
-                words += ToWords(number1 / 1000000) + " Million ";
-                number1 %= 1000000;
-            }
 
-            if ((number1 / 1000) > 0)
-            {
-                words += ToWords(number1 / 1000) + " Thousand ";
-                number1 %= 1000;
-            }
+                if (number1 == 0)
+                    return "Zero";
 
-            if ((number1 / 100) > 0)
-            {
-                words += ToWords(number1 / 100) + " Hundred ";
-                number1 %= 100;
-            }
+                if (number1 < 0)
+                    return "minus " + ToWords(Math.Abs(number1));
 
-            if (number1 > 0)
-            {
-                if (words != "")
-                    words += "and ";
-
-                var unitsMap = new[] { "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
-                var tensMap = new[] { "Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
-
-                if (number1 < 20)
-                    words +=string.Format("{0}", unitsMap[number1]);
-                else
+                
+                if ((number1 / 1000000) > 0)
                 {
-                    words = string.Format("{0} {1}", tensMap[number1 / 10]); 
-                    if ((number1 % 10) > 0)
-                        // words += "-" + unitsMap[number1 % 10];
-                        words +=  " " unitsMap[number1 % 10];
+                    words += ToWords(number1 / 1000000) + " Million ";
+                    number1 %= 1000000;
                 }
+
+                if ((number1 / 1000) > 0)
+                {
+                    words += ToWords(number1 / 1000) + " Thousand ";
+                    number1 %= 1000;
+                }
+
+                if ((number1 / 100) > 0)
+                {
+                    words += ToWords(number1 / 100) + " Hundred ";
+                    number1 %= 100;
+                }
+
+                if (number1 > 0)
+                {
+                    if (words != "")
+                        words += "and ";
+
+                    var unitsMap = new[] { "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+                    var tensMap = new[] { "Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+
+                    if (number1 < 20)
+                        words += unitsMap[number1];
+                    else
+                    {
+                        words += tensMap[number1 / 10];
+                        if ((number1 % 10) > 0)
+                            // words += "-" + unitsMap[number1 % 10];
+                            words += " " + unitsMap[number1 % 10];
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+
             }
             return words.ToUpper();
         }

@@ -95,10 +95,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
-                    if (MessageBox.Show("Do you want to print Voucher?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
-                        Print();
-                    }
+                    if (ckxAutoPrint.IsChecked == true) Print();
                     data.Clear();
                 }
             }
