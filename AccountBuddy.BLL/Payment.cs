@@ -107,7 +107,7 @@ namespace AccountBuddy.BLL
                 if (_StatusList == null)
                 {
                     _StatusList = new List<string>();
-                    _StatusList.Add("Proccess");
+                    _StatusList.Add("Process");
                     _StatusList.Add("Completed");
                     _StatusList.Add("Returned");
                 }

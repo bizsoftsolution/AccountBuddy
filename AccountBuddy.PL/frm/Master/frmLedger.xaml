@@ -241,26 +241,31 @@
                         </TransformGroup>
                     </TabControl.RenderTransform>
                     <TabItem Header="Details" FontSize="16">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                            <RowDefinition Height="130"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
 
-                        <Grid Grid.Row="0" Margin="0,0,10,-20" >
-                           
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,-4,0,505" Height="77" Grid.ColumnSpan="2">
-                                <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                            <TextBlock Text="Search Text" FontWeight="Bold"/>
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </TextBox>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                    <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5" />
-                                    <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  Margin="5"/>
-                                    <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" Margin="5" />
-                                    <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" Margin="5"/>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Height="77" Grid.ColumnSpan="2">
+                                    <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5" />
+                                        <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  Margin="5"/>
+                                        <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" Margin="5" />
+                                        <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" Margin="5"/>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-
+                            </Grid>
+                            <Grid Grid.Row="1">
                             <DataGrid x:Name="dgvLedger" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="20" Grid.ColumnSpan="2" SelectionChanged="dgvLedger_SelectionChanged" MouseDoubleClick="dgvLedger_MouseDoubleClick" >
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -282,7 +287,7 @@
                                     <DataGridTextColumn Header="Opening Credit" FontWeight="Bold" Width="200" Binding="{Binding OPCr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-
+                            </Grid>
                         </Grid>
 
                     </TabItem>
