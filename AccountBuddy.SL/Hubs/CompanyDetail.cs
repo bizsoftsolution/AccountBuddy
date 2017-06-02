@@ -49,21 +49,21 @@ namespace AccountBuddy.SL.Hubs
             if (DB.Payments.Count() > 0)
             {
                 d = DB.Payments.Min(x => x.PaymentDate);
-                int yy = YearFrom = d.Month < 4 ? d.Year - 1 : d.Year;
+                int yy = d.Month < 4 ? d.Year - 1 : d.Year;
                 YearFrom = yy < YearFrom ? yy : YearFrom;
             }
 
             if (DB.Receipts.Count() > 0)
             {
                 d = DB.Receipts.Min(x => x.ReceiptDate);
-                int yy = YearFrom = d.Month < 4 ? d.Year - 1 : d.Year;
+                int yy = d.Month < 4 ? d.Year - 1 : d.Year;
                 YearFrom = yy < YearFrom ? yy : YearFrom;
             }
 
             if (DB.Journals.Count() > 0)
             {
                 d = DB.Journals.Min(x => x.JournalDate);
-                int yy = YearFrom = d.Month < 4 ? d.Year - 1 : d.Year;
+                int yy = d.Month < 4 ? d.Year - 1 : d.Year;
                 YearFrom = yy < YearFrom ? yy : YearFrom;
             }
 
