@@ -47,6 +47,14 @@
         <AssociationConnector Association="DBFMCGModel.FK_UserAccount_UserType" ManuallyRouted="false" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserType" ManuallyRouted="false" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBFMCGModel.Product" Width="1.5" PointX="10.25" PointY="20.125" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockGroup" Width="1.5" PointX="3" PointY="5.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.UOM" Width="1.5" PointX="3" PointY="24.125" />
+        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_UOM_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_Product_StockGroup" />
+        <AssociationConnector Association="DBFMCGModel.FK_Product_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_StockGroup1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

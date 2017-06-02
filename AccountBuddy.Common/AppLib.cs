@@ -19,9 +19,15 @@ namespace AccountBuddy.Common
             frmUserType,
             frmAccountGroup, 
             frmLedger, 
+            frmSupplier, 
+            frmCustomer, 
+            frmStaff, 
+            frmUOM, 
+            frmStockGroup, 
+            frmProduct,
             frmPayment, 
             frmReceipt, 
-            frmJournal
+            frmJournal,
            
         }
 

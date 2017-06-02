@@ -108,11 +108,20 @@
     <Compile Include="PaymentDetail.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Product.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receipt.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReceiptDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockGroup.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UOM.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserAccount.cs">
@@ -137,7 +146,7 @@
     <None Include="DBFMCGModel.edmx.diagram">
       <DependentUpon>DBFMCGModel.edmx</DependentUpon>
     </None>
-    <None Include="DB\DBFMCG.bak" />
+    <None Include="DB\DBFMCG_020617.bak" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +165,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,0 +1,385 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AccountBuddy.Common;
+
+namespace AccountBuddy.BLL
+{
+   public class StockGroup : INotifyPropertyChanged
+    {
+        #region Fields
+        private static ObservableCollection<StockGroup> _toList;
+
+        private int _id;
+        private string _stockGroupName;
+        private string _groupNameWithCode;
+        private string _stockGroupCode;
+        private int? _underGroupId;
+        private int _companyId;
+        private StockGroup _UnderStockGroup;
+        private CompanyDetail _Company;
+        private string _underGroupName;
+
+        private static UserTypeDetail _UserPermission;
+        private bool _IsReadOnly;
+        private bool _IsEnabled;
+        #endregion
+
+        #region Property
+
+        public string AccountPath
+        {
+            get
+            {
+                return UnderStockGroup == null ? "" : UnderStockGroup.AccountPath + "/" + _stockGroupName;
+            }
+        }
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmStockGroup.ToString()).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
+
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
+
+        public static ObservableCollection<StockGroup> toList
+        {
+            get
+            {
+                try
+                {
+                    if (_toList == null)
+                    {
+                        _toList = new ObservableCollection<StockGroup>();
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<StockGroup>>("StockGroup_List").Result;
+                        _toList = new ObservableCollection<StockGroup>(l1.OrderBy(x => x.GroupNameWithCode));
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return _toList;
+            }
+            set
+            {
+                _toList = value;
+            }
+        }
+
+        public int Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    _id = value;
+                    NotifyPropertyChanged(nameof(Id));
+                }
+            }
+        }
+        public string StockGroupName
+        {
+            get
+            {
+                return _stockGroupName;
+            }
+            set
+            {
+                if (_stockGroupName != value)
+                {
+                    _stockGroupName = value;
+                    NotifyPropertyChanged(nameof(StockGroupName));
+                    SetGroupNameWithCode();
+                }
+            }
+        }
+        public string StockGroupCode
+        {
+            get
+            {
+                return _stockGroupCode;
+            }
+            set
+            {
+                if (_stockGroupCode != value)
+                {
+                    _stockGroupCode = value;
+                    NotifyPropertyChanged(nameof(StockGroupCode));
+                    SetGroupNameWithCode();
+                }
+            }
+        }
+        public string GroupNameWithCode
+        {
+            get
+            {
+                return _groupNameWithCode;
+            }
+            set
+            {
+                if (_groupNameWithCode != value)
+                {
+                    _groupNameWithCode = value;
+                    NotifyPropertyChanged(nameof(GroupNameWithCode));
+                }
+            }
+        }
+        public int CompanyId
+        {
+            get
+            {
+                return _companyId;
+            }
+            set
+            {
+                if (_companyId != value)
+                {
+                    _companyId = value;
+                    NotifyPropertyChanged(nameof(CompanyId));
+                }
+            }
+        }
+        public int? UnderGroupId
+        {
+            get
+            {
+                return _underGroupId;
+            }
+            set
+            {
+                if (_underGroupId != value)
+                {
+                    _underGroupId = value;
+                    NotifyPropertyChanged(nameof(UnderGroupId));
+                }
+            }
+        }
+        public StockGroup UnderStockGroup
+        {
+            get
+            {
+                return _UnderStockGroup;
+            }
+            set
+            {
+                if (_UnderStockGroup != value)
+                {
+                    _UnderStockGroup = value;
+                    NotifyPropertyChanged(nameof(UnderStockGroup));
+                    NotifyPropertyChanged(nameof(AccountPath));
+                }
+            }
+        }
+        public CompanyDetail Company
+        {
+            get
+            {
+                return _Company;
+            }
+            set
+            {
+                if (_Company != value)
+                {
+                    _Company = value;
+                    NotifyPropertyChanged(nameof(Company));
+                }
+            }
+        }
+
+        public string underGroupName
+        {
+            get
+            {
+                return _underGroupName;
+            }
+            set
+            {
+                if (_underGroupName != value)
+                {
+                    _underGroupName = value;
+                    NotifyPropertyChanged(nameof(underGroupName));
+                }
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return _IsReadOnly;
+            }
+
+            set
+            {
+                if (_IsReadOnly != value)
+                {
+                    _IsReadOnly = value;
+                    NotifyPropertyChanged(nameof(IsReadOnly));
+                }
+                IsEnabled = !value;
+            }
+        }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+
+            set
+            {
+                if (_IsEnabled != value)
+                {
+                    _IsEnabled = value;
+                    NotifyPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
+
+        #endregion
+
+        #region Property  Changed Event
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(string PropertyName)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
+        }
+
+
+        private void NotifyAllPropertyChanged()
+        {
+            foreach (var p in this.GetType().GetProperties()) NotifyPropertyChanged(p.Name);
+        }
+
+        #endregion
+
+        #region Methods
+
+        public bool Save(bool isServerCall = false)
+        {
+            if (!isValid()) return false;
+            try
+            {
+                StockGroup d = toList.Where(x => x.Id == Id).FirstOrDefault();
+
+                if (d == null)
+                {
+                    d = new StockGroup();
+                    toList.Add(d);
+                }
+
+                this.toCopy<StockGroup>(d);
+                if (isServerCall == false)
+                {
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("StockGroup_Save", this).Result;
+                    d.Id = i;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+
+            }
+
+        }
+
+        public void Clear()
+        {
+            try
+            {
+                new StockGroup().toCopy<StockGroup>(this);
+                IsReadOnly = !UserPermission.AllowInsert;
+
+                NotifyAllPropertyChanged();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public bool Find(int pk)
+        {
+            var d = toList.Where(x => x.Id == pk).FirstOrDefault();
+            if (d != null)
+            {
+                d.toCopy<StockGroup>(this);
+                IsReadOnly = !UserPermission.AllowUpdate;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool Delete(bool isServerCall = false)
+        {
+            var rv = false;
+            var d = toList.Where(x => x.Id == Id).FirstOrDefault();
+            if (d != null)
+            {
+
+                if (isServerCall == false)
+                {
+                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("StockGroup_Delete", this.Id).Result;
+                    if (rv == true)
+                    {
+                        toList.Remove(d);
+                    }
+                }
+                return rv;
+            }
+
+            return false;
+        }
+
+        public bool isValid()
+        {
+            bool RValue = true;
+
+            if (toList.Where(x => x.StockGroupName.ToLower() == StockGroupName.ToLower() && x.Id != Id).Count() > 0)
+            {
+                RValue = false;
+            }
+            return RValue;
+
+        }
+
+        public static void Init()
+        {
+            _toList = null;
+        }
+
+        void SetGroupNameWithCode()
+        {
+            GroupNameWithCode = StockGroupName;// string.Format("{0}{1}{2}", GroupCode, string.IsNullOrWhiteSpace(GroupCode) ? "" : "-", GroupName);
+        }
+        #endregion
+    }
+}
