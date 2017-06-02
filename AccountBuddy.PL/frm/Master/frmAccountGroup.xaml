@@ -36,7 +36,7 @@
                 <Grid Grid.Row="0"  >
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                            <TextBox  x:Name="txtStockGroupName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding GroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
+                            <TextBox  x:Name="txtGroupName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding GroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="AccountMultiple" Height="25" Width="25" />
@@ -53,7 +53,7 @@
                                 </materialDesign:HintAssist.Hint>
                             </ComboBox>
 
-                            <TextBox x:Name="txtStockGroupCode" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding GroupCode, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
+                            <TextBox x:Name="txtGroupCode" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding GroupCode, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Sort" Height="25" Width="25" />

@@ -102,6 +102,11 @@
                                             <Master:frmCustomer/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Stock Group" FormName="Stock Group">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmStockGroup/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
 
                                 </ListBox>
                             </Expander>
