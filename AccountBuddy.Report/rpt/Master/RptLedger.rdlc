@@ -15,16 +15,16 @@
               <Width>2.94147cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.94147cm</Width>
+              <Width>2.80918cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.94147cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.7773cm</Width>
+              <Width>2.99438cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.94438cm</Width>
+              <Width>2.57938cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -447,7 +447,6 @@
                         <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -514,7 +513,7 @@
         <Top>0.17639cm</Top>
         <Left>1.25128cm</Left>
         <Height>1.2cm</Height>
-        <Width>20.662cm</Width>
+        <Width>22.38179cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
