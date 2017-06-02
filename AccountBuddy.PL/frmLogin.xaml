@@ -140,14 +140,14 @@
     </Window.Resources>
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150*"/>
-            <ColumnDefinition Width="500"/>
-            <ColumnDefinition Width="150*"/>
+            <ColumnDefinition Width="18*"/>
+            <ColumnDefinition Width="468"/>
+            <ColumnDefinition Width="245*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="300*"/>
-            <RowDefinition Height="100*"/>
+            <RowDefinition Height="329"/>
+            <RowDefinition/>
+            <RowDefinition Height="0*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid Grid.Column="1" Grid.Row="0">
@@ -201,23 +201,23 @@
                     </TabItem.Header>
                     <StackPanel Orientation="Vertical" Margin="10,20,10,0">
                         <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Office" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,17,0,0"  />
+                            <materialDesign:PackIcon Kind="Office" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
                             <TextBlock Text="Company" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="70" Height="20"  />
-                            <ComboBox x:Name="cmbCompany"  IsEditable="True"  Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="30,9,0,2" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
+                            <ComboBox x:Name="cmbCompany" IsEditable="True"  Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="30,9,0,2" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
 
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="38" >
-                            <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,17,0,0"/>
+                            <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"/>
                             <TextBlock Text="User Id" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" FontSize="14.667" FontWeight="Bold" Width="70" Margin="0,18,0,0"  />
                             <TextBox x:Name="txtUserId" Foreground="{DynamicResource PrimaryHueDarkBrush}"   FontSize="16" FontWeight="Bold" Width="250" Margin="30,7,0,0" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="46" >
-                            <materialDesign:PackIcon Kind="Key" Height="24" Width="24" Foreground="{DynamicResource PrimaryHueDarkBrush}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,20,0,2"/>
+                            <materialDesign:PackIcon Kind="Key" Height="24" Width="24" Foreground="{DynamicResource PrimaryHueDarkBrush}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,20,0,2"/>
                             <TextBlock Text="Password" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14.667" FontWeight="Bold"   Width="70" Margin="0,24,0,2" Height="20"   />
                             <PasswordBox x:Name="txtPassword" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="30,13,0,2" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
-                            <Button x:Name="btnLogin" Content="SIGN IN" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="150,10,0,10" Click="btnLogin_Click" />
+                            <Button x:Name="btnLogin" Content="SIGN IN" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="100,10,0,10" Click="btnLogin_Click" />
                             <Button x:Name="btnSignup" Content="SIGN UP" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="90" Height="35"   Margin="10,10,0,10" Click="btnSignup_Click"  />
                             <Button x:Name="btnClear" Content="CLEAR" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="35"   Margin="10,10,0,0"  Click="btnClear_Click" />
 
@@ -234,30 +234,30 @@
                     </TabItem.Header>
                     <StackPanel Orientation="Vertical" Margin="10">
                         <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Office" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,17,0,0"  />
+                            <materialDesign:PackIcon Kind="Office" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
                             <TextBlock Text="Company" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Height="20"  />
                             <ComboBox x:Name="cmbCompanyWarehousePrimay" IsEditable="True"  Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="30,11,0,0" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}" />
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Group" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,17,0,0"  />
+                            <materialDesign:PackIcon Kind="Group" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
                             <TextBlock Text="Warehouse" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold"   />
                             <ComboBox x:Name="cmbCompanyWarehouse"  IsEditable="True" GotFocus="cmbCompanyWarehouse_GotFocus" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="30,11,0,0"  OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Height="38" >
-                            <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,17,0,0"/>
+                            <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"/>
                             <TextBlock Text="User Id" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Margin="0,0,0,-4" Height="20"  />
                             <TextBox x:Name="txtUserIdWarehouse" Foreground="{DynamicResource PrimaryHueDarkBrush}"   FontSize="16" FontWeight="Bold" Width="250" Margin="30,11,0,-4"/>
 
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="46" >
-                            <materialDesign:PackIcon Kind="Key" Height="24" Width="24" Foreground="{DynamicResource PrimaryHueDarkBrush}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,20,0,2"/>
+                            <materialDesign:PackIcon Kind="Key" Height="24" Width="24" Foreground="{DynamicResource PrimaryHueDarkBrush}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,20,0,2"/>
                             <TextBlock Text="Password" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14.667" FontWeight="Bold"   Width="77" Margin="0,26,0,0" Height="20"   />
                             <PasswordBox x:Name="txtPasswordWarehouse" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="30,15,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="10">
-                            <Button x:Name="btnLoginWarehouse" Content="SIGN IN" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="220,10,10,10" Click="btnLoginWarehouse_Click" />
+                            <Button x:Name="btnLoginWarehouse" Content="SIGN IN" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="180,10,10,10" Click="btnLoginWarehouse_Click" />
                             <Button x:Name="btnClearWarehouse" Content="CLEAR" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="10"  Click="btnClearWarehouse_Click" />
                         </StackPanel>
                     </StackPanel>
@@ -272,36 +272,36 @@
                     </TabItem.Header>
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Office" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,17,0,0"  />
+                            <materialDesign:PackIcon Kind="Office" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
                             <TextBlock Text="Company" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Height="20"  />
                             <ComboBox x:Name="cmbCompanyDealerPrimay" IsEditable="True" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="20,11,0,0" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Group" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,17,0,0"  />
+                            <materialDesign:PackIcon Kind="Group" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
                             <TextBlock Text="Warehouse" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Height="20"  />
                             <ComboBox x:Name="cmbCompanyDealerWarehouse" GotFocus="cmbCompanyDealerWarehouse_GotFocus" IsEditable="True" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="20,11,0,0" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Sale" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,17,0,0"  />
+                            <materialDesign:PackIcon Kind="Sale" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
                             <TextBlock Text="Dealer" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Height="20" Width="77"   />
                             <ComboBox x:Name="cmbCompanyDealer" GotFocus="cmbCompanyDealer_GotFocus" IsEditable="True"  Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="20,11,0,0" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
                         </StackPanel>
 
 
                         <StackPanel Orientation="Horizontal" Height="38" >
-                            <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,17,0,0"/>
+                            <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"/>
                             <TextBlock Text="User Id" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Height="20"  />
                             <TextBox x:Name="txtUserIdDealer" Foreground="{DynamicResource PrimaryHueDarkBrush}"   FontSize="16" FontWeight="Bold" Width="250" Margin="20,11,0,0" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="46" >
-                            <materialDesign:PackIcon Kind="Key" Height="24" Width="24" Foreground="{DynamicResource PrimaryHueDarkBrush}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,20,0,2"/>
+                            <materialDesign:PackIcon Kind="Key" Height="24" Width="24" Foreground="{DynamicResource PrimaryHueDarkBrush}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,20,0,2"/>
                             <TextBlock Text="Password" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14.667" FontWeight="Bold"   Width="77" Margin="0,24,0,0" Height="20"   />
                             <PasswordBox x:Name="txtPasswordDealer" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="250" Margin="20,11,0,0" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0">
-                            <Button x:Name="btnLoginDealer" Content="SIGN IN" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="220,10,10,10" Click="btnLoginDealer_Click" />
+                            <Button x:Name="btnLoginDealer" Content="SIGN IN" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="180,10,10,10" Click="btnLoginDealer_Click" />
                             <Button x:Name="btnClearDealer" Content="CLEAR" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="10"  Click="btnClearDealer_Click" />
                         </StackPanel>
                     </StackPanel>

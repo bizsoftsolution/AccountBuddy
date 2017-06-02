@@ -9,35 +9,13 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
+        
+        
         #region CompanyDetail
-
-        public static List<BLL.CompanyDetail> _listCompany;
-        public static List<BLL.CompanyDetail> ListCompany
+       
+        BLL.CompanyDetail CompanyDetailDAL_BLL(DAL.CompanyDetail d)
         {
-            get
-            {
-                if (_listCompany == null)
-                {
-                    _listCompany = DB.CompanyDetails.Where(x => x.IsActive == true).Select(x => new BLL.CompanyDetail()
-                    {
-                        Id = x.Id,
-                        CompanyName = x.CompanyName,
-                        AddressLine1 = x.AddressLine1,
-                        AddressLine2 = x.AddressLine2,
-                        CityName = x.CityName,
-                        EMailId = x.EMailId,
-                        GSTNo = x.GSTNo,
-                        Logo = x.Logo,
-                        MobileNo = x.MobileNo,
-                        PostalCode = x.PostalCode,
-                        TelephoneNo = x.TelephoneNo, 
-                        CompanyType=x.CompanyType, 
-                        IsActive=x.IsActive.Value
-                    }
-                    ).ToList();
-                }
-                return _listCompany;
-            }
+            return d.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
         }
 
         public List<string> CompanyDetail_AcYearList()
@@ -76,48 +54,40 @@ namespace AccountBuddy.SL.Hubs
 
             return AcYearList;
         }
-
-
-
+        
         public List<BLL.CompanyDetail> CompanyDetail_List()
         {
-            return ListCompany;
+            return DB.CompanyDetails.Where(x => x.IsActive!=false).ToList()
+                             .Select(x => CompanyDetailDAL_BLL(x)).ToList();
         }
 
-        public int CompanyDetail_Save(BLL.CompanyDetail sgp)
+        public int CompanyDetail_Save(BLL.CompanyDetail cm)
         {
             try
             {
-                sgp.IsActive = true;
-                BLL.CompanyDetail b = ListCompany.Where(x => x.Id == sgp.Id).FirstOrDefault();
-                DAL.CompanyDetail d = DB.CompanyDetails.Where(x => x.Id == sgp.Id).FirstOrDefault();
+                cm.IsActive = true;
+                DAL.CompanyDetail d = DB.CompanyDetails.Where(x => x.Id == cm.Id).FirstOrDefault();
 
                 if (d == null)
                 {
-
-                    b = new BLL.CompanyDetail();
-                    ListCompany.Add(b);
-
                     d = new DAL.CompanyDetail();
                     DB.CompanyDetails.Add(d);
 
-                    sgp.toCopy<DAL.CompanyDetail>(d);
+                    cm.toCopy<DAL.CompanyDetail>(d);
 
                     DB.SaveChanges();
-                    d.toCopy<BLL.CompanyDetail>(b);
-                    sgp.Id = d.Id;
-                    if (d.Id != 0) CompanySetup(sgp);
+                    cm.Id = d.Id;
+                    if (d.Id != 0) CompanySetup(cm);
                 }
                 else
                 {
-                    sgp.toCopy<BLL.CompanyDetail>(b);
-                    sgp.toCopy<DAL.CompanyDetail>(d);
+                    cm.toCopy<DAL.CompanyDetail>(d);
                     DB.SaveChanges();
                 }
 
-                Clients.Others.CompanyDetail_Save(sgp);
+                Clients.Others.CompanyDetail_Save(cm);
 
-                return sgp.Id;
+                return cm.Id;
             }
             catch (Exception ex) { }
             return 0;

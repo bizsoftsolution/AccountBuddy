@@ -289,5 +289,17 @@ namespace AccountBuddy.PL.frm.Master
         }
 
         #endregion
+
+        private void btnUserWarehouse_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+                frmUserManager f = new frmUserManager();
+                f.Title = string.Format("Login Users - {0}", cm.CompanyName);
+                f.ShowDialog();
+            }
+            catch (Exception ex) { }
+        }
     }
 }
