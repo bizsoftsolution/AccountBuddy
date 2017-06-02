@@ -747,19 +747,152 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBFMCGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountGroups" EntityType="DBFMCGModel.AccountGroup" />
+          <EntitySet Name="CompanyDetails" EntityType="DBFMCGModel.CompanyDetail" />
+          <EntitySet Name="CreditLimitTypes" EntityType="DBFMCGModel.CreditLimitType" />
+          <EntitySet Name="Customers" EntityType="DBFMCGModel.Customer" />
+          <EntitySet Name="EntityTypes" EntityType="DBFMCGModel.EntityType" />
+          <EntitySet Name="ErrorLogs" EntityType="DBFMCGModel.ErrorLog" />
+          <EntitySet Name="Journals" EntityType="DBFMCGModel.Journal" />
+          <EntitySet Name="JournalDetails" EntityType="DBFMCGModel.JournalDetail" />
+          <EntitySet Name="Ledgers" EntityType="DBFMCGModel.Ledger" />
+          <EntitySet Name="LogDetails" EntityType="DBFMCGModel.LogDetail" />
+          <EntitySet Name="LogDetailTypes" EntityType="DBFMCGModel.LogDetailType" />
+          <EntitySet Name="LogMasters" EntityType="DBFMCGModel.LogMaster" />
+          <EntitySet Name="Payments" EntityType="DBFMCGModel.Payment" />
+          <EntitySet Name="PaymentDetails" EntityType="DBFMCGModel.PaymentDetail" />
+          <EntitySet Name="Products" EntityType="DBFMCGModel.Product" />
+          <EntitySet Name="Receipts" EntityType="DBFMCGModel.Receipt" />
+          <EntitySet Name="ReceiptDetails" EntityType="DBFMCGModel.ReceiptDetail" />
+          <EntitySet Name="StockGroups" EntityType="DBFMCGModel.StockGroup" />
+          <EntitySet Name="UOMs" EntityType="DBFMCGModel.UOM" />
+          <EntitySet Name="UserAccounts" EntityType="DBFMCGModel.UserAccount" />
+          <EntitySet Name="UserTypes" EntityType="DBFMCGModel.UserType" />
+          <EntitySet Name="UserTypeDetails" EntityType="DBFMCGModel.UserTypeDetail" />
+          <EntitySet Name="UserTypeFormDetails" EntityType="DBFMCGModel.UserTypeFormDetail" />
+          <AssociationSet Name="FK_AccountGroup_AccountGroup" Association="DBFMCGModel.FK_AccountGroup_AccountGroup">
+            <End Role="AccountGroup" EntitySet="AccountGroups" />
+            <End Role="AccountGroup1" EntitySet="AccountGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountGroup_CompanyDetail" Association="DBFMCGModel.FK_AccountGroup_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="AccountGroup" EntitySet="AccountGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ledger_AccountGroup" Association="DBFMCGModel.FK_Ledger_AccountGroup">
+            <End Role="AccountGroup" EntitySet="AccountGroups" />
+            <End Role="Ledger" EntitySet="Ledgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockGroup_CompanyDetail" Association="DBFMCGModel.FK_StockGroup_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="StockGroup" EntitySet="StockGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UOM_CompanyDetail" Association="DBFMCGModel.FK_UOM_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="UOM" EntitySet="UOMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserType_CompanyDetail" Association="DBFMCGModel.FK_UserType_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="UserType" EntitySet="UserTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ledger_CreditLimitType" Association="DBFMCGModel.FK_Ledger_CreditLimitType">
+            <End Role="CreditLimitType" EntitySet="CreditLimitTypes" />
+            <End Role="Ledger" EntitySet="Ledgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Ledger" Association="DBFMCGModel.FK_Customer_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogMaster_EntityType" Association="DBFMCGModel.FK_LogMaster_EntityType">
+            <End Role="EntityType" EntitySet="EntityTypes" />
+            <End Role="LogMaster" EntitySet="LogMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalDetail_Journal" Association="DBFMCGModel.FK_JournalDetail_Journal">
+            <End Role="Journal" EntitySet="Journals" />
+            <End Role="JournalDetail" EntitySet="JournalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalDetail_Ledger" Association="DBFMCGModel.FK_JournalDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="JournalDetail" EntitySet="JournalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Ledger" Association="DBFMCGModel.FK_Payment_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentDetail_Ledger" Association="DBFMCGModel.FK_PaymentDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Ledger" Association="DBFMCGModel.FK_Receipt_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Receipt" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetail_Ledger" Association="DBFMCGModel.FK_ReceiptDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_LogDetailType" Association="DBFMCGModel.FK_LogDetail_LogDetailType">
+            <End Role="LogDetailType" EntitySet="LogDetailTypes" />
+            <End Role="LogDetail" EntitySet="LogDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_LogMaster" Association="DBFMCGModel.FK_LogDetail_LogMaster">
+            <End Role="LogMaster" EntitySet="LogMasters" />
+            <End Role="LogDetail" EntitySet="LogDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogDetail_UserAccount" Association="DBFMCGModel.FK_LogDetail_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="LogDetail" EntitySet="LogDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogMaster_UserAccount" Association="DBFMCGModel.FK_LogMaster_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="LogMaster" EntitySet="LogMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentDetail_Payment" Association="DBFMCGModel.FK_PaymentDetail_Payment">
+            <End Role="Payment" EntitySet="Payments" />
+            <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_StockGroup" Association="DBFMCGModel.FK_Product_StockGroup">
+            <End Role="StockGroup" EntitySet="StockGroups" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_UOM" Association="DBFMCGModel.FK_Product_UOM">
+            <End Role="UOM" EntitySet="UOMs" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetail_Receipt" Association="DBFMCGModel.FK_ReceiptDetail_Receipt">
+            <End Role="Receipt" EntitySet="Receipts" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockGroup_StockGroup1" Association="DBFMCGModel.FK_StockGroup_StockGroup1">
+            <End Role="StockGroup" EntitySet="StockGroups" />
+            <End Role="StockGroup1" EntitySet="StockGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccount_UserType" Association="DBFMCGModel.FK_UserAccount_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTypeDetail_UserType" Association="DBFMCGModel.FK_UserTypeDetail_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTypeDetail_UserTypeFormDetail" Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail">
+            <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
+            <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="UnderGroupId" Type="Int32" />
           <Property Name="GroupCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AccountGroup1" Relationship="Self.FK_AccountGroup_AccountGroup" FromRole="AccountGroup" ToRole="AccountGroup1" />
-          <NavigationProperty Name="AccountGroup2" Relationship="Self.FK_AccountGroup_AccountGroup" FromRole="AccountGroup1" ToRole="AccountGroup" />
-          <NavigationProperty Name="CompanyDetail" Relationship="Self.FK_AccountGroup_CompanyDetail" FromRole="AccountGroup" ToRole="CompanyDetail" />
-          <NavigationProperty Name="Ledgers" Relationship="Self.FK_Ledger_AccountGroup" FromRole="AccountGroup" ToRole="Ledger" />
+          <NavigationProperty Name="AccountGroup1" Relationship="DBFMCGModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup" ToRole="AccountGroup1" />
+          <NavigationProperty Name="AccountGroup2" Relationship="DBFMCGModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup1" ToRole="AccountGroup" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="AccountGroup" ToRole="CompanyDetail" />
+          <NavigationProperty Name="Ledgers" Relationship="DBFMCGModel.FK_Ledger_AccountGroup" FromRole="AccountGroup" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="CompanyDetail">
           <Key>
@@ -777,12 +910,12 @@
           <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="AccountGroups" Relationship="Self.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
-          <NavigationProperty Name="UserTypes" Relationship="Self.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
           <Property Name="UnderCompanyId" Type="Int32" />
           <Property Name="CompanyType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AccountGroups" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
           <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
           <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
+          <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -790,7 +923,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LimitType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledgers" Relationship="Self.FK_Ledger_CreditLimitType" FromRole="CreditLimitType" ToRole="Ledger" />
+          <NavigationProperty Name="Ledgers" Relationship="DBFMCGModel.FK_Ledger_CreditLimitType" FromRole="CreditLimitType" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -798,7 +931,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Customer_Ledger" FromRole="Customer" ToRole="Ledger" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Customer_Ledger" FromRole="Customer" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="EntityType">
           <Key>
@@ -806,7 +939,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Entity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="LogMasters" Relationship="Self.FK_LogMaster_EntityType" FromRole="EntityType" ToRole="LogMaster" />
+          <NavigationProperty Name="LogMasters" Relationship="DBFMCGModel.FK_LogMaster_EntityType" FromRole="EntityType" ToRole="LogMaster" />
         </EntityType>
         <EntityType Name="ErrorLog">
           <Key>
@@ -824,14 +957,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EntryNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EntryNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="JournalDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Particular" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="HQNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="JournalDetails" Relationship="Self.FK_JournalDetail_Journal" FromRole="Journal" ToRole="JournalDetail" />
+          <NavigationProperty Name="JournalDetails" Relationship="DBFMCGModel.FK_JournalDetail_Journal" FromRole="Journal" ToRole="JournalDetail" />
         </EntityType>
         <EntityType Name="JournalDetail">
           <Key>
@@ -840,11 +973,11 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="JournalId" Type="Int64" Nullable="false" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
-          <Property Name="DrAmt" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="CrAmt" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DrAmt" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CrAmt" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Journal" Relationship="Self.FK_JournalDetail_Journal" FromRole="JournalDetail" ToRole="Journal" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_JournalDetail_Ledger" FromRole="JournalDetail" ToRole="Ledger" />
+          <NavigationProperty Name="Journal" Relationship="DBFMCGModel.FK_JournalDetail_Journal" FromRole="JournalDetail" ToRole="Journal" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_JournalDetail_Ledger" FromRole="JournalDetail" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="Ledger">
           <Key>
@@ -867,14 +1000,14 @@
           <Property Name="OPCr" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="LedgerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="AccountGroupId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AccountGroup" Relationship="Self.FK_Ledger_AccountGroup" FromRole="Ledger" ToRole="AccountGroup" />
-          <NavigationProperty Name="CreditLimitType" Relationship="Self.FK_Ledger_CreditLimitType" FromRole="Ledger" ToRole="CreditLimitType" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_Ledger" FromRole="Ledger" ToRole="Customer" />
-          <NavigationProperty Name="JournalDetails" Relationship="Self.FK_JournalDetail_Ledger" FromRole="Ledger" ToRole="JournalDetail" />
-          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Ledger" FromRole="Ledger" ToRole="Payment" />
-          <NavigationProperty Name="PaymentDetails" Relationship="Self.FK_PaymentDetail_Ledger" FromRole="Ledger" ToRole="PaymentDetail" />
-          <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipt_Ledger" FromRole="Ledger" ToRole="Receipt" />
-          <NavigationProperty Name="ReceiptDetails" Relationship="Self.FK_ReceiptDetail_Ledger" FromRole="Ledger" ToRole="ReceiptDetail" />
+          <NavigationProperty Name="AccountGroup" Relationship="DBFMCGModel.FK_Ledger_AccountGroup" FromRole="Ledger" ToRole="AccountGroup" />
+          <NavigationProperty Name="CreditLimitType" Relationship="DBFMCGModel.FK_Ledger_CreditLimitType" FromRole="Ledger" ToRole="CreditLimitType" />
+          <NavigationProperty Name="Customers" Relationship="DBFMCGModel.FK_Customer_Ledger" FromRole="Ledger" ToRole="Customer" />
+          <NavigationProperty Name="JournalDetails" Relationship="DBFMCGModel.FK_JournalDetail_Ledger" FromRole="Ledger" ToRole="JournalDetail" />
+          <NavigationProperty Name="Payments" Relationship="DBFMCGModel.FK_Payment_Ledger" FromRole="Ledger" ToRole="Payment" />
+          <NavigationProperty Name="PaymentDetails" Relationship="DBFMCGModel.FK_PaymentDetail_Ledger" FromRole="Ledger" ToRole="PaymentDetail" />
+          <NavigationProperty Name="Receipts" Relationship="DBFMCGModel.FK_Receipt_Ledger" FromRole="Ledger" ToRole="Receipt" />
+          <NavigationProperty Name="ReceiptDetails" Relationship="DBFMCGModel.FK_ReceiptDetail_Ledger" FromRole="Ledger" ToRole="ReceiptDetail" />
         </EntityType>
         <EntityType Name="LogDetail">
           <Key>
@@ -886,9 +1019,9 @@
           <Property Name="EntryBy" Type="Int32" />
           <Property Name="EntryAt" Type="DateTime" Precision="3" />
           <Property Name="LogDetailTypeId" Type="Int32" />
-          <NavigationProperty Name="LogDetailType" Relationship="Self.FK_LogDetail_LogDetailType" FromRole="LogDetail" ToRole="LogDetailType" />
-          <NavigationProperty Name="LogMaster" Relationship="Self.FK_LogDetail_LogMaster" FromRole="LogDetail" ToRole="LogMaster" />
-          <NavigationProperty Name="UserAccount" Relationship="Self.FK_LogDetail_UserAccount" FromRole="LogDetail" ToRole="UserAccount" />
+          <NavigationProperty Name="LogDetailType" Relationship="DBFMCGModel.FK_LogDetail_LogDetailType" FromRole="LogDetail" ToRole="LogDetailType" />
+          <NavigationProperty Name="LogMaster" Relationship="DBFMCGModel.FK_LogDetail_LogMaster" FromRole="LogDetail" ToRole="LogMaster" />
+          <NavigationProperty Name="UserAccount" Relationship="DBFMCGModel.FK_LogDetail_UserAccount" FromRole="LogDetail" ToRole="UserAccount" />
         </EntityType>
         <EntityType Name="LogDetailType">
           <Key>
@@ -896,7 +1029,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="LogDetails" Relationship="Self.FK_LogDetail_LogDetailType" FromRole="LogDetailType" ToRole="LogDetail" />
+          <NavigationProperty Name="LogDetails" Relationship="DBFMCGModel.FK_LogDetail_LogDetailType" FromRole="LogDetailType" ToRole="LogDetail" />
         </EntityType>
         <EntityType Name="LogMaster">
           <Key>
@@ -911,20 +1044,20 @@
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
           <Property Name="DeletedAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EntityType" Relationship="Self.FK_LogMaster_EntityType" FromRole="LogMaster" ToRole="EntityType" />
-          <NavigationProperty Name="LogDetails" Relationship="Self.FK_LogDetail_LogMaster" FromRole="LogMaster" ToRole="LogDetail" />
-          <NavigationProperty Name="UserAccount" Relationship="Self.FK_LogMaster_UserAccount" FromRole="LogMaster" ToRole="UserAccount" />
+          <NavigationProperty Name="EntityType" Relationship="DBFMCGModel.FK_LogMaster_EntityType" FromRole="LogMaster" ToRole="EntityType" />
+          <NavigationProperty Name="LogDetails" Relationship="DBFMCGModel.FK_LogDetail_LogMaster" FromRole="LogMaster" ToRole="LogDetail" />
+          <NavigationProperty Name="UserAccount" Relationship="DBFMCGModel.FK_LogMaster_UserAccount" FromRole="LogMaster" ToRole="UserAccount" />
         </EntityType>
         <EntityType Name="Payment">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EntryNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EntryNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
-          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PaymentMode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="RefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ExtraCharge" Type="Decimal" Precision="19" Scale="4" />
@@ -934,8 +1067,8 @@
           <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="PayTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Payment_Ledger" FromRole="Payment" ToRole="Ledger" />
-          <NavigationProperty Name="PaymentDetails" Relationship="Self.FK_PaymentDetail_Payment" FromRole="Payment" ToRole="PaymentDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Payment_Ledger" FromRole="Payment" ToRole="Ledger" />
+          <NavigationProperty Name="PaymentDetails" Relationship="DBFMCGModel.FK_PaymentDetail_Payment" FromRole="Payment" ToRole="PaymentDetail" />
         </EntityType>
         <EntityType Name="PaymentDetail">
           <Key>
@@ -944,497 +1077,11 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PaymentId" Type="Int64" Nullable="false" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Particular" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_PaymentDetail_Ledger" FromRole="PaymentDetail" ToRole="Ledger" />
-          <NavigationProperty Name="Payment" Relationship="Self.FK_PaymentDetail_Payment" FromRole="PaymentDetail" ToRole="Payment" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_PaymentDetail_Ledger" FromRole="PaymentDetail" ToRole="Ledger" />
+          <NavigationProperty Name="Payment" Relationship="DBFMCGModel.FK_PaymentDetail_Payment" FromRole="PaymentDetail" ToRole="Payment" />
         </EntityType>
-        <EntityType Name="Receipt">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EntryNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ReceiptDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="LedgerId" Type="Int32" Nullable="false" />
-          <Property Name="ReceiptMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="RefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Extracharge" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ChequeNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ChequeDate" Type="DateTime" Precision="0" />
-          <Property Name="CleareDate" Type="DateTime" Precision="0" />
-          <Property Name="ReceivedFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Receipt_Ledger" FromRole="Receipt" ToRole="Ledger" />
-          <NavigationProperty Name="ReceiptDetails" Relationship="Self.FK_ReceiptDetail_Receipt" FromRole="Receipt" ToRole="ReceiptDetail" />
-        </EntityType>
-        <EntityType Name="ReceiptDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ReceiptId" Type="Int64" Nullable="false" />
-          <Property Name="LedgerId" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_ReceiptDetail_Ledger" FromRole="ReceiptDetail" ToRole="Ledger" />
-          <NavigationProperty Name="Receipt" Relationship="Self.FK_ReceiptDetail_Receipt" FromRole="ReceiptDetail" ToRole="Receipt" />
-        </EntityType>
-        <EntityType Name="UserAccount">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserTypeId" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="LogDetails" Relationship="Self.FK_LogDetail_UserAccount" FromRole="UserAccount" ToRole="LogDetail" />
-          <NavigationProperty Name="LogMasters" Relationship="Self.FK_LogMaster_UserAccount" FromRole="UserAccount" ToRole="LogMaster" />
-          <NavigationProperty Name="UserType" Relationship="Self.FK_UserAccount_UserType" FromRole="UserAccount" ToRole="UserType" />
-        </EntityType>
-        <EntityType Name="UserType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeOfUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CompanyDetail" Relationship="Self.FK_UserType_CompanyDetail" FromRole="UserType" ToRole="CompanyDetail" />
-          <NavigationProperty Name="UserAccounts" Relationship="Self.FK_UserAccount_UserType" FromRole="UserType" ToRole="UserAccount" />
-          <NavigationProperty Name="UserTypeDetails" Relationship="Self.FK_UserTypeDetail_UserType" FromRole="UserType" ToRole="UserTypeDetail" />
-        </EntityType>
-        <EntityType Name="UserTypeDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserTypeId" Type="Int32" Nullable="false" />
-          <Property Name="UserTypeFormDetailId" Type="Int32" Nullable="false" />
-          <Property Name="IsViewForm" Type="Boolean" Nullable="false" />
-          <Property Name="AllowInsert" Type="Boolean" Nullable="false" />
-          <Property Name="AllowUpdate" Type="Boolean" Nullable="false" />
-          <Property Name="AllowDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="UserType" Relationship="Self.FK_UserTypeDetail_UserType" FromRole="UserTypeDetail" ToRole="UserType" />
-          <NavigationProperty Name="UserTypeFormDetail" Relationship="Self.FK_UserTypeDetail_UserTypeFormDetail" FromRole="UserTypeDetail" ToRole="UserTypeFormDetail" />
-        </EntityType>
-        <EntityType Name="UserTypeFormDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FormType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrderNo" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="IsInsert" Type="Boolean" Nullable="false" />
-          <Property Name="IsUpdate" Type="Boolean" Nullable="false" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="IsMenu" Type="Boolean" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="UserTypeDetails" Relationship="Self.FK_UserTypeDetail_UserTypeFormDetail" FromRole="UserTypeFormDetail" ToRole="UserTypeDetail" />
-        </EntityType>
-        <Association Name="FK_AccountGroup_AccountGroup">
-          <End Role="AccountGroup" Type="Self.AccountGroup" Multiplicity="0..1" />
-          <End Role="AccountGroup1" Type="Self.AccountGroup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountGroup">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AccountGroup1">
-              <PropertyRef Name="UnderGroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccountGroup_CompanyDetail">
-          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
-          <End Role="AccountGroup" Type="Self.AccountGroup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AccountGroup">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Ledger_AccountGroup">
-          <End Role="AccountGroup" Type="Self.AccountGroup" Multiplicity="1" />
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountGroup">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Ledger">
-              <PropertyRef Name="AccountGroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserType_CompanyDetail">
-          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
-          <End Role="UserType" Type="Self.UserType" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserType">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Ledger_CreditLimitType">
-          <End Role="CreditLimitType" Type="Self.CreditLimitType" Multiplicity="0..1" />
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CreditLimitType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Ledger">
-              <PropertyRef Name="CreditLimitTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Customer_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LogMaster_EntityType">
-          <End Role="EntityType" Type="Self.EntityType" Multiplicity="0..1" />
-          <End Role="LogMaster" Type="Self.LogMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EntityType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LogMaster">
-              <PropertyRef Name="EntityTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JournalDetail_Journal">
-          <End Role="Journal" Type="Self.Journal" Multiplicity="1" />
-          <End Role="JournalDetail" Type="Self.JournalDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Journal">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JournalDetail">
-              <PropertyRef Name="JournalId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JournalDetail_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="JournalDetail" Type="Self.JournalDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JournalDetail">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Payment_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Payment">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PaymentDetail_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="PaymentDetail" Type="Self.PaymentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PaymentDetail">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Receipt_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Receipt">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ReceiptDetail_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="ReceiptDetail" Type="Self.ReceiptDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ReceiptDetail">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LogDetail_LogDetailType">
-          <End Role="LogDetailType" Type="Self.LogDetailType" Multiplicity="0..1" />
-          <End Role="LogDetail" Type="Self.LogDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LogDetailType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LogDetail">
-              <PropertyRef Name="LogDetailTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LogDetail_LogMaster">
-          <End Role="LogMaster" Type="Self.LogMaster" Multiplicity="0..1" />
-          <End Role="LogDetail" Type="Self.LogDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LogMaster">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LogDetail">
-              <PropertyRef Name="LogMasterId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LogDetail_UserAccount">
-          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
-          <End Role="LogDetail" Type="Self.LogDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserAccount">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LogDetail">
-              <PropertyRef Name="EntryBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LogMaster_UserAccount">
-          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
-          <End Role="LogMaster" Type="Self.LogMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserAccount">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LogMaster">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PaymentDetail_Payment">
-          <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
-          <End Role="PaymentDetail" Type="Self.PaymentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Payment">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PaymentDetail">
-              <PropertyRef Name="PaymentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ReceiptDetail_Receipt">
-          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1" />
-          <End Role="ReceiptDetail" Type="Self.ReceiptDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Receipt">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ReceiptDetail">
-              <PropertyRef Name="ReceiptId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserAccount_UserType">
-          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
-          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserAccount">
-              <PropertyRef Name="UserTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserTypeDetail_UserType">
-          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
-          <End Role="UserTypeDetail" Type="Self.UserTypeDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserTypeDetail">
-              <PropertyRef Name="UserTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserTypeDetail_UserTypeFormDetail">
-          <End Role="UserTypeFormDetail" Type="Self.UserTypeFormDetail" Multiplicity="1" />
-          <End Role="UserTypeDetail" Type="Self.UserTypeDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserTypeFormDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserTypeDetail">
-              <PropertyRef Name="UserTypeFormDetailId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AccountGroups" EntityType="Self.AccountGroup" />
-          <EntitySet Name="CompanyDetails" EntityType="Self.CompanyDetail" />
-          <EntitySet Name="CreditLimitTypes" EntityType="Self.CreditLimitType" />
-          <EntitySet Name="Customers" EntityType="Self.Customer" />
-          <EntitySet Name="EntityTypes" EntityType="Self.EntityType" />
-          <EntitySet Name="ErrorLogs" EntityType="Self.ErrorLog" />
-          <EntitySet Name="Journals" EntityType="Self.Journal" />
-          <EntitySet Name="JournalDetails" EntityType="Self.JournalDetail" />
-          <EntitySet Name="Ledgers" EntityType="Self.Ledger" />
-          <EntitySet Name="LogDetails" EntityType="Self.LogDetail" />
-          <EntitySet Name="LogDetailTypes" EntityType="Self.LogDetailType" />
-          <EntitySet Name="LogMasters" EntityType="Self.LogMaster" />
-          <EntitySet Name="Payments" EntityType="Self.Payment" />
-          <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetail" />
-          <EntitySet Name="Receipts" EntityType="Self.Receipt" />
-          <EntitySet Name="ReceiptDetails" EntityType="Self.ReceiptDetail" />
-          <EntitySet Name="UserAccounts" EntityType="Self.UserAccount" />
-          <EntitySet Name="UserTypes" EntityType="Self.UserType" />
-          <EntitySet Name="UserTypeDetails" EntityType="Self.UserTypeDetail" />
-          <EntitySet Name="UserTypeFormDetails" EntityType="Self.UserTypeFormDetail" />
-          <AssociationSet Name="FK_AccountGroup_AccountGroup" Association="Self.FK_AccountGroup_AccountGroup">
-            <End Role="AccountGroup" EntitySet="AccountGroups" />
-            <End Role="AccountGroup1" EntitySet="AccountGroups" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccountGroup_CompanyDetail" Association="Self.FK_AccountGroup_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="AccountGroup" EntitySet="AccountGroups" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ledger_AccountGroup" Association="Self.FK_Ledger_AccountGroup">
-            <End Role="AccountGroup" EntitySet="AccountGroups" />
-            <End Role="Ledger" EntitySet="Ledgers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserType_CompanyDetail" Association="Self.FK_UserType_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="UserType" EntitySet="UserTypes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ledger_CreditLimitType" Association="Self.FK_Ledger_CreditLimitType">
-            <End Role="CreditLimitType" EntitySet="CreditLimitTypes" />
-            <End Role="Ledger" EntitySet="Ledgers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customer_Ledger" Association="Self.FK_Customer_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Customer" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LogMaster_EntityType" Association="Self.FK_LogMaster_EntityType">
-            <End Role="EntityType" EntitySet="EntityTypes" />
-            <End Role="LogMaster" EntitySet="LogMasters" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JournalDetail_Journal" Association="Self.FK_JournalDetail_Journal">
-            <End Role="Journal" EntitySet="Journals" />
-            <End Role="JournalDetail" EntitySet="JournalDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JournalDetail_Ledger" Association="Self.FK_JournalDetail_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="JournalDetail" EntitySet="JournalDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Payment_Ledger" Association="Self.FK_Payment_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Payment" EntitySet="Payments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PaymentDetail_Ledger" Association="Self.FK_PaymentDetail_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="PaymentDetail" EntitySet="PaymentDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Receipt_Ledger" Association="Self.FK_Receipt_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Receipt" EntitySet="Receipts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReceiptDetail_Ledger" Association="Self.FK_ReceiptDetail_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LogDetail_LogDetailType" Association="Self.FK_LogDetail_LogDetailType">
-            <End Role="LogDetailType" EntitySet="LogDetailTypes" />
-            <End Role="LogDetail" EntitySet="LogDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LogDetail_LogMaster" Association="Self.FK_LogDetail_LogMaster">
-            <End Role="LogMaster" EntitySet="LogMasters" />
-            <End Role="LogDetail" EntitySet="LogDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LogDetail_UserAccount" Association="Self.FK_LogDetail_UserAccount">
-            <End Role="UserAccount" EntitySet="UserAccounts" />
-            <End Role="LogDetail" EntitySet="LogDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LogMaster_UserAccount" Association="Self.FK_LogMaster_UserAccount">
-            <End Role="UserAccount" EntitySet="UserAccounts" />
-            <End Role="LogMaster" EntitySet="LogMasters" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PaymentDetail_Payment" Association="Self.FK_PaymentDetail_Payment">
-            <End Role="Payment" EntitySet="Payments" />
-            <End Role="PaymentDetail" EntitySet="PaymentDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReceiptDetail_Receipt" Association="Self.FK_ReceiptDetail_Receipt">
-            <End Role="Receipt" EntitySet="Receipts" />
-            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserAccount_UserType" Association="Self.FK_UserAccount_UserType">
-            <End Role="UserType" EntitySet="UserTypes" />
-            <End Role="UserAccount" EntitySet="UserAccounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserTypeDetail_UserType" Association="Self.FK_UserTypeDetail_UserType">
-            <End Role="UserType" EntitySet="UserTypes" />
-            <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserTypeDetail_UserTypeFormDetail" Association="Self.FK_UserTypeDetail_UserTypeFormDetail">
-            <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
-            <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
-          </AssociationSet>
-          <EntitySet Name="Products" EntityType="DBFMCGModel.Product" />
-          <EntitySet Name="StockGroups" EntityType="DBFMCGModel.StockGroup" />
-          <EntitySet Name="UOMs" EntityType="DBFMCGModel.UOM" />
-          <AssociationSet Name="FK_StockGroup_CompanyDetail" Association="DBFMCGModel.FK_StockGroup_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="StockGroup" EntitySet="StockGroups" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UOM_CompanyDetail" Association="DBFMCGModel.FK_UOM_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="UOM" EntitySet="UOMs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_StockGroup" Association="DBFMCGModel.FK_Product_StockGroup">
-            <End Role="StockGroup" EntitySet="StockGroups" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_UOM" Association="DBFMCGModel.FK_Product_UOM">
-            <End Role="UOM" EntitySet="UOMs" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StockGroup_StockGroup1" Association="DBFMCGModel.FK_StockGroup_StockGroup1">
-            <End Role="StockGroup" EntitySet="StockGroups" />
-            <End Role="StockGroup1" EntitySet="StockGroups" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
@@ -1453,6 +1100,40 @@
           <Property Name="ProductImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="StockGroup" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="Product" ToRole="StockGroup" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="Product" ToRole="UOM" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="ReceiptMode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Extracharge" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ChequeNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ChequeDate" Type="DateTime" Precision="0" />
+          <Property Name="CleareDate" Type="DateTime" Precision="0" />
+          <Property Name="ReceivedFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Receipt_Ledger" FromRole="Receipt" ToRole="Ledger" />
+          <NavigationProperty Name="ReceiptDetails" Relationship="DBFMCGModel.FK_ReceiptDetail_Receipt" FromRole="Receipt" ToRole="ReceiptDetail" />
+        </EntityType>
+        <EntityType Name="ReceiptDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReceiptId" Type="Int64" Nullable="false" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_ReceiptDetail_Ledger" FromRole="ReceiptDetail" ToRole="Ledger" />
+          <NavigationProperty Name="Receipt" Relationship="DBFMCGModel.FK_ReceiptDetail_Receipt" FromRole="ReceiptDetail" ToRole="Receipt" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -1479,6 +1160,97 @@
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="UOM" ToRole="CompanyDetail" />
           <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="UOM" ToRole="Product" />
         </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTypeId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoginId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LogDetails" Relationship="DBFMCGModel.FK_LogDetail_UserAccount" FromRole="UserAccount" ToRole="LogDetail" />
+          <NavigationProperty Name="LogMasters" Relationship="DBFMCGModel.FK_LogMaster_UserAccount" FromRole="UserAccount" ToRole="LogMaster" />
+          <NavigationProperty Name="UserType" Relationship="DBFMCGModel.FK_UserAccount_UserType" FromRole="UserAccount" ToRole="UserType" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeOfUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="UserType" ToRole="CompanyDetail" />
+          <NavigationProperty Name="UserAccounts" Relationship="DBFMCGModel.FK_UserAccount_UserType" FromRole="UserType" ToRole="UserAccount" />
+          <NavigationProperty Name="UserTypeDetails" Relationship="DBFMCGModel.FK_UserTypeDetail_UserType" FromRole="UserType" ToRole="UserTypeDetail" />
+        </EntityType>
+        <EntityType Name="UserTypeDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTypeId" Type="Int32" Nullable="false" />
+          <Property Name="UserTypeFormDetailId" Type="Int32" Nullable="false" />
+          <Property Name="IsViewForm" Type="Boolean" Nullable="false" />
+          <Property Name="AllowInsert" Type="Boolean" Nullable="false" />
+          <Property Name="AllowUpdate" Type="Boolean" Nullable="false" />
+          <Property Name="AllowDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserType" Relationship="DBFMCGModel.FK_UserTypeDetail_UserType" FromRole="UserTypeDetail" ToRole="UserType" />
+          <NavigationProperty Name="UserTypeFormDetail" Relationship="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" FromRole="UserTypeDetail" ToRole="UserTypeFormDetail" />
+        </EntityType>
+        <EntityType Name="UserTypeFormDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FormType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderNo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsInsert" Type="Boolean" Nullable="false" />
+          <Property Name="IsUpdate" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="IsMenu" Type="Boolean" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserTypeDetails" Relationship="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" FromRole="UserTypeFormDetail" ToRole="UserTypeDetail" />
+        </EntityType>
+        <Association Name="FK_AccountGroup_AccountGroup">
+          <End Type="DBFMCGModel.AccountGroup" Role="AccountGroup" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AccountGroup" Role="AccountGroup1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountGroup1">
+              <PropertyRef Name="UnderGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountGroup_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.AccountGroup" Role="AccountGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountGroup">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ledger_AccountGroup">
+          <End Type="DBFMCGModel.AccountGroup" Role="AccountGroup" Multiplicity="1" />
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ledger">
+              <PropertyRef Name="AccountGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StockGroup_CompanyDetail">
           <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
           <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="*" />
@@ -1500,6 +1272,186 @@
             </Principal>
             <Dependent Role="UOM">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserType_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.UserType" Role="UserType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserType">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ledger_CreditLimitType">
+          <End Type="DBFMCGModel.CreditLimitType" Role="CreditLimitType" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreditLimitType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ledger">
+              <PropertyRef Name="CreditLimitTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBFMCGModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogMaster_EntityType">
+          <End Type="DBFMCGModel.EntityType" Role="EntityType" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.LogMaster" Role="LogMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EntityType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogMaster">
+              <PropertyRef Name="EntityTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalDetail_Journal">
+          <End Type="DBFMCGModel.Journal" Role="Journal" Multiplicity="1" />
+          <End Type="DBFMCGModel.JournalDetail" Role="JournalDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JournalDetail">
+              <PropertyRef Name="JournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalDetail_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBFMCGModel.JournalDetail" Role="JournalDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JournalDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBFMCGModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentDetail_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBFMCGModel.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBFMCGModel.Receipt" Role="Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetail_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBFMCGModel.ReceiptDetail" Role="ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_LogDetailType">
+          <End Type="DBFMCGModel.LogDetailType" Role="LogDetailType" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.LogDetail" Role="LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogDetailType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="LogDetailTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_LogMaster">
+          <End Type="DBFMCGModel.LogMaster" Role="LogMaster" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.LogDetail" Role="LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="LogMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogDetail_UserAccount">
+          <End Type="DBFMCGModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.LogDetail" Role="LogDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogDetail">
+              <PropertyRef Name="EntryBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogMaster_UserAccount">
+          <End Type="DBFMCGModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.LogMaster" Role="LogMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogMaster">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentDetail_Payment">
+          <End Type="DBFMCGModel.Payment" Role="Payment" Multiplicity="1" />
+          <End Type="DBFMCGModel.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentDetail">
+              <PropertyRef Name="PaymentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1527,6 +1479,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReceiptDetail_Receipt">
+          <End Type="DBFMCGModel.Receipt" Role="Receipt" Multiplicity="1" />
+          <End Type="DBFMCGModel.ReceiptDetail" Role="ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="ReceiptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StockGroup_StockGroup1">
           <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="0..1" />
           <End Type="DBFMCGModel.StockGroup" Role="StockGroup1" Multiplicity="*" />
@@ -1539,6 +1503,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserAccount_UserType">
+          <End Type="DBFMCGModel.UserType" Role="UserType" Multiplicity="1" />
+          <End Type="DBFMCGModel.UserAccount" Role="UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTypeDetail_UserType">
+          <End Type="DBFMCGModel.UserType" Role="UserType" Multiplicity="1" />
+          <End Type="DBFMCGModel.UserTypeDetail" Role="UserTypeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTypeDetail">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTypeDetail_UserTypeFormDetail">
+          <End Type="DBFMCGModel.UserTypeFormDetail" Role="UserTypeFormDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.UserTypeDetail" Role="UserTypeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTypeFormDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTypeDetail">
+              <PropertyRef Name="UserTypeFormDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1548,11 +1548,11 @@
           <EntitySetMapping Name="AccountGroups">
             <EntityTypeMapping TypeName="DBFMCGModel.AccountGroup">
               <MappingFragment StoreEntitySet="AccountGroup">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-                <ScalarProperty Name="UnderGroupId" ColumnName="UnderGroupId" />
-                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="UnderGroupId" ColumnName="UnderGroupId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1561,252 +1561,170 @@
               <MappingFragment StoreEntitySet="CompanyDetail">
                 <ScalarProperty Name="CompanyType" ColumnName="CompanyType" />
                 <ScalarProperty Name="UnderCompanyId" ColumnName="UnderCompanyId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
-                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
-                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
-                <ScalarProperty Name="Logo" ColumnName="Logo" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
+                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CreditLimitTypes">
             <EntityTypeMapping TypeName="DBFMCGModel.CreditLimitType">
               <MappingFragment StoreEntitySet="CreditLimitType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="LimitType" ColumnName="LimitType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="DBFMCGModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EntityTypes">
             <EntityTypeMapping TypeName="DBFMCGModel.EntityType">
               <MappingFragment StoreEntitySet="EntityType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Entity" ColumnName="Entity" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ErrorLogs">
             <EntityTypeMapping TypeName="DBFMCGModel.ErrorLog">
               <MappingFragment StoreEntitySet="ErrorLog">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="EntityTypeId" ColumnName="EntityTypeId" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="ErrorBy" ColumnName="ErrorBy" />
-                <ScalarProperty Name="ErrorAt" ColumnName="ErrorAt" />
                 <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+                <ScalarProperty Name="ErrorAt" ColumnName="ErrorAt" />
+                <ScalarProperty Name="ErrorBy" ColumnName="ErrorBy" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="EntityTypeId" ColumnName="EntityTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Journals">
             <EntityTypeMapping TypeName="DBFMCGModel.Journal">
               <MappingFragment StoreEntitySet="Journal">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
-                <ScalarProperty Name="JournalDate" ColumnName="JournalDate" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Particular" ColumnName="Particular" />
-                <ScalarProperty Name="HQNo" ColumnName="HQNo" />
-                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="HQNo" ColumnName="HQNo" />
+                <ScalarProperty Name="Particular" ColumnName="Particular" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="JournalDate" ColumnName="JournalDate" />
+                <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JournalDetails">
             <EntityTypeMapping TypeName="DBFMCGModel.JournalDetail">
               <MappingFragment StoreEntitySet="JournalDetail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="JournalId" ColumnName="JournalId" />
-                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="DrAmt" ColumnName="DrAmt" />
-                <ScalarProperty Name="CrAmt" ColumnName="CrAmt" />
                 <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="CrAmt" ColumnName="CrAmt" />
+                <ScalarProperty Name="DrAmt" ColumnName="DrAmt" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="JournalId" ColumnName="JournalId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ledgers">
             <EntityTypeMapping TypeName="DBFMCGModel.Ledger">
               <MappingFragment StoreEntitySet="Ledger">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="LedgerName" ColumnName="LedgerName" />
-                <ScalarProperty Name="PersonIncharge" ColumnName="PersonIncharge" />
-                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
-                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
-                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
-                <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
-                <ScalarProperty Name="CreditLimitTypeId" ColumnName="CreditLimitTypeId" />
-                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
-                <ScalarProperty Name="OPDr" ColumnName="OPDr" />
-                <ScalarProperty Name="OPCr" ColumnName="OPCr" />
-                <ScalarProperty Name="LedgerCode" ColumnName="LedgerCode" />
                 <ScalarProperty Name="AccountGroupId" ColumnName="AccountGroupId" />
+                <ScalarProperty Name="LedgerCode" ColumnName="LedgerCode" />
+                <ScalarProperty Name="OPCr" ColumnName="OPCr" />
+                <ScalarProperty Name="OPDr" ColumnName="OPDr" />
+                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+                <ScalarProperty Name="CreditLimitTypeId" ColumnName="CreditLimitTypeId" />
+                <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
+                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
+                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="PersonIncharge" ColumnName="PersonIncharge" />
+                <ScalarProperty Name="LedgerName" ColumnName="LedgerName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LogDetails">
             <EntityTypeMapping TypeName="DBFMCGModel.LogDetail">
               <MappingFragment StoreEntitySet="LogDetail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="LogMasterId" ColumnName="LogMasterId" />
-                <ScalarProperty Name="RecordDetail" ColumnName="RecordDetail" />
-                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
-                <ScalarProperty Name="EntryAt" ColumnName="EntryAt" />
                 <ScalarProperty Name="LogDetailTypeId" ColumnName="LogDetailTypeId" />
+                <ScalarProperty Name="EntryAt" ColumnName="EntryAt" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="RecordDetail" ColumnName="RecordDetail" />
+                <ScalarProperty Name="LogMasterId" ColumnName="LogMasterId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LogDetailTypes">
             <EntityTypeMapping TypeName="DBFMCGModel.LogDetailType">
               <MappingFragment StoreEntitySet="LogDetailType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LogMasters">
             <EntityTypeMapping TypeName="DBFMCGModel.LogMaster">
               <MappingFragment StoreEntitySet="LogMaster">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
-                <ScalarProperty Name="EntityTypeId" ColumnName="EntityTypeId" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
                 <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="EntityTypeId" ColumnName="EntityTypeId" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="DBFMCGModel.Payment">
               <MappingFragment StoreEntitySet="Payment">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
-                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
-                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ExtraCharge" ColumnName="ExtraCharge" />
-                <ScalarProperty Name="ChequeNo" ColumnName="ChequeNo" />
-                <ScalarProperty Name="ChequeDate" ColumnName="ChequeDate" />
-                <ScalarProperty Name="ClearDate" ColumnName="ClearDate" />
-                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
-                <ScalarProperty Name="PayTo" ColumnName="PayTo" />
                 <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="PayTo" ColumnName="PayTo" />
+                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="ClearDate" ColumnName="ClearDate" />
+                <ScalarProperty Name="ChequeDate" ColumnName="ChequeDate" />
+                <ScalarProperty Name="ChequeNo" ColumnName="ChequeNo" />
+                <ScalarProperty Name="ExtraCharge" ColumnName="ExtraCharge" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PaymentDetails">
             <EntityTypeMapping TypeName="DBFMCGModel.PaymentDetail">
               <MappingFragment StoreEntitySet="PaymentDetail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
-                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Particular" ColumnName="Particular" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Receipts">
-            <EntityTypeMapping TypeName="DBFMCGModel.Receipt">
-              <MappingFragment StoreEntitySet="Receipt">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
-                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
-                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="ReceiptMode" ColumnName="ReceiptMode" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
-                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Extracharge" ColumnName="Extracharge" />
-                <ScalarProperty Name="ChequeNo" ColumnName="ChequeNo" />
-                <ScalarProperty Name="ChequeDate" ColumnName="ChequeDate" />
-                <ScalarProperty Name="CleareDate" ColumnName="CleareDate" />
-                <ScalarProperty Name="ReceivedFrom" ColumnName="ReceivedFrom" />
-                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ReceiptDetails">
-            <EntityTypeMapping TypeName="DBFMCGModel.ReceiptDetail">
-              <MappingFragment StoreEntitySet="ReceiptDetail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserAccounts">
-            <EntityTypeMapping TypeName="DBFMCGModel.UserAccount">
-              <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserTypes">
-            <EntityTypeMapping TypeName="DBFMCGModel.UserType">
-              <MappingFragment StoreEntitySet="UserType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TypeOfUser" ColumnName="TypeOfUser" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserTypeDetails">
-            <EntityTypeMapping TypeName="DBFMCGModel.UserTypeDetail">
-              <MappingFragment StoreEntitySet="UserTypeDetail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
-                <ScalarProperty Name="UserTypeFormDetailId" ColumnName="UserTypeFormDetailId" />
-                <ScalarProperty Name="IsViewForm" ColumnName="IsViewForm" />
-                <ScalarProperty Name="AllowInsert" ColumnName="AllowInsert" />
-                <ScalarProperty Name="AllowUpdate" ColumnName="AllowUpdate" />
-                <ScalarProperty Name="AllowDelete" ColumnName="AllowDelete" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserTypeFormDetails">
-            <EntityTypeMapping TypeName="DBFMCGModel.UserTypeFormDetail">
-              <MappingFragment StoreEntitySet="UserTypeFormDetail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FormName" ColumnName="FormName" />
-                <ScalarProperty Name="FormType" ColumnName="FormType" />
-                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="IsInsert" ColumnName="IsInsert" />
-                <ScalarProperty Name="IsUpdate" ColumnName="IsUpdate" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1828,6 +1746,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Receipts">
+            <EntityTypeMapping TypeName="DBFMCGModel.Receipt">
+              <MappingFragment StoreEntitySet="Receipt">
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="ReceivedFrom" ColumnName="ReceivedFrom" />
+                <ScalarProperty Name="CleareDate" ColumnName="CleareDate" />
+                <ScalarProperty Name="ChequeDate" ColumnName="ChequeDate" />
+                <ScalarProperty Name="ChequeNo" ColumnName="ChequeNo" />
+                <ScalarProperty Name="Extracharge" ColumnName="Extracharge" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ReceiptMode" ColumnName="ReceiptMode" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceiptDetails">
+            <EntityTypeMapping TypeName="DBFMCGModel.ReceiptDetail">
+              <MappingFragment StoreEntitySet="ReceiptDetail">
+                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="StockGroups">
             <EntityTypeMapping TypeName="DBFMCGModel.StockGroup">
               <MappingFragment StoreEntitySet="StockGroup">
@@ -1845,6 +1795,56 @@
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Symbol" ColumnName="Symbol" />
                 <ScalarProperty Name="FormalName" ColumnName="FormalName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccounts">
+            <EntityTypeMapping TypeName="DBFMCGModel.UserAccount">
+              <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="DBFMCGModel.UserType">
+              <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TypeOfUser" ColumnName="TypeOfUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypeDetails">
+            <EntityTypeMapping TypeName="DBFMCGModel.UserTypeDetail">
+              <MappingFragment StoreEntitySet="UserTypeDetail">
+                <ScalarProperty Name="AllowDelete" ColumnName="AllowDelete" />
+                <ScalarProperty Name="AllowUpdate" ColumnName="AllowUpdate" />
+                <ScalarProperty Name="AllowInsert" ColumnName="AllowInsert" />
+                <ScalarProperty Name="IsViewForm" ColumnName="IsViewForm" />
+                <ScalarProperty Name="UserTypeFormDetailId" ColumnName="UserTypeFormDetailId" />
+                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypeFormDetails">
+            <EntityTypeMapping TypeName="DBFMCGModel.UserTypeFormDetail">
+              <MappingFragment StoreEntitySet="UserTypeFormDetail">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsUpdate" ColumnName="IsUpdate" />
+                <ScalarProperty Name="IsInsert" ColumnName="IsInsert" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="FormType" ColumnName="FormType" />
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -37,23 +37,24 @@
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"  >
 
-                            <ComboBox x:Name="cmbAccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="10" Height="40" >
+                            <ComboBox x:Name="cmbAccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="5" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Account Name"/>
+                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                        <TextBlock Text="Account From" FontWeight="Bold"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </ComboBox>
 
-                            <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10" >
+                            <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="5,20,5,5" >
                                 <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" >
                                         <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
                                         <TextBlock Text="Date From" FontWeight="Bold"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </DatePicker>
-                            <DatePicker Name="dtpDateTo" Width="135"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10">
+                            <DatePicker Name="dtpDateTo"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="5,20,5,5">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />

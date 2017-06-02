@@ -55,37 +55,37 @@ namespace AccountBuddy.SL.Hubs
             return 0;
         }
 
-        public bool StockGroup_Delete(int pk)
-        {
-            var rv = false;
-            try
-            {
-                var d = DB.StockGroups.Where(x => x.Id == pk).FirstOrDefault();
-                if (d.Ledgers != null)
-                {
-                    if (d != null)
-                    {
-                        DB.StockGroups.Remove(d);
-                        DB.SaveChanges();
-                        LogDetailStore(d.toCopy<BLL.StockGroup>(new BLL.StockGroup()), LogDetailType.DELETE);
-                    }
+        //public bool StockGroup_Delete(int pk)
+        //{
+        //    var rv = false;
+        //    try
+        //    {
+        //        var d = DB.StockGroups.Where(x => x.Id == pk).FirstOrDefault();
+        //        if (d.Ledgers != null)
+        //        {
+        //            if (d != null)
+        //            {
+        //                DB.StockGroups.Remove(d);
+        //                DB.SaveChanges();
+        //                LogDetailStore(d.toCopy<BLL.StockGroup>(new BLL.StockGroup()), LogDetailType.DELETE);
+        //            }
 
-                    Clients.Clients(OtherLoginClientsOnGroup).SStockGroup_Delete(pk);
-                    Clients.All.delete(pk);
-                    rv = true;
-                }
-                else
-                {
-                    rv = false;
-                }
+        //            Clients.Clients(OtherLoginClientsOnGroup).SStockGroup_Delete(pk);
+        //            Clients.All.delete(pk);
+        //            rv = true;
+        //        }
+        //        else
+        //        {
+        //            rv = false;
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                rv = false;
-            }
-            return rv;
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        rv = false;
+        //    }
+        //    return rv;
+        //}
 
 
         #endregion
