@@ -252,7 +252,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     }
                 }
             }
-            MessageBox.Show("Saved");
+            MessageBox.Show(Message.PL.Saved_Alert);
             App.frmHome.ShowWelcome();
         }
 

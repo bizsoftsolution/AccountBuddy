@@ -3,5 +3,64 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@drawable/accountbaclogin1"
+    android:gravity="center">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/heataccoutlogin" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#aaaaaaaa">
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:layout_margin="5dip"
+            android:id="@+id/cmbYear" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:layout_margin="5dip"
+            android:id="@+id/cmbCompany" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:id="@+id/txtUserName"
+            android:singleLine="true"
+            android:hint="user name" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:id="@+id/txtPassword"
+            android:singleLine="true"
+            android:hint="password" />
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="5dip"
+            android:orientation="horizontal">
+            <Button
+                android:text="signIn"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnSignIn" />
+            <Button
+                android:text="Clear"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnClear" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
