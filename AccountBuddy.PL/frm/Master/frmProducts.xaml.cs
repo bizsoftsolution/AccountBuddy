@@ -12,34 +12,33 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Reporting.WinForms;
 
 namespace AccountBuddy.PL.frm.Master
 {
     /// <summary>
-    /// Interaction logic for frmStockGroup.xaml
+    /// Interaction logic for frmProducts.xaml
     /// </summary>
-    public partial class frmStockGroup : UserControl
+    public partial class frmProducts : UserControl
     {
         #region Field
 
-        public static string FormName = "Stock Group";
-        BLL.StockGroup data = new BLL.StockGroup();
+        public static string FormName = "Products";
+        BLL.Products data = new BLL.Products();
 
         #endregion
 
         #region Constructor
 
-        public frmStockGroup()
+        public frmProducts()
         {
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-            rptStockGroup.SetDisplayMode(DisplayMode.PrintLayout);
-
+            rptProduct.SetDisplayMode(DisplayMode.PrintLayout);
             onClientEvents();
-
         }
 
         #endregion
@@ -48,28 +47,32 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvStock.ItemsSource = BLL.StockGroup.toList;
+            dgvProduct.ItemsSource = BLL.Products.toList;
 
-            CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Filter = StockGroup_Filter;
-            CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.StockGroupCode), System.ComponentModel.ListSortDirection.Ascending));
-            cmbUnder.ItemsSource = BLL.StockGroup.toList;
-            cmbUnder.SelectedValuePath = "Id";
-            cmbUnder.DisplayMemberPath = "GroupNameWithCode";
+            CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).Filter = Product_Filter;
+            CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.ProductName), System.ComponentModel.ListSortDirection.Ascending));
 
+            cmbStockGroupId.ItemsSource = BLL.StockGroup.toList.ToList();
+            cmbStockGroupId.DisplayMemberPath = "StockGroupName";
+            cmbStockGroupId.SelectedValuePath = "Id";
+
+
+
+            cmbUOM.ItemsSource = BLL.UOM.toList;
+            cmbUOM.SelectedValuePath = "Id";
+            cmbUOM.DisplayMemberPath = "Symbol";
 
 
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
-            data.Clear();
-
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.StockGroupName == null)
+            if (data.ProductName == null)
             {
-                MessageBox.Show(String.Format(Message.BLL.Required_Data, "Group Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "ProductName"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
@@ -83,16 +86,16 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (data.Save() == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert,FormName.ToString(),MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(Message.PL.Saved_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                     Grid_Refresh();
                 }
+
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.StockGroupName),FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.ProductName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -109,7 +112,7 @@ namespace AccountBuddy.PL.frm.Master
                     {
                         if (data.Delete() == true)
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert,FormName.ToString(), MessageBoxButton.OK,MessageBoxImage.Information);
+                            MessageBox.Show(Message.PL.Delete_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                             data.Clear();
                             Grid_Refresh();
                         }
@@ -127,7 +130,6 @@ namespace AccountBuddy.PL.frm.Master
                 MessageBox.Show("No Records to Delete", FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
 
-
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -135,9 +137,9 @@ namespace AccountBuddy.PL.frm.Master
             data.Clear();
         }
 
-        private void dgvStock_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dgvProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvStock.SelectedItem as BLL.StockGroup;
+            var d = dgvProduct.SelectedItem as BLL.Products;
             if (d != null)
             {
                 data.Find(d.Id);
@@ -185,14 +187,19 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
+        private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = Common.AppLib.IsTextNumeric(e.Text);
+        }
+
         #endregion
 
         #region Methods
 
-        private bool StockGroup_Filter(object obj)
+        private bool Product_Filter(object obj)
         {
             bool RValue = false;
-            var d = obj as BLL.StockGroup;
+            var d = obj as BLL.Products;
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
@@ -235,7 +242,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Refresh();
+                CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).Refresh();
             }
             catch (Exception ex) { };
 
@@ -245,14 +252,14 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                rptStockGroup.Reset();
-                ReportDataSource data = new ReportDataSource("StockGroup", BLL.StockGroup.toList.Where(x => StockGroup_Filter(x)).Select(x => new { x.StockGroupCode, x.StockGroupName, underGroupName = x.UnderStockGroup.StockGroupName }).OrderBy(x => x.StockGroupCode).ToList());
+                rptProduct.Reset();
+                ReportDataSource data = new ReportDataSource("Products", BLL.Products.toList.Where(x => Product_Filter(x)).Select(x => new { x.ProductName, x.StockGroup.StockGroupName, x.UOM.Symbol, x.ItemCode, x.PurchaseRate, x.SellingRate, x.GST, x.MRP, x.OpeningStock, x.ReOrderLevel }).OrderBy(x => x.ProductName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
-                rptStockGroup.LocalReport.DataSources.Add(data);
-                rptStockGroup.LocalReport.DataSources.Add(data1);
-                rptStockGroup.LocalReport.ReportPath = @"rpt\master\rptStockGroup.rdlc";
+                rptProduct.LocalReport.DataSources.Add(data);
+                rptProduct.LocalReport.DataSources.Add(data1);
+                rptProduct.LocalReport.ReportPath = @"rpt\master\rptProducts.rdlc";
 
-                rptStockGroup.RefreshReport();
+                rptProduct.RefreshReport();
 
             }
             catch (Exception ex)
@@ -265,23 +272,20 @@ namespace AccountBuddy.PL.frm.Master
 
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.StockGroup>("StockGroup_Save", (sgp) =>
-            {
+            BLL.FMCGHubClient.FMCGHub.On<BLL.Products>("Product_Save", (led) => {
 
                 this.Dispatcher.Invoke(() =>
                 {
-                    sgp.Save(true);
+                    led.Save(true);
                 });
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("StockGroup_Delete", (Action<int>)((pk) =>
-            {
-                this.Dispatcher.Invoke((Action)(() =>
-                {
-                    BLL.StockGroup agp = new BLL.StockGroup();
-                    agp.Find((int)pk);
-                    agp.Delete((bool)true);
+            BLL.FMCGHubClient.FMCGHub.On("Product_Delete", (Action<int>)((pk) => {
+                this.Dispatcher.Invoke((Action)(() => {
+                    BLL.Products led = new BLL.Products();
+                    led.Find((int)pk);
+                    led.Delete((bool)true);
                 }));
 
             }));
@@ -289,13 +293,88 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-        private void dgvStock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void txtPurchase_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var d = dgvStock.SelectedItem as BLL.StockGroup;
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtPurchaseRate.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+        }
+
+        private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void rptContain_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void rptEndWith_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+
+        private void dgvProduct_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var d = dgvProduct.SelectedItem as BLL.Products;
             if (d != null)
             {
                 data.Find(d.Id);
             }
+        }
+
+        private void txtSellingRate_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtSellingRate.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtMRP_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtMRP.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtGST_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtGST.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtOpeningStock_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtOpeningStock.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtReOrderLevel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtReOrderLevel.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
         }
 
     }

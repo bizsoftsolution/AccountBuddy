@@ -24,7 +24,7 @@ namespace AccountBuddy.Common
             frmStaff, 
             frmUOM, 
             frmStockGroup, 
-            frmProduct,
+            frmProducts,
             frmPayment, 
             frmReceipt, 
             frmJournal,

@@ -8,33 +8,32 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Stock Group
-        BLL.StockGroup StockGroupDAL_BLL(DAL.StockGroup d)
+        #region Account Group
+        BLL.UOM UOMDAL_BLL(DAL.UOM d)
         {
-            BLL.StockGroup b = d.toCopy<BLL.StockGroup>(new BLL.StockGroup());
+            BLL.UOM b = d.toCopy<BLL.UOM>(new BLL.UOM());
             b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
-            b.UnderStockGroup = d.StockGroup2 == null ? new BLL.StockGroup() : StockGroupDAL_BLL(d.StockGroup2);
-            return b;
+             return b;
         }
-        public List<BLL.StockGroup> StockGroup_List()
+        public List<BLL.UOM> UOM_List()
         {
-            return DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList()
-                               .Select(x => StockGroupDAL_BLL(x)).ToList();
+            return DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId ).ToList()
+                               .Select(x => UOMDAL_BLL(x)).ToList();
         }
 
-        public int StockGroup_Save(BLL.StockGroup agp)
+        public int UOM_Save(BLL.UOM agp)
         {
             try
             {
                 agp.CompanyId = Caller.CompanyId;
-                DAL.StockGroup d = DB.StockGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
+                DAL.UOM d = DB.UOMs.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
                 {
-                    d = new DAL.StockGroup();
-                    DB.StockGroups.Add(d);
+                    d = new DAL.UOM();
+                    DB.UOMs.Add(d);
 
-                    agp.toCopy<DAL.StockGroup>(d);
+                    agp.toCopy<DAL.UOM>(d);
                     DB.SaveChanges();
 
                     agp.Id = d.Id;
@@ -42,12 +41,12 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    agp.toCopy<DAL.StockGroup>(d);
+                    agp.toCopy<DAL.UOM>(d);
                     DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).StockGroup_Save(agp);
+                Clients.Clients(OtherLoginClientsOnGroup).UOM_Save(agp);
 
                 return agp.Id;
             }
@@ -55,22 +54,22 @@ namespace AccountBuddy.SL.Hubs
             return 0;
         }
 
-        public bool StockGroup_Delete(int pk)
+        public bool UOM_Delete(int pk)
         {
             var rv = false;
             try
             {
-                var d = DB.StockGroups.Where(x => x.Id == pk).FirstOrDefault();
+                var d = DB.UOMs.Where(x => x.Id == pk).FirstOrDefault();
                 if (d.Products != null)
                 {
                     if (d != null)
                     {
-                        DB.StockGroups.Remove(d);
+                        DB.UOMs.Remove(d);
                         DB.SaveChanges();
-                        LogDetailStore(d.toCopy<BLL.StockGroup>(new BLL.StockGroup()), LogDetailType.DELETE);
+                        LogDetailStore(d.toCopy<BLL.UOM>(new BLL.UOM()), LogDetailType.DELETE);
                     }
 
-                    Clients.Clients(OtherLoginClientsOnGroup).SStockGroup_Delete(pk);
+                    Clients.Clients(OtherLoginClientsOnGroup).SUOM_Delete(pk);
                     Clients.All.delete(pk);
                     rv = true;
                 }

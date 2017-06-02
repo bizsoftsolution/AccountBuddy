@@ -15,7 +15,7 @@
         mc:Ignorable="d"
         Title="Account Buddy" Height="600" Width="1100"
                        ShowMaxRestoreButton="False"
-        BorderThickness="0" GlowBrush="Black" ResizeMode="NoResize" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Images/AB1.ico" >
+        BorderThickness="0" GlowBrush="Black" ResizeMode="NoResize" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Images/fmcg_logo.png" >
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
@@ -105,6 +105,16 @@
                                     <Menu:NavMenuItem MenuName="Stock Group" FormName="Stock Group">
                                         <Menu:NavMenuItem.Content>
                                             <Master:frmStockGroup/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Unit Of Measurement" FormName="UOM">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmUOM/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Products" FormName="Products">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmProducts/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
 
