@@ -151,6 +151,7 @@
             <RowDefinition Height="43*"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
+        <Image Source="Images/DenariuSoftPoweredBy.png" Grid.ColumnSpan="2" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,50,0,0" />
         <Grid Grid.Column="1" Grid.Row="0">
             <StackPanel VerticalAlignment="Bottom">
                 <Image Source="Images/ABLoginHead1.png" />
