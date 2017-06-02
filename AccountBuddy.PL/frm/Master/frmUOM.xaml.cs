@@ -18,25 +18,25 @@ using Microsoft.Reporting.WinForms;
 namespace AccountBuddy.PL.frm.Master
 {
     /// <summary>
-    /// Interaction logic for frmStockGroup.xaml
+    /// Interaction logic for frmUOM.xaml
     /// </summary>
-    public partial class frmStockGroup : UserControl
+    public partial class frmUOM : UserControl
     {
         #region Field
 
-        public static string FormName = "Stock Group";
-        BLL.StockGroup data = new BLL.StockGroup();
+        public static string FormName = "UOM";
+        BLL.UOM data = new BLL.UOM();
 
         #endregion
 
         #region Constructor
 
-        public frmStockGroup()
+        public frmUOM()
         {
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-            rptStockGroup.SetDisplayMode(DisplayMode.PrintLayout);
+            rptUOM.SetDisplayMode(DisplayMode.PrintLayout);
 
             onClientEvents();
 
@@ -48,15 +48,11 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvStock.ItemsSource = BLL.StockGroup.toList;
+            dgvUOM.ItemsSource = BLL.UOM.toList;
 
-            CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Filter = StockGroup_Filter;
-            CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.StockGroupCode), System.ComponentModel.ListSortDirection.Ascending));
-            cmbUnder.ItemsSource = BLL.StockGroup.toList;
-            cmbUnder.SelectedValuePath = "Id";
-            cmbUnder.DisplayMemberPath = "GroupNameWithCode";
-
-
+            CollectionViewSource.GetDefaultView(dgvUOM.ItemsSource).Filter = UOM_Filter;
+            CollectionViewSource.GetDefaultView(dgvUOM.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Symbol), System.ComponentModel.ListSortDirection.Ascending));
+           
 
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
@@ -67,9 +63,9 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.StockGroupName == null)
+            if (data.Symbol == null)
             {
-                MessageBox.Show(String.Format(Message.BLL.Required_Data, "Group Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(String.Format(Message.BLL.Required_Data, "Symbol"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
@@ -83,13 +79,13 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (data.Save() == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert,FormName.ToString(),MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(Message.PL.Saved_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                     Grid_Refresh();
                 }
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.StockGroupName),FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.Symbol), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
@@ -109,7 +105,7 @@ namespace AccountBuddy.PL.frm.Master
                     {
                         if (data.Delete() == true)
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert,FormName.ToString(), MessageBoxButton.OK,MessageBoxImage.Information);
+                            MessageBox.Show(Message.PL.Delete_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                             data.Clear();
                             Grid_Refresh();
                         }
@@ -135,9 +131,9 @@ namespace AccountBuddy.PL.frm.Master
             data.Clear();
         }
 
-        private void dgvStock_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dgvUOM_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvStock.SelectedItem as BLL.StockGroup;
+            var d = dgvUOM.SelectedItem as BLL.UOM;
             if (d != null)
             {
                 data.Find(d.Id);
@@ -189,10 +185,10 @@ namespace AccountBuddy.PL.frm.Master
 
         #region Methods
 
-        private bool StockGroup_Filter(object obj)
+        private bool UOM_Filter(object obj)
         {
             bool RValue = false;
-            var d = obj as BLL.StockGroup;
+            var d = obj as BLL.UOM;
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
@@ -235,7 +231,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Refresh();
+                CollectionViewSource.GetDefaultView(dgvUOM.ItemsSource).Refresh();
             }
             catch (Exception ex) { };
 
@@ -245,14 +241,14 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                rptStockGroup.Reset();
-                ReportDataSource data = new ReportDataSource("StockGroup", BLL.StockGroup.toList.Where(x => StockGroup_Filter(x)).Select(x => new { x.StockGroupCode, x.StockGroupName, underGroupName = x.UnderStockGroup.StockGroupName }).OrderBy(x => x.StockGroupCode).ToList());
+                rptUOM.Reset();
+                ReportDataSource data = new ReportDataSource("UOM", BLL.UOM.toList.Where(x => UOM_Filter(x)).Select(x => new { x.Symbol, x.FormalName }).OrderBy(x => x.Symbol).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
-                rptStockGroup.LocalReport.DataSources.Add(data);
-                rptStockGroup.LocalReport.DataSources.Add(data1);
-                rptStockGroup.LocalReport.ReportPath = @"rpt\master\rptStockGroup.rdlc";
+                rptUOM.LocalReport.DataSources.Add(data);
+                rptUOM.LocalReport.DataSources.Add(data1);
+                rptUOM.LocalReport.ReportPath = @"rpt\master\rptUOM.rdlc";
 
-                rptStockGroup.RefreshReport();
+                rptUOM.RefreshReport();
 
             }
             catch (Exception ex)
@@ -265,21 +261,21 @@ namespace AccountBuddy.PL.frm.Master
 
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.StockGroup>("StockGroup_Save", (sgp) =>
+            BLL.FMCGHubClient.FMCGHub.On<BLL.UOM>("UOM_Save", (uom) =>
             {
 
                 this.Dispatcher.Invoke(() =>
                 {
-                    sgp.Save(true);
+                    uom.Save(true);
                 });
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("StockGroup_Delete", (Action<int>)((pk) =>
+            BLL.FMCGHubClient.FMCGHub.On("UOM_Delete", (Action<int>)((pk) =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
                 {
-                    BLL.StockGroup agp = new BLL.StockGroup();
+                    BLL.UOM agp = new BLL.UOM();
                     agp.Find((int)pk);
                     agp.Delete((bool)true);
                 }));
@@ -289,9 +285,9 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-        private void dgvStock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void dgvUOM_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvStock.SelectedItem as BLL.StockGroup;
+            var d = dgvUOM.SelectedItem as BLL.UOM;
             if (d != null)
             {
                 data.Find(d.Id);

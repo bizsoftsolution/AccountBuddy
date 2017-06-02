@@ -159,6 +159,7 @@
     <Compile Include="Hubs\Journal.cs" />
     <Compile Include="Hubs\Ledger.cs" />
     <Compile Include="Hubs\Payment.cs" />
+    <Compile Include="Hubs\Products.cs" />
     <Compile Include="Hubs\ProfitLoss.cs" />
     <Compile Include="Hubs\Receipt.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -168,6 +169,7 @@
     <Compile Include="Hubs\SLUser.cs" />
     <Compile Include="Hubs\StockGroup.cs" />
     <Compile Include="Hubs\TrialBalance.cs" />
+    <Compile Include="Hubs\UOM.cs" />
     <Compile Include="Hubs\UserAccount.cs" />
     <Compile Include="Hubs\UserType.cs" />
     <Compile Include="Hubs\UserTypeDetail.cs" />

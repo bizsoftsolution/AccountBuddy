@@ -53,7 +53,13 @@
     <EmbeddedResource Include="rpt\Master\RptLedger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Master\rptProducts.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Master\rptStockGroup.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Master\rptUOM.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Report\rptBalanceSheet.rdlc">
@@ -104,12 +110,14 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.Ledger.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Payment.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.PaymentDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Products1.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ProfitLoss.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Receipt.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptAndPayment.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockGroup1.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.TrialBalance.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.UOM.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UserAccount.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UserType.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UserTypeDetail.datasource" />

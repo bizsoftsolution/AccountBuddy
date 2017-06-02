@@ -174,7 +174,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmProducts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmStockGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Master\frmUOM.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -301,8 +309,14 @@
     <Compile Include="frm\Master\frmLedger.xaml.cs">
       <DependentUpon>frmLedger.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Master\frmProducts.xaml.cs">
+      <DependentUpon>frmProducts.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Master\frmStockGroup.xaml.cs">
       <DependentUpon>frmStockGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmUOM.xaml.cs">
+      <DependentUpon>frmUOM.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmUser.xaml.cs">
       <DependentUpon>frmUser.xaml</DependentUpon>
@@ -468,6 +482,14 @@
   <ItemGroup>
     <Resource Include="Images\fmcgbck.jpg" />
     <Resource Include="Images\fmcg_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fmcg\fmcg home page.png" />
+    <Resource Include="Images\fmcg\fmcg login page bck.png" />
+    <Resource Include="Images\fmcg\fmcg login page.png" />
+    <Resource Include="Images\fmcg\fmcg logo 256 x 256.ico" />
+    <Resource Include="Images\fmcg\home page – 2.png" />
+    <Resource Include="Images\fmcg\logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

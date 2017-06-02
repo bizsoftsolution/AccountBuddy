@@ -13,7 +13,7 @@
                        
                        Closing="MetroWindow_Closing" Icon="Images/fmcg_logo.png" Loaded="MetroWindow_Loaded" >
     <Window.Background>
-        <ImageBrush ImageSource="Images/fmcgbck.jpg"/>
+        <ImageBrush ImageSource="Images/fmcg/fmcg login page bck.png"/>
     </Window.Background>
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="CommandBinding_Executed" />
