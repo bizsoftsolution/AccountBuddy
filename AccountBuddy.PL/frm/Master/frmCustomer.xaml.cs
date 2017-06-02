@@ -52,9 +52,9 @@ namespace AccountBuddy.PL.frm.Master
             CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).Filter = Customer_Filter;
             CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.AccountName), System.ComponentModel.ListSortDirection.Ascending));
 
-            cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.ToList();
-            cmbAccountGroupId.DisplayMemberPath = "GroupName";
-            cmbAccountGroupId.SelectedValuePath = "Id";
+            //cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.ToList();
+            //cmbAccountGroupId.DisplayMemberPath = "GroupName";
+            //cmbAccountGroupId.SelectedValuePath = "Id";
 
 
 
