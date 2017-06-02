@@ -33,30 +33,32 @@ namespace AccountBuddy.SL.Hubs
                              .Select(x => CustomerDAL_BLL(x)).ToList();
         }
 
-        public int Customer_Save(BLL.Customer led)
+        public int Customer_Save(BLL.Customer cus)
         {
             try
             {
-                DAL.Ledger d = DB.Ledgers.Where(x => x.Id == led.Id).FirstOrDefault();
-                DAL.Customer CL = DB.Customers.Where(x => x.LedgerId == led.Id).FirstOrDefault();
+                DAL.Ledger d = DB.Ledgers.Where(x => x.Id == cus.Ledger.Id).FirstOrDefault();
+                DAL.Customer CL = DB.Customers.Where(x => x.LedgerId == cus.Id).FirstOrDefault();
 
                 if (d == null)
                 {
+
                     d = new DAL.Ledger();
                     DB.Ledgers.Add(d);
-
-                    led.toCopy<DAL.Ledger>(d);
-                    led.Id = d.Id;
+                    d.AccountGroupId = DB.AccountGroups.Where(x => x.GroupName == "Sundry Creditors").Select(x => x.Id).FirstOrDefault();
+                    cus.Ledger.toCopy<DAL.Ledger>(d);
+                                        
+                    cus.Id = d.Id;
                     DB.SaveChanges();
 
                     CL = new DAL.Customer();
                     CL.LedgerId = d.Id;
-                   
+                     
                     DB.Customers.Add(CL);
                     DB.SaveChanges();
 
                   
-                    led.toCopy<DAL.Customer>(CL);
+                    cus.toCopy<DAL.Customer>(CL);
 
 
 
@@ -64,18 +66,18 @@ namespace AccountBuddy.SL.Hubs
 
 
 
-                    LogDetailStore(led, LogDetailType.INSERT);
+                    LogDetailStore(cus, LogDetailType.INSERT);
                 }
                 else
                 {
-                    led.toCopy<DAL.Ledger>(d);
+                    cus.toCopy<DAL.Ledger>(d);
                     DB.SaveChanges();
-                    LogDetailStore(led, LogDetailType.UPDATE);
+                    LogDetailStore(cus, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).Customer_Save(led);
+                Clients.Clients(OtherLoginClientsOnGroup).Customer_Save(cus);
 
-                return led.Id = d.Id;
+                return cus.Id = d.Id;
             }
             catch (Exception ex) { }
             return 0;
