@@ -25,9 +25,9 @@ namespace AccountBuddy.BLL
         private decimal? _PurchaseRate;
         private decimal? _SellingRate;
         private decimal? _MRP;
-        private decimal? _GST;
-        private decimal? _OpeningStock;
-        private decimal? _ReOrderLevel;
+        private double? _GST;
+        private double? _OpeningStock;
+        private double? _ReOrderLevel;
 
         private byte[] _ProductImage;
 
@@ -238,7 +238,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? GST
+        public double? GST
         {
             get
             {
@@ -254,7 +254,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? OpeningStock
+        public double? OpeningStock
         {
             get
             {
@@ -270,7 +270,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? ReOrderLevel
+        public double? ReOrderLevel
         {
             get
             {

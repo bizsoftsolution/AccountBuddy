@@ -55,7 +55,7 @@
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
 
-                            <ComboBox  Name="cmbStockGroupId"  IsEditable="True" SelectedValue="{Binding StockGroupId,Mode=TwoWay}" FontWeight="Bold" FontSize="14" SelectedItem="{Binding StockGroup.GroupName,Mode=TwoWay}" Text ="{Binding StockGroup.GroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBox  Name="cmbStockGroupId"  IsEditable="True" SelectedValue="{Binding StockGroupId,Mode=TwoWay}" FontWeight="Bold" FontSize="14" SelectedItem="{Binding StockGroup.StockGroupName,Mode=TwoWay}" Text ="{Binding StockGroup.StockGroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" >
                                         <materialDesign:PackIcon  Kind="Group" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />

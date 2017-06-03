@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace AccountBuddy.PL.frm.Master
 {
@@ -59,7 +60,8 @@ namespace AccountBuddy.PL.frm.Master
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
-            
+            iProductImage.Source = AppLib.ViewImage(data.Logo);
+            iProductImage.Tag = data.Logo;
 
             var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
             dgvWarehouse.ItemsSource = lstCompany;
@@ -288,6 +290,34 @@ namespace AccountBuddy.PL.frm.Master
             if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
         }
 
+
         #endregion
+
+        private void btnImage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog OpenDialogBox = new OpenFileDialog();
+                OpenDialogBox.DefaultExt = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+                OpenDialogBox.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+
+                var browsefile = OpenDialogBox.ShowDialog();
+                if (browsefile == true)
+                {
+                    string sFileName = OpenDialogBox.FileName.ToString();
+                    if (!string.IsNullOrEmpty(sFileName))
+                    {
+                        ImageSource imageSource = new BitmapImage(new Uri(sFileName));
+
+                        iProductImage.Source = imageSource;
+                        iProductImage.Tag = AppLib.ReadImageFile(sFileName);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            { }
+
+        }
     }
 }
