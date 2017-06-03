@@ -19,9 +19,9 @@ using Microsoft.Reporting.WinForms;
 namespace AccountBuddy.PL.frm.Master
 {
     /// <summary>
-    /// Interaction logic for frmSupplier.xaml
+    /// Interaction logic for frmStaff.xaml
     /// </summary>
-    public partial class frmSupplier : UserControl
+    public partial class frmStaff : UserControl
     {
 
         #region Field
@@ -33,7 +33,7 @@ namespace AccountBuddy.PL.frm.Master
 
         #region Constructor
 
-        public frmSupplier()
+        public frmStaff()
         {
             InitializeComponent();
             this.DataContext = data;
@@ -48,10 +48,10 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvSupplier.ItemsSource = BLL.Customer.toList;
+            dgvCustomer.ItemsSource = BLL.Customer.toList;
 
-            CollectionViewSource.GetDefaultView(dgvSupplier.ItemsSource).Filter = Customer_Filter;
-            CollectionViewSource.GetDefaultView(dgvSupplier.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.AccountName), System.ComponentModel.ListSortDirection.Ascending));
+            CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).Filter = Customer_Filter;
+            CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.AccountName), System.ComponentModel.ListSortDirection.Ascending));
 
             //cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.ToList();
             //cmbAccountGroupId.DisplayMemberPath = "GroupName";
@@ -138,9 +138,9 @@ namespace AccountBuddy.PL.frm.Master
             data.Clear();
         }
 
-        private void dgvSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dgvCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvSupplier.SelectedItem as BLL.Customer;
+            var d = dgvCustomer.SelectedItem as BLL.Customer;
             if (d != null)
             {
                 data.Find(d.Id);
@@ -243,7 +243,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                CollectionViewSource.GetDefaultView(dgvSupplier.ItemsSource).Refresh();
+                CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).Refresh();
             }
             catch (Exception ex) { };
 
@@ -328,9 +328,9 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
-        private void dgvSupplier_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void dgvCustomer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvSupplier.SelectedItem as BLL.Ledger;
+            var d = dgvCustomer.SelectedItem as BLL.Ledger;
             if (d != null)
             {
                 data.Find(d.Id);

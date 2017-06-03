@@ -1,0 +1,258 @@
+﻿<UserControl x:Class="AccountBuddy.PL.frm.Transaction.frmSalesReturn"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AccountBuddy.PL.frm.Transaction"
+             mc:Ignorable="d" 
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
+            
+             xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+          
+           d:DesignHeight="600" d:DesignWidth="1100" Background="White">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
+            <RowDefinition Height="{DynamicResource FormBodyHeight}"/>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
+        <!--#region Form Head -->
+        <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Width="1099" Margin="0,0,0,1"><Run Text="Sales Return"/></TextBlock>
+            </StackPanel>
+        </Grid>
+        <!--#endregion-->
+        <!--#region Form Body-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="230"/>
+            </Grid.ColumnDefinitions>
+            <!--#region Form Left-->
+            <Grid Grid.Column="0" Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="31*"/>
+                    <RowDefinition Height="24*"/>
+                    <RowDefinition Height="340"/>
+                    <RowDefinition Height="70"/>
+
+                </Grid.RowDefinitions>
+                <!--#endregion-->
+                <!--#region Form Design-->
+                <Grid Grid.Row="0" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" >
+                    <Grid Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="100"/>
+
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" VerticalAlignment="Top"  Height="79" >
+                                <TextBox Text="{Binding RefNo, Mode=TwoWay}" Width="73" materialDesign:HintAssist.Hint="Ref.Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                                <TextBox Text="{Binding BillNo, Mode=TwoWay}" Width="73" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                                <DatePicker x:Name="dtpDate"  SelectedDate="{Binding SRDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,10,24" Width="102" FontWeight="Bold"  />
+                                <ComboBox x:Name="cmbCustomer" SelectionChanged="cmbCustomer_SelectionChanged" Text="{Binding CustomerName}" SelectedValue="{Binding CustomerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="230" Height="43" Margin="0,12,0,24">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="Customer Name"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+
+                                <ComboBox x:Name="cmbPType" Text="{Binding TransactionType}" SelectedValue="{Binding TransactionTypeId , Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" Margin="10,12,20,24" FontSize="14" Width="123" Height="43">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+
+                                            <TextBlock Text="Type"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+
+                                <!--<ComboBox x:Name="cmbPORefNo" SelectionChanged="cmbPORefNo_SelectionChanged" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" Margin="10,12,20,24" FontSize="14" Width="123" Height="43">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+
+                                            <TextBlock Text="PO Ref.Code"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>-->
+
+
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="0,0,0,38">
+                            <StackPanel  x:Name="stkPurchaseDetails" Orientation="Horizontal" VerticalAlignment="Top">
+                                <TextBox KeyDown="txtBarCode_KeyDown" x:Name="txtBarCode" Margin="0,0,10,0" Text="{Binding SRDetail.ItemCode,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="90">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="CardsOutline" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+
+                                            <TextBlock Text="Bar Code"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                                <ComboBox x:Name="cmbItem" Margin="0,0,10,0" Text="{Binding SRDetail.ProductName}" SelectedValue="{Binding SRDetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="Item Name"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <ComboBox x:Name="cmbUOM" Margin="0,0,10,0" Text="{Binding SRDetail.UOMName}" SelectedValue="{Binding SRDetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Weight" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="UOM"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <TextBox x:Name="txtRate" Margin="0,0,10,0" Text="{Binding SRDetail.UnitPrice}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="70"  TextAlignment="Right">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="Rate"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                                <TextBox x:Name="txtQty" Margin="0,0,10,0" Text="{Binding SRDetail.Quantity}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="CardsOutline" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+
+                                            <TextBlock Text="Qty"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                                <TextBox x:Name="txtAmount" Margin="0,0,10,0" Text="{Binding SRDetail.Amount}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="90" TextAlignment="Right">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="CashMultiple" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="Amount"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                                <Button Margin="0,0,10,0" x:Name="btnAdd" Background="Transparent" BorderThickness="1" ToolTip="Add Item"  Width="57" Height="36" Click="btnAdd_Click"  >
+                                    <materialDesign:PackIcon Kind="CartPlus" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />
+                                </Button>
+                                <Button x:Name="btnRefresh" BorderThickness="1" ToolTip="Refresh" Background="Transparent"  Width="60" Height="36" Click="btnRefresh_Click" >
+                                    <materialDesign:PackIcon Kind="Refresh" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />
+                                </Button>
+
+                            </StackPanel>
+                        </Grid>
+
+                    </Grid>
+
+                </Grid>
+
+                <!--#endregion-->
+                <!--#region Grid-->
+                <Grid Margin="0,2,10,10" Grid.Row="2" x:Name="gvPurchaseDetails">
+
+                    <DataGrid x:Name="dgvDetails" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding SRDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,16,104" >
+                        <DataGrid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="-0.283"/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0.745"/>
+                            </TransformGroup>
+                        </DataGrid.RenderTransform>
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            </Style>
+
+                        </DataGrid.ColumnHeaderStyle>
+
+                        <DataGrid.Effect>
+                            <DropShadowEffect/>
+                        </DataGrid.Effect>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Item Name" FontWeight="Bold" Width="350" Binding="{Binding ProductName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                            <DataGridTextColumn Header="UOM" FontWeight="Bold" Width="100" Binding="{Binding UOMName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Rate" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="100" Binding="{Binding UnitPrice, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Qty"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="70" Binding="{Binding Quantity, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTemplateColumn Header="Delete" TextBlock.TextAlignment="Center"  Width="75">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding ProductName}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                            <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding AmountInwords}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"  RenderTransformOrigin="0.5,0.375" TextAlignment="Left" Margin="10,228,10,10" Width="597"/>
+                    </StackPanel>
+
+                </Grid>
+                <!--#endregion-->
+                <!--#region Buttons-->
+                <Grid Grid.Row="2" Margin="0,295,0,-7" Grid.RowSpan="2">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button Click="btnSave_Click" Width="80" Height="30" x:Name="btnSave" Content="SAVE"   Margin="5 5" />
+                        <Button Click="btnDelete_Click" Width="80" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
+                        <Button Click="btnClear_Click"  Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />
+                        <Button Click="btnPrint_Click"  Width="80" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" />
+                        <TextBox Text="{Binding SearchText}" Width="100" materialDesign:HintAssist.Hint="Ref.Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                        <Button Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" Margin="5 5" />
+
+                    </StackPanel>
+                    <TextBlock x:Name="lblAmountInWords"  Width="auto" FontWeight="Black" Margin="771,0,0,0" FontSize="17" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="auto"/>
+                    <TextBlock x:Name="lblAmount" Width="auto" FontWeight="Black"  FontSize="17" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="auto" Margin="846,28,0,0"/>
+
+                </Grid>
+                <!--#endregion-->
+
+            </Grid>
+            <!--#endregion-->
+            <!--#region Form Right-->
+            <Grid Grid.Column="1" Margin="10,90,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--#region Search Box-->
+
+
+                <!--#endregion-->
+
+                <!--#region DataGrid-->
+                <Grid Grid.Row="1" Margin="0">
+                    <StackPanel Orientation="Vertical">
+                        <TextBox Text="{Binding ItemAmount,Mode=TwoWay,StringFormat={}{0:N2}}" materialDesign:HintAssist.Hint="Item Amount"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0" TextAlignment="Right"  />
+                        <TextBox Text="{Binding DiscountAmount,StringFormat={}{0:N2}}" materialDesign:HintAssist.Hint="Discount Amount"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0" RenderTransformOrigin="0.5,0.375" TextAlignment="Right"/>
+                        <TextBox Text="{Binding GSTAmount, Mode=TwoWay,StringFormat={}{0:N2}}" materialDesign:HintAssist.Hint="GST Amount"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0" RenderTransformOrigin="0.5,0.375" TextAlignment="Right"/>
+                        <TextBox x:Name="txtExtras" Text="{Binding ExtraAmount, Mode=TwoWay,StringFormat={}{0:N2}}" materialDesign:HintAssist.Hint="Extra Amount"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0"  RenderTransformOrigin="0.5,0.375" TextAlignment="Right"/>
+                        <TextBox x:Name="txtTotal" Text="{Binding TotalAmount, Mode=TwoWay,StringFormat={}{0:N2}}" materialDesign:HintAssist.Hint="Total Amount"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0"  IsReadOnly="False" RenderTransformOrigin="0.5,0.5" TextAlignment="Right" />
+                    </StackPanel>
+
+                </Grid>
+                <!--#endregion-->
+            </Grid>
+            <!--#endregion-->
+
+        </Grid>
+        <!--#endregion-->
+    </Grid>
+</UserControl>

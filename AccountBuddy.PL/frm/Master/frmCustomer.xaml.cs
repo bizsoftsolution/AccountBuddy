@@ -25,7 +25,7 @@ namespace AccountBuddy.PL.frm.Master
     {
         #region Field
 
-        public static string FormName = "Ledger";
+        public static string FormName = "Customer";
         BLL.Customer data = new BLL.Customer();
 
         #endregion

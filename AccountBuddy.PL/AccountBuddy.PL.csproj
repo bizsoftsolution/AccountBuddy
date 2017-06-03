@@ -162,6 +162,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmBank.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmCompanySetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,9 +182,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmStaff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmStockGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Master\frmSupplier.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="frm\Master\frmUOM.xaml">
       <SubType>Designer</SubType>
@@ -262,7 +274,43 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmPurchase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Transaction\frmPurchaseOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmPurchaseReturn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmReceipt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmSale.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Transaction\frmSalesOrder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Transaction\frmSalesReturn.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Transaction\Purchase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\SalesOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\SalesReturn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -304,6 +352,9 @@
     <Compile Include="frm\Master\frmAccountGroup.xaml.cs">
       <DependentUpon>frmAccountGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Master\frmBank.xaml.cs">
+      <DependentUpon>frmBank.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Master\frmCompanySetting.xaml.cs">
       <DependentUpon>frmCompanySetting.xaml</DependentUpon>
     </Compile>
@@ -316,8 +367,14 @@
     <Compile Include="frm\Master\frmProducts.xaml.cs">
       <DependentUpon>frmProducts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Master\frmStaff.xaml.cs">
+      <DependentUpon>frmStaff.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Master\frmStockGroup.xaml.cs">
       <DependentUpon>frmStockGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmSupplier.xaml.cs">
+      <DependentUpon>frmSupplier.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmUOM.xaml.cs">
       <DependentUpon>frmUOM.xaml</DependentUpon>
@@ -379,8 +436,35 @@
     <Compile Include="frm\Transaction\frmPayment.xaml.cs">
       <DependentUpon>frmPayment.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmPurchase.xaml.cs">
+      <DependentUpon>frmPurchase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmPurchaseOrder.xaml.cs">
+      <DependentUpon>frmPurchaseOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmPurchaseReturn.xaml.cs">
+      <DependentUpon>frmPurchaseReturn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmReceipt.xaml.cs">
       <DependentUpon>frmReceipt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmSale.xaml.cs">
+      <DependentUpon>frmSale.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmSalesOrder.xaml.cs">
+      <DependentUpon>frmSalesOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmSalesReturn.xaml.cs">
+      <DependentUpon>frmSalesReturn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\Purchase.xaml.cs">
+      <DependentUpon>Purchase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\SalesOrder.xaml.cs">
+      <DependentUpon>SalesOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\SalesReturn.xaml.cs">
+      <DependentUpon>SalesReturn.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Vouchers\frmQuickJournalVoucher.xaml.cs">
       <DependentUpon>frmQuickJournalVoucher.xaml</DependentUpon>

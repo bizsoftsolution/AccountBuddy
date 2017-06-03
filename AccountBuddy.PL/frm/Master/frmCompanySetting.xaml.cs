@@ -80,6 +80,7 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
+
         #region ButtonEvents
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -246,11 +247,17 @@ namespace AccountBuddy.PL.frm.Master
             {
                 var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
                 frmUserManager f = new frmUserManager();
+                f.LoadWindow(cm.Id);
+                f.userId = cm.Id;
                 f.Title = string.Format("Login Users - {0}", cm.CompanyName);
                 f.ShowDialog();
             }
             catch (Exception ex) { }
         }
+
+
+
+
 
         private void btnImage_Click(object sender, RoutedEventArgs e)
         {
@@ -331,5 +338,8 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-           }
+
+
+
+    }
 }

@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using AccountBuddy.Common;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace AccountBuddy.PL.frm.Master
 {
@@ -19,9 +21,77 @@ namespace AccountBuddy.PL.frm.Master
     /// </summary>
     public partial class frmUserManager : Window
     {
+        public  int userId;
+
         public frmUserManager()
         {
             InitializeComponent();
+            onClientEvents();
+            
+    }
+
+
+    private void onClientEvents()
+        {
+
+
+            BLL.FMCGHubClient.FMCGHub.On<BLL.UserAccount>("UserAccount_Save", (ua) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    BLL.UserAccount u = new BLL.UserAccount();
+                    ua.toCopy<BLL.UserAccount>(u);
+                    BLL.UserAccount.toList.Add(u);
+                });
+
+            });
         }
+        private void btnNewUser_Click(object sender, RoutedEventArgs e)
+        {
+            frmUser f = new frmUser();
+            f.ShowDialog();
+            //f.data.UserType.CompanyId = userId;
+            
+        }
+
+        private void btnEditUser_Click(object sender, RoutedEventArgs e)
+        {
+            var u = dgvUsers.SelectedItem as BLL.UserAccount;
+
+            frmUser f = new frmUser();
+          
+            u.toCopy<BLL.UserAccount>(f.data);
+            f.ShowDialog();
+        }
+
+        private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+            var u = dgvUsers.SelectedItem as BLL.UserAccount;
+            if (u != null)
+            {
+                if (BLL.UserAccount.toList.Count() == 1)
+                {
+                    MessageBox.Show(string.Format("You can not delete this user. atleast one user required"));
+                }
+                else if (MessageBox.Show("Do you Delete this?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    if (u.Delete() == true) MessageBox.Show(Message.PL.Delete_Alert);
+                }
+            }
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadWindow(userId);
+
+        }
+
+        public void LoadWindow(int userId)
+        {
+            dgvUsers.ItemsSource = BLL.UserAccount.toList.Where(x => x.UserType.CompanyId == userId).ToList();
+        }
+
     }
 }

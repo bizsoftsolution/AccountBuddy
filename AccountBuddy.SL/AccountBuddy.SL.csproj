@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Hubs\Bank.manifest" />
     <None Include="Properties\PublishProfiles\ABSL.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
@@ -151,6 +152,7 @@
     <Compile Include="Hubs\ABServerHub.cs" />
     <Compile Include="Hubs\AccountGroup.cs" />
     <Compile Include="Hubs\BalanceSheet.cs" />
+    <Compile Include="Hubs\Bank.cs" />
     <Compile Include="Hubs\BankReconcilation.cs" />
     <Compile Include="Hubs\CompanyDetail.cs" />
     <Compile Include="Hubs\CreditLimitType.cs" />
@@ -161,13 +163,21 @@
     <Compile Include="Hubs\Payment.cs" />
     <Compile Include="Hubs\Products.cs" />
     <Compile Include="Hubs\ProfitLoss.cs" />
+    <Compile Include="Hubs\Purchase.cs" />
+    <Compile Include="Hubs\PurchaseOrder.cs" />
+    <Compile Include="Hubs\PurchaseReturn.cs" />
     <Compile Include="Hubs\Receipt.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Hubs\ReceiptAndPayment.cs" />
     <Compile Include="Hubs\Report.cs" />
+    <Compile Include="Hubs\Sales.cs" />
+    <Compile Include="Hubs\SalesOrder.cs" />
+    <Compile Include="Hubs\SalesReturn.cs" />
     <Compile Include="Hubs\SLUser.cs" />
     <Compile Include="Hubs\StockGroup.cs" />
+    <Compile Include="Hubs\Supplier.cs" />
+    <Compile Include="Hubs\TransactionType.cs" />
     <Compile Include="Hubs\TrialBalance.cs" />
     <Compile Include="Hubs\UOM.cs" />
     <Compile Include="Hubs\UserAccount.cs" />
@@ -213,6 +223,10 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Hubs\Bank.manifest</ApplicationManifest>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

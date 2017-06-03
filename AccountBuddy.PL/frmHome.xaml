@@ -102,6 +102,21 @@
                                             <Master:frmCustomer/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Supplier" FormName="Supplier">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmSupplier/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Bank" FormName="Bank">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmBank/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Staff" FormName="Staff">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmStaff/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Stock Group" FormName="Stock Group">
                                         <Menu:NavMenuItem.Content>
                                             <Master:frmStockGroup/>
@@ -129,7 +144,36 @@
                                             <TextBlock Text="{Binding MenuName}" Margin="32 0 32 0" FontSize="16"  />
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
-
+                                    <Menu:NavMenuItem MenuName="Purchase Order" FormName="Purchase Order">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmPurchaseOrder/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Purchase" FormName="Purchase">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmPurchase/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Sales Order" FormName="Sales Order">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmSalesOrder/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Sales" FormName="Sales">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmSale/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Purchase Return" FormName="Purchase Return">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmPurchaseReturn/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Sales Return" FormName="Sales Return">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmSalesReturn/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Payment" FormName="Payment">
                                         <Menu:NavMenuItem.Content>
                                             <Transaction:frmPayment/>
