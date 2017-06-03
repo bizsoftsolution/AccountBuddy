@@ -240,6 +240,44 @@ namespace AccountBuddy.PL.frm.Master
             }
         }
 
+        private void btnUserWarehouse_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+                frmUserManager f = new frmUserManager();
+                f.Title = string.Format("Login Users - {0}", cm.CompanyName);
+                f.ShowDialog();
+            }
+            catch (Exception ex) { }
+        }
+
+        private void btnImage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog OpenDialogBox = new OpenFileDialog();
+                OpenDialogBox.DefaultExt = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+                OpenDialogBox.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+
+                var browsefile = OpenDialogBox.ShowDialog();
+                if (browsefile == true)
+                {
+                    string sFileName = OpenDialogBox.FileName.ToString();
+                    if (!string.IsNullOrEmpty(sFileName))
+                    {
+                        ImageSource imageSource = new BitmapImage(new Uri(sFileName));
+
+                        iProductImage.Source = imageSource;
+                        iProductImage.Tag = AppLib.ReadImageFile(sFileName);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            { }
+
+        }
         #endregion
 
         #region Events
@@ -293,31 +331,5 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-        private void btnImage_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                OpenFileDialog OpenDialogBox = new OpenFileDialog();
-                OpenDialogBox.DefaultExt = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
-                OpenDialogBox.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
-
-                var browsefile = OpenDialogBox.ShowDialog();
-                if (browsefile == true)
-                {
-                    string sFileName = OpenDialogBox.FileName.ToString();
-                    if (!string.IsNullOrEmpty(sFileName))
-                    {
-                        ImageSource imageSource = new BitmapImage(new Uri(sFileName));
-
-                        iProductImage.Source = imageSource;
-                        iProductImage.Tag = AppLib.ReadImageFile(sFileName);
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            { }
-
-        }
-    }
+           }
 }
