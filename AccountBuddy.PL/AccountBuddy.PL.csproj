@@ -190,6 +190,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmUserManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmUserType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -320,6 +324,9 @@
     </Compile>
     <Compile Include="frm\Master\frmUser.xaml.cs">
       <DependentUpon>frmUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmUserManager.xaml.cs">
+      <DependentUpon>frmUserManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmUserType.xaml.cs">
       <DependentUpon>frmUserType.xaml</DependentUpon>
