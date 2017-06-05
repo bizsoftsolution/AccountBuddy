@@ -86,7 +86,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
             iLogoImage.Source = AppLib.ViewImage(data.Logo);
-           // iLogoImage.Tag = AppLib.ReadImageFile(data.Logo);
+            iLogoImage.Tag = data.Logo;
 
             var lstUser = BLL.UserAccount.toList;
             dgvUsers.ItemsSource = lstUser;

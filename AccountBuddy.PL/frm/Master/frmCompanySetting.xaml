@@ -29,7 +29,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <!--#region Form Left-->
             <Grid Grid.Column="0" Margin="10,0,10,0" Grid.Row="0">
@@ -138,10 +138,7 @@
                 <Image  Source=" C:\Projects\AccountBuddy\AccountBuddy.PL\Images\LogoFrame.png" Margin="0,10,0,115">
 
                 </Image>
-
-                <Image x:Name="iLogoImage"  Tag="{Binding Logo, Mode=TwoWay}"  VerticalAlignment="Top"  Width="140" Height="110" Margin="10,25,10,0"   >
-
-                </Image>
+                <Image x:Name="iLogoImage"  Tag="{Binding Logo, Mode=TwoWay}"  VerticalAlignment="Top"  Width="140" Height="110" Margin="10,25,10,0"   />
 
             </Grid>
 

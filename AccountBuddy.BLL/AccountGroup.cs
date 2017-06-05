@@ -28,6 +28,7 @@ namespace AccountBuddy.BLL
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
         private bool _IsEnabled;
+
         #endregion
 
         #region Property

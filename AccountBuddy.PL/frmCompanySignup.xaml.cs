@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL
 {
@@ -110,5 +112,35 @@ namespace AccountBuddy.PL
         {
             if (txtMail.Text !="" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
         }
+
+        private void btnImage_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                OpenFileDialog OpenDialogBox = new OpenFileDialog();
+                OpenDialogBox.DefaultExt = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+                OpenDialogBox.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+
+                var browsefile = OpenDialogBox.ShowDialog();
+                if (browsefile == true)
+                {
+                    string sFileName = OpenDialogBox.FileName.ToString();
+                    if (!string.IsNullOrEmpty(sFileName))
+                    {
+                        ImageSource imageSource = new BitmapImage(new Uri(sFileName));
+
+                        iLogoImage.Source = imageSource;
+                        iLogoImage.Tag = AppLib.ReadImageFile(sFileName);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            { }
+
+
+        }
+
     }
 }

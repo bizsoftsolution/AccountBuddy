@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AccountBuddy.Common;
+using System.IO;
 
 namespace AccountBuddy.PL.frm.Master
 {
@@ -246,6 +248,9 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 RptAccount.Reset();
+              var b=BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).FirstOrDefault();
+
+                RptAccount.LocalReport.EnableExternalImages = true;
                 ReportDataSource data = new ReportDataSource("AccountGroup", BLL.AccountGroup.toList.Where(x => AccountGroup_Filter(x)).Select(x=>new {x.GroupCode, x.GroupName, underGroupName=x.UnderAccountGroup.GroupName }).OrderBy(x => x.GroupCode).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptAccount.LocalReport.DataSources.Add(data);
