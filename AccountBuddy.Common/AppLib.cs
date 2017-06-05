@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace AccountBuddy.Common
 {
@@ -175,7 +177,33 @@ namespace AccountBuddy.Common
 
         #endregion
 
+        #region Image
+        public static byte[] ReadImageFile(string imageLocation)
+        {
+            byte[] imageData = null;
+            FileInfo fileInfo = new FileInfo(imageLocation);
+            long imageFileLength = fileInfo.Length;
+            FileStream fs = new FileStream(imageLocation, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fs);
+            imageData = br.ReadBytes((int)imageFileLength);
+            return imageData;
+        }
+        public static BitmapImage ViewImage(byte[] bytes)
+        {
+            BitmapImage img = new BitmapImage();
 
+            if (bytes != null)
+            {
+                MemoryStream stream = new System.IO.MemoryStream(bytes);
+
+                img.BeginInit();
+                img.StreamSource = stream;
+                img.EndInit();
+            }
+
+            return img;
+        }
+        #endregion
 
     }
 }

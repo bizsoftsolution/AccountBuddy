@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace AccountBuddy.PL.frm.Master
 {
@@ -79,15 +80,17 @@ namespace AccountBuddy.PL.frm.Master
             }
         }
 
-        
+
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
+            iLogoImage.Source = AppLib.ViewImage(data.Logo);
+           // iLogoImage.Tag = AppLib.ReadImageFile(data.Logo);
 
             var lstUser = BLL.UserAccount.toList;
             dgvUsers.ItemsSource = lstUser;
-            
+
             if (BLL.UserAccount.UserPermission.IsViewForm)
             {
                 gbxLoginUser.Visibility = Visibility.Visible;
@@ -100,15 +103,15 @@ namespace AccountBuddy.PL.frm.Master
                 gbxLoginUser.Visibility = Visibility.Collapsed;
             }
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;            
+            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void btnNewUser_Click(object sender, RoutedEventArgs e)
         {
             frmUser f = new frmUser();
-            f.ShowDialog();            
+            f.ShowDialog();
         }
-        
+
         private void btnEditUser_Click(object sender, RoutedEventArgs e)
         {
             var u = dgvUsers.SelectedItem as BLL.UserAccount;
@@ -123,7 +126,7 @@ namespace AccountBuddy.PL.frm.Master
             var u = dgvUsers.SelectedItem as BLL.UserAccount;
             if (u != null)
             {
-                if(BLL.UserAccount.toList.Count() == 1)
+                if (BLL.UserAccount.toList.Count() == 1)
                 {
                     MessageBox.Show(string.Format("You can not delete this user. atleast one user required"));
                 }
@@ -132,7 +135,7 @@ namespace AccountBuddy.PL.frm.Master
                     if (u.Delete() == true) MessageBox.Show(Message.PL.Delete_Alert);
                 }
             }
-            
+
         }
 
         private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
@@ -172,13 +175,42 @@ namespace AccountBuddy.PL.frm.Master
             if (!BLL.CompanyDetail.UserPermission.AllowDelete)
                 MessageBox.Show(string.Format(Message.PL.DenyDelete, lblHead.Text));
             else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
-                
+
                 if (data.Delete() == true)
                 {
                     MessageBox.Show(Message.PL.Delete_Alert);
                     App.frmHome.IsForcedClose = true;
                     App.frmHome.Close();
                 }
+        }
+
+        private void btnImage_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                OpenFileDialog OpenDialogBox = new OpenFileDialog();
+                OpenDialogBox.DefaultExt = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+                OpenDialogBox.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+
+                var browsefile = OpenDialogBox.ShowDialog();
+                if (browsefile == true)
+                {
+                    string sFileName = OpenDialogBox.FileName.ToString();
+                    if (!string.IsNullOrEmpty(sFileName))
+                    {
+                        ImageSource imageSource = new BitmapImage(new Uri(sFileName));
+
+                        iLogoImage.Source = imageSource;
+                        iLogoImage.Tag = AppLib.ReadImageFile(sFileName);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            { }
+
+
         }
     }
 }

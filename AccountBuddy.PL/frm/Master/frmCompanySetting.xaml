@@ -16,6 +16,7 @@
             <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
             <RowDefinition Height="300"/>
             <RowDefinition Height="*"/>
+
         </Grid.RowDefinitions>
         <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="3" />
         <!--#region Form Head -->
@@ -26,12 +27,13 @@
         <!--#region Form Body-->
         <Grid Grid.Row="1" Margin="20,30,20,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <!--#region Form Left-->
             <Grid Grid.Column="0" Margin="10,0,10,0" Grid.Row="0">
-                
+
                 <!--#endregion-->
                 <!--#region Form Design-->
                 <Grid Grid.Row="0"  >
@@ -78,12 +80,12 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        
-                        
+
+
                     </StackPanel>
                 </Grid>
                 <!--#endregion-->
-                
+
                 <!--#endregion-->
             </Grid>
 
@@ -131,8 +133,20 @@
 
                 </StackPanel>
             </Grid>
+            <Grid Grid.Column="3">
+                <Button Width="80" Height="Auto" x:Name="btnImage" Content="Logo"  Margin="40,190,40,45" Click="btnImage_Click"  />
+                <Image  Source=" C:\Projects\AccountBuddy\AccountBuddy.PL\Images\LogoFrame.png" Margin="0,10,0,115">
+
+                </Image>
+
+                <Image x:Name="iLogoImage"  Tag="{Binding Logo, Mode=TwoWay}"  VerticalAlignment="Top"  Width="140" Height="110" Margin="10,25,10,0"   >
+
+                </Image>
+
+            </Grid>
+
             <!--#endregion-->
-            
+
         </Grid>
         <Grid Grid.Row="2">
             <GroupBox Name="gbxLoginUser" Header="Login Users" Height="350" Margin="10">
