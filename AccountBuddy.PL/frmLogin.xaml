@@ -151,14 +151,14 @@
             <RowDefinition Height="43*"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
-        <Image Source="Images/DenariuSoftPoweredBy.png" Grid.ColumnSpan="2" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,50,0,0" />
+        <Image Source="Images/DenariuSoftPoweredBy.png" Grid.ColumnSpan="2" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,25,0,0" />
         <Grid Grid.Column="1" Grid.Row="0">
             <StackPanel VerticalAlignment="Bottom">
                 <Image Source="Images/ABLoginHead1.png" />
             </StackPanel>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1" >
-            <Border BorderThickness="3" Margin="14,0,26,0" CornerRadius="20" BorderBrush="White" Background="#F0FFFFFF"  >
+            <Border BorderThickness="3" Margin="14,0,22,0" CornerRadius="20" BorderBrush="White" Background="#F0FFFFFF"  >
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="12" ShadowDepth="5"  Opacity=".2"/>
                 </Border.Effect>
