@@ -147,6 +147,7 @@
       <DependentUpon>DBFMCGModel.edmx</DependentUpon>
     </None>
     <None Include="DB\DBFMCG_020617.bak" />
+    <None Include="DB\DBFMCG_030617.bak" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
