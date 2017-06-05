@@ -17,8 +17,10 @@ namespace AccountBuddy.BLL
        
         private int _Id;
         private string _ProductName;
-        private StockGroup _StockGroup;
-        private int? _StockGroupId;
+        private Ledger _Ledger;
+        private int _LedgerId;
+        private AccountGroup _AccountGroup;
+        private int? _AccountGroupId;
         private string _ItemCode;
         private int? _UOMId;
         private UOM _UOM;
@@ -32,7 +34,7 @@ namespace AccountBuddy.BLL
         private byte[] _ProductImage;
 
         private string _UOMName;
-        private string _StockGroupName;
+        private string _AccountGroupName;
 
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
@@ -143,19 +145,35 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? StockGroupId
+        public int LedgerId
         {
             get
             {
-                return _StockGroupId;
+                return _LedgerId;
             }
 
             set
             {
-                if (_StockGroupId != value)
+                if (_LedgerId != value)
                 {
-                    _StockGroupId = value;
-                    NotifyPropertyChanged(nameof(StockGroupId));
+                    _LedgerId = value;
+                    NotifyPropertyChanged(nameof(LedgerId));
+                }
+            }
+        }
+        public int? AccountGroupId
+        {
+            get
+            {
+                return _AccountGroupId;
+            }
+
+            set
+            {
+                if (_AccountGroupId != value)
+                {
+                    _AccountGroupId = value;
+                    NotifyPropertyChanged(nameof(AccountGroupId));
                 }
             }
         }
@@ -322,14 +340,14 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return _StockGroupName;
+                return _AccountGroupName;
             }
 
             set
             {
-                if (_StockGroupName != value)
+                if (_AccountGroupName != value)
                 {
-                    _StockGroupName = value;
+                    _AccountGroupName = value;
                     NotifyPropertyChanged(nameof(StockGroupName));
                 }
             }
@@ -349,22 +367,36 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public StockGroup StockGroup
+        public AccountGroup AccountGroup
         {
             get
             {
-                return _StockGroup;
+                return _AccountGroup;
             }
             set
             {
-                if (_StockGroup != value)
+                if (_AccountGroup != value)
                 {
-                    _StockGroup = value;
-                    NotifyPropertyChanged(nameof(StockGroup));
+                    _AccountGroup = value;
+                    NotifyPropertyChanged(nameof(AccountGroup));
                 }
             }
         }
-
+        public Ledger Ledger
+        {
+            get
+            {
+                return _Ledger;
+            }
+            set
+            {
+                if(_Ledger!=value)
+                {
+                    _Ledger = value;
+                    NotifyPropertyChanged(nameof(Ledger));
+                }
+            }
+        }
 
         #endregion
 

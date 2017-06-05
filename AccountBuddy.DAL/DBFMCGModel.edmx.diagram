@@ -5,56 +5,109 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f954c757d34644738c6bc410d7c95d79" Name="Diagram1">
-        <EntityTypeShape EntityType="DBFMCGModel.AccountGroup" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.CompanyDetail" Width="1.5" PointX="0.75" PointY="17" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.CreditLimitType" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.Customer" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.EntityType" Width="1.5" PointX="8.25" PointY="20.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.ErrorLog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.Journal" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.JournalDetail" Width="1.5" PointX="10.5" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.Ledger" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.LogDetail" Width="1.5" PointX="7.5" PointY="22.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.LogDetailType" Width="1.5" PointX="5.25" PointY="31.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.LogMaster" Width="1.5" PointX="10.5" PointY="22.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.Payment" Width="1.5" PointX="7.5" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.PaymentDetail" Width="1.5" PointX="9.75" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.Product" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.Receipt" Width="1.5" PointX="7.5" PointY="27.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.ReceiptDetail" Width="1.5" PointX="12.75" PointY="20.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockGroup" Width="1.5" PointX="3" PointY="16.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.UOM" Width="1.5" PointX="3" PointY="20" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.UserAccount" Width="1.5" PointX="5.25" PointY="22.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.UserType" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.UserTypeDetail" Width="1.5" PointX="5.25" PointY="26.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBFMCGModel.UserTypeFormDetail" Width="1.5" PointX="3" PointY="26.625" IsExpanded="true" />
-        <AssociationConnector Association="DBFMCGModel.FK_AccountGroup_AccountGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_AccountGroup_CompanyDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_Ledger_AccountGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_CompanyDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_UOM_CompanyDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_UserType_CompanyDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_Ledger_CreditLimitType" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_Customer_Ledger" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_LogMaster_EntityType" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_JournalDetail_Journal" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_JournalDetail_Ledger" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_Payment_Ledger" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Ledger" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_Receipt_Ledger" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Ledger" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_LogDetail_LogDetailType" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_LogDetail_LogMaster" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_LogDetail_UserAccount" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_LogMaster_UserAccount" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Payment" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_Product_StockGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_Product_UOM" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Receipt" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_StockGroup1" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_UserAccount_UserType" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserType" ManuallyRouted="false" />
-        <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBFMCGModel.AccountGroup" Width="1.5" PointX="3" PointY="44.125" />
+        <EntityTypeShape EntityType="DBFMCGModel.Bank" Width="1.5" PointX="10.5" PointY="35.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.CompanyDetail" Width="1.5" PointX="0.75" PointY="38.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.CreditLimitType" Width="1.5" PointX="6" PointY="35.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.Customer" Width="1.5" PointX="10.5" PointY="52.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.EntityType" Width="1.5" PointX="8.25" PointY="53.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.ErrorLog" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.Journal" Width="1.5" PointX="11.25" PointY="31.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.JournalDetail" Width="1.5" PointX="13.5" PointY="44.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.Ledger" Width="1.5" PointX="8.25" PointY="42.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.LogDetail" Width="1.5" PointX="7.5" PointY="49.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.LogDetailType" Width="1.5" PointX="5.25" PointY="51.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.LogMaster" Width="1.5" PointX="10.5" PointY="47.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.Payment" Width="1.5" PointX="10.5" PointY="60" />
+        <EntityTypeShape EntityType="DBFMCGModel.PaymentDetail" Width="1.5" PointX="12.75" PointY="56.125" />
+        <EntityTypeShape EntityType="DBFMCGModel.Product" Width="1.5" PointX="13.5" PointY="37.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.Purchase" Width="1.5" PointX="12.75" PointY="64.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseDetail" Width="1.5" PointX="18.75" PointY="46.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseOrder" Width="1.5" PointX="15.75" PointY="64.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseOrderDetail" Width="1.5" PointX="18" PointY="52" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseReturn" Width="1.5" PointX="12.75" PointY="69.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseReturnDetail" Width="1.5" PointX="21" PointY="52.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.Receipt" Width="1.5" PointX="10.5" PointY="55" />
+        <EntityTypeShape EntityType="DBFMCGModel.ReceiptDetail" Width="1.5" PointX="15.75" PointY="47.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.Sale" Width="1.5" PointX="6" PointY="38.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.SalesDetail" Width="1.5" PointX="18" PointY="38.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.SalesOrder" Width="1.5" PointX="12.75" PointY="51.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.SalesOrderDetail" Width="1.5" PointX="15.75" PointY="42.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.SalesReturn" Width="1.5" PointX="15.75" PointY="51.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.SalesReturnDetail" Width="1.5" PointX="21.25" PointY="42.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.Staff" Width="1.5" PointX="10.5" PointY="41.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockGroup" Width="1.5" PointX="5.25" PointY="66.125" />
+        <EntityTypeShape EntityType="DBFMCGModel.Supplier" Width="1.5" PointX="10.5" PointY="65" />
+        <EntityTypeShape EntityType="DBFMCGModel.TransactionType" Width="1.5" PointX="3.75" PointY="40.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.UOM" Width="1.5" PointX="3" PointY="35.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.UserAccount" Width="1.5" PointX="5.25" PointY="48" />
+        <EntityTypeShape EntityType="DBFMCGModel.UserType" Width="1.5" PointX="3" PointY="48.125" />
+        <EntityTypeShape EntityType="DBFMCGModel.UserTypeDetail" Width="1.5" PointX="5.25" PointY="43.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.UserTypeFormDetail" Width="1.5" PointX="3" PointY="51.75" />
+        <AssociationConnector Association="DBFMCGModel.FK_AccountGroup_AccountGroup" />
+        <AssociationConnector Association="DBFMCGModel.FK_AccountGroup_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_Ledger_AccountGroup" />
+        <AssociationConnector Association="DBFMCGModel.FK_Product_AccountGroup" />
+        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_AccountGroup" />
+        <AssociationConnector Association="DBFMCGModel.FK_Bank_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_Sale_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_UOM_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_UserType_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_Ledger_CreditLimitType" />
+        <AssociationConnector Association="DBFMCGModel.FK_Customer_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesOrder_Customer" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesReturn_Customer" />
+        <AssociationConnector Association="DBFMCGModel.FK_LogMaster_EntityType" />
+        <AssociationConnector Association="DBFMCGModel.FK_JournalDetail_Journal" />
+        <AssociationConnector Association="DBFMCGModel.FK_JournalDetail_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_Payment_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_Product_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_Receipt_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_Staff_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_Supplier_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_LogDetail_LogDetailType" />
+        <AssociationConnector Association="DBFMCGModel.FK_LogDetail_LogMaster" />
+        <AssociationConnector Association="DBFMCGModel.FK_LogDetail_UserAccount" />
+        <AssociationConnector Association="DBFMCGModel.FK_LogMaster_UserAccount" />
+        <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Payment" />
+        <AssociationConnector Association="DBFMCGModel.FK_Product_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseDetail_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrderDetail_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturnDetail_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesDetail_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesOrderDetail_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesReturnDetail_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_Purchase_Supplier" />
+        <AssociationConnector Association="DBFMCGModel.FK_Purchase_TransactionType" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseDetail_Purchase" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseDetail_PurchaseOrderDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturnDetail_PurchaseDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrder_Supplier" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrder_TransactionType" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrderDetail_PurchaseOrder" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrderDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturn_Supplier" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturn_TransactionType" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturnDetail_PurchaseReturn" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturnDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Receipt" />
+        <AssociationConnector Association="DBFMCGModel.FK_Sale_TransactionType" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesDetail_Sale" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesDetail_SalesOrderDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesReturnDetail_SalesDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesOrder_TransactionType" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesOrderDetail_SalesOrder" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesOrderDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesReturn_TransactionType" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesReturnDetail_SalesReturn" />
+        <AssociationConnector Association="DBFMCGModel.FK_SalesReturnDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_UserAccount_UserType" />
+        <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserType" />
+        <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

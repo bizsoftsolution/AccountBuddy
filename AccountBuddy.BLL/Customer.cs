@@ -140,8 +140,8 @@ namespace AccountBuddy.BLL
                 if (_Ledger != value)
                 {
                     _Ledger = value;
-                    NotifyPropertyChanged(nameof(BLL.Ledger));
-                    SetAccountName();
+                    NotifyPropertyChanged(nameof(Ledger));
+                    //SetAccountName();
                 }
             }
         }

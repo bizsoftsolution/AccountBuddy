@@ -12,11 +12,13 @@ namespace AccountBuddy.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class StockGroup
+    public partial class Staff
     {
         public int Id { get; set; }
-        public int AccountGroupId { get; set; }
+        public Nullable<int> LedgerId { get; set; }
+        public Nullable<decimal> Salary { get; set; }
+        public string Designation { get; set; }
     
-        public virtual AccountGroup AccountGroup { get; set; }
+        public virtual Ledger Ledger { get; set; }
     }
 }

@@ -12,13 +12,13 @@ namespace AccountBuddy.SL.Hubs
         BLL.StockGroup StockGroupDAL_BLL(DAL.StockGroup d)
         {
             BLL.StockGroup b = d.toCopy<BLL.StockGroup>(new BLL.StockGroup());
-            b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
-            b.UnderStockGroup = d.StockGroup2 == null ? new BLL.StockGroup() : StockGroupDAL_BLL(d.StockGroup2);
-            return b;
+           // b.Company = d.AccountGroup.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+           // b.UnderStockGroup = d.StockGroup2 == null ? new BLL.StockGroup() : StockGroupDAL_BLL(d.StockGroup2);
+             return b;
         }
         public List<BLL.StockGroup> StockGroup_List()
         {
-            return DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+            return DB.StockGroups.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList()
                                .Select(x => StockGroupDAL_BLL(x)).ToList();
         }
 
@@ -26,7 +26,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                agp.CompanyId = Caller.CompanyId;
+               // agp.CompanyId = Caller.CompanyId;
                 DAL.StockGroup d = DB.StockGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
@@ -60,12 +60,15 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = DB.StockGroups.Where(x => x.Id == pk).FirstOrDefault();
+                var d = DB.AccountGroups.Where(x => x.Id == pk).FirstOrDefault();
+                var sd = DB.StockGroups.Where(x => x.AccountGroupId == pk).FirstOrDefault();
                 if (d.Products != null)
                 {
                     if (d != null)
                     {
-                        DB.StockGroups.Remove(d);
+                        DB.StockGroups.Remove(sd);
+                        DB.SaveChanges();
+                        DB.AccountGroups.Remove(d);
                         DB.SaveChanges();
                         LogDetailStore(d.toCopy<BLL.StockGroup>(new BLL.StockGroup()), LogDetailType.DELETE);
                     }

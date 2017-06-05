@@ -15,15 +15,9 @@ namespace AccountBuddy.BLL
         private static ObservableCollection<StockGroup> _toList;
 
         private int _id;
-        private string _stockGroupName;
-        private string _groupNameWithCode;
-        private string _stockGroupCode;
-        private int? _underGroupId;
-        private int _companyId;
-        private StockGroup _UnderStockGroup;
-        private CompanyDetail _Company;
-        private string _underGroupName;
-
+        private int _AccountGroupId;
+        private AccountGroup _AccountGroup;
+       
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
         private bool _IsEnabled;
@@ -31,13 +25,6 @@ namespace AccountBuddy.BLL
 
         #region Property
 
-        public string AccountPath
-        {
-            get
-            {
-                return UnderStockGroup == null ? "" : UnderStockGroup.AccountPath + "/" + _stockGroupName;
-            }
-        }
         public static UserTypeDetail UserPermission
         {
             get
@@ -68,7 +55,7 @@ namespace AccountBuddy.BLL
                     {
                         _toList = new ObservableCollection<StockGroup>();
                         var l1 = FMCGHubClient.FMCGHub.Invoke<List<StockGroup>>("StockGroup_List").Result;
-                        _toList = new ObservableCollection<StockGroup>(l1.OrderBy(x => x.GroupNameWithCode));
+                        _toList = new ObservableCollection<StockGroup>(l1.OrderBy(x => x.AccountGroup.GroupCode));
                     }
                 }
                 catch (Exception ex)
@@ -99,127 +86,19 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string StockGroupName
+     
+        public AccountGroup AccountGroup
         {
             get
             {
-                return _stockGroupName;
+                return _AccountGroup;
             }
             set
             {
-                if (_stockGroupName != value)
+                if(_AccountGroup!=value)
                 {
-                    _stockGroupName = value;
-                    NotifyPropertyChanged(nameof(StockGroupName));
-                    SetGroupNameWithCode();
-                }
-            }
-        }
-        public string StockGroupCode
-        {
-            get
-            {
-                return _stockGroupCode;
-            }
-            set
-            {
-                if (_stockGroupCode != value)
-                {
-                    _stockGroupCode = value;
-                    NotifyPropertyChanged(nameof(StockGroupCode));
-                    SetGroupNameWithCode();
-                }
-            }
-        }
-        public string GroupNameWithCode
-        {
-            get
-            {
-                return _groupNameWithCode;
-            }
-            set
-            {
-                if (_groupNameWithCode != value)
-                {
-                    _groupNameWithCode = value;
-                    NotifyPropertyChanged(nameof(GroupNameWithCode));
-                }
-            }
-        }
-        public int CompanyId
-        {
-            get
-            {
-                return _companyId;
-            }
-            set
-            {
-                if (_companyId != value)
-                {
-                    _companyId = value;
-                    NotifyPropertyChanged(nameof(CompanyId));
-                }
-            }
-        }
-        public int? UnderGroupId
-        {
-            get
-            {
-                return _underGroupId;
-            }
-            set
-            {
-                if (_underGroupId != value)
-                {
-                    _underGroupId = value;
-                    NotifyPropertyChanged(nameof(UnderGroupId));
-                }
-            }
-        }
-        public StockGroup UnderStockGroup
-        {
-            get
-            {
-                return _UnderStockGroup;
-            }
-            set
-            {
-                if (_UnderStockGroup != value)
-                {
-                    _UnderStockGroup = value;
-                    NotifyPropertyChanged(nameof(UnderStockGroup));
-                    NotifyPropertyChanged(nameof(AccountPath));
-                }
-            }
-        }
-        public CompanyDetail Company
-        {
-            get
-            {
-                return _Company;
-            }
-            set
-            {
-                if (_Company != value)
-                {
-                    _Company = value;
-                    NotifyPropertyChanged(nameof(Company));
-                }
-            }
-        }
-
-        public string underGroupName
-        {
-            get
-            {
-                return _underGroupName;
-            }
-            set
-            {
-                if (_underGroupName != value)
-                {
-                    _underGroupName = value;
-                    NotifyPropertyChanged(nameof(underGroupName));
+                    _AccountGroup = value;
+                    NotifyPropertyChanged(nameof(AccountGroup));
                 }
             }
         }
@@ -363,10 +242,10 @@ namespace AccountBuddy.BLL
         {
             bool RValue = true;
 
-            if (toList.Where(x => x.StockGroupName.ToLower() == StockGroupName.ToLower() && x.Id != Id).Count() > 0)
-            {
-                RValue = false;
-            }
+            //if (toList.Where(x => x.StockGroupName.ToLower() == StockGroupName.ToLower() && x.Id != Id).Count() > 0)
+            //{
+            //    RValue = false;
+            //}
             return RValue;
 
         }
@@ -378,7 +257,7 @@ namespace AccountBuddy.BLL
 
         void SetGroupNameWithCode()
         {
-            GroupNameWithCode = StockGroupName;// string.Format("{0}{1}{2}", GroupCode, string.IsNullOrWhiteSpace(GroupCode) ? "" : "-", GroupName);
+            //GroupNameWithCode = StockGroupName;// string.Format("{0}{1}{2}", GroupCode, string.IsNullOrWhiteSpace(GroupCode) ? "" : "-", GroupName);
         }
         #endregion
     }

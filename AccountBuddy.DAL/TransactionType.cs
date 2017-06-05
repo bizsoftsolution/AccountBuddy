@@ -12,32 +12,33 @@ namespace AccountBuddy.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class AccountGroup
+    public partial class TransactionType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AccountGroup()
+        public TransactionType()
         {
-            this.AccountGroup1 = new HashSet<AccountGroup>();
-            this.Ledgers = new HashSet<Ledger>();
-            this.Products = new HashSet<Product>();
-            this.StockGroups = new HashSet<StockGroup>();
+            this.Purchases = new HashSet<Purchase>();
+            this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.PurchaseReturns = new HashSet<PurchaseReturn>();
+            this.Sales = new HashSet<Sale>();
+            this.SalesOrders = new HashSet<SalesOrder>();
+            this.SalesReturns = new HashSet<SalesReturn>();
         }
     
         public int Id { get; set; }
-        public string GroupName { get; set; }
-        public Nullable<int> UnderGroupId { get; set; }
-        public string GroupCode { get; set; }
-        public int CompanyId { get; set; }
+        public string Type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AccountGroup> AccountGroup1 { get; set; }
-        public virtual AccountGroup AccountGroup2 { get; set; }
-        public virtual CompanyDetail CompanyDetail { get; set; }
+        public virtual ICollection<Purchase> Purchases { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ledger> Ledgers { get; set; }
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<PurchaseReturn> PurchaseReturns { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockGroup> StockGroups { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalesOrder> SalesOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalesReturn> SalesReturns { get; set; }
     }
 }

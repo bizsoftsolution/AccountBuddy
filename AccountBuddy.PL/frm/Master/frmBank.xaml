@@ -41,28 +41,13 @@
                             <TextBox x:Name="txtLedgerName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.LedgerName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                        <materialDesign:PackIcon Kind="Bank" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
 
-                                        <TextBlock Text="Ledger Name"/>
+                                        <TextBlock Text="Bank Name"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
 
-                            <!--<StackPanel Orientation="Horizontal">
-                                <ComboBox Width="200" Name="cmbAccountGroupId"  IsEditable="True" SelectedValue="{Binding AccountGroupId,Mode=TwoWay}" FontWeight="Bold" FontSize="14" SelectedItem="{Binding Ledger.AccountGroup,Mode=TwoWay}" Text ="{Binding AccountGroup.GroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal" Width="151">
-                                            <materialDesign:PackIcon  Kind="CashMultiple" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                            <TextBlock Text="Account Group" />
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-
-                                </ComboBox>
-                                <TextBlock Margin="10,0,10,0"  FontWeight="Bold" FontSize="14"  VerticalAlignment="Bottom">AC Code</TextBlock>
-                                <TextBox Text="{Binding Ledger.AccountGroup.GroupCode,Mode=OneWay}" IsReadOnly="True" FontWeight="Bold" FontSize="14"  TextAlignment="Right" Width="30" />
-                                <TextBlock VerticalAlignment="Bottom" FontSize="22"> -</TextBlock>
-                                <TextBox Text="{Binding Ledger.LedgerCode}" FontWeight="Bold" FontSize="14"  Width="30"/>
-                            </StackPanel>-->
                             <TextBox x:Name="txtPersonIncharge" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.PersonIncharge,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
@@ -71,7 +56,24 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <TextBox   x:Name="txtAddress1" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.AddressLine1, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
+                            <TextBox x:Name="txtAccountNo" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.LedgerName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="AccountKey" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+
+                                        <TextBlock Text="Account No"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+                            <TextBox x:Name="txtAccountName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.LedgerName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+
+                                        <TextBlock Text="Account Name"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox> <TextBox   x:Name="txtAddress1" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.AddressLine1, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Width="331">
                                         <materialDesign:PackIcon  Kind="AccountLocation" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
