@@ -23,11 +23,10 @@ namespace AccountBuddy.PL.frm.Master
     /// </summary>
     public partial class frmSupplier : UserControl
     {
-
         #region Field
 
-        public static string FormName = "Customer";
-        BLL.Customer data = new BLL.Customer();
+        public static string FormName = "Supplier";
+        BLL.Supplier data = new BLL.Supplier();
 
         #endregion
 
@@ -38,7 +37,7 @@ namespace AccountBuddy.PL.frm.Master
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-            rptCustomer.SetDisplayMode(DisplayMode.PrintLayout);
+            rptSupplier.SetDisplayMode(DisplayMode.PrintLayout);
             onClientEvents();
         }
 
@@ -48,16 +47,12 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvSupplier.ItemsSource = BLL.Customer.toList;
+            dgvSupplier.ItemsSource = BLL.Supplier.toList;
 
-            CollectionViewSource.GetDefaultView(dgvSupplier.ItemsSource).Filter = Customer_Filter;
-            CollectionViewSource.GetDefaultView(dgvSupplier.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.AccountName), System.ComponentModel.ListSortDirection.Ascending));
+            CollectionViewSource.GetDefaultView(dgvSupplier.ItemsSource).Filter = Supplier_Filter;
+            CollectionViewSource.GetDefaultView(dgvSupplier.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.LedgerName), System.ComponentModel.ListSortDirection.Ascending));
 
-            //cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.ToList();
-            //cmbAccountGroupId.DisplayMemberPath = "GroupName";
-            //cmbAccountGroupId.SelectedValuePath = "Id";
-
-
+            rptContain.IsChecked = true;
 
             cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
             cmbCreditLimitTypeId.SelectedValuePath = "Id";
@@ -69,33 +64,32 @@ namespace AccountBuddy.PL.frm.Master
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
         }
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (data.Ledger.LedgerName == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "LedgerName"));
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Supplier Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
                 if (data.Save() == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(Message.PL.Saved_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                     Grid_Refresh();
                 }
 
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.Ledger.LedgerName));
+                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.Ledger.LedgerName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -106,30 +100,31 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (!BLL.UserAccount.AllowDelete(FormName))
                 {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
                 else
                 {
-                    if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    if (MessageBox.Show(Message.PL.Delete_confirmation, FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.No)
                     {
                         if (data.Delete() == true)
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert);
+                            MessageBox.Show(Message.PL.Delete_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                             data.Clear();
                             Grid_Refresh();
                         }
                         else
                         {
-                            MessageBox.Show(Message.PL.Cant_Delete_Alert);
+                            MessageBox.Show(Message.PL.Cant_Delete_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                            data.Clear();
                         }
+
                     }
                 }
             }
             else
             {
-                MessageBox.Show("No Records to Delete");
+                MessageBox.Show("No Records to Delete", FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-
 
         }
 
@@ -138,9 +133,10 @@ namespace AccountBuddy.PL.frm.Master
             data.Clear();
         }
 
+
         private void dgvSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvSupplier.SelectedItem as BLL.Customer;
+            var d = dgvSupplier.SelectedItem as BLL.Supplier;
             if (d != null)
             {
                 data.Find(d.Id);
@@ -197,10 +193,10 @@ namespace AccountBuddy.PL.frm.Master
 
         #region Methods
 
-        private bool Customer_Filter(object obj)
+        private bool Supplier_Filter(object obj)
         {
             bool RValue = false;
-            var d = obj as BLL.Customer;
+            var d = obj as BLL.Supplier;
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
@@ -253,14 +249,21 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                rptCustomer.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Customer_Filter(x)).Select(x => new { x.AccountName, x.PersonIncharge, x.AddressLine1, x.AddressLine2, x.CityName, x.CreditAmount, x.CreditLimit, CreditLimitTypeName = x.CreditLimitType.LimitType, x.OPCr, x.OPDr }).OrderBy(x => x.AccountName).ToList());
+                rptSupplier.Reset();
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.Supplier.toList.Where(x => Supplier_Filter(x)).Select(x => new { x.Ledger.LedgerName, x.Ledger.PersonIncharge, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.CreditAmount, x.Ledger.CreditLimit, CreditLimitTypeName = x.Ledger.CreditLimitType.LimitType, x.Ledger.OPCr, x.Ledger.OPDr }).OrderBy(x => x.LedgerName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
-                rptCustomer.LocalReport.DataSources.Add(data);
-                rptCustomer.LocalReport.DataSources.Add(data1);
-                rptCustomer.LocalReport.ReportPath = @"rpt\master\RptLedger.rdlc";
+                rptSupplier.LocalReport.DataSources.Add(data);
+                rptSupplier.LocalReport.DataSources.Add(data1);
 
-                rptCustomer.RefreshReport();
+                rptSupplier.LocalReport.ReportPath = @"rpt\master\RptLedger.rdlc";
+
+                ReportParameter[] param = new ReportParameter[1];
+                param[0] = new ReportParameter("Title", "SUPPLIER LIST");
+                rptSupplier.LocalReport.SetParameters(param);
+
+
+
+                rptSupplier.RefreshReport();
 
             }
             catch (Exception ex)
@@ -273,7 +276,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.Customer>("Customer_Save", (Cus) => {
+            BLL.FMCGHubClient.FMCGHub.On<BLL.Supplier>("Supplier_Save", (Cus) => {
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -282,9 +285,9 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("Customer_Delete", (Action<int>)((pk) => {
+            BLL.FMCGHubClient.FMCGHub.On("Supplier_Delete", (Action<int>)((pk) => {
                 this.Dispatcher.Invoke((Action)(() => {
-                    BLL.Customer led = new BLL.Customer();
+                    BLL.Supplier led = new BLL.Supplier();
                     led.Find((int)pk);
                     led.Delete((bool)true);
                 }));
@@ -330,7 +333,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvSupplier_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvSupplier.SelectedItem as BLL.Ledger;
+            var d = dgvSupplier.SelectedItem as BLL.Supplier;
             if (d != null)
             {
                 data.Find(d.Id);

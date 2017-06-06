@@ -86,11 +86,27 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-     
+        public int AccountGroupId
+        {
+            get
+            {
+                return _AccountGroupId;
+            }
+            set
+            {
+                if (_AccountGroupId != value)
+                {
+                    _AccountGroupId = value;
+                    NotifyPropertyChanged(nameof(AccountGroupId));
+                }
+            }
+        }
+
         public AccountGroup AccountGroup
         {
             get
             {
+                if (_AccountGroup == null) _AccountGroup = new BLL.AccountGroup();
                 return _AccountGroup;
             }
             set
@@ -255,10 +271,7 @@ namespace AccountBuddy.BLL
             _toList = null;
         }
 
-        void SetGroupNameWithCode()
-        {
-            //GroupNameWithCode = StockGroupName;// string.Format("{0}{1}{2}", GroupCode, string.IsNullOrWhiteSpace(GroupCode) ? "" : "-", GroupName);
-        }
+       
         #endregion
     }
 }

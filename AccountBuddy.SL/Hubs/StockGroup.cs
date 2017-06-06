@@ -9,46 +9,51 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
         #region Stock Group
-        BLL.StockGroup StockGroup_DALtoBLL(DAL.StockGroup d)
+        private BLL.StockGroup StockGroup_DALtoBLL(DAL.StockGroup StockGroupFrom)
         {
-            BLL.StockGroup b = d.toCopy<BLL.StockGroup>(new BLL.StockGroup());
-             b.AccountGroup =  AccountGroupDAL_BLL(d.AccountGroup);
-            return b;
-        }
-        public List<BLL.StockGroup> StockGroup_List()
-        {
-            return DB.StockGroups.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList()
-            .Select(x => StockGroup_DALtoBLL(x)).ToList();
+            BLL.StockGroup StockGroupTo = StockGroupFrom.toCopy<BLL.StockGroup>(new BLL.StockGroup());
+
+            StockGroupTo.AccountGroup = AccountGroupDAL_BLL(StockGroupFrom.AccountGroup);
+
+
+            return StockGroupTo;
         }
 
-        public int StockGroup_Save(BLL.StockGroup agp)
+        public List<BLL.StockGroup> StockGroup_List()
+        {
+            return DB.StockGroups.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+                             .Select(x => StockGroup_DALtoBLL(x)).ToList();
+        }
+
+        public int StockGroup_Save(BLL.StockGroup cus)
         {
             try
             {
-               agp.AccountGroup.CompanyId = Caller.CompanyId;
-                DAL.StockGroup d = DB.StockGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
-
+                DAL.StockGroup d = DB.StockGroups.Where(x => x.Id == cus.Id).FirstOrDefault();
                 if (d == null)
                 {
+
                     d = new DAL.StockGroup();
-                    DB.StockGroups.Add(d);
-
-                    agp.toCopy<DAL.StockGroup>(d);
-                    DB.SaveChanges();
-
-                    agp.Id = d.Id;
-                    LogDetailStore(agp, LogDetailType.INSERT);
+                    d.AccountGroupId = AccountGroup_Save(cus.AccountGroup);
+                    if (d.AccountGroupId != 0)
+                    {
+                        DB.StockGroups.Add(d);
+                        DB.SaveChanges();
+                        cus.Id = d.Id;
+                        LogDetailStore(cus, LogDetailType.INSERT);
+                    }
                 }
                 else
                 {
-                    agp.toCopy<DAL.StockGroup>(d);
+                    cus.toCopy<DAL.StockGroup>(d);
+                    AccountGroup_Save(cus.AccountGroup);
                     DB.SaveChanges();
-                    LogDetailStore(agp, LogDetailType.UPDATE);
+                    LogDetailStore(cus, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).StockGroup_Save(agp);
+                Clients.Clients(OtherLoginClientsOnGroup).StockGroup_Save(cus);
 
-                return agp.Id;
+                return d.Id;
             }
             catch (Exception ex) { }
             return 0;
@@ -59,27 +64,19 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = DB.AccountGroups.Where(x => x.Id == pk).FirstOrDefault();
-                //var sd = DB.StockGroups.Where(x => x.AccountGroupId == pk).FirstOrDefault();
-                //if (d.Products != null)
-                //{
-                //    if (d != null)
-                //    {
-                //        DB.StockGroups.Remove(sd);
-                //        DB.SaveChanges();
-                //        DB.AccountGroups.Remove(d);
-                //        DB.SaveChanges();
-                //        LogDetailStore(d.toCopy<BLL.StockGroup>(new BLL.StockGroup()), LogDetailType.DELETE);
-                //    }
+                var d = DB.StockGroups.Where(x => x.Id == pk).FirstOrDefault();
+                if (d != null && AccountGroup_CanDelete(d.AccountGroup))
+                {
+                    DB.StockGroups.Remove(d);
+                    AccountGroup_Delete(d.AccountGroupId);
+                    DB.SaveChanges();
+                    LogDetailStore(StockGroup_DALtoBLL(d), LogDetailType.DELETE);
+                }
 
-                //    Clients.Clients(OtherLoginClientsOnGroup).SStockGroup_Delete(pk);
-                //    Clients.All.delete(pk);
-                //    rv = true;
-                //}
-                //else
-                //{
-                //    rv = false;
-                //}
+                Clients.Clients(OtherLoginClientsOnGroup).StockGroup_Delete(pk);
+                Clients.All.delete(pk);
+
+                rv = true;
 
             }
             catch (Exception ex)
@@ -88,7 +85,6 @@ namespace AccountBuddy.SL.Hubs
             }
             return rv;
         }
-
 
         #endregion
     }

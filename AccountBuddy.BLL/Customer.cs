@@ -231,7 +231,7 @@ namespace AccountBuddy.BLL
 
                 if (isServerCall == false)
                 {
-                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("Ledger_Delete", this.Id).Result;
+                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("Customer_Delete", this.Id).Result;
                     if (rv == true) toList.Remove(d);
 
                 }

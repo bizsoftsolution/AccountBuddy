@@ -62,7 +62,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 var d = DB.AccountGroups.Where(x => x.Id == pk).FirstOrDefault();
-                if (d.Ledgers != null)
+                if (d.Ledgers != null && AccountGroup_CanDelete(d))
                 {
                     if (d != null)
                     {
@@ -88,7 +88,11 @@ namespace AccountBuddy.SL.Hubs
             return rv;
         }
 
-
+        public bool AccountGroup_CanDelete(DAL.AccountGroup l)
+        {
+            return l.Ledgers.Count() == 0;
+                 
+        }
         #endregion
     }
 }
