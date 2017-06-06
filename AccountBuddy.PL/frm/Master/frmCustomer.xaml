@@ -279,16 +279,16 @@
                                     </DataGrid.ColumnHeaderStyle>
 
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="250" Binding="{Binding AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Person Incharge" FontWeight="Bold" Width="200" Binding="{Binding PersonIncharge}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Address Line 1" FontWeight="Bold" Width="200" Binding="{Binding AddressLine1}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Address Line 2" FontWeight="Bold" Width="200" Binding="{Binding AddressLine2}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="City" FontWeight="Bold" Width="200" Binding="{Binding CityName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Credit Limit" FontWeight="Bold" Width="200" Binding="{Binding CreditLimit}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Credit Type" FontWeight="Bold" Width="200" Binding="{Binding CreditLimitType.LimitType}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Credit Amount" FontWeight="Bold" Width="200" Binding="{Binding CreditAmount}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Opening Debit" FontWeight="Bold" Width="200" Binding="{Binding OPDr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Opening Credit" FontWeight="Bold" Width="200" Binding="{Binding OPCr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Customer Name" FontWeight="Bold" Width="250" Binding="{Binding Ledger.LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                        <DataGridTextColumn Header="Person Incharge" FontWeight="Bold" Width="200" Binding="{Binding Ledger.PersonIncharge}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Address Line 1" FontWeight="Bold" Width="200" Binding="{Binding Ledger.AddressLine1}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Address Line 2" FontWeight="Bold" Width="200" Binding="{Binding Ledger.AddressLine2}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                        <DataGridTextColumn Header="City" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CityName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Credit Limit" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CreditLimit}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Credit Type" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CreditLimitType.LimitType}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Credit Amount" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CreditAmount}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Opening Debit" FontWeight="Bold" Width="200" Binding="{Binding Ledger.OPDr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Opening Credit" FontWeight="Bold" Width="200" Binding="{Binding Ledger.OPCr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
 

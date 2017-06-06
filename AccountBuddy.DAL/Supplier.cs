@@ -12,32 +12,25 @@ namespace AccountBuddy.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class AccountGroup
+    public partial class Supplier
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AccountGroup()
+        public Supplier()
         {
-            this.AccountGroup1 = new HashSet<AccountGroup>();
-            this.Ledgers = new HashSet<Ledger>();
-            this.Products = new HashSet<Product>();
-            this.StockGroups = new HashSet<StockGroup>();
+            this.Purchases = new HashSet<Purchase>();
+            this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.PurchaseReturns = new HashSet<PurchaseReturn>();
         }
     
         public int Id { get; set; }
-        public string GroupName { get; set; }
-        public Nullable<int> UnderGroupId { get; set; }
-        public string GroupCode { get; set; }
-        public int CompanyId { get; set; }
+        public Nullable<int> LedgerId { get; set; }
     
+        public virtual Ledger Ledger { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AccountGroup> AccountGroup1 { get; set; }
-        public virtual AccountGroup AccountGroup2 { get; set; }
-        public virtual CompanyDetail CompanyDetail { get; set; }
+        public virtual ICollection<Purchase> Purchases { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ledger> Ledgers { get; set; }
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockGroup> StockGroups { get; set; }
+        public virtual ICollection<PurchaseReturn> PurchaseReturns { get; set; }
     }
 }

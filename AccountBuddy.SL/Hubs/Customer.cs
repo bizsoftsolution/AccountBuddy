@@ -29,10 +29,9 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.Customer d = DB.Customers.Where(x => x.LedgerId == cus.Id).FirstOrDefault();
+                DAL.Customer d = DB.Customers.Where(x => x.Id == cus.Id).FirstOrDefault();
                 if (d == null)
-                {
-                    cus.Ledger.AccountGroupId = BLL.DataKeyValue.SundryDebtors;
+                {                    
 
                     d = new DAL.Customer();
                     d.LedgerId = Ledger_Save(cus.Ledger);

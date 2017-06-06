@@ -34,7 +34,7 @@ namespace AccountBuddy.BLL
             {
                 if (_UserPermission == null)
                 {
-                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmLedger.ToString()).FirstOrDefault();
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmCustomer.ToString()).FirstOrDefault();
                 }
                 return _UserPermission;
             }
@@ -86,7 +86,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<Customer>(FMCGHubClient.FMCGHub.Invoke<List<Customer>>("Ledger_List").Result);
+                if (_toList == null) _toList = new ObservableCollection<Customer>(FMCGHubClient.FMCGHub.Invoke<List<Customer>>("Customer_List").Result);
                 return _toList;
             }
             set
@@ -132,6 +132,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
+                if (_Ledger == null) _Ledger = new Ledger();
                 return _Ledger;
             }
 
@@ -182,10 +183,11 @@ namespace AccountBuddy.BLL
                     toList.Add(d);
                 }
 
-                this.toCopy<Customer>(d);
+                Ledger.AccountGroupId = BLL.DataKeyValue.SundryDebtors;
+                this.toCopy<Customer>(d);                
                 if (isServerCall == false)
-                {
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Ledger_Save", this).Result;
+                {                    
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Customer_Save", this).Result;
                     d.Id = i;
                 }
 
@@ -202,6 +204,7 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new Customer().toCopy<Customer>(this);
+            this.Ledger.Clear();
             NotifyAllPropertyChanged();
         }
 
@@ -241,7 +244,7 @@ namespace AccountBuddy.BLL
         public bool isValid()
         {
             bool RValue = true;
-            if (toList.Where(x => x.Ledger.LedgerName.ToLower() == Ledger.LedgerName.ToLower() && x.Id != Id).Count() > 0)
+            if (!Ledger.isValid())
             {
                 RValue = false;
             }

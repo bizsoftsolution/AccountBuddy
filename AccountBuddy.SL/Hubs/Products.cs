@@ -15,20 +15,20 @@ namespace AccountBuddy.SL.Hubs
         {
             BLL.Products ProductsTo = ProductsFrom.toCopy<BLL.Products>(new BLL.Products());
 
-            //ProductsTo.AccountGroup = AccountGroupDAL_BLL(ProductsFrom.AccountGroup);
+            ProductsTo.AccountGroup = AccountGroupDAL_BLL(ProductsFrom.AccountGroup);
 
             ProductsTo.UOM = UOMDAL_BLL(ProductsFrom.UOM);
 
             return ProductsTo;
         }
 
-        //public List<BLL.Products> Products_List()
-        //{
-        //    return DB.Products.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
-        //                     .Select(x => ProductsDAL_BLL(x)).ToList();
-        //}
+        public List<BLL.Products> Products_List()
+        {
+            return DB.Products.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+                             .Select(x => ProductsDAL_BLL(x)).ToList();
+        }
 
-       
+
 
         public int Products_Save(BLL.Products pro)
         {

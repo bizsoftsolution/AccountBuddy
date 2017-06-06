@@ -9,24 +9,23 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
         #region Stock Group
-        BLL.StockGroup StockGroupDAL_BLL(DAL.StockGroup d)
+        BLL.StockGroup StockGroup_DALtoBLL(DAL.StockGroup d)
         {
             BLL.StockGroup b = d.toCopy<BLL.StockGroup>(new BLL.StockGroup());
-           // b.Company = d.AccountGroup.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
-           // b.UnderStockGroup = d.StockGroup2 == null ? new BLL.StockGroup() : StockGroupDAL_BLL(d.StockGroup2);
-             return b;
+             b.AccountGroup =  AccountGroupDAL_BLL(d.AccountGroup);
+            return b;
         }
-        //public List<BLL.StockGroup> StockGroup_List()
-        //{
-        //    //return DB.StockGroups.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList()
-        //                       //.Select(x => StockGroupDAL_BLL(x)).ToList();
-        //}
+        public List<BLL.StockGroup> StockGroup_List()
+        {
+            return DB.StockGroups.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList()
+            .Select(x => StockGroup_DALtoBLL(x)).ToList();
+        }
 
         public int StockGroup_Save(BLL.StockGroup agp)
         {
             try
             {
-               // agp.CompanyId = Caller.CompanyId;
+               agp.AccountGroup.CompanyId = Caller.CompanyId;
                 DAL.StockGroup d = DB.StockGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
