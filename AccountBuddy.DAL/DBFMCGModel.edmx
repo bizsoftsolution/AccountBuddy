@@ -200,7 +200,7 @@
           <Property Name="LedgerId" Type="int" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="150" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="AccountGroupId" Type="int" />
+          <Property Name="StockGroupId" Type="int" />
           <Property Name="UOMId" Type="int" />
           <Property Name="PurchaseRate" Type="money" />
           <Property Name="SellingRate" Type="money" />
@@ -708,14 +708,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_AccountGroup">
-          <End Role="AccountGroup" Type="Self.AccountGroup" Multiplicity="0..1" />
+          <End Role="StockGroup" Type="Self.StockGroup" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AccountGroup">
+            <Principal Role="StockGroup">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Product">
-              <PropertyRef Name="AccountGroupId" />
+              <PropertyRef Name="StockGroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1389,7 +1389,7 @@
             <End Role="PaymentDetail" EntitySet="PaymentDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_AccountGroup" Association="Self.FK_Product_AccountGroup">
-            <End Role="AccountGroup" EntitySet="AccountGroup" />
+            <End Role="StockGroup" EntitySet="StockGroup" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Ledger" Association="Self.FK_Product_Ledger">
@@ -1638,10 +1638,6 @@
             <End Role="AccountGroup" EntitySet="AccountGroups" />
             <End Role="Ledger" EntitySet="Ledgers" />
           </AssociationSet>
-          <AssociationSet Name="FK_Product_AccountGroup" Association="DBFMCGModel.FK_Product_AccountGroup">
-            <End Role="AccountGroup" EntitySet="AccountGroups" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
           <AssociationSet Name="FK_StockGroup_AccountGroup" Association="DBFMCGModel.FK_StockGroup_AccountGroup">
             <End Role="AccountGroup" EntitySet="AccountGroups" />
             <End Role="StockGroup" EntitySet="StockGroups" />
@@ -1737,6 +1733,10 @@
           <AssociationSet Name="FK_PaymentDetail_Payment" Association="DBFMCGModel.FK_PaymentDetail_Payment">
             <End Role="Payment" EntitySet="Payments" />
             <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_AccountGroup" Association="DBFMCGModel.FK_Product_AccountGroup">
+            <End Role="StockGroup" EntitySet="StockGroups" />
+            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_UOM" Association="DBFMCGModel.FK_Product_UOM">
             <End Role="UOM" EntitySet="UOMs" />
@@ -1896,7 +1896,6 @@
           <NavigationProperty Name="AccountGroup2" Relationship="DBFMCGModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup1" ToRole="AccountGroup" />
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="AccountGroup" ToRole="CompanyDetail" />
           <NavigationProperty Name="Ledgers" Relationship="DBFMCGModel.FK_Ledger_AccountGroup" FromRole="AccountGroup" ToRole="Ledger" />
-          <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_AccountGroup" FromRole="AccountGroup" ToRole="Product" />
           <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_AccountGroup" FromRole="AccountGroup" ToRole="StockGroup" />
         </EntityType>
         <EntityType Name="Bank">
@@ -2120,7 +2119,7 @@
           <Property Name="LedgerId" Type="Int32" />
           <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountGroupId" Type="Int32" />
+          <Property Name="StockGroupId" Type="Int32" />
           <Property Name="UOMId" Type="Int32" />
           <Property Name="PurchaseRate" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SellingRate" Type="Decimal" Precision="19" Scale="4" />
@@ -2129,8 +2128,8 @@
           <Property Name="OpeningStock" Type="Double" />
           <Property Name="ReOrderLevel" Type="Double" />
           <Property Name="ProductImage" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="AccountGroup" Relationship="DBFMCGModel.FK_Product_AccountGroup" FromRole="Product" ToRole="AccountGroup" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Product_Ledger" FromRole="Product" ToRole="Ledger" />
+          <NavigationProperty Name="StockGroup" Relationship="DBFMCGModel.FK_Product_AccountGroup" FromRole="Product" ToRole="StockGroup" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="Product" ToRole="UOM" />
           <NavigationProperty Name="PurchaseDetails" Relationship="DBFMCGModel.FK_PurchaseDetail_Product" FromRole="Product" ToRole="PurchaseDetail" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="DBFMCGModel.FK_PurchaseOrderDetail_Product" FromRole="Product" ToRole="PurchaseOrderDetail" />
@@ -2424,6 +2423,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AccountGroupId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AccountGroup" Relationship="DBFMCGModel.FK_StockGroup_AccountGroup" FromRole="StockGroup" ToRole="AccountGroup" />
+          <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_AccountGroup" FromRole="StockGroup" ToRole="Product" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -2553,18 +2553,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Ledger">
-              <PropertyRef Name="AccountGroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_AccountGroup">
-          <End Type="DBFMCGModel.AccountGroup" Role="AccountGroup" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountGroup">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
               <PropertyRef Name="AccountGroupId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2854,6 +2842,18 @@
             </Principal>
             <Dependent Role="PaymentDetail">
               <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_AccountGroup">
+          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="StockGroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3509,7 +3509,7 @@
                 <ScalarProperty Name="SellingRate" ColumnName="SellingRate" />
                 <ScalarProperty Name="PurchaseRate" ColumnName="PurchaseRate" />
                 <ScalarProperty Name="UOMId" ColumnName="UOMId" />
-                <ScalarProperty Name="AccountGroupId" ColumnName="AccountGroupId" />
+                <ScalarProperty Name="StockGroupId" ColumnName="StockGroupId" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />

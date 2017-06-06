@@ -38,12 +38,12 @@
 
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                            <TextBox x:Name="txtLedgerName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.LedgerName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+                            <TextBox x:Name="txtSupplierName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.LedgerName, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
 
-                                        <TextBlock Text="Ledger Name"/>
+                                        <TextBlock Text="Supplier Name"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
@@ -241,7 +241,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TabControl.RenderTransform>
-                 <TabItem Header="Details" FontSize="16">
+                    <TabItem Header="Details" FontSize="16">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="120"></RowDefinition>
@@ -267,7 +267,7 @@
                                     </StackPanel>
                                 </StackPanel>
 
-                                
+
                             </Grid>
                             <Grid Grid.Row="1">
                                 <DataGrid x:Name="dgvSupplier" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="20" Grid.ColumnSpan="2" SelectionChanged="dgvSupplier_SelectionChanged" MouseDoubleClick="dgvSupplier_MouseDoubleClick" >
@@ -279,16 +279,16 @@
                                     </DataGrid.ColumnHeaderStyle>
 
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Supplier Name" FontWeight="Bold" Width="250" Binding="{Binding AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Person Incharge" FontWeight="Bold" Width="200" Binding="{Binding PersonIncharge}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Address Line 1" FontWeight="Bold" Width="200" Binding="{Binding AddressLine1}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Address Line 2" FontWeight="Bold" Width="200" Binding="{Binding AddressLine2}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="City" FontWeight="Bold" Width="200" Binding="{Binding CityName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Credit Limit" FontWeight="Bold" Width="200" Binding="{Binding CreditLimit}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Credit Type" FontWeight="Bold" Width="200" Binding="{Binding CreditLimitType.LimitType}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Credit Amount" FontWeight="Bold" Width="200" Binding="{Binding CreditAmount}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Opening Debit" FontWeight="Bold" Width="200" Binding="{Binding OPDr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Opening Credit" FontWeight="Bold" Width="200" Binding="{Binding OPCr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Supplier Name" FontWeight="Bold" Width="250" Binding="{Binding Ledger.LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                        <DataGridTextColumn Header="Person Incharge" FontWeight="Bold" Width="200" Binding="{Binding Ledger.PersonIncharge}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Address Line 1" FontWeight="Bold" Width="200" Binding="{Binding Ledger.AddressLine1}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Address Line 2" FontWeight="Bold" Width="200" Binding="{Binding Ledger.AddressLine2}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                        <DataGridTextColumn Header="City" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CityName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Credit Limit" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CreditLimit}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Credit Type" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CreditLimitType.LimitType}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Credit Amount" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CreditAmount}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Opening Debit" FontWeight="Bold" Width="200" Binding="{Binding Ledger.OPDr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Opening Credit" FontWeight="Bold" Width="200" Binding="{Binding Ledger.OPCr}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
 
@@ -296,10 +296,10 @@
                         </Grid>
 
                     </TabItem>
-                       <TabItem Header="Report" FontSize="16">
+                    <TabItem Header="Report" FontSize="16">
                         <Grid Grid.Row="0" Margin="0,0,4,-14">
                             <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="550"  Margin="20">
-                                <rv:ReportViewer x:Name="rptCustomer"/>
+                                <rv:ReportViewer x:Name="rptSupplier"/>
                             </WindowsFormsHost>
 
                         </Grid>
