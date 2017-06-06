@@ -14,20 +14,9 @@ namespace AccountBuddy.DAL
     
     public partial class Customer
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Customer()
-        {
-            this.SalesOrders = new HashSet<SalesOrder>();
-            this.SalesReturns = new HashSet<SalesReturn>();
-        }
-    
         public int Id { get; set; }
         public int LedgerId { get; set; }
     
         public virtual Ledger Ledger { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SalesOrder> SalesOrders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SalesReturn> SalesReturns { get; set; }
     }
 }

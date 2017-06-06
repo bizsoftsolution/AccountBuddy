@@ -16,11 +16,11 @@ namespace AccountBuddy.SL.Hubs
            // b.UnderStockGroup = d.StockGroup2 == null ? new BLL.StockGroup() : StockGroupDAL_BLL(d.StockGroup2);
              return b;
         }
-        public List<BLL.StockGroup> StockGroup_List()
-        {
-            return DB.StockGroups.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList()
-                               .Select(x => StockGroupDAL_BLL(x)).ToList();
-        }
+        //public List<BLL.StockGroup> StockGroup_List()
+        //{
+        //    //return DB.StockGroups.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList()
+        //                       //.Select(x => StockGroupDAL_BLL(x)).ToList();
+        //}
 
         public int StockGroup_Save(BLL.StockGroup agp)
         {
@@ -61,26 +61,26 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 var d = DB.AccountGroups.Where(x => x.Id == pk).FirstOrDefault();
-                var sd = DB.StockGroups.Where(x => x.AccountGroupId == pk).FirstOrDefault();
-                if (d.Products != null)
-                {
-                    if (d != null)
-                    {
-                        DB.StockGroups.Remove(sd);
-                        DB.SaveChanges();
-                        DB.AccountGroups.Remove(d);
-                        DB.SaveChanges();
-                        LogDetailStore(d.toCopy<BLL.StockGroup>(new BLL.StockGroup()), LogDetailType.DELETE);
-                    }
+                //var sd = DB.StockGroups.Where(x => x.AccountGroupId == pk).FirstOrDefault();
+                //if (d.Products != null)
+                //{
+                //    if (d != null)
+                //    {
+                //        DB.StockGroups.Remove(sd);
+                //        DB.SaveChanges();
+                //        DB.AccountGroups.Remove(d);
+                //        DB.SaveChanges();
+                //        LogDetailStore(d.toCopy<BLL.StockGroup>(new BLL.StockGroup()), LogDetailType.DELETE);
+                //    }
 
-                    Clients.Clients(OtherLoginClientsOnGroup).SStockGroup_Delete(pk);
-                    Clients.All.delete(pk);
-                    rv = true;
-                }
-                else
-                {
-                    rv = false;
-                }
+                //    Clients.Clients(OtherLoginClientsOnGroup).SStockGroup_Delete(pk);
+                //    Clients.All.delete(pk);
+                //    rv = true;
+                //}
+                //else
+                //{
+                //    rv = false;
+                //}
 
             }
             catch (Exception ex)

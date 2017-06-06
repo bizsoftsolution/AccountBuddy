@@ -26,7 +26,6 @@ namespace AccountBuddy.DAL
         }
     
         public virtual DbSet<AccountGroup> AccountGroups { get; set; }
-        public virtual DbSet<Bank> Banks { get; set; }
         public virtual DbSet<CompanyDetail> CompanyDetails { get; set; }
         public virtual DbSet<CreditLimitType> CreditLimitTypes { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
@@ -41,28 +40,14 @@ namespace AccountBuddy.DAL
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Purchase> Purchases { get; set; }
-        public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
-        public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
-        public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
-        public virtual DbSet<PurchaseReturn> PurchaseReturns { get; set; }
-        public virtual DbSet<PurchaseReturnDetail> PurchaseReturnDetails { get; set; }
         public virtual DbSet<Receipt> Receipts { get; set; }
         public virtual DbSet<ReceiptDetail> ReceiptDetails { get; set; }
-        public virtual DbSet<Sale> Sales { get; set; }
-        public virtual DbSet<SalesDetail> SalesDetails { get; set; }
-        public virtual DbSet<SalesOrder> SalesOrders { get; set; }
-        public virtual DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
-        public virtual DbSet<SalesReturn> SalesReturns { get; set; }
-        public virtual DbSet<SalesReturnDetail> SalesReturnDetails { get; set; }
-        public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<StockGroup> StockGroups { get; set; }
-        public virtual DbSet<Supplier> Suppliers { get; set; }
-        public virtual DbSet<TransactionType> TransactionTypes { get; set; }
         public virtual DbSet<UOM> UOMs { get; set; }
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<UserTypeFormDetail> UserTypeFormDetails { get; set; }
+        public virtual DbSet<DataKeyValue> DataKeyValues { get; set; }
     }
 }

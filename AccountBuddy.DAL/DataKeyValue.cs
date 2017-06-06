@@ -12,13 +12,11 @@ namespace AccountBuddy.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Bank
+    public partial class DataKeyValue
     {
         public int Id { get; set; }
-        public string AccountNo { get; set; }
-        public string BankAccountName { get; set; }
-        public Nullable<int> LedgerId { get; set; }
-    
-        public virtual Ledger Ledger { get; set; }
+        public string DataKey { get; set; }
+        public int DataValue { get; set; }
+        public int CompanyId { get; set; }
     }
 }

@@ -19,8 +19,6 @@ namespace AccountBuddy.DAL
         {
             this.AccountGroup1 = new HashSet<AccountGroup>();
             this.Ledgers = new HashSet<Ledger>();
-            this.Products = new HashSet<Product>();
-            this.StockGroups = new HashSet<StockGroup>();
         }
     
         public int Id { get; set; }
@@ -35,9 +33,5 @@ namespace AccountBuddy.DAL
         public virtual CompanyDetail CompanyDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ledger> Ledgers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockGroup> StockGroups { get; set; }
     }
 }

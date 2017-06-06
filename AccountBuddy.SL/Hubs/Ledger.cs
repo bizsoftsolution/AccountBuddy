@@ -74,31 +74,33 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 var d = DB.Ledgers.Where(x => x.Id == pk).FirstOrDefault();
-                if (d.Payments != null && d.PaymentDetails != null && d.Receipts != null && d.ReceiptDetails != null && d.JournalDetails != null)
+                if (d != null && Ledger_CanDelete(d))
                 {
-                    if (d != null)
-                    {
-                        DB.Ledgers.Remove(d);
-                        DB.SaveChanges();
-                        LogDetailStore(LedgerDAL_BLL(d), LogDetailType.DELETE);
-                    }
-
-                    Clients.Clients(OtherLoginClientsOnGroup).Ledger_Delete(pk);
-                    Clients.All.delete(pk);
-
-                    rv = true;
-                }
-                else
-                {
-                    rv = false;
+                    DB.Ledgers.Remove(d);
+                    DB.SaveChanges();
+                    LogDetailStore(LedgerDAL_BLL(d), LogDetailType.DELETE);
                 }
 
+                Clients.Clients(OtherLoginClientsOnGroup).Ledger_Delete(pk);
+                Clients.All.delete(pk);
+
+                rv = true;
+                
             }
             catch (Exception ex)
             {
                 rv = false;
             }
             return rv;
+        }
+
+        public bool Ledger_CanDelete(DAL.Ledger l)
+        {
+            return l.Payments.Count() == 0 &&
+                   l.PaymentDetails.Count() == 0 &&
+                   l.Receipts.Count() == 0 &&
+                   l.ReceiptDetails.Count() == 0 &&
+                   l.JournalDetails.Count() == 0;
         }
 
         #endregion

@@ -17,16 +17,12 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ledger()
         {
-            this.Banks = new HashSet<Bank>();
             this.Customers = new HashSet<Customer>();
             this.JournalDetails = new HashSet<JournalDetail>();
             this.Payments = new HashSet<Payment>();
             this.PaymentDetails = new HashSet<PaymentDetail>();
-            this.Products = new HashSet<Product>();
             this.Receipts = new HashSet<Receipt>();
             this.ReceiptDetails = new HashSet<ReceiptDetail>();
-            this.Staffs = new HashSet<Staff>();
-            this.Suppliers = new HashSet<Supplier>();
         }
     
         public int Id { get; set; }
@@ -48,8 +44,6 @@ namespace AccountBuddy.DAL
         public int AccountGroupId { get; set; }
     
         public virtual AccountGroup AccountGroup { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Bank> Banks { get; set; }
         public virtual CreditLimitType CreditLimitType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer> Customers { get; set; }
@@ -60,14 +54,8 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receipt> Receipts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReceiptDetail> ReceiptDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Staff> Staffs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Supplier> Suppliers { get; set; }
     }
 }

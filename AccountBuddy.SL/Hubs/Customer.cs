@@ -9,9 +9,7 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
 
-        #region Customer
-
-        private BLL.Customer CustomerDAL_BLL(DAL.Customer customerFrom)
+        private BLL.Customer Customer_DALtoBLL(DAL.Customer customerFrom)
         {
             BLL.Customer CustomerTo = customerFrom.toCopy<BLL.Customer>(new BLL.Customer());
 
@@ -24,60 +22,39 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.Customer> Customer_List()
         {
             return DB.Customers.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
-                             .Select(x => CustomerDAL_BLL(x)).ToList();
-        }
-
-        public List<BLL.Customer> CashCustomer_List()
-        {
-            return DB.Customers.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.Ledger.AccountGroup.GroupName == "Bank Accounts" || x.Ledger.AccountGroup.GroupName == "Cash-in-Hand").ToList()
-                             .Select(x => CustomerDAL_BLL(x)).ToList();
-        }
+                             .Select(x => Customer_DALtoBLL(x)).ToList();
+        }        
 
         public int Customer_Save(BLL.Customer cus)
         {
             try
             {
-                DAL.Ledger d = DB.Ledgers.Where(x => x.Id == cus.Ledger.Id).FirstOrDefault();
-                DAL.Customer CL = DB.Customers.Where(x => x.LedgerId == cus.Id).FirstOrDefault();
-
+                DAL.Customer d = DB.Customers.Where(x => x.LedgerId == cus.Id).FirstOrDefault();
                 if (d == null)
                 {
+                    cus.Ledger.AccountGroupId = BLL.DataKeyValue.SundryDebtors;
 
-                    d = new DAL.Ledger();
-                    DB.Ledgers.Add(d);
-                    d.AccountGroupId = DB.AccountGroups.Where(x => x.GroupName == "Sundry Creditors").Select(x => x.Id).FirstOrDefault();
-                    cus.Ledger.toCopy<DAL.Ledger>(d);
-                                        
-                    cus.Id = d.Id;
-                    DB.SaveChanges();
-
-                    CL = new DAL.Customer();
-                    CL.LedgerId = d.Id;
-                     
-                    DB.Customers.Add(CL);
-                    DB.SaveChanges();
-
-                  
-                    cus.toCopy<DAL.Customer>(CL);
-
-
-
-                   
-
-
-
-                    LogDetailStore(cus, LogDetailType.INSERT);
+                    d = new DAL.Customer();
+                    d.LedgerId = Ledger_Save(cus.Ledger);
+                    if (d.LedgerId != 0)
+                    {
+                        DB.Customers.Add(d);
+                        DB.SaveChanges();
+                        cus.Id = d.Id;
+                        LogDetailStore(cus, LogDetailType.INSERT);
+                    }
                 }
                 else
                 {
-                    cus.toCopy<DAL.Ledger>(d);
+                    cus.toCopy<DAL.Customer>(d);
+                    Ledger_Save(cus.Ledger);
                     DB.SaveChanges();
                     LogDetailStore(cus, LogDetailType.UPDATE);
                 }
 
                 Clients.Clients(OtherLoginClientsOnGroup).Customer_Save(cus);
 
-                return cus.Id = d.Id;
+                return d.Id;
             }
             catch (Exception ex) { }
             return 0;
@@ -89,24 +66,18 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 var d = DB.Customers.Where(x => x.Id == pk).FirstOrDefault();
-                if (d.Ledger.Payments != null && d.Ledger.PaymentDetails != null && d.Ledger.Receipts != null && d.Ledger.ReceiptDetails != null && d.Ledger.JournalDetails != null)
+                if (d != null && Ledger_CanDelete(d.Ledger))
                 {
-                    if (d != null)
-                    {
-                        DB.Customers.Remove(d);
-                        DB.SaveChanges();
-                        LogDetailStore(CustomerDAL_BLL(d), LogDetailType.DELETE);
-                    }
-
-                    Clients.Clients(OtherLoginClientsOnGroup).Customer_Delete(pk);
-                    Clients.All.delete(pk);
-
-                    rv = true;
+                    DB.Customers.Remove(d);
+                    Ledger_Delete(d.LedgerId);
+                    DB.SaveChanges();
+                    LogDetailStore(Customer_DALtoBLL(d), LogDetailType.DELETE);
                 }
-                else
-                {
-                    rv = false;
-                }
+
+                Clients.Clients(OtherLoginClientsOnGroup).Customer_Delete(pk);
+                Clients.All.delete(pk);
+
+                rv = true;                
 
             }
             catch (Exception ex)
@@ -115,7 +86,6 @@ namespace AccountBuddy.SL.Hubs
             }
             return rv;
         }
-
-        #endregion
+        
     }
 }
