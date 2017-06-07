@@ -26,7 +26,6 @@ namespace AccountBuddy.DAL
         }
     
         public int Id { get; set; }
-        public Nullable<int> LedgerId { get; set; }
         public string ProductName { get; set; }
         public string ItemCode { get; set; }
         public Nullable<int> StockGroupId { get; set; }
@@ -39,7 +38,6 @@ namespace AccountBuddy.DAL
         public Nullable<double> ReOrderLevel { get; set; }
         public byte[] ProductImage { get; set; }
     
-        public virtual Ledger Ledger { get; set; }
         public virtual StockGroup StockGroup { get; set; }
         public virtual UOM UOM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

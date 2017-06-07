@@ -100,13 +100,8 @@ namespace AccountBuddy.SL.Hubs
                    l.PaymentDetails.Count() == 0 &&
                    l.Receipts.Count() == 0 &&
                    l.ReceiptDetails.Count() == 0 &&
-                   l.JournalDetails.Count() == 0 &&
-                   l.Products.FirstOrDefault().PurchaseOrderDetails.Count() == 0 &&
-                   l.Products.FirstOrDefault().PurchaseDetails.Count() == 0 &&
-                   l.Products.FirstOrDefault().PurchaseReturnDetails.Count() == 0 &&
-                    l.Products.FirstOrDefault().SalesOrderDetails.Count() == 0 &&
-                   l.Products.FirstOrDefault().SalesDetails.Count() == 0 &&
-                   l.Products.FirstOrDefault().SalesReturnDetails.Count() == 0;
+                   l.JournalDetails.Count() == 0;
+                 
         }
 
         #endregion

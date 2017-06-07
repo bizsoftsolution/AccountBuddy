@@ -36,7 +36,7 @@
                 <Grid Grid.Row="0"  >
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                            <TextBox  x:Name="txtGroupName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding AccountGroup.GroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
+                            <TextBox  x:Name="txtGroupName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding StockGroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="AccountMultiple" Height="25" Width="25" />
@@ -44,7 +44,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <ComboBox x:Name="cmbUnder"  IsEditable="True"  SelectedValue="{Binding AccountGroup.UnderGroupId,Mode=TwoWay}" SelectedItem="{Binding AccountGroup.UnderAccountGroup,Mode=TwoWay}" Text="{Binding AccountGroup.UnderAccountGroup.GroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" >
+                            <ComboBox x:Name="cmbUnder"  IsEditable="True"  SelectedValue="{Binding UnderGroupId,Mode=TwoWay}" SelectedItem="{Binding UnderStockGroup,Mode=TwoWay}" Text="{Binding UnderStockGroup.StockGroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="AccountNetwork" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -53,7 +53,7 @@
                                 </materialDesign:HintAssist.Hint>
                             </ComboBox>
 
-                            <TextBox x:Name="txtGroupCode" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding AccountGroup.GroupCode, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
+                            <TextBox x:Name="txtGroupCode" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding GroupCode, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Sort" Height="25" Width="25" />
@@ -157,9 +157,9 @@
                                         </DataGrid.ColumnHeaderStyle>
 
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Order Code" FontWeight="Bold" Width="100" Binding="{Binding AccountGroup.GroupCode}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                            <DataGridTextColumn Header="Group Name" FontWeight="Bold" Width="200" Binding="{Binding AccountGroup.GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                            <DataGridTextColumn Header="Under" FontWeight="Bold" Width="200" Binding="{Binding AccountGroup.UnderAccountGroup.GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Order Code" FontWeight="Bold" Width="100" Binding="{Binding GroupCode}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Group Name" FontWeight="Bold" Width="200" Binding="{Binding StockGroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Under" FontWeight="Bold" Width="200" Binding="{Binding UnderStockGroup.StockGroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
 

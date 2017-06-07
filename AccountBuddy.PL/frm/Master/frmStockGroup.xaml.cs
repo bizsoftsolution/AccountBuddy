@@ -51,10 +51,10 @@ namespace AccountBuddy.PL.frm.Master
             dgvStock.ItemsSource = BLL.StockGroup.toList;
 
             CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Filter = StockGroup_Filter;
-            CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.AccountGroup.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
+            CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
             cmbUnder.ItemsSource = BLL.StockGroup.toList;
-            cmbUnder.SelectedValuePath = "AccountGroup.Id";
-            cmbUnder.DisplayMemberPath = "AccountGroup.GroupName";
+            cmbUnder.SelectedValuePath = "Id";
+            cmbUnder.DisplayMemberPath = "StockGroupName";
 
 
 
@@ -67,7 +67,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.AccountGroup.GroupName == null)
+            if (data.StockGroupName == null)
             {
                 MessageBox.Show(String.Format(Message.BLL.Required_Data, "Group Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -89,7 +89,7 @@ namespace AccountBuddy.PL.frm.Master
                 }
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.AccountGroup.GroupName),FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.StockGroupName),FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
@@ -246,7 +246,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptStockGroup.Reset();
-                ReportDataSource data = new ReportDataSource("StockGroup", BLL.StockGroup.toList.Where(x => StockGroup_Filter(x)).Select(x => new { StockGroupCode=x.AccountGroup.GroupCode,StockGroupName= x.AccountGroup.GroupName, underGroupName = x.AccountGroup.UnderAccountGroup.GroupName }).OrderBy(x => x.StockGroupCode).ToList());
+                ReportDataSource data = new ReportDataSource("StockGroup", BLL.StockGroup.toList.Where(x => StockGroup_Filter(x)).Select(x => new { StockGroupCode=x.GroupCode,StockGroupName= x.StockGroupName, underGroupName = x.UnderStockGroup.StockGroupName }).OrderBy(x => x.StockGroupCode).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptStockGroup.LocalReport.DataSources.Add(data);
                 rptStockGroup.LocalReport.DataSources.Add(data1);

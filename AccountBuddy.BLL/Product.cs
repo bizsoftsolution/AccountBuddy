@@ -399,7 +399,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         #endregion
 
         #region Property  Changed Event

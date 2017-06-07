@@ -15,16 +15,16 @@ namespace AccountBuddy.SL.Hubs
         {
             BLL.Products ProductsTo = ProductsFrom.toCopy<BLL.Products>(new BLL.Products());
 
-            ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
+            ProductsTo.StockGroup = StockGroup_DAL_BLL(ProductsFrom.StockGroup);
 
-            ProductsTo.UOM = UOMDAL_BLL(ProductsFrom.UOM);
+            ProductsTo.UOM = ProductsTo.UOM == null ? null: UOMDAL_BLL(ProductsFrom.UOM);
 
             return ProductsTo;
         }
 
         public List<BLL.Products> Products_List()
         {
-            return DB.Products.Where(x => x.StockGroup.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+            return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => Products_DAL_BLL(x)).ToList();
         }
 
@@ -34,23 +34,19 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                pro.Ledger.LedgerName = pro.ProductName;
-                pro.Ledger.AccountGroupId = pro.StockGroupId;
                 
                 DAL.Product d = DB.Products.Where(x => x.Id == pro.Id).FirstOrDefault();
                 if (d == null)
                 {
                     d = new DAL.Product();
-                    d.LedgerId = Ledger_Save(pro.Ledger);
-                    if (d.LedgerId != 0)
-                    {
-                        pro.toCopy<DAL.Product>(d);
+                    DB.Products.Add(d);
 
-                        DB.Products.Add(d);
+                    pro.toCopy<DAL.Product>(d);
+
                     DB.SaveChanges();
                     pro.Id = d.Id;
                     LogDetailStore(pro, LogDetailType.INSERT);
-                    }
+                   
                 }
                 else
                 {
@@ -73,10 +69,10 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 var d = DB.Products.Where(x => x.Id == pk).FirstOrDefault();
-                if (d != null && Ledger_CanDelete(d.Ledger))
+                if (d != null )
                 {
                     DB.Products.Remove(d);
-                    Ledger_Delete((int)d.LedgerId);
+                    //Ledger_Delete((int)d.LedgerId);
                     DB.SaveChanges();
                     LogDetailStore(Products_DAL_BLL(d), LogDetailType.DELETE);
                 }

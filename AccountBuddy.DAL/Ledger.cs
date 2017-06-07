@@ -22,7 +22,6 @@ namespace AccountBuddy.DAL
             this.JournalDetails = new HashSet<JournalDetail>();
             this.Payments = new HashSet<Payment>();
             this.PaymentDetails = new HashSet<PaymentDetail>();
-            this.Products = new HashSet<Product>();
             this.Receipts = new HashSet<Receipt>();
             this.ReceiptDetails = new HashSet<ReceiptDetail>();
             this.Staffs = new HashSet<Staff>();
@@ -59,8 +58,6 @@ namespace AccountBuddy.DAL
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receipt> Receipts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
