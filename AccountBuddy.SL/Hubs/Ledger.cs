@@ -18,7 +18,7 @@ namespace AccountBuddy.SL.Hubs
 
             ledgerTo.AccountGroup = AccountGroupDAL_BLL(ledgerFrom.AccountGroup);
 
-            ledgerTo.CreditLimitType = new BLL.CreditLimitType();            
+            ledgerTo.CreditLimitType = new BLL.CreditLimitType();
             ledgerFrom.CreditLimitType.toCopy<BLL.CreditLimitType>(ledgerTo.CreditLimitType);
 
             return ledgerTo;
@@ -85,7 +85,7 @@ namespace AccountBuddy.SL.Hubs
                 Clients.All.delete(pk);
 
                 rv = true;
-                
+
             }
             catch (Exception ex)
             {
@@ -101,6 +101,7 @@ namespace AccountBuddy.SL.Hubs
                    l.Receipts.Count() == 0 &&
                    l.ReceiptDetails.Count() == 0 &&
                    l.JournalDetails.Count() == 0;
+                 
         }
 
         #endregion

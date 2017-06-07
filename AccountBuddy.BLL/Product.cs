@@ -9,18 +9,16 @@ using AccountBuddy.Common;
 
 namespace AccountBuddy.BLL
 {
-    public class Products : INotifyPropertyChanged
+    public class Product : INotifyPropertyChanged
     {
         #region Fileds
 
-        private static ObservableCollection<Products> _toList;
+        private static ObservableCollection<Product> _toList;
        
         private int _Id;
         private string _ProductName;
-        private Ledger _Ledger;
-        private int _LedgerId;
-        private AccountGroup _AccountGroup;
-        private int? _AccountGroupId;
+        private StockGroup _StockGroup;
+        private int? _StockGroupId;
         private string _ItemCode;
         private int? _UOMId;
         private UOM _UOM;
@@ -99,11 +97,11 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public static ObservableCollection<Products> toList
+        public static ObservableCollection<Product> toList
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<Products>(FMCGHubClient.FMCGHub.Invoke<List<Products>>("Products_List").Result);
+                if (_toList == null) _toList = new ObservableCollection<Product>(FMCGHubClient.FMCGHub.Invoke<List<Product>>("Product_List").Result);
                 return _toList;
             }
             set
@@ -145,35 +143,20 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int LedgerId
+        
+        public int? StockGroupId
         {
             get
             {
-                return _LedgerId;
+                return _StockGroupId;
             }
 
             set
             {
-                if (_LedgerId != value)
+                if (_StockGroupId != value)
                 {
-                    _LedgerId = value;
-                    NotifyPropertyChanged(nameof(LedgerId));
-                }
-            }
-        }
-        public int? AccountGroupId
-        {
-            get
-            {
-                return _AccountGroupId;
-            }
-
-            set
-            {
-                if (_AccountGroupId != value)
-                {
-                    _AccountGroupId = value;
-                    NotifyPropertyChanged(nameof(AccountGroupId));
+                    _StockGroupId = value;
+                    NotifyPropertyChanged(nameof(StockGroupId));
                 }
             }
         }
@@ -367,37 +350,23 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public AccountGroup AccountGroup
+        public StockGroup StockGroup
         {
             get
             {
-                return _AccountGroup;
+                if (_StockGroup == null) _StockGroup = new StockGroup();
+                return _StockGroup;
             }
             set
             {
-                if (_AccountGroup != value)
+                if (_StockGroup != value)
                 {
-                    _AccountGroup = value;
-                    NotifyPropertyChanged(nameof(AccountGroup));
+                    _StockGroup = value;
+                    NotifyPropertyChanged(nameof(StockGroup));
                 }
             }
         }
-        public Ledger Ledger
-        {
-            get
-            {
-                return _Ledger;
-            }
-            set
-            {
-                if(_Ledger!=value)
-                {
-                    _Ledger = value;
-                    NotifyPropertyChanged(nameof(Ledger));
-                }
-            }
-        }
-
+        
         #endregion
 
         #region Property  Changed Event
@@ -425,34 +394,35 @@ namespace AccountBuddy.BLL
             try
             {
 
-                Products d = toList.Where(x => x.Id == Id).FirstOrDefault();
+                Product d = toList.Where(x => x.Id == Id).FirstOrDefault();
 
                 if (d == null)
                 {
-                    d = new Products();
-                    toList.Add(d);
+                    d = new Product();                    
                 }
 
-                this.toCopy<Products>(d);
+                this.toCopy<Product>(d);
                 if (isServerCall == false)
                 {
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Products_Save", this).Result;
-                    d.Id = i;
-                }
-
-                return true;
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Product_Save", this).Result;
+                    if (i != 0)
+                    {
+                        d.Id = i;
+                        toList.Add(d);
+                        return true;
+                    }                    
+                }                
             }
             catch (Exception ex)
             {
                 return false;
-
             }
-
+            return false;
         }
 
         public void Clear()
         {
-            new Products().toCopy<Products>(this);
+            new Product().toCopy<Product>(this);
             NotifyAllPropertyChanged();
         }
 
@@ -461,7 +431,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<Products>(this);
+                d.toCopy<Product>(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
 
                 return true;
@@ -479,7 +449,7 @@ namespace AccountBuddy.BLL
 
                 if (isServerCall == false)
                 {
-                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("Products_Delete", this.Id).Result;
+                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("Product_Delete", this.Id).Result;
                     if (rv == true) toList.Remove(d);
 
                 }
@@ -508,9 +478,7 @@ namespace AccountBuddy.BLL
         {
             _toList = null;
         }
-
- 
-
+        
         #endregion
 
 

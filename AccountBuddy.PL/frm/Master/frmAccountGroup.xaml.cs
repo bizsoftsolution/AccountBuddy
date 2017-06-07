@@ -57,7 +57,7 @@ namespace AccountBuddy.PL.frm.Master
             cmbUnder.DisplayMemberPath = "GroupNameWithCode";
 
 
-           
+            rptContain.IsChecked = true;
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
@@ -201,7 +201,14 @@ namespace AccountBuddy.PL.frm.Master
 
                 foreach (var p in d.GetType().GetProperties())
                 {
-                    if (p.Name.ToLower().Contains("id") || p.GetValue(d) == null) continue;
+                    if (    p.Name.ToLower().Contains("id") || 
+                            p.GetValue(d) == null || 
+                            (   p.Name != nameof(data.GroupName) && 
+                                p.Name !=nameof(data.underGroupName) &&
+                                p.Name !=nameof(data.GroupCode)
+
+                             )
+                        ) continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {

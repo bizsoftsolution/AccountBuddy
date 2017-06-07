@@ -18,13 +18,20 @@ namespace AccountBuddy.DAL
         public StockGroup()
         {
             this.Products = new HashSet<Product>();
+            this.StockGroup1 = new HashSet<StockGroup>();
         }
     
         public int Id { get; set; }
-        public int AccountGroupId { get; set; }
+        public string StockGroupName { get; set; }
+        public string GroupCode { get; set; }
+        public Nullable<int> UnderGroupId { get; set; }
+        public int CompanyId { get; set; }
     
-        public virtual AccountGroup AccountGroup { get; set; }
+        public virtual CompanyDetail CompanyDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockGroup> StockGroup1 { get; set; }
+        public virtual StockGroup StockGroup2 { get; set; }
     }
 }

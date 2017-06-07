@@ -50,6 +50,9 @@
     <EmbeddedResource Include="rpt\Master\rptAccountGroup.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Master\rptBank.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Master\RptLedger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -87,14 +90,24 @@
     <EmbeddedResource Include="rpt\Transaction\rptPaymentVoucher.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptPurchase.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptPurchaseReturn.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptQuickPurchaseOrder.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptQuickSales.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptQuickSalesOrder.rdlc" />
     <EmbeddedResource Include="rpt\Transaction\rptReceiptVoucher.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptSalesReturn.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AccountBuddy.BLL\AccountBuddy.BLL.csproj">
       <Project>{76991d67-fb80-4181-a9f1-a12280fb4327}</Project>
       <Name>AccountBuddy.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AccountBuddy.DAL\AccountBuddy.DAL.csproj">
+      <Project>{4687cb8f-e7e9-4cd5-acfd-b08b997d35fd}</Project>
+      <Name>AccountBuddy.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

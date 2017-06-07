@@ -312,8 +312,7 @@ namespace AccountBuddy.PL
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            BLL.CompanyDetail.Init();
-            var l1 = BLL.CompanyDetail.toList.Where(x=>x.CompanyType=="Company");
+            var l1 = BLL.CompanyDetail.toList;
             cmbCompany.ItemsSource = l1;
             cmbCompany.SelectedValuePath = "Id";
             cmbCompany.DisplayMemberPath = "CompanyName";
@@ -326,8 +325,38 @@ namespace AccountBuddy.PL
             cmbCompanyDealerPrimay.SelectedValuePath = "Id";
             cmbCompanyDealerPrimay.DisplayMemberPath = "CompanyName";
 
+            CollectionViewSource.GetDefaultView(cmbCompany.ItemsSource).Filter = Company_Filter;
+            CollectionViewSource.GetDefaultView(cmbCompany.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription("CompanyName", System.ComponentModel.ListSortDirection.Ascending));
 
         }
-        
+
+        bool Company_Filter(object o)
+        {
+            var c = o as BLL.CompanyDetail;
+            return c.CompanyType == "Company";
+        }
+        void Company_Refresh()
+        {
+            try
+            {
+                CollectionViewSource.GetDefaultView(cmbCompany.ItemsSource).Refresh();
+            }
+            catch (Exception ex) { };
+        }
+
+        private void cmbCompany_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Company_Refresh();
+        }
+
+        private void cmbCompanyWarehousePrimay_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Company_Refresh();
+        }
+
+        private void cmbCompanyDealerPrimay_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Company_Refresh();
+        }
     }
 }

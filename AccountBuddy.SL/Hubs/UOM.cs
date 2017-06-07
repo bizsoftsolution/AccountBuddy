@@ -9,7 +9,7 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
         #region Account Group
-        BLL.UOM UOMDAL_BLL(DAL.UOM d)
+        BLL.UOM UOM_DALtoBLL(DAL.UOM d)
         {
             BLL.UOM b = d.toCopy<BLL.UOM>(new BLL.UOM());
             b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
@@ -18,7 +18,7 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.UOM> UOM_List()
         {
             return DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId ).ToList()
-                               .Select(x => UOMDAL_BLL(x)).ToList();
+                               .Select(x => UOM_DALtoBLL(x)).ToList();
         }
 
         public int UOM_Save(BLL.UOM agp)

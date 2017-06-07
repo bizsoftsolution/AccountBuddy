@@ -26,8 +26,8 @@ namespace AccountBuddy.PL.frm.Master
 
         #region Field
 
-        public static string FormName = "Customer";
-        BLL.Customer data = new BLL.Customer();
+        public static string FormName = "Bank";
+        BLL.Bank data = new BLL.Bank();
 
         #endregion
 
@@ -38,7 +38,7 @@ namespace AccountBuddy.PL.frm.Master
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-            rptCustomer.SetDisplayMode(DisplayMode.PrintLayout);
+            rptBank.SetDisplayMode(DisplayMode.PrintLayout);
             onClientEvents();
         }
 
@@ -48,20 +48,12 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvCustomer.ItemsSource = BLL.Customer.toList;
+            dgvBank.ItemsSource = BLL.Bank.toList;
 
-            CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).Filter = Customer_Filter;
-            CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.AccountName), System.ComponentModel.ListSortDirection.Ascending));
+            CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).Filter = Bank_Filter;
+            CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.AccountName), System.ComponentModel.ListSortDirection.Ascending));
 
-            //cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.ToList();
-            //cmbAccountGroupId.DisplayMemberPath = "GroupName";
-            //cmbAccountGroupId.SelectedValuePath = "Id";
-
-
-
-            cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
-            cmbCreditLimitTypeId.SelectedValuePath = "Id";
-            cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
+            
 
             cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
 
@@ -138,9 +130,9 @@ namespace AccountBuddy.PL.frm.Master
             data.Clear();
         }
 
-        private void dgvCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dgvBank_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvCustomer.SelectedItem as BLL.Customer;
+            var d = dgvBank.SelectedItem as BLL.Bank;
             if (d != null)
             {
                 data.Find(d.Id);
@@ -197,10 +189,10 @@ namespace AccountBuddy.PL.frm.Master
 
         #region Methods
 
-        private bool Customer_Filter(object obj)
+        private bool Bank_Filter(object obj)
         {
             bool RValue = false;
-            var d = obj as BLL.Customer;
+            var d = obj as BLL.Bank;
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
@@ -243,7 +235,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).Refresh();
+                CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).Refresh();
             }
             catch (Exception ex) { };
 
@@ -253,14 +245,14 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                rptCustomer.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Customer_Filter(x)).Select(x => new { x.AccountName, x.PersonIncharge, x.AddressLine1, x.AddressLine2, x.CityName, x.CreditAmount, x.CreditLimit, CreditLimitTypeName = x.CreditLimitType.LimitType, x.OPCr, x.OPDr }).OrderBy(x => x.AccountName).ToList());
+                rptBank.Reset();
+                ReportDataSource data = new ReportDataSource("Bank", BLL.Bank.toList.Where(x => Bank_Filter(x)).Select(x => new { x.AccountName,GroupCode=x.AccountNo,x.Ledger.LedgerName, x.Ledger.PersonIncharge, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.CreditAmount, x.Ledger.CreditLimit, CreditLimitTypeName = x.Ledger.CreditLimitType.LimitType, x.Ledger.OPCr, x.Ledger.OPDr }).OrderBy(x => x.AccountName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
-                rptCustomer.LocalReport.DataSources.Add(data);
-                rptCustomer.LocalReport.DataSources.Add(data1);
-                rptCustomer.LocalReport.ReportPath = @"rpt\master\RptLedger.rdlc";
+                rptBank.LocalReport.DataSources.Add(data);
+                rptBank.LocalReport.DataSources.Add(data1);
+                rptBank.LocalReport.ReportPath = @"rpt\master\rptBank.rdlc";
 
-                rptCustomer.RefreshReport();
+                rptBank.RefreshReport();
 
             }
             catch (Exception ex)
@@ -273,7 +265,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.Customer>("Customer_Save", (Cus) => {
+            BLL.FMCGHubClient.FMCGHub.On<BLL.Bank>("Bank_Save", (Cus) => {
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -282,9 +274,9 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("Customer_Delete", (Action<int>)((pk) => {
+            BLL.FMCGHubClient.FMCGHub.On("Bank_Delete", (Action<int>)((pk) => {
                 this.Dispatcher.Invoke((Action)(() => {
-                    BLL.Customer led = new BLL.Customer();
+                    BLL.Bank led = new BLL.Bank();
                     led.Find((int)pk);
                     led.Delete((bool)true);
                 }));
@@ -294,14 +286,7 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-        private void txtCreditAmount_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtCreditAmount.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-        }
+       
 
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -328,9 +313,9 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
-        private void dgvCustomer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void dgvBank_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvCustomer.SelectedItem as BLL.Ledger;
+            var d = dgvBank.SelectedItem as BLL.Ledger;
             if (d != null)
             {
                 data.Find(d.Id);

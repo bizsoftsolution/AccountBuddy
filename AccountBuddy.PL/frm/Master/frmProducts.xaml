@@ -37,16 +37,17 @@
 
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                            <TextBox x:Name="txtProductName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding ProductName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+                            <TextBox Margin="0,0,10,0" x:Name="txtProductName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding ProductName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
 
-                                        <TextBlock Text="Product Name"/>
+                                        <TextBlock Text="Product Name" />
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <TextBox   x:Name="txtItemCode" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Left"  FontWeight="Bold" FontSize="14" Text="{Binding ItemCode, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" Margin="0,10">
+                            <StackPanel Orientation="Horizontal">
+                            <TextBox   x:Name="txtItemCode" Width="250" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Left"  FontWeight="Bold" FontSize="14" Text="{Binding ItemCode, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" Margin="0,10">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Width="151">
                                         <materialDesign:PackIcon  Kind="Barcode" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -54,27 +55,19 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-
-                            <ComboBox  Name="cmbStockGroupId"  IsEditable="True" SelectedValue="{Binding StockGroupId,Mode=TwoWay}" FontWeight="Bold" FontSize="14" SelectedItem="{Binding StockGroup.StockGroupName,Mode=TwoWay}" Text ="{Binding StockGroup.StockGroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                          
+                            </StackPanel>
+                            <ComboBox  Name="cmbStockGroupId" Margin="0,0,10,0" IsEditable="True" SelectedValue="{Binding StockGroupId,Mode=TwoWay}" FontWeight="Bold" FontSize="14" SelectedItem="{Binding StockGroup,Mode=TwoWay}" Text ="{Binding StockGroup.StockGroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" >
                                         <materialDesign:PackIcon  Kind="Group" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                        <TextBlock Text="Account Group" />
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-
-                            </ComboBox>
-                            <ComboBox  Name="cmbUOM"  IsEditable="True" SelectedValue="{Binding UOMId,Mode=TwoWay}" FontWeight="Bold" FontSize="14" SelectedItem="{Binding UOM,Mode=TwoWay}" Text ="{Binding UOM.Symbol, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal" >
-                                        <materialDesign:PackIcon  Kind="Weight" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                        <TextBlock Text="UOM" />
+                                        <TextBlock Text="Stock Group" />
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
 
                             </ComboBox>
                             <StackPanel Orientation="Horizontal">
-                                <TextBox  Width="150"  x:Name="txtPurchaseRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtPurchase_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding PurchaseRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" Margin="0,10">
+                                <TextBox  Width="120"  x:Name="txtPurchaseRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtPurchase_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding PurchaseRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" Margin="0,10">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Width="151">
                                             <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -82,7 +75,7 @@
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
                                 </TextBox>
-                                <TextBox  Width="150"  x:Name="txtSellingRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtSellingRate_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding SellingRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="5,10">
+                                <TextBox  Width="120"  x:Name="txtSellingRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtSellingRate_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding SellingRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="5,10">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Width="150">
                                             <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -90,10 +83,7 @@
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
                                 </TextBox>
-
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox  Width="150"  x:Name="txtMRP" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtMRP_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding MRP, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" Margin="0,10">
+                                <TextBox  Width="120"  x:Name="txtMRP" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtMRP_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding MRP, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" Margin="5,10">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Width="151">
                                             <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -101,31 +91,32 @@
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
                                 </TextBox>
-                                <TextBox  Width="150"  x:Name="txtGST" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtGST_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding GST, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="5,10">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal" Width="150">
-                                            <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                            <TextBlock Text="GST" />
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </TextBox>
 
                             </StackPanel>
+                           
+                            <StackPanel Orientation="Horizontal" Width="378" Margin="0" >
+                                <ComboBox  Name="cmbUOM" Width="120" Margin="0,10"  IsEditable="True" SelectedValue="{Binding UOMId,Mode=TwoWay}" FontWeight="Bold" FontSize="14" SelectedItem="{Binding UOM,Mode=TwoWay}" Text ="{Binding UOM.Symbol, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <materialDesign:PackIcon  Kind="Weight" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="UOM" />
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
 
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox  Width="150"  x:Name="txtOpeningStock" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtOpeningStock_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding OpeningStock, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" Margin="0,10">
+                                </ComboBox>
+                                <TextBox  Width="120"   x:Name="txtOpeningStock" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtOpeningStock_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding OpeningStock, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" Margin="5,10">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Width="151">
-                                            <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                            <TextBlock Text="Opening Stock" />
+                                            <materialDesign:PackIcon  Kind="OpenInNew" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="Opening Stock" FontSize="12"/>
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
                                 </TextBox>
-                                <TextBox  Width="150"  x:Name="txtReOrderLevel" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtReOrderLevel_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding ReOrderLevel, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="5,10">
+                                <TextBox  Width="120" x:Name="txtReOrderLevel" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtReOrderLevel_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding ReOrderLevel, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="5,10">
                                     <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal" Width="150">
-                                            <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                            <TextBlock Text="Re-Order Level" />
+                                        <StackPanel Orientation="Horizontal" Width="120">
+                                            <materialDesign:PackIcon  Kind="ClockStart" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="Re-Order Level" FontSize="12"/>
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
                                 </TextBox>

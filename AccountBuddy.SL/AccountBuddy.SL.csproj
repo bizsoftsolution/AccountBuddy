@@ -161,7 +161,7 @@
     <Compile Include="Hubs\Journal.cs" />
     <Compile Include="Hubs\Ledger.cs" />
     <Compile Include="Hubs\Payment.cs" />
-    <Compile Include="Hubs\Products.cs" />
+    <Compile Include="Hubs\Product.cs" />
     <Compile Include="Hubs\ProfitLoss.cs" />
     <Compile Include="Hubs\Purchase.cs" />
     <Compile Include="Hubs\PurchaseOrder.cs" />

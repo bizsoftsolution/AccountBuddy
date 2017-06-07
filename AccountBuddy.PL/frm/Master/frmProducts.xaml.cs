@@ -26,7 +26,7 @@ namespace AccountBuddy.PL.frm.Master
         #region Field
 
         public static string FormName = "Products";
-        BLL.Products data = new BLL.Products();
+        BLL.Product data = new BLL.Product();
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvProduct.ItemsSource = BLL.Products.toList;
+            dgvProduct.ItemsSource = BLL.Product.toList;
 
             CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).Filter = Product_Filter;
             CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.ProductName), System.ComponentModel.ListSortDirection.Ascending));
@@ -73,6 +73,10 @@ namespace AccountBuddy.PL.frm.Master
             if (data.ProductName == null)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "ProductName"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            if (data.ItemCode == null)
+            {
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Item Code"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
@@ -139,7 +143,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvProduct.SelectedItem as BLL.Products;
+            var d = dgvProduct.SelectedItem as BLL.Product;
             if (d != null)
             {
                 data.Find(d.Id);
@@ -199,7 +203,7 @@ namespace AccountBuddy.PL.frm.Master
         private bool Product_Filter(object obj)
         {
             bool RValue = false;
-            var d = obj as BLL.Products;
+            var d = obj as BLL.Product;
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
@@ -253,7 +257,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptProduct.Reset();
-                ReportDataSource data = new ReportDataSource("Products", BLL.Products.toList.Where(x => Product_Filter(x)).Select(x => new { x.ProductName, x.AccountGroup.GroupName, UOMName=x.UOM.Symbol, x.ItemCode, x.PurchaseRate, x.SellingRate, x.GST, x.MRP, x.OpeningStock, x.ReOrderLevel }).OrderBy(x => x.ProductName).ToList());
+                ReportDataSource data = new ReportDataSource("Products", BLL.Product.toList.Where(x => Product_Filter(x)).Select(x => new { x.ProductName, x.StockGroup.StockGroupName, UOMName=x.UOM.Symbol, x.ItemCode, x.PurchaseRate, x.SellingRate, x.GST, x.MRP, x.OpeningStock, x.ReOrderLevel }).OrderBy(x => x.ProductName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptProduct.LocalReport.DataSources.Add(data);
                 rptProduct.LocalReport.DataSources.Add(data1);
@@ -272,7 +276,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.Products>("Product_Save", (led) => {
+            BLL.FMCGHubClient.FMCGHub.On<BLL.Product>("Product_Save", (led) => {
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -283,7 +287,7 @@ namespace AccountBuddy.PL.frm.Master
 
             BLL.FMCGHubClient.FMCGHub.On("Product_Delete", (Action<int>)((pk) => {
                 this.Dispatcher.Invoke((Action)(() => {
-                    BLL.Products led = new BLL.Products();
+                    BLL.Product led = new BLL.Product();
                     led.Find((int)pk);
                     led.Delete((bool)true);
                 }));
@@ -320,7 +324,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvProduct_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvProduct.SelectedItem as BLL.Products;
+            var d = dgvProduct.SelectedItem as BLL.Product;
             if (d != null)
             {
                 data.Find(d.Id);
@@ -347,15 +351,15 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
-        private void txtGST_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtGST.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+        //private void txtGST_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    TextBox textBox = sender as TextBox;
+        //    Int32 selectionStart = textBox.SelectionStart;
+        //    Int32 selectionLength = textBox.SelectionLength;
+        //    textBox.Text = AppLib.NumericOnly(txtGST.Text);
+        //    textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
-        }
+        //}
 
         private void txtOpeningStock_TextChanged(object sender, TextChangedEventArgs e)
         {

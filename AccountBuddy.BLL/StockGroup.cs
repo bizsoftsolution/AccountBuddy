@@ -15,9 +15,15 @@ namespace AccountBuddy.BLL
         private static ObservableCollection<StockGroup> _toList;
 
         private int _id;
-        private int _AccountGroupId;
-        private AccountGroup _AccountGroup;
-       
+        private string _StockGroupName;
+        private string _StockGroupNameWithCode;
+        private string _groupCode;
+        private int? _underGroupId;
+        private int _companyId;
+        private StockGroup _UnderStockGroup;
+        private CompanyDetail _Company;
+        private string _underStockGroupName;
+
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
         private bool _IsEnabled;
@@ -25,6 +31,13 @@ namespace AccountBuddy.BLL
 
         #region Property
 
+        public string AccountPath
+        {
+            get
+            {
+                return UnderStockGroup == null ? "" : UnderStockGroup.AccountPath + "/" + _StockGroupName;
+            }
+        }
         public static UserTypeDetail UserPermission
         {
             get
@@ -55,7 +68,7 @@ namespace AccountBuddy.BLL
                     {
                         _toList = new ObservableCollection<StockGroup>();
                         var l1 = FMCGHubClient.FMCGHub.Invoke<List<StockGroup>>("StockGroup_List").Result;
-                        _toList = new ObservableCollection<StockGroup>(l1.OrderBy(x => x.AccountGroup.GroupCode));
+                        _toList = new ObservableCollection<StockGroup>(l1.OrderBy(x => x.StockGroupNameWithCode));
                     }
                 }
                 catch (Exception ex)
@@ -86,35 +99,127 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int AccountGroupId
+        public string StockGroupName
         {
             get
             {
-                return _AccountGroupId;
+                return _StockGroupName;
             }
             set
             {
-                if (_AccountGroupId != value)
+                if (_StockGroupName != value)
                 {
-                    _AccountGroupId = value;
-                    NotifyPropertyChanged(nameof(AccountGroupId));
+                    _StockGroupName = value;
+                    NotifyPropertyChanged(nameof(StockGroupName));
+                    SetStockGroupNameWithCode();
+                }
+            }
+        }
+        public string GroupCode
+        {
+            get
+            {
+                return _groupCode;
+            }
+            set
+            {
+                if (_groupCode != value)
+                {
+                    _groupCode = value;
+                    NotifyPropertyChanged(nameof(GroupCode));
+                    SetStockGroupNameWithCode();
+                }
+            }
+        }
+        public string StockGroupNameWithCode
+        {
+            get
+            {
+                return _StockGroupNameWithCode;
+            }
+            set
+            {
+                if (_StockGroupNameWithCode != value)
+                {
+                    _StockGroupNameWithCode = value;
+                    NotifyPropertyChanged(nameof(StockGroupNameWithCode));
+                }
+            }
+        }
+        public int CompanyId
+        {
+            get
+            {
+                return _companyId;
+            }
+            set
+            {
+                if (_companyId != value)
+                {
+                    _companyId = value;
+                    NotifyPropertyChanged(nameof(CompanyId));
+                }
+            }
+        }
+        public int? UnderGroupId
+        {
+            get
+            {
+                return _underGroupId;
+            }
+            set
+            {
+                if (_underGroupId != value)
+                {
+                    _underGroupId = value;
+                    NotifyPropertyChanged(nameof(UnderGroupId));
+                }
+            }
+        }
+        public StockGroup UnderStockGroup
+        {
+            get
+            {
+                return _UnderStockGroup;
+            }
+            set
+            {
+                if (_UnderStockGroup != value)
+                {
+                    _UnderStockGroup = value;
+                    NotifyPropertyChanged(nameof(UnderStockGroup));
+                    NotifyPropertyChanged(nameof(AccountPath));
+                }
+            }
+        }
+        public CompanyDetail Company
+        {
+            get
+            {
+                return _Company;
+            }
+            set
+            {
+                if (_Company != value)
+                {
+                    _Company = value;
+                    NotifyPropertyChanged(nameof(Company));
                 }
             }
         }
 
-        public AccountGroup AccountGroup
+        public string underStockGroupName
         {
             get
             {
-                if (_AccountGroup == null) _AccountGroup = new BLL.AccountGroup();
-                return _AccountGroup;
+                return _underStockGroupName;
             }
             set
             {
-                if(_AccountGroup!=value)
+                if (_underStockGroupName != value)
                 {
-                    _AccountGroup = value;
-                    NotifyPropertyChanged(nameof(AccountGroup));
+                    _underStockGroupName = value;
+                    NotifyPropertyChanged(nameof(underStockGroupName));
                 }
             }
         }
@@ -258,10 +363,10 @@ namespace AccountBuddy.BLL
         {
             bool RValue = true;
 
-            //if (toList.Where(x => x.StockGroupName.ToLower() == StockGroupName.ToLower() && x.Id != Id).Count() > 0)
-            //{
-            //    RValue = false;
-            //}
+            if (toList.Where(x => x.StockGroupName.ToLower() == StockGroupName.ToLower() && x.Id != Id).Count() > 0)
+            {
+                RValue = false;
+            }
             return RValue;
 
         }
@@ -271,7 +376,10 @@ namespace AccountBuddy.BLL
             _toList = null;
         }
 
-       
+        void SetStockGroupNameWithCode()
+        {
+            StockGroupNameWithCode = StockGroupName;// string.Format("{0}{1}{2}", GroupCode, string.IsNullOrWhiteSpace(GroupCode) ? "" : "-", StockGroupName);
+        }
         #endregion
     }
 }
