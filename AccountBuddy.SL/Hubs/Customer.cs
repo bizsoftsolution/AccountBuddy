@@ -6,6 +6,7 @@ using AccountBuddy.Common;
 
 namespace AccountBuddy.SL.Hubs
 {
+    #region Customer
     public partial class ABServerHub
     {
 
@@ -87,4 +88,5 @@ namespace AccountBuddy.SL.Hubs
         }
         
     }
+    #endregion
 }

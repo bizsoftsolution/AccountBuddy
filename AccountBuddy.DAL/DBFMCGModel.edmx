@@ -707,18 +707,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Product_AccountGroup">
-          <End Role="StockGroup" Type="Self.StockGroup" Multiplicity="0..1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockGroup">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="StockGroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Product_Ledger">
           <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -728,6 +716,18 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_StockGroup">
+          <End Role="StockGroup" Type="Self.StockGroup" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="StockGroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1388,12 +1388,12 @@
             <End Role="Payment" EntitySet="Payment" />
             <End Role="PaymentDetail" EntitySet="PaymentDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_Product_AccountGroup" Association="Self.FK_Product_AccountGroup">
-            <End Role="StockGroup" EntitySet="StockGroup" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
           <AssociationSet Name="FK_Product_Ledger" Association="Self.FK_Product_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_StockGroup" Association="Self.FK_Product_StockGroup">
+            <End Role="StockGroup" EntitySet="StockGroup" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_UOM" Association="Self.FK_Product_UOM">
@@ -1734,7 +1734,7 @@
             <End Role="Payment" EntitySet="Payments" />
             <End Role="PaymentDetail" EntitySet="PaymentDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Product_AccountGroup" Association="DBFMCGModel.FK_Product_AccountGroup">
+          <AssociationSet Name="FK_Product_StockGroup" Association="DBFMCGModel.FK_Product_StockGroup">
             <End Role="StockGroup" EntitySet="StockGroups" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
@@ -2129,7 +2129,7 @@
           <Property Name="ReOrderLevel" Type="Double" />
           <Property Name="ProductImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Product_Ledger" FromRole="Product" ToRole="Ledger" />
-          <NavigationProperty Name="StockGroup" Relationship="DBFMCGModel.FK_Product_AccountGroup" FromRole="Product" ToRole="StockGroup" />
+          <NavigationProperty Name="StockGroup" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="Product" ToRole="StockGroup" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="Product" ToRole="UOM" />
           <NavigationProperty Name="PurchaseDetails" Relationship="DBFMCGModel.FK_PurchaseDetail_Product" FromRole="Product" ToRole="PurchaseDetail" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="DBFMCGModel.FK_PurchaseOrderDetail_Product" FromRole="Product" ToRole="PurchaseOrderDetail" />
@@ -2423,7 +2423,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AccountGroupId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AccountGroup" Relationship="DBFMCGModel.FK_StockGroup_AccountGroup" FromRole="StockGroup" ToRole="AccountGroup" />
-          <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_AccountGroup" FromRole="StockGroup" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="StockGroup" ToRole="Product" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -2845,7 +2845,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Product_AccountGroup">
+        <Association Name="FK_Product_StockGroup">
           <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="0..1" />
           <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>

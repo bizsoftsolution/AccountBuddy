@@ -53,8 +53,8 @@ namespace AccountBuddy.PL.frm.Master
             CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.ProductName), System.ComponentModel.ListSortDirection.Ascending));
 
             cmbStockGroupId.ItemsSource = BLL.StockGroup.toList.ToList();
-            cmbStockGroupId.DisplayMemberPath = "StockGroupName";
-            cmbStockGroupId.SelectedValuePath = "Id";
+            cmbStockGroupId.DisplayMemberPath = "AccountGroup.GroupName";
+            cmbStockGroupId.SelectedValuePath = "AccountGroupId";
 
 
 
@@ -73,6 +73,10 @@ namespace AccountBuddy.PL.frm.Master
             if (data.ProductName == null)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "ProductName"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            if (data.ItemCode == null)
+            {
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Item Code"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
@@ -253,7 +257,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptProduct.Reset();
-                ReportDataSource data = new ReportDataSource("Products", BLL.Products.toList.Where(x => Product_Filter(x)).Select(x => new { x.ProductName, x.AccountGroup.GroupName, UOMName=x.UOM.Symbol, x.ItemCode, x.PurchaseRate, x.SellingRate, x.GST, x.MRP, x.OpeningStock, x.ReOrderLevel }).OrderBy(x => x.ProductName).ToList());
+                ReportDataSource data = new ReportDataSource("Products", BLL.Products.toList.Where(x => Product_Filter(x)).Select(x => new { x.ProductName, x.StockGroup.AccountGroup.GroupName, UOMName=x.UOM.Symbol, x.ItemCode, x.PurchaseRate, x.SellingRate, x.GST, x.MRP, x.OpeningStock, x.ReOrderLevel }).OrderBy(x => x.ProductName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptProduct.LocalReport.DataSources.Add(data);
                 rptProduct.LocalReport.DataSources.Add(data1);

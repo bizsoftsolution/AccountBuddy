@@ -87,9 +87,15 @@
     <EmbeddedResource Include="rpt\Transaction\rptPaymentVoucher.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptPurchase.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptPurchaseReturn.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptQuickPurchaseOrder.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptQuickSales.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptQuickSalesOrder.rdlc" />
     <EmbeddedResource Include="rpt\Transaction\rptReceiptVoucher.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptSalesReturn.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AccountBuddy.BLL\AccountBuddy.BLL.csproj">

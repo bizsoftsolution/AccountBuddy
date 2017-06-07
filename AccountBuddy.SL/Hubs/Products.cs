@@ -11,11 +11,11 @@ namespace AccountBuddy.SL.Hubs
 
         #region Products
 
-        private BLL.Products ProductsDAL_BLL(DAL.Product ProductsFrom)
+        private BLL.Products Products_DAL_BLL(DAL.Product ProductsFrom)
         {
             BLL.Products ProductsTo = ProductsFrom.toCopy<BLL.Products>(new BLL.Products());
 
-            ProductsTo.AccountGroup = AccountGroupDAL_BLL(ProductsFrom.AccountGroup);
+            ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
 
             ProductsTo.UOM = UOMDAL_BLL(ProductsFrom.UOM);
 
@@ -24,8 +24,8 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Products> Products_List()
         {
-            return DB.Products.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
-                             .Select(x => ProductsDAL_BLL(x)).ToList();
+            return DB.Products.Where(x => x.StockGroup.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+                             .Select(x => Products_DAL_BLL(x)).ToList();
         }
 
 
@@ -34,29 +34,34 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
+                pro.Ledger.LedgerName = pro.ProductName;
+                pro.Ledger.AccountGroupId = pro.StockGroupId;
+                
                 DAL.Product d = DB.Products.Where(x => x.Id == pro.Id).FirstOrDefault();
                 if (d == null)
                 {
                     d = new DAL.Product();
-                    DB.Products.Add(d);
+                    d.LedgerId = Ledger_Save(pro.Ledger);
+                    if (d.LedgerId != 0)
+                    {
+                        pro.toCopy<DAL.Product>(d);
 
-                    pro.toCopy<DAL.Product>(d);
-
+                        DB.Products.Add(d);
                     DB.SaveChanges();
                     pro.Id = d.Id;
-
                     LogDetailStore(pro, LogDetailType.INSERT);
+                    }
                 }
                 else
                 {
                     pro.toCopy<DAL.Product>(d);
+                    //Ledger_Save(pro.Ledger);
                     DB.SaveChanges();
-                    LogDetailStore(pro, LogDetailType.UPDATE);
+
+                    Clients.Clients(OtherLoginClientsOnGroup).Products_Save(pro);
+
+                    return pro.Id = d.Id;
                 }
-
-                Clients.Clients(OtherLoginClientsOnGroup).Products_Save(pro);
-
-                return pro.Id = d.Id;
             }
             catch (Exception ex) { }
             return 0;
@@ -68,19 +73,18 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 var d = DB.Products.Where(x => x.Id == pk).FirstOrDefault();
-               
-                    if (d != null)
-                    {
-                        DB.Products.Remove(d);
-                        DB.SaveChanges();
-                        LogDetailStore(ProductsDAL_BLL(d), LogDetailType.DELETE);
-                    }
+                if (d != null && Ledger_CanDelete(d.Ledger))
+                {
+                    DB.Products.Remove(d);
+                    Ledger_Delete((int)d.LedgerId);
+                    DB.SaveChanges();
+                    LogDetailStore(Products_DAL_BLL(d), LogDetailType.DELETE);
+                }
 
-                    Clients.Clients(OtherLoginClientsOnGroup).Products_Delete(pk);
-                    Clients.All.delete(pk);
+                Clients.Clients(OtherLoginClientsOnGroup).Customer_Delete(pk);
+                Clients.All.delete(pk);
 
-                    rv = true;
-              
+                rv = true;
 
             }
             catch (Exception ex)
