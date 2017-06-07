@@ -246,10 +246,10 @@
     <Height>0.625in</Height>
     <Style />
   </Body>
-  <Width>6.03992in</Width>
+  <Width>6.06938in</Width>
   <Page>
     <PageHeader>
-      <Height>5.66208cm</Height>
+      <Height>5.5827cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -273,7 +273,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>4.70048cm</Top>
+          <Top>4.60967cm</Top>
           <Left>4.37018cm</Left>
           <Height>0.78521cm</Height>
           <Width>6.60104cm</Width>
@@ -302,15 +302,15 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Left</TextAlign>
+                <TextAlign>Center</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>CompanyName</rd:DefaultName>
-          <Top>0.31432cm</Top>
-          <Left>0.40333cm</Left>
+          <Top>0.38488cm</Top>
+          <Left>3.33193cm</Left>
           <Height>0.81167cm</Height>
-          <Width>10.55826cm</Width>
+          <Width>8.75236cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -334,15 +334,15 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Left</TextAlign>
+                <TextAlign>Center</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>AddressLine1</rd:DefaultName>
-          <Top>1.13481cm</Top>
-          <Left>0.40333cm</Left>
+          <Top>1.20537cm</Top>
+          <Left>3.33193cm</Left>
           <Height>0.6cm</Height>
-          <Width>10.54143cm</Width>
+          <Width>8.75236cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -366,15 +366,15 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Left</TextAlign>
+                <TextAlign>Center</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>AddressLine2</rd:DefaultName>
-          <Top>1.77009cm</Top>
-          <Left>0.40333cm</Left>
+          <Top>1.84065cm</Top>
+          <Left>3.33193cm</Left>
           <Height>0.6cm</Height>
-          <Width>10.56789cm</Width>
+          <Width>8.75236cm</Width>
           <ZIndex>3</ZIndex>
           <Style>
             <Border>
@@ -398,15 +398,15 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Left</TextAlign>
+                <TextAlign>Center</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>CityName</rd:DefaultName>
-          <Top>2.44064cm</Top>
-          <Left>0.40333cm</Left>
+          <Top>2.5112cm</Top>
+          <Left>3.33193cm</Left>
           <Height>0.6cm</Height>
-          <Width>10.56789cm</Width>
+          <Width>8.75236cm</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border>
@@ -435,19 +435,15 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>GSTNo</rd:DefaultName>
-          <Top>3.07592cm</Top>
-          <Left>0.40333cm</Left>
-          <Height>0.6cm</Height>
-          <Width>4.89007cm</Width>
+          <Top>3.18175cm</Top>
+          <Left>7.96297cm</Left>
+          <Height>0.56472cm</Height>
+          <Width>4.0535cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
             </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
         <Textbox Name="PostalCode">
@@ -461,23 +457,21 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PostalCode</rd:DefaultName>
-          <Top>3.07592cm</Top>
-          <Left>5.41606cm</Left>
-          <Height>0.6cm</Height>
-          <Width>5.5287cm</Width>
+          <Top>3.18175cm</Top>
+          <Left>3.33193cm</Left>
+          <Height>0.56472cm</Height>
+          <Width>4.56049cm</Width>
           <ZIndex>6</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
             </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
         <Textbox Name="TelephoneNo">
@@ -492,15 +486,15 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Left</TextAlign>
+                <TextAlign>Center</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>TelephoneNo</rd:DefaultName>
-          <Top>3.72745cm</Top>
-          <Left>0.40333cm</Left>
+          <Top>3.79801cm</Top>
+          <Left>3.33193cm</Left>
           <Height>0.6cm</Height>
-          <Width>10.54143cm</Width>
+          <Width>8.75236cm</Width>
           <ZIndex>7</ZIndex>
           <Style>
             <Border>
@@ -529,10 +523,10 @@
           <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
           <MIMEType>image/png</MIMEType>
           <Sizing>FitProportional</Sizing>
-          <Top>1.13481cm</Top>
-          <Left>11.77078cm</Left>
-          <Height>2.95783cm</Height>
-          <Width>3.13437cm</Width>
+          <Top>0.49953cm</Top>
+          <Left>0.28786cm</Left>
+          <Height>3.19264cm</Height>
+          <Width>2.87042cm</Width>
           <ZIndex>9</ZIndex>
           <ToolTip>=First(Fields!Logo.Value, "CompanyDetail")</ToolTip>
           <Style>
