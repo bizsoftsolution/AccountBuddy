@@ -15,7 +15,7 @@ namespace AccountBuddy.SL.Hubs
         {
             BLL.Products ProductsTo = ProductsFrom.toCopy<BLL.Products>(new BLL.Products());
 
-            ProductsTo.AccountGroup = AccountGroupDAL_BLL(ProductsFrom.AccountGroup);
+            ProductsTo.AccountGroup = AccountGroupDAL_BLL(ProductsFrom.StockGroup.AccountGroup);
 
             ProductsTo.UOM = UOMDAL_BLL(ProductsFrom.UOM);
 
@@ -24,7 +24,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Products> Products_List()
         {
-            return DB.Products.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+            return DB.Products.Where(x => x.StockGroup.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => ProductsDAL_BLL(x)).ToList();
         }
 

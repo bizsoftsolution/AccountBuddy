@@ -312,6 +312,7 @@ namespace AccountBuddy.PL
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            BLL.CompanyDetail.Init();
             var l1 = BLL.CompanyDetail.toList.Where(x=>x.CompanyType=="Company");
             cmbCompany.ItemsSource = l1;
             cmbCompany.SelectedValuePath = "Id";

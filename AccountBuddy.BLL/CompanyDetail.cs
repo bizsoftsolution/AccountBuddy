@@ -539,7 +539,10 @@ namespace AccountBuddy.BLL
             }
             return false;
         }
-
+        public static void Init()
+        {
+            _toList = null;
+        }
         #endregion
     }
 }
