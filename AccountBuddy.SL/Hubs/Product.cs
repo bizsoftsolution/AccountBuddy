@@ -11,26 +11,24 @@ namespace AccountBuddy.SL.Hubs
 
         #region Products
 
-        private BLL.Products Products_DAL_BLL(DAL.Product ProductsFrom)
+        private BLL.Product Product_DALtoBLL(DAL.Product ProductsFrom)
         {
-            BLL.Products ProductsTo = ProductsFrom.toCopy<BLL.Products>(new BLL.Products());
+            BLL.Product ProductsTo = ProductsFrom.toCopy<BLL.Product>(new BLL.Product());
 
-            ProductsTo.StockGroup = StockGroup_DAL_BLL(ProductsFrom.StockGroup);
+            ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
 
-            ProductsTo.UOM = ProductsTo.UOM == null ? null: UOMDAL_BLL(ProductsFrom.UOM);
+            ProductsTo.UOM = ProductsTo.UOM == null ? null: UOM_DALtoBLL(ProductsFrom.UOM);
 
             return ProductsTo;
         }
 
-        public List<BLL.Products> Products_List()
+        public List<BLL.Product> Product_List()
         {
             return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
-                             .Select(x => Products_DAL_BLL(x)).ToList();
+                             .Select(x => Product_DALtoBLL(x)).ToList();
         }
-
-
-
-        public int Products_Save(BLL.Products pro)
+        
+        public int Product_Save(BLL.Product pro)
         {
             try
             {
@@ -45,8 +43,7 @@ namespace AccountBuddy.SL.Hubs
 
                     DB.SaveChanges();
                     pro.Id = d.Id;
-                    LogDetailStore(pro, LogDetailType.INSERT);
-                   
+                    LogDetailStore(pro, LogDetailType.INSERT);                   
                 }
                 else
                 {
@@ -54,7 +51,7 @@ namespace AccountBuddy.SL.Hubs
                     //Ledger_Save(pro.Ledger);
                     DB.SaveChanges();
 
-                    Clients.Clients(OtherLoginClientsOnGroup).Products_Save(pro);
+                    Clients.Clients(OtherLoginClientsOnGroup).Product_Save(pro);
 
                     return pro.Id = d.Id;
                 }
@@ -63,7 +60,7 @@ namespace AccountBuddy.SL.Hubs
             return 0;
         }
 
-        public bool Products_Delete(int pk)
+        public bool Product_Delete(int pk)
         {
             var rv = false;
             try
@@ -74,7 +71,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.Products.Remove(d);
                     //Ledger_Delete((int)d.LedgerId);
                     DB.SaveChanges();
-                    LogDetailStore(Products_DAL_BLL(d), LogDetailType.DELETE);
+                    LogDetailStore(Product_DALtoBLL(d), LogDetailType.DELETE);
                 }
 
                 Clients.Clients(OtherLoginClientsOnGroup).Customer_Delete(pk);

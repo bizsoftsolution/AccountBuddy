@@ -37,7 +37,7 @@ namespace AccountBuddy.PL.frm.Transaction
             //cmbPType.DisplayMemberPath = "Type";
             //cmbPType.SelectedValuePath = "Id";
 
-            cmbItem.ItemsSource = BLL.Products.toList;
+            cmbItem.ItemsSource = BLL.Product.toList;
             cmbItem.DisplayMemberPath = "ProductName";
             cmbItem.SelectedValuePath = "Id";
 

@@ -9,16 +9,14 @@ using AccountBuddy.Common;
 
 namespace AccountBuddy.BLL
 {
-    public class Products : INotifyPropertyChanged
+    public class Product : INotifyPropertyChanged
     {
         #region Fileds
 
-        private static ObservableCollection<Products> _toList;
+        private static ObservableCollection<Product> _toList;
        
         private int _Id;
         private string _ProductName;
-        private Ledger _Ledger;
-        private int? _LedgerId;
         private StockGroup _StockGroup;
         private int? _StockGroupId;
         private string _ItemCode;
@@ -99,11 +97,11 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public static ObservableCollection<Products> toList
+        public static ObservableCollection<Product> toList
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<Products>(FMCGHubClient.FMCGHub.Invoke<List<Products>>("Products_List").Result);
+                if (_toList == null) _toList = new ObservableCollection<Product>(FMCGHubClient.FMCGHub.Invoke<List<Product>>("Product_List").Result);
                 return _toList;
             }
             set
@@ -145,22 +143,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? LedgerId
-        {
-            get
-            {
-                return _LedgerId;
-            }
-
-            set
-            {
-                if (_LedgerId != value)
-                {
-                    _LedgerId = value;
-                    NotifyPropertyChanged(nameof(LedgerId));
-                }
-            }
-        }
+        
         public int? StockGroupId
         {
             get
@@ -383,22 +366,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public Ledger Ledger
-        {
-            get
-            {
-                if (_Ledger == null) _Ledger = new Ledger();
-                return _Ledger;
-            }
-            set
-            {
-                if(_Ledger!=value)
-                {
-                    _Ledger = value;
-                    NotifyPropertyChanged(nameof(Ledger));
-                }
-            }
-        }
+        
         #endregion
 
         #region Property  Changed Event
@@ -426,34 +394,35 @@ namespace AccountBuddy.BLL
             try
             {
 
-                Products d = toList.Where(x => x.Id == Id).FirstOrDefault();
+                Product d = toList.Where(x => x.Id == Id).FirstOrDefault();
 
                 if (d == null)
                 {
-                    d = new Products();
-                    toList.Add(d);
+                    d = new Product();                    
                 }
 
-                this.toCopy<Products>(d);
+                this.toCopy<Product>(d);
                 if (isServerCall == false)
                 {
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Products_Save", this).Result;
-                    d.Id = i;
-                }
-
-                return true;
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Product_Save", this).Result;
+                    if (i != 0)
+                    {
+                        d.Id = i;
+                        toList.Add(d);
+                        return true;
+                    }                    
+                }                
             }
             catch (Exception ex)
             {
                 return false;
-
             }
-
+            return false;
         }
 
         public void Clear()
         {
-            new Products().toCopy<Products>(this);
+            new Product().toCopy<Product>(this);
             NotifyAllPropertyChanged();
         }
 
@@ -462,7 +431,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<Products>(this);
+                d.toCopy<Product>(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
 
                 return true;
@@ -480,7 +449,7 @@ namespace AccountBuddy.BLL
 
                 if (isServerCall == false)
                 {
-                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("Products_Delete", this.Id).Result;
+                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("Product_Delete", this.Id).Result;
                     if (rv == true) toList.Remove(d);
 
                 }
@@ -509,9 +478,7 @@ namespace AccountBuddy.BLL
         {
             _toList = null;
         }
-
- 
-
+        
         #endregion
 
 
