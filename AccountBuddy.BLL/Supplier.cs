@@ -172,30 +172,43 @@ namespace AccountBuddy.BLL
             if (!isValid()) return false;
             try
             {
-
-                Supplier d = toList.Where(x => x.Id == Id).FirstOrDefault();
-
-                if (d == null)
-                {
-                    d = new Supplier();                    
-                }
-
-                Ledger.AccountGroupId = BLL.DataKeyValue.SundryDebtors;
-                this.toCopy<Supplier>(d);
                 if (isServerCall == false)
                 {
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Supplier_Save", this).Result;
-                    toList.Add(d);
-                    d.Id = i;
+                    var d = FMCGHubClient.FMCGHub.Invoke<Supplier>("Supplier_Save", this).Result;
+                    if (d.Id != 0)
+                    {
+                        if (Id == 0)
+                        {
+                            toList.Add(d);
+                            Ledger.toList.Add(d.Ledger);
+                        }
+                        else
+                        {
+                            var d1 = toList.Where(x => x.Id == d.Id).FirstOrDefault();
+                            var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
+                            d.toCopy<Supplier>(d1);
+                            d.Ledger.toCopy<Ledger>(l1);
+                        }
+                        return true;
+                    }
                 }
-
-                return true;
+                else
+                {
+                    var d1 = toList.Where(x => x.Id == Id).FirstOrDefault();
+                    var l1 = Ledger.toList.Where(x => x.Id == LedgerId).FirstOrDefault();
+                    if (d1 == null)
+                    {
+                        d1 = new Supplier();
+                        toList.Add(d1);
+                        l1 = new Ledger();
+                        Ledger.toList.Add(l1);
+                    }
+                    this.toCopy<Supplier>(d1);
+                    this.Ledger.toCopy<Ledger>(l1);
+                }
             }
-            catch (Exception ex)
-            {
-                return false;
-
-            }
+            catch (Exception ex) { }
+            return false;
 
         }
 
@@ -224,14 +237,26 @@ namespace AccountBuddy.BLL
         {
             var rv = false;
             var d = toList.Where(x => x.Id == Id).FirstOrDefault();
-            if (d != null)
+            var b = FMCGHubClient.FMCGHub.Invoke<bool>("Ledger_CanDeleteById", this.LedgerId).Result;
+            if (d != null && b == true)
             {
 
                 if (isServerCall == false)
                 {
                     rv = FMCGHubClient.FMCGHub.Invoke<bool>("Supplier_Delete", this.Id).Result;
-                    if (rv == true) toList.Remove(d);
+                    if (rv == true)
+                    {
+                        toList.Remove(d);
+                        var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
+                        Ledger.toList.Remove(l1);
+                    }
 
+                }
+                else
+                {
+                    toList.Remove(d);
+                    var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
+                    Ledger.toList.Remove(l1);
                 }
                 return rv;
             }

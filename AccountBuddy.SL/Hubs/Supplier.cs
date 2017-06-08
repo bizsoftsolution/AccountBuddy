@@ -25,38 +25,38 @@ namespace AccountBuddy.SL.Hubs
                              .Select(x => Supplier_DALtoBLL(x)).ToList();
         }
 
-        public int Supplier_Save(BLL.Supplier cus)
+        public BLL.Supplier Supplier_Save(BLL.Supplier sup)
         {
             try
             {
-                DAL.Supplier d = DB.Suppliers.Where(x => x.Id == cus.Id).FirstOrDefault();
+                DAL.Supplier d = DB.Suppliers.Where(x => x.Id == sup.Id).FirstOrDefault();
                 if (d == null)
                 {
 
                     d = new DAL.Supplier();
-                    d.LedgerId = Ledger_Save(cus.Ledger);
+                    d.LedgerId = Ledger_Save(sup.Ledger);
                     if (d.LedgerId != 0)
                     {
                         DB.Suppliers.Add(d);
                         DB.SaveChanges();
-                        cus.Id = d.Id;
-                        LogDetailStore(cus, LogDetailType.INSERT);
+                        sup.Id = d.Id;
+                        LogDetailStore(sup, LogDetailType.INSERT);
                     }
                 }
                 else
                 {
-                    cus.toCopy<DAL.Supplier>(d);
-                    Ledger_Save(cus.Ledger);
+                    sup.toCopy<DAL.Supplier>(d);
+                    Ledger_Save(sup.Ledger);
                     DB.SaveChanges();
-                    LogDetailStore(cus, LogDetailType.UPDATE);
+                    LogDetailStore(sup, LogDetailType.UPDATE);
                 }
+                var s = Supplier_DALtoBLL(d);
+                Clients.Clients(OtherLoginClientsOnGroup).Supplier_Save(s);
 
-                Clients.Clients(OtherLoginClientsOnGroup).Supplier_Save(cus);
-
-                return d.Id;
+                return s;
             }
             catch (Exception ex) { }
-            return 0;
+            return new BLL.Supplier();
         }
 
         public bool Supplier_Delete(int pk)
@@ -67,10 +67,11 @@ namespace AccountBuddy.SL.Hubs
                 var d = DB.Suppliers.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null && Ledger_CanDelete(d.Ledger))
                 {
+                    var s = Supplier_DALtoBLL(d);
                     DB.Suppliers.Remove(d);
-                    Ledger_Delete((int)d.LedgerId);
                     DB.SaveChanges();
-                    LogDetailStore(Supplier_DALtoBLL(d), LogDetailType.DELETE);
+                    Ledger_Delete((int)d.LedgerId);                    
+                    LogDetailStore(s, LogDetailType.DELETE);
                 }
 
                 Clients.Clients(OtherLoginClientsOnGroup).Supplier_Delete(pk);
