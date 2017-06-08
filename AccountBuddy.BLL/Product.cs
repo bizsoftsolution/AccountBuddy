@@ -393,30 +393,35 @@ namespace AccountBuddy.BLL
             if (!isValid()) return false;
             try
             {
-
-                Product d = toList.Where(x => x.Id == Id).FirstOrDefault();
-
-                if (d == null)
-                {
-                    d = new Product();                    
-                }
-
-                this.toCopy<Product>(d);
                 if (isServerCall == false)
                 {
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Product_Save", this).Result;
-                    if (i != 0)
+                    var d = FMCGHubClient.FMCGHub.Invoke<Product>("Product_Save", this).Result;
+                    if (d.Id != 0)
                     {
-                        d.Id = i;
-                        toList.Add(d);
+                        if (Id == 0)
+                        {
+                            toList.Add(d);
+                        }
+                        else
+                        {
+                            var d1 = toList.Where(x => x.Id == d.Id).FirstOrDefault();                            
+                            d.toCopy<Product>(d1);
+                        }
                         return true;
-                    }                    
-                }                
+                    }
+                }
+                else
+                {
+                    var d1 = toList.Where(x => x.Id == Id).FirstOrDefault();
+                    if (d1 == null)
+                    {
+                        d1 = new Product();
+                        toList.Add(d1);
+                    }
+                    this.toCopy<Product>(d1);
+                }
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            catch (Exception ex) { }
             return false;
         }
 
@@ -444,14 +449,22 @@ namespace AccountBuddy.BLL
         {
             var rv = false;
             var d = toList.Where(x => x.Id == Id).FirstOrDefault();
-            if (d != null)
+            var b = FMCGHubClient.FMCGHub.Invoke<bool>("Product_CanDeleteById", Id).Result;
+            if (d != null && b == true)
             {
 
                 if (isServerCall == false)
                 {
                     rv = FMCGHubClient.FMCGHub.Invoke<bool>("Product_Delete", this.Id).Result;
-                    if (rv == true) toList.Remove(d);
+                    if (rv == true)
+                    {
+                        toList.Remove(d);
+                    }
 
+                }
+                else
+                {
+                    toList.Remove(d);
                 }
                 return rv;
             }
