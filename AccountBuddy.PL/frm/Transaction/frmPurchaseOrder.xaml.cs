@@ -117,7 +117,7 @@ data.Clear();
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show("Saved");
+                    MessageBox.Show("Saved Successfully");
                     data.Clear();
                 }
             }

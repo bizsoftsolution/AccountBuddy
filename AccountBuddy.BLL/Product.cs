@@ -31,7 +31,123 @@ namespace AccountBuddy.BLL
             if (p == null) p = new Product();
             p.toCopy<Product>(this);
         }
+        public double? POQty
+        {
+            get
+            {
+                return _POQty;
+            }
+            set
+            {
+                if (_POQty != value)
+                {
+                    _POQty = value;
+                    NotifyPropertyChanged(nameof(POQty));
+                }
 
+            }
+        }
+
+        public double? PQty
+        {
+            get
+            {
+                return _PQty;
+            }
+            set
+            {
+                if (_PQty != value)
+                {
+                    _PQty = value;
+                    NotifyPropertyChanged(nameof(PQty));
+                }
+
+            }
+        }
+
+        public double? PRQty
+        {
+            get
+            {
+                return _PRQty;
+            }
+            set
+            {
+                if (_PRQty != value)
+                {
+                    _PRQty = value;
+                    NotifyPropertyChanged(nameof(PRQty));
+                }
+
+            }
+        }
+
+        public double? SOQty
+        {
+            get
+            {
+                return _SOQty;
+            }
+            set
+            {
+                if (_SOQty != value)
+                {
+                    _SOQty = value;
+                    NotifyPropertyChanged(nameof(SOQty));
+                }
+
+            }
+        }
+
+        public double? SQty
+        {
+            get
+            {
+                return _SQty;
+            }
+            set
+            {
+                if (_SQty != value)
+                {
+                    _SQty = value;
+                    NotifyPropertyChanged(nameof(SQty));
+                }
+
+            }
+        }
+
+        public double? SRQty
+        {
+            get
+            {
+                return _SRQty;
+            }
+            set
+            {
+                if (_SRQty != value)
+                {
+                    _SRQty = value;
+                    NotifyPropertyChanged(nameof(SRQty));
+                }
+
+            }
+        }
+
+        public double AvailableStock
+        {
+            get
+            {
+                return (OpeningStock ?? 0 + PQty ?? 0 + SRQty ?? 0) - (SQty ?? 0 + PRQty ?? 0);
+            }
+        }
+
+        public bool IsReOrderLevel
+        {
+            get
+            {
+                return ReOrderLevel > AvailableStock;
+            }
+        }
         #endregion
 
 
@@ -60,6 +176,12 @@ namespace AccountBuddy.BLL
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
         private bool _IsEnabled;
+        private double? _SRQty;
+        private double? _SQty;
+        private double? _PRQty;
+        private double? _SOQty;
+        private double? _PQty;
+        private double? _POQty;
 
         #endregion
 

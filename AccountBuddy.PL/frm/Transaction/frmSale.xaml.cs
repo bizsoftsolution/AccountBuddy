@@ -22,20 +22,20 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmSale : UserControl
     {
-        BLL.Sales data = new BLL.Sales();
+        BLL.Sale data = new BLL.Sale();
         string TextToPrint = "";
         public frmSale()
         {
             InitializeComponent();
             this.DataContext = data;
 
-            cmbCustomer.ItemsSource = BLL.Customer.toList;
-            cmbCustomer.DisplayMemberPath = "CustomerName";
+            cmbCustomer.ItemsSource = BLL.Ledger.toList;
+            cmbCustomer.DisplayMemberPath = "LedgerName";
             cmbCustomer.SelectedValuePath = "Id";
 
-            //cmbPType.ItemsSource = BLL.TransactionType.toList;
-            //cmbPType.DisplayMemberPath = "Type";
-            //cmbPType.SelectedValuePath = "Id";
+            cmbPType.ItemsSource = BLL.TransactionType.toList;
+            cmbPType.DisplayMemberPath = "Type";
+            cmbPType.SelectedValuePath = "Id";
 
             cmbItem.ItemsSource = BLL.Product.toList;
             cmbItem.DisplayMemberPath = "ProductName";
@@ -45,14 +45,14 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbUOM.DisplayMemberPath = "Symbol";
             cmbUOM.SelectedValuePath = "Id";
 
-            //cmbSORefNo.ItemsSource = BLL.Sale.SPendingList;
-            //cmbSORefNo.DisplayMemberPath = "RefNo";
-            //cmbSORefNo.SelectedValuePath = "Id";
+            cmbSORefNo.ItemsSource = BLL.Sale.SPendingList;
+            cmbSORefNo.DisplayMemberPath = "RefNo";
+            cmbSORefNo.SelectedValuePath = "Id";
 
             //CollectionViewSource.GetDefaultView(cmbSORefNo.ItemsSource).Filter = PORefNo_Filter;
 
 
-           // data.Clear();
+            data.Clear();
 
         }
 
@@ -60,87 +60,90 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //if (data.SDetail.ProductId == null)
-            //{
-            //    MessageBox.Show(Message.PL.Transaction_Empty_Product);
-            //}
-            //else if (data.SDetail.Quantity > BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault())
-            //{
-            //    var avst = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
-            //    MessageBox.Show(Message.PL.Product_Not_In_Stock, avst.ToString());
-            //}
-            //else
-            //{
-            //    data.SaveDetail();
-            //}
+            if (data.SDetail.ProductId == null)
+            {
+                MessageBox.Show("Empty Record");
+            }
+            else if (data.SDetail.Quantity > BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault())
+            {
+                var avst = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
+                MessageBox.Show("Available Stock ", avst.ToString());
+            }
+            else
+            {
+                data.SaveDetail();
+            }
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-           // data.ClearDetail();
+           data.ClearDetail();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-           // data.Clear();
+           data.Clear();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            //if (MessageBox.Show(string.Format(Message.PL.TransactionDeleteConfirmation, data.RefNo), "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            //{
-            //    var rv = data.Delete();
-            //    if (rv == true)
-            //    {
-            //        MessageBox.Show("Deleted");
-            //        data.Clear();
-            //    }
-            //}
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                var rv = data.Delete();
+                if (rv == true)
+                {
+                    MessageBox.Show("Deleted");
+                    data.Clear();
+                }
+            }
 
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            //if (data.RefNo == null)
-            //{
-            //    MessageBox.Show(Message.PL.Transaction_RefNo_Validation);
-            //}
-            //else if (data.CustomerName == null)
-            //{
-            //    MessageBox.Show(Message.PL.Transaction_Supplier_Validation);
-            //}
-            //else if (data.TransactionTypeId == null)
-            //{
-            //    MessageBox.Show(Message.PL.Transaction_Type_Validation);
-            //}
-            //else if (data.SDetails.Count == 0)
-            //{
-            //    MessageBox.Show(Message.PL.Transaction_ItemDetails_Validation);
-            //}
-            //else if (data.FindRefNo() == false)
-            //{
-            //    var rv = data.Save();
-            //    if (rv == true)
-            //    {
-            //        MessageBox.Show("Saved");
-            //        data.Clear();
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show(string.Format(Message.PL.Transaction_RefNo_ExistValidation, data.RefNo));
+            if (data.RefNo == null)
+            {
+                MessageBox.Show("Enter Reference No");
 
-            //}
+            }
+            else if (data.LedgerName == null)
+            {
+                MessageBox.Show("Enter Supplier");
+
+            }
+            else if (data.TransactionTypeId == null)
+            {
+                MessageBox.Show("Enter Transaction Type");
+            }
+            else if (data.SDetails.Count == 0)
+            {
+                MessageBox.Show("Enter Product Details");
+            }
+            else if (data.FindRefNo() == false)
+            {
+                var rv = data.Save();
+                if (rv == true)
+                {
+                    MessageBox.Show("Saved Successfully");
+                    data.Clear();
+                }
+            }
+            else
+            {
+                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo));
+
+            }
         }
+
 
         private void OnDelete(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    Button btn = (Button)sender;
-            //    data.DeleteDetail(btn.Tag.ToString());
-            //}
-            //catch (Exception ex) { }
+            try
+            {
+                Button btn = (Button)sender;
+                data.DeleteDetail(btn.Tag.ToString());
+            }
+            catch (Exception ex) { }
 
         }
 
@@ -255,73 +258,73 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-         //   var rv = data.Find();
-          //  if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
+            var rv = data.Find();
+            if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //try
-            //{
-            //    BLL.SalesDetail pod = dgvDetails.SelectedItem as BLL.SalesDetail;
-            //    pod.toCopy<BLL.SalesDetail>(data.SDetail);
-            //}
-            //catch (Exception ex) { }
+            try
+            {
+                BLL.SalesDetail pod = dgvDetails.SelectedItem as BLL.SalesDetail;
+                pod.toCopy<BLL.SalesDetail>(data.SDetail);
+            }
+            catch (Exception ex) { }
 
         }
 
         private void txtBarCode_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.Key == Key.Return && data.SDetail.ProductId != null)
-            //{
-            //    data.SaveDetail();
-            //}
+            if (e.Key == Key.Return && data.SDetail.ProductId != null)
+            {
+                data.SaveDetail();
+            }
         }
 
-        private void cmbCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbLedger_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           // PORefNo_Refresh();
+            PORefNo_Refresh();
         }
 
         private void cmbSORefNo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //try
-            //{
-            //    BLL.Sale SO = cmbSORefNo.SelectedItem as BLL.Sale;
-            //    SO.SearchText = SO.RefNo;
-            //    if (SO.Find())
-            //    {
-            //        foreach (var sod in SO.SDetails)
-            //        {
-            //            data.SDetail.SODId = sod.Id;
-            //            data.SDetail.ProductId = sod.ProductId.Value;
-            //            data.SDetail.Quantity = sod.Quantity.Value;
-            //            data.SDetail.UnitPrice = sod.UnitPrice;
+            try
+            {
+                BLL.Sale SO = cmbSORefNo.SelectedItem as BLL.Sale;
+                SO.SearchText = SO.RefNo;
+                if (SO.Find())
+                {
+                    foreach (var sod in SO.SDetails)
+                    {
+                        data.SDetail.SODId = sod.Id;
+                        data.SDetail.ProductId = sod.ProductId.Value;
+                        data.SDetail.Quantity = sod.Quantity.Value;
+                        data.SDetail.UnitPrice = sod.UnitPrice;
 
-            //            data.SaveDetail();
-            //        }
-            //    }
+                        data.SaveDetail();
+                    }
+                }
 
-            //}
-            //catch (Exception EX) { }
+            }
+            catch (Exception EX) { }
         }
 
         #endregion
 
         #region Methods
-      //  public bool PORefNo_Filter(object obj)
-//{
-        //    try
-        //    {
-        //        BLL.Sale SO = obj as BLL.Sale;
-        //        BLL.Customer S = cmbCustomer.SelectedItem as BLL.Customer;
+        public bool PORefNo_Filter(object obj)
+        {
+            try
+            {
+                BLL.Sale SO = obj as BLL.Sale;
+                BLL.Ledger S = cmbCustomer.SelectedItem as BLL.Ledger;
 
-        //        return SO.CustomerId == S.Id;
-        //    }
-        //    catch (Exception ex) { }
-        //    return false;
+                return SO.LedgerId == S.Id;
+            }
+            catch (Exception ex) { }
+            return false;
 
-   //     }
+        }
         public void PORefNo_Refresh()
         {
             try
