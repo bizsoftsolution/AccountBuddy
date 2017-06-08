@@ -459,16 +459,12 @@ namespace AccountBuddy.BLL
                     if (rv == true)
                     {
                         toList.Remove(d);
-                        var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
-                        Ledger.toList.Remove(l1);
                     }
 
                 }
                 else
                 {
                     toList.Remove(d);
-                    var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
-                    Ledger.toList.Remove(l1);
                 }
                 return rv;
             }

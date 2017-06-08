@@ -50,11 +50,15 @@ namespace AccountBuddy.SL.Hubs
                     pro.toCopy<DAL.Product>(d);
                     //Ledger_Save(pro.Ledger);
                     DB.SaveChanges();
+                }
+                if (d.Id != 0)
+                {
                     var p = Product_DALtoBLL(d);
                     Clients.Clients(OtherLoginClientsOnGroup).Product_Save(p);
 
                     return p;
                 }
+                
             }
             catch (Exception ex) { }
             return new BLL.Product();
