@@ -253,6 +253,25 @@ namespace AccountBuddy.BLL
             }
         }
 
+        #region Stock_In_Hand Ledger
+        public static string Stock_In_Hand_Ledger_Key
+        {
+            get
+            {
+                return "Stock-In-Hand Tax";
+            }
+
+        }
+        public static int Stock_In_Hand_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Stock_In_Hand_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+
+
         public static string FixedAssets_Key
         {
             get
@@ -509,6 +528,99 @@ namespace AccountBuddy.BLL
                 return toList.Where(x => x.DataKey == SalesAccount_Key).FirstOrDefault().DataValue;
             }
         }
+
+        #region Sales A/C Ledger
+        public static string SalesAccount_Ledger_Key
+        {
+            get
+            {
+                return "Sales A/C";
+            }
+
+        }
+        public static int SalesAccount_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey ==SalesAccount_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+
+        #region Sales_Return A/C Ledger
+        public static string Sales_Return_Ledger_Key
+        {
+            get
+            {
+                return "Sales Return A/C";
+            }
+
+        }
+        public static int Sales_Return_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Sales_Return_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+
+
+        #region Profit_Loss Ledger
+        public static string Profit_Loss_Ledger_Key
+        {
+            get
+            {
+                return "Profit & Loss A/c";
+            }
+
+        }
+        public static int Profit_Loss_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Profit_Loss_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+
+        #region Input_Tax Ledger
+        public static string Input_Tax_Ledger_Key
+        {
+            get
+            {
+                return "Input Tax";
+            }
+
+        }
+        public static int Input_Tax_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Input_Tax_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+
+        #region Output_Tax Ledger
+        public static string Output_Tax_Ledger_Key
+        {
+            get
+            {
+                return "Output Tax";
+            }
+
+        }
+        public static int Output_Tax_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Output_Tax_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+
+
         public static string DirectExpenses_Key
         {
             get
@@ -554,6 +666,43 @@ namespace AccountBuddy.BLL
                 return toList.Where(x => x.DataKey == PurchaseAccount_Key).FirstOrDefault().DataValue;
             }
         }
+        #region Purchase_Ac_Ledger
+        public static string PurchaseAccount_Ledger_Key
+        {
+            get
+            {
+                return "Purchase A/C";
+            }
+
+        }
+        public static int PurchaseAccount_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == PurchaseAccount_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+      
+        #region Purchase_Return A/C Ledger
+        public static string Purchase_Return_Ledger_Key
+        {
+            get
+            {
+                return "Purchase Return A/C";
+            }
+
+        }
+        public static int Purchase_Return_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Purchase_Return_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+
+
         #endregion
 
         public static List<DataKeyValue> toList

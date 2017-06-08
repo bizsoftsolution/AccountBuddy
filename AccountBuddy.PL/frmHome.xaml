@@ -96,6 +96,11 @@
                                             <Master:frmAccountGroup/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Ledger" FormName ="Ledger">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmLedger/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
 
                                     <Menu:NavMenuItem MenuName="Customer" FormName="Customer">
                                         <Menu:NavMenuItem.Content>
