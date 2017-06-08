@@ -91,17 +91,6 @@
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
 
-                                    <Menu:NavMenuItem MenuName="Account Group" FormName ="Account Group">
-                                        <Menu:NavMenuItem.Content>
-                                            <Master:frmAccountGroup/>
-                                        </Menu:NavMenuItem.Content>
-                                    </Menu:NavMenuItem>
-                                    <Menu:NavMenuItem MenuName="Ledger" FormName ="Ledger">
-                                        <Menu:NavMenuItem.Content>
-                                            <Master:frmLedger/>
-                                        </Menu:NavMenuItem.Content>
-                                    </Menu:NavMenuItem>
-
                                     <Menu:NavMenuItem MenuName="Customer" FormName="Customer">
                                         <Menu:NavMenuItem.Content>
                                             <Master:frmCustomer/>
@@ -117,14 +106,15 @@
                                             <Master:frmBank/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                    <!--<Menu:NavMenuItem MenuName="Staff" FormName="Staff">
+
+                                    <Menu:NavMenuItem MenuName="Account Group" FormName ="Account Group">
                                         <Menu:NavMenuItem.Content>
-                                            <Master:frmStaff/>
+                                            <Master:frmAccountGroup/>
                                         </Menu:NavMenuItem.Content>
-                                    </Menu:NavMenuItem>-->
-                                    <Menu:NavMenuItem MenuName="Stock Group" FormName="Stock Group">
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Ledger" FormName="Ledger">
                                         <Menu:NavMenuItem.Content>
-                                            <Master:frmStockGroup/>
+                                            <Master:frmLedger/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Unit Of Measurement" FormName="UOM">
@@ -132,6 +122,12 @@
                                             <Master:frmUOM/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Stock Group" FormName="Stock Group">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmStockGroup/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                   
                                     <Menu:NavMenuItem MenuName="Products" FormName="Products">
                                         <Menu:NavMenuItem.Content>
                                             <Master:frmProducts/>
