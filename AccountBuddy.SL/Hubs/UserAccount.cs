@@ -26,7 +26,7 @@ namespace AccountBuddy.SL.Hubs
 
                                                 && x.LoginId == LoginId
                                                 
-                                                && x.Password == Password)
+                                                && x.Password == Password && x.UserType.CompanyDetail.IsActive!=false)
                                    .FirstOrDefault();
             if (ua != null)
             {
