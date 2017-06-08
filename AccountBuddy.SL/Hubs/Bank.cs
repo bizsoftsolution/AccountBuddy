@@ -25,7 +25,7 @@ namespace AccountBuddy.SL.Hubs
                              .Select(x => Bank_DALtoBLL(x)).ToList();
         }
 
-        public int Bank_Save(BLL.Bank cus)
+        public BLL.Bank Bank_Save(BLL.Bank cus)
         {
             try
             {
@@ -50,13 +50,13 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(cus, LogDetailType.UPDATE);
                 }
+                var b = Bank_DALtoBLL(d);
+                Clients.Clients(OtherLoginClientsOnGroup).Bank_Save(b);
 
-                Clients.Clients(OtherLoginClientsOnGroup).Bank_Save(cus);
-
-                return d.Id;
+                return b;
             }
             catch (Exception ex) { }
-            return 0;
+            return new BLL.Bank();
         }
 
         public bool Bank_Delete(int pk)
@@ -67,10 +67,11 @@ namespace AccountBuddy.SL.Hubs
                 var d = DB.Banks.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null && Ledger_CanDelete(d.Ledger))
                 {
+                    var b = Bank_DALtoBLL(d);
                     DB.Banks.Remove(d);
                     Ledger_Delete((int)d.LedgerId);
                     DB.SaveChanges();
-                    LogDetailStore(Bank_DALtoBLL(d), LogDetailType.DELETE);
+                    LogDetailStore(b, LogDetailType.DELETE);
                 }
 
                 Clients.Clients(OtherLoginClientsOnGroup).Bank_Delete(pk);

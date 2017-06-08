@@ -16,6 +16,7 @@ namespace AccountBuddy.BLL
         private string _AccountNo;
         private string _AccountName;
         private Ledger _Ledger;
+        private int _LedgerId;
         private static ObservableCollection<Bank> _toList;
         #endregion
 
@@ -32,6 +33,22 @@ namespace AccountBuddy.BLL
                 {
                     _Id = value;
                     NotifyPropertyChanged(nameof(Id));
+                }
+            }
+        }
+
+        public int LedgerId
+        {
+            get
+            {
+                return _LedgerId;
+            }
+            set
+            {
+                if (_LedgerId != value)
+                {
+                    _LedgerId = value;
+                    NotifyPropertyChanged(nameof(LedgerId));
                 }
             }
         }
@@ -123,30 +140,43 @@ namespace AccountBuddy.BLL
             if (!isValid()) return false;
             try
             {
-
-                Bank d = toList.Where(x => x.Id == Id).FirstOrDefault();
-
-                if (d == null)
-                {
-                    d = new Bank();
-                    toList.Add(d);
-                }
-
-                Ledger.AccountGroupId = BLL.DataKeyValue.SundryDebtors;
-                this.toCopy<Bank>(d);
                 if (isServerCall == false)
                 {
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Bank_Save", this).Result;
-                    d.Id = i;
+                    var d = FMCGHubClient.FMCGHub.Invoke<Bank>("Bank_Save", this).Result;
+                    if (d.Id != 0)
+                    {
+                        if (Id == 0)
+                        {
+                            toList.Add(d);
+                            Ledger.toList.Add(d.Ledger);
+                        }
+                        else
+                        {
+                            var d1 = toList.Where(x => x.Id == d.Id).FirstOrDefault();
+                            var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
+                            d.toCopy<Bank>(d1);
+                            d.Ledger.toCopy<Ledger>(l1);
+                        }
+                        return true;
+                    }
                 }
-
-                return true;
+                else
+                {
+                    var d1 = toList.Where(x => x.Id == Id).FirstOrDefault();
+                    var l1 = Ledger.toList.Where(x => x.Id == LedgerId).FirstOrDefault();
+                    if (d1 == null)
+                    {
+                        d1 = new Bank();
+                        toList.Add(d1);
+                        l1 = new Ledger();
+                        Ledger.toList.Add(l1);
+                    }
+                    this.toCopy<Bank>(d1);
+                    this.Ledger.toCopy<Ledger>(l1);
+                }
             }
-            catch (Exception ex)
-            {
-                return false;
-
-            }
+            catch (Exception ex) { }
+            return false;
 
         }
 
@@ -175,14 +205,26 @@ namespace AccountBuddy.BLL
         {
             var rv = false;
             var d = toList.Where(x => x.Id == Id).FirstOrDefault();
-            if (d != null)
+            var b = FMCGHubClient.FMCGHub.Invoke<bool>("Ledger_CanDeleteById", this.LedgerId).Result;
+            if (d != null && b == true)
             {
 
                 if (isServerCall == false)
                 {
                     rv = FMCGHubClient.FMCGHub.Invoke<bool>("Bank_Delete", this.Id).Result;
-                    if (rv == true) toList.Remove(d);
+                    if (rv == true)
+                    {
+                        toList.Remove(d);
+                        var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
+                        Ledger.toList.Remove(l1);
+                    }
 
+                }
+                else
+                {
+                    toList.Remove(d);
+                    var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
+                    Ledger.toList.Remove(l1);
                 }
                 return rv;
             }
