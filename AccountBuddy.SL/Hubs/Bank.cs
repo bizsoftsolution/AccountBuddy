@@ -34,10 +34,11 @@ namespace AccountBuddy.SL.Hubs
                 {
 
                     d = new DAL.Bank();
+                    cus.toCopy<DAL.Bank>(d);
                     d.LedgerId = Ledger_Save(cus.Ledger);
                     if (d.LedgerId != 0)
                     {
-                        DB.Banks.Add(d);
+                        DB.Banks.Add(d);                        
                         DB.SaveChanges();
                         cus.Id = d.Id;
                         LogDetailStore(cus, LogDetailType.INSERT);

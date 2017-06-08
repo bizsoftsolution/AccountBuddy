@@ -14,7 +14,7 @@ namespace AccountBuddy.BLL
         #region fields
         private int _Id;
         private string _AccountNo;
-        private string _AccountName;
+        private string _BankAccountName;
         private Ledger _Ledger;
         private int _LedgerId;
         private static ObservableCollection<Bank> _toList;
@@ -53,18 +53,18 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public string AccountName
+        public string BankAccountName
         {
             get
             {
-                return _AccountName;
+                return _BankAccountName;
             }
             set
             {
-                if(_AccountName!=value)
+                if(_BankAccountName!=value)
                 {
-                    _AccountName = value;
-                    NotifyPropertyChanged(nameof(AccountName));
+                    _BankAccountName = value;
+                    NotifyPropertyChanged(nameof(BankAccountName));
                 }
             }
         }
