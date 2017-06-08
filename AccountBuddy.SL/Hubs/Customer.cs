@@ -15,7 +15,7 @@ namespace AccountBuddy.SL.Hubs
             BLL.Customer CustomerTo = customerFrom.toCopy<BLL.Customer>(new BLL.Customer());
 
             CustomerTo.Ledger = LedgerDAL_BLL(customerFrom.Ledger);
-
+            
 
             return CustomerTo;
         }
