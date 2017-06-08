@@ -258,7 +258,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return "Stock-In-Hand Tax";
+                return "Stock-In-Hand";
             }
 
         }
