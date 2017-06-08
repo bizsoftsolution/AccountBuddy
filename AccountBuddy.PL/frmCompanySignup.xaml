@@ -143,7 +143,7 @@
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
 
-                    <GroupBox Header="Login Credential" Margin="0,10,0,0"  >
+                    <GroupBox Name="gbxLogin" Header="Login Credential" Margin="0,10,0,0"  >
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" >
                                 <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"/>

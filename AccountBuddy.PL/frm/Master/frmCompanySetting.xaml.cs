@@ -68,8 +68,13 @@ namespace AccountBuddy.PL.frm.Master
                 var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
                 dgvWarehouse.ItemsSource = lstCompany;
 
-                var lstWareHouse = lstCompany.Where(x => x.UnderCompanyId == BLL.UserAccount.User.UserType.CompanyId);
-                dgvDealer.ItemsSource = lstWareHouse;
+                if (lstCompany.Count() > 0)
+                {
+                    dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == lstCompany.FirstOrDefault().Id);
+                }else
+                {
+                    dgvDealer.ItemsSource = new List<BLL.CompanyDetail>();
+                }                               
             }
             else
             {
@@ -135,6 +140,7 @@ namespace AccountBuddy.PL.frm.Master
             frmCompanySignup f = new frmCompanySignup();
             f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
             f.data.CompanyType = "Warehouse";
+            f.Title = "New Warehouse";
             f.ShowDialog();
             var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
             dgvWarehouse.ItemsSource = lstCompany;
@@ -148,6 +154,7 @@ namespace AccountBuddy.PL.frm.Master
                 frmCompanySignup f = new frmCompanySignup();
                 f.data.UnderCompanyId = cm.Id;
                 f.data.CompanyType = "Dealer";
+                f.Title = "New Dealer";
                 f.ShowDialog();
                 List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
                 if (cm != null)
@@ -166,6 +173,8 @@ namespace AccountBuddy.PL.frm.Master
             cm.toCopy<BLL.CompanyDetail>(f.data);
             f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
             f.data.CompanyType = "Warehouse";
+            f.Title = "Edit Warehouse";
+            f.gbxLogin.Visibility = Visibility.Collapsed;
             f.ShowDialog();
             var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
             dgvWarehouse.ItemsSource = lstCompany;
@@ -212,6 +221,8 @@ namespace AccountBuddy.PL.frm.Master
                 cmd.toCopy<BLL.CompanyDetail>(f.data);
                 f.data.UnderCompanyId = cm.Id;
                 f.data.CompanyType = "Dealer";
+                f.Title = "Edit Dealer";
+                f.gbxLogin.Visibility = Visibility.Collapsed;
                 f.ShowDialog();
                 List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
                 if (cm != null)

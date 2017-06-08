@@ -26,7 +26,7 @@ namespace AccountBuddy.PL
         {
             InitializeComponent();
             this.DataContext = data;
-            IsForcedClose = false;
+            IsForcedClose = false;            
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

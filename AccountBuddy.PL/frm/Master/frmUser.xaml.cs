@@ -21,11 +21,12 @@ namespace AccountBuddy.PL.frm.Master
     public partial class frmUser : MetroWindow
     {
         public BLL.UserAccount data = new BLL.UserAccount();
+        public int UnderCompanyId;
         public frmUser()
         {
             InitializeComponent();
 
-            this.DataContext = data;
+            this.DataContext = data;            
             btnUserTypeSetting.Visibility = BLL.UserType.UserPermission.IsViewForm ? Visibility.Visible : Visibility.Collapsed;
             cmbUserType.ItemsSource = BLL.UserType.toList;
             cmbUserType.DisplayMemberPath = "TypeOfUser";
@@ -40,6 +41,7 @@ namespace AccountBuddy.PL.frm.Master
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            data.UnderCompanyId = UnderCompanyId;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

@@ -51,9 +51,12 @@ namespace AccountBuddy.PL.frm.Master
         private void btnNewUser_Click(object sender, RoutedEventArgs e)
         {
             frmUser f = new frmUser();
+            f.UnderCompanyId = CompanyId;
+            f.data.UnderCompanyId = CompanyId;
             f.ShowDialog();
+            LoadWindow(CompanyId);
             //f.data.UserType.CompanyId = userId;
-            
+
         }
 
         private void btnEditUser_Click(object sender, RoutedEventArgs e)
@@ -61,9 +64,11 @@ namespace AccountBuddy.PL.frm.Master
             var u = dgvUsers.SelectedItem as BLL.UserAccount;
 
             frmUser f = new frmUser();
-          
+            f.UnderCompanyId = CompanyId;
             u.toCopy<BLL.UserAccount>(f.data);
             f.ShowDialog();
+            LoadWindow(CompanyId);
+
         }
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
@@ -77,7 +82,11 @@ namespace AccountBuddy.PL.frm.Master
                 }
                 else if (MessageBox.Show("Do you Delete this?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    if (u.Delete() == true) MessageBox.Show(Message.PL.Delete_Alert);
+                    if (u.Delete() == true)
+                    {
+                        MessageBox.Show(Message.PL.Delete_Alert);
+                        LoadWindow(CompanyId);
+                    }
                 }
             }
 
