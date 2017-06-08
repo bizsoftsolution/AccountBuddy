@@ -31,6 +31,7 @@ namespace AccountBuddy.BLL
         private string _GSTNo;
         private short _CreditLimit;
         private double _CreditAmount;
+        private int? _CreditLimitTypeId;
         private CreditLimitType _CreditLimitType;
         private string _CreditLimitTypeName;
 
@@ -447,6 +448,21 @@ namespace AccountBuddy.BLL
                 {
                     _CreditLimitType = value;
                     NotifyPropertyChanged(nameof(BLL.CreditLimitType));
+                }
+            }
+        }
+        public int? CreditLimitTypeId
+        {
+            get
+            {
+                return _CreditLimitTypeId;
+            }
+            set
+            {
+                if (_CreditLimitTypeId != value)
+                {
+                    _CreditLimitTypeId = value;
+                    NotifyPropertyChanged(nameof(CreditLimitTypeId));
                 }
             }
         }

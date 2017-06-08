@@ -169,7 +169,7 @@
                                             </StackPanel>
                                         </materialDesign:HintAssist.Hint>
                                     </TextBox>
-                                    <ComboBox Width="80" Margin="10,0,0,0"   x:Name="cmbCreditLimitTypeId" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.CreditLimitType.LimitType, Mode=TwoWay}" SelectedItem="{Binding Ledger.CreditLimitType, Mode=TwoWay}" SelectedValue="{Binding CreditLimitTypeId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
+                                    <ComboBox Width="80" Margin="10,0,0,0"   x:Name="cmbCreditLimitTypeId" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.CreditLimitType.LimitType, Mode=TwoWay}" SelectedItem="{Binding Ledger.CreditLimitType, Mode=TwoWay}" SelectedValue="{Binding Ledger.CreditLimitTypeId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
                                         <materialDesign:HintAssist.Hint>
                                             <StackPanel Orientation="Horizontal" Width="80">
                                                 <materialDesign:PackIcon  Kind="CalendarMultiple" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
