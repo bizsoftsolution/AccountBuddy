@@ -333,7 +333,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvCustomer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvCustomer.SelectedItem as BLL.Ledger;
+            var d = dgvCustomer.SelectedItem as BLL.Customer;
             if (d != null)
             {
                 data.Find(d.Id);

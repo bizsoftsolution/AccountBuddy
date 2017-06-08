@@ -177,8 +177,7 @@ namespace AccountBuddy.BLL
 
                 if (d == null)
                 {
-                    d = new Supplier();
-                    toList.Add(d);
+                    d = new Supplier();                    
                 }
 
                 Ledger.AccountGroupId = BLL.DataKeyValue.SundryDebtors;
@@ -186,6 +185,7 @@ namespace AccountBuddy.BLL
                 if (isServerCall == false)
                 {
                     var i = FMCGHubClient.FMCGHub.Invoke<int>("Supplier_Save", this).Result;
+                    toList.Add(d);
                     d.Id = i;
                 }
 

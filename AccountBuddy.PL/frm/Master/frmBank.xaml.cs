@@ -315,7 +315,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvBank_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvBank.SelectedItem as BLL.Ledger;
+            var d = dgvBank.SelectedItem as BLL.Bank;
             if (d != null)
             {
                 data.Find(d.Id);

@@ -96,12 +96,17 @@ namespace AccountBuddy.SL.Hubs
 
         public bool Ledger_CanDelete(DAL.Ledger l)
         {
-            return l.Payments.Count() == 0 &&
+            bool rv = (l == null) ? false : l.Payments.Count() == 0 &&
                    l.PaymentDetails.Count() == 0 &&
                    l.Receipts.Count() == 0 &&
                    l.ReceiptDetails.Count() == 0 &&
                    l.JournalDetails.Count() == 0;
-                 
+            return rv;
+        }
+
+        public bool Ledger_CanDeleteById(int Id)
+        {
+            return Ledger_CanDelete(DB.Ledgers.Where(x => x.Id == Id).FirstOrDefault()); 
         }
 
         #endregion
