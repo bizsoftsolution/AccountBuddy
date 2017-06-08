@@ -174,17 +174,37 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(cmp.Id, pr.GroupName, pr.Id);
 
+
+            DAL.Ledger IT = new DAL.Ledger();
+            IT.LedgerName = BLL.DataKeyValue.Input_Tax_Ledger_Key;
+            IT.AccountGroupId = pr.Id;
+            DB.Ledgers.Add(IT);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, IT.LedgerName, IT.Id);
+
+
+            DAL.Ledger OT = new DAL.Ledger();
+            OT.LedgerName = BLL.DataKeyValue.Output_Tax_Ledger_Key;
+            OT.AccountGroupId = pr.Id;
+            DB.Ledgers.Add(OT);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, OT.LedgerName, OT.Id);
+
+
             AccountSetup_Asset(pr);
             AccountSetup_Liabilities(pr);
             AccountSetup_Income(pr);
             AccountSetup_Expense(pr);
 
-            //DAL.Ledger PL = new DAL.Ledger();
-            //PL.LedgerName = "Profit & Loss A/C";
-            //PL.AccountGroupId = pr.Id;
-           
-            //DB.Ledgers.Add(PL);
-            //DB.SaveChanges();
+            DAL.Ledger PL = new DAL.Ledger();
+            PL.LedgerName =BLL.DataKeyValue.Profit_Loss_Ledger_Key;
+            PL.AccountGroupId = pr.Id;
+             DB.Ledgers.Add(PL);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, PL.LedgerName, PL.Id);
+
+
+
         }
 
         void AccountSetup_Asset(DAL.AccountGroup pr)
@@ -222,8 +242,7 @@ namespace AccountBuddy.SL.Hubs
             DAL.Ledger cL = new DAL.Ledger();
             cL.LedgerName = BLL.DataKeyValue.CashLedger_Key;
             cL.AccountGroupId = ch.Id;
-         
-            DB.Ledgers.Add(cL);
+             DB.Ledgers.Add(cL);
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, cL.LedgerName, cL.Id);
 
@@ -265,6 +284,14 @@ namespace AccountBuddy.SL.Hubs
             DB.AccountGroups.Add(SIH);
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, SIH.GroupName, SIH.Id);
+
+            DAL.Ledger st = new DAL.Ledger();
+            st.LedgerName = BLL.DataKeyValue.Stock_In_Hand_Ledger_Key;
+            st.AccountGroupId = SIH.Id;
+            DB.Ledgers.Add(st);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, st.LedgerName, st.Id);
+
 
             DAL.AccountGroup sd = new DAL.AccountGroup();
             sd.GroupName = BLL.DataKeyValue.SundryDebtors_Key;
@@ -496,6 +523,21 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, Sa.GroupName, Sa.Id);
 
+            DAL.Ledger salL = new DAL.Ledger();
+            salL.LedgerName = BLL.DataKeyValue.SalesAccount_Ledger_Key;
+            salL.AccountGroupId = Sa.Id;
+            DB.Ledgers.Add(salL);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, salL.LedgerName, salL.Id);
+
+            DAL.Ledger SRL = new DAL.Ledger();
+            SRL.LedgerName = BLL.DataKeyValue.Sales_Return_Ledger_Key;
+            SRL.AccountGroupId = Sa.Id;
+            DB.Ledgers.Add(SRL);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, SRL.LedgerName, SRL.Id);
+
+
         }
 
         void AccountSetup_Expense(DAL.AccountGroup pr)
@@ -542,6 +584,24 @@ namespace AccountBuddy.SL.Hubs
             DB.AccountGroups.Add(Pur);
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, Pur.GroupName, Pur.Id);
+
+
+            DAL.Ledger PurL = new DAL.Ledger();
+            PurL.LedgerName = BLL.DataKeyValue.PurchaseAccount_Ledger_Key;
+            PurL.AccountGroupId = Pur.Id;
+            DB.Ledgers.Add(PurL);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, PurL.LedgerName, PurL.Id);
+
+            DAL.Ledger PRL = new DAL.Ledger();
+            PRL.LedgerName = BLL.DataKeyValue.Purchase_Return_Ledger_Key;
+            PRL.AccountGroupId = Pur.Id;
+            DB.Ledgers.Add(PurL);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, PRL.LedgerName, PRL.Id);
+
+
+
         }
 
         #endregion
