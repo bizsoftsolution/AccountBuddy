@@ -28,7 +28,7 @@ namespace AccountBuddy.SL.Hubs
                              .Select(x => Product_DALtoBLL(x)).ToList();
         }
         
-        public int Product_Save(BLL.Product pro)
+        public BLL.Product Product_Save(BLL.Product pro)
         {
             try
             {
@@ -50,14 +50,14 @@ namespace AccountBuddy.SL.Hubs
                     pro.toCopy<DAL.Product>(d);
                     //Ledger_Save(pro.Ledger);
                     DB.SaveChanges();
+                    var p = Product_DALtoBLL(d);
+                    Clients.Clients(OtherLoginClientsOnGroup).Product_Save(p);
 
-                    Clients.Clients(OtherLoginClientsOnGroup).Product_Save(pro);
-
-                    return pro.Id = d.Id;
+                    return p;
                 }
             }
             catch (Exception ex) { }
-            return 0;
+            return new BLL.Product();
         }
 
         public bool Product_Delete(int pk)
@@ -68,14 +68,14 @@ namespace AccountBuddy.SL.Hubs
                 var d = DB.Products.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null )
                 {
+                    var p = Product_DALtoBLL(d);
                     DB.Products.Remove(d);
                     //Ledger_Delete((int)d.LedgerId);
                     DB.SaveChanges();
-                    LogDetailStore(Product_DALtoBLL(d), LogDetailType.DELETE);
+                    LogDetailStore(p, LogDetailType.DELETE);
                 }
 
                 Clients.Clients(OtherLoginClientsOnGroup).Customer_Delete(pk);
-                Clients.All.delete(pk);
 
                 rv = true;
 
@@ -85,6 +85,23 @@ namespace AccountBuddy.SL.Hubs
                 rv = false;
             }
             return rv;
+        }
+
+        public bool Product_CanDelete(DAL.Product p)
+        {
+            bool rv = (p == null) ? false : p.PurchaseOrderDetails.Count() == 0 &&
+                   p.PurchaseDetails.Count() == 0 &&
+                   p.PurchaseReturnDetails.Count() == 0 &&
+                   p.SalesOrderDetails.Count() == 0 &&
+                   p.SalesDetails.Count() == 0 && 
+                   p.SalesReturnDetails.Count()==0;
+
+            return rv;
+        }
+
+        public bool Product_CanDeleteById(int Id)
+        {
+            return Product_CanDelete(DB.Products.Where(x => x.Id == Id).FirstOrDefault());
         }
 
         #endregion
