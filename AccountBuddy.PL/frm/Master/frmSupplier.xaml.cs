@@ -362,8 +362,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void txtMail_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
-            txtMail.Focus();
+            if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");            
         }
 
     }

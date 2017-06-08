@@ -48,8 +48,7 @@ namespace AccountBuddy.BLL
         private UOM _UOM;
         private decimal? _PurchaseRate;
         private decimal? _SellingRate;
-        private decimal? _MRP;
-        private double? _GST;
+        private decimal? _MRP;        
         private double? _OpeningStock;
         private double? _ReOrderLevel;
 
@@ -263,22 +262,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public double? GST
-        {
-            get
-            {
-                return _GST;
-            }
-
-            set
-            {
-                if (_GST != value)
-                {
-                    _GST = value;
-                    NotifyPropertyChanged(nameof(GST));
-                }
-            }
-        }
+        
         public double? OpeningStock
         {
             get
