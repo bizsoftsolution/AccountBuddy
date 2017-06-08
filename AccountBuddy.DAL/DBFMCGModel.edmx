@@ -217,7 +217,7 @@
           <Property Name="PurchaseDate" Type="date" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
           <Property Name="InvoiceNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="SupplierId" Type="int" />
+          <Property Name="LedgerId" Type="int" />
           <Property Name="TransactionTypeId" Type="int" />
           <Property Name="ItemAmount" Type="money" />
           <Property Name="DiscountAmount" Type="money" />
@@ -249,7 +249,7 @@
           <Property Name="PODate" Type="date" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
           <Property Name="PONo" Type="nvarchar" MaxLength="20" />
-          <Property Name="SupplierId" Type="int" />
+          <Property Name="LedgerId" Type="int" />
           <Property Name="TransactionTypeId" Type="int" />
           <Property Name="ItemAmount" Type="money" />
           <Property Name="DiscountAmount" Type="money" />
@@ -280,7 +280,7 @@
           <Property Name="PRDate" Type="date" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
           <Property Name="InvoiceNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="SupplierId" Type="int" />
+          <Property Name="LedgerId" Type="int" />
           <Property Name="TransactionTypeId" Type="int" />
           <Property Name="ItemAmount" Type="money" />
           <Property Name="DiscountAmount" Type="money" />
@@ -342,7 +342,7 @@
           <Property Name="SalesDate" Type="date" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
           <Property Name="BillNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="CustomerId" Type="int" />
+          <Property Name="LedgerId" Type="int" />
           <Property Name="TransactionTypeId" Type="int" />
           <Property Name="ItemAmount" Type="money" />
           <Property Name="DiscountAmount" Type="money" />
@@ -374,7 +374,7 @@
           <Property Name="SODate" Type="date" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
           <Property Name="SONo" Type="nvarchar" MaxLength="20" />
-          <Property Name="CustomerId" Type="int" />
+          <Property Name="LedgerId" Type="int" />
           <Property Name="TransactionTypeId" Type="int" />
           <Property Name="ItemAmount" Type="money" />
           <Property Name="DiscountAmount" Type="money" />
@@ -405,7 +405,7 @@
           <Property Name="SRDate" Type="date" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
           <Property Name="BillNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="CustomerId" Type="int" />
+          <Property Name="LedgerId" Type="int" />
           <Property Name="TransactionTypeId" Type="int" />
           <Property Name="ItemAmount" Type="money" />
           <Property Name="DiscountAmount" Type="money" />
@@ -734,15 +734,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Purchase_Supplier">
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+        <Association Name="FK_Purchase_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
           <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Supplier">
+            <Principal Role="Ledger">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Purchase">
-              <PropertyRef Name="SupplierId" />
+              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -806,15 +806,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PurchaseOrder_Supplier">
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+        <Association Name="FK_PurchaseOrder_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
           <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Supplier">
+            <Principal Role="Ledger">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PurchaseOrder">
-              <PropertyRef Name="SupplierId" />
+              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -866,15 +866,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PurchaseReturn_Supplier">
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+        <Association Name="FK_PurchaseReturn_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
           <End Role="PurchaseReturn" Type="Self.PurchaseReturn" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Supplier">
+            <Principal Role="Ledger">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PurchaseReturn">
-              <PropertyRef Name="SupplierId" />
+              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -982,7 +982,19 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Sale">
-              <PropertyRef Name="CustomerId" />
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1046,15 +1058,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SalesOrder_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+        <Association Name="FK_SalesOrder_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
           <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Customer">
+            <Principal Role="Ledger">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SalesOrder">
-              <PropertyRef Name="CustomerId" />
+              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1066,7 +1078,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SalesOrder">
-              <PropertyRef Name="CustomerId" />
+              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1106,15 +1118,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SalesReturn_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+        <Association Name="FK_SalesReturn_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
           <End Role="SalesReturn" Type="Self.SalesReturn" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Customer">
+            <Principal Role="Ledger">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SalesReturn">
-              <PropertyRef Name="CustomerId" />
+              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1411,8 +1423,8 @@
             <End Role="UOM" EntitySet="UOM" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK_Purchase_Supplier" Association="Self.FK_Purchase_Supplier">
-            <End Role="Supplier" EntitySet="Supplier" />
+          <AssociationSet Name="FK_Purchase_Ledger" Association="Self.FK_Purchase_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
             <End Role="Purchase" EntitySet="Purchase" />
           </AssociationSet>
           <AssociationSet Name="FK_Purchase_TransactionType" Association="Self.FK_Purchase_TransactionType">
@@ -1435,8 +1447,8 @@
             <End Role="UOM" EntitySet="UOM" />
             <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrder_Supplier" Association="Self.FK_PurchaseOrder_Supplier">
-            <End Role="Supplier" EntitySet="Supplier" />
+          <AssociationSet Name="FK_PurchaseOrder_Ledger" Association="Self.FK_PurchaseOrder_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrder_TransactionType" Association="Self.FK_PurchaseOrder_TransactionType">
@@ -1455,8 +1467,8 @@
             <End Role="UOM" EntitySet="UOM" />
             <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_PurchaseReturn_Supplier" Association="Self.FK_PurchaseReturn_Supplier">
-            <End Role="Supplier" EntitySet="Supplier" />
+          <AssociationSet Name="FK_PurchaseReturn_Ledger" Association="Self.FK_PurchaseReturn_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
             <End Role="PurchaseReturn" EntitySet="PurchaseReturn" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseReturn_TransactionType" Association="Self.FK_PurchaseReturn_TransactionType">
@@ -1495,6 +1507,10 @@
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
+          <AssociationSet Name="FK_Sale_Ledger" Association="Self.FK_Sale_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
           <AssociationSet Name="FK_Sale_TransactionType" Association="Self.FK_Sale_TransactionType">
             <End Role="TransactionType" EntitySet="TransactionType" />
             <End Role="Sale" EntitySet="Sale" />
@@ -1515,8 +1531,8 @@
             <End Role="UOM" EntitySet="UOM" />
             <End Role="SalesDetail" EntitySet="SalesDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_SalesOrder_Customer" Association="Self.FK_SalesOrder_Customer">
-            <End Role="Customer" EntitySet="Customer" />
+          <AssociationSet Name="FK_SalesOrder_Ledger" Association="Self.FK_SalesOrder_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
             <End Role="SalesOrder" EntitySet="SalesOrder" />
           </AssociationSet>
           <AssociationSet Name="FK_SalesOrder_TransactionType" Association="Self.FK_SalesOrder_TransactionType">
@@ -1535,8 +1551,8 @@
             <End Role="UOM" EntitySet="UOM" />
             <End Role="SalesOrderDetail" EntitySet="SalesOrderDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_SalesReturn_Customer" Association="Self.FK_SalesReturn_Customer">
-            <End Role="Customer" EntitySet="Customer" />
+          <AssociationSet Name="FK_SalesReturn_Ledger" Association="Self.FK_SalesReturn_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
             <End Role="SalesReturn" EntitySet="SalesReturn" />
           </AssociationSet>
           <AssociationSet Name="FK_SalesReturn_TransactionType" Association="Self.FK_SalesReturn_TransactionType">
@@ -1689,14 +1705,6 @@
             <End Role="Ledger" EntitySet="Ledgers" />
             <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
-          <AssociationSet Name="FK_SalesOrder_Customer" Association="DBFMCGModel.FK_SalesOrder_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="SalesOrder" EntitySet="SalesOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SalesReturn_Customer" Association="DBFMCGModel.FK_SalesReturn_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="SalesReturn" EntitySet="SalesReturns" />
-          </AssociationSet>
           <AssociationSet Name="FK_LogMaster_EntityType" Association="DBFMCGModel.FK_LogMaster_EntityType">
             <End Role="EntityType" EntitySet="EntityTypes" />
             <End Role="LogMaster" EntitySet="LogMasters" />
@@ -1717,6 +1725,18 @@
             <End Role="Ledger" EntitySet="Ledgers" />
             <End Role="PaymentDetail" EntitySet="PaymentDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_Purchase_Ledger" Association="DBFMCGModel.FK_Purchase_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Purchase" EntitySet="Purchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_Ledger" Association="DBFMCGModel.FK_PurchaseOrder_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseReturn_Ledger" Association="DBFMCGModel.FK_PurchaseReturn_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="PurchaseReturn" EntitySet="PurchaseReturns" />
+          </AssociationSet>
           <AssociationSet Name="FK_Receipt_Ledger" Association="DBFMCGModel.FK_Receipt_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
             <End Role="Receipt" EntitySet="Receipts" />
@@ -1724,6 +1744,18 @@
           <AssociationSet Name="FK_ReceiptDetail_Ledger" Association="DBFMCGModel.FK_ReceiptDetail_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
             <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_Ledger" Association="DBFMCGModel.FK_Sale_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrder_Ledger" Association="DBFMCGModel.FK_SalesOrder_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="SalesOrder" EntitySet="SalesOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesReturn_Ledger" Association="DBFMCGModel.FK_SalesReturn_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="SalesReturn" EntitySet="SalesReturns" />
           </AssociationSet>
           <AssociationSet Name="FK_Staff_Ledger" Association="DBFMCGModel.FK_Staff_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
@@ -1785,10 +1817,6 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="SalesReturnDetail" EntitySet="SalesReturnDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Purchase_Supplier" Association="DBFMCGModel.FK_Purchase_Supplier">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="Purchase" EntitySet="Purchases" />
-          </AssociationSet>
           <AssociationSet Name="FK_Purchase_TransactionType" Association="DBFMCGModel.FK_Purchase_TransactionType">
             <End Role="TransactionType" EntitySet="TransactionTypes" />
             <End Role="Purchase" EntitySet="Purchases" />
@@ -1809,10 +1837,6 @@
             <End Role="PurchaseDetail" EntitySet="PurchaseDetails" />
             <End Role="PurchaseReturnDetail" EntitySet="PurchaseReturnDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrder_Supplier" Association="DBFMCGModel.FK_PurchaseOrder_Supplier">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-          </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrder_TransactionType" Association="DBFMCGModel.FK_PurchaseOrder_TransactionType">
             <End Role="TransactionType" EntitySet="TransactionTypes" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
@@ -1824,10 +1848,6 @@
           <AssociationSet Name="FK_PurchaseOrderDetail_UOM" Association="DBFMCGModel.FK_PurchaseOrderDetail_UOM">
             <End Role="UOM" EntitySet="UOMs" />
             <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseReturn_Supplier" Association="DBFMCGModel.FK_PurchaseReturn_Supplier">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="PurchaseReturn" EntitySet="PurchaseReturns" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseReturn_TransactionType" Association="DBFMCGModel.FK_PurchaseReturn_TransactionType">
             <End Role="TransactionType" EntitySet="TransactionTypes" />
@@ -1970,8 +1990,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Customer_Ledger" FromRole="Customer" ToRole="Ledger" />
-          <NavigationProperty Name="SalesOrders" Relationship="DBFMCGModel.FK_SalesOrder_Customer" FromRole="Customer" ToRole="SalesOrder" />
-          <NavigationProperty Name="SalesReturns" Relationship="DBFMCGModel.FK_SalesReturn_Customer" FromRole="Customer" ToRole="SalesReturn" />
         </EntityType>
         <EntityType Name="DataKeyValue">
           <Key>
@@ -2056,8 +2074,14 @@
           <NavigationProperty Name="JournalDetails" Relationship="DBFMCGModel.FK_JournalDetail_Ledger" FromRole="Ledger" ToRole="JournalDetail" />
           <NavigationProperty Name="Payments" Relationship="DBFMCGModel.FK_Payment_Ledger" FromRole="Ledger" ToRole="Payment" />
           <NavigationProperty Name="PaymentDetails" Relationship="DBFMCGModel.FK_PaymentDetail_Ledger" FromRole="Ledger" ToRole="PaymentDetail" />
+          <NavigationProperty Name="Purchases" Relationship="DBFMCGModel.FK_Purchase_Ledger" FromRole="Ledger" ToRole="Purchase" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="DBFMCGModel.FK_PurchaseOrder_Ledger" FromRole="Ledger" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="PurchaseReturns" Relationship="DBFMCGModel.FK_PurchaseReturn_Ledger" FromRole="Ledger" ToRole="PurchaseReturn" />
           <NavigationProperty Name="Receipts" Relationship="DBFMCGModel.FK_Receipt_Ledger" FromRole="Ledger" ToRole="Receipt" />
           <NavigationProperty Name="ReceiptDetails" Relationship="DBFMCGModel.FK_ReceiptDetail_Ledger" FromRole="Ledger" ToRole="ReceiptDetail" />
+          <NavigationProperty Name="Sales" Relationship="DBFMCGModel.FK_Sale_Ledger" FromRole="Ledger" ToRole="Sale" />
+          <NavigationProperty Name="SalesOrders" Relationship="DBFMCGModel.FK_SalesOrder_Ledger" FromRole="Ledger" ToRole="SalesOrder" />
+          <NavigationProperty Name="SalesReturns" Relationship="DBFMCGModel.FK_SalesReturn_Ledger" FromRole="Ledger" ToRole="SalesReturn" />
           <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Ledger" ToRole="Staff" />
           <NavigationProperty Name="Suppliers" Relationship="DBFMCGModel.FK_Supplier_Ledger" FromRole="Ledger" ToRole="Supplier" />
         </EntityType>
@@ -2167,7 +2191,7 @@
           <Property Name="PurchaseDate" Type="DateTime" Precision="0" />
           <Property Name="RefNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="InvoiceNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="LedgerId" Type="Int32" />
           <Property Name="TransactionTypeId" Type="Int32" />
           <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
@@ -2175,7 +2199,7 @@
           <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Supplier" Relationship="DBFMCGModel.FK_Purchase_Supplier" FromRole="Purchase" ToRole="Supplier" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Purchase_Ledger" FromRole="Purchase" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_Purchase_TransactionType" FromRole="Purchase" ToRole="TransactionType" />
           <NavigationProperty Name="PurchaseDetails" Relationship="DBFMCGModel.FK_PurchaseDetail_Purchase" FromRole="Purchase" ToRole="PurchaseDetail" />
         </EntityType>
@@ -2207,7 +2231,7 @@
           <Property Name="PODate" Type="DateTime" Precision="0" />
           <Property Name="RefNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="PONo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="LedgerId" Type="Int32" />
           <Property Name="TransactionTypeId" Type="Int32" />
           <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
@@ -2215,7 +2239,7 @@
           <Property Name="Extras" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Supplier" Relationship="DBFMCGModel.FK_PurchaseOrder_Supplier" FromRole="PurchaseOrder" ToRole="Supplier" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_PurchaseOrder_Ledger" FromRole="PurchaseOrder" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_PurchaseOrder_TransactionType" FromRole="PurchaseOrder" ToRole="TransactionType" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="DBFMCGModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
         </EntityType>
@@ -2245,7 +2269,7 @@
           <Property Name="PRDate" Type="DateTime" Precision="0" />
           <Property Name="RefNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="InvoiceNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="LedgerId" Type="Int32" />
           <Property Name="TransactionTypeId" Type="Int32" />
           <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
@@ -2253,7 +2277,7 @@
           <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Supplier" Relationship="DBFMCGModel.FK_PurchaseReturn_Supplier" FromRole="PurchaseReturn" ToRole="Supplier" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_PurchaseReturn_Ledger" FromRole="PurchaseReturn" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_PurchaseReturn_TransactionType" FromRole="PurchaseReturn" ToRole="TransactionType" />
           <NavigationProperty Name="PurchaseReturnDetails" Relationship="DBFMCGModel.FK_PurchaseReturnDetail_PurchaseReturn" FromRole="PurchaseReturn" ToRole="PurchaseReturnDetail" />
         </EntityType>
@@ -2318,7 +2342,7 @@
           <Property Name="SalesDate" Type="DateTime" Precision="0" />
           <Property Name="RefNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="BillNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="LedgerId" Type="Int32" />
           <Property Name="TransactionTypeId" Type="Int32" />
           <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
@@ -2327,6 +2351,7 @@
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_Sale_CompanyDetail" FromRole="Sale" ToRole="CompanyDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Sale_Ledger" FromRole="Sale" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_Sale_TransactionType" FromRole="Sale" ToRole="TransactionType" />
           <NavigationProperty Name="SalesDetails" Relationship="DBFMCGModel.FK_SalesDetail_Sale" FromRole="Sale" ToRole="SalesDetail" />
         </EntityType>
@@ -2358,7 +2383,7 @@
           <Property Name="SODate" Type="DateTime" Precision="0" />
           <Property Name="RefNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="SONo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="LedgerId" Type="Int32" />
           <Property Name="TransactionTypeId" Type="Int32" />
           <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
@@ -2366,7 +2391,7 @@
           <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customer" Relationship="DBFMCGModel.FK_SalesOrder_Customer" FromRole="SalesOrder" ToRole="Customer" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_SalesOrder_Ledger" FromRole="SalesOrder" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_SalesOrder_TransactionType" FromRole="SalesOrder" ToRole="TransactionType" />
           <NavigationProperty Name="SalesOrderDetails" Relationship="DBFMCGModel.FK_SalesOrderDetail_SalesOrder" FromRole="SalesOrder" ToRole="SalesOrderDetail" />
         </EntityType>
@@ -2396,7 +2421,7 @@
           <Property Name="SRDate" Type="DateTime" Precision="0" />
           <Property Name="RefNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="BillNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="LedgerId" Type="Int32" />
           <Property Name="TransactionTypeId" Type="Int32" />
           <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
@@ -2404,7 +2429,7 @@
           <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customer" Relationship="DBFMCGModel.FK_SalesReturn_Customer" FromRole="SalesReturn" ToRole="Customer" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_SalesReturn_Ledger" FromRole="SalesReturn" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_SalesReturn_TransactionType" FromRole="SalesReturn" ToRole="TransactionType" />
           <NavigationProperty Name="SalesReturnDetails" Relationship="DBFMCGModel.FK_SalesReturnDetail_SalesReturn" FromRole="SalesReturn" ToRole="SalesReturnDetail" />
         </EntityType>
@@ -2458,9 +2483,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LedgerId" Type="Int32" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Supplier_Ledger" FromRole="Supplier" ToRole="Ledger" />
-          <NavigationProperty Name="Purchases" Relationship="DBFMCGModel.FK_Purchase_Supplier" FromRole="Supplier" ToRole="Purchase" />
-          <NavigationProperty Name="PurchaseOrders" Relationship="DBFMCGModel.FK_PurchaseOrder_Supplier" FromRole="Supplier" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="PurchaseReturns" Relationship="DBFMCGModel.FK_PurchaseReturn_Supplier" FromRole="Supplier" ToRole="PurchaseReturn" />
         </EntityType>
         <EntityType Name="TransactionType">
           <Key>
@@ -2605,7 +2627,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Sale">
-              <PropertyRef Name="CustomerId" />
+              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2681,30 +2703,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SalesOrder_Customer">
-          <End Type="DBFMCGModel.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.SalesOrder" Role="SalesOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SalesOrder">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SalesReturn_Customer">
-          <End Type="DBFMCGModel.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.SalesReturn" Role="SalesReturn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SalesReturn">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LogMaster_EntityType">
           <End Type="DBFMCGModel.EntityType" Role="EntityType" Multiplicity="0..1" />
           <End Type="DBFMCGModel.LogMaster" Role="LogMaster" Multiplicity="*" />
@@ -2765,6 +2763,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Purchase_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Purchase" Role="Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseReturn_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.PurchaseReturn" Role="PurchaseReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseReturn">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Receipt_Ledger">
           <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
           <End Type="DBFMCGModel.Receipt" Role="Receipt" Multiplicity="*" />
@@ -2785,6 +2819,42 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesOrder_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.SalesOrder" Role="SalesOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SalesOrder">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesReturn_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.SalesReturn" Role="SalesReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SalesReturn">
               <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2969,18 +3039,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Purchase_Supplier">
-          <End Type="DBFMCGModel.Supplier" Role="Supplier" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.Purchase" Role="Purchase" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Purchase">
-              <PropertyRef Name="SupplierId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Purchase_TransactionType">
           <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="0..1" />
           <End Type="DBFMCGModel.Purchase" Role="Purchase" Multiplicity="*" />
@@ -3041,18 +3099,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PurchaseOrder_Supplier">
-          <End Type="DBFMCGModel.Supplier" Role="Supplier" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrder">
-              <PropertyRef Name="SupplierId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PurchaseOrder_TransactionType">
           <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="0..1" />
           <End Type="DBFMCGModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
@@ -3086,18 +3132,6 @@
             </Principal>
             <Dependent Role="PurchaseOrderDetail">
               <PropertyRef Name="UOMId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseReturn_Supplier">
-          <End Type="DBFMCGModel.Supplier" Role="Supplier" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.PurchaseReturn" Role="PurchaseReturn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseReturn">
-              <PropertyRef Name="SupplierId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3217,7 +3251,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SalesOrder">
-              <PropertyRef Name="CustomerId" />
+              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3566,7 +3600,7 @@
                 <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
@@ -3600,7 +3634,7 @@
                 <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="PONo" ColumnName="PONo" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="PODate" ColumnName="PODate" />
@@ -3633,7 +3667,7 @@
                 <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="PRDate" ColumnName="PRDate" />
@@ -3699,7 +3733,7 @@
                 <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="BillNo" ColumnName="BillNo" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="SalesDate" ColumnName="SalesDate" />
@@ -3733,7 +3767,7 @@
                 <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="SONo" ColumnName="SONo" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="SODate" ColumnName="SODate" />
@@ -3766,7 +3800,7 @@
                 <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="BillNo" ColumnName="BillNo" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="SRDate" ColumnName="SRDate" />
