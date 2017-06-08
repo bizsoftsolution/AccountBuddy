@@ -4,33 +4,45 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AccountBuddy.Common;
+using System.Collections.ObjectModel;
 
 namespace AccountBuddy.BLL
 {
-    public class Sales : INotifyPropertyChanged
+    public class Sale : INotifyPropertyChanged
     {
-        #region Fields
-        private int _Id;
-        private DateTime _SalesDate;
-        private string _RefNo;
-        private string _InvoiceNo;
-        private int _CustomerId;
-        private int _TransactionTypeId;
-        private decimal _ItemAmount;
-        private decimal _DiscountAmount;
-        private decimal _GSTAmount;
-        private decimal _ExtraAmount;
-        private decimal _TotalAmount;
-        private string _Narration;
+        #region Field
+        private static ObservableCollection<Sale> _SPendingList;
 
-        private Customer _Customer;
-        private TransactionType _TransactionType;
+        private long _Id;
+        private DateTime? _SalesDate;
+        private string _RefNo;
+        private string _BillNo;
+        private int? _LedgerId;
+        private int? _TransactionTypeId;
+        private decimal? _ItemAmount;
+        private decimal? _DiscountAmount;
+        private decimal? _GSTAmount;
+        private decimal? _ExtraAmount;
+        private decimal? _TotalAmount;
+        private string _Narration;
+        private int? _CompanyId;
+        private decimal? _PaidAmount;
+        private decimal? _PayAmount;
+        private string _LedgerName;
+        private string _TransactionType;
+        private string _AmountInwords;
+
+        private string _SearchText;
+
+        private SalesDetail _SDetail;
+        private ObservableCollection<SalesDetail> _SDetails;
 
         #endregion
 
         #region Property
-
-        public int Id
+        public long ReceiptLedgerId { get; set; }
+        public long Id
         {
             get
             {
@@ -46,7 +58,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public DateTime SalesDate
+        public DateTime? SalesDate
         {
             get
             {
@@ -61,7 +73,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string RefNo
         {
             get
@@ -77,39 +88,37 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public string InvoiceNo
+        public string BillNo
         {
             get
             {
-                return _InvoiceNo;
+                return _BillNo;
             }
             set
             {
-                if (_InvoiceNo != value)
+                if (_BillNo != value)
                 {
-                    _InvoiceNo = value;
-                    NotifyPropertyChanged(nameof(InvoiceNo));
+                    _BillNo = value;
+                    NotifyPropertyChanged(nameof(BillNo));
                 }
             }
         }
-        public int CustomerId
+        public int? LedgerId
         {
             get
             {
-                return _CustomerId;
+                return _LedgerId;
             }
             set
             {
-                if (_CustomerId != value)
+                if (_LedgerId != value)
                 {
-                    _CustomerId = value;
-                    NotifyPropertyChanged(nameof(CustomerId));
+                    _LedgerId = value;
+                    NotifyPropertyChanged(nameof(LedgerId));
                 }
             }
         }
-
-        public int TransactionTypeId
+        public int? TransactionTypeId
         {
             get
             {
@@ -123,13 +132,12 @@ namespace AccountBuddy.BLL
                     NotifyPropertyChanged(nameof(TransactionTypeId));
                 }
             }
-
         }
-
-        public decimal ItemAmount
+        public decimal? ItemAmount
         {
             get
             {
+                if (_ItemAmount == null) _ItemAmount = 0;
                 return _ItemAmount;
             }
             set
@@ -138,14 +146,15 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
+                    if (value != null) SetAmount();
                 }
             }
         }
-
-        public decimal DiscountAmount
+        public decimal? DiscountAmount
         {
             get
             {
+                if (_DiscountAmount == null) _DiscountAmount = 0;
                 return _DiscountAmount;
             }
             set
@@ -154,14 +163,15 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
+                    if (value != null) SetAmount();
                 }
             }
         }
-
-        public decimal GSTAmount
+        public decimal? GSTAmount
         {
             get
             {
+                if (_GSTAmount == null) _GSTAmount = 0;
                 return _GSTAmount;
             }
             set
@@ -173,11 +183,11 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public decimal ExtraAmount
+        public decimal? ExtraAmount
         {
             get
             {
+                if (_ExtraAmount == null) _ExtraAmount = 0;
                 return _ExtraAmount;
             }
             set
@@ -186,14 +196,15 @@ namespace AccountBuddy.BLL
                 {
                     _ExtraAmount = value;
                     NotifyPropertyChanged(nameof(ExtraAmount));
+                    if (value != null) SetAmount();
                 }
             }
         }
-
-        public decimal TotalAmount
+        public decimal? TotalAmount
         {
             get
             {
+                if (_TotalAmount == null) _TotalAmount = 0;
                 return _TotalAmount;
             }
             set
@@ -202,11 +213,10 @@ namespace AccountBuddy.BLL
                 {
                     _TotalAmount = value;
                     NotifyPropertyChanged(nameof(TotalAmount));
-
+                    AmountInwords = value.ToCurrencyInWords();
                 }
             }
         }
-
         public string Narration
         {
             get
@@ -222,24 +232,81 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public Customer Customer
+        public int? CompanyId
         {
             get
             {
-                return _Customer;
+                return _CompanyId;
             }
             set
             {
-                if (_Customer != value)
+                if (_CompanyId != value)
                 {
-                    _Customer = value;
-                    NotifyPropertyChanged(nameof(Customer));
+                    _CompanyId = value;
+                    NotifyPropertyChanged(nameof(CompanyId));
+                }
+            }
+        }
+        public decimal? PaidAmount
+        {
+            get
+            {
+                if (_PaidAmount == null) _PaidAmount = 0;
+                return _PaidAmount;
+            }
+            set
+            {
+                if (_PaidAmount != value)
+                {
+                    _PaidAmount = value;
+                    NotifyPropertyChanged(nameof(PaidAmount));
+                    AmountInwords = value.ToCurrencyInWords();
                 }
             }
         }
 
-        public TransactionType TransactionType
+        public decimal? BalanceAmount
+        {
+            get
+            {
+                if (_TotalAmount == null) return null;
+                if (_PaidAmount == null) return _TotalAmount.Value;
+                return _TotalAmount.Value - _PaidAmount.Value;
+            }
+        }
+        public decimal? PayAmount
+        {
+            get
+            {
+                if (_PayAmount == null) _PayAmount = 0;
+                return _PayAmount;
+            }
+            set
+            {
+                if (_PayAmount != value)
+                {
+                    _PayAmount = value;
+                    NotifyPropertyChanged(nameof(PayAmount));
+                    AmountInwords = value.ToCurrencyInWords();
+                }
+            }
+        }
+        public string LedgerName
+        {
+            get
+            {
+                return _LedgerName;
+            }
+            set
+            {
+                if (_LedgerName != value)
+                {
+                    _LedgerName = value;
+                    NotifyPropertyChanged(nameof(LedgerName));
+                }
+            }
+        }
+        public string TransactionType
         {
             get
             {
@@ -254,20 +321,223 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        #endregion
 
-        #region Property  Changed Event
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged(string PropertyName)
+        public string SearchText
         {
-            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
+            get
+            {
+                return _SearchText;
+            }
+            set
+            {
+                if (_SearchText != value)
+                {
+                    _SearchText = value;
+                    NotifyPropertyChanged(nameof(SearchText));
+                }
+            }
         }
 
+        public string AmountInwords
+        {
+            get
+            {
+                if (_AmountInwords == null) _AmountInwords = "";
+                return _AmountInwords;
+            }
+            set
+            {
+                if (_AmountInwords != value)
+                {
+                    _AmountInwords = value;
+                    NotifyPropertyChanged(nameof(AmountInwords));
+                }
+            }
+        }
+
+        public SalesDetail SDetail
+        {
+            get
+            {
+                if (_SDetail == null) _SDetail = new SalesDetail();
+                return _SDetail;
+            }
+            set
+            {
+                if (_SDetail != value)
+                {
+                    _SDetail = value;
+                    NotifyPropertyChanged(nameof(SDetail));
+                }
+            }
+        }
+
+        public ObservableCollection<SalesDetail> SDetails
+        {
+            get
+            {
+                if (_SDetails == null) _SDetails = new ObservableCollection<SalesDetail>();
+                return _SDetails;
+            }
+            set
+            {
+                if (_SDetails != value)
+                {
+                    _SDetails = value;
+                    NotifyPropertyChanged(nameof(SDetails));
+                }
+            }
+        }
+        public static ObservableCollection<Sale> SPendingList
+        {
+            get
+            {
+                if (_SPendingList == null)
+                {
+                    _SPendingList = new ObservableCollection<Sale>();
+                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<Sale>>("Sales_SPendingList").Result;
+                    _SPendingList = new ObservableCollection<Sale>(l1);
+                }
+                return _SPendingList;
+            }
+            set
+            {
+                _SPendingList = value;
+            }
+        }
+
+        #endregion
+
+        #region Property Changed
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(String ProperName)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(ProperName));
+        }
         private void NotifyAllPropertyChanged()
         {
             foreach (var p in this.GetType().GetProperties()) NotifyPropertyChanged(p.Name);
+        }
+
+        #endregion
+
+        #region Methods
+
+        #region Master
+
+        public bool Save()
+        {
+            try
+            {
+                return FMCGHubClient.FMCGHub.Invoke<bool>("Sales_Save", this).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public void Clear()
+        {
+            new Sale().toCopy<Sale>(this);
+            this.SDetail = new SalesDetail();
+            this.SDetails = new ObservableCollection<SalesDetail>();
+
+            SalesDate = DateTime.Now;
+
+            NotifyAllPropertyChanged();
+        }
+
+        public bool Find()
+        {
+            try
+            {
+                Sale S = FMCGHubClient.FMCGHub.Invoke<Sale>("Sales_Find", SearchText).Result;
+                if (S.Id == 0) return false;
+                S.toCopy<Sale>(this);
+                this.SDetails = S.SDetails;
+                NotifyAllPropertyChanged();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool Delete()
+        {
+            try
+            {
+                return FMCGHubClient.FMCGHub.Invoke<bool>("Sales_Delete", this.Id).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Detail
+
+        public void SaveDetail()
+        {
+            if (SDetail.ProductId != 0)
+            {
+                SalesDetail sod = SDetails.Where(x => x.ProductId == SDetail.ProductId).FirstOrDefault();
+
+                if (sod == null)
+                {
+                    sod = new SalesDetail();
+                    SDetails.Add(sod);
+                }
+                else
+                {
+                    SDetail.Quantity += sod.Quantity;
+                }
+                SDetail.toCopy<SalesDetail>(sod);
+                ClearDetail();
+                ItemAmount = SDetails.Sum(x => x.Amount);
+            }
+
+        }
+
+        public void ClearDetail()
+        {
+            SalesDetail sod = new SalesDetail();
+            sod.toCopy<SalesDetail>(SDetail);
+        }
+
+        public void DeleteDetail(string PName)
+        {
+            SalesDetail sod = SDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+
+            if (sod != null)
+            {
+                SDetails.Remove(sod);
+                ItemAmount = SDetails.Sum(x => x.Amount);
+            }
+        }
+
+        #endregion
+
+        private void SetAmount()
+        {
+            GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
+            TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+        }
+        public bool FindRefNo()
+        {
+            var rv = false;
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_SRef", RefNo, this).Result;
+            }
+            catch (Exception ex)
+            {
+                rv = true;
+            }
+            return rv;
         }
 
         #endregion

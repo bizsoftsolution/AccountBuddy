@@ -1,28 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.ComponentModel;
 namespace AccountBuddy.BLL
 {
-  public  class SalesOrderDetail : INotifyPropertyChanged
+    public class SalesOrderDetail : INotifyPropertyChanged
     {
-        #region Fields
-        private int _Id;
-        private int _SOId;
-       private int _ProductId;
-        private int _UOMId;
-        private decimal _Quantity;
-        private decimal _UnitPrice;
-        private decimal _DiscountAmount;
-        private decimal _GSTAmount;
-        private decimal _Amount;
+
+        #region Field
+        private long _Id;
+        private long? _SOId;
+        private int? _ProductId;
+        private int? _UOMId;
+        private double? _Quantity;
+        private decimal? _UnitPrice;
+        private decimal? _DiscountAmount;
+        private decimal? _GSTAmount;
+        private decimal? _Amount;
+
+        private string _ItemCode;
+        private string _ProductName;
+        private string _UOMName;
         #endregion
 
         #region Property
-        public int Id
+
+        public long Id
         {
             get
             {
@@ -37,7 +42,8 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int SOId
+
+        public long? SOId
         {
             get
             {
@@ -53,9 +59,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-
-
-        public int ProductId
+        public int? ProductId
         {
             get
             {
@@ -65,14 +69,14 @@ namespace AccountBuddy.BLL
             {
                 if (_ProductId != value)
                 {
-
                     _ProductId = value;
+                    if (value != null) SetProduct(new Product(_ProductId.Value));
                     NotifyPropertyChanged(nameof(ProductId));
                 }
             }
         }
 
-        public int UOMId
+        public int? UOMId
         {
             get
             {
@@ -88,7 +92,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public decimal Quantity
+        public double? Quantity
         {
             get
             {
@@ -99,12 +103,13 @@ namespace AccountBuddy.BLL
                 if (_Quantity != value)
                 {
                     _Quantity = value;
+                    Amount = Convert.ToDecimal(_Quantity ?? 0) * _UnitPrice ?? 0;
                     NotifyPropertyChanged(nameof(Quantity));
                 }
             }
         }
 
-        public decimal UnitPrice
+        public decimal? UnitPrice
         {
             get
             {
@@ -115,12 +120,13 @@ namespace AccountBuddy.BLL
                 if (_UnitPrice != value)
                 {
                     _UnitPrice = value;
+                    Amount = Convert.ToDecimal(_Quantity ?? 0) * _UnitPrice ?? 0;
                     NotifyPropertyChanged(nameof(UnitPrice));
                 }
             }
         }
 
-        public decimal DiscountAmount
+        public decimal? DiscountAmount
         {
             get
             {
@@ -136,7 +142,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public decimal GSTAmount
+        public decimal? GSTAmount
         {
             get
             {
@@ -152,7 +158,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public decimal Amount
+        public decimal? Amount
         {
             get
             {
@@ -168,24 +174,84 @@ namespace AccountBuddy.BLL
             }
         }
 
-
-        #endregion
-
-        #region Property  Changed Event
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged(string PropertyName)
+        public string ItemCode
         {
-            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
+            get
+            {
+                return _ItemCode;
+            }
+            set
+            {
+                if (_ItemCode != value)
+                {
+                    _ItemCode = value;
+                    if (value != "")
+                    {
+                        Product p = new Product(value);
+                        if (p.Id != 0) ProductId = p.Id;
+                    }
+                    NotifyPropertyChanged(nameof(ItemCode));
+                }
+            }
         }
 
 
+        public string ProductName
+        {
+            get
+            {
+                return _ProductName;
+            }
+            set
+            {
+                if (_ProductName != value)
+                {
+                    _ProductName = value;
+                    NotifyPropertyChanged(nameof(ProductName));
+                }
+            }
+        }
+
+        public string UOMName
+        {
+            get
+            {
+                return _UOMName;
+            }
+            set
+            {
+                if (_UOMName != value)
+                {
+                    _UOMName = value;
+                    NotifyPropertyChanged(nameof(UOMName));
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region Property Changed
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(String ProperName)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(ProperName));
+        }
         private void NotifyAllPropertyChanged()
         {
             foreach (var p in this.GetType().GetProperties()) NotifyPropertyChanged(p.Name);
         }
 
+        #endregion
+
+        #region Methods
+        private void SetProduct(Product p)
+        {
+            UOMId = p.UOMId;
+            ProductName = p.ProductName;
+            UnitPrice = p.SellingRate;
+            Quantity = p.Id != 0 ? 1 : 0;
+        }
         #endregion
 
     }

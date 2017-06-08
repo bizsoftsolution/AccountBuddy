@@ -92,7 +92,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptPurchase.rdlc" />
     <EmbeddedResource Include="rpt\Transaction\rptPurchaseReturn.rdlc" />
-    <EmbeddedResource Include="rpt\Transaction\rptQuickPurchaseOrder.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptQuickPurchaseOrder.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptQuickSales.rdlc" />
     <EmbeddedResource Include="rpt\Transaction\rptQuickSalesOrder.rdlc" />
     <EmbeddedResource Include="rpt\Transaction\rptReceiptVoucher.rdlc">
@@ -125,6 +127,8 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.PaymentDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Products1.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ProfitLoss.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseOrder.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseOrderDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Receipt.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptAndPayment.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptDetail.datasource" />

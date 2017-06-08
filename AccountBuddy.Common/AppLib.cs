@@ -14,6 +14,8 @@ namespace AccountBuddy.Common
     public static class AppLib
     {
 
+        public static decimal GSTPer = (decimal)0.06;
+
         public enum Forms
         {
             frmCompanySetting,

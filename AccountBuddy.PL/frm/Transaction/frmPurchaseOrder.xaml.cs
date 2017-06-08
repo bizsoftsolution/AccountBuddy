@@ -30,24 +30,24 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            //cmbSupplier.ItemsSource = BLL.Supplier.toList;
-            //cmbSupplier.DisplayMemberPath = "SupplierName";
-            //cmbSupplier.SelectedValuePath = "Id";
+            cmbSupplier.ItemsSource = BLL.Ledger.toList;
+            cmbSupplier.DisplayMemberPath = "LedgerName";
+            cmbSupplier.SelectedValuePath = "Id";
 
-            //cmbPType.ItemsSource = BLL.TransactionType.toList;
-            //cmbPType.DisplayMemberPath = "Type";
-            //cmbPType.SelectedValuePath = "Id";
+            cmbPType.ItemsSource = BLL.TransactionType.toList;
+            cmbPType.DisplayMemberPath = "Type";
+            cmbPType.SelectedValuePath = "Id";
 
-            //cmbItem.ItemsSource = BLL.Product.toList;
-            //cmbItem.DisplayMemberPath = "ProductName";
-            //cmbItem.SelectedValuePath = "Id";
+            cmbItem.ItemsSource = BLL.Product.toList;
+            cmbItem.DisplayMemberPath = "ProductName";
+            cmbItem.SelectedValuePath = "Id";
 
-            //cmbUOM.ItemsSource = BLL.UOM.toList;
-            //cmbUOM.DisplayMemberPath = "Symbol";
-            //cmbUOM.SelectedValuePath = "Id";
+            cmbUOM.ItemsSource = BLL.UOM.toList;
+            cmbUOM.DisplayMemberPath = "Symbol";
+            cmbUOM.SelectedValuePath = "Id";
 
 
-       //     data.Clear();
+               data.Clear();
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-MY");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-MY");
 
@@ -55,88 +55,87 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //if (data.PODetail.ProductId == null)
-            //{
-            //    MessageBox.Show(Message.PL.Transaction_Empty_Product);
-            //}
-            //else if (data.PODetail.Quantity > BLL.Product.toList.Where(x => x.Id == data.PODetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault())
-            //{
-            //    var avst = BLL.Product.toList.Where(x => x.Id == data.PODetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
-            //    MessageBox.Show(Message.PL.Product_Not_In_Stock, avst.ToString());
-            //}
-            //else
-            //{
-            //    data.SaveDetail();
-            ////}
-            
+            if (data.PODetail.ProductId == null)
+            {
+                MessageBox.Show(Message.PL.Empty_Record);
+            }
+
+            else
+            {
+                data.SaveDetail();
+            }
+
         }
+            
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-          //  data.ClearDetail();
+            data.ClearDetail();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-//data.Clear();
+data.Clear();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            //if(MessageBox.Show(string.Format(Message.PL.TransactionDeleteConfirmation,data.RefNo),"Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            //{
-            //    var rv = data.Delete(); 
-            //    if(rv == true)
-            //    {
-            //        MessageBox.Show("Deleted");
-            //        data.Clear();
-            //    }
-            //}
-            
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                var rv = data.Delete();
+                if (rv == true)
+                {
+                    MessageBox.Show("Deleted");
+                    data.Clear();
+                }
+            }
+
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            //if(data.RefNo==null)
-            //{
-            //    MessageBox.Show(Message.PL.Transaction_RefNo_Validation);
-            //}
-            //else if(data.SupplierName==null)
-            //{
-            //    MessageBox.Show(Message.PL.Transaction_Supplier_Validation);
-            //}
-            //else if(data.TransactionTypeId==null)
-            //{
-            //    MessageBox.Show(Message.PL.Transaction_Type_Validation);
-            //}
-            //else if(data.PODetails.Count==0)
-            //{
-            //    MessageBox.Show(Message.PL.Transaction_ItemDetails_Validation);
-            //}
-            //else if (data.FindRefNo()==false)
-            //{
-            //    var rv = data.Save();
-            //    if (rv == true)
-            //    {
-            //        MessageBox.Show("Saved");
-            //        data.Clear();
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show(string.Format(Message.PL.Transaction_RefNo_ExistValidation, data.RefNo));
+            if (data.RefNo == null)
+            {
+                MessageBox.Show("Enter Reference No");
+                txtRefNo.Focus();
+            }
+            else if (data.LedgerName == null)
+            {
+                MessageBox.Show("Enter Supplier");
                 
-            //}
+            }
+            else if (data.TransactionTypeId == null)
+            {
+                MessageBox.Show("Enter Transaction Type");
+            }
+            else if (data.PODetails.Count == 0)
+            {
+                MessageBox.Show("Enter Product Details");
+            }
+            else if (data.FindRefNo() == false)
+            {
+                var rv = data.Save();
+                if (rv == true)
+                {
+                    MessageBox.Show("Saved Successfully");
+                    data.Clear();
+                }
+            }
+            else
+            {
+                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo));
+
+            }
         }
 
         private void OnDelete(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    Button btn = (Button)sender;
-            //    data.DeleteDetail(btn.Tag.ToString());
-            //}
-            //catch (Exception ex) { }
+            try
+            {
+                Button btn = (Button)sender;
+                data.DeleteDetail(btn.Tag.ToString());
+            }
+            catch (Exception ex) { }
 
         }
 
@@ -147,49 +146,46 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            //    var rv= data.Find();
-            //    if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
-            //
+            var rv = data.Find();
+            if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
+
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //try
-            //{
-            //    BLL.PurchaseOrderDetail pod = dgvDetails.SelectedItem as BLL.PurchaseOrderDetail;
-            //    pod.toCopy<BLL.PurchaseOrderDetail>(data.PODetail);
-            //}
-            //catch (Exception ex) { }
+            try
+            {
+                BLL.PurchaseOrderDetail pod = dgvDetails.SelectedItem as BLL.PurchaseOrderDetail;
+                pod.toCopy<BLL.PurchaseOrderDetail>(data.PODetail);
+            }
+            catch (Exception ex) { }
 
         }
 
         private void txtBarCode_KeyDown(object sender, KeyEventArgs e)
         {
-            
-            //if (e.Key == Key.Return && data.PODetail.ProductId != null)
-            //{
-            //    if (data.PODetail.ProductId == null)
-            //    {
-            //        MessageBox.Show(Message.PL.Transaction_Empty_Product);
-            //    }
-            //    else if (data.PODetail.Quantity>BLL.Product.toList.Where(x=>x.Id==data.PODetail.ProductId).Select(x=>x.AvailableStock).FirstOrDefault())
-            //    {
-            //        var avst = BLL.Product.toList.Where(x => x.Id == data.PODetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
-            //        MessageBox.Show(Message.PL.Product_Not_In_Stock, avst.ToString());
-            //    }
-            //    else
-            //    {
-            //        data.SaveDetail();
-            //    }
+
+            if (e.Key == Key.Return && data.PODetail.ProductId != null)
+            {
+                if (data.PODetail.ProductId == null)
+                {
+                    MessageBox.Show("Enter Product");
+                    cmbItem.Focus();
+                }
                
-            //}
+                else
+                {
+                    data.SaveDetail();
+                }
+
+            }
         }
 
         private void LoadReport()
         {
-            //frm.Print.frmQuickPO f = new Print.frmQuickPO();
-            //f.LoadReport(data);
-            //f.ShowDialog();
+            frm.Print.frmQuickPO f = new Print.frmQuickPO();
+            f.LoadReport(data);
+            f.ShowDialog();
         }
 
     }
