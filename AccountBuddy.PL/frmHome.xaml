@@ -14,8 +14,8 @@
         Closing="MetroWindow_Closing"
         mc:Ignorable="d"
         Title="Account Buddy" Height="600" Width="1100"
-                       ShowMaxRestoreButton="False"
-        BorderThickness="0" GlowBrush="Black" ResizeMode="NoResize" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Images/fmcg/fmcg logo 256 x 256.ico" >
+                       
+        BorderThickness="0" GlowBrush="Black" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Images/fmcg/fmcg logo 256 x 256.ico" >
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"

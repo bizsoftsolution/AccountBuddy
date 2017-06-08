@@ -291,7 +291,7 @@
                         </StackPanel>
 
 
-                        <StackPanel Orientation="Horizontal" Height="38" >
+                        <StackPanel Orientation="Horizontal" Height="46" >
                             <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"/>
                             <TextBlock Text="User Id" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Height="20"  />
                             <TextBox x:Name="txtUserIdDealer" Foreground="{DynamicResource PrimaryHueDarkBrush}"   FontSize="16" FontWeight="Bold" Width="220" Margin="20,11,0,0" />
