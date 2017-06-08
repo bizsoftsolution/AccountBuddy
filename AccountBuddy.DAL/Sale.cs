@@ -24,7 +24,7 @@ namespace AccountBuddy.DAL
         public Nullable<System.DateTime> SalesDate { get; set; }
         public string RefNo { get; set; }
         public string BillNo { get; set; }
-        public Nullable<int> CustomerId { get; set; }
+        public Nullable<int> LedgerId { get; set; }
         public Nullable<int> TransactionTypeId { get; set; }
         public Nullable<decimal> ItemAmount { get; set; }
         public Nullable<decimal> DiscountAmount { get; set; }
@@ -34,6 +34,7 @@ namespace AccountBuddy.DAL
         public string Narration { get; set; }
     
         public virtual CompanyDetail CompanyDetail { get; set; }
+        public virtual Ledger Ledger { get; set; }
         public virtual TransactionType TransactionType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalesDetail> SalesDetails { get; set; }
