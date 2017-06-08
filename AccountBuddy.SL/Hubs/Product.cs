@@ -17,7 +17,7 @@ namespace AccountBuddy.SL.Hubs
 
             ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
 
-            ProductsTo.UOM = ProductsTo.UOM == null ? null: UOM_DALtoBLL(ProductsFrom.UOM);
+            ProductsTo.UOM = ProductsFrom.UOM == null ? null: UOM_DALtoBLL(ProductsFrom.UOM);
 
             return ProductsTo;
         }

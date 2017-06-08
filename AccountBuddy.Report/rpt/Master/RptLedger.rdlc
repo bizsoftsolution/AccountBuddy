@@ -40,7 +40,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Ledger Name</Value>
+                              <Value>Account Name</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -266,21 +266,21 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="LedgerName">
+                    <Textbox Name="AccountName">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!LedgerName.Value</Value>
+                              <Value>=Fields!AccountName.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>LedgerName</rd:DefaultName>
+                      <rd:DefaultName>AccountName</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
