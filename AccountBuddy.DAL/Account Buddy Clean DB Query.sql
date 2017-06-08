@@ -7,8 +7,15 @@ delete from Receipt
 delete from JournalDetail
 delete from Journal
 
+delete from Supplier
+delete from Customer
+delete from Bank
+
 delete from Ledger
 
+delete from Product
+delete from UOM
+delete from StockGroup
 delete from AccountGroup
 
 delete from CompanyDetail
@@ -21,7 +28,6 @@ delete from LogDetail
 delete from LogMaster
 
 delete from ErrorLog
-
 USE [DBFMCG]
 GO
 
