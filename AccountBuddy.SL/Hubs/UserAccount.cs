@@ -23,10 +23,8 @@ namespace AccountBuddy.SL.Hubs
 
             DAL.UserAccount ua = DB.UserAccounts
                                    .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
-
-                                                && x.LoginId == LoginId
-                                                
-                                                && x.Password == Password && x.UserType.CompanyDetail.IsActive!=false)
+                                   && x.LoginId == LoginId
+                                   && x.Password == Password && x.UserType.CompanyDetail.IsActive!=false)
                                    .FirstOrDefault();
             if (ua != null)
             {
