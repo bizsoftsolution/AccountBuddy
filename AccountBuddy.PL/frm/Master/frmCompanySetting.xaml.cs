@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 
 namespace AccountBuddy.PL.frm.Master
-{
+{                     
     /// <summary>
     /// Interaction logic for frmCompanySetting.xaml
     /// </summary>
@@ -248,7 +248,7 @@ namespace AccountBuddy.PL.frm.Master
                 var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
                 frmUserManager f = new frmUserManager();
                 f.LoadWindow(cm.Id);
-                f.userId = cm.Id;
+                f.CompanyId = cm.Id;
                 f.Title = string.Format("Login Users - {0}", cm.CompanyName);
                 f.ShowDialog();
             }
@@ -336,10 +336,23 @@ namespace AccountBuddy.PL.frm.Master
         }
 
 
+
+
+
         #endregion
 
-
-
-
+        private void btnUserDealer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+                frmUserManager f = new frmUserManager();
+                f.LoadWindow(cm.Id);
+                f.CompanyId = cm.Id;
+                f.Title = string.Format("Login Users - {0}", cm.CompanyName);
+                f.ShowDialog();
+            }
+            catch (Exception ex) { }
+        }
     }
 }

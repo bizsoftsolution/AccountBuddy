@@ -29,6 +29,7 @@ namespace AccountBuddy.BLL
         private string _password;
         private int _UserTypeId;
         private UserType _UserType;
+        private int _UnderCompanyId;
         #endregion
 
         #region Property
@@ -117,6 +118,22 @@ namespace AccountBuddy.BLL
                 {
                     _id = value;
                     NotifyPropertyChanged(nameof(Id));
+                }
+            }
+        }
+
+        public int UnderCompanyId
+        {
+            get
+            {
+                return _UnderCompanyId;
+            }
+            set
+            {
+                if (_UnderCompanyId != value)
+                {
+                    _UnderCompanyId = value;
+                    NotifyPropertyChanged(nameof(UnderCompanyId));
                 }
             }
         }

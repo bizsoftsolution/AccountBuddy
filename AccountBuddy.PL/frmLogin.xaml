@@ -174,7 +174,7 @@
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Panel" Property="Background" Value="Black" />
+                                            <Setter TargetName="Panel" Property="Background" Value="lightgray" />
                                         </Trigger>
                                         <Trigger Property="IsSelected" Value="False">
                                             <Setter TargetName="Panel" Property="Background" Value="white" />

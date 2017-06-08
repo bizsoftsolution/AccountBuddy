@@ -480,6 +480,7 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LoginId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UnderCompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -1237,6 +1238,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserAccount_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="UnderCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserAccount_UserType">
           <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
           <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="*" />
@@ -1566,6 +1579,10 @@
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
             <End Role="UOM" EntitySet="UOM" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserAccount_CompanyDetail" Association="Self.FK_UserAccount_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="UserAccount" EntitySet="UserAccount" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserAccount_UserType" Association="Self.FK_UserAccount_UserType">
             <End Role="UserType" EntitySet="UserType" />
             <End Role="UserAccount" EntitySet="UserAccount" />
@@ -1655,6 +1672,10 @@
           <AssociationSet Name="FK_UOM_CompanyDetail" Association="DBFMCGModel.FK_UOM_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
             <End Role="UOM" EntitySet="UOMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccount_CompanyDetail" Association="DBFMCGModel.FK_UserAccount_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="UserAccount" EntitySet="UserAccounts" />
           </AssociationSet>
           <AssociationSet Name="FK_UserType_CompanyDetail" Association="DBFMCGModel.FK_UserType_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
@@ -1931,6 +1952,7 @@
           <NavigationProperty Name="Sales" Relationship="DBFMCGModel.FK_Sale_CompanyDetail" FromRole="CompanyDetail" ToRole="Sale" />
           <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
           <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
+          <NavigationProperty Name="UserAccounts" Relationship="DBFMCGModel.FK_UserAccount_CompanyDetail" FromRole="CompanyDetail" ToRole="UserAccount" />
           <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
         </EntityType>
         <EntityType Name="CreditLimitType">
@@ -2479,6 +2501,8 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LoginId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UnderCompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UserAccount_CompanyDetail" FromRole="UserAccount" ToRole="CompanyDetail" />
           <NavigationProperty Name="LogDetails" Relationship="DBFMCGModel.FK_LogDetail_UserAccount" FromRole="UserAccount" ToRole="LogDetail" />
           <NavigationProperty Name="LogMasters" Relationship="DBFMCGModel.FK_LogMaster_UserAccount" FromRole="UserAccount" ToRole="LogMaster" />
           <NavigationProperty Name="UserType" Relationship="DBFMCGModel.FK_UserAccount_UserType" FromRole="UserAccount" ToRole="UserType" />
@@ -2606,6 +2630,18 @@
             </Principal>
             <Dependent Role="UOM">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccount_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.UserAccount" Role="UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAccount">
+              <PropertyRef Name="UnderCompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3804,6 +3840,7 @@
           <EntitySetMapping Name="UserAccounts">
             <EntityTypeMapping TypeName="DBFMCGModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="UnderCompanyId" ColumnName="UnderCompanyId" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="LoginId" ColumnName="LoginId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />

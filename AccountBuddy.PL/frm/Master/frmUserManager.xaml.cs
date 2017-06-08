@@ -21,7 +21,7 @@ namespace AccountBuddy.PL.frm.Master
     /// </summary>
     public partial class frmUserManager : Window
     {
-        public  int userId;
+        public  int CompanyId;
 
         public frmUserManager()
         {
@@ -84,7 +84,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadWindow(userId);
+            LoadWindow(CompanyId);
 
         }
 
