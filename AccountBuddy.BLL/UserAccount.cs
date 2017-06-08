@@ -239,6 +239,7 @@ namespace AccountBuddy.BLL
             BLL.UserAccount.Init();
             BLL.AccountGroup.Init();
             BLL.Ledger.Init();
+            BLL.CompanyDetail.Init();
         }
 
         public static bool AllowFormShow(string FormName)

@@ -46,7 +46,7 @@ namespace AccountBuddy.BLL
             {
                 if (_UserPermission == null)
                 {
-                    _UserPermission = UserAccount.User.UserType==null?new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmCompanySetting.ToString()).FirstOrDefault();
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmCompanySetting.ToString()).FirstOrDefault();
                 }
                 return _UserPermission;
             }
@@ -256,7 +256,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+
         public string PostalCode
         {
             get
@@ -371,7 +371,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-           #endregion
+        #endregion
 
         #region Property  Changed Event
 
@@ -424,10 +424,10 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-           new CompanyDetail().toCopy<CompanyDetail>(this);
-           IsReadOnly = !UserPermission.AllowInsert;
-           
-           NotifyAllPropertyChanged();
+            new CompanyDetail().toCopy<CompanyDetail>(this);
+            IsReadOnly = !UserPermission.AllowInsert;
+
+            NotifyAllPropertyChanged();
         }
 
         public bool Find(int pk)
@@ -448,7 +448,7 @@ namespace AccountBuddy.BLL
             bool RValue = true;
             lstValidation.Clear();
 
-            
+
             if (string.IsNullOrWhiteSpace(CompanyName))
             {
                 lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Required_Data, nameof(CompanyName)) });
@@ -492,6 +492,10 @@ namespace AccountBuddy.BLL
             return false;
         }
 
+       public static void Init()
+        {
+            _toList = null;
+        }
         #endregion
     }
 }
