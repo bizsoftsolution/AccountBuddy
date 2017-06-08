@@ -20,9 +20,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AccountNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="BankAccountName" Type="nvarchar" MaxLength="50" />
-          <Property Name="LedgerId" Type="int" />
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BankAccountName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CompanyDetail">
           <Key>
@@ -453,7 +453,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LedgerId" Type="int" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TransactionType">
           <Key>
@@ -543,7 +543,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bank_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="Bank" Type="Self.Bank" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -1227,7 +1227,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Supplier_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -1945,9 +1945,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AccountNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BankAccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LedgerId" Type="Int32" />
+          <Property Name="AccountNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BankAccountName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Bank_Ledger" FromRole="Bank" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="CompanyDetail">
@@ -2481,7 +2481,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LedgerId" Type="Int32" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Supplier_Ledger" FromRole="Supplier" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="TransactionType">
@@ -2608,7 +2608,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bank_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
           <End Type="DBFMCGModel.Bank" Role="Bank" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -2872,7 +2872,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Supplier_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
           <End Type="DBFMCGModel.Supplier" Role="Supplier" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
