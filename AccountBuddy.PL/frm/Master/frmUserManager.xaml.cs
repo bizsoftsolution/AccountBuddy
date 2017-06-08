@@ -13,15 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
+using MahApps.Metro.Controls;
 
 namespace AccountBuddy.PL.frm.Master
 {
     /// <summary>
     /// Interaction logic for frmUserManager.xaml
     /// </summary>
-    public partial class frmUserManager : Window
+    public partial class frmUserManager : MetroWindow
     {
-        public  int userId;
+        public  int CompanyId;
 
         public frmUserManager()
         {
@@ -84,13 +85,13 @@ namespace AccountBuddy.PL.frm.Master
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadWindow(userId);
+            LoadWindow(CompanyId);
 
         }
 
         public void LoadWindow(int userId)
         {
-            dgvUsers.ItemsSource = BLL.UserAccount.toList.Where(x => x.UserType.CompanyId == userId).ToList();
+            dgvUsers.ItemsSource = BLL.UserAccount.toList.Where(x => x.UnderCompanyId == userId).ToList();
         }
 
     }

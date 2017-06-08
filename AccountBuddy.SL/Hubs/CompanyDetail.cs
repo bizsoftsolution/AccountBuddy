@@ -128,6 +128,7 @@ namespace AccountBuddy.SL.Hubs
             ua.LoginId = cmp.UserId;
             ua.UserName = cmp.UserId;
             ua.Password = cmp.Password;
+            ua.UnderCompanyId = cmp.Id;
 
             DAL.UserType ut = new DAL.UserType();
             ut.TypeOfUser = BLL.DataKeyValue.Administrator_Key;

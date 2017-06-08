@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 
 namespace AccountBuddy.PL.frm.Master
-{
+{                     
     /// <summary>
     /// Interaction logic for frmCompanySetting.xaml
     /// </summary>
@@ -59,15 +59,26 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
             iProductImage.Source = AppLib.ViewImage(data.Logo);
             iProductImage.Tag = data.Logo;
+            if (data.CompanyType == "Company")
+            {
+                var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
+                dgvWarehouse.ItemsSource = lstCompany;
 
-            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
-            dgvWarehouse.ItemsSource = lstCompany;
-
-            var lstWareHouse = lstCompany.Where(x => x.UnderCompanyId == BLL.UserAccount.User.UserType.CompanyId);
-            dgvDealer.ItemsSource = lstWareHouse;
+                var lstWareHouse = lstCompany.Where(x => x.UnderCompanyId == BLL.UserAccount.User.UserType.CompanyId);
+                dgvDealer.ItemsSource = lstWareHouse;
+            }
+            else
+            {
+                gbxWareHouse.Visibility = Visibility.Collapsed;
+                gbxDealer.Visibility = Visibility.Collapsed;
+                btnUser.Visibility = Visibility.Collapsed;
+                btnDelete.Visibility = Visibility.Collapsed;
+            }
+            
         }
         private void Grid_Refresh()
         {
@@ -248,7 +259,7 @@ namespace AccountBuddy.PL.frm.Master
                 var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
                 frmUserManager f = new frmUserManager();
                 f.LoadWindow(cm.Id);
-                f.userId = cm.Id;
+                f.CompanyId = cm.Id;
                 f.Title = string.Format("Login Users - {0}", cm.CompanyName);
                 f.ShowDialog();
             }
@@ -336,10 +347,36 @@ namespace AccountBuddy.PL.frm.Master
         }
 
 
+
+
+
         #endregion
 
+        private void btnUserDealer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+                frmUserManager f = new frmUserManager();
+                f.LoadWindow(cm.Id);
+                f.CompanyId = cm.Id;
+                f.Title = string.Format("Login Users - {0}", cm.CompanyName);
+                f.ShowDialog();
+            }
+            catch (Exception ex) { }
+        }
 
-
-
+        private void btnUser_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {              
+                frmUserManager f = new frmUserManager();
+                f.LoadWindow(BLL.UserAccount.User.UserType.CompanyId);
+                f.CompanyId = BLL.UserAccount.User.UserType.CompanyId;
+                f.Title = string.Format("Login Users - {0}", BLL.UserAccount.User.UserType.Company.CompanyName);
+                f.ShowDialog();
+            }
+            catch (Exception ex) { }
+        }
     }
 }
