@@ -12,10 +12,27 @@ namespace AccountBuddy.BLL
         #region Fields
         private int _Id;
         private string _Type;
+        private static List<BLL.TransactionType> _tolist;
 
         #endregion
 
         #region Property
+        public static List<BLL.TransactionType> toList
+        {
+            get
+            {
+                if (_tolist == null)
+                {
+                    _tolist = new List<TransactionType>();
+                    _tolist = FMCGHubClient.FMCGHub.Invoke<List<BLL.TransactionType>>("TransactionType_List").Result;
+                }
+                return _tolist;
+            }
+            set
+            {
+                _tolist = value;
+            }
+        }
 
         public int Id
         {

@@ -11,6 +11,30 @@ namespace AccountBuddy.BLL
 {
     public class Product : INotifyPropertyChanged
     {
+        #region Constructor
+
+        public Product()
+        {
+
+        }
+
+        public Product(int ProductId)
+        {
+            Product p = toList.Where(x => x.Id == ProductId).FirstOrDefault();
+            if (p == null) p = new Product();
+            p.toCopy<Product>(this);
+        }
+
+        public Product(string ProductCode)
+        {
+            Product p = toList.Where(x => x.ItemCode == ProductCode).FirstOrDefault();
+            if (p == null) p = new Product();
+            p.toCopy<Product>(this);
+        }
+
+        #endregion
+
+
         #region Fileds
 
         private static ObservableCollection<Product> _toList;
