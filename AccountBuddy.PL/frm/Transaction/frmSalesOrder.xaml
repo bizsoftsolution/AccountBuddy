@@ -48,7 +48,6 @@
                 <Grid Grid.Row="0">
                     <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" VerticalAlignment="Top"  Height="79" >
                         <DatePicker x:Name="dtpDate"  SelectedDate="{Binding SODate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="50,27,10,24" Width="100" FontWeight="Bold"  />
-                        <TextBox x:Name="txtRefNo" Text="{Binding RefNo, Mode=TwoWay}" Width="73" materialDesign:HintAssist.Hint="Ref.Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
                         <ComboBox x:Name="cmbCustomer" Text="{Binding LedgerName}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="330" Height="43" Margin="0,12,0,24">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
@@ -57,6 +56,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
+                        <TextBox x:Name="txtRefNo" Text="{Binding RefNo, Mode=TwoWay}" Width="73" materialDesign:HintAssist.Hint="SO Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
                     </StackPanel>
                 </Grid>
                 <!--#endregion-->
@@ -180,7 +180,7 @@
                         <CheckBox Margin="10" FontWeight="Bold" Width="100">Autoprint</CheckBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <TextBox Text="{Binding SearchText}" Width="100" materialDesign:HintAssist.Hint="Ref.Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold" Height="41"/>
+                        <TextBox Text="{Binding SearchText}" Width="100" materialDesign:HintAssist.Hint="SO Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold" Height="41"/>
                         <Button Margin="10" Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" />
 
                     </StackPanel>
