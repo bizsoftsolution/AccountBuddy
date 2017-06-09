@@ -28,14 +28,13 @@ namespace AccountBuddy.DAL
         public int Id { get; set; }
         public string ProductName { get; set; }
         public string ItemCode { get; set; }
-        public Nullable<int> StockGroupId { get; set; }
-        public Nullable<int> UOMId { get; set; }
-        public Nullable<decimal> PurchaseRate { get; set; }
-        public Nullable<decimal> SellingRate { get; set; }
-        public Nullable<decimal> MRP { get; set; }
-        public Nullable<double> GST { get; set; }
-        public Nullable<double> OpeningStock { get; set; }
-        public Nullable<double> ReOrderLevel { get; set; }
+        public int StockGroupId { get; set; }
+        public int UOMId { get; set; }
+        public decimal PurchaseRate { get; set; }
+        public decimal SellingRate { get; set; }
+        public decimal MRP { get; set; }
+        public double OpeningStock { get; set; }
+        public double ReOrderLevel { get; set; }
         public byte[] ProductImage { get; set; }
     
         public virtual StockGroup StockGroup { get; set; }

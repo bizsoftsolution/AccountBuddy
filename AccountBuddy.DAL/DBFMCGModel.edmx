@@ -197,16 +197,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductName" Type="nvarchar" MaxLength="150" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="StockGroupId" Type="int" />
-          <Property Name="UOMId" Type="int" />
-          <Property Name="PurchaseRate" Type="money" />
-          <Property Name="SellingRate" Type="money" />
-          <Property Name="MRP" Type="money" />
-          <Property Name="GST" Type="float" />
-          <Property Name="OpeningStock" Type="float" />
-          <Property Name="ReOrderLevel" Type="float" />
+          <Property Name="StockGroupId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="PurchaseRate" Type="money" Nullable="false" />
+          <Property Name="SellingRate" Type="money" Nullable="false" />
+          <Property Name="MRP" Type="money" Nullable="false" />
+          <Property Name="OpeningStock" Type="float" Nullable="false" />
+          <Property Name="ReOrderLevel" Type="float" Nullable="false" />
           <Property Name="ProductImage" Type="image" />
         </EntityType>
         <EntityType Name="Purchase">
@@ -384,14 +383,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SOId" Type="bigint" />
-          <Property Name="ProductId" Type="int" />
-          <Property Name="UOMId" Type="int" />
-          <Property Name="Quantity" Type="float" />
-          <Property Name="UnitPrice" Type="money" />
-          <Property Name="DiscountAmount" Type="money" />
-          <Property Name="GSTAmount" Type="money" />
-          <Property Name="Amount" Type="money" />
+          <Property Name="SOId" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="SalesReturn">
           <Key>
@@ -463,9 +462,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FormalName" Type="nvarchar" MaxLength="150" />
-          <Property Name="Symbol" Type="nvarchar" MaxLength="150" />
-          <Property Name="CompanyId" Type="int" />
+          <Property Name="FormalName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Symbol" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -707,7 +706,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_StockGroup">
-          <End Role="StockGroup" Type="Self.StockGroup" Multiplicity="0..1" />
+          <End Role="StockGroup" Type="Self.StockGroup" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StockGroup">
@@ -719,7 +718,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_UOM">
-          <End Role="UOM" Type="Self.UOM" Multiplicity="0..1" />
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -1054,20 +1053,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SalesOrder_TransactionType">
-          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="1" />
-          <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TransactionType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SalesOrder">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SalesOrderDetail_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="SalesOrderDetail" Type="Self.SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -1079,7 +1066,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesOrderDetail_SalesOrder">
-          <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="0..1" />
+          <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="1" />
           <End Role="SalesOrderDetail" Type="Self.SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SalesOrder">
@@ -1091,7 +1078,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesOrderDetail_UOM">
-          <End Role="UOM" Type="Self.UOM" Multiplicity="0..1" />
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
           <End Role="SalesOrderDetail" Type="Self.SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -1223,7 +1210,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UOM_CompanyDetail">
-          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="0..1" />
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
           <End Role="UOM" Type="Self.UOM" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyDetail">
@@ -1513,10 +1500,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_SalesOrder_Ledger" Association="Self.FK_SalesOrder_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
-            <End Role="SalesOrder" EntitySet="SalesOrder" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SalesOrder_TransactionType" Association="Self.FK_SalesOrder_TransactionType">
-            <End Role="TransactionType" EntitySet="TransactionType" />
             <End Role="SalesOrder" EntitySet="SalesOrder" />
           </AssociationSet>
           <AssociationSet Name="FK_SalesOrderDetail_Product" Association="Self.FK_SalesOrderDetail_Product">
@@ -1861,10 +1844,6 @@
             <End Role="SalesDetail" EntitySet="SalesDetails" />
             <End Role="SalesReturnDetail" EntitySet="SalesReturnDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_SalesOrder_TransactionType" Association="DBFMCGModel.FK_SalesOrder_TransactionType">
-            <End Role="TransactionType" EntitySet="TransactionTypes" />
-            <End Role="SalesOrder" EntitySet="SalesOrders" />
-          </AssociationSet>
           <AssociationSet Name="FK_SalesOrderDetail_SalesOrder" Association="DBFMCGModel.FK_SalesOrderDetail_SalesOrder">
             <End Role="SalesOrder" EntitySet="SalesOrders" />
             <End Role="SalesOrderDetail" EntitySet="SalesOrderDetails" />
@@ -2139,16 +2118,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StockGroupId" Type="Int32" />
-          <Property Name="UOMId" Type="Int32" />
-          <Property Name="PurchaseRate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="SellingRate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MRP" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GST" Type="Double" />
-          <Property Name="OpeningStock" Type="Double" />
-          <Property Name="ReOrderLevel" Type="Double" />
+          <Property Name="StockGroupId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="PurchaseRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="SellingRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="MRP" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="OpeningStock" Type="Double" Nullable="false" />
+          <Property Name="ReOrderLevel" Type="Double" Nullable="false" />
           <Property Name="ProductImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="StockGroup" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="Product" ToRole="StockGroup" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="Product" ToRole="UOM" />
@@ -2363,7 +2341,6 @@
           <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_SalesOrder_Ledger" FromRole="SalesOrder" ToRole="Ledger" />
-          <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_SalesOrder_TransactionType" FromRole="SalesOrder" ToRole="TransactionType" />
           <NavigationProperty Name="SalesOrderDetails" Relationship="DBFMCGModel.FK_SalesOrderDetail_SalesOrder" FromRole="SalesOrder" ToRole="SalesOrderDetail" />
         </EntityType>
         <EntityType Name="SalesOrderDetail">
@@ -2371,14 +2348,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SOId" Type="Int64" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="UOMId" Type="Int32" />
-          <Property Name="Quantity" Type="Double" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SOId" Type="Int64" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_SalesOrderDetail_Product" FromRole="SalesOrderDetail" ToRole="Product" />
           <NavigationProperty Name="SalesDetails" Relationship="DBFMCGModel.FK_SalesDetail_SalesOrderDetail" FromRole="SalesOrderDetail" ToRole="SalesDetail" />
           <NavigationProperty Name="SalesOrder" Relationship="DBFMCGModel.FK_SalesOrderDetail_SalesOrder" FromRole="SalesOrderDetail" ToRole="SalesOrder" />
@@ -2464,7 +2441,6 @@
           <NavigationProperty Name="Purchases" Relationship="DBFMCGModel.FK_Purchase_TransactionType" FromRole="TransactionType" ToRole="Purchase" />
           <NavigationProperty Name="PurchaseReturns" Relationship="DBFMCGModel.FK_PurchaseReturn_TransactionType" FromRole="TransactionType" ToRole="PurchaseReturn" />
           <NavigationProperty Name="Sales" Relationship="DBFMCGModel.FK_Sale_TransactionType" FromRole="TransactionType" ToRole="Sale" />
-          <NavigationProperty Name="SalesOrders" Relationship="DBFMCGModel.FK_SalesOrder_TransactionType" FromRole="TransactionType" ToRole="SalesOrder" />
           <NavigationProperty Name="SalesReturns" Relationship="DBFMCGModel.FK_SalesReturn_TransactionType" FromRole="TransactionType" ToRole="SalesReturn" />
         </EntityType>
         <EntityType Name="UOM">
@@ -2472,9 +2448,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormalName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Symbol" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="FormalName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="UOM" ToRole="CompanyDetail" />
           <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="UOM" ToRole="Product" />
           <NavigationProperty Name="PurchaseDetails" Relationship="DBFMCGModel.FK_PurchaseDetail_UOM" FromRole="UOM" ToRole="PurchaseDetail" />
@@ -2614,7 +2590,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UOM_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
           <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyDetail">
@@ -2914,7 +2890,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_StockGroup">
-          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="1" />
           <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StockGroup">
@@ -2926,7 +2902,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_UOM">
-          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
           <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -2986,7 +2962,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesOrderDetail_Product">
-          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesOrderDetail" Role="SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -3201,20 +3177,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SalesOrder_TransactionType">
-          <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="1" />
-          <End Type="DBFMCGModel.SalesOrder" Role="SalesOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TransactionType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SalesOrder">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SalesOrderDetail_SalesOrder">
-          <End Type="DBFMCGModel.SalesOrder" Role="SalesOrder" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.SalesOrder" Role="SalesOrder" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesOrderDetail" Role="SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SalesOrder">
@@ -3226,7 +3190,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesOrderDetail_UOM">
-          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesOrderDetail" Role="SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -3536,7 +3500,6 @@
                 <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
                 <ScalarProperty Name="ReOrderLevel" ColumnName="ReOrderLevel" />
                 <ScalarProperty Name="OpeningStock" ColumnName="OpeningStock" />
-                <ScalarProperty Name="GST" ColumnName="GST" />
                 <ScalarProperty Name="MRP" ColumnName="MRP" />
                 <ScalarProperty Name="SellingRate" ColumnName="SellingRate" />
                 <ScalarProperty Name="PurchaseRate" ColumnName="PurchaseRate" />

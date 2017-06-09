@@ -92,7 +92,7 @@ namespace AccountBuddy.SL.Hubs
 
                     d.toCopy<BLL.SalesReturn>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
-                    // P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     foreach (var d_pod in d.SalesReturnDetails)
                     {
                         BLL.SalesReturnDetail b_pod = new BLL.SalesReturnDetail();
@@ -118,8 +118,8 @@ namespace AccountBuddy.SL.Hubs
                 {
                     BLL.SalesReturn P = new BLL.SalesReturn();
                     d.toCopy<BLL.SalesReturn>(P);
-                    P.LedgerName = d.Ledger.LedgerName;
-                    //P.TransactionType = d.TransactionType.Type;
+                  //  P.LedgerName = d.Ledger.LedgerName;
+                  //  P.TransactionType = d.TransactionType.Type;
                     foreach (var d_pod in d.SalesReturnDetails)
                     {
                         BLL.SalesReturnDetail b_pod = new BLL.SalesReturnDetail();

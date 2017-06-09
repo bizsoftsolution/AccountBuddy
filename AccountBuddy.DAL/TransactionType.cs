@@ -20,7 +20,6 @@ namespace AccountBuddy.DAL
             this.Purchases = new HashSet<Purchase>();
             this.PurchaseReturns = new HashSet<PurchaseReturn>();
             this.Sales = new HashSet<Sale>();
-            this.SalesOrders = new HashSet<SalesOrder>();
             this.SalesReturns = new HashSet<SalesReturn>();
         }
     
@@ -33,8 +32,6 @@ namespace AccountBuddy.DAL
         public virtual ICollection<PurchaseReturn> PurchaseReturns { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sales { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SalesOrder> SalesOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalesReturn> SalesReturns { get; set; }
     }
