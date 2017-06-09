@@ -14,8 +14,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                P.CompanyId = Caller.CompanyId;
-
+               
                 DAL.SalesReturn d = DB.SalesReturns.Where(x => x.Id == P.Id).FirstOrDefault();
 
                 if (d == null)
