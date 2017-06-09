@@ -45,10 +45,7 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbUOM.DisplayMemberPath = "Symbol";
             cmbUOM.SelectedValuePath = "Id";
 
-            cmbSORefNo.ItemsSource = BLL.Sale.SPendingList;
-            cmbSORefNo.DisplayMemberPath = "RefNo";
-            cmbSORefNo.SelectedValuePath = "Id";
-
+            
             //CollectionViewSource.GetDefaultView(cmbSORefNo.ItemsSource).Filter = PORefNo_Filter;
 
 
@@ -297,8 +294,8 @@ namespace AccountBuddy.PL.frm.Transaction
                     foreach (var sod in SO.SDetails)
                     {
                         data.SDetail.SODId = sod.Id;
-                        data.SDetail.ProductId = sod.ProductId.Value;
-                        data.SDetail.Quantity = sod.Quantity.Value;
+                        data.SDetail.ProductId = sod.ProductId;
+                        data.SDetail.Quantity = sod.Quantity;
                         data.SDetail.UnitPrice = sod.UnitPrice;
 
                         data.SaveDetail();

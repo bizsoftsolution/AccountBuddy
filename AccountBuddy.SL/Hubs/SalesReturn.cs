@@ -9,31 +9,7 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
         #region SalesReturn
-        #region list
-        public static List<BLL.SalesReturn> _SRPendingList;
-        public static List<BLL.SalesReturn> SRPendingList
-        {
-            get
-            {
-                if (_SRPendingList == null)
-                {
-                    _SRPendingList = new List<BLL.SalesReturn>();
-                    foreach (var d1 in DB.SalesReturns.Where(x => x.TransactionType.Type == "Credit").OrderBy(x => x.RefNo).ToList())
-                    {
-                        BLL.SalesReturn d2 = new BLL.SalesReturn();
-                        d1.toCopy<BLL.SalesReturn>(d2);
-                        _SRPendingList.Add(d2);
-                    }
-
-                }
-                return _SRPendingList;
-            }
-            set
-            {
-                _SRPendingList = value;
-            }
-        }
-        #endregion
+        
         public bool SalesReturn_Save(BLL.SalesReturn P)
         {
             try
@@ -138,11 +114,7 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-        public List<BLL.SalesReturn> SalesReturn_SRPendingList()
-        {
-            return SRPendingList.Where(x => x.CompanyId == Caller.CompanyId).ToList();
-        }
-
+        
         public bool Find_SRRef(string RefNo, BLL.SalesReturn PO)
 
         {

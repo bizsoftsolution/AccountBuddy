@@ -12,7 +12,6 @@ namespace AccountBuddy.BLL
     public class PurchaseReturn:INotifyPropertyChanged
     {
         #region Field
-        private static ObservableCollection<PurchaseReturn> _PRPendingList;
 
         private long _Id;
         private DateTime? _PRDate;
@@ -371,24 +370,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public static ObservableCollection<PurchaseReturn> PRPendingList
-        {
-            get
-            {
-                if (_PRPendingList == null)
-                {
-                    _PRPendingList = new ObservableCollection<PurchaseReturn>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseReturn>>("PurchaseReturn_PRPendingList").Result;
-                    _PRPendingList = new ObservableCollection<PurchaseReturn>(l1);
-                }
-                return _PRPendingList;
-            }
-            set
-            {
-                _PRPendingList = value;
-            }
-        }
-
+        
         #endregion
 
         #region Property Changed

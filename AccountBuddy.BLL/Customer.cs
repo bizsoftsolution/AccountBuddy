@@ -14,8 +14,6 @@ namespace AccountBuddy.BLL
         #region Fileds
 
         private static ObservableCollection<Customer> _toList;
-        private static List<string> _CstomerList;
-        private static List<string> _ACTypeList;
 
         private int _Id;
         private int  _LedgerId;

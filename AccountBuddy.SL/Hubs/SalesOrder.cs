@@ -96,7 +96,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.SalesOrder d = DB.SalesOrders.Where(x => x.RefNo == SearchText).FirstOrDefault();
+                DAL.SalesOrder d = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
                 DB.Entry(d).Reload();
                 if (d != null)
                 {
@@ -162,7 +162,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_SORef(string RefNo, BLL.SalesOrder PO)
 
         {
-            DAL.SalesOrder d = DB.SalesOrders.Where(x => x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.SalesOrder d = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
             if (d == null)
             {
                 return false;

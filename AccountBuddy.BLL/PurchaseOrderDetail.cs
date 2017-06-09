@@ -66,7 +66,7 @@ namespace AccountBuddy.BLL
                 if (_ProductId != value)
                 {
                     _ProductId = value;
-                    if (value != null) SetProduct(new Product(_ProductId));
+                    if (value != 0) SetProduct(new Product(_ProductId));
                     NotifyPropertyChanged(nameof(ProductId));
                 }
             }

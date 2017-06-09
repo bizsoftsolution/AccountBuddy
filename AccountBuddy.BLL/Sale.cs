@@ -12,20 +12,19 @@ namespace AccountBuddy.BLL
     public class Sale : INotifyPropertyChanged
     {
         #region Field
-        private static ObservableCollection<Sale> _SPendingList;
 
         private long _Id;
-        private DateTime? _SalesDate;
+        private DateTime _SalesDate;
         private string _RefNo;        
-        private int? _LedgerId;
-        private int? _TransactionTypeId;
-        private decimal? _ItemAmount;
-        private decimal? _DiscountAmount;
-        private decimal? _GSTAmount;
-        private decimal? _ExtraAmount;
-        private decimal? _TotalAmount;
+        private int _LedgerId;
+        private int _TransactionTypeId;
+        private decimal _ItemAmount;
+        private decimal _DiscountAmount;
+        private decimal _GSTAmount;
+        private decimal _ExtraAmount;
+        private decimal _TotalAmount;
         private string _Narration;
-        private int? _CompanyId;
+
         private decimal? _PaidAmount;
         private decimal? _PayAmount;
         private string _LedgerName;
@@ -57,7 +56,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public DateTime? SalesDate
+        public DateTime SalesDate
         {
             get
             {
@@ -87,7 +86,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? LedgerId
+        public int LedgerId
         {
             get
             {
@@ -102,7 +101,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? TransactionTypeId
+        public int TransactionTypeId
         {
             get
             {
@@ -117,11 +116,10 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? ItemAmount
+        public decimal ItemAmount
         {
             get
             {
-                if (_ItemAmount == null) _ItemAmount = 0;
                 return _ItemAmount;
             }
             set
@@ -130,15 +128,14 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                    if (value != null) SetAmount();
+                    if (value != 0) SetAmount();
                 }
             }
         }
-        public decimal? DiscountAmount
+        public decimal DiscountAmount
         {
             get
-            {
-                if (_DiscountAmount == null) _DiscountAmount = 0;
+            {                
                 return _DiscountAmount;
             }
             set
@@ -147,15 +144,15 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                    if (value != null) SetAmount();
+                    if (value != 0) SetAmount();
                 }
             }
         }
-        public decimal? GSTAmount
+        public decimal GSTAmount
         {
             get
             {
-                if (_GSTAmount == null) _GSTAmount = 0;
+                if (_GSTAmount == 0) _GSTAmount = 0;
                 return _GSTAmount;
             }
             set
@@ -167,11 +164,10 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? ExtraAmount
+        public decimal ExtraAmount
         {
             get
             {
-                if (_ExtraAmount == null) _ExtraAmount = 0;
                 return _ExtraAmount;
             }
             set
@@ -180,15 +176,14 @@ namespace AccountBuddy.BLL
                 {
                     _ExtraAmount = value;
                     NotifyPropertyChanged(nameof(ExtraAmount));
-                    if (value != null) SetAmount();
+                    if (value != 0) SetAmount();
                 }
             }
         }
-        public decimal? TotalAmount
+        public decimal TotalAmount
         {
             get
             {
-                if (_TotalAmount == null) _TotalAmount = 0;
                 return _TotalAmount;
             }
             set
@@ -216,21 +211,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? CompanyId
-        {
-            get
-            {
-                return _CompanyId;
-            }
-            set
-            {
-                if (_CompanyId != value)
-                {
-                    _CompanyId = value;
-                    NotifyPropertyChanged(nameof(CompanyId));
-                }
-            }
-        }
+
         public decimal? PaidAmount
         {
             get
@@ -253,9 +234,9 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_TotalAmount == null) return null;
-                if (_PaidAmount == null) return _TotalAmount.Value;
-                return _TotalAmount.Value - _PaidAmount.Value;
+                if (_TotalAmount == 0) return null;
+                if (_PaidAmount == null) return _TotalAmount;
+                return _TotalAmount - _PaidAmount.Value;
             }
         }
         public decimal? PayAmount
@@ -372,24 +353,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public static ObservableCollection<Sale> SPendingList
-        {
-            get
-            {
-                if (_SPendingList == null)
-                {
-                    _SPendingList = new ObservableCollection<Sale>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<Sale>>("Sales_SPendingList").Result;
-                    _SPendingList = new ObservableCollection<Sale>(l1);
-                }
-                return _SPendingList;
-            }
-            set
-            {
-                _SPendingList = value;
-            }
-        }
-
+      
         #endregion
 
         #region Property Changed
@@ -507,8 +471,8 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
-            TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+            GSTAmount = (ItemAmount - DiscountAmount ) * Common.AppLib.GSTPer;
+            TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;
         }
         public bool FindRefNo()
         {
