@@ -8,34 +8,7 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Purchase Order
-
-        #region list
-        public static List<BLL.PurchaseOrder> _POPendingList;
-        public static List<BLL.PurchaseOrder> POPendingList
-        {
-            get
-            {
-                if (_POPendingList == null)
-                {
-                    _POPendingList = new List<BLL.PurchaseOrder>();
-                    foreach (var d1 in DB.PurchaseOrders.OrderBy(x => x.RefNo).ToList())
-                    {
-                        BLL.PurchaseOrder d2 = new BLL.PurchaseOrder();
-                        d1.toCopy<BLL.PurchaseOrder>(d2);
-                        _POPendingList.Add(d2);
-                    }
-
-                }
-                return _POPendingList;
-            }
-            set
-            {
-                _POPendingList = value;
-            }
-        }
-        #endregion
-
+        #region Purchase Order       
 
         public bool PurchaseOrder_Save(BLL.PurchaseOrder PO)
         {
@@ -74,17 +47,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
-
-                BLL.PurchaseOrder B_PO = POPendingList.Where(x => x.Id == PO.Id).FirstOrDefault();
-
-                if (B_PO == null)
-                {
-                    B_PO = new BLL.PurchaseOrder();
-                    POPendingList.Add(B_PO);
-                }
-
-                PO.toCopy<BLL.PurchaseOrder>(B_PO);
-                Clients.Clients(OtherLoginClientsOnGroup).PurchaseOrder_POPendingSave(B_PO);
+                
 
                 return true;
             }
@@ -98,7 +61,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.RefNo == SearchText).FirstOrDefault();
+                DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
                 DB.Entry(d).Reload();
                 if (d != null)
                 {
@@ -143,12 +106,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.DELETE);
 
-                    BLL.PurchaseOrder B_PO = POPendingList.Where(x => x.Id == PO.Id).FirstOrDefault();
-                    if (B_PO != null)
-                    {
-                        Clients.Clients(OtherLoginClientsOnGroup).PurchaseOrder_POPendingDelete(B_PO.Id);
-                        POPendingList.Remove(B_PO);
-                    }
+                   
                 }
                 return true;
             }
@@ -158,13 +116,20 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.PurchaseOrder> PurchaseOrder_POPendingList()
         {
-            return POPendingList;
+            return DB.PurchaseOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
+                                    .ToList()
+                                    .Select(x=> PurchaseOrder_DALtoBLL(x) )
+                                    .ToList() ;
         }
 
+        public BLL.PurchaseOrder PurchaseOrder_DALtoBLL(DAL.PurchaseOrder d)
+        {
+            return d.toCopy<BLL.PurchaseOrder>(new BLL.PurchaseOrder());
+        }
         public bool Find_PORef(string RefNo, BLL.PurchaseOrder PO)
 
         {
-            DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.Ledger.AccountGroup.CompanyId==Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
             if (d == null)
             {
                 return false;
