@@ -26,7 +26,7 @@ namespace AccountBuddy.BLL
         private decimal? _ExtraAmount;
         private decimal? _TotalAmount;
         private string _Narration;
-        private int? _CompanyId;
+        
         private decimal? _PaidAmount;        
         private decimal? _PayAmount;
         private string _LedgerName;
@@ -231,21 +231,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? CompanyId
-        {
-            get
-            {
-                return _CompanyId;
-            }
-            set
-            {
-                if (_CompanyId != value)
-                {
-                    _CompanyId = value;
-                    NotifyPropertyChanged(nameof(CompanyId));
-                }
-            }
-        }
+        
 
         public decimal? PaidAmount
         {

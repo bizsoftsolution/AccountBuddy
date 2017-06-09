@@ -30,7 +30,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
             cmbCustomer.ItemsSource = BLL.Customer.toList;
             cmbCustomer.DisplayMemberPath = "Ledger.LedgerName";
-            cmbCustomer.SelectedValuePath = "Ledger.LedgerId";
+            cmbCustomer.SelectedValuePath = "Ledger.Id";
 
             cmbPType.ItemsSource = BLL.TransactionType.toList;
             cmbPType.DisplayMemberPath = "Type";
@@ -167,29 +167,12 @@ data.Clear();
             {
                 data.SaveDetail();
             }
-        }
-
-        private void cmbCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SORefNo_Filter(cmbCustomer.SelectedItem as BLL.Customer);
-        }
+        }       
 
         #endregion
 
         #region Methods
-        public bool SORefNo_Filter(object obj)
-        {
-            try
-            {
-                BLL.SalesReturn PO = obj as BLL.SalesReturn;
-                BLL.Customer S = cmbCustomer.SelectedItem as BLL.Customer;
-
-                return PO.LedgerId == S.Id;
-            }
-            catch (Exception ex) { }
-            return false;
-
-        }
+        
         #endregion
     }
 }
