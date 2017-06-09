@@ -7,14 +7,14 @@ namespace AccountBuddy.BLL
     {
         #region Field
         private long _Id;
-        private long? _POId;
-        private int? _ProductId;
-        private int? _UOMId;
-        private double? _Quantity;
-        private decimal? _UnitPrice;
-        private decimal? _DiscountAmount;
-        private decimal? _GSTAmount;
-        private decimal? _Amount;
+        private long _POId;
+        private int _ProductId;
+        private int _UOMId;
+        private double _Quantity;
+        private decimal _UnitPrice;
+        private decimal _DiscountAmount;
+        private decimal _GSTAmount;
+        private decimal _Amount;
 
         private string _ItemCode;
         private string _ProductName;

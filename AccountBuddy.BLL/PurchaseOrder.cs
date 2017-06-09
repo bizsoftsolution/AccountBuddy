@@ -17,7 +17,7 @@ namespace AccountBuddy.BLL
         private long _Id;
         private DateTime? _PODate;
         private string _RefNo;
-        private int? _LedgerId;
+        private int _LedgerId;
         private decimal? _ItemAmount;
         private decimal? _DiscountAmount;
         private decimal? _GSTAmount;
@@ -102,7 +102,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public int? LedgerId
+        public int LedgerId
         {
             get
             {
@@ -233,21 +233,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string TransactionType
-        {
-            get
-            {
-                return _TransactionType;
-            }
-            set
-            {
-                if (_TransactionType != value)
-                {
-                    _TransactionType = value;
-                    NotifyPropertyChanged(nameof(TransactionType));
-                }
-            }
-        }
+        
 
         public string SearchText
         {
