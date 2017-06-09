@@ -23,6 +23,7 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.Purchase();
                     DB.Purchases.Add(d);
 
+
                     P.toCopy<DAL.Purchase>(d);
 
                     foreach (var b_pod in P.PDetails)
@@ -32,6 +33,48 @@ namespace AccountBuddy.SL.Hubs
                         d.PurchaseDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
+
+                    DAL.Journal j = new DAL.Journal();
+                    j.EntryNo = string.Format("PUR-{0}", P.RefNo);
+                    j.JournalDate = P.PurchaseDate;                    
+                    DB.Journals.Add(j);
+
+                    DAL.JournalDetail jD = new DAL.JournalDetail();                   
+                    if(P.TransactionType=="Cash")
+                    {                        
+                        jD.LedgerId = DB.DataKeyValues.Where(x => x.CompanyId == Caller.CompanyId && x.DataKey == BLL.DataKeyValue.CashLedger_Key).FirstOrDefault().DataValue;
+                    }
+                    else
+                    {
+                        jD.LedgerId = P.LedgerId;
+                    }
+                    jD.Particulars = "Purchase";
+                    jD.CrAmt = P.TotalAmount;
+                    DB.JournalDetails.Add(jD);
+                    DB.SaveChanges();
+
+                    jD.JournalId = j.Id;
+                    jD.LedgerId = DB.Ledgers.Where(x => x.LedgerName == BLL.DataKeyValue.PurchaseAccount_Key).Select(x => x.Id).FirstOrDefault();
+                    jD.Particulars = "Purchase Account";
+                    jD.DrAmt = P.GSTAmount;
+                    DB.JournalDetails.Add(jD);
+                    DB.SaveChanges();
+
+                    jD.JournalId = j.Id;
+                    jD.LedgerId = DB.Ledgers.Where(x => x.LedgerName == BLL.DataKeyValue.Output_Tax_Ledger_Key).Select(x => x.Id).FirstOrDefault();
+                    jD.Particulars = "Purchase Tax";
+                    jD.DrAmt = P.GSTAmount;
+                    DB.JournalDetails.Add(jD);
+                    DB.SaveChanges();
+
+                    jD.JournalId = j.Id;
+                    jD.LedgerId = DB.Ledgers.Where(x => x.LedgerName == BLL.DataKeyValue.Profit_Loss_Ledger_Key).Select(x => x.Id).FirstOrDefault();
+                    jD.Particulars = "Extras";
+                    jD.DrAmt = P.ExtraAmount;
+                    DB.JournalDetails.Add(jD);
+                    DB.SaveChanges();
+
+                    j.JournalDetails.Add(jD);
 
                     LogDetailStore(P, LogDetailType.INSERT);
                 }
