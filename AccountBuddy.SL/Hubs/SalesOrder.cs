@@ -40,8 +40,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                SO.CompanyId = Caller.CompanyId;
-
+                
                 DAL.SalesOrder d = DB.SalesOrders.Where(x => x.Id == SO.Id).FirstOrDefault();
 
                 if (d == null)
@@ -104,7 +103,6 @@ namespace AccountBuddy.SL.Hubs
 
                     d.toCopy<BLL.SalesOrder>(SO);
                     SO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
-                    SO.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     foreach (var d_pod in d.SalesOrderDetails)
                     {
                         BLL.SalesOrderDetail b_pod = new BLL.SalesOrderDetail();
@@ -131,7 +129,6 @@ namespace AccountBuddy.SL.Hubs
                     BLL.SalesOrder SO = new BLL.SalesOrder();
                     d.toCopy<BLL.SalesOrder>(SO);
                     SO.LedgerName = d.Ledger.LedgerName;
-                    SO.TransactionType = d.TransactionType.Type;
                     foreach (var d_pod in d.SalesOrderDetails)
                     {
                         BLL.SalesOrderDetail b_pod = new BLL.SalesOrderDetail();

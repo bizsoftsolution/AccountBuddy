@@ -19,7 +19,6 @@ namespace AccountBuddy.BLL
         private string _RefNo;
         private string _SONo;
         private int? _LedgerId;
-        private int? _TransactionTypeId;
         private decimal? _ItemAmount;
         private decimal? _DiscountAmount;
         private decimal? _GSTAmount;
@@ -29,7 +28,6 @@ namespace AccountBuddy.BLL
         private int? _CompanyId;
 
         private string _LedgerName;
-        private string _TransactionType;
         private string _AmountInwords;
 
         private string _SearchText;
@@ -133,21 +131,6 @@ namespace AccountBuddy.BLL
                 {
                     _LedgerId = value;
                     NotifyPropertyChanged(nameof(LedgerId));
-                }
-            }
-        }
-        public int? TransactionTypeId
-        {
-            get
-            {
-                return _TransactionTypeId;
-            }
-            set
-            {
-                if (_TransactionTypeId != value)
-                {
-                    _TransactionTypeId = value;
-                    NotifyPropertyChanged(nameof(TransactionTypeId));
                 }
             }
         }
@@ -281,22 +264,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string TransactionType
-        {
-            get
-            {
-                return _TransactionType;
-            }
-            set
-            {
-                if (_TransactionType != value)
-                {
-                    _TransactionType = value;
-                    NotifyPropertyChanged(nameof(TransactionType));
-                }
-            }
-        }
-
+  
         public string SearchText
         {
             get
@@ -397,8 +365,8 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new SalesOrder().toCopy<SalesOrder>(this);
-            this.SODetail = new SalesOrderDetail();
-            this.SODetails = new ObservableCollection<SalesOrderDetail>();
+            _SODetail = new SalesOrderDetail();
+            _SODetails = new ObservableCollection<SalesOrderDetail>();
 
             SODate = DateTime.Now;
 

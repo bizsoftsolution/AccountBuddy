@@ -92,18 +92,14 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.RefNo == null)
             {
-                MessageBox.Show("Enter Reference No");
+                MessageBox.Show("Enter PO Code");
                 txtRefNo.Focus();
             }
-            else if (data.LedgerName == null)
+            else if (data.LedgerId == 0)
             {
                 MessageBox.Show("Enter Supplier");
                 
-            }
-            else if (data.TransactionTypeId == null)
-            {
-                MessageBox.Show("Enter Transaction Type");
-            }
+            }            
             else if (data.PODetails.Count == 0)
             {
                 MessageBox.Show("Enter Product Details");

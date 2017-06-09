@@ -137,7 +137,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return (OpeningStock ?? 0 + PQty ?? 0 + SRQty ?? 0) - (SQty ?? 0 + PRQty ?? 0);
+                return (OpeningStock  + PQty?? 0 + SRQty??0 ) - (SQty??0  + PRQty??0);
             }
         }
 
@@ -158,15 +158,15 @@ namespace AccountBuddy.BLL
         private int _Id;
         private string _ProductName;
         private StockGroup _StockGroup;
-        private int? _StockGroupId;
+        private int _StockGroupId;
         private string _ItemCode;
-        private int? _UOMId;
+        private int _UOMId;
         private UOM _UOM;
-        private decimal? _PurchaseRate;
-        private decimal? _SellingRate;
-        private decimal? _MRP;        
-        private double? _OpeningStock;
-        private double? _ReOrderLevel;
+        private decimal _PurchaseRate;
+        private decimal _SellingRate;
+        private decimal _MRP;        
+        private double _OpeningStock;
+        private double _ReOrderLevel;
 
         private byte[] _ProductImage;
 
@@ -289,7 +289,7 @@ namespace AccountBuddy.BLL
             }
         }
         
-        public int? StockGroupId
+        public int StockGroupId
         {
             get
             {
@@ -321,7 +321,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? UOMId
+        public int UOMId
         {
             get
             {
@@ -337,7 +337,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? PurchaseRate
+        public decimal PurchaseRate
         {
             get
             {
@@ -353,7 +353,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? SellingRate
+        public decimal SellingRate
         {
             get
             {
@@ -368,7 +368,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? MRP
+        public decimal MRP
         {
             get
             {
@@ -385,7 +385,7 @@ namespace AccountBuddy.BLL
             }
         }
         
-        public double? OpeningStock
+        public double OpeningStock
         {
             get
             {
@@ -401,7 +401,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public double? ReOrderLevel
+        public double ReOrderLevel
         {
             get
             {

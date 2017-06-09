@@ -17,19 +17,15 @@ namespace AccountBuddy.BLL
         private long _Id;
         private DateTime? _PODate;
         private string _RefNo;
-        private string _InvoiceNo;
         private int? _LedgerId;
-        private int? _TransactionTypeId;
         private decimal? _ItemAmount;
         private decimal? _DiscountAmount;
         private decimal? _GSTAmount;
         private decimal? _Extras;
         private decimal? _TotalAmount;
         private string _Narration;
-        private int? _CompanyId;
 
-        private string _LedgerName;
-        private string _TransactionType;
+        private string _LedgerName;        
         private string _AmountInwords;
 
         private string _SearchText;
@@ -105,21 +101,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string InvoiceNo
-        {
-            get
-            {
-                return _InvoiceNo;
-            }
-            set
-            {
-                if (_InvoiceNo != value)
-                {
-                    _InvoiceNo = value;
-                    NotifyPropertyChanged(nameof(InvoiceNo));
-                }
-            }
-        }
+
         public int? LedgerId
         {
             get
@@ -135,21 +117,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? TransactionTypeId
-        {
-            get
-            {
-                return _TransactionTypeId;
-            }
-            set
-            {
-                if (_TransactionTypeId != value)
-                {
-                    _TransactionTypeId = value;
-                    NotifyPropertyChanged(nameof(TransactionTypeId));
-                }
-            }
-        }
+
         public decimal? ItemAmount
         {
             get
@@ -265,22 +233,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string TransactionType
-        {
-            get
-            {
-                return _TransactionType;
-            }
-            set
-            {
-                if (_TransactionType != value)
-                {
-                    _TransactionType = value;
-                    NotifyPropertyChanged(nameof(TransactionType));
-                }
-            }
-        }
-
         public string SearchText
         {
             get

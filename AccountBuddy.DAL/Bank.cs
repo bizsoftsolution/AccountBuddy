@@ -17,7 +17,7 @@ namespace AccountBuddy.DAL
         public int Id { get; set; }
         public string AccountNo { get; set; }
         public string BankAccountName { get; set; }
-        public int LedgerId { get; set; }
+        public Nullable<int> LedgerId { get; set; }
     
         public virtual Ledger Ledger { get; set; }
     }

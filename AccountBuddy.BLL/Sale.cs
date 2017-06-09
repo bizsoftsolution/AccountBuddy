@@ -440,8 +440,8 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new Sale().toCopy<Sale>(this);
-            this.SDetail = new SalesDetail();
-            this.SDetails = new ObservableCollection<SalesDetail>();
+            _SDetail = new SalesDetail();
+           _SDetails = new ObservableCollection<SalesDetail>();
 
             SalesDate = DateTime.Now;
 
