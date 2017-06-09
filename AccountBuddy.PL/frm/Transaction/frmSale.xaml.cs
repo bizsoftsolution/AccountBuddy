@@ -29,9 +29,9 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            cmbCustomer.ItemsSource = BLL.Ledger.toList;
-            cmbCustomer.DisplayMemberPath = "LedgerName";
-            cmbCustomer.SelectedValuePath = "Id";
+            cmbCustomer.ItemsSource = BLL.Customer.toList;
+            cmbCustomer.DisplayMemberPath = "Ledger.LedgerName";
+            cmbCustomer.SelectedValuePath = "Ledger.Id";
 
             cmbPType.ItemsSource = BLL.TransactionType.toList;
             cmbPType.DisplayMemberPath = "Type";
@@ -46,8 +46,6 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbUOM.SelectedValuePath = "Id";
 
             
-            //CollectionViewSource.GetDefaultView(cmbSORefNo.ItemsSource).Filter = PORefNo_Filter;
-
 
             data.Clear();
 
@@ -57,15 +55,10 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (data.SDetail.ProductId == null)
+            if (data.SDetail.ProductId == 0)
             {
                 MessageBox.Show("Empty Record");
-            }
-            else if (data.SDetail.Quantity > BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault())
-            {
-                var avst = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
-                MessageBox.Show("Available Stock ", avst.ToString());
-            }
+            }            
             else
             {
                 data.SaveDetail();
@@ -103,12 +96,12 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show("Enter Reference No");
 
             }
-            else if (data.LedgerName == null)
+            else if (data.LedgerId == 0)
             {
                 MessageBox.Show("Enter Supplier");
 
             }
-            else if (data.TransactionTypeId == null)
+            else if (data.TransactionTypeId == 0)
             {
                 MessageBox.Show("Enter Transaction Type");
             }
@@ -278,58 +271,11 @@ namespace AccountBuddy.PL.frm.Transaction
             }
         }
 
-        private void cmbLedger_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            PORefNo_Refresh();
-        }
-
-        private void cmbSORefNo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                BLL.Sale SO = cmbSORefNo.SelectedItem as BLL.Sale;
-                SO.SearchText = SO.RefNo;
-                if (SO.Find())
-                {
-                    foreach (var sod in SO.SDetails)
-                    {
-                        data.SDetail.SODId = sod.Id;
-                        data.SDetail.ProductId = sod.ProductId;
-                        data.SDetail.Quantity = sod.Quantity;
-                        data.SDetail.UnitPrice = sod.UnitPrice;
-
-                        data.SaveDetail();
-                    }
-                }
-
-            }
-            catch (Exception EX) { }
-        }
-
-        #endregion
+       
+         #endregion
 
         #region Methods
-        public bool PORefNo_Filter(object obj)
-        {
-            try
-            {
-                BLL.Sale SO = obj as BLL.Sale;
-                BLL.Ledger S = cmbCustomer.SelectedItem as BLL.Ledger;
-
-                return SO.LedgerId == S.Id;
-            }
-            catch (Exception ex) { }
-            return false;
-
-        }
-        public void PORefNo_Refresh()
-        {
-            try
-            {
-                CollectionViewSource.GetDefaultView(cmbSORefNo.ItemsSource).Refresh();
-            }
-            catch (Exception ex) { };
-        }
+       
         #endregion
 
         private void cmbCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
