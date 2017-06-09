@@ -21,20 +21,17 @@ namespace AccountBuddy.DAL
         }
     
         public long Id { get; set; }
-        public Nullable<System.DateTime> PODate { get; set; }
+        public System.DateTime PODate { get; set; }
         public string RefNo { get; set; }
-        public string PONo { get; set; }
-        public Nullable<int> LedgerId { get; set; }
-        public Nullable<int> TransactionTypeId { get; set; }
-        public Nullable<decimal> ItemAmount { get; set; }
-        public Nullable<decimal> DiscountAmount { get; set; }
-        public Nullable<decimal> GSTAmount { get; set; }
-        public Nullable<decimal> Extras { get; set; }
-        public Nullable<decimal> TotalAmount { get; set; }
+        public int LedgerId { get; set; }
+        public decimal ItemAmount { get; set; }
+        public decimal DiscountAmount { get; set; }
+        public decimal GSTAmount { get; set; }
+        public decimal Extras { get; set; }
+        public decimal TotalAmount { get; set; }
         public string Narration { get; set; }
     
         public virtual Ledger Ledger { get; set; }
-        public virtual TransactionType TransactionType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
     }

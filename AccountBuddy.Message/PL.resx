@@ -159,7 +159,19 @@
   <data name="Login_Warehouse_Validation" xml:space="preserve">
     <value>Enter warehouse !</value>
   </data>
+  <data name="Product_Available_Stock" xml:space="preserve">
+    <value>Available Stock {0}</value>
+  </data>
+  <data name="Product_Not_In_Stock" xml:space="preserve">
+    <value>UnAvailable Stock</value>
+  </data>
   <data name="Saved_Alert" xml:space="preserve">
     <value>Saved Successfully</value>
+  </data>
+  <data name="Transaction_Empty_Product" xml:space="preserve">
+    <value>Enter Product</value>
+  </data>
+  <data name="Transaction_ItemDetails_Validation" xml:space="preserve">
+    <value>Enter Product Detail</value>
   </data>
 </root>

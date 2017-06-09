@@ -397,8 +397,8 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new SalesOrder().toCopy<SalesOrder>(this);
-            this.SODetail = new SalesOrderDetail();
-            this.SODetails = new ObservableCollection<SalesOrderDetail>();
+            _SODetail = new SalesOrderDetail();
+            _SODetails = new ObservableCollection<SalesOrderDetail>();
 
             SODate = DateTime.Now;
 

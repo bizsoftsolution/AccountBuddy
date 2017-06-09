@@ -15,7 +15,7 @@ namespace AccountBuddy.DAL
     public partial class Supplier
     {
         public int Id { get; set; }
-        public int LedgerId { get; set; }
+        public Nullable<int> LedgerId { get; set; }
     
         public virtual Ledger Ledger { get; set; }
     }

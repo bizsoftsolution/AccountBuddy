@@ -187,11 +187,47 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Available Stock {0}.
+        /// </summary>
+        public static string Product_Available_Stock {
+            get {
+                return ResourceManager.GetString("Product_Available_Stock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UnAvailable Stock.
+        /// </summary>
+        public static string Product_Not_In_Stock {
+            get {
+                return ResourceManager.GetString("Product_Not_In_Stock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saved Successfully.
         /// </summary>
         public static string Saved_Alert {
             get {
                 return ResourceManager.GetString("Saved_Alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Product.
+        /// </summary>
+        public static string Transaction_Empty_Product {
+            get {
+                return ResourceManager.GetString("Transaction_Empty_Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Product Detail.
+        /// </summary>
+        public static string Transaction_ItemDetails_Validation {
+            get {
+                return ResourceManager.GetString("Transaction_ItemDetails_Validation", resourceCulture);
             }
         }
     }

@@ -105,7 +105,6 @@ namespace AccountBuddy.SL.Hubs
 
                     d.toCopy<BLL.PurchaseOrder>(PO);
                     PO.LedgerName = (d.Ledger?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
-                    PO.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     foreach (var d_pod in d.PurchaseOrderDetails)
                     {
                         BLL.PurchaseOrderDetail b_pod = new BLL.PurchaseOrderDetail();
@@ -132,7 +131,6 @@ namespace AccountBuddy.SL.Hubs
                     BLL.PurchaseOrder PO = new BLL.PurchaseOrder();
                     d.toCopy<BLL.PurchaseOrder>(PO);
                     PO.LedgerName = d.Ledger.LedgerName;
-                    PO.TransactionType = d.TransactionType.Type;
                     foreach (var d_pod in d.PurchaseOrderDetails)
                     {
                         BLL.PurchaseOrderDetail b_pod = new BLL.PurchaseOrderDetail();
