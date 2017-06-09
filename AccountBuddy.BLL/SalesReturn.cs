@@ -13,7 +13,7 @@ namespace AccountBuddy.BLL
     {
 
         #region Field
-        private static ObservableCollection<SalesReturn> _SRPendingList;
+        
         private long _Id;
         private DateTime? _SRDate;
         private string _RefNo;
@@ -388,24 +388,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public static ObservableCollection<SalesReturn> SRPendingList
-        {
-            get
-            {
-                if (_SRPendingList == null)
-                {
-                    _SRPendingList = new ObservableCollection<SalesReturn>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<SalesReturn>>("SalesReturn_SRPendingList").Result;
-                    _SRPendingList = new ObservableCollection<SalesReturn>(l1);
-                }
-                return _SRPendingList;
-            }
-            set
-            {
-                _SRPendingList = value;
-            }
-        }
-
+        
         public long PaymentLedgerId { get; set; }
         
         #endregion

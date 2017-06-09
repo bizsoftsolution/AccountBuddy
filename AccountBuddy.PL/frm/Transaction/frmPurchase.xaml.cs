@@ -61,7 +61,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (data.PDetail.ProductId == null)
+            if (data.PDetail.ProductId == 0)
             {
                 MessageBox.Show("Enter Product");
             }
@@ -108,7 +108,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show("Enter Supplier");
 
             }
-            else if (data.TransactionTypeId == null)
+            else if (data.TransactionTypeId == 0)
             {
                 MessageBox.Show("Enter Transaction Type");
             }
@@ -170,7 +170,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void txtBarCode_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return && data.PDetail.ProductId != null)
+            if (e.Key == Key.Return && data.PDetail.ProductId != 0)
             {
                 data.SaveDetail();
             }

@@ -17,7 +17,7 @@ namespace AccountBuddy.SL.Hubs
             BLL.GeneralLedger gl = new BLL.GeneralLedger();
 
             var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == LedgerId).ToList();
-            decimal TotDr = 0, TotCr = 0;
+
             
             #region Ledger
 

@@ -10,37 +10,12 @@ namespace AccountBuddy.SL.Hubs
     {
 
         #region Sales
-        #region list
-        public static List<BLL.Sale> _SPendingList;
-        public static List<BLL.Sale> SPendingList
-        {
-            get
-            {
-                if (_SPendingList == null)
-                {
-                    _SPendingList = new List<BLL.Sale>();
-                    foreach (var d1 in DB.Sales.Where(x => x.TransactionType.Type == "Credit").OrderBy(x => x.RefNo).ToList())
-                    {
-                        BLL.Sale d2 = new BLL.Sale();
-                        d1.toCopy<BLL.Sale>(d2);
-                        _SPendingList.Add(d2);
-                    }
-
-                }
-                return _SPendingList;
-            }
-            set
-            {
-                _SPendingList = value;
-            }
-        }
-        #endregion
+     
         public bool Sales_Save(BLL.Sale P)
         {
             try
             {
-                P.CompanyId = Caller.CompanyId;
-
+                
                 DAL.Sale d = DB.Sales.Where(x => x.Id == P.Id).FirstOrDefault();
 
                 if (d == null)
@@ -138,10 +113,7 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
-        public List<BLL.Sale> Sales_SPendingList()
-        {
-            return SPendingList.Where(x => x.CompanyId == Caller.CompanyId).ToList();
-        }
+        
 
         public bool Find_SRef(string RefNo, BLL.Sale PO)
 

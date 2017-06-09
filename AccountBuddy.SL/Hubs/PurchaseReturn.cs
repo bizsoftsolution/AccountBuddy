@@ -10,31 +10,7 @@ namespace AccountBuddy.SL.Hubs
     {
         #region PurchaseReturn
 
-        #region list
-        public static List<BLL.PurchaseReturn> _PRPendingList;
-        public static List<BLL.PurchaseReturn> PRPendingList
-        {
-            get
-            {
-                if (_PRPendingList == null)
-                {
-                    _PRPendingList = new List<BLL.PurchaseReturn>();
-                    foreach (var d1 in DB.PurchaseReturns.Where(x => x.TransactionType.Type == "Credit").OrderBy(x => x.RefNo).ToList())
-                    {
-                        BLL.PurchaseReturn d2 = new BLL.PurchaseReturn();
-                        d1.toCopy<BLL.PurchaseReturn>(d2);
-                        _PRPendingList.Add(d2);
-                    }
-
-                }
-                return _PRPendingList;
-            }
-            set
-            {
-                _PRPendingList = value;
-            }
-        }
-        #endregion
+     
 
         public bool PurchaseReturn_Save(BLL.PurchaseReturn P)
         {
@@ -139,10 +115,7 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
-        public List<BLL.PurchaseReturn> PurchaseReturn_PRPendingList()
-        {
-            return PRPendingList.Where(x => x.CompanyId == Caller.CompanyId).ToList();
-        }
+       
 
         public bool Find_PRRef(string RefNo, BLL.PurchaseReturn PO)
 

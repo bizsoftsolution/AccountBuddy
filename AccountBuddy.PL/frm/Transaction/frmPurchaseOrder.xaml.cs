@@ -51,7 +51,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (data.PODetail.ProductId == null)
+            if (data.PODetail.ProductId == 0)
             {
                 MessageBox.Show(Message.PL.Empty_Record);
             }
@@ -157,9 +157,9 @@ namespace AccountBuddy.PL.frm.Transaction
         private void txtBarCode_KeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.Key == Key.Return && data.PODetail.ProductId != null)
+            if (e.Key == Key.Return && data.PODetail.ProductId != 0)
             {
-                if (data.PODetail.ProductId == null)
+                if (data.PODetail.ProductId == 0)
                 {
                     MessageBox.Show("Enter Product");
                     cmbItem.Focus();

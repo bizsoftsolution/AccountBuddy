@@ -44,12 +44,7 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbUOM.DisplayMemberPath = "Symbol";
             cmbUOM.SelectedValuePath = "Id";
 
-            cmbPORefNo.ItemsSource = BLL.Purchase.PPendingList;
-            cmbPORefNo.DisplayMemberPath = "RefNo";
-            cmbPORefNo.SelectedValuePath = "Id";
-
-            //CollectionViewSource.GetDefaultView(cmbPORefNo.ItemsSource).Filter = PORefNo_Filter;
-
+           
 
              data.Clear();
 

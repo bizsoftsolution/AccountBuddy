@@ -254,9 +254,21 @@ namespace AccountBuddy.BLL
         static void Data_Init()
         {
             BLL.UserAccount.Init();
+
             BLL.AccountGroup.Init();
+            BLL.StockGroup.Init();
+
+            BLL.Bank.Init();
+            BLL.Customer.Init();
+            BLL.Supplier.Init();
             BLL.Ledger.Init();
+
             BLL.DataKeyValue.Init();
+
+            BLL.UOM.Init();
+            BLL.Product.Init();
+            
+            
         }
 
         public static bool AllowFormShow(string FormName)
