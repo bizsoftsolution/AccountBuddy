@@ -55,7 +55,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.DrAmt = 0;                    
                 }
                 BalAmt += (gl.DrAmt - gl.CrAmt);
-                gl.BalAmt = BalAmt;
+                gl.BalAmt = Math.Abs(BalAmt);
 
                 gl.Ledger = new BLL.Ledger();
                 gl.Particular = string.Format("Balance {0}", l.LedgerName);
@@ -75,7 +75,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.DrAmt = pd.Amount;
                     gl.CrAmt = 0;
                     BalAmt += (gl.DrAmt - gl.CrAmt);
-                    gl.BalAmt = BalAmt;
+                    gl.BalAmt = Math.Abs(BalAmt);
                     lstGeneralLedger.Add(gl);
                 }
 
@@ -96,7 +96,7 @@ namespace AccountBuddy.SL.Hubs
                         gl.DrAmt = 0;
                         gl.CrAmt = pd.Amount;
                         BalAmt += (gl.DrAmt - gl.CrAmt);
-                        gl.BalAmt = BalAmt;
+                        gl.BalAmt = Math.Abs(BalAmt);
                         lstGeneralLedger.Add(gl);
                     }                    
                 }
@@ -117,7 +117,7 @@ namespace AccountBuddy.SL.Hubs
                         gl.DrAmt = rd.Amount;
                         gl.CrAmt = 0;
                         BalAmt += (gl.DrAmt - gl.CrAmt);
-                        gl.BalAmt = BalAmt;
+                        gl.BalAmt = Math.Abs(BalAmt);
                         lstGeneralLedger.Add(gl);
                     }
                     
@@ -136,7 +136,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.DrAmt = 0;
                     gl.CrAmt = rd.Amount; 
                     BalAmt += (gl.DrAmt - gl.CrAmt);
-                    gl.BalAmt = BalAmt;
+                    gl.BalAmt = Math.Abs(BalAmt);
                     lstGeneralLedger.Add(gl);
                 }
 
@@ -155,7 +155,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.DrAmt = jd.DrAmt;
                     gl.CrAmt = jd.CrAmt;
                     BalAmt += (gl.DrAmt - gl.CrAmt);
-                    gl.BalAmt = BalAmt;
+                    gl.BalAmt = Math.Abs(BalAmt);
                     lstGeneralLedger.Add(gl);
                 }                                
                 gl = new BLL.GeneralLedger();
@@ -163,7 +163,7 @@ namespace AccountBuddy.SL.Hubs
                 gl.Particular = "Total";
                 gl.DrAmt = lstGeneralLedger.Sum(x=> x.DrAmt);
                 gl.CrAmt = lstGeneralLedger.Sum(x=>x.CrAmt);
-                gl.BalAmt = BalAmt;
+                gl.BalAmt = Math.Abs(BalAmt);
                 lstGeneralLedger.Add(gl);
 
             }
