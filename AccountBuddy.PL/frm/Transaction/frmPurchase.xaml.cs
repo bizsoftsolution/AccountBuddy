@@ -192,8 +192,8 @@ namespace AccountBuddy.PL.frm.Transaction
                     foreach (var pod in PO.PODetails)
                     {
                         data.PDetail.PODId = pod.Id;
-                        data.PDetail.ProductId = pod.ProductId.Value;
-                        data.PDetail.Quantity = pod.Quantity.Value;
+                        data.PDetail.ProductId = pod.ProductId;
+                        data.PDetail.Quantity = pod.Quantity;
                         data.PDetail.UnitPrice = pod.UnitPrice;
 
                         data.SaveDetail();
