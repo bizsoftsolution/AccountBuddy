@@ -129,7 +129,6 @@ namespace AccountBuddy.SL.Hubs
                     BLL.SalesOrder SO = new BLL.SalesOrder();
                     d.toCopy<BLL.SalesOrder>(SO);
                     SO.LedgerName = d.Ledger.LedgerName;
-                    SO.TransactionType = d.TransactionType.Type;
                     foreach (var d_pod in d.SalesOrderDetails)
                     {
                         BLL.SalesOrderDetail b_pod = new BLL.SalesOrderDetail();
