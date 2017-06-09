@@ -1054,18 +1054,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SalesOrder_TransactionType">
-          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="1" />
-          <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TransactionType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SalesOrder">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SalesOrderDetail_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
           <End Role="SalesOrderDetail" Type="Self.SalesOrderDetail" Multiplicity="*" />
@@ -1515,10 +1503,6 @@
             <End Role="Ledger" EntitySet="Ledger" />
             <End Role="SalesOrder" EntitySet="SalesOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK_SalesOrder_TransactionType" Association="Self.FK_SalesOrder_TransactionType">
-            <End Role="TransactionType" EntitySet="TransactionType" />
-            <End Role="SalesOrder" EntitySet="SalesOrder" />
-          </AssociationSet>
           <AssociationSet Name="FK_SalesOrderDetail_Product" Association="Self.FK_SalesOrderDetail_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="SalesOrderDetail" EntitySet="SalesOrderDetail" />
@@ -1860,10 +1844,6 @@
           <AssociationSet Name="FK_SalesReturnDetail_SalesDetail" Association="DBFMCGModel.FK_SalesReturnDetail_SalesDetail">
             <End Role="SalesDetail" EntitySet="SalesDetails" />
             <End Role="SalesReturnDetail" EntitySet="SalesReturnDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SalesOrder_TransactionType" Association="DBFMCGModel.FK_SalesOrder_TransactionType">
-            <End Role="TransactionType" EntitySet="TransactionTypes" />
-            <End Role="SalesOrder" EntitySet="SalesOrders" />
           </AssociationSet>
           <AssociationSet Name="FK_SalesOrderDetail_SalesOrder" Association="DBFMCGModel.FK_SalesOrderDetail_SalesOrder">
             <End Role="SalesOrder" EntitySet="SalesOrders" />
@@ -2363,7 +2343,6 @@
           <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_SalesOrder_Ledger" FromRole="SalesOrder" ToRole="Ledger" />
-          <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_SalesOrder_TransactionType" FromRole="SalesOrder" ToRole="TransactionType" />
           <NavigationProperty Name="SalesOrderDetails" Relationship="DBFMCGModel.FK_SalesOrderDetail_SalesOrder" FromRole="SalesOrder" ToRole="SalesOrderDetail" />
         </EntityType>
         <EntityType Name="SalesOrderDetail">
@@ -2464,7 +2443,6 @@
           <NavigationProperty Name="Purchases" Relationship="DBFMCGModel.FK_Purchase_TransactionType" FromRole="TransactionType" ToRole="Purchase" />
           <NavigationProperty Name="PurchaseReturns" Relationship="DBFMCGModel.FK_PurchaseReturn_TransactionType" FromRole="TransactionType" ToRole="PurchaseReturn" />
           <NavigationProperty Name="Sales" Relationship="DBFMCGModel.FK_Sale_TransactionType" FromRole="TransactionType" ToRole="Sale" />
-          <NavigationProperty Name="SalesOrders" Relationship="DBFMCGModel.FK_SalesOrder_TransactionType" FromRole="TransactionType" ToRole="SalesOrder" />
           <NavigationProperty Name="SalesReturns" Relationship="DBFMCGModel.FK_SalesReturn_TransactionType" FromRole="TransactionType" ToRole="SalesReturn" />
         </EntityType>
         <EntityType Name="UOM">
@@ -3198,18 +3176,6 @@
             </Principal>
             <Dependent Role="SalesReturnDetail">
               <PropertyRef Name="SDId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SalesOrder_TransactionType">
-          <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="1" />
-          <End Type="DBFMCGModel.SalesOrder" Role="SalesOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TransactionType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SalesOrder">
-              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

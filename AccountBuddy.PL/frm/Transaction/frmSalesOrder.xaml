@@ -27,7 +27,7 @@
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
             <StackPanel Orientation="Horizontal">
 
-                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Text="Sales Order" Width="1000" Margin="0,0,0,1"/>
+                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Text="Sales Order" Width="1100" Margin="0,0,0,1"/>
             </StackPanel>
         </Grid>
         <Border BorderBrush="Black" Grid.RowSpan="2" BorderThickness="1"></Border>
