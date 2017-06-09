@@ -904,7 +904,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!SupplierName.Value, "PurchaseReturn")</Value>
+                <Value>=First(Fields!LedgerName.Value, "PurchaseReturn")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1253,16 +1253,16 @@
           <DataField>AddressLine2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CityId">
-          <DataField>CityId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="CityName">
           <DataField>CityName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CompanyName">
           <DataField>CompanyName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CompanyType">
+          <DataField>CompanyType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="EMailId">
@@ -1277,12 +1277,32 @@
           <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="IsActive">
+          <DataField>IsActive</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IsEnabled">
+          <DataField>IsEnabled</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IsReadOnly">
+          <DataField>IsReadOnly</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="LoginAccYear">
+          <DataField>LoginAccYear</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="Logo">
           <DataField>Logo</DataField>
           <rd:TypeName>System.Byte[]</rd:TypeName>
         </Field>
         <Field Name="MobileNo">
           <DataField>MobileNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Password">
+          <DataField>Password</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="PostalCode">
@@ -1293,11 +1313,19 @@
           <DataField>TelephoneNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="UnderCompanyId">
+          <DataField>UnderCompanyId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="UserId">
+          <DataField>UserId</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>CompanyDetail</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.CompanyDetail, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.CompanyDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="PurchaseReturnDetail">
@@ -1360,9 +1388,9 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>PurchaseReturnDetail</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.PurchaseReturnDetail, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.PurchaseReturnDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="PurchaseReturn">
@@ -1399,13 +1427,17 @@
           <DataField>Id</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
-        <Field Name="InvoiceNo">
-          <DataField>InvoiceNo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="ItemAmount">
           <DataField>ItemAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="LedgerId">
+          <DataField>LedgerId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="LedgerName">
+          <DataField>LedgerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Narration">
           <DataField>Narration</DataField>
@@ -1425,7 +1457,11 @@
         </Field>
         <Field Name="PRDetail">
           <DataField>PRDetail</DataField>
-          <rd:TypeName>FMCG.BLL.PurchaseReturnDetail</rd:TypeName>
+          <rd:TypeName>AccountBuddy.BLL.PurchaseReturnDetail</rd:TypeName>
+        </Field>
+        <Field Name="ReceiptLedgerId">
+          <DataField>ReceiptLedgerId</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
         <Field Name="RefNo">
           <DataField>RefNo</DataField>
@@ -1433,14 +1469,6 @@
         </Field>
         <Field Name="SearchText">
           <DataField>SearchText</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SupplierId">
-          <DataField>SupplierId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="SupplierName">
-          <DataField>SupplierName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TotalAmount">
@@ -1457,9 +1485,9 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>PurchaseReturn</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.PurchaseReturn, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.PurchaseReturn, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

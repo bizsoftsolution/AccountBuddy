@@ -124,9 +124,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-//            frm.Print.frmQuickSO f= new Print.frmQuickSO();
-//f.LoadReport(data);
-//            f.ShowDialog();
+            frm.Print.frmQuickSO f = new Print.frmQuickSO();
+            f.LoadReport(data);
+            f.ShowDialog();
         }
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)

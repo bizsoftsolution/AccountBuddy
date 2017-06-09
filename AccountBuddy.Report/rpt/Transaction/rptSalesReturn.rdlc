@@ -872,7 +872,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!CustomerName.Value, "SalesReturn")</Value>
+                <Value>=First(Fields!LedgerName.Value, "SalesReturn")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1360,9 +1360,9 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>SalesReturnDetail</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.SalesReturnDetail, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.SalesReturnDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="SalesReturn">
@@ -1379,17 +1379,13 @@
           <DataField>BalanceAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="BillNo">
+          <DataField>BillNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="CompanyId">
           <DataField>CompanyId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="CustomerId">
-          <DataField>CustomerId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="CustomerName">
-          <DataField>CustomerName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="DiscountAmount">
           <DataField>DiscountAmount</DataField>
@@ -1407,13 +1403,17 @@
           <DataField>Id</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
-        <Field Name="InvoiceNo">
-          <DataField>InvoiceNo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="ItemAmount">
           <DataField>ItemAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="LedgerId">
+          <DataField>LedgerId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="LedgerName">
+          <DataField>LedgerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Narration">
           <DataField>Narration</DataField>
@@ -1426,6 +1426,10 @@
         <Field Name="PayAmount">
           <DataField>PayAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="PaymentLedgerId">
+          <DataField>PaymentLedgerId</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
         <Field Name="RefNo">
           <DataField>RefNo</DataField>
@@ -1441,7 +1445,7 @@
         </Field>
         <Field Name="SRDetail">
           <DataField>SRDetail</DataField>
-          <rd:TypeName>FMCG.BLL.SalesReturnDetail</rd:TypeName>
+          <rd:TypeName>AccountBuddy.BLL.SalesReturnDetail</rd:TypeName>
         </Field>
         <Field Name="TotalAmount">
           <DataField>TotalAmount</DataField>
@@ -1457,9 +1461,9 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>SalesReturn</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.SalesReturn, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.SalesReturn, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

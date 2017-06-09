@@ -497,7 +497,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.20165in</Width>
+              <Width>0.51833in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.69721in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.66196in</Width>
@@ -516,6 +519,38 @@
             <TablixRow>
               <Height>0.25in</Height>
               <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox3">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>SNO</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox3</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox77">
@@ -564,7 +599,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -691,6 +726,36 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox4">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=RowNumber(nothing)</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox4</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="ProductName">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -733,7 +798,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -858,6 +923,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -874,7 +940,7 @@
         <Top>0.68836in</Top>
         <Left>0.10639in</Left>
         <Height>0.5in</Height>
-        <Width>5.97124in</Width>
+        <Width>5.98513in</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -921,7 +987,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!CustomerName.Value, "Sale")</Value>
+                <Value>=First(Fields!LedgerName.Value, "Sale")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -978,7 +1044,7 @@
     <Height>3.04167in</Height>
     <Style />
   </Body>
-  <Width>6.18055in</Width>
+  <Width>6.12971in</Width>
   <Page>
     <PageHeader>
       <Height>1.29167in</Height>
@@ -1271,16 +1337,16 @@
           <DataField>AddressLine2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CityId">
-          <DataField>CityId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="CityName">
           <DataField>CityName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CompanyName">
           <DataField>CompanyName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CompanyType">
+          <DataField>CompanyType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="EMailId">
@@ -1295,12 +1361,32 @@
           <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="IsActive">
+          <DataField>IsActive</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IsEnabled">
+          <DataField>IsEnabled</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IsReadOnly">
+          <DataField>IsReadOnly</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="LoginAccYear">
+          <DataField>LoginAccYear</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="Logo">
           <DataField>Logo</DataField>
           <rd:TypeName>System.Byte[]</rd:TypeName>
         </Field>
         <Field Name="MobileNo">
           <DataField>MobileNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Password">
+          <DataField>Password</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="PostalCode">
@@ -1311,11 +1397,19 @@
           <DataField>TelephoneNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="UnderCompanyId">
+          <DataField>UnderCompanyId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="UserId">
+          <DataField>UserId</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>CompanyDetail</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.CompanyDetail, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.CompanyDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="SalesDetail">
@@ -1378,9 +1472,9 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>SalesDetail</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.SalesDetail, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.SalesDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="Sale">
@@ -1397,21 +1491,9 @@
           <DataField>BalanceAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="BillNo">
-          <DataField>BillNo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="CompanyId">
           <DataField>CompanyId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="CustomerId">
-          <DataField>CustomerId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="CustomerName">
-          <DataField>CustomerName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="DiscountAmount">
           <DataField>DiscountAmount</DataField>
@@ -1433,6 +1515,14 @@
           <DataField>ItemAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="LedgerId">
+          <DataField>LedgerId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="LedgerName">
+          <DataField>LedgerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Narration">
           <DataField>Narration</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -1445,6 +1535,10 @@
           <DataField>PayAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="ReceiptLedgerId">
+          <DataField>ReceiptLedgerId</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
         <Field Name="RefNo">
           <DataField>RefNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -1455,7 +1549,7 @@
         </Field>
         <Field Name="SDetail">
           <DataField>SDetail</DataField>
-          <rd:TypeName>FMCG.BLL.SalesDetail</rd:TypeName>
+          <rd:TypeName>AccountBuddy.BLL.SalesDetail</rd:TypeName>
         </Field>
         <Field Name="SearchText">
           <DataField>SearchText</DataField>
@@ -1475,9 +1569,9 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>Sale</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.Sale, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.Sale, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
