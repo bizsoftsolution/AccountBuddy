@@ -28,9 +28,9 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            cmbSupplier.ItemsSource = BLL.Ledger.toList;
-            cmbSupplier.DisplayMemberPath = "LedgerName";
-            cmbSupplier.SelectedValuePath = "Id";
+            cmbSupplier.ItemsSource = BLL.Supplier.toList;
+            cmbSupplier.DisplayMemberPath = "Ledger.LedgerName";
+            cmbSupplier.SelectedValuePath = "Ledger.Id";
 
             cmbPType.ItemsSource = BLL.TransactionType.toList;
             cmbPType.DisplayMemberPath = "Type";
@@ -172,58 +172,12 @@ data.Clear();
             }
         }
 
-        private void cmbSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            PORefNo_Refresh();
-        }
-
-        private void cmbPORefNo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                BLL.PurchaseReturn PO = cmbPORefNo.SelectedItem as BLL.PurchaseReturn;
-                PO.SearchText = PO.RefNo;
-                if (PO.Find())
-                {
-                    foreach (var pod in PO.PRDetails)
-                    {
-                        data.PRDetail.PDId = pod.Id;
-                        data.PRDetail.ProductId = pod.ProductId.Value;
-                        data.PRDetail.Quantity = pod.Quantity.Value;
-                        data.PRDetail.UnitPrice = pod.UnitPrice;
-
-                        data.SaveDetail();
-                    }
-                }
-
-            }
-            catch (Exception EX) { }
-        }
-
+       
+        
         #endregion
 
         #region Methods
-        public bool PORefNo_Filter(object obj)
-        {
-            try
-            {
-                BLL.PurchaseReturn PO = obj as BLL.PurchaseReturn;
-                BLL.Supplier S = cmbSupplier.SelectedItem as BLL.Supplier;
-
-                return PO.LedgerId == S.Id;
-            }
-            catch (Exception ex) { }
-            return false;
-
-        }
-        public void PORefNo_Refresh()
-        {
-            try
-            {
-                CollectionViewSource.GetDefaultView(cmbPORefNo.ItemsSource).Refresh();
-            }
-            catch (Exception ex) { };
-        }
+        
         #endregion
     }
 }
