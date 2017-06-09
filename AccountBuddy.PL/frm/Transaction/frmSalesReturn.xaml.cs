@@ -63,11 +63,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show(Message.PL.Transaction_Empty_Product);
             }
-            else if (data.SRDetail.Quantity > BLL.Product.toList.Where(x => x.Id == data.SRDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault())
-            {
-                var avst = BLL.Product.toList.Where(x => x.Id == data.SRDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
-                MessageBox.Show(Message.PL.Product_Not_In_Stock, avst.ToString());
-            }
+           
             else
             {
                 data.SaveDetail();
@@ -91,7 +87,7 @@ data.Clear();
                 var rv = data.Delete();
                 if (rv == true)
                 {
-                    MessageBox.Show("Deleted");
+                    MessageBox.Show(Message.PL.Delete_confirmation);
                     data.Clear();
                 }
             }
