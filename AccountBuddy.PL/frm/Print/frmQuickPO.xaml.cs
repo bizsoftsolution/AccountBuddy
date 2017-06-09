@@ -36,18 +36,18 @@ namespace AccountBuddy.PL.frm.Print
                 List<BLL.PurchaseOrder> POList = new List<BLL.PurchaseOrder>();
                 List<BLL.PurchaseOrderDetail> PODList = new List<BLL.PurchaseOrderDetail>();
                 List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
-                ObservableCollection<BLL.Ledger> SupplierDetail = new ObservableCollection<BLL.Ledger>();
+                ObservableCollection<BLL.Ledger> LedgerDetail = new ObservableCollection<BLL.Ledger>();
 
                 POList.Add(data);
                 PODList.AddRange(data.PODetails);
                 CList.Add(BLL.UserAccount.User.UserType.Company);
-                SupplierDetail.Add(BLL.Ledger.toList.Where(x=>x.LedgerName==data.LedgerName).FirstOrDefault());
+                LedgerDetail.Add(BLL.Ledger.toList.Where(x=>x.LedgerName==data.LedgerName).FirstOrDefault());
 
                 rptQuickPO.Reset();
                 ReportDataSource data1 = new ReportDataSource("PurchaseOrder", POList);
                 ReportDataSource data2 = new ReportDataSource("PurchaseOrderDetail", PODList);
                 ReportDataSource data3 = new ReportDataSource("CompanyDetail", CList);
-                ReportDataSource data4 = new ReportDataSource("Supplier", SupplierDetail);
+                ReportDataSource data4 = new ReportDataSource("Ledger", LedgerDetail);
 
              
                 rptQuickPO.LocalReport.DataSources.Add(data1);

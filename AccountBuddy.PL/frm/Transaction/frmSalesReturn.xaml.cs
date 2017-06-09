@@ -190,7 +190,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 BLL.SalesReturn PO = obj as BLL.SalesReturn;
                 BLL.Customer S = cmbCustomer.SelectedItem as BLL.Customer;
 
-                return PO.CustomerId == S.Id;
+                return PO.LedgerId == S.Id;
             }
             catch (Exception ex) { }
             return false;
