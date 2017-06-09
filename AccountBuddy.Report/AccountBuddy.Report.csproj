@@ -77,6 +77,12 @@
     <EmbeddedResource Include="rpt\Report\rptPaymentReceipt.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptReorderLevelReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptStockReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Report\rptTrialBalance.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -133,6 +139,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.Ledger.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Payment.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.PaymentDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Product.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Products1.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ProfitLoss.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Purchase.datasource" />

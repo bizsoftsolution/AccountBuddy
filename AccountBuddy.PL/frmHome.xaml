@@ -242,7 +242,16 @@
                                             <Report:frmIncomeAndExpenditure/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                    
+                                    <Menu:NavMenuItem MenuName="Stock Report" FormName="Stock Report">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmStockReport/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Re-Order Level" FormName="Re-Order Level">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmReOrderLevel/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                 </ListBox>
                             </Expander>
 

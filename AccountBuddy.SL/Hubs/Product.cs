@@ -18,7 +18,13 @@ namespace AccountBuddy.SL.Hubs
             ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
 
             ProductsTo.UOM = ProductsFrom.UOM == null ? null: UOM_DALtoBLL(ProductsFrom.UOM);
+            ProductsTo.POQty = ProductsFrom.PurchaseOrderDetails.Sum(x => x.Quantity);
+            ProductsTo.PQty = ProductsFrom.PurchaseDetails.Sum(x => x.Quantity);
+            ProductsTo.PRQty = ProductsFrom.PurchaseReturnDetails.Sum(x => x.Quantity);
+            ProductsTo.SOQty = ProductsFrom.SalesOrderDetails.Sum(x => x.Quantity);
+            ProductsTo.SQty = ProductsFrom.SalesDetails.Sum(x => x.Quantity);
 
+            ProductsTo.SRQty= ProductsFrom.SalesReturnDetails.Sum(x => x.Quantity);
             return ProductsTo;
         }
 
