@@ -49,12 +49,7 @@ namespace AccountBuddy.PL.frm.Transaction
             if (data.SODetail.ProductId == null)
             {
                 MessageBox.Show(Message.PL.Transaction_Empty_Product);
-            }
-            else if (data.SODetail.Quantity > BLL.Product.toList.Where(x => x.Id == data.SODetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault())
-            {
-                var avst = BLL.Product.toList.Where(x => x.Id == data.SODetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
-                MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, avst.ToString()));
-            }
+            }            
             else
             {
                 data.SaveDetail();
@@ -91,7 +86,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show(String.Format(Message.PL.Empty_Record,"RefNo"));
             }
-            else if (data.LedgerName == null)
+            else if (data.LedgerId == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record,"Ledger Name"));
             }
