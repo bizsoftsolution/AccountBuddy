@@ -172,23 +172,7 @@ namespace AccountBuddy.SL.Hubs
             pr.CompanyId = cmp.Id;
             DB.AccountGroups.Add(pr);
             DB.SaveChanges();
-            insertDataKeyValue(cmp.Id, pr.GroupName, pr.Id);
-
-
-            DAL.Ledger IT = new DAL.Ledger();
-            IT.LedgerName = BLL.DataKeyValue.Input_Tax_Ledger_Key;
-            IT.AccountGroupId = pr.Id;
-            DB.Ledgers.Add(IT);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, IT.LedgerName, IT.Id);
-
-
-            DAL.Ledger OT = new DAL.Ledger();
-            OT.LedgerName = BLL.DataKeyValue.Output_Tax_Ledger_Key;
-            OT.AccountGroupId = pr.Id;
-            DB.Ledgers.Add(OT);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, OT.LedgerName, OT.Id);
+            insertDataKeyValue(cmp.Id, pr.GroupName, pr.Id);           
 
 
             AccountSetup_Asset(pr);
@@ -373,6 +357,21 @@ namespace AccountBuddy.SL.Hubs
             DB.AccountGroups.Add(DT);
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, DT.GroupName, DT.Id);
+
+            DAL.Ledger IT = new DAL.Ledger();
+            IT.LedgerName = BLL.DataKeyValue.Input_Tax_Ledger_Key;
+            IT.AccountGroupId = DT.Id;
+            DB.Ledgers.Add(IT);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, IT.LedgerName, IT.Id);
+
+
+            DAL.Ledger OT = new DAL.Ledger();
+            OT.LedgerName = BLL.DataKeyValue.Output_Tax_Ledger_Key;
+            OT.AccountGroupId = DT.Id;
+            DB.Ledgers.Add(OT);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, OT.LedgerName, OT.Id);
 
             DAL.AccountGroup prov = new DAL.AccountGroup();
             prov.GroupName = BLL.DataKeyValue.Provisions_Key;
@@ -596,7 +595,7 @@ namespace AccountBuddy.SL.Hubs
             DAL.Ledger PRL = new DAL.Ledger();
             PRL.LedgerName = BLL.DataKeyValue.Purchase_Return_Ledger_Key;
             PRL.AccountGroupId = Pur.Id;
-            DB.Ledgers.Add(PurL);
+            DB.Ledgers.Add(PRL);
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, PRL.LedgerName, PRL.Id);
 
