@@ -233,22 +233,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string TransactionType
-        {
-            get
-            {
-                return _TransactionType;
-            }
-            set
-            {
-                if (_TransactionType != value)
-                {
-                    _TransactionType = value;
-                    NotifyPropertyChanged(nameof(TransactionType));
-                }
-            }
-        }
-
         public string SearchText
         {
             get

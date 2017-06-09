@@ -384,14 +384,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SOId" Type="bigint" />
-          <Property Name="ProductId" Type="int" />
-          <Property Name="UOMId" Type="int" />
-          <Property Name="Quantity" Type="float" />
-          <Property Name="UnitPrice" Type="money" />
-          <Property Name="DiscountAmount" Type="money" />
-          <Property Name="GSTAmount" Type="money" />
-          <Property Name="Amount" Type="money" />
+          <Property Name="SOId" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="SalesReturn">
           <Key>
@@ -1055,7 +1055,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesOrderDetail_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="SalesOrderDetail" Type="Self.SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -1067,7 +1067,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesOrderDetail_SalesOrder">
-          <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="0..1" />
+          <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="1" />
           <End Role="SalesOrderDetail" Type="Self.SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SalesOrder">
@@ -1079,7 +1079,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesOrderDetail_UOM">
-          <End Role="UOM" Type="Self.UOM" Multiplicity="0..1" />
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
           <End Role="SalesOrderDetail" Type="Self.SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -2350,14 +2350,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SOId" Type="Int64" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="UOMId" Type="Int32" />
-          <Property Name="Quantity" Type="Double" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SOId" Type="Int64" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_SalesOrderDetail_Product" FromRole="SalesOrderDetail" ToRole="Product" />
           <NavigationProperty Name="SalesDetails" Relationship="DBFMCGModel.FK_SalesDetail_SalesOrderDetail" FromRole="SalesOrderDetail" ToRole="SalesDetail" />
           <NavigationProperty Name="SalesOrder" Relationship="DBFMCGModel.FK_SalesOrderDetail_SalesOrder" FromRole="SalesOrderDetail" ToRole="SalesOrder" />
@@ -2964,7 +2964,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesOrderDetail_Product">
-          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesOrderDetail" Role="SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -3180,7 +3180,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesOrderDetail_SalesOrder">
-          <End Type="DBFMCGModel.SalesOrder" Role="SalesOrder" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.SalesOrder" Role="SalesOrder" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesOrderDetail" Role="SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SalesOrder">
@@ -3192,7 +3192,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesOrderDetail_UOM">
-          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesOrderDetail" Role="SalesOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
