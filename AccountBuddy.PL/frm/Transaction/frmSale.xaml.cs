@@ -335,5 +335,9 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         #endregion
 
+        private void cmbCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

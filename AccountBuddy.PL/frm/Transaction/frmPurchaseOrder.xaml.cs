@@ -30,13 +30,9 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            cmbSupplier.ItemsSource = BLL.Ledger.toList;
-            cmbSupplier.DisplayMemberPath = "LedgerName";
-            cmbSupplier.SelectedValuePath = "Id";
-
-            cmbPType.ItemsSource = BLL.TransactionType.toList;
-            cmbPType.DisplayMemberPath = "Type";
-            cmbPType.SelectedValuePath = "Id";
+            cmbSupplier.ItemsSource = BLL.Supplier.toList;
+            cmbSupplier.DisplayMemberPath = "Ledger.LedgerName";
+            cmbSupplier.SelectedValuePath = "Ledger.Id";          
 
             cmbItem.ItemsSource = BLL.Product.toList;
             cmbItem.DisplayMemberPath = "ProductName";
@@ -75,7 +71,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-data.Clear();
+            data.Clear();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

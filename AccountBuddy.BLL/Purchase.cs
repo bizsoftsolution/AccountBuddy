@@ -397,8 +397,8 @@ namespace AccountBuddy.BLL
                 if (_PPendingList == null)
                 {
                     _PPendingList = new ObservableCollection<Purchase>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<Purchase>>("Purchase_PPendingList").Result;
-                    _PPendingList = new ObservableCollection<Purchase>(l1);
+                    //var l1 = FMCGHubClient.FMCGHub.Invoke<List<Purchase>>("Purchase_PPendingList").Result;
+                    //_PPendingList = new ObservableCollection<Purchase>(l1);
                 }
                 return _PPendingList;
             }

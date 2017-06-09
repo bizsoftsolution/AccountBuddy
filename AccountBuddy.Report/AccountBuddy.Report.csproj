@@ -92,9 +92,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptPurchase.rdlc" />
     <EmbeddedResource Include="rpt\Transaction\rptPurchaseReturn.rdlc" />
-    <EmbeddedResource Include="rpt\Transaction\rptQuickPurchaseOrder.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptQuickSales.rdlc" />
     <EmbeddedResource Include="rpt\Transaction\rptQuickSalesOrder.rdlc" />
     <EmbeddedResource Include="rpt\Transaction\rptReceiptVoucher.rdlc">

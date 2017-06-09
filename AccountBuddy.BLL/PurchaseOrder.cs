@@ -381,8 +381,8 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new PurchaseOrder().toCopy<PurchaseOrder>(this);
-            this.PODetail = new PurchaseOrderDetail();
-            this.PODetails = new ObservableCollection<PurchaseOrderDetail>();
+            _PODetail = new PurchaseOrderDetail();
+            _PODetails = new ObservableCollection<PurchaseOrderDetail>();
 
             PODate = DateTime.Now;
 
