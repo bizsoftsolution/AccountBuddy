@@ -16,8 +16,7 @@ namespace AccountBuddy.BLL
 
         private long _Id;
         private DateTime? _PRDate;
-        private string _RefNo;
-        private string _InvoiceNo;
+        private string _RefNo;        
         private int? _LedgerId;
         private int? _TransactionTypeId;
         private decimal? _ItemAmount;
@@ -85,21 +84,6 @@ namespace AccountBuddy.BLL
                 {
                     _RefNo = value;
                     NotifyPropertyChanged(nameof(RefNo));
-                }
-            }
-        }
-        public string InvoiceNo
-        {
-            get
-            {
-                return _InvoiceNo;
-            }
-            set
-            {
-                if (_InvoiceNo != value)
-                {
-                    _InvoiceNo = value;
-                    NotifyPropertyChanged(nameof(InvoiceNo));
                 }
             }
         }

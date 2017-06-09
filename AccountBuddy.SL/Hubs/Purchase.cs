@@ -8,39 +8,12 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Purchase
-
-        #region list
-        public static List<BLL.Purchase> _PurPendingList;
-        public static List<BLL.Purchase> PurPendingList
-        {
-            get
-            {
-                if (_PurPendingList == null)
-                {
-                    _PurPendingList = new List<BLL.Purchase>();
-                    foreach (var d1 in DB.Purchases.Where(x => x.TransactionType.Type == "Credit").OrderBy(x => x.RefNo).ToList())
-                    {
-                        BLL.Purchase d2 = new BLL.Purchase();
-                        d1.toCopy<BLL.Purchase>(d2);
-                        _PurPendingList.Add(d2);
-                    }
-
-                }
-                return _PurPendingList;
-            }
-            set
-            {
-                _PurPendingList = value;
-            }
-        }
-        #endregion
+        #region Purchase      
 
         public bool Purchase_Save(BLL.Purchase P)
         {
             try
             {
-                P.CompanyId = Caller.CompanyId;
 
                 DAL.Purchase d = DB.Purchases.Where(x => x.Id == P.Id).FirstOrDefault();
 
@@ -139,11 +112,7 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
-        public List<BLL.Purchase> Purchase_PurPendingList()
-        {
-            return PurPendingList.Where(x => x.CompanyId == Caller.CompanyId).ToList();
-        }
-
+        
         public bool Find_PRef(string RefNo, BLL.Purchase PO)
 
         {

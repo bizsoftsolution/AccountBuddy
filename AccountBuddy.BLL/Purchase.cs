@@ -16,18 +16,16 @@ namespace AccountBuddy.BLL
         private static ObservableCollection<Purchase> _PPendingList;
 
         private long _Id;
-        private DateTime? _PurchaseDate;
+        private DateTime _PurchaseDate;
         private string _RefNo;
-        private string _InvoiceNo;
-        private int? _LedgerId;
-        private int? _TransactionTypeId;
-        private decimal? _ItemAmount;
-        private decimal? _DiscountAmount;
-        private decimal? _GSTAmount;
-        private decimal? _ExtraAmount;
-        private decimal? _TotalAmount;
-        private string _Narration;
-        private int? _CompanyId;
+        private int _LedgerId;
+        private int _TransactionTypeId;
+        private decimal _ItemAmount;
+        private decimal _DiscountAmount;
+        private decimal _GSTAmount;
+        private decimal _ExtraAmount;
+        private decimal _TotalAmount;
+        private string _Narration;        
 
         private decimal? _PaidAmount;
         private decimal? _PayAmount;
@@ -61,7 +59,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public DateTime? PurchaseDate
+        public DateTime PurchaseDate
         {
             get
             {
@@ -91,22 +89,8 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string InvoiceNo
-        {
-            get
-            {
-                return _InvoiceNo;
-            }
-            set
-            {
-                if (_InvoiceNo != value)
-                {
-                    _InvoiceNo = value;
-                    NotifyPropertyChanged(nameof(InvoiceNo));
-                }
-            }
-        }
-        public int? LedgerId
+        
+        public int LedgerId
         {
             get
             {
@@ -121,7 +105,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? TransactionTypeId
+        public int TransactionTypeId
         {
             get
             {
@@ -136,7 +120,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? ItemAmount
+        public decimal ItemAmount
         {
             get
             {
@@ -153,7 +137,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? DiscountAmount
+        public decimal DiscountAmount
         {
             get
             {
@@ -170,7 +154,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? GSTAmount
+        public decimal GSTAmount
         {
             get
             {
@@ -186,7 +170,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? ExtraAmount
+        public decimal ExtraAmount
         {
             get
             {
@@ -203,7 +187,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? TotalAmount
+        public decimal TotalAmount
         {
             get
             {
@@ -235,21 +219,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public int? CompanyId
-        {
-            get
-            {
-                return _CompanyId;
-            }
-            set
-            {
-                if (_CompanyId != value)
-                {
-                    _CompanyId = value;
-                    NotifyPropertyChanged(nameof(CompanyId));
-                }
-            }
-        }
+
         public decimal? PaidAmount
         {
             get
@@ -272,8 +242,8 @@ namespace AccountBuddy.BLL
             get
             {
                 if (_TotalAmount == null) return null;
-                if (_PaidAmount == null) return _TotalAmount.Value;
-                return _TotalAmount.Value - _PaidAmount.Value;
+                if (_PaidAmount == null) return _TotalAmount;
+                return _TotalAmount - _PaidAmount;
             }
         }
         public decimal? PayAmount
@@ -525,8 +495,8 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
-            TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
+            TotalAmount = ItemAmount - DiscountAmount  + GSTAmount + ExtraAmount;
         }
 
         public bool FindRefNo()
