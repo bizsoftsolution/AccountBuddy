@@ -146,9 +146,9 @@ data.Clear();
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            //frm.Print.frmQuickPReturn f = new Print.frmQuickPReturn();
-            //f.LoadReport(data);
-            //f.ShowDialog();
+            frm.Print.frmQuickPReturn f = new Print.frmQuickPReturn();
+            f.LoadReport(data);
+            f.ShowDialog();
         }
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)

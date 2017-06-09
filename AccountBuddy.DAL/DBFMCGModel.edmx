@@ -22,14 +22,14 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AccountNo" Type="nvarchar" MaxLength="50" />
           <Property Name="BankAccountName" Type="nvarchar" MaxLength="50" />
-          <Property Name="LedgerId" Type="int" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CompanyDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
           <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
           <Property Name="CityName" Type="nvarchar" MaxLength="50" />
@@ -39,9 +39,9 @@
           <Property Name="EMailId" Type="nvarchar" MaxLength="100" />
           <Property Name="GSTNo" Type="nvarchar" MaxLength="20" />
           <Property Name="Logo" Type="image" />
-          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="UnderCompanyId" Type="int" />
-          <Property Name="CompanyType" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyType" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -113,7 +113,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LedgerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LedgerName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="PersonIncharge" Type="nvarchar" MaxLength="50" />
           <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
           <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
@@ -213,16 +213,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PurchaseDate" Type="date" />
-          <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="InvoiceNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="LedgerId" Type="int" />
-          <Property Name="TransactionTypeId" Type="int" />
-          <Property Name="ItemAmount" Type="money" />
-          <Property Name="DiscountAmount" Type="money" />
-          <Property Name="GSTAmount" Type="money" />
-          <Property Name="ExtraAmount" Type="money" />
-          <Property Name="TotalAmount" Type="money" />
+          <Property Name="PurchaseDate" Type="date" Nullable="false" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="TransactionTypeId" Type="int" Nullable="false" />
+          <Property Name="ItemAmount" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="ExtraAmount" Type="money" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
           <Property Name="Narration" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="PurchaseDetail">
@@ -230,15 +229,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PurchaseId" Type="bigint" />
+          <Property Name="PurchaseId" Type="bigint" Nullable="false" />
           <Property Name="PODId" Type="bigint" />
-          <Property Name="ProductId" Type="int" />
-          <Property Name="UOMId" Type="int" />
-          <Property Name="Quantity" Type="float" />
-          <Property Name="UnitPrice" Type="money" />
-          <Property Name="DiscountAmount" Type="money" />
-          <Property Name="GSTAmount" Type="money" />
-          <Property Name="Amount" Type="money" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -274,16 +273,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PRDate" Type="date" />
-          <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="InvoiceNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="LedgerId" Type="int" />
-          <Property Name="TransactionTypeId" Type="int" />
-          <Property Name="ItemAmount" Type="money" />
-          <Property Name="DiscountAmount" Type="money" />
-          <Property Name="GSTAmount" Type="money" />
-          <Property Name="ExtraAmount" Type="money" />
-          <Property Name="TotalAmount" Type="money" />
+          <Property Name="PRDate" Type="date" Nullable="false" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="TransactionTypeId" Type="int" Nullable="false" />
+          <Property Name="ItemAmount" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="ExtraAmount" Type="money" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
           <Property Name="Narration" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="PurchaseReturnDetail">
@@ -291,15 +289,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PRId" Type="bigint" />
+          <Property Name="PRId" Type="bigint" Nullable="false" />
           <Property Name="PDId" Type="bigint" />
-          <Property Name="ProductId" Type="int" />
-          <Property Name="UOMId" Type="int" />
-          <Property Name="Quantity" Type="float" />
-          <Property Name="UnitPrice" Type="money" />
-          <Property Name="DiscountAmount" Type="money" />
-          <Property Name="GSTAmount" Type="money" />
-          <Property Name="Amount" Type="money" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Receipt">
           <Key>
@@ -336,16 +334,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SalesDate" Type="date" />
-          <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="BillNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="LedgerId" Type="int" />
-          <Property Name="TransactionTypeId" Type="int" />
-          <Property Name="ItemAmount" Type="money" />
-          <Property Name="DiscountAmount" Type="money" />
-          <Property Name="GSTAmount" Type="money" />
-          <Property Name="ExtraAmount" Type="money" />
-          <Property Name="TotalAmount" Type="money" />
+          <Property Name="SalesDate" Type="date" Nullable="false" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="TransactionTypeId" Type="int" Nullable="false" />
+          <Property Name="ItemAmount" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="ExtraAmount" Type="money" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
           <Property Name="Narration" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="SalesDetail">
@@ -355,13 +352,13 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SalesId" Type="bigint" Nullable="false" />
           <Property Name="SODId" Type="bigint" />
-          <Property Name="ProductId" Type="int" />
-          <Property Name="UOMId" Type="int" />
-          <Property Name="Quantity" Type="float" />
-          <Property Name="UnitPrice" Type="money" />
-          <Property Name="DiscountAmount" Type="money" />
-          <Property Name="GSTAmount" Type="money" />
-          <Property Name="Amount" Type="money" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="SalesOrder">
           <Key>
@@ -397,16 +394,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SRDate" Type="date" />
-          <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="BillNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="LedgerId" Type="int" />
-          <Property Name="TransactionTypeId" Type="int" />
-          <Property Name="ItemAmount" Type="money" />
-          <Property Name="DiscountAmount" Type="money" />
-          <Property Name="GSTAmount" Type="money" />
-          <Property Name="ExtraAmount" Type="money" />
-          <Property Name="TotalAmount" Type="money" />
+          <Property Name="SRDate" Type="date" Nullable="false" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="TransactionTypeId" Type="int" Nullable="false" />
+          <Property Name="ItemAmount" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="ExtraAmount" Type="money" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
           <Property Name="Narration" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="SalesReturnDetail">
@@ -417,11 +413,11 @@
           <Property Name="SRId" Type="bigint" Nullable="false" />
           <Property Name="SDId" Type="bigint" />
           <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="UOMId" Type="int" />
-          <Property Name="Quantity" Type="float" />
-          <Property Name="UnitPrice" Type="money" />
-          <Property Name="DiscountAmount" Type="money" />
-          <Property Name="GSTAmount" Type="money" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
           <Property Name="Amount" Type="money" />
         </EntityType>
         <EntityType Name="Staff">
@@ -438,7 +434,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StockGroupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="StockGroupName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="GroupCode" Type="nvarchar" MaxLength="50" />
           <Property Name="UnderGroupId" Type="int" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
@@ -448,7 +444,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LedgerId" Type="int" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TransactionType">
           <Key>
@@ -538,7 +534,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bank_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="Bank" Type="Self.Bank" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -730,7 +726,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Purchase_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -742,7 +738,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Purchase_TransactionType">
-          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="0..1" />
+          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="1" />
           <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TransactionType">
@@ -754,7 +750,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseDetail_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -766,7 +762,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseDetail_Purchase">
-          <End Role="Purchase" Type="Self.Purchase" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="1" />
           <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Purchase">
@@ -790,7 +786,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseDetail_UOM">
-          <End Role="UOM" Type="Self.UOM" Multiplicity="0..1" />
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
           <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -850,7 +846,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseReturn_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="PurchaseReturn" Type="Self.PurchaseReturn" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -862,7 +858,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseReturn_TransactionType">
-          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="0..1" />
+          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="1" />
           <End Role="PurchaseReturn" Type="Self.PurchaseReturn" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TransactionType">
@@ -874,7 +870,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseReturnDetail_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PurchaseReturnDetail" Type="Self.PurchaseReturnDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -898,7 +894,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseReturnDetail_PurchaseReturn">
-          <End Role="PurchaseReturn" Type="Self.PurchaseReturn" Multiplicity="0..1" />
+          <End Role="PurchaseReturn" Type="Self.PurchaseReturn" Multiplicity="1" />
           <End Role="PurchaseReturnDetail" Type="Self.PurchaseReturnDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PurchaseReturn">
@@ -910,7 +906,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseReturnDetail_UOM">
-          <End Role="UOM" Type="Self.UOM" Multiplicity="0..1" />
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
           <End Role="PurchaseReturnDetail" Type="Self.PurchaseReturnDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -958,7 +954,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sale_CompanyDetail">
-          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="0..1" />
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
           <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyDetail">
@@ -970,7 +966,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sale_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -982,7 +978,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sale_TransactionType">
-          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="0..1" />
+          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="1" />
           <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TransactionType">
@@ -994,7 +990,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesDetail_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="SalesDetail" Type="Self.SalesDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -1030,7 +1026,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesDetail_UOM">
-          <End Role="UOM" Type="Self.UOM" Multiplicity="0..1" />
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
           <End Role="SalesDetail" Type="Self.SalesDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -1090,7 +1086,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesReturn_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="SalesReturn" Type="Self.SalesReturn" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -1102,7 +1098,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesReturn_TransactionType">
-          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="0..1" />
+          <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="1" />
           <End Role="SalesReturn" Type="Self.SalesReturn" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TransactionType">
@@ -1150,7 +1146,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesReturnDetail_UOM">
-          <End Role="UOM" Type="Self.UOM" Multiplicity="0..1" />
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
           <End Role="SalesReturnDetail" Type="Self.SalesReturnDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -1198,7 +1194,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Supplier_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -1902,7 +1898,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AccountNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BankAccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LedgerId" Type="Int32" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Bank_Ledger" FromRole="Bank" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="CompanyDetail">
@@ -1910,7 +1906,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1920,9 +1916,9 @@
           <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="UnderCompanyId" Type="Int32" />
-          <Property Name="CompanyType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AccountGroups" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
           <NavigationProperty Name="Sales" Relationship="DBFMCGModel.FK_Sale_CompanyDetail" FromRole="CompanyDetail" ToRole="Sale" />
           <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
@@ -2006,7 +2002,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LedgerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LedgerName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="PersonIncharge" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -2142,16 +2138,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PurchaseDate" Type="DateTime" Precision="0" />
-          <Property Name="RefNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="InvoiceNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LedgerId" Type="Int32" />
-          <Property Name="TransactionTypeId" Type="Int32" />
-          <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ExtraAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Purchase_Ledger" FromRole="Purchase" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_Purchase_TransactionType" FromRole="Purchase" ToRole="TransactionType" />
@@ -2162,15 +2157,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PurchaseId" Type="Int64" />
+          <Property Name="PurchaseId" Type="Int64" Nullable="false" />
           <Property Name="PODId" Type="Int64" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="UOMId" Type="Int32" />
-          <Property Name="Quantity" Type="Double" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_PurchaseDetail_Product" FromRole="PurchaseDetail" ToRole="Product" />
           <NavigationProperty Name="Purchase" Relationship="DBFMCGModel.FK_PurchaseDetail_Purchase" FromRole="PurchaseDetail" ToRole="Purchase" />
           <NavigationProperty Name="PurchaseOrderDetail" Relationship="DBFMCGModel.FK_PurchaseDetail_PurchaseOrderDetail" FromRole="PurchaseDetail" ToRole="PurchaseOrderDetail" />
@@ -2217,16 +2212,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PRDate" Type="DateTime" Precision="0" />
-          <Property Name="RefNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="InvoiceNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LedgerId" Type="Int32" />
-          <Property Name="TransactionTypeId" Type="Int32" />
-          <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PRDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ExtraAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_PurchaseReturn_Ledger" FromRole="PurchaseReturn" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_PurchaseReturn_TransactionType" FromRole="PurchaseReturn" ToRole="TransactionType" />
@@ -2237,15 +2231,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PRId" Type="Int64" />
+          <Property Name="PRId" Type="Int64" Nullable="false" />
           <Property Name="PDId" Type="Int64" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="UOMId" Type="Int32" />
-          <Property Name="Quantity" Type="Double" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_PurchaseReturnDetail_Product" FromRole="PurchaseReturnDetail" ToRole="Product" />
           <NavigationProperty Name="PurchaseDetail" Relationship="DBFMCGModel.FK_PurchaseReturnDetail_PurchaseDetail" FromRole="PurchaseReturnDetail" ToRole="PurchaseDetail" />
           <NavigationProperty Name="PurchaseReturn" Relationship="DBFMCGModel.FK_PurchaseReturnDetail_PurchaseReturn" FromRole="PurchaseReturnDetail" ToRole="PurchaseReturn" />
@@ -2290,16 +2284,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SalesDate" Type="DateTime" Precision="0" />
-          <Property Name="RefNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="BillNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LedgerId" Type="Int32" />
-          <Property Name="TransactionTypeId" Type="Int32" />
-          <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalesDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ExtraAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_Sale_CompanyDetail" FromRole="Sale" ToRole="CompanyDetail" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Sale_Ledger" FromRole="Sale" ToRole="Ledger" />
@@ -2313,13 +2306,13 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SalesId" Type="Int64" Nullable="false" />
           <Property Name="SODId" Type="Int64" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="UOMId" Type="Int32" />
-          <Property Name="Quantity" Type="Double" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_SalesDetail_Product" FromRole="SalesDetail" ToRole="Product" />
           <NavigationProperty Name="Sale" Relationship="DBFMCGModel.FK_SalesDetail_Sale" FromRole="SalesDetail" ToRole="Sale" />
           <NavigationProperty Name="SalesOrderDetail" Relationship="DBFMCGModel.FK_SalesDetail_SalesOrderDetail" FromRole="SalesDetail" ToRole="SalesOrderDetail" />
@@ -2366,16 +2359,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SRDate" Type="DateTime" Precision="0" />
-          <Property Name="RefNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="BillNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LedgerId" Type="Int32" />
-          <Property Name="TransactionTypeId" Type="Int32" />
-          <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SRDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ExtraAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_SalesReturn_Ledger" FromRole="SalesReturn" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_SalesReturn_TransactionType" FromRole="SalesReturn" ToRole="TransactionType" />
@@ -2389,11 +2381,11 @@
           <Property Name="SRId" Type="Int64" Nullable="false" />
           <Property Name="SDId" Type="Int64" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="UOMId" Type="Int32" />
-          <Property Name="Quantity" Type="Double" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GSTAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_SalesReturnDetail_Product" FromRole="SalesReturnDetail" ToRole="Product" />
           <NavigationProperty Name="SalesDetail" Relationship="DBFMCGModel.FK_SalesReturnDetail_SalesDetail" FromRole="SalesReturnDetail" ToRole="SalesDetail" />
@@ -2415,7 +2407,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StockGroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StockGroupName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GroupCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UnderGroupId" Type="Int32" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
@@ -2429,7 +2421,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LedgerId" Type="Int32" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Supplier_Ledger" FromRole="Supplier" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="TransactionType">
@@ -2554,7 +2546,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bank_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
           <End Type="DBFMCGModel.Bank" Role="Bank" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -2566,7 +2558,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sale_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
           <End Type="DBFMCGModel.Sale" Role="Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyDetail">
@@ -2710,7 +2702,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Purchase_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
           <End Type="DBFMCGModel.Purchase" Role="Purchase" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -2734,7 +2726,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseReturn_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
           <End Type="DBFMCGModel.PurchaseReturn" Role="PurchaseReturn" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -2770,7 +2762,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sale_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
           <End Type="DBFMCGModel.Sale" Role="Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -2794,7 +2786,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesReturn_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesReturn" Role="SalesReturn" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -2818,7 +2810,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Supplier_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
           <End Type="DBFMCGModel.Supplier" Role="Supplier" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ledger">
@@ -2914,7 +2906,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseDetail_Product">
-          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
           <End Type="DBFMCGModel.PurchaseDetail" Role="PurchaseDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -2938,7 +2930,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseReturnDetail_Product">
-          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
           <End Type="DBFMCGModel.PurchaseReturnDetail" Role="PurchaseReturnDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -2950,7 +2942,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesDetail_Product">
-          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesDetail" Role="SalesDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -2986,7 +2978,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Purchase_TransactionType">
-          <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="1" />
           <End Type="DBFMCGModel.Purchase" Role="Purchase" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TransactionType">
@@ -2998,7 +2990,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseDetail_Purchase">
-          <End Type="DBFMCGModel.Purchase" Role="Purchase" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Purchase" Role="Purchase" Multiplicity="1" />
           <End Type="DBFMCGModel.PurchaseDetail" Role="PurchaseDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Purchase">
@@ -3022,7 +3014,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseDetail_UOM">
-          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
           <End Type="DBFMCGModel.PurchaseDetail" Role="PurchaseDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -3070,7 +3062,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseReturn_TransactionType">
-          <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="1" />
           <End Type="DBFMCGModel.PurchaseReturn" Role="PurchaseReturn" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TransactionType">
@@ -3082,7 +3074,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseReturnDetail_PurchaseReturn">
-          <End Type="DBFMCGModel.PurchaseReturn" Role="PurchaseReturn" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.PurchaseReturn" Role="PurchaseReturn" Multiplicity="1" />
           <End Type="DBFMCGModel.PurchaseReturnDetail" Role="PurchaseReturnDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PurchaseReturn">
@@ -3094,7 +3086,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseReturnDetail_UOM">
-          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
           <End Type="DBFMCGModel.PurchaseReturnDetail" Role="PurchaseReturnDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -3118,7 +3110,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sale_TransactionType">
-          <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="1" />
           <End Type="DBFMCGModel.Sale" Role="Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TransactionType">
@@ -3154,7 +3146,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesDetail_UOM">
-          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesDetail" Role="SalesDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -3202,7 +3194,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesReturn_TransactionType">
-          <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.TransactionType" Role="TransactionType" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesReturn" Role="SalesReturn" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TransactionType">
@@ -3226,7 +3218,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SalesReturnDetail_UOM">
-          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
           <End Type="DBFMCGModel.SalesReturnDetail" Role="SalesReturnDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -3522,7 +3514,6 @@
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -3587,7 +3578,6 @@
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="PRDate" ColumnName="PRDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -3653,7 +3643,6 @@
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="BillNo" ColumnName="BillNo" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="SalesDate" ColumnName="SalesDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -3718,7 +3707,6 @@
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="BillNo" ColumnName="BillNo" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="SRDate" ColumnName="SRDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

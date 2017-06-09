@@ -176,57 +176,57 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-//if (rdbBillPrint.IsChecked == true)
-          //  {
+            if (rdbBillPrint.IsChecked == true)
+            {
 
-            //    System.Drawing.Printing.PrintDocument prnPurchaseOrder = new System.Drawing.Printing.PrintDocument();
-            //    prnPurchaseOrder.PrintPage += PrnPurchaseOrder_PrintPage;
-            //    PrintDialog pd = new PrintDialog();
-            //    pd.ShowDialog();
-            //    prnPurchaseOrder.DefaultPageSettings.PrinterSettings.PrinterName = prnPurchaseOrder.DefaultPageSettings.PrinterSettings.PrinterName;
-            //    //prnPurchaseOrder.DefaultPageSettings.PrinterSettings.PrinterName = @"\\192.168.43.212\POS-58";
-            //    prnPurchaseOrder.PrintController = new System.Drawing.Printing.StandardPrintController();
+                System.Drawing.Printing.PrintDocument prnPurchaseOrder = new System.Drawing.Printing.PrintDocument();
+                prnPurchaseOrder.PrintPage += PrnPurchaseOrder_PrintPage;
+                PrintDialog pd = new PrintDialog();
+                pd.ShowDialog();
+                prnPurchaseOrder.DefaultPageSettings.PrinterSettings.PrinterName = prnPurchaseOrder.DefaultPageSettings.PrinterSettings.PrinterName;
+                //prnPurchaseOrder.DefaultPageSettings.PrinterSettings.PrinterName = @"\\192.168.43.212\POS-58";
+                prnPurchaseOrder.PrintController = new System.Drawing.Printing.StandardPrintController();
 
-            //    TextToPrint = PrintLine(BLL.UserAccount.Company.CompanyName, PrintTextAlignType.Center);
-            //    TextToPrint += PrintLine(string.Format("{0},", BLL.UserAccount.Company.AddressLine1), PrintTextAlignType.Center);
-            //    TextToPrint += PrintLine(string.Format("{0},", BLL.UserAccount.Company.AddressLine2), PrintTextAlignType.Center);
-            //    TextToPrint += PrintLine(string.Format("{0},", BLL.UserAccount.Company.CityName), PrintTextAlignType.Center);
+                TextToPrint = PrintLine(BLL.UserAccount.User.UserType.Company.CompanyName, PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0},", BLL.UserAccount.User.UserType.Company.AddressLine1), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0},", BLL.UserAccount.User.UserType.Company.AddressLine2), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0},", BLL.UserAccount.User.UserType.Company.CityName), PrintTextAlignType.Center);
 
-            //    TextToPrint += PrintLine(string.Format("{0}CASH BILL{0}", new string('-', 8)), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0}CASH BILL{0}", new string('-', 8)), PrintTextAlignType.Center);
 
-            //    TextToPrint += PrintLine(string.Format("Dt: {0:dd/MM/yyyy hh:mm tt}", DateTime.Now), PrintTextAlignType.Left);
-            //    TextToPrint += PrintLine(string.Format("Bill No: {0}", data.BillNo), PrintTextAlignType.Left);
+                TextToPrint += PrintLine(string.Format("Dt: {0:dd/MM/yyyy hh:mm tt}", DateTime.Now), PrintTextAlignType.Left);
+                TextToPrint += PrintLine(string.Format("Bill No: {0}", data.RefNo), PrintTextAlignType.Left);
 
-            //    TextToPrint += PrintLine(string.Format("{0}", new string('-', PrintNoOfCharPerLine)), PrintTextAlignType.Center);
-            //    TextToPrint += PrintLine(string.Format("{0,3} {1,-11} {2,10}", "SNo", "Particulars", "Amount"), PrintTextAlignType.Left);
-            //    TextToPrint += PrintLine(string.Format("{0}", new string('-', PrintNoOfCharPerLine)), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0}", new string('-', PrintNoOfCharPerLine)), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0,3} {1,-11} {2,10}", "SNo", "Particulars", "Amount"), PrintTextAlignType.Left);
+                TextToPrint += PrintLine(string.Format("{0}", new string('-', PrintNoOfCharPerLine)), PrintTextAlignType.Center);
 
-            //    int sno = 0;
+                int sno = 0;
 
-            //    foreach (var data in data.SDetails)
-            //    {
-            //        TextToPrint += PrintLine(string.Format("{0,3} {1,-11} {2,10:0.00}", ++sno, data.ProductName, data.UnitPrice * (decimal)data.Quantity), PrintTextAlignType.Left);
-            //        TextToPrint += PrintLine(string.Format("{0,3} [Rs. {1} x {2} {3}]", "", data.UnitPrice, data.Quantity, data.UOMName), PrintTextAlignType.Left);
-            //    }
-            //    TextToPrint += PrintLine(string.Format("{0}", new string('-', PrintNoOfCharPerLine)), PrintTextAlignType.Center);
-            //    TextToPrint += PrintLine(string.Format("Total   : {0,10:0.00}", Convert.ToDouble(data.ItemAmount)), PrintTextAlignType.Right);
-            //    TextToPrint += PrintLine(string.Format("Discount: {0,10:0.00}", Convert.ToDouble(data.DiscountAmount)), PrintTextAlignType.Right);
-            //    TextToPrint += PrintLine(string.Format("GST: {0,10:0.00}", Convert.ToDouble(data.GSTAmount)), PrintTextAlignType.Right);
-            //    TextToPrint += PrintLine("", PrintTextAlignType.Left);
-            //    TextToPrint += PrintLine(string.Format("Bill Amount : RM .{0:0.00}", Convert.ToDouble(data.TotalAmount)), PrintTextAlignType.Center);
-            //    TextToPrint += PrintLine("", PrintTextAlignType.Left);
-            //    TextToPrint += PrintLine("", PrintTextAlignType.Left);
-            //    TextToPrint += PrintLine("", PrintTextAlignType.Left);
+                foreach (var data in data.SDetails)
+                {
+                    TextToPrint += PrintLine(string.Format("{0,3} {1,-11} {2,10:0.00}", ++sno, data.ProductName, data.UnitPrice * (decimal)data.Quantity), PrintTextAlignType.Left);
+                    TextToPrint += PrintLine(string.Format("{0,3} [Rs. {1} x {2} {3}]", "", data.UnitPrice, data.Quantity, data.UOMName), PrintTextAlignType.Left);
+                }
+                TextToPrint += PrintLine(string.Format("{0}", new string('-', PrintNoOfCharPerLine)), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("Total   : {0,10:0.00}", Convert.ToDouble(data.ItemAmount)), PrintTextAlignType.Right);
+                TextToPrint += PrintLine(string.Format("Discount: {0,10:0.00}", Convert.ToDouble(data.DiscountAmount)), PrintTextAlignType.Right);
+                TextToPrint += PrintLine(string.Format("GST: {0,10:0.00}", Convert.ToDouble(data.GSTAmount)), PrintTextAlignType.Right);
+                TextToPrint += PrintLine("", PrintTextAlignType.Left);
+                TextToPrint += PrintLine(string.Format("Bill Amount : RM .{0:0.00}", Convert.ToDouble(data.TotalAmount)), PrintTextAlignType.Center);
+                TextToPrint += PrintLine("", PrintTextAlignType.Left);
+                TextToPrint += PrintLine("", PrintTextAlignType.Left);
+                TextToPrint += PrintLine("", PrintTextAlignType.Left);
 
 
-            //    prnPurchaseOrder.Print();
-            //}
-            //else
-            //{
-            //    frm.Print.FrmQuickSales f = new Print.FrmQuickSales();
-            //    f.LoadReport(data);
-            //    f.ShowDialog();
-            //}
+                prnPurchaseOrder.Print();
+            }
+            else
+            {
+                frm.Print.FrmQuickSales f = new Print.FrmQuickSales();
+                f.LoadReport(data);
+                f.ShowDialog();
+            }
         }
 
         private void PrnPurchaseOrder_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)

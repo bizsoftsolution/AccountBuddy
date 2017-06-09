@@ -36,7 +36,7 @@ namespace AccountBuddy.DAL
         public string EMailId { get; set; }
         public string GSTNo { get; set; }
         public byte[] Logo { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public bool IsActive { get; set; }
         public Nullable<int> UnderCompanyId { get; set; }
         public string CompanyType { get; set; }
     

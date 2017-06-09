@@ -15,15 +15,15 @@ namespace AccountBuddy.DAL
     public partial class PurchaseReturnDetail
     {
         public long Id { get; set; }
-        public Nullable<long> PRId { get; set; }
+        public long PRId { get; set; }
         public Nullable<long> PDId { get; set; }
-        public Nullable<int> ProductId { get; set; }
-        public Nullable<int> UOMId { get; set; }
-        public Nullable<double> Quantity { get; set; }
-        public Nullable<decimal> UnitPrice { get; set; }
-        public Nullable<decimal> DiscountAmount { get; set; }
-        public Nullable<decimal> GSTAmount { get; set; }
-        public Nullable<decimal> Amount { get; set; }
+        public int ProductId { get; set; }
+        public int UOMId { get; set; }
+        public double Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+        public decimal DiscountAmount { get; set; }
+        public decimal GSTAmount { get; set; }
+        public decimal Amount { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual PurchaseDetail PurchaseDetail { get; set; }

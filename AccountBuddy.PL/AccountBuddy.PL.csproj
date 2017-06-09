@@ -210,7 +210,32 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Print\frmQuickPayment.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="frm\Print\frmQuickPO.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Print\frmQuickPReturn.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Print\frmQuickPurchase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Print\FrmQuickSales.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="frm\Print\frmQuickSO.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Print\frmQuickSReturn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -392,8 +417,27 @@
     <Compile Include="frm\Master\frmUserType.xaml.cs">
       <DependentUpon>frmUserType.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Print\frmQuickPayment.xaml.cs">
+      <DependentUpon>frmQuickPayment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Print\frmQuickPO.xaml.cs">
       <DependentUpon>frmQuickPO.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Print\frmQuickPReturn.xaml.cs">
+      <DependentUpon>frmQuickPReturn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Print\frmQuickPurchase.xaml.cs">
+      <DependentUpon>frmQuickPurchase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Print\FrmQuickSales.xaml.cs">
+      <DependentUpon>FrmQuickSales.xaml</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="frm\Print\frmQuickSO.xaml.cs">
+      <DependentUpon>frmQuickSO.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Print\frmQuickSReturn.xaml.cs">
+      <DependentUpon>frmQuickSReturn.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmBalanceSheet.xaml.cs">
       <DependentUpon>frmBalanceSheet.xaml</DependentUpon>

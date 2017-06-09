@@ -872,7 +872,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!SupplierName.Value, "Purchase")</Value>
+                <Value>=First(Fields!LedgerName.Value, "Purchase")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1256,16 +1256,16 @@
           <DataField>AddressLine2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CityId">
-          <DataField>CityId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="CityName">
           <DataField>CityName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CompanyName">
           <DataField>CompanyName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CompanyType">
+          <DataField>CompanyType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="EMailId">
@@ -1280,12 +1280,32 @@
           <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="IsActive">
+          <DataField>IsActive</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IsEnabled">
+          <DataField>IsEnabled</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IsReadOnly">
+          <DataField>IsReadOnly</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="LoginAccYear">
+          <DataField>LoginAccYear</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="Logo">
           <DataField>Logo</DataField>
           <rd:TypeName>System.Byte[]</rd:TypeName>
         </Field>
         <Field Name="MobileNo">
           <DataField>MobileNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Password">
+          <DataField>Password</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="PostalCode">
@@ -1296,11 +1316,19 @@
           <DataField>TelephoneNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="UnderCompanyId">
+          <DataField>UnderCompanyId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="UserId">
+          <DataField>UserId</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>CompanyDetail</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.CompanyDetail, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.CompanyDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="PurchaseDetail">
@@ -1311,15 +1339,15 @@
       <Fields>
         <Field Name="Amount">
           <DataField>Amount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="DiscountAmount">
           <DataField>DiscountAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="GSTAmount">
           <DataField>GSTAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Id">
           <DataField>Id</DataField>
@@ -1335,7 +1363,7 @@
         </Field>
         <Field Name="ProductId">
           <DataField>ProductId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="ProductName">
           <DataField>ProductName</DataField>
@@ -1343,19 +1371,19 @@
         </Field>
         <Field Name="PurchaseId">
           <DataField>PurchaseId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
         <Field Name="Quantity">
           <DataField>Quantity</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="UnitPrice">
           <DataField>UnitPrice</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="UOMId">
           <DataField>UOMId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="UOMName">
           <DataField>UOMName</DataField>
@@ -1363,9 +1391,9 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>PurchaseDetail</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.PurchaseDetail, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.PurchaseDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="Purchase">
@@ -1382,33 +1410,33 @@
           <DataField>BalanceAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="CompanyId">
-          <DataField>CompanyId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
         <Field Name="DiscountAmount">
           <DataField>DiscountAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ExtraAmount">
           <DataField>ExtraAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="GSTAmount">
           <DataField>GSTAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Id">
           <DataField>Id</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
-        <Field Name="InvoiceNo">
-          <DataField>InvoiceNo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="ItemAmount">
           <DataField>ItemAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="LedgerId">
+          <DataField>LedgerId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="LedgerName">
+          <DataField>LedgerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Narration">
           <DataField>Narration</DataField>
@@ -1422,13 +1450,17 @@
           <DataField>PayAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="PaymentLedgerId">
+          <DataField>PaymentLedgerId</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
         <Field Name="PDetail">
           <DataField>PDetail</DataField>
-          <rd:TypeName>FMCG.BLL.PurchaseDetail</rd:TypeName>
+          <rd:TypeName>AccountBuddy.BLL.PurchaseDetail</rd:TypeName>
         </Field>
         <Field Name="PurchaseDate">
           <DataField>PurchaseDate</DataField>
-          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="RefNo">
           <DataField>RefNo</DataField>
@@ -1438,17 +1470,9 @@
           <DataField>SearchText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="SupplierId">
-          <DataField>SupplierId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="SupplierName">
-          <DataField>SupplierName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="TotalAmount">
           <DataField>TotalAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="TransactionType">
           <DataField>TransactionType</DataField>
@@ -1456,13 +1480,13 @@
         </Field>
         <Field Name="TransactionTypeId">
           <DataField>TransactionTypeId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>FMCG.BLL</rd:DataSetName>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>Purchase</rd:TableName>
-        <rd:ObjectDataSourceType>FMCG.BLL.Purchase, FMCG.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.Purchase, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

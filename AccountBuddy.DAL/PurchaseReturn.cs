@@ -21,16 +21,15 @@ namespace AccountBuddy.DAL
         }
     
         public long Id { get; set; }
-        public Nullable<System.DateTime> PRDate { get; set; }
+        public System.DateTime PRDate { get; set; }
         public string RefNo { get; set; }
-        public string InvoiceNo { get; set; }
-        public Nullable<int> LedgerId { get; set; }
-        public Nullable<int> TransactionTypeId { get; set; }
-        public Nullable<decimal> ItemAmount { get; set; }
-        public Nullable<decimal> DiscountAmount { get; set; }
-        public Nullable<decimal> GSTAmount { get; set; }
-        public Nullable<decimal> ExtraAmount { get; set; }
-        public Nullable<decimal> TotalAmount { get; set; }
+        public int LedgerId { get; set; }
+        public int TransactionTypeId { get; set; }
+        public decimal ItemAmount { get; set; }
+        public decimal DiscountAmount { get; set; }
+        public decimal GSTAmount { get; set; }
+        public decimal ExtraAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public string Narration { get; set; }
     
         public virtual Ledger Ledger { get; set; }

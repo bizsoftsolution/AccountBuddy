@@ -431,11 +431,7 @@
         </TablixBody>
         <TablixColumnHierarchy>
           <TablixMembers>
-            <TablixMember>
-              <FixedData>true</FixedData>
-              <KeepWithGroup>After</KeepWithGroup>
-              <RepeatOnNewPage>true</RepeatOnNewPage>
-            </TablixMember>
+            <TablixMember />
             <TablixMember />
             <TablixMember />
             <TablixMember />
@@ -799,9 +795,9 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>PersonIncharge</rd:DefaultName>
-                <Top>1.07986in</Top>
+                <Top>1.02431in</Top>
                 <Left>0.02083in</Left>
-                <Height>0.3507in</Height>
+                <Height>0.25in</Height>
                 <Width>2.03473in</Width>
                 <ZIndex>4</ZIndex>
                 <Style>
@@ -1788,38 +1784,6 @@
           <Height>0.54167in</Height>
           <Width>2.96181in</Width>
           <ZIndex>6</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="PageNumber">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=Globals!PageNumber</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>2.38539in</Top>
-          <Left>2.48485in</Left>
-          <Height>0.25in</Height>
-          <Width>1in</Width>
-          <ZIndex>7</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>

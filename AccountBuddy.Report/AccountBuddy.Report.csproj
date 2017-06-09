@@ -90,13 +90,21 @@
     <EmbeddedResource Include="rpt\Transaction\rptPaymentVoucher.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="rpt\Transaction\rptPurchase.rdlc" />
-    <EmbeddedResource Include="rpt\Transaction\rptPurchaseReturn.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptPurchase.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptPurchaseReturn.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptQuickPurchaseOrder.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="rpt\Transaction\rptQuickSales.rdlc" />
-    <EmbeddedResource Include="rpt\Transaction\rptQuickSalesOrder.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptQuickSales.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptQuickSalesOrder.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptReceiptVoucher.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -127,11 +135,21 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.PaymentDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Products1.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ProfitLoss.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Purchase.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseOrder.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseOrderDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseReturn.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseReturnDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Receipt.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptAndPayment.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Sale.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesOrder.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesOrderDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturn.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturnDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockGroup1.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.TrialBalance.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UOM.datasource" />
