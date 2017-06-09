@@ -197,16 +197,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductName" Type="nvarchar" MaxLength="150" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="StockGroupId" Type="int" />
-          <Property Name="UOMId" Type="int" />
-          <Property Name="PurchaseRate" Type="money" />
-          <Property Name="SellingRate" Type="money" />
-          <Property Name="MRP" Type="money" />
-          <Property Name="GST" Type="float" />
-          <Property Name="OpeningStock" Type="float" />
-          <Property Name="ReOrderLevel" Type="float" />
+          <Property Name="StockGroupId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="PurchaseRate" Type="money" Nullable="false" />
+          <Property Name="SellingRate" Type="money" Nullable="false" />
+          <Property Name="MRP" Type="money" Nullable="false" />
+          <Property Name="OpeningStock" Type="float" Nullable="false" />
+          <Property Name="ReOrderLevel" Type="float" Nullable="false" />
           <Property Name="ProductImage" Type="image" />
         </EntityType>
         <EntityType Name="Purchase">
@@ -463,9 +462,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FormalName" Type="nvarchar" MaxLength="150" />
-          <Property Name="Symbol" Type="nvarchar" MaxLength="150" />
-          <Property Name="CompanyId" Type="int" />
+          <Property Name="FormalName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Symbol" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -707,7 +706,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_StockGroup">
-          <End Role="StockGroup" Type="Self.StockGroup" Multiplicity="0..1" />
+          <End Role="StockGroup" Type="Self.StockGroup" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StockGroup">
@@ -719,7 +718,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_UOM">
-          <End Role="UOM" Type="Self.UOM" Multiplicity="0..1" />
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -1211,7 +1210,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UOM_CompanyDetail">
-          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="0..1" />
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
           <End Role="UOM" Type="Self.UOM" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyDetail">
@@ -2119,16 +2118,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StockGroupId" Type="Int32" />
-          <Property Name="UOMId" Type="Int32" />
-          <Property Name="PurchaseRate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="SellingRate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MRP" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="GST" Type="Double" />
-          <Property Name="OpeningStock" Type="Double" />
-          <Property Name="ReOrderLevel" Type="Double" />
+          <Property Name="StockGroupId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="PurchaseRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="SellingRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="MRP" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="OpeningStock" Type="Double" Nullable="false" />
+          <Property Name="ReOrderLevel" Type="Double" Nullable="false" />
           <Property Name="ProductImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="StockGroup" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="Product" ToRole="StockGroup" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="Product" ToRole="UOM" />
@@ -2450,9 +2448,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormalName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Symbol" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="FormalName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="UOM" ToRole="CompanyDetail" />
           <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="UOM" ToRole="Product" />
           <NavigationProperty Name="PurchaseDetails" Relationship="DBFMCGModel.FK_PurchaseDetail_UOM" FromRole="UOM" ToRole="PurchaseDetail" />
@@ -2592,7 +2590,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UOM_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
           <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyDetail">
@@ -2892,7 +2890,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_StockGroup">
-          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="1" />
           <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StockGroup">
@@ -2904,7 +2902,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_UOM">
-          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
           <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
@@ -3502,7 +3500,6 @@
                 <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
                 <ScalarProperty Name="ReOrderLevel" ColumnName="ReOrderLevel" />
                 <ScalarProperty Name="OpeningStock" ColumnName="OpeningStock" />
-                <ScalarProperty Name="GST" ColumnName="GST" />
                 <ScalarProperty Name="MRP" ColumnName="MRP" />
                 <ScalarProperty Name="SellingRate" ColumnName="SellingRate" />
                 <ScalarProperty Name="PurchaseRate" ColumnName="PurchaseRate" />

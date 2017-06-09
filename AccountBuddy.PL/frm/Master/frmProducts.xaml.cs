@@ -74,9 +74,17 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "ProductName"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            if (data.ItemCode == null)
+            else if (data.ItemCode == null)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Item Code"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.StockGroupId == 0)
+            {
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Stock Group"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           else if (data.UOMId == 0)
+            {
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "UOM"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
