@@ -104,13 +104,18 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    var LName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), cm.CompanyName);
-                    var l = DB.Ledgers.Where(x => x.LedgerName == LName).FirstOrDefault().toCopy<BLL.Ledger>(new BLL.Ledger());
-                    cm.toCopy<BLL.Ledger>(l);      
-                                 
+                    var LName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), d.CompanyName);
+                    var lstLedger = DB.Ledgers.Where(x => x.LedgerName == LName).ToList();
+                    foreach(var dl in lstLedger)
+                    {
+                        var l = dl.toCopy<BLL.Ledger>(new BLL.Ledger());
+                        cm.toCopy<BLL.Ledger>(l);
+                        l.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), d.CompanyName); 
+                        Ledger_Save(l);
+                    }
+                                                     
                     cm.toCopy<DAL.CompanyDetail>(d);
-                    DB.SaveChanges();
-                    Ledger_Save(l);            
+                    DB.SaveChanges();                                
                 }
 
                 Clients.Others.CompanyDetail_Save(cm);
