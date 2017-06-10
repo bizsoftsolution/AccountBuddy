@@ -87,19 +87,27 @@ namespace AccountBuddy.SL.Hubs
                         CompanySetup(cm);
                         if (( d.UnderCompanyId??0) !=0)
                         {
-                            var l = new BLL.Ledger();
-                            cm.toCopy<BLL.Ledger>(l);
-                            l.LedgerName = string.Format("{0}-{1}",cm.CompanyType== "Warehouse" ? "WH":"DL", cm.CompanyName);
-                            l.AccountGroupId = AccountGroupIdByCompanyAndKey(d.UnderCompanyId.Value, BLL.DataKeyValue.FixedAssets_Key);
-                            Ledger_Save(l);
+                            var l1 = new BLL.Ledger();
+                            cm.toCopy<BLL.Ledger>(l1);
+                            l1.LedgerName = string.Format("{0}-{1}",cm.CompanyType== "Warehouse" ? "WH":"DL", cm.CompanyName);
+                            l1.AccountGroupId = AccountGroupIdByCompanyAndKey(d.UnderCompanyId.Value, BLL.DataKeyValue.FixedAssets_Key);
+                            Ledger_Save(l1);
+
+                            var l2 = new BLL.Ledger();
+                            var cm2 = DB.CompanyDetails.Where(x => x.Id == cm.UnderCompanyId).FirstOrDefault();
+                            cm2.toCopy<BLL.Ledger>(l2);
+                            l2.LedgerName = string.Format("CM-{1}",  cm2.CompanyName);
+                            l2.AccountGroupId = AccountGroupIdByCompanyAndKey(cm.Id, BLL.DataKeyValue.FixedAssets_Key);
+                            Ledger_Save(l2);
                         }
                     }
                 }
                 else
                 {
-                    var LName = string.Format("{0}-{1}", cm.CompanyType == "Warehouse" ? "WH" : "DL", cm.CompanyName);
+                    var LName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), cm.CompanyName);
                     var l = DB.Ledgers.Where(x => x.LedgerName == LName).FirstOrDefault().toCopy<BLL.Ledger>(new BLL.Ledger());
-                    cm.toCopy<BLL.Ledger>(l);                   
+                    cm.toCopy<BLL.Ledger>(l);      
+                                 
                     cm.toCopy<DAL.CompanyDetail>(d);
                     DB.SaveChanges();
                     Ledger_Save(l);            
