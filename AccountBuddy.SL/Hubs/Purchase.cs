@@ -103,13 +103,16 @@ namespace AccountBuddy.SL.Hubs
                 DAL.Purchase d = DB.Purchases.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
-                {                    
+                {
+                    var P = Purchase_DALtoBLL(d);
                     DB.PurchaseDetails.RemoveRange(d.PurchaseDetails);
                     DB.Purchases.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(Purchase_DALtoBLL(d), LogDetailType.DELETE);
+                    LogDetailStore(P, LogDetailType.DELETE);
+                    Journal_DeleteByPurchase(P);
+                    return true;
                 }
-                return true;
+                
             }
             catch (Exception ex) { }
             return false;

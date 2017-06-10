@@ -10,43 +10,7 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Journal
-
-        #region list
-        public static List<BLL.Journal> _JPendingList;
-        public static List<BLL.Journal> JPendingList
-        {
-            get
-            {
-                if (_JPendingList == null)
-                {
-                    _JPendingList = new List<BLL.Journal>();
-                    foreach (var d1 in DB.Journals.OrderBy(x => x.EntryNo).ToList())
-                    {
-                        BLL.Journal d2 = new BLL.Journal();
-                        d1.toCopy<BLL.Journal>(d2);
-
-                        d2.JDetails = new ObservableCollection<BLL.JournalDetail>();
-                        foreach(var jdFrom in d1.JournalDetails)
-                        {
-                            BLL.JournalDetail jdTo = new BLL.JournalDetail();
-                            jdFrom.toCopy<BLL.JournalDetail>(jdTo);
-                            jdTo.LedgerName = jdFrom.Ledger.LedgerName;
-                            jdFrom.Ledger.toCopy<BLL.Ledger>(jdTo.JLedger);
-                            d2.JDetails.Add(jdTo);
-                        }
-                        _JPendingList.Add(d2);
-                    }
-
-                }
-                return _JPendingList;
-            }
-            set
-            {
-                _JPendingList = value;
-            }
-        }
-        #endregion
+        #region Journal        
 
 
         public bool Journal_Save(BLL.Journal PO)
@@ -76,13 +40,14 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    PO.toCopy<DAL.Journal>(d);
 
-                    //foreach (var d_pod in d.JournalDetails)
-                    //{
-                    //    BLL.JournalDetail b_pod = PO.JDetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
-                    //    if (b_pod == null) d.JournalDetails.Remove(d_pod);
-                    //}
+                    foreach (var d_SOd in d.JournalDetails)
+                    {
+                        BLL.JournalDetail b_SOd = PO.JDetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
+                        if (b_SOd == null) d.JournalDetails.Remove(d_SOd);
+                    }
+
+                    PO.toCopy<DAL.Journal>(d);
 
                     foreach (var b_pod in PO.JDetails)
                     {
@@ -97,18 +62,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
-
-                BLL.Journal B_PO = JPendingList.Where(x => x.Id == PO.Id).FirstOrDefault();
-
-                if (B_PO == null)
-                {
-                    B_PO = new BLL.Journal();
-                    JPendingList.Add(B_PO);
-                }
-
-                PO.toCopy<BLL.Journal>(B_PO);
-                Clients.Clients(OtherLoginClientsOnGroup).Journal_POPendingSave(B_PO);
-
+                
                 return true;
             }
             catch (Exception ex) { }
@@ -149,36 +103,25 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
-                    BLL.Journal PO = new BLL.Journal();
-                    d.toCopy<BLL.Journal>(PO);
-                    foreach (var d_pod in d.JournalDetails)
-                    {
-                        BLL.JournalDetail b_pod = new BLL.JournalDetail();
-                        d_pod.toCopy<BLL.JournalDetail>(b_pod);
-                        PO.JDetails.Add(b_pod);
-
-                    }
                     DB.JournalDetails.RemoveRange(d.JournalDetails);
                     DB.Journals.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(PO, LogDetailType.DELETE);
-
-                    BLL.Journal B_PO = JPendingList.Where(x => x.Id == PO.Id).FirstOrDefault();
-                    if (B_PO != null)
-                    {
-                        Clients.Clients(OtherLoginClientsOnGroup).Journal_POPendingDelete(B_PO.Id);
-                        JPendingList.Remove(B_PO);
-                    }
+                    LogDetailStore(Journal_DALtoBLL(d), LogDetailType.DELETE);                    
                 }
                 return true;
             }
             catch (Exception ex) { }
             return false;
-        }
+        }        
 
-        public List<BLL.Journal> Journal_JPendingList()
+        public BLL.Journal Journal_DALtoBLL(DAL.Journal d)
         {
-            return JPendingList.Where(x => x.JDetail.JLedger.AccountGroup.Company.Id == Caller.CompanyId).ToList();
+            BLL.Journal J = d.toCopy<BLL.Journal>(new BLL.Journal());
+            foreach (var d_Jd in d.JournalDetails)
+            {
+                J.JDetails.Add(d_Jd.toCopy<BLL.JournalDetail>(new BLL.JournalDetail()));
+            }
+            return J;
         }
 
         public bool Find_JEntryNo(string entryNo, BLL.Payment PO)
@@ -254,7 +197,12 @@ namespace AccountBuddy.SL.Hubs
             j.JournalDate = P.PurchaseDate;
             DB.SaveChanges();
         }
-
+        void Journal_DeleteByPurchase(BLL.Purchase P)
+        {
+            var EntryNo = string.Format("PUR-{0}", P.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            if (j != null) Journal_Delete(j.Id);            
+        }
         void Journal_SaveBySalesReturn(BLL.SalesReturn SR)
         {
             var EntryNo = string.Format("SRN-{0}", SR.Id);
@@ -307,7 +255,13 @@ namespace AccountBuddy.SL.Hubs
             j.JournalDate = SR.SRDate;
             DB.SaveChanges();
         }
+        void Journal_DeleteBySalesReturn(BLL.SalesReturn SR)
+        {
+            var EntryNo = string.Format("SRN-{0}", SR.Id);
 
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            if (j == null) Journal_Delete(j.Id);
+        }
         void Journal_SaveBySales(BLL.Sale S)
         {
             var EntryNo = string.Format("SAL-{0}", S.Id);
@@ -360,7 +314,13 @@ namespace AccountBuddy.SL.Hubs
             j.JournalDate = S.SalesDate;
             DB.SaveChanges();
         }
+        void Journal_DeleteBySales(BLL.Sale S)
+        {
+            var EntryNo = string.Format("SAL-{0}", S.Id);
 
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            if (j == null) Journal_Delete(j.Id);
+        }
         void Journal_SaveByPurchaseReturn(BLL.PurchaseReturn PR)
         {
             var EntryNo = string.Format("PRN-{0}", PR.Id);
@@ -413,7 +373,13 @@ namespace AccountBuddy.SL.Hubs
             j.JournalDate = PR.PRDate;
             DB.SaveChanges();
         }
+        void Journal_DeleteByPurchaseReturn(BLL.PurchaseReturn PR)
+        {
+            var EntryNo = string.Format("PRN-{0}", PR.Id);
 
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            if (j == null) Journal_Delete(j.Id);
+        }
 
         #endregion
     }

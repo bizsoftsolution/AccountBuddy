@@ -101,10 +101,12 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
+                    var P = SalesReturn_DALtoBLL(d);
                     DB.SalesReturnDetails.RemoveRange(d.SalesReturnDetails);
                     DB.SalesReturns.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(SalesReturn_DALtoBLL(d), LogDetailType.DELETE);
+                    LogDetailStore(P, LogDetailType.DELETE);
+                    Journal_DeleteBySalesReturn(P);
                 }
                 return true;
             }

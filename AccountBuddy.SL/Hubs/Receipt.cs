@@ -11,33 +11,7 @@ namespace AccountBuddy.SL.Hubs
     {
         #region Receipt
 
-        #region list
-        public static List<BLL.Receipt> _RPendingList;
-        public static List<BLL.Receipt> RPendingList
-        {
-            get
-            {
-                if (_RPendingList == null)
-                {
-                    _RPendingList = new List<BLL.Receipt>();
-                    foreach (var d1 in DB.Receipts.OrderBy(x => x.EntryNo).ToList())
-                    {
-                        BLL.Receipt d2 = new BLL.Receipt();
-                        d1.toCopy<BLL.Receipt>(d2);
-                        _RPendingList.Add(d2);
-                    }
-
-                }
-                return _RPendingList;
-            }
-            set
-            {
-                _RPendingList = value;
-            }
-        }
-        #endregion
-
-
+      
         public bool Receipt_Save(BLL.Receipt PO)
         {
             try
@@ -65,13 +39,14 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    PO.toCopy<DAL.Receipt>(d);
 
-                    //foreach (var d_pod in d.ReceiptDetails)
-                    //{
-                    //    BLL.ReceiptDetail b_pod = PO.RDetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
-                    //    if (b_pod == null) d.ReceiptDetails.Remove(d_pod);
-                    //}
+                    foreach (var d_pod in d.ReceiptDetails)
+                    {
+                        BLL.ReceiptDetail b_pod = PO.RDetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
+                        if (b_pod == null) d.ReceiptDetails.Remove(d_pod);
+                    }
+
+                    PO.toCopy<DAL.Receipt>(d);
 
                     foreach (var b_pod in PO.RDetails)
                     {
@@ -86,18 +61,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
-
-                BLL.Receipt B_PO = RPendingList.Where(x => x.Id == PO.Id).FirstOrDefault();
-
-                if (B_PO == null)
-                {
-                    B_PO = new BLL.Receipt();
-                    RPendingList.Add(B_PO);
-                }
-
-                PO.toCopy<BLL.Receipt>(B_PO);
-                Clients.Clients(OtherLoginClientsOnGroup).Receipt_POPendingSave(B_PO);
-
+                
                 return true;
             }
             catch (Exception ex) { }
@@ -139,27 +103,10 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
-                    BLL.Receipt PO = new BLL.Receipt();
-                    d.toCopy<BLL.Receipt>(PO);
-                    PO.LedgerName = d.Ledger.LedgerName;
-                    foreach (var d_pod in d.ReceiptDetails)
-                    {
-                        BLL.ReceiptDetail b_pod = new BLL.ReceiptDetail();
-                        d_pod.toCopy<BLL.ReceiptDetail>(b_pod);
-                        PO.RDetails.Add(b_pod);
-
-                    }
                     DB.ReceiptDetails.RemoveRange(d.ReceiptDetails);
                     DB.Receipts.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(PO, LogDetailType.DELETE);
-
-                    BLL.Receipt B_PO = RPendingList.Where(x => x.Id == PO.Id).FirstOrDefault();
-                    if (B_PO != null)
-                    {
-                        Clients.Clients(OtherLoginClientsOnGroup).Receipt_POPendingDelete(B_PO.Id);
-                        RPendingList.Remove(B_PO);
-                    }
+                    LogDetailStore(Receipt_DALtoBLL(d), LogDetailType.DELETE);
                 }
                 return true;
             }
@@ -167,9 +114,15 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-        public List<BLL.Receipt> Receipt_RPendingList()
+
+        public BLL.Receipt Receipt_DALtoBLL(DAL.Receipt d)
         {
-            return RPendingList.Where(x => x.RLedger.AccountGroup.Company.Id == Caller.CompanyId).ToList();
+            BLL.Receipt R = d.toCopy<BLL.Receipt>(new BLL.Receipt());
+            foreach (var d_Pd in d.ReceiptDetails)
+            {
+                R.RDetails.Add(d_Pd.toCopy<BLL.ReceiptDetail>(new BLL.ReceiptDetail()));
+            }
+            return R;
         }
 
         public bool Find_REntryNo(string entryNo, BLL.Receipt PO)
