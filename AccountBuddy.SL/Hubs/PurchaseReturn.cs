@@ -16,8 +16,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                P.CompanyId = Caller.CompanyId;
-
+               
                 DAL.PurchaseReturn d = DB.PurchaseReturns.Where(x => x.Id == P.Id).FirstOrDefault();
 
                 if (d == null)
@@ -50,7 +49,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
-
+                Journal_SaveByPurchaseReturn(P);
                 return true;
             }
             catch (Exception ex) { }

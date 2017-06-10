@@ -11,15 +11,15 @@ namespace AccountBuddy.BLL
     {
         #region Field
         private long _Id;
-        private long? _SRId;
+        private long _SRId;
         private long? _SDId;
-        private int? _ProductId;
-        private int? _UOMId;
-        private double? _Quantity;
-        private decimal? _UnitPrice;
-        private decimal? _DiscountAmount;
-        private decimal? _GSTAmount;
-        private decimal? _Amount;
+        private int _ProductId;
+        private int _UOMId;
+        private double _Quantity;
+        private decimal _UnitPrice;
+        private decimal _DiscountAmount;
+        private decimal _GSTAmount;
+        private decimal _Amount;
 
         private string _ItemCode;
         private string _ProductName;
@@ -43,8 +43,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public long? SRId
+        public long SRId
         {
             get
             {
@@ -59,7 +58,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public long? SDId
         {
             get
@@ -75,9 +73,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-
-        public int? ProductId
+        public int ProductId
         {
             get
             {
@@ -88,13 +84,12 @@ namespace AccountBuddy.BLL
                 if (_ProductId != value)
                 {
                     _ProductId = value;
-                    if (value != null) SetProduct(new Product(_ProductId.Value));
+                    if (value != 0) SetProduct(new Product(_ProductId));
                     NotifyPropertyChanged(nameof(ProductId));
                 }
             }
         }
-
-        public int? UOMId
+        public int UOMId
         {
             get
             {
@@ -109,8 +104,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public double? Quantity
+        public double Quantity
         {
             get
             {
@@ -121,13 +115,12 @@ namespace AccountBuddy.BLL
                 if (_Quantity != value)
                 {
                     _Quantity = value;
-                    Amount = Convert.ToDecimal(_Quantity ?? 0) * _UnitPrice ?? 0;
+                    Amount = Convert.ToDecimal(_Quantity ) * _UnitPrice;
                     NotifyPropertyChanged(nameof(Quantity));
                 }
             }
         }
-
-        public decimal? UnitPrice
+        public decimal UnitPrice
         {
             get
             {
@@ -138,13 +131,12 @@ namespace AccountBuddy.BLL
                 if (_UnitPrice != value)
                 {
                     _UnitPrice = value;
-                    Amount = Convert.ToDecimal(_Quantity ?? 0) * _UnitPrice ?? 0;
+                    Amount = Convert.ToDecimal(_Quantity) * _UnitPrice;
                     NotifyPropertyChanged(nameof(UnitPrice));
                 }
             }
         }
-
-        public decimal? DiscountAmount
+        public decimal DiscountAmount
         {
             get
             {
@@ -159,8 +151,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public decimal? GSTAmount
+        public decimal GSTAmount
         {
             get
             {
@@ -175,8 +166,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public decimal? Amount
+        public decimal Amount
         {
             get
             {
@@ -191,7 +181,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string ItemCode
         {
             get
@@ -212,7 +201,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string ProductName
         {
             get
@@ -228,7 +216,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string UOMName
         {
             get

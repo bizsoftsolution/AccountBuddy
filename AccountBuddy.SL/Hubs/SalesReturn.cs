@@ -47,7 +47,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
-
+                Journal_SaveBySalesReturn(P);
                 return true;
             }
             catch (Exception ex) { }
