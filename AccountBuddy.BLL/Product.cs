@@ -141,7 +141,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return (OpeningStock  + PQty?? 0 + SRQty??0 ) - (SQty??0  + PRQty??0);
+                return (OpeningStock  + (PQty?? 0) + (SRQty??0 )) - ((SQty??0)  + (PRQty??0));
             }
         }
 
