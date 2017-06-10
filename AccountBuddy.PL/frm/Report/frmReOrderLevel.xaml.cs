@@ -118,6 +118,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            BLL.Product.Init();
             dgvStockReport.ItemsSource = BLL.Product.toList;
             CollectionViewSource.GetDefaultView(dgvStockReport.ItemsSource).Filter = DGV_Filter;
             LoadReport();
