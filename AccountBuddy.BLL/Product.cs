@@ -60,6 +60,7 @@ namespace AccountBuddy.BLL
                 {
                     _PQty = value;
                     NotifyPropertyChanged(nameof(PQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
                 }
 
             }
@@ -77,6 +78,7 @@ namespace AccountBuddy.BLL
                 {
                     _PRQty = value;
                     NotifyPropertyChanged(nameof(PRQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
                 }
 
             }
@@ -111,6 +113,7 @@ namespace AccountBuddy.BLL
                 {
                     _SQty = value;
                     NotifyPropertyChanged(nameof(SQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
                 }
 
             }
@@ -128,6 +131,7 @@ namespace AccountBuddy.BLL
                 {
                     _SRQty = value;
                     NotifyPropertyChanged(nameof(SRQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
                 }
 
             }
@@ -398,6 +402,7 @@ namespace AccountBuddy.BLL
                 {
                     _OpeningStock = value;
                     NotifyPropertyChanged(nameof(OpeningStock));
+                    NotifyPropertyChanged(nameof(AvailableStock));
                 }
             }
         }
