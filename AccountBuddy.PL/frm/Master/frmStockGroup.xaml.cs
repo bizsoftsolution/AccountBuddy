@@ -48,6 +48,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            BLL.StockGroup.Init();
             dgvStock.ItemsSource = BLL.StockGroup.toList;
 
             CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Filter = StockGroup_Filter;

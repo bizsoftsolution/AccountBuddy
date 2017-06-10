@@ -48,6 +48,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            BLL.UOM.Init();
             dgvUOM.ItemsSource = BLL.UOM.toList;
 
             CollectionViewSource.GetDefaultView(dgvUOM.ItemsSource).Filter = UOM_Filter;

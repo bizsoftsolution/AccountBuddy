@@ -59,6 +59,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            BLL.CompanyDetail.Init();
 
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
             iProductImage.Source = AppLib.ViewImage(data.Logo);

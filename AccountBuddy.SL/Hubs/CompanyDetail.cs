@@ -61,6 +61,11 @@ namespace AccountBuddy.SL.Hubs
                              .Select(x => CompanyDetailDAL_BLL(x)).ToList();
         }
 
+        int AccountGroupIdByCompanyAndKey(int CompanyId,string key)
+        {
+            return DB.DataKeyValues.Where(x => x.CompanyId == CompanyId && x.DataKey == key).FirstOrDefault().DataValue;
+        }
+
         public int CompanyDetail_Save(BLL.CompanyDetail cm)
         {
             try
@@ -77,12 +82,27 @@ namespace AccountBuddy.SL.Hubs
 
                     DB.SaveChanges();
                     cm.Id = d.Id;
-                    if (d.Id != 0) CompanySetup(cm);
+                    if (d.Id != 0)
+                    {
+                        CompanySetup(cm);
+                        if (( d.UnderCompanyId??0) !=0)
+                        {
+                            var l = new BLL.Ledger();
+                            cm.toCopy<BLL.Ledger>(l);
+                            l.LedgerName = string.Format("{0}-{1}",cm.CompanyType== "Warehouse" ? "WH":"DL", cm.CompanyName);
+                            l.AccountGroupId = AccountGroupIdByCompanyAndKey(d.UnderCompanyId.Value, BLL.DataKeyValue.FixedAssets_Key);
+                            Ledger_Save(l);
+                        }
+                    }
                 }
                 else
                 {
+                    var LName = string.Format("{0}-{1}", cm.CompanyType == "Warehouse" ? "WH" : "DL", cm.CompanyName);
+                    var l = DB.Ledgers.Where(x => x.LedgerName == LName).FirstOrDefault().toCopy<BLL.Ledger>(new BLL.Ledger());
+                    cm.toCopy<BLL.Ledger>(l);                   
                     cm.toCopy<DAL.CompanyDetail>(d);
                     DB.SaveChanges();
+                    Ledger_Save(l);            
                 }
 
                 Clients.Others.CompanyDetail_Save(cm);

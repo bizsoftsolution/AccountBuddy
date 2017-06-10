@@ -48,6 +48,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            BLL.Bank.Init();
             dgvBank.ItemsSource = BLL.Bank.toList;
 
             CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).Filter = Bank_Filter;

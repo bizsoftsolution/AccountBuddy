@@ -48,6 +48,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            BLL.Ledger.Init();
             dgvLedger.ItemsSource = BLL.Ledger.toList;
 
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).Filter = Ledger_Filter;

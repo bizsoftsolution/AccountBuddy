@@ -47,6 +47,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            BLL.Supplier.Init();
             dgvSupplier.ItemsSource = BLL.Supplier.toList;
 
             CollectionViewSource.GetDefaultView(dgvSupplier.ItemsSource).Filter = Supplier_Filter;
