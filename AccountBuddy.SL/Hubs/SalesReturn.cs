@@ -33,18 +33,28 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
 
+                    P.Id = d.Id;
                     LogDetailStore(P, LogDetailType.INSERT);
                 }
                 else
                 {
-                    P.toCopy<DAL.SalesReturn>(d);
-                    foreach (var b_pod in P.SRDetails)
+                    foreach (var d_SRd in d.SalesReturnDetails)
                     {
-                        DAL.SalesReturnDetail d_pod = new DAL.SalesReturnDetail();
-                        b_pod.toCopy<DAL.SalesReturnDetail>(d_pod);
-                        d.SalesReturnDetails.Add(d_pod);
+                        BLL.SalesReturnDetail b_SRd = P.SRDetails.Where(x => x.Id == d_SRd.Id).FirstOrDefault();
+                        if (b_SRd == null) d.SalesReturnDetails.Remove(d_SRd);
                     }
-                    DB.SaveChanges();
+
+                    P.toCopy<DAL.SalesReturn>(d);
+                    foreach (var b_SRd in P.SRDetails)
+                    {
+                        DAL.SalesReturnDetail d_SRd = d.SalesReturnDetails.Where(x => x.Id == b_SRd.Id).FirstOrDefault();
+                        if (d_SRd == null)
+                        {
+                            d_SRd = new DAL.SalesReturnDetail();
+                            d.SalesReturnDetails.Add(d_SRd);
+                        }
+                        b_SRd.toCopy<DAL.SalesReturnDetail>(d_SRd);
+                    }
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Journal_SaveBySalesReturn(P);
@@ -91,21 +101,10 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
-                    BLL.SalesReturn P = new BLL.SalesReturn();
-                    d.toCopy<BLL.SalesReturn>(P);
-                  //  P.LedgerName = d.Ledger.LedgerName;
-                  //  P.TransactionType = d.TransactionType.Type;
-                    foreach (var d_pod in d.SalesReturnDetails)
-                    {
-                        BLL.SalesReturnDetail b_pod = new BLL.SalesReturnDetail();
-                        d_pod.toCopy<BLL.SalesReturnDetail>(b_pod);
-                        P.SRDetails.Add(b_pod);
-
-                    }
                     DB.SalesReturnDetails.RemoveRange(d.SalesReturnDetails);
                     DB.SalesReturns.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(P, LogDetailType.DELETE);
+                    LogDetailStore(SalesReturn_DALtoBLL(d), LogDetailType.DELETE);
                 }
                 return true;
             }
@@ -113,7 +112,15 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-        
+        public BLL.SalesReturn SalesReturn_DALtoBLL(DAL.SalesReturn d)
+        {
+            BLL.SalesReturn SR = d.toCopy<BLL.SalesReturn>(new BLL.SalesReturn());
+            foreach (var d_SRd in d.SalesReturnDetails)
+            {
+                SR.SRDetails.Add(d_SRd.toCopy<BLL.SalesReturnDetail>(new BLL.SalesReturnDetail()));
+            }
+            return SR;
+        }
         public bool Find_SRRef(string RefNo, BLL.SalesReturn PO)
 
         {

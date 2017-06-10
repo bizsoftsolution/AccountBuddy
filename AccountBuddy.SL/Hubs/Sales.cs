@@ -34,18 +34,28 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
 
+                    P.Id = d.Id;
                     LogDetailStore(P, LogDetailType.INSERT);
                 }
                 else
                 {
-                    P.toCopy<DAL.Sale>(d);
-                    foreach (var b_pod in P.SDetails)
+                    foreach (var d_Sd in d.SalesDetails)
                     {
-                        DAL.SalesDetail d_pod = new DAL.SalesDetail();
-                        b_pod.toCopy<DAL.SalesDetail>(d_pod);
-                        d.SalesDetails.Add(d_pod);
+                        BLL.SalesDetail b_Sd = P.SDetails.Where(x => x.Id == d_Sd.Id).FirstOrDefault();
+                        if (b_Sd == null) d.SalesDetails.Remove(d_Sd);
                     }
-                    DB.SaveChanges();
+
+                    P.toCopy<DAL.Sale>(d);
+                    foreach (var b_Sd in P.SDetails)
+                    {
+                        DAL.SalesDetail d_Sd = d.SalesDetails.Where(x => x.Id == b_Sd.Id).FirstOrDefault();
+                        if (d_Sd == null)
+                        {
+                            d_Sd = new DAL.SalesDetail();
+                            d.SalesDetails.Add(d_Sd);
+                        }
+                        b_Sd.toCopy<DAL.SalesDetail>(d_Sd);
+                    }
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Journal_SaveBySales(P);
@@ -92,29 +102,26 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
-                    BLL.Sale P = new BLL.Sale();
-                    d.toCopy<BLL.Sale>(P);
-                    P.LedgerName = d.Ledger.LedgerName;
-                    P.TransactionType = d.TransactionType.Type;
-                    foreach (var d_pod in d.SalesDetails)
-                    {
-                        BLL.SalesDetail b_pod = new BLL.SalesDetail();
-                        d_pod.toCopy<BLL.SalesDetail>(b_pod);
-                        P.SDetails.Add(b_pod);
-
-                    }
                     DB.SalesDetails.RemoveRange(d.SalesDetails);
                     DB.Sales.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(P, LogDetailType.DELETE);
+                    LogDetailStore(Sales_DALtoBLL(d), LogDetailType.DELETE);
                 }
                 return true;
             }
             catch (Exception ex) { }
             return false;
         }
-        
 
+        public BLL.Sale Sales_DALtoBLL(DAL.Sale d)
+        {
+            BLL.Sale S = d.toCopy<BLL.Sale>(new BLL.Sale());
+            foreach (var d_Sd in d.SalesDetails)
+            {
+                S.SDetails.Add(d_Sd.toCopy<BLL.SalesDetail>(new BLL.SalesDetail()));
+            }
+            return S;
+        }
         public bool Find_SRef(string RefNo, BLL.Sale PO)
 
         {

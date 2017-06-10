@@ -35,16 +35,27 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
 
+                    P.Id = d.Id;
                     LogDetailStore(P, LogDetailType.INSERT);
                 }
                 else
                 {
-                    P.toCopy<DAL.PurchaseReturn>(d);
-                    foreach (var b_pod in P.PRDetails)
+                    foreach (var d_Pd in d.PurchaseReturnDetails)
                     {
-                        DAL.PurchaseReturnDetail d_pod = new DAL.PurchaseReturnDetail();
-                        b_pod.toCopy<DAL.PurchaseReturnDetail>(d_pod);
-                        d.PurchaseReturnDetails.Add(d_pod);
+                        BLL.PurchaseReturnDetail b_Pd = P.PRDetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
+                        if (b_Pd == null) d.PurchaseReturnDetails.Remove(d_Pd);
+                    }
+
+                    P.toCopy<DAL.PurchaseReturn>(d);
+                    foreach (var b_Pd in P.PRDetails)
+                    {
+                        DAL.PurchaseReturnDetail d_Pd = d.PurchaseReturnDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
+                        if (d_Pd == null)
+                        {
+                            d_Pd = new DAL.PurchaseReturnDetail();
+                            d.PurchaseReturnDetails.Add(d_Pd);
+                        }
+                        b_Pd.toCopy<DAL.PurchaseReturnDetail>(d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -93,29 +104,26 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
-                    BLL.PurchaseReturn P = new BLL.PurchaseReturn();
-                    d.toCopy<BLL.PurchaseReturn>(P);
-                    P.LedgerName = d.Ledger.LedgerName;
-                    P.TransactionType = d.TransactionType.Type;
-                    foreach (var d_pod in d.PurchaseReturnDetails)
-                    {
-                        BLL.PurchaseReturnDetail b_pod = new BLL.PurchaseReturnDetail();
-                        d_pod.toCopy<BLL.PurchaseReturnDetail>(b_pod);
-                        P.PRDetails.Add(b_pod);
-
-                    }
                     DB.PurchaseReturnDetails.RemoveRange(d.PurchaseReturnDetails);
                     DB.PurchaseReturns.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(P, LogDetailType.DELETE);
+                    LogDetailStore(PurchaseReturn_DALtoBLL(d), LogDetailType.DELETE);
                 }
                 return true;
             }
             catch (Exception ex) { }
             return false;
         }
-       
 
+        public BLL.PurchaseReturn PurchaseReturn_DALtoBLL(DAL.PurchaseReturn d)
+        {
+            BLL.PurchaseReturn PR = d.toCopy<BLL.PurchaseReturn>(new BLL.PurchaseReturn());
+            foreach (var d_PRd in d.PurchaseReturnDetails)
+            {
+                PR.PRDetails.Add(d_PRd.toCopy<BLL.PurchaseReturnDetail>(new BLL.PurchaseReturnDetail()));
+            }
+            return PR;
+        }
         public bool Find_PRRef(string RefNo, BLL.PurchaseReturn PO)
 
         {

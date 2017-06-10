@@ -37,12 +37,23 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    
+                    foreach(var d_pod in d.PurchaseOrderDetails)
+                    {
+                        BLL.PurchaseOrderDetail b_pod = PO.PODetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
+                        if (b_pod == null)d.PurchaseOrderDetails.Remove(d_pod);                        
+                    }
+
                     PO.toCopy<DAL.PurchaseOrder>(d);
                     foreach (var b_pod in PO.PODetails)
                     {
-                        DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
-                        b_pod.toCopy<DAL.PurchaseOrderDetail>(d_pod);
-                        d.PurchaseOrderDetails.Add(d_pod);
+                        DAL.PurchaseOrderDetail d_pod = d.PurchaseOrderDetails.Where(x => x.Id == b_pod.Id).FirstOrDefault();
+                        if (d_pod == null)
+                        {
+                            d_pod = new DAL.PurchaseOrderDetail();
+                            d.PurchaseOrderDetails.Add(d_pod);
+                        }
+                        b_pod.toCopy<DAL.PurchaseOrderDetail>(d_pod);                        
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
@@ -91,22 +102,10 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
-                    BLL.PurchaseOrder PO = new BLL.PurchaseOrder();
-                    d.toCopy<BLL.PurchaseOrder>(PO);
-                    PO.LedgerName = d.Ledger.LedgerName;
-                    foreach (var d_pod in d.PurchaseOrderDetails)
-                    {
-                        BLL.PurchaseOrderDetail b_pod = new BLL.PurchaseOrderDetail();
-                        d_pod.toCopy<BLL.PurchaseOrderDetail>(b_pod);
-                        PO.PODetails.Add(b_pod);
-
-                    }
                     DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails);
                     DB.PurchaseOrders.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(PO, LogDetailType.DELETE);
-
-                   
+                    LogDetailStore(PurchaseOrder_DALtoBLL(d), LogDetailType.DELETE);
                 }
                 return true;
             }
@@ -124,7 +123,12 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.PurchaseOrder PurchaseOrder_DALtoBLL(DAL.PurchaseOrder d)
         {
-            return d.toCopy<BLL.PurchaseOrder>(new BLL.PurchaseOrder());
+            BLL.PurchaseOrder PO = d.toCopy<BLL.PurchaseOrder>(new BLL.PurchaseOrder());
+            foreach(var d_pod in d.PurchaseOrderDetails)
+            {
+                PO.PODetails.Add(d_pod.toCopy<BLL.PurchaseOrderDetail>(new BLL.PurchaseOrderDetail()));
+            }
+            return PO;
         }
         public bool Find_PORef(string RefNo, BLL.PurchaseOrder PO)
 

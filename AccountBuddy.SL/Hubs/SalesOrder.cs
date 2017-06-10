@@ -8,33 +8,7 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Sales Order
-
-        #region list
-        public static List<BLL.SalesOrder> _SOPendingList;
-        public static List<BLL.SalesOrder> SOPendingList
-        {
-            get
-            {
-                if (_SOPendingList == null)
-                {
-                    _SOPendingList = new List<BLL.SalesOrder>();
-                    foreach (var d1 in DB.SalesOrders.OrderBy(x => x.RefNo).ToList())
-                    {
-                        BLL.SalesOrder d2 = new BLL.SalesOrder();
-                        d1.toCopy<BLL.SalesOrder>(d2);
-                        _SOPendingList.Add(d2);
-                    }
-
-                }
-                return _SOPendingList;
-            }
-            set
-            {
-                _SOPendingList = value;
-            }
-        }
-        #endregion
+        #region Sales Order     
 
         public bool SalesOrder_Save(BLL.SalesOrder SO)
         {
@@ -58,31 +32,32 @@ namespace AccountBuddy.SL.Hubs
                         d.SalesOrderDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
-
+                    SO.Id = d.Id;
                     LogDetailStore(SO, LogDetailType.INSERT);
                 }
                 else
                 {
-                    SO.toCopy<DAL.SalesOrder>(d);
-                    foreach (var b_pod in SO.SODetails)
+                    foreach (var d_SOd in d.SalesOrderDetails)
                     {
-                        DAL.SalesOrderDetail d_pod = new DAL.SalesOrderDetail();
-                        b_pod.toCopy<DAL.SalesOrderDetail>(d_pod);
-                        d.SalesOrderDetails.Add(d_pod);
+                        BLL.SalesOrderDetail b_SOd = SO.SODetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
+                        if (b_SOd == null) d.SalesOrderDetails.Remove(d_SOd);
                     }
-                    DB.SaveChanges();
+
+                    SO.toCopy<DAL.SalesOrder>(d);
+                    foreach (var b_SOd in SO.SODetails)
+                    {
+                        DAL.SalesOrderDetail d_SOd = d.SalesOrderDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
+                        if (d_SOd == null)
+                        {
+                            d_SOd = new DAL.SalesOrderDetail();
+                            d.SalesOrderDetails.Add(d_SOd);
+                        }
+                        b_SOd.toCopy<DAL.SalesOrderDetail>(d_SOd);
+                    }
                     LogDetailStore(SO, LogDetailType.UPDATE);
                 }
-                BLL.SalesOrder B_SO = SOPendingList.Where(x => x.Id == SO.Id).FirstOrDefault();
-
-                if (B_SO == null)
-                {
-                    B_SO = new BLL.SalesOrder();
-                    SOPendingList.Add(B_SO);
-                }
-
-                SO.toCopy<BLL.SalesOrder>(B_SO);
-                Clients.Clients(OtherLoginClientsOnGroup).SalesOrder_SOPendingSave(B_SO);
+                
+                Clients.Clients(OtherLoginClientsOnGroup).SalesOrder_SOPendingSave(SO);
 
                 return true;
             }
@@ -126,27 +101,12 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
-                    BLL.SalesOrder SO = new BLL.SalesOrder();
-                    d.toCopy<BLL.SalesOrder>(SO);
-                    SO.LedgerName = d.Ledger.LedgerName;
-                    foreach (var d_pod in d.SalesOrderDetails)
-                    {
-                        BLL.SalesOrderDetail b_pod = new BLL.SalesOrderDetail();
-                        d_pod.toCopy<BLL.SalesOrderDetail>(b_pod);
-                        SO.SODetails.Add(b_pod);
-
-                    }
                     DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails);
                     DB.SalesOrders.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(SO, LogDetailType.DELETE);
 
-                    BLL.SalesOrder B_SO = SOPendingList.Where(x => x.Id == SO.Id).FirstOrDefault();
-                    if (B_SO != null)
-                    {
-                        Clients.Clients(OtherLoginClientsOnGroup).SalesOrder_SOPendingDelete(B_SO.Id);
-                        SOPendingList.Remove(B_SO);
-                    }
+                    LogDetailStore(SalesOrder_DALtoBLL(d), LogDetailType.DELETE);
+                    
                 }
                 return true;
             }
@@ -156,9 +116,20 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.SalesOrder> SalesOrder_SOPendingList()
         {
-            return SOPendingList.Where(x => x.CompanyId == Caller.CompanyId).ToList();
+            return DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
+                                     .ToList()
+                                     .Select(x => SalesOrder_DALtoBLL(x))
+                                     .ToList();
         }
-
+        public BLL.SalesOrder SalesOrder_DALtoBLL(DAL.SalesOrder d)
+        {
+            BLL.SalesOrder SO = d.toCopy<BLL.SalesOrder>(new BLL.SalesOrder());
+            foreach (var d_SOd in d.SalesOrderDetails)
+            {
+                SO.SODetails.Add(d_SOd.toCopy<BLL.SalesOrderDetail>(new BLL.SalesOrderDetail()));
+            }
+            return SO;
+        }
         public bool Find_SORef(string RefNo, BLL.SalesOrder PO)
 
         {

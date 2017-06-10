@@ -33,18 +33,29 @@ namespace AccountBuddy.SL.Hubs
                         d.PurchaseDetails.Add(d_pod);       
                     }
                     DB.SaveChanges();
-
+                    P.Id = d.Id;
                     
                     LogDetailStore(P, LogDetailType.INSERT);
                 }
                 else
                 {
-                    P.toCopy<DAL.Purchase>(d);
-                    foreach (var b_pod in P.PDetails)
+
+                    foreach (var d_Pd in d.PurchaseDetails)
                     {
-                        DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
-                        b_pod.toCopy<DAL.PurchaseDetail>(d_pod);
-                        d.PurchaseDetails.Add(d_pod);
+                        BLL.PurchaseDetail b_Pd = P.PDetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
+                        if (b_Pd == null) d.PurchaseDetails.Remove(d_Pd);
+                    }
+
+                    P.toCopy<DAL.Purchase>(d);
+                    foreach (var b_Pd in P.PDetails)
+                    {
+                        DAL.PurchaseDetail d_Pd = d.PurchaseDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
+                        if (d_Pd == null)
+                        {
+                            d_Pd = new DAL.PurchaseDetail();
+                            d.PurchaseDetails.Add(d_Pd);
+                        }
+                        b_Pd.toCopy<DAL.PurchaseDetail>(d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -92,29 +103,26 @@ namespace AccountBuddy.SL.Hubs
                 DAL.Purchase d = DB.Purchases.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
-                {
-                    BLL.Purchase P = new BLL.Purchase();
-                    d.toCopy<BLL.Purchase>(P);
-                    P.LedgerName = d.Ledger.LedgerName;
-                    P.TransactionType = d.TransactionType.Type;
-                    foreach (var d_pod in d.PurchaseDetails)
-                    {
-                        BLL.PurchaseDetail b_pod = new BLL.PurchaseDetail();
-                        d_pod.toCopy<BLL.PurchaseDetail>(b_pod);
-                        P.PDetails.Add(b_pod);
-
-                    }
+                {                    
                     DB.PurchaseDetails.RemoveRange(d.PurchaseDetails);
                     DB.Purchases.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(P, LogDetailType.DELETE);
+                    LogDetailStore(Purchase_DALtoBLL(d), LogDetailType.DELETE);
                 }
                 return true;
             }
             catch (Exception ex) { }
             return false;
         }
-        
+        public BLL.Purchase Purchase_DALtoBLL(DAL.Purchase d)
+        {
+            BLL.Purchase P = d.toCopy<BLL.Purchase>(new BLL.Purchase());
+            foreach (var d_Pd in d.PurchaseDetails)
+            {
+                P.PDetails.Add(d_Pd.toCopy<BLL.PurchaseDetail>(new BLL.PurchaseDetail()));
+            }
+            return P;
+        }
         public bool Find_PRef(string RefNo, BLL.Purchase PO)
 
         {

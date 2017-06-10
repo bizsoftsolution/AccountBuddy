@@ -473,8 +473,8 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
-            TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
+            TotalAmount = ItemAmount  - DiscountAmount + GSTAmount + ExtraAmount ;
         }
 
         public bool FindRefNo()
