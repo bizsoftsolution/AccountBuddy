@@ -213,6 +213,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             MessageBox.Show(Message.PL.Saved_Alert);
             App.frmHome.ShowWelcome();
+            BLL.Ledger.Init();
         }
 
         private void dgvLedger_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
