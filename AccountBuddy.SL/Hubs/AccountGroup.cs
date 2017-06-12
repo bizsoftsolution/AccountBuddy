@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
         BLL.AccountGroup AccountGroupDAL_BLL(DAL.AccountGroup d)
         {
             BLL.AccountGroup b = d.toCopy<BLL.AccountGroup>(new BLL.AccountGroup());
-            b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+            b.Company = d.CompanyDetail == null ? new BLL.CompanyDetail(): d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
             b.UnderAccountGroup = d.AccountGroup2 == null ? new BLL.AccountGroup() : AccountGroupDAL_BLL(d.AccountGroup2);
             return b;
         }

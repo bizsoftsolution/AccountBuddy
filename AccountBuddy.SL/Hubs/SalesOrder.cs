@@ -55,13 +55,16 @@ namespace AccountBuddy.SL.Hubs
                         b_SOd.toCopy<DAL.SalesOrderDetail>(d_SOd);
                     }
                     LogDetailStore(SO, LogDetailType.UPDATE);
+                    PurchaseOrder_SaveBySalesOrder(SO);
                 }
                 
                 Clients.Clients(OtherLoginClientsOnGroup).SalesOrder_SOPendingSave(SO);
 
                 return true;
+                
             }
-            catch (Exception ex) { }
+
+           catch (Exception ex) { }
             return false;
         }
 
@@ -76,7 +79,8 @@ namespace AccountBuddy.SL.Hubs
                 {
                    
                     DAL.SalesOrder d = DB.SalesOrders.Where(x => x.RefNo == PO.RefNo && x.Ledger.AccountGroup.CompanyId==Caller.UnderCompanyId).FirstOrDefault();
-
+                    d.ExtraAmount = PO.Extras.Value;
+                    d.SODate = PO.PODate.Value;
                     if (d != null)
                     {
                         DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails);
@@ -175,12 +179,13 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
+                    var s = SalesOrder_DALtoBLL(d);
                     DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails);
                     DB.SalesOrders.Remove(d);
                     DB.SaveChanges();
 
-                    LogDetailStore(SalesOrder_DALtoBLL(d), LogDetailType.DELETE);
-                    
+                    LogDetailStore(s, LogDetailType.DELETE);
+                    PurchaseOrder_DeleteBySalesOrder(s);
                 }
                 return true;
             }
