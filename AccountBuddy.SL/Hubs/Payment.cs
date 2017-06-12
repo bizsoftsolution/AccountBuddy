@@ -98,11 +98,14 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
+                    var P = Payment_DALtoBLL(d);
                     DB.PaymentDetails.RemoveRange(d.PaymentDetails);
                     DB.Payments.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(Payment_DALtoBLL(d), LogDetailType.DELETE);
+                    LogDetailStore(P, LogDetailType.DELETE);
+                    Journal_DeleteByPayment(P);
                 }
+                
                 return true;
             }
             catch (Exception ex) { }

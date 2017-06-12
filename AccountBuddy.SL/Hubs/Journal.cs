@@ -443,22 +443,85 @@ namespace AccountBuddy.SL.Hubs
 
 
                 }
-                else if (ld.LedgerName.StartsWith("WH-"))
-                {
-
-                }
             }
             else
-            {
-                
+            {                
                 j.JournalDate = P.PaymentDate;
+                foreach(var jd in j.JournalDetails)
+                {
+                    if (jd.CrAmt != 0) jd.CrAmt = P.Amount;
+                    if (jd.DrAmt != 0) jd.DrAmt = P.Amount;
+                    jd.Particulars = P.Particulars;
+                }
                 DB.SaveChanges();
             }
 
         }
         void Journal_DeleteByPayment(BLL.Payment P)
         {
-            var EntryNo = string.Format("PUR-{0}", P.Id);
+            var EntryNo = string.Format("PMT-{0}", P.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            if (j != null) Journal_Delete(j.Id);
+        }
+
+        void Journal_SaveByReceipt(BLL.Receipt R)
+        {
+            var EntryNo = string.Format("RPT-{0}", R.Id);
+
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            if (j == null)
+            {
+                var pd = R.RDetails.FirstOrDefault();
+                var ld = DB.Ledgers.Where(x => x.Id == pd.LedgerId).FirstOrDefault();
+
+                if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
+                {
+                    j = new DAL.Journal();
+                    j.EntryNo = EntryNo;
+                    j.JournalDate = R.ReceiptDate;
+
+                    var CId = CompanyIdByLedgerName(ld.LedgerName);
+                    if (CId != 0)
+                    {
+                        var LName = LedgerNameByCompanyId(Caller.CompanyId);
+
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
+                            DrAmt = R.Amount,
+                            Particulars = R.Particulars
+                        });
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+
+                            LedgerId = LedgerIdByCompany(LName, CId),
+                            CrAmt = R.Amount,
+                            Particulars = R.Particulars
+                        });
+                        DB.Journals.Add(j);
+                        DB.SaveChanges();
+                    }
+
+
+                }
+            }
+            else
+            {
+
+                j.JournalDate = R.ReceiptDate;
+                foreach (var jd in j.JournalDetails)
+                {
+                    if (jd.CrAmt != 0) jd.CrAmt = R.Amount;
+                    if (jd.DrAmt != 0) jd.DrAmt = R.Amount;
+                    jd.Particulars = R.Particulars;
+                }
+                DB.SaveChanges();
+            }
+
+        }
+        void Journal_DeleteByReceipt(BLL.Receipt P)
+        {
+            var EntryNo = string.Format("RPT-{0}", P.Id);
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
