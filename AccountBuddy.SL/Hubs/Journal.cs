@@ -141,7 +141,28 @@ namespace AccountBuddy.SL.Hubs
 
         int LedgerIdByKey(string key)
         {
-            return DB.DataKeyValues.Where(x => x.CompanyId == Caller.CompanyId && x.DataKey == key).FirstOrDefault().DataValue;
+            return LedgerIdByKeyAndCompany(key, Caller.CompanyId);
+        }
+
+        int LedgerIdByKeyAndCompany(string key,int CompanyId)
+        {
+            return DB.DataKeyValues.Where(x => x.CompanyId == CompanyId && x.DataKey == key).FirstOrDefault().DataValue;
+        }
+        int LedgerIdByCompany(string LName, int CompanyId)
+        {            
+            var l = DB.Ledgers.Where(x => x.LedgerName ==LName && x.AccountGroup.CompanyId == CompanyId).FirstOrDefault();
+            return l == null ? 0 : l.Id;
+        }
+        int CompanyIdByLedgerName(string LedgerName)
+        {
+            var CName = LedgerName.Substring(3);
+            var cm = DB.CompanyDetails.Where(x => x.CompanyName == CName).FirstOrDefault();
+            return cm == null ? 0 : cm.Id;
+        }
+        string LedgerNameByCompanyId(int CompanyId)
+        {
+            var cm = DB.CompanyDetails.Where(x => x.Id == CompanyId).FirstOrDefault();
+            return string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), cm.CompanyName);
         }
 
         void Journal_SaveByPurchase(BLL.Purchase P)
@@ -380,6 +401,68 @@ namespace AccountBuddy.SL.Hubs
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null) Journal_Delete(j.Id);
         }
+
+
+        void Journal_SaveByPayment(BLL.Payment P)
+        {
+            var EntryNo = string.Format("PMT-{0}", P.Id);
+
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            if (j == null)
+            {
+                var pd = P.PDetails.FirstOrDefault();
+                var ld = DB.Ledgers.Where(x => x.Id == pd.LedgerId).FirstOrDefault();
+
+                if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
+                {
+                    j = new DAL.Journal();
+                    j.EntryNo = EntryNo;
+                    j.JournalDate = P.PaymentDate;
+
+                    var CId = CompanyIdByLedgerName(ld.LedgerName);
+                    if (CId != 0)
+                    {
+                        var LName = LedgerNameByCompanyId(Caller.CompanyId);
+
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
+                            DrAmt = P.Amount,
+                            Particulars = P.Particulars
+                        });
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+
+                            LedgerId = LedgerIdByCompany(LName, CId),
+                            CrAmt = P.Amount,
+                            Particulars = P.Particulars
+                        });
+                        DB.Journals.Add(j);
+                        DB.SaveChanges();
+                    }
+
+
+                }
+                else if (ld.LedgerName.StartsWith("WH-"))
+                {
+
+                }
+            }
+            else
+            {
+                
+                j.JournalDate = P.PaymentDate;
+                DB.SaveChanges();
+            }
+
+        }
+        void Journal_DeleteByPayment(BLL.Payment P)
+        {
+            var EntryNo = string.Format("PUR-{0}", P.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            if (j != null) Journal_Delete(j.Id);
+        }
+
 
         #endregion
     }

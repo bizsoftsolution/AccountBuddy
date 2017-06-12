@@ -90,32 +90,40 @@ namespace AccountBuddy.SL.Hubs
                             var l1 = new BLL.Ledger();
                             cm.toCopy<BLL.Ledger>(l1);
                             l1.LedgerName = string.Format("{0}-{1}",cm.CompanyType== "Warehouse" ? "WH":"DL", cm.CompanyName);
-                            l1.AccountGroupId = AccountGroupIdByCompanyAndKey(d.UnderCompanyId.Value, BLL.DataKeyValue.FixedAssets_Key);
+                            l1.AccountGroupId = AccountGroupIdByCompanyAndKey(d.UnderCompanyId.Value, BLL.DataKeyValue.SundryDebtors_Key);
+                            l1.Id = 0;
                             Ledger_Save(l1);
 
                             var l2 = new BLL.Ledger();
                             var cm2 = DB.CompanyDetails.Where(x => x.Id == cm.UnderCompanyId).FirstOrDefault();
                             cm2.toCopy<BLL.Ledger>(l2);
-                            l2.LedgerName = string.Format("CM-{1}",  cm2.CompanyName);
-                            l2.AccountGroupId = AccountGroupIdByCompanyAndKey(cm.Id, BLL.DataKeyValue.FixedAssets_Key);
+                            l2.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Warehouse" ? "CM" : "WH", cm.CompanyName);
+                            l2.AccountGroupId = AccountGroupIdByCompanyAndKey(cm.Id, BLL.DataKeyValue.SundryCreditors_Key);
+                            l2.Id = 0;
                             Ledger_Save(l2);
                         }
                     }
                 }
                 else
                 {
-                    var LName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), d.CompanyName);
+                    var CName = d.CompanyName;                    
+                    cm.toCopy<DAL.CompanyDetail>(d);
+                    DB.SaveChanges();
+
+                    var LName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), CName);
                     var lstLedger = DB.Ledgers.Where(x => x.LedgerName == LName).ToList();
                     foreach(var dl in lstLedger)
-                    {
-                        var l = dl.toCopy<BLL.Ledger>(new BLL.Ledger());
-                        cm.toCopy<BLL.Ledger>(l);
-                        l.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), d.CompanyName); 
-                        Ledger_Save(l);
+                    {                                                                   
+                        dl.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), cm.CompanyName);
+                        dl.AddressLine1 = cm.AddressLine1;
+                        dl.AddressLine2 = cm.AddressLine2;
+                        dl.CityName = cm.CityName;
+                        dl.EMailId = cm.EMailId;
+                        dl.GSTNo = cm.GSTNo;
+                        dl.MobileNo = cm.MobileNo;
+                        dl.TelephoneNo = cm.TelephoneNo;                                                    
                     }
-                                                     
-                    cm.toCopy<DAL.CompanyDetail>(d);
-                    DB.SaveChanges();                                
+                    DB.SaveChanges();                                                                                                  
                 }
 
                 Clients.Others.CompanyDetail_Save(cm);

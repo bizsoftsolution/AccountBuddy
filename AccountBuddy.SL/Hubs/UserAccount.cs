@@ -32,6 +32,8 @@ namespace AccountBuddy.SL.Hubs
             {
                 Groups.Add(Context.ConnectionId, ua.UserType.CompanyId.ToString());
                 Caller.CompanyId = ua.UserType.CompanyId;
+                Caller.UnderCompanyId = ua.UserType.CompanyDetail.UnderCompanyId.Value;
+                Caller.CompanyType= ua.UserType.CompanyDetail.CompanyType;
                 Caller.UserId = ua.Id;
                 Caller.AccYear = AccYear;
                 BLL.UserAccount u = UserAccountDAL_BLL(ua);
