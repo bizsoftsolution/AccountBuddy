@@ -29,8 +29,24 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Product> Product_List()
         {
-            return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
-                             .Select(x => Product_DALtoBLL(x)).ToList();
+
+            if (Caller.CompanyType == "Warehouse")
+            {
+                return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.UnderCompanyId).ToList()
+                            .Select(x => Product_DALtoBLL(x)).ToList();
+            }
+            else if(Caller.CompanyType == "Dealer")
+            {
+                var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
+                return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == wh.UnderCompanyId).ToList()
+                           .Select(x => Product_DALtoBLL(x)).ToList();
+            }
+            else
+            {
+                return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+                            .Select(x => Product_DALtoBLL(x)).ToList();
+            }
+
         }
         
         public BLL.Product Product_Save(BLL.Product pro)

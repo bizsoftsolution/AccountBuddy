@@ -66,6 +66,80 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
+        public bool PurchaseReturn_SaveBySalesReturn(BLL.SalesReturn SR)
+        {
+            try
+            {
+                var LName = DB.Ledgers.Where(x => x.Id == SR.LedgerId).FirstOrDefault().LedgerName;
+
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                {
+
+                    DAL.PurchaseReturn d = DB.PurchaseReturns.Where(x => x.RefNo == SR.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
+                    d.ExtraAmount = SR.ExtraAmount;
+                    d.PRDate = SR.SRDate;
+                    if (d != null)
+                    {
+                        DB.PurchaseReturnDetails.RemoveRange(d.PurchaseReturnDetails);
+                        DB.PurchaseReturns.Remove(d);
+                        DB.SaveChanges();
+                    }
+
+
+                    d = new DAL.PurchaseReturn();
+                    DB.PurchaseReturns.Add(d);
+                    var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
+                    SR.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
+
+                    SR.toCopy<DAL.PurchaseReturn>(d);
+
+
+                    foreach (var b_SRd in SR.SRDetails)
+                    {
+                        DAL.PurchaseReturnDetail d_SRd = new DAL.PurchaseReturnDetail();
+                        b_SRd.toCopy<DAL.PurchaseReturnDetail>(d_SRd);
+                        d.PurchaseReturnDetails.Add(d_SRd);
+                    }
+                    DB.SaveChanges();
+                    SR.Id = d.Id;
+                    LogDetailStore(SR, LogDetailType.INSERT);
+
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+
+        public bool PurchaseOrder_DeleteBySalesReturn(BLL.SalesReturn PO)
+        {
+            try
+            {
+                var LName = DB.Ledgers.Where(x => x.Id == PO.LedgerId).FirstOrDefault().LedgerName;
+
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                {
+
+                    DAL.SalesReturn d = DB.SalesReturns.Where(x => x.RefNo == PO.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
+
+                    if (d != null)
+                    {
+                        DB.SalesReturnDetails.RemoveRange(d.SalesReturnDetails);
+                        DB.SalesReturns.Remove(d);
+                        DB.SaveChanges();
+                    }
+
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+
 
         public BLL.PurchaseReturn PurchaseReturn_Find(string SearchText)
         {

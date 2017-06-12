@@ -58,13 +58,88 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
-                
 
+                SalesOrder_SaveByPurchaseOrder(PO);
                 return true;
             }
             catch (Exception ex) { }
             return false;
         }
+
+        public bool PurchaseOrder_SaveBySalesOrder(BLL.SalesOrder SO)
+        {
+            try
+            {
+                var LName = DB.Ledgers.Where(x => x.Id == SO.LedgerId).FirstOrDefault().LedgerName;
+
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                {
+
+                    DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.RefNo == SO.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
+                    d.Extras = SO.ExtraAmount.Value;
+                    d.PODate = SO.SODate.Value;
+                    if (d != null)
+                    {
+                        DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails);
+                        DB.PurchaseOrders.Remove(d);
+                        DB.SaveChanges();
+                    }
+
+
+                    d = new DAL.PurchaseOrder();
+                    DB.PurchaseOrders.Add(d);
+                    var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
+                    SO.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
+
+                    SO.toCopy<DAL.PurchaseOrder>(d);
+
+
+                    foreach (var b_SOd in SO.SODetails)
+                    {
+                        DAL.PurchaseOrderDetail d_SOd = new DAL.PurchaseOrderDetail();
+                        b_SOd.toCopy<DAL.PurchaseOrderDetail>(d_SOd);
+                        d.PurchaseOrderDetails.Add(d_SOd);
+                    }
+                    DB.SaveChanges();
+                    SO.Id = d.Id;
+                    LogDetailStore(SO, LogDetailType.INSERT);
+
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+
+        public bool PurchaseOrder_DeleteBySalesOrder(BLL.SalesOrder PO)
+        {
+            try
+            {
+                var LName = DB.Ledgers.Where(x => x.Id == PO.LedgerId).FirstOrDefault().LedgerName;
+
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                {
+
+                    DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.RefNo == PO.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
+
+                    if (d != null)
+                    {
+                        DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails);
+                        DB.PurchaseOrders.Remove(d);
+                        DB.SaveChanges();
+                    }
+
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+
 
         public BLL.PurchaseOrder PurchaseOrder_Find(string SearchText)
         {
@@ -102,11 +177,14 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
+                    var P = PurchaseOrder_DALtoBLL(d);
                     DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails);
                     DB.PurchaseOrders.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(PurchaseOrder_DALtoBLL(d), LogDetailType.DELETE);
+                    LogDetailStore(P, LogDetailType.DELETE);
+                    SalesOrder_DeleteByPurchaseOrder(P);
                 }
+
                 return true;
             }
             catch (Exception ex) { }

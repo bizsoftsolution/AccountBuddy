@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AccountBuddy.PL.frm.Transaction  
+namespace AccountBuddy.PL.frm.Transaction
 {
     /// <summary>
     /// Interaction logic for frmSale.xaml
@@ -29,9 +29,7 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            cmbCustomer.ItemsSource = BLL.Customer.toList;
-            cmbCustomer.DisplayMemberPath = "Ledger.LedgerName";
-            cmbCustomer.SelectedValuePath = "Ledger.Id";
+          
 
             cmbPType.ItemsSource = BLL.TransactionType.toList;
             cmbPType.DisplayMemberPath = "Type";
@@ -45,7 +43,7 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbUOM.DisplayMemberPath = "Symbol";
             cmbUOM.SelectedValuePath = "Id";
 
-            
+
 
             data.Clear();
 
@@ -58,7 +56,7 @@ namespace AccountBuddy.PL.frm.Transaction
             if (data.SDetail.ProductId == 0)
             {
                 MessageBox.Show("Empty Record");
-            }            
+            }
             else
             {
                 data.SaveDetail();
@@ -67,12 +65,12 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-           data.ClearDetail();
+            data.ClearDetail();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-           data.Clear();
+            data.Clear();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -271,15 +269,26 @@ namespace AccountBuddy.PL.frm.Transaction
             }
         }
 
-       
-         #endregion
+
+        #endregion
 
         #region Methods
-       
+
         #endregion
 
         private void cmbCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+        }
+
+
+      
+
+        private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList(); ;
+            cmbCustomer.DisplayMemberPath = "LedgerName";
+            cmbCustomer.SelectedValuePath = "Id";
 
         }
     }

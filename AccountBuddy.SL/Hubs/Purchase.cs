@@ -67,6 +67,84 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
+        public bool Purchase_SaveBySales(BLL.Sale S)
+        {
+            try
+            {
+                var LName = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault().LedgerName;
+
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                {
+
+                    DAL.Purchase d = DB.Purchases.Where(x => x.RefNo == S.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
+                    if (d != null)
+                    {
+                        DB.PurchaseDetails.RemoveRange(d.PurchaseDetails);
+                        DB.Purchases.Remove(d);
+                        DB.SaveChanges();
+                    }
+
+
+                    d = new DAL.Purchase();
+                    d.ExtraAmount = S.ExtraAmount;
+                    d.PurchaseDate = S.SalesDate;
+
+                    DB.Purchases.Add(d);
+                    var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
+                    S.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
+
+                    S.toCopy<DAL.Purchase>(d);
+
+
+                    foreach (var b_SOd in S.SDetails)
+                    {
+                        DAL.PurchaseDetail d_SOd = new DAL.PurchaseDetail();
+                        b_SOd.toCopy<DAL.PurchaseDetail>(d_SOd);
+                        d.PurchaseDetails.Add(d_SOd);
+                    }
+                    DB.SaveChanges();
+                    S.Id = d.Id;
+                    LogDetailStore(S, LogDetailType.INSERT);
+
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+
+        public bool Purchase_DeleteBySales(BLL.Sale s)
+        {
+            try
+            {
+                var LName = DB.Ledgers.Where(x => x.Id == s.LedgerId).FirstOrDefault().LedgerName;
+
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                {
+
+                    DAL.Sale d = DB.Sales.Where(x => x.RefNo == s.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
+
+                    if (d != null)
+                    {
+                        DB.SalesDetails.RemoveRange(d.SalesDetails);
+                        DB.Sales.Remove(d);
+                        DB.SaveChanges();
+                    }
+
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+
+
+
+
         public BLL.Purchase Purchase_Find(string SearchText)
         {
             BLL.Purchase P = new BLL.Purchase();

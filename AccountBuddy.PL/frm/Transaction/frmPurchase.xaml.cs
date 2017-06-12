@@ -30,10 +30,7 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            cmbSupplier.ItemsSource = BLL.Supplier.toList;
-            cmbSupplier.DisplayMemberPath = "Ledger.LedgerName";
-            cmbSupplier.SelectedValuePath = "Ledger.Id";
-
+         
             cmbPType.ItemsSource = BLL.TransactionType.toList;
             cmbPType.DisplayMemberPath = "Type";
             cmbPType.SelectedValuePath = "Id";
@@ -169,13 +166,21 @@ namespace AccountBuddy.PL.frm.Transaction
                 data.SaveDetail();
             }
         }
-        
-        
+
+
         #endregion
 
         #region Methods
 
         #endregion
 
+       
+
+        private void cmbSupplier_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key).ToList();
+            cmbSupplier.DisplayMemberPath = "LedgerName";
+            cmbSupplier.SelectedValuePath = "Id";
+        }
     }
 }

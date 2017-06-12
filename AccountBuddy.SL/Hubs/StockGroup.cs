@@ -18,8 +18,23 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.StockGroup> StockGroup_List()
         {
-            return DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId ).ToList()
-                               .Select(x => StockGroup_DALtoBLL(x)).ToList();
+            if (Caller.CompanyType == "Company")
+            {
+                return DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+                              .Select(x => StockGroup_DALtoBLL(x)).ToList();
+            }
+            else if (Caller.CompanyType == "Warehouse")
+            {
+                return DB.StockGroups.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
+                              .Select(x => StockGroup_DALtoBLL(x)).ToList();
+            }
+            else
+            {
+                var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
+                return DB.StockGroups.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
+                              .Select(x => StockGroup_DALtoBLL(x)).ToList();
+            }
+           
         }
 
         public int StockGroup_Save(BLL.StockGroup agp)

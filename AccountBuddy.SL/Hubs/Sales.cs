@@ -65,6 +65,82 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
+        public bool Sales_SaveByPurchase(BLL.Purchase P)
+        {
+            try
+            {
+                var LName = DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault().LedgerName;
+
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                {
+
+                    DAL.Sale d = DB.Sales.Where(x => x.RefNo == P.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
+
+                    if (d != null)
+                    {
+                        DB.SalesDetails.RemoveRange(d.SalesDetails);
+                        DB.Sales.Remove(d);
+                        DB.SaveChanges();
+                    }
+
+
+                    d = new DAL.Sale();
+                    d.ExtraAmount =P.ExtraAmount;
+                    d.SalesDate = P.PurchaseDate;
+                    DB.Sales.Add(d);
+                    var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
+                    P.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
+
+                    P.toCopy<DAL.Sale>(d);
+
+
+                    foreach (var b_pod in P.PDetails)
+                    {
+                        DAL.SalesDetail d_pod = new DAL.SalesDetail();
+                        b_pod.toCopy<DAL.SalesDetail>(d_pod);
+                        d.SalesDetails.Add(d_pod);
+                    }
+                    DB.SaveChanges();
+                    P.Id = d.Id;
+                    LogDetailStore(P, LogDetailType.INSERT);
+
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+        public bool Sales_DeleteByPurchase(BLL.Purchase P)
+        {
+            try
+            {
+                var LName = DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault().LedgerName;
+
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                {
+
+                    DAL.Sale d = DB.Sales.Where(x => x.RefNo == P.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
+
+                    if (d != null)
+                    {
+                        DB.SalesDetails.RemoveRange(d.SalesDetails);
+                        DB.Sales.Remove(d);
+                        DB.SaveChanges();
+                    }
+
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+
+
+
         public BLL.Sale Sales_Find(string SearchText)
         {
             BLL.Sale P = new BLL.Sale();

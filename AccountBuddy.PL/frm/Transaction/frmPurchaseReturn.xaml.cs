@@ -44,9 +44,9 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbUOM.DisplayMemberPath = "Symbol";
             cmbUOM.SelectedValuePath = "Id";
 
-           
 
-             data.Clear();
+
+            data.Clear();
 
         }
 
@@ -58,7 +58,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("Enter Product");
             }
-           
+
             else
             {
                 data.SaveDetail();
@@ -72,7 +72,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-data.Clear();
+            data.Clear();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -94,7 +94,7 @@ data.Clear();
             if (data.RefNo == null)
             {
                 MessageBox.Show("Enter Reference No");
-                
+
             }
             else if (data.LedgerName == null)
             {
@@ -172,12 +172,22 @@ data.Clear();
             }
         }
 
-       
-        
+
+
         #endregion
 
         #region Methods
-        
+
         #endregion
+
+
+      
+
+        private void cmbSupplier_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key).ToList();
+            cmbSupplier.DisplayMemberPath = "LedgerName";
+            cmbSupplier.SelectedValuePath = "Id";
+        }
     }
 }

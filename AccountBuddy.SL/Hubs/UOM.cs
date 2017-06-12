@@ -17,8 +17,23 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.UOM> UOM_List()
         {
-            return DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId ).ToList()
-                               .Select(x => UOM_DALtoBLL(x)).ToList();
+            if (Caller.CompanyType == "Company")
+            {
+                return DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+                              .Select(x => UOM_DALtoBLL(x)).ToList();
+            }
+            else if (Caller.CompanyType == "Warehouse")
+            {
+                return DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
+                              .Select(x => UOM_DALtoBLL(x)).ToList();
+            }
+            else
+            {
+                var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
+                return DB.UOMs.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
+                              .Select(x => UOM_DALtoBLL(x)).ToList();
+            }
+           
         }
 
         public int UOM_Save(BLL.UOM agp)
