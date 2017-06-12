@@ -72,7 +72,7 @@ namespace AccountBuddy.SL.Hubs
             {
                 var LName = DB.Ledgers.Where(x => x.Id == SO.LedgerId).FirstOrDefault().LedgerName;
 
-                if (LName.StartsWith("WH-") || LName.StartsWith("DL-"))
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
                 {
 
                     DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.RefNo == SO.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
@@ -119,7 +119,7 @@ namespace AccountBuddy.SL.Hubs
             {
                 var LName = DB.Ledgers.Where(x => x.Id == PO.LedgerId).FirstOrDefault().LedgerName;
 
-                if (LName.StartsWith("WH-") || LName.StartsWith("DL-"))
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
                 {
 
                     DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.RefNo == PO.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();

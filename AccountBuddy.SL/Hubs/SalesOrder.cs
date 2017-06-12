@@ -79,8 +79,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                    
                     DAL.SalesOrder d = DB.SalesOrders.Where(x => x.RefNo == PO.RefNo && x.Ledger.AccountGroup.CompanyId==Caller.UnderCompanyId).FirstOrDefault();
-                    d.ExtraAmount = PO.Extras.Value;
-                    d.SODate = PO.PODate.Value;
+                   
                     if (d != null)
                     {
                         DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails);
@@ -90,6 +89,8 @@ namespace AccountBuddy.SL.Hubs
 
 
                     d = new DAL.SalesOrder();
+                    d.ExtraAmount = PO.Extras.Value;
+                    d.SODate = PO.PODate.Value;
                     DB.SalesOrders.Add(d);
                     var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
                     PO.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
