@@ -65,6 +65,80 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
+
+        public bool SalesOrder_SaveByPurchaseOrder(BLL.PurchaseOrder PO)
+        {
+            try
+            {
+                var LName = DB.Ledgers.Where(x => x.Id == PO.LedgerId).FirstOrDefault().LedgerName;
+
+                if(LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                {
+                   
+                    DAL.SalesOrder d = DB.SalesOrders.Where(x => x.RefNo == PO.RefNo && x.Ledger.AccountGroup.CompanyId==Caller.UnderCompanyId).FirstOrDefault();
+
+                    if (d != null)
+                    {
+                        DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails);
+                        DB.SalesOrders.Remove(d);
+                        DB.SaveChanges();
+                    }
+
+
+                    d = new DAL.SalesOrder();
+                    DB.SalesOrders.Add(d);
+                    var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
+                    PO.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
+
+                    PO.toCopy<DAL.SalesOrder>(d);
+
+
+                    foreach (var b_pod in PO.PODetails)
+                    {
+                        DAL.SalesOrderDetail d_pod = new DAL.SalesOrderDetail();
+                        b_pod.toCopy<DAL.SalesOrderDetail>(d_pod);
+                        d.SalesOrderDetails.Add(d_pod);
+                    }
+                    DB.SaveChanges();
+                    PO.Id = d.Id;
+                    LogDetailStore(PO, LogDetailType.INSERT);
+
+                    return true;
+                }
+
+                
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+        public bool SalesOrder_DeleteByPurchaseOrder(BLL.PurchaseOrder PO)
+        {
+            try
+            {
+                var LName = DB.Ledgers.Where(x => x.Id == PO.LedgerId).FirstOrDefault().LedgerName;
+
+                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                {
+
+                    DAL.SalesOrder d = DB.SalesOrders.Where(x => x.RefNo == PO.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
+
+                    if (d != null)
+                    {
+                        DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails);
+                        DB.SalesOrders.Remove(d);
+                        DB.SaveChanges();
+                    }
+
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+        
+
         public BLL.SalesOrder SalesOrder_Find(string SearchText)
         {
             BLL.SalesOrder SO = new BLL.SalesOrder();
@@ -131,10 +205,31 @@ namespace AccountBuddy.SL.Hubs
             return SO;
         }
         public bool Find_SORef(string RefNo, BLL.SalesOrder PO)
-
         {
-            DAL.SalesOrder d = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
-            if (d == null)
+            DAL.SalesOrder d1 = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.SalesOrder d2 = null;
+
+
+            var LName = DB.Ledgers.Where(x => x.Id == PO.LedgerId).FirstOrDefault().LedgerName;
+
+            if (LName.StartsWith("CM-"))
+            {
+                var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
+                var LId=  LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
+
+                d2 = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId && x.RefNo == RefNo ).FirstOrDefault();
+                if (d2 != null)
+                {
+                    if(d2.LedgerId == LId)
+                    {
+                        d2 = null;
+                    }
+                }
+            }
+           
+
+
+            if (d1 == null || d2 ==null)
             {
                 return false;
             }

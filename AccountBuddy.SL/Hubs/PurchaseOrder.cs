@@ -58,8 +58,8 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
-                
 
+                SalesOrder_SaveByPurchaseOrder(PO);
                 return true;
             }
             catch (Exception ex) { }
@@ -102,11 +102,14 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
+                    var P = PurchaseOrder_DALtoBLL(d);
                     DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails);
                     DB.PurchaseOrders.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(PurchaseOrder_DALtoBLL(d), LogDetailType.DELETE);
+                    LogDetailStore(P, LogDetailType.DELETE);
+                    SalesOrder_DeleteByPurchaseOrder(P);
                 }
+
                 return true;
             }
             catch (Exception ex) { }
