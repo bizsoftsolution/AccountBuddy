@@ -32,7 +32,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
             cmbSupplier.ItemsSource = BLL.Supplier.toList;
             cmbSupplier.DisplayMemberPath = "Ledger.LedgerName";
-            cmbSupplier.SelectedValuePath = "Ledger.Id";          
+            cmbSupplier.SelectedValuePath = "Ledger.Id";
 
             cmbItem.ItemsSource = BLL.Product.toList;
             cmbItem.DisplayMemberPath = "ProductName";
@@ -43,7 +43,7 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbUOM.SelectedValuePath = "Id";
 
 
-               data.Clear();
+            data.Clear();
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-MY");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-MY");
 
@@ -62,7 +62,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
 
         }
-            
+
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
@@ -98,8 +98,8 @@ namespace AccountBuddy.PL.frm.Transaction
             else if (data.LedgerId == 0)
             {
                 MessageBox.Show("Enter Supplier");
-                
-            }            
+
+            }
             else if (data.PODetails.Count == 0)
             {
                 MessageBox.Show("Enter Product Details");
@@ -164,7 +164,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     MessageBox.Show("Enter Product");
                     cmbItem.Focus();
                 }
-               
+
                 else
                 {
                     data.SaveDetail();
@@ -180,5 +180,13 @@ namespace AccountBuddy.PL.frm.Transaction
             f.ShowDialog();
         }
 
+
+        private void cmbSupplier_GotFocus(object sender, RoutedEventArgs e)
+        {
+            cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key).ToList();
+            cmbSupplier.DisplayMemberPath = "LedgerName";
+            cmbSupplier.SelectedValuePath = "Id";
+
+        }
     }
 }

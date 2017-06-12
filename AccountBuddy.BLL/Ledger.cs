@@ -14,6 +14,8 @@ namespace AccountBuddy.BLL
         #region Fileds
 
         private static ObservableCollection<Ledger> _toList;
+        private static ObservableCollection<Ledger> _Sd_toList;
+        private static ObservableCollection<Ledger> _Sc_toList;
         private static List<string> _ACTypeList;
 
         private int _Id;
@@ -116,6 +118,32 @@ namespace AccountBuddy.BLL
             set
             {
                 _toList = value;
+            }
+        }
+
+        public static ObservableCollection<Ledger> Sd_toList
+        {
+            get
+            {
+                if (_Sd_toList == null) _Sd_toList = new ObservableCollection<Ledger>(FMCGHubClient.FMCGHub.Invoke<List<Ledger>>("SD_List").Result);
+                return _Sd_toList;
+            }
+            set
+            {
+                _Sd_toList = value;
+            }
+        }
+
+        public static ObservableCollection<Ledger> Sc_toList
+        {
+            get
+            {
+                if (_Sc_toList == null) _Sc_toList = new ObservableCollection<Ledger>(FMCGHubClient.FMCGHub.Invoke<List<Ledger>>("SC_List").Result);
+                return _Sc_toList;
+            }
+            set
+            {
+                _Sc_toList = value;
             }
         }
 
@@ -646,6 +674,8 @@ namespace AccountBuddy.BLL
         public static void Init()
         {
             _toList = null;
+            _Sd_toList = null;
+            _Sc_toList = null;
         }
 
         private void SetAccountName()

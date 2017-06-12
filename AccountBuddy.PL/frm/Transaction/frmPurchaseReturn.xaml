@@ -61,7 +61,7 @@
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
 
-                        <ComboBox x:Name="cmbSupplier" Text="{Binding LedgerName}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="230" Height="43" Margin="0,12,0,24">
+                        <ComboBox x:Name="cmbSupplier" GotFocus="cmbSupplier_GotFocus" Text="{Binding LedgerName}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="230" Height="43" Margin="0,12,0,24">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />

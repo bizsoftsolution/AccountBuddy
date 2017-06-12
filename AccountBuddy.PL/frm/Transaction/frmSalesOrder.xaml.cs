@@ -27,9 +27,7 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            cmbCustomer.ItemsSource = BLL.Customer.toList;
-            cmbCustomer.DisplayMemberPath = "Ledger.LedgerName";
-            cmbCustomer.SelectedValuePath = "Ledger.Id";
+           
 
             cmbItem.ItemsSource = BLL.Product.toList;
             cmbItem.DisplayMemberPath = "ProductName";
@@ -154,6 +152,14 @@ namespace AccountBuddy.PL.frm.Transaction
             }
         }
 
-        
+        private void cmbCustomer_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList(); ;
+            cmbCustomer.DisplayMemberPath = "LedgerName";
+            cmbCustomer.SelectedValuePath = "Id";
+
+
+        }
     }
 }
