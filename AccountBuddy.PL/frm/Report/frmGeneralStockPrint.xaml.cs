@@ -17,44 +17,38 @@ using Microsoft.Reporting.WinForms;
 namespace AccountBuddy.PL.frm.Report
 {
     /// <summary>
-    /// Interaction logic for frmPaymentReceiptPrint.xaml
+    /// Interaction logic for frmGeneralStockPrint.xaml
     /// </summary>
-    public partial class frmPaymentReceiptPrint : MetroWindow
+    public partial class frmGeneralStockPrint : MetroWindow
     {
         public static int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
 
         DateTime? dtFrom = new DateTime(yy, 4, 1);
         DateTime? dtTo = new DateTime(yy + 1, 3, 31);
 
-        public frmPaymentReceiptPrint()
+        public frmGeneralStockPrint()
         {
             InitializeComponent();
             RptViewer.SetDisplayMode(DisplayMode.PrintLayout);
 
-           
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            
 
         }
-        public void LoadReport(int LID,DateTime dtFrom, DateTime dtTo, String EntryNo, String status)
+        public void LoadReport(int PID, DateTime dtFrom, DateTime dtTo)
         {
             try
             {
-                List<BLL.ReceiptAndPayment> list = BLL.ReceiptAndPayment.ToList((int?)LID, dtFrom, dtTo, EntryNo, status);
-                list = list.Select(x => new BLL.ReceiptAndPayment()
-                { AccountName = x.Ledger.AccountName, Amount = x.Amount, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
+                List<BLL.GeneralStock> list = BLL.GeneralStock.ToList((int)PID, dtFrom, dtTo);
+                list = list.Select(x => new BLL.GeneralStock()
+                { LedgerName = x.Ledger.LedgerName, TType=x.TType, Inwards = x.Inwards, Outwards = x.Outwards, BalStock = x.BalStock, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType }).ToList();
 
                 try
                 {
                     RptViewer.Reset();
-                    ReportDataSource data = new ReportDataSource("PaymentAndReceipt", list);
+                    ReportDataSource data = new ReportDataSource("GeneralStock", list);
                     ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                     RptViewer.LocalReport.DataSources.Add(data);
                     RptViewer.LocalReport.DataSources.Add(data1);
-                    RptViewer.LocalReport.ReportPath = @"rpt\Report\rptPaymentReceipt.rdlc";
+                    RptViewer.LocalReport.ReportPath = @"rpt\Report\rptGeneralStock.rdlc";
 
                     ReportParameter[] par = new ReportParameter[2];
                     par[0] = new ReportParameter("DateFrom", dtFrom.ToString());
@@ -76,5 +70,9 @@ namespace AccountBuddy.PL.frm.Report
 
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

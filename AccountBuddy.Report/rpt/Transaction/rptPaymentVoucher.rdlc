@@ -368,6 +368,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BackgroundColor>DimGray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -400,6 +401,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BackgroundColor>DimGray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -434,6 +436,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BackgroundColor>DimGray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -540,7 +543,6 @@
                         <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -583,7 +585,7 @@
   <Width>6.25569in</Width>
   <Page>
     <PageHeader>
-      <Height>0.89583in</Height>
+      <Height>0.76041in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -607,13 +609,13 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.42236in</Top>
+          <Top>0.45014in</Top>
           <Left>1.43973in</Left>
           <Height>0.30208in</Height>
           <Width>3.1875in</Width>
           <Style>
             <Border>
-              <Style>Solid</Style>
+              <Style>None</Style>
             </Border>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -643,7 +645,7 @@
           <rd:DefaultName>CompanyName</rd:DefaultName>
           <Top>0.10292in</Top>
           <Left>0.97098in</Left>
-          <Height>0.27778in</Height>
+          <Height>0.29167in</Height>
           <Width>4.04167in</Width>
           <ZIndex>1</ZIndex>
           <Style>
@@ -676,7 +678,9 @@
               <TextRuns>
                 <TextRun>
                   <Value>Payment Authorized By</Value>
-                  <Style />
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />
@@ -705,7 +709,9 @@
               <TextRuns>
                 <TextRun>
                   <Value>Payment Prepared By</Value>
-                  <Style />
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />

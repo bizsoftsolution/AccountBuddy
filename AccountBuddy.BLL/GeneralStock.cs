@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 
 namespace AccountBuddy.BLL
 {
-    public class ReceiptAndPayment : INotifyPropertyChanged
+   public class GeneralStock : INotifyPropertyChanged
     {
         #region Fields
         private long _EId;
-        private Char _EType;
+        private string _EType;
         private DateTime? _EDate;
         private String _EntryNo;
-        private string _RefNo;
+        private string _TType;
+        private Product _Product;
+        private decimal _Inwards;
+        private decimal _Outwards;
+        private decimal _BalStock;
+        private string _LedgerName;
+        private string _Particular;
         private Ledger _Ledger;
-        private decimal _Amount;
-        private string _AccountName;
-
-        public string _PayTo;
-        public string _Status;
-        public string _Particulars;
 
         #endregion
 
@@ -42,7 +42,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public char EType
+        public string EType
         {
             get
             {
@@ -72,18 +72,18 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string RefNo
+        public string TType
         {
             get
             {
-                return _RefNo;
+                return _TType;
             }
             set
             {
-                if (_RefNo != value)
+                if (_TType != value)
                 {
-                    _RefNo = value;
-                    NotifyPropertyChanged(nameof(RefNo));
+                    _TType = value;
+                    NotifyPropertyChanged(nameof(TType));
                 }
             }
         }
@@ -102,6 +102,21 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public Product Product
+        {
+            get
+            {
+                return _Product;
+            }
+            set
+            {
+                if (_Product != value)
+                {
+                    _Product = value;
+                    NotifyPropertyChanged(nameof(Product));
+                }
+            }
+        }
         public Ledger Ledger
         {
             get
@@ -117,79 +132,80 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal Amount
+        public decimal Inwards
         {
             get
             {
-                return _Amount;
+                return _Inwards;
             }
             set
             {
-                if (_Amount != value)
+                if (_Inwards != value)
                 {
-                    _Amount = value;
-                    NotifyPropertyChanged(nameof(Amount));
+                    _Inwards = value;
+                    NotifyPropertyChanged(nameof(Inwards));
                 }
             }
         }
-        public string PayTo
+        public decimal Outwards
         {
             get
             {
-                return _PayTo;
+                return _Outwards;
             }
             set
             {
-                if (_PayTo != value)
+                if (_Outwards != value)
                 {
-                    _PayTo = value;
-                    NotifyPropertyChanged(nameof(PayTo));
+                    _Outwards = value;
+                    NotifyPropertyChanged(nameof(Outwards));
                 }
             }
         }
-        public string Particular
+        public decimal BalStock
         {
             get
             {
-                return _Particulars;
+                return _BalStock;
             }
             set
             {
-                if (_Particulars != value)
+                if (_BalStock != value)
                 {
-                    _Particulars = value;
-                    NotifyPropertyChanged(nameof(Particular));
+                    _BalStock = value;
+                    NotifyPropertyChanged(nameof(BalStock));
                 }
             }
         }
 
-        public string Status
+        public string LedgerName
         {
             get
             {
-                return _Status;
+                return _LedgerName;
             }
             set
             {
-                if (_Status != value)
+                if (_LedgerName != value)
                 {
-                    _Status = value;
-                    NotifyPropertyChanged(nameof(Status));
+                    _LedgerName = value;
+                    NotifyPropertyChanged(nameof(LedgerName));
                 }
             }
         }
-        public string AccountName
+
+        public string Particular
         {
             get
             {
-                return _AccountName;
+                return _Particular;
             }
             set
             {
-                if (_AccountName != value)
+                if (_Particular != value)
                 {
-                    _AccountName = value;
-                    NotifyPropertyChanged(nameof(AccountName));
+                    _Particular = value;
+                    NotifyPropertyChanged(nameof(Particular));
                 }
             }
         }
@@ -213,9 +229,9 @@ namespace AccountBuddy.BLL
 
         #region Methods
 
-        public static List<ReceiptAndPayment> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string entryNo, string Status)
+        public static List<GeneralStock> ToList(int LedgerId, DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<ReceiptAndPayment>>("ReceiptAndPayment_List", LedgerId, dtFrom, dtTo,entryNo, Status).Result;
+            return FMCGHubClient.FMCGHub.Invoke<List<GeneralStock>>("GeneralStock_List", LedgerId, dtFrom, dtTo).Result;
         }
 
         #endregion

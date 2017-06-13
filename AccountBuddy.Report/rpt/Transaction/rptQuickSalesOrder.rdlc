@@ -71,7 +71,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Product Name</Value>
+                              <Value>PRODUCT</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -135,7 +135,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Unit Price</Value>
+                              <Value>PRICE</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -199,7 +199,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Amount</Value>
+                              <Value>AMOUNT</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -430,7 +430,9 @@
         <TablixRowHierarchy>
           <TablixMembers>
             <TablixMember>
+              <FixedData>true</FixedData>
               <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
               <Group Name="Details" />
@@ -455,7 +457,7 @@
   <Width>6.04563in</Width>
   <Page>
     <PageHeader>
-      <Height>2.73141in</Height>
+      <Height>2.69791in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -508,8 +510,9 @@
                   </Paragraphs>
                   <rd:DefaultName>LedgerName</rd:DefaultName>
                   <Top>0.24653in</Top>
+                  <Left>0.29106cm</Left>
                   <Height>0.25in</Height>
-                  <Width>1.72917in</Width>
+                  <Width>1.61458in</Width>
                   <ZIndex>1</ZIndex>
                   <Style>
                     <Border>
@@ -678,7 +681,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>Delivery To:</Value>
+                          <Value>Delivery By:</Value>
                           <Style>
                             <FontWeight>Bold</FontWeight>
                           </Style>
@@ -1101,7 +1104,7 @@
           <Top>0.30208in</Top>
           <Left>0.33395in</Left>
           <Height>0.25in</Height>
-          <Width>2.38889in</Width>
+          <Width>2.52431in</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -1137,7 +1140,7 @@
           <Top>0.55208in</Top>
           <Left>1.39992in</Left>
           <Height>0.25in</Height>
-          <Width>1.32292in</Width>
+          <Width>1.45834in</Width>
           <ZIndex>3</ZIndex>
           <Style>
             <Border>
@@ -1164,10 +1167,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PostalCode</rd:DefaultName>
-          <Top>0.55208in</Top>
-          <Left>2.75062in</Left>
-          <Height>0.26389in</Height>
-          <Width>1.04167in</Width>
+          <Top>0.56597in</Top>
+          <Left>2.88603in</Left>
+          <Height>0.23611in</Height>
+          <Width>0.90626in</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border>
@@ -1194,10 +1197,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>AddressLine2</rd:DefaultName>
-          <Top>0.30208in</Top>
-          <Left>2.73673in</Left>
+          <Top>0.31597in</Top>
+          <Left>2.87215in</Left>
           <Height>0.25in</Height>
-          <Width>2.74653in</Width>
+          <Width>2.61111in</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border>

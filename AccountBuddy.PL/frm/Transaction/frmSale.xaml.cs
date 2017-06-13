@@ -22,7 +22,7 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmSale : UserControl
     {
-        BLL.Sale data = new BLL.Sale();
+        public BLL.Sale data = new BLL.Sale();
         string TextToPrint = "";
         public frmSale()
         {
@@ -176,9 +176,9 @@ namespace AccountBuddy.PL.frm.Transaction
                 prnPurchaseOrder.PrintController = new System.Drawing.Printing.StandardPrintController();
 
                 TextToPrint = PrintLine(BLL.UserAccount.User.UserType.Company.CompanyName, PrintTextAlignType.Center);
-                TextToPrint += PrintLine(string.Format("{0},", BLL.UserAccount.User.UserType.Company.AddressLine1), PrintTextAlignType.Center);
-                TextToPrint += PrintLine(string.Format("{0},", BLL.UserAccount.User.UserType.Company.AddressLine2), PrintTextAlignType.Center);
-                TextToPrint += PrintLine(string.Format("{0},", BLL.UserAccount.User.UserType.Company.CityName), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine1), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine2), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.CityName), PrintTextAlignType.Center);
 
                 TextToPrint += PrintLine(string.Format("{0}CASH BILL{0}", new string('-', 8)), PrintTextAlignType.Center);
 
@@ -200,6 +200,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 TextToPrint += PrintLine(string.Format("Total   : {0,10:0.00}", Convert.ToDouble(data.ItemAmount)), PrintTextAlignType.Right);
                 TextToPrint += PrintLine(string.Format("Discount: {0,10:0.00}", Convert.ToDouble(data.DiscountAmount)), PrintTextAlignType.Right);
                 TextToPrint += PrintLine(string.Format("GST: {0,10:0.00}", Convert.ToDouble(data.GSTAmount)), PrintTextAlignType.Right);
+                TextToPrint += PrintLine(string.Format("Extra: {0,10:0.00}", Convert.ToDouble(data.ExtraAmount)), PrintTextAlignType.Right);
                 TextToPrint += PrintLine("", PrintTextAlignType.Left);
                 TextToPrint += PrintLine(string.Format("Bill Amount : RM .{0:0.00}", Convert.ToDouble(data.TotalAmount)), PrintTextAlignType.Center);
                 TextToPrint += PrintLine("", PrintTextAlignType.Left);

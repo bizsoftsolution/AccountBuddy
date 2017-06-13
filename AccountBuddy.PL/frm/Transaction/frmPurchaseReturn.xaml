@@ -142,7 +142,7 @@
                 <!--#region Grid-->
                 <Grid Margin="10,2,10,10" Grid.Row="2" x:Name="gvPurchaseDetails">
 
-                    <DataGrid x:Name="dgvDetails" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding PRDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,16,104" >
+                    <DataGrid x:Name="dgvDetails" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding PRDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,16,104" >
                         <DataGrid.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -159,9 +159,7 @@
 
                         </DataGrid.ColumnHeaderStyle>
 
-                        <DataGrid.Effect>
-                            <DropShadowEffect/>
-                        </DataGrid.Effect>
+                     
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Item Name" FontWeight="Bold" Width="350" Binding="{Binding ProductName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                             <DataGridTextColumn Header="UOM" FontWeight="Bold" Width="100" Binding="{Binding UOMName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>

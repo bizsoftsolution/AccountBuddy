@@ -251,6 +251,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmGeneralStock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Report\frmGeneralStockPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmIncomeAndExpenditure.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -459,6 +467,12 @@
     </Compile>
     <Compile Include="frm\Report\frmGeneralLedgerPrint.xaml.cs">
       <DependentUpon>frmGeneralLedgerPrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmGeneralStock.xaml.cs">
+      <DependentUpon>frmGeneralStock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmGeneralStockPrint.xaml.cs">
+      <DependentUpon>frmGeneralStockPrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmIncomeAndExpenditure.xaml.cs">
       <DependentUpon>frmIncomeAndExpenditure.xaml</DependentUpon>

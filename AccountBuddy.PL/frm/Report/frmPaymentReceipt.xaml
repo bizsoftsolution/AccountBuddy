@@ -29,41 +29,70 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="80"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="150"/>
+                        <RowDefinition Height="350"/>
+                        <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"  >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="75"></RowDefinition>
+                            <RowDefinition Height="75"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="120,10,120,0" Height="66"  >
 
+                                <ComboBox x:Name="cmbAccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="297" Margin="10" Height="46" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Account Name"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                            <TextBlock Text="Date From" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </DatePicker>
+                                <DatePicker Name="dtpDateTo" Width="135"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                            <TextBlock Text="Date To" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </DatePicker>
 
-                            <ComboBox x:Name="cmbAccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="10" Height="40" >
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Account Name"/>
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </ComboBox>
+                            </StackPanel>
 
-                            <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10" >
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                        <TextBlock Text="Date From" FontWeight="Bold"/>
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </DatePicker>
-                            <DatePicker Name="dtpDateTo" Width="135"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10">
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                        <TextBlock Text="Date To" FontWeight="Bold"/>
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </DatePicker>
-                            <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
-                        </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="260,10,305,0" Width="535">
 
+                                <TextBox Name="txtEntryNo" Width="100" Margin="10" Height="40" FontWeight="Bold" FontSize="14"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"   >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Entry No" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                                <ComboBox x:Name="cmbstatus" Width="170" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Margin="10" Height="40" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Status"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                    <ComboBoxItem>Process</ComboBoxItem>
+                                    <ComboBoxItem>Completed</ComboBoxItem>
+                                    <ComboBoxItem>Returned</ComboBoxItem>
+
+                                </ComboBox>
+                                <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
+                            </StackPanel>
+
+                        </Grid>
 
                     </Grid>
                     <Grid Grid.Row="1">
@@ -71,14 +100,14 @@
                         <Grid Grid.Row="0"  >
 
                             <DataGrid x:Name="dgvReceiptAndPayment" MouseDoubleClick="dgvReceiptAndPayment_MouseDoubleClick" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" Margin="100,10,100,10">
-                               <DataGrid.ColumnHeaderStyle>
+                                <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="FontWeight" Value="Bold" />
                                         <Setter Property="HorizontalContentAlignment" Value="Left"/>
                                     </Style>
 
                                 </DataGrid.ColumnHeaderStyle>
-                             
+
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Date" FontWeight="Bold" Width="100" Binding="{Binding EDate,StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header="Entry No" FontWeight="Bold" Width="100" Binding="{Binding EntryNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
@@ -98,7 +127,7 @@
                         </WindowsFormsHost>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <StackPanel Orientation="Horizontal" Margin="350,24,300,23" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="48" Margin="310,0,325,-27">
 
                             <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
                                 PDF

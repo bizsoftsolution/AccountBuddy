@@ -44,10 +44,13 @@ namespace AccountBuddy.PL.frm.Print
                 ReportDataSource data1 = new ReportDataSource("SalesReturn", POList);
                 ReportDataSource data2 = new ReportDataSource("SalesReturnDetail", PODList);
                 ReportDataSource data3 = new ReportDataSource("CompanyDetail", CList);
+                ReportDataSource data4 = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => x.Id == data.LedgerId).ToList());
+                
 
                 rptQuickSalesReturn.LocalReport.DataSources.Add(data1);
                 rptQuickSalesReturn.LocalReport.DataSources.Add(data2);
                 rptQuickSalesReturn.LocalReport.DataSources.Add(data3);
+                rptQuickSalesReturn.LocalReport.DataSources.Add(data4);
                 rptQuickSalesReturn.LocalReport.ReportPath = @"rpt\Transaction\rptSalesReturn.rdlc";
 
                 rptQuickSalesReturn.RefreshReport();

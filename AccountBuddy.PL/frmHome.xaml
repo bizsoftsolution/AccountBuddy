@@ -252,6 +252,11 @@
                                             <Report:frmReOrderLevel/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="General Stock" FormName="General Stock">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmGeneralStock/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                 </ListBox>
                             </Expander>
 

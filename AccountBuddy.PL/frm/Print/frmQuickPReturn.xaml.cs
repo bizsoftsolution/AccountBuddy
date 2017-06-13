@@ -34,20 +34,22 @@ namespace AccountBuddy.PL.frm.Print
                 List<BLL.PurchaseReturn> POList = new List<BLL.PurchaseReturn>();
                 List<BLL.PurchaseReturnDetail> PODList = new List<BLL.PurchaseReturnDetail>();
                 List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
-
+            
                 POList.Add(data);
                 PODList.AddRange(data.PRDetails);
                 CList.Add(BLL.UserAccount.User.UserType.Company);
-
+                
 
                 rptQuickPR.Reset();
                 ReportDataSource data1 = new ReportDataSource("PurchaseReturn", POList);
                 ReportDataSource data2 = new ReportDataSource("PurchaseReturnDetail", PODList);
                 ReportDataSource data3 = new ReportDataSource("CompanyDetail", CList);
+                ReportDataSource data4 = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x=>x.Id==data.LedgerId).ToList());
 
                 rptQuickPR.LocalReport.DataSources.Add(data1);
                 rptQuickPR.LocalReport.DataSources.Add(data2);
                 rptQuickPR.LocalReport.DataSources.Add(data3);
+                rptQuickPR.LocalReport.DataSources.Add(data4);
                 rptQuickPR.LocalReport.ReportPath = @"rpt\Transaction\rptPurchaseReturn.rdlc";
 
                 rptQuickPR.RefreshReport();

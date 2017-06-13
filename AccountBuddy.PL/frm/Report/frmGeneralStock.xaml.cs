@@ -21,17 +21,18 @@ using Microsoft.Win32;
 namespace AccountBuddy.PL.frm.Report
 {
     /// <summary>
-    /// Interaction logic for frmPaymentReceipt.xaml
+    /// Interaction logic for frmGeneralStock.xaml
     /// </summary>
-    public partial class frmPaymentReceipt : UserControl
+    public partial class frmGeneralStock : UserControl
     {
         private int m_currentPageIndex;
         private IList<Stream> m_streams;
 
-        public frmPaymentReceipt()
+        public frmGeneralStock()
         {
             InitializeComponent();
             rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
+
             int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
 
             DateTime? dtFrom = new DateTime(yy, 4, 1);
@@ -40,15 +41,14 @@ namespace AccountBuddy.PL.frm.Report
             dtpDateFrom.SelectedDate = dtFrom;
             dtpDateTo.SelectedDate = dtTo;
 
-
+            cmbProduct.ItemsSource = BLL.Product.toList;
+            cmbProduct.DisplayMemberPath = "ProductName";
+            cmbProduct.SelectedValuePath = "Id";
         }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbAccountName.ItemsSource = BLL.Ledger.toList.ToList();
-            cmbAccountName.DisplayMemberPath = "AccountName";
-            cmbAccountName.SelectedValuePath = "Id";
-
-
+            LoadReport();
         }
 
 
@@ -56,18 +56,16 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                List<BLL.ReceiptAndPayment> list = BLL.ReceiptAndPayment.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, cmbstatus.Text);
-                list = list.Select(x => new BLL.ReceiptAndPayment()
-                { AccountName = x.Ledger.AccountName, Amount = x.Amount, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
-
+                List<BLL.GeneralStock> list = BLL.GeneralStock.ToList((int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+             
                 try
                 {
                     rptViewer.Reset();
-                    ReportDataSource data = new ReportDataSource("PaymentAndReceipt", list);
+                    ReportDataSource data = new ReportDataSource("GeneralStock", list);
                     ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                     rptViewer.LocalReport.DataSources.Add(data);
                     rptViewer.LocalReport.DataSources.Add(data1);
-                    rptViewer.LocalReport.ReportPath = @"rpt\Report\rptPaymentReceipt.rdlc";
+                    rptViewer.LocalReport.ReportPath = @"rpt\Report\rptGeneralStock.rdlc";
 
                     ReportParameter[] par = new ReportParameter[2];
                     par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
@@ -89,11 +87,65 @@ namespace AccountBuddy.PL.frm.Report
 
         }
 
+      
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            dgvReceiptAndPayment.ItemsSource = BLL.ReceiptAndPayment.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, cmbstatus.Text);
-            LoadReport();
+            if (cmbProduct.SelectedValue == null)
+            {
+                MessageBox.Show("Enter Product..");
+                cmbProduct.Focus();
+            }
+            else
+            {
+                if (cmbProduct.SelectedValue != null) dgvGeneralStock.ItemsSource = BLL.GeneralStock.ToList((int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                LoadReport();
+            }
+
+        }
+
+        private void dgvGeneralStock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var gl = dgvGeneralStock.SelectedItem as BLL.GeneralStock;
+            if (gl != null)
+            {
+                if (gl.EType == "P")
+                {
+                    Transaction.frmPurchase f = new Transaction.frmPurchase();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+                else if (gl.EType == "S")
+                {
+                    Transaction.frmSale f = new Transaction.frmSale();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+                else if (gl.EType == "PR")
+                {
+                    Transaction.frmPurchaseReturn f = new Transaction.frmPurchaseReturn();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+                else if (gl.EType == "SR")
+                {
+                    Transaction.frmSalesReturn f = new Transaction.frmSalesReturn();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+            }
         }
 
         #region Button Events
@@ -142,6 +194,7 @@ namespace AccountBuddy.PL.frm.Report
             Export(rptViewer.LocalReport);
             Print();
         }
+
         private void Export(LocalReport report)
         {
             try
@@ -192,6 +245,7 @@ namespace AccountBuddy.PL.frm.Report
             }
 
         }
+
         private void PrintPage(object sender, PrintPageEventArgs ev)
         {
             Metafile pageImage = new
@@ -217,64 +271,19 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbAccountName.Text != "")
+            if (dgvGeneralStock.Items.Count != 0)
             {
-                if (dgvReceiptAndPayment.Items.Count != 0)
-                {
-
-                    frmPaymentReceiptPrint f = new frmPaymentReceiptPrint();
-
-                    f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, cmbstatus.Text);
-                    f.ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show("No Records To Print");
-                }
-
+                frmGeneralStockPrint f = new frmGeneralStockPrint();
+                f.LoadReport((int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                f.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Enter AccountName");
+                MessageBox.Show("Enter LedgerName");
             }
 
         }
 
         #endregion
-
-        private void dgvReceiptAndPayment_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var rp = dgvReceiptAndPayment.SelectedItem as BLL.ReceiptAndPayment;
-            if (rp != null)
-            {
-                if (rp.EType == 'P')
-                {
-                    Transaction.frmPayment f = new Transaction.frmPayment();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = rp.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
-                }
-                else if (rp.EType == 'R')
-                {
-                    Transaction.frmReceipt f = new Transaction.frmReceipt();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = rp.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
-                }
-                else if (rp.EType == 'J')
-                {
-                    Transaction.frmJournal f = new Transaction.frmJournal();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = rp.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
-                }
-            }
-        }
     }
 }

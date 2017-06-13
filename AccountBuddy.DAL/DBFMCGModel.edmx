@@ -953,18 +953,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sale_CompanyDetail">
-          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
-          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sale">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Sale_Ledger">
           <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
@@ -1466,10 +1454,6 @@
             <End Role="Receipt" EntitySet="Receipt" />
             <End Role="ReceiptDetail" EntitySet="ReceiptDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sale_CompanyDetail" Association="Self.FK_Sale_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
-            <End Role="Sale" EntitySet="Sale" />
-          </AssociationSet>
           <AssociationSet Name="FK_Sale_Ledger" Association="Self.FK_Sale_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
             <End Role="Sale" EntitySet="Sale" />
@@ -1635,10 +1619,6 @@
           <AssociationSet Name="FK_Bank_Ledger" Association="DBFMCGModel.FK_Bank_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
             <End Role="Bank" EntitySet="Banks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sale_CompanyDetail" Association="DBFMCGModel.FK_Sale_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="Sale" EntitySet="Sales" />
           </AssociationSet>
           <AssociationSet Name="FK_StockGroup_CompanyDetail" Association="DBFMCGModel.FK_StockGroup_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
@@ -1920,7 +1900,6 @@
           <Property Name="UnderCompanyId" Type="Int32" />
           <Property Name="CompanyType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AccountGroups" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
-          <NavigationProperty Name="Sales" Relationship="DBFMCGModel.FK_Sale_CompanyDetail" FromRole="CompanyDetail" ToRole="Sale" />
           <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
           <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
           <NavigationProperty Name="UserAccounts" Relationship="DBFMCGModel.FK_UserAccount_CompanyDetail" FromRole="CompanyDetail" ToRole="UserAccount" />
@@ -2294,7 +2273,6 @@
           <Property Name="ExtraAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_Sale_CompanyDetail" FromRole="Sale" ToRole="CompanyDetail" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Sale_Ledger" FromRole="Sale" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="DBFMCGModel.FK_Sale_TransactionType" FromRole="Sale" ToRole="TransactionType" />
           <NavigationProperty Name="SalesDetails" Relationship="DBFMCGModel.FK_SalesDetail_Sale" FromRole="Sale" ToRole="SalesDetail" />
@@ -2553,18 +2531,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Bank">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sale_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
-          <End Type="DBFMCGModel.Sale" Role="Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sale">
               <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>

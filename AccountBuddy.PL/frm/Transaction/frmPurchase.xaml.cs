@@ -23,7 +23,7 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmPurchase : UserControl
     {
-        AccountBuddy.BLL.Purchase data = new BLL.Purchase();
+        public AccountBuddy.BLL.Purchase data = new BLL.Purchase();
 
         public frmPurchase()
         {

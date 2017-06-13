@@ -71,6 +71,9 @@
     <EmbeddedResource Include="rpt\Report\rptGeneralLedger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptGeneralStock.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Report\rptIncomeAndExpenditure.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -134,6 +137,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.CompanyDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.CreditLimitType.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralLedger.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralStock.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Journal.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.JournalDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Ledger.datasource" />

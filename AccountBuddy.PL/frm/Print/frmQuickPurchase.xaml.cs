@@ -34,6 +34,7 @@ namespace AccountBuddy.PL.frm.Print
                 List<BLL.Purchase> POList = new List<BLL.Purchase>();
                 List<BLL.PurchaseDetail> PODList = new List<BLL.PurchaseDetail>();
                 List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
+                List<BLL.Ledger> SList = new List<BLL.Ledger>();
 
                 POList.Add(data);
                 PODList.AddRange(data.PDetails);
@@ -44,10 +45,12 @@ namespace AccountBuddy.PL.frm.Print
                 ReportDataSource data1 = new ReportDataSource("Purchase", POList);
                 ReportDataSource data2 = new ReportDataSource("PurchaseDetail", PODList);
                 ReportDataSource data3 = new ReportDataSource("CompanyDetail", CList);
+                ReportDataSource data4 = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x=>x.Id==data.LedgerId).ToList());
 
                 rptQuickPurchase.LocalReport.DataSources.Add(data1);
                 rptQuickPurchase.LocalReport.DataSources.Add(data2);
                 rptQuickPurchase.LocalReport.DataSources.Add(data3);
+                rptQuickPurchase.LocalReport.DataSources.Add(data4);
                 rptQuickPurchase.LocalReport.ReportPath = @"rpt\Transaction\rptPurchase.rdlc";
 
                 rptQuickPurchase.RefreshReport();

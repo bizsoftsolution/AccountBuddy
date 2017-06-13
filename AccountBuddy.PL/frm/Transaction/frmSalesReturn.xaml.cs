@@ -21,7 +21,7 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmSalesReturn : UserControl
     {
-        BLL.SalesReturn data = new BLL.SalesReturn();
+       public BLL.SalesReturn data = new BLL.SalesReturn();
 
         public frmSalesReturn()
         {
