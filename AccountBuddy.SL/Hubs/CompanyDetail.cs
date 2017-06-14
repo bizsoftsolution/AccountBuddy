@@ -317,6 +317,19 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, st.LedgerName, st.Id);
 
+            DAL.Ledger sti = new DAL.Ledger();
+            sti.LedgerName = BLL.DataKeyValue.Stock_Inward_Ledger_Key;
+            sti.AccountGroupId = SIH.Id;
+            DB.Ledgers.Add(sti);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, sti.LedgerName, sti.Id);
+
+            DAL.Ledger sto = new DAL.Ledger();
+            sto.LedgerName = BLL.DataKeyValue.Stock_Outward_Ledger_Key;
+            sto.AccountGroupId = SIH.Id;
+            DB.Ledgers.Add(sto);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, sto.LedgerName, sto.Id);
 
             DAL.AccountGroup sd = new DAL.AccountGroup();
             sd.GroupName = BLL.DataKeyValue.SundryDebtors_Key;

@@ -1,3 +1,10 @@
+
+delete from StockInDetail
+delete from StockIn
+
+delete from StockOutDetail
+delete from StockOut
+
 delete from PaymentDetail
 delete from Payment
 

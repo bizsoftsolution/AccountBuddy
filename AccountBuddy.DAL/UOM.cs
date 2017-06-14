@@ -24,6 +24,8 @@ namespace AccountBuddy.DAL
             this.SalesDetails = new HashSet<SalesDetail>();
             this.SalesOrderDetails = new HashSet<SalesOrderDetail>();
             this.SalesReturnDetails = new HashSet<SalesReturnDetail>();
+            this.StockInDetails = new HashSet<StockInDetail>();
+            this.StockOutDetails = new HashSet<StockOutDetail>();
         }
     
         public int Id { get; set; }
@@ -46,5 +48,9 @@ namespace AccountBuddy.DAL
         public virtual ICollection<SalesOrderDetail> SalesOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalesReturnDetail> SalesReturnDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockInDetail> StockInDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockOutDetail> StockOutDetails { get; set; }
     }
 }

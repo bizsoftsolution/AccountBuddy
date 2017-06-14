@@ -29,9 +29,15 @@ namespace AccountBuddy.SL.Hubs
             }
             else
             {
+                List<BLL.UOM> u = new List<BLL.UOM>();
+
                var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
-                    return DB.UOMs.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
-                                  .Select(x => UOM_DALtoBLL(x)).ToList();
+                if(wh!=null)
+                {
+                    u = DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
+                              .Select(x => UOM_DALtoBLL(x)).ToList();
+                }
+                return u;
                
                
             }

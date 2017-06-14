@@ -86,6 +86,10 @@
     <Compile Include="SalesReturnDetail.cs" />
     <Compile Include="Staff.cs" />
     <Compile Include="StockGroup.cs" />
+    <Compile Include="StockIn.cs" />
+    <Compile Include="StockInDetail.cs" />
+    <Compile Include="StockOut.cs" />
+    <Compile Include="StockOutDetail.cs" />
     <Compile Include="Supplier.cs" />
     <Compile Include="TransactionType.cs" />
     <Compile Include="TrialBalance.cs" />

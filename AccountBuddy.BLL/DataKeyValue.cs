@@ -271,6 +271,41 @@ namespace AccountBuddy.BLL
         }
         #endregion
 
+        #region Stock_Inward_Ledger
+        public static string Stock_Inward_Ledger_Key
+        {
+            get
+            {
+                return "Stock Inward";
+            }
+
+        }
+        public static int Stock_Inward_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Stock_Inward_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+
+        #region Stock_Outward_Ledger
+        public static string Stock_Outward_Ledger_Key
+        {
+            get
+            {
+                return "Stock Outward";
+            }
+
+        }
+        public static int Stock_Outward_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Stock_Outward_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
 
         public static string FixedAssets_Key
         {

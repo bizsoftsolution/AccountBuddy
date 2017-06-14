@@ -184,6 +184,8 @@
     <Compile Include="Hubs\SalesReturn.cs" />
     <Compile Include="Hubs\SLUser.cs" />
     <Compile Include="Hubs\StockGroup.cs" />
+    <Compile Include="Hubs\StockIn.cs" />
+    <Compile Include="Hubs\StockOut.cs" />
     <Compile Include="Hubs\Supplier.cs" />
     <Compile Include="Hubs\TransactionType.cs" />
     <Compile Include="Hubs\TrialBalance.cs" />
