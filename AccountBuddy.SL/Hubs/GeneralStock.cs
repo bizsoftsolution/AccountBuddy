@@ -29,19 +29,19 @@ namespace AccountBuddy.SL.Hubs
 
                 opqty = (decimal)P.OpeningStock;
 
-                pqty =(decimal) P.PurchaseDetails.Sum(x => x.Quantity);
-                srqty = (decimal)P.SalesReturnDetails.Sum(x => x.Quantity);
-                sqty = (decimal)P.SalesDetails.Sum(x => x.Quantity);
-                prqty = (decimal)P.PurchaseReturnDetails.Sum(x => x.Quantity);
-
-              
-
-                //gl.Inwards = pqty+srqty;
-                //gl.Outwards = sqty+prqty;
+                pqty =(decimal) P.PurchaseDetails.Where(x=> x.Purchase.PurchaseDate<dtFrom).Sum(x => x.Quantity);
+                srqty = (decimal)P.SalesReturnDetails.Where(x=> x.SalesReturn.SRDate<dtFrom).Sum(x => x.Quantity);
+                sqty = (decimal)P.SalesDetails.Where(x=> x.Sale.SalesDate<dtFrom).Sum(x => x.Quantity);
+                prqty = (decimal)P.PurchaseReturnDetails.Where(x=> x.PurchaseReturn.PRDate<dtFrom).Sum(x => x.Quantity);
 
 
-                // BalQty += (gl.Inwards - gl.Outwards)+opqty;
-                BalQty += opqty;
+
+                gl.Inwards = pqty + srqty;
+                gl.Outwards = sqty + prqty;
+
+
+                BalQty += ( ( opqty + gl.Inwards) - gl.Outwards) ;
+
                 gl.BalStock = Math.Abs(BalQty);
 
                 gl.Ledger = new BLL.Ledger();
@@ -56,7 +56,7 @@ namespace AccountBuddy.SL.Hubs
 
                     gl.EId = pd.Purchase.Id;
                     gl.EType = "P";
-                    gl.TType = pd.Purchase.TransactionType.Type;
+                    gl.TType = string.Format("{0} - Purchase", pd.Purchase.TransactionType.Type);
                     gl.EDate = pd.Purchase.PurchaseDate;
                     gl.Ledger = new BLL.Ledger();
                     gl.Ledger = LedgerDAL_BLL(pd.Purchase.Ledger);
@@ -80,7 +80,7 @@ namespace AccountBuddy.SL.Hubs
                         gl.EId = s.Id;
                         gl.EType = "S";
                         gl.EDate = s.Sale.SalesDate;
-                        gl.TType = s.Sale.TransactionType.Type;
+                        gl.TType = string.Format("{0} - Sales", s.Sale.TransactionType.Type);
                         gl.EntryNo = s.Sale.RefNo;
                         gl.Outwards =(decimal) s.Quantity;
                         gl.Inwards = 0;
@@ -99,7 +99,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.EId = pr.PurchaseReturn.Id;
                     gl.EType = "PR";
                     gl.EDate = pr.PurchaseReturn.PRDate;
-                    gl.TType = pr.PurchaseReturn.TransactionType.Type;
+                    gl.TType = string.Format("{0} - Purchase Return", pr.PurchaseReturn.TransactionType.Type);
                     gl.EntryNo = pr.PurchaseReturn.RefNo;
                     gl.Inwards = 0;
                     gl.Outwards = (decimal)pr.Quantity;
@@ -120,7 +120,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.EDate = sr.SalesReturn.SRDate;
 
                     gl.EntryNo = sr.SalesReturn.RefNo;
-                    gl.TType = sr.SalesReturn.TransactionType.Type;
+                    gl.TType = string.Format("{0} - Sales Return", sr.SalesReturn.TransactionType.Type);
                     gl.Inwards = (decimal)sr.Quantity;
                     gl.Outwards = 0;
                     BalQty += (gl.Inwards- gl.Outwards);
