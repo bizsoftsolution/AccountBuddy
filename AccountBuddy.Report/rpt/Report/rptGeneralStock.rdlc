@@ -513,7 +513,9 @@
         <TablixRowHierarchy>
           <TablixMembers>
             <TablixMember>
+              <FixedData>true</FixedData>
               <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
               <Group Name="Details" />
@@ -524,7 +526,7 @@
         <Top>0.86113cm</Top>
         <Left>2.24973cm</Left>
         <Height>1.2cm</Height>
-        <Width>20.51625cm</Width>
+        <Width>20.51624cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>

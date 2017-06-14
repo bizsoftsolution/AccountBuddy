@@ -83,6 +83,9 @@
     <EmbeddedResource Include="rpt\Report\rptReorderLevelReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptStockIn.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Report\rptStockReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -118,6 +121,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptSalesReturn.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptStockOut.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AccountBuddy.BLL\AccountBuddy.BLL.csproj">
@@ -162,6 +168,10 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturn.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturnDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockGroup1.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockIn.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockInDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockOut.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockOutDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.TrialBalance.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UOM.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UserAccount.datasource" />

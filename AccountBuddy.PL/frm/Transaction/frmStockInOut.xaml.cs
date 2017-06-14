@@ -117,9 +117,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            //frm.Print.frmQuickPurchase f = new Print.frmQuickPurchase();
-            //f.LoadReport(data);
-            //f.ShowDialog();
+            frm.Print.frmQuickStockIn f = new Print.frmQuickStockIn();
+            f.LoadReport(data);
+            f.ShowDialog();
         }
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)

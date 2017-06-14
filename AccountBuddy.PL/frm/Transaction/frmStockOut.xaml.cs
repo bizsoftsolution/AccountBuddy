@@ -117,11 +117,11 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            //frm.Print.frmQuickPurchase f = new Print.frmQuickPurchase();
-            //f.LoadReport(data);
-            //f.ShowDialog();
+            frmQuickStockOut f = new frmQuickStockOut();
+            f.LoadReport(data);
+            f.ShowDialog();
         }
-
+       
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();

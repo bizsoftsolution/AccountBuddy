@@ -141,7 +141,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return (OpeningStock  + (PQty?? 0) + (SRQty??0 )) - ((SQty??0)  + (PRQty??0));
+                return (OpeningStock  + (PQty?? 0) + (SRQty??0 )+ (SInQty??0)) - ((SQty??0)  + (PRQty??0)+(SOutQty??0));
             }
         }
 
@@ -150,6 +150,43 @@ namespace AccountBuddy.BLL
             get
             {
                 return ReOrderLevel > AvailableStock;
+            }
+        }
+
+
+
+        public double? SInQty
+        {
+            get
+            {
+                return _SInQty;
+            }
+            set
+            {
+                if (_SInQty != value)
+                {
+                    _SInQty = value;
+                    NotifyPropertyChanged(nameof(SInQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
+
+            }
+        }
+        public double? SOutQty
+        {
+            get
+            {
+                return _SOutQty;
+            }
+            set
+            {
+                if (_SOutQty != value)
+                {
+                    _SOutQty = value;
+                    NotifyPropertyChanged(nameof(SOutQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
+
             }
         }
         #endregion
@@ -186,6 +223,8 @@ namespace AccountBuddy.BLL
         private double? _SOQty;
         private double? _PQty;
         private double? _POQty;
+        private double? _SInQty;
+        private double? _SOutQty;
 
         #endregion
 
