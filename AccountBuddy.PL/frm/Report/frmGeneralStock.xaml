@@ -30,13 +30,20 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="80"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="20*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"  >
-
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"  >
+                            <ComboBox x:Name="cmbCompany" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="5" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                        <TextBlock Text="Account Name" FontWeight="Bold" Width="150"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </ComboBox>
                             <ComboBox x:Name="cmbProduct" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="5" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
@@ -46,23 +53,26 @@
                                 </materialDesign:HintAssist.Hint>
                             </ComboBox>
 
-                            <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="5,20,5,5" >
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal" >
-                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                        <TextBlock Text="Date From" FontWeight="Bold"/>
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </DatePicker>
-                            <DatePicker Name="dtpDateTo"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="5,20,5,5">
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                        <TextBlock Text="Date To" FontWeight="Bold"/>
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </DatePicker>
-                            <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="5,20,15,5" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                            <TextBlock Text="Date From" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </DatePicker>
+                                <DatePicker Name="dtpDateTo"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="5,20,15,5">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                            <TextBlock Text="Date To" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </DatePicker>
+                                <Button Width="110" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 20 15 5" />
+                            </StackPanel>
+                            
                         </StackPanel>
 
 
@@ -71,7 +81,7 @@
 
                         <Grid Grid.Row="0"  >
 
-                            <DataGrid x:Name="dgvGeneralStock" BorderBrush="Black" BorderThickness="1" MouseDoubleClick="dgvGeneralStock_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False"  Background="White" Foreground="Black" Margin="100,20,100,40" >
+                            <DataGrid x:Name="dgvGeneralStock" BorderBrush="Black" BorderThickness="1" MouseDoubleClick="dgvGeneralStock_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False"  Background="White" Foreground="Black" Margin="100,20,100,20" >
 
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">

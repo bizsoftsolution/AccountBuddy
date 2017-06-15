@@ -11,7 +11,7 @@ namespace AccountBuddy.SL.Hubs
 
         #region Products
 
-        private BLL.Product Product_DALtoBLL(DAL.Product ProductsFrom)
+        public BLL.Product Product_DALtoBLL(DAL.Product ProductsFrom)
         {
             BLL.Product ProductsTo = ProductsFrom.toCopy<BLL.Product>(new BLL.Product());
 

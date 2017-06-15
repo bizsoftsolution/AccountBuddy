@@ -32,6 +32,19 @@ namespace AccountBuddy.PL.frm.Report
         {
             InitializeComponent();
             rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
+            var l1 = BLL.CompanyDetail.toList.Where(x => x.Id==BLL.UserAccount.User.UserType.CompanyId || x.UnderCompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
+            if (l1.Count() > 0)
+            {
+                cmbCompany.Visibility = Visibility.Visible;
+                cmbCompany.ItemsSource = l1;
+                cmbCompany.DisplayMemberPath = "CompanyName";
+                cmbCompany.SelectedValuePath = "Id";
+            }
+            else
+            {
+                cmbCompany.Visibility = Visibility.Collapsed;
+            }
+            
 
             int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
 
@@ -56,7 +69,10 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                List<BLL.GeneralStock> list = BLL.GeneralStock.ToList((int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                var cm = cmbCompany.SelectedItem as BLL.CompanyDetail;
+                int? CompanyId = cm == null ? null : (int?)cm.Id;
+
+                List<BLL.GeneralStock> list = BLL.GeneralStock.ToList(CompanyId,(int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
              
                 try
                 {
@@ -98,7 +114,10 @@ namespace AccountBuddy.PL.frm.Report
             }
             else
             {
-                if (cmbProduct.SelectedValue != null) dgvGeneralStock.ItemsSource = BLL.GeneralStock.ToList((int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                var cm = cmbCompany.SelectedItem as BLL.CompanyDetail;
+                int? CompanyId = cm==null?null: (int?)cm.Id;
+
+                if (cmbProduct.SelectedValue != null) dgvGeneralStock.ItemsSource = BLL.GeneralStock.ToList(CompanyId,(int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
                 LoadReport();
             }
 
@@ -273,8 +292,10 @@ namespace AccountBuddy.PL.frm.Report
         {
             if (dgvGeneralStock.Items.Count != 0)
             {
+                var cm = cmbCompany.SelectedItem as BLL.CompanyDetail;
+                int? CompanyId = cm == null ? null : (int?)cm.Id;
                 frmGeneralStockPrint f = new frmGeneralStockPrint();
-                f.LoadReport((int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                f.LoadReport(CompanyId,(int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
                 f.ShowDialog();
             }
             else
