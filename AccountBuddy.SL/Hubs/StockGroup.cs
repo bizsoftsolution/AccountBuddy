@@ -30,9 +30,14 @@ namespace AccountBuddy.SL.Hubs
             }
             else
             {
+                List<BLL.StockGroup> c=new List<BLL.StockGroup>();
                 var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
-                return DB.StockGroups.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
-                              .Select(x => StockGroup_DALtoBLL(x)).ToList();
+                if(wh!=null)
+                {
+                    c= DB.StockGroups.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
+                            .Select(x => StockGroup_DALtoBLL(x)).ToList();
+                }
+                return c;
             }
            
         }

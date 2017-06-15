@@ -174,6 +174,18 @@
     <Compile Include="StockGroup.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="StockIn.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockInDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockOut.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockOutDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Supplier.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
@@ -205,7 +217,7 @@
     <None Include="DBFMCGModel.edmx.diagram">
       <DependentUpon>DBFMCGModel.edmx</DependentUpon>
     </None>
-    <None Include="DB\DBFMCG_090617.bak" />
+    <None Include="DB\DBFMCG_1406.bak" />
     <None Include="FMCG.xsc">
       <DependentUpon>FMCG.xsd</DependentUpon>
     </None>

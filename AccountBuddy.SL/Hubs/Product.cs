@@ -24,6 +24,8 @@ namespace AccountBuddy.SL.Hubs
             ProductsTo.SOQty = ProductsFrom.SalesOrderDetails.Sum(x => x.Quantity);
             ProductsTo.SQty = ProductsFrom.SalesDetails.Sum(x => x.Quantity);
             ProductsTo.SRQty= ProductsFrom.SalesReturnDetails.Sum(x => x.Quantity);
+            ProductsTo.SInQty = ProductsFrom.StockInDetails.Sum(x => x.Quantity);
+            ProductsTo.SOutQty = ProductsFrom.StockOutDetails.Sum(x => x.Quantity);
             return ProductsTo;
         }
 

@@ -273,9 +273,7 @@ namespace AccountBuddy.PL.frm.Report
                 {
                     list = BLL.Product.toList.ToList();
                 }
-                list = list.Select(x => new BLL.Product()
-                { ProductName = x.ProductName, PRQty = x.PRQty, SRQty = x.SRQty, SQty = x.SQty, PQty = x.PQty, SOQty = x.SOQty, POQty = x.SOQty, OpeningStock = x.OpeningStock, ReOrderLevel = x.ReOrderLevel }).ToList();
-
+              
                 try
                 {
                     rptViewer.Reset();

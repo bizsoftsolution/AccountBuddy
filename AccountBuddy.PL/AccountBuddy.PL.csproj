@@ -235,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="frm\Print\frmQuickStockIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmBalanceSheet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -335,6 +339,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmQuickStockOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmReceipt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -350,6 +358,14 @@
     <Page Include="frm\Transaction\frmSalesReturn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Transaction\frmStockInOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmStockOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Transaction\Purchase.xaml">
       <SubType>Designer</SubType>
@@ -456,6 +472,9 @@
     <Compile Include="frm\Print\frmQuickSReturn.xaml.cs">
       <DependentUpon>frmQuickSReturn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Print\frmQuickStockIn.xaml.cs">
+      <DependentUpon>frmQuickStockIn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Report\frmBalanceSheet.xaml.cs">
       <DependentUpon>frmBalanceSheet.xaml</DependentUpon>
     </Compile>
@@ -531,6 +550,9 @@
     <Compile Include="frm\Transaction\frmPurchaseReturn.xaml.cs">
       <DependentUpon>frmPurchaseReturn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmQuickStockOut.xaml.cs">
+      <DependentUpon>frmQuickStockOut.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmReceipt.xaml.cs">
       <DependentUpon>frmReceipt.xaml</DependentUpon>
     </Compile>
@@ -542,6 +564,12 @@
     </Compile>
     <Compile Include="frm\Transaction\frmSalesReturn.xaml.cs">
       <DependentUpon>frmSalesReturn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmStockInOut.xaml.cs">
+      <DependentUpon>frmStockInOut.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmStockOut.xaml.cs">
+      <DependentUpon>frmStockOut.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\Purchase.xaml.cs">
       <DependentUpon>Purchase.xaml</DependentUpon>
@@ -587,6 +615,53 @@
     <None Include="AccountBuddy.PL_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.AccountGroup.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.BalanceSheet.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Bank.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.BankReconcilation.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.CompanyDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.CreditLimitType.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Customer.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.DataKeyValue.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.FMCGHubClient.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralLedger.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralStock.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Journal.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.JournalDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Ledger.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Payment.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PaymentDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Product.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.ProfitLoss.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Purchase.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseOrder.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseOrderDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseReturn.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseReturnDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Receipt.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptAndPayment.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Sale.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesOrder.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesOrderDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturn.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturnDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockGroup.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockIn.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockInDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockOut.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockOutDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Supplier.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.TransactionType.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.TrialBalance.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.UOM.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.UserAccount.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.UserType.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.UserTypeDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.UserTypeFormDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Validation.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

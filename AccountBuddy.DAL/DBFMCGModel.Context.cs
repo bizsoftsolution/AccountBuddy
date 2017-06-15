@@ -58,6 +58,10 @@ namespace AccountBuddy.DAL
         public virtual DbSet<SalesReturnDetail> SalesReturnDetails { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<StockGroup> StockGroups { get; set; }
+        public virtual DbSet<StockIn> StockIns { get; set; }
+        public virtual DbSet<StockInDetail> StockInDetails { get; set; }
+        public virtual DbSet<StockOut> StockOuts { get; set; }
+        public virtual DbSet<StockOutDetail> StockOutDetails { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<TransactionType> TransactionTypes { get; set; }
         public virtual DbSet<UOM> UOMs { get; set; }

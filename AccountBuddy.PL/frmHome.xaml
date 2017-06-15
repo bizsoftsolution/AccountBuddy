@@ -175,6 +175,16 @@
                                             <Transaction:frmSalesReturn/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Stock Inward" FormName="Stock Inward">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmStockInOut/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Stock Outward" FormName="Stock Outward">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmStockOut/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Payment" FormName="Payment">
                                         <Menu:NavMenuItem.Content>
                                             <Transaction:frmPayment/>
