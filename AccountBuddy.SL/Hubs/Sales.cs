@@ -57,6 +57,7 @@ namespace AccountBuddy.SL.Hubs
                         b_Sd.toCopy<DAL.SalesDetail>(d_Sd);
                     }
                     LogDetailStore(P, LogDetailType.UPDATE);
+                   
                 }
                 Journal_SaveBySales(P);
                 Purchase_SaveBySales(P);
@@ -66,52 +67,51 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-        public bool Sales_SaveByPurchase(BLL.Purchase P)
+       void Sales_SaveByPurchase(BLL.Purchase P)
         {
-            try
+            var refNo = string.Format("SAL-{0}", P.Id);
+
+            DAL.Sale s = DB.Sales.Where(x => x.RefNo == refNo).FirstOrDefault();
+            if (s != null)
             {
-                var LName = DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault().LedgerName;
+                DB.SalesDetails.RemoveRange(s.SalesDetails);
+                DB.Sales.Remove(s);
+                DB.SaveChanges();
+            }
+            var pd = P.PDetails.FirstOrDefault();
+            var ld = DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault();
 
-                if (LName.StartsWith("WH-") || LName.StartsWith("DL-"))
+            if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
+            {
+                var LName = LedgerNameByCompanyId(Caller.CompanyId);
+
+                var CId = CompanyIdByLedgerName(ld.LedgerName);
+
+                s = new DAL.Sale();
+                s.RefNo = refNo;
+                s.SalesDate  =P.PurchaseDate;
+                s.DiscountAmount = P.DiscountAmount;
+                s.ExtraAmount = P.ExtraAmount;
+                s.GSTAmount = P.GSTAmount;
+                s.ItemAmount = P.ItemAmount;
+                s.TotalAmount = P.TotalAmount;
+                s.LedgerId = LedgerIdByCompany(LName, CId);
+                s.TransactionTypeId = P.TransactionTypeId;
+                if (CId != 0)
                 {
-
-                    DAL.Sale d = DB.Sales.Where(x => x.RefNo == P.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
-
-                    if (d != null)
-                    {
-                        DB.SalesDetails.RemoveRange(d.SalesDetails);
-                        DB.Sales.Remove(d);
-                        DB.SaveChanges();
-                    }
-
-
-                    d = new DAL.Sale();
-                    d.ExtraAmount =P.ExtraAmount;
-                    d.SalesDate = P.PurchaseDate;
-                    DB.Sales.Add(d);
-                    var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
-                    P.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
-
-                    P.toCopy<DAL.Sale>(d);
-
-
                     foreach (var b_pod in P.PDetails)
                     {
                         DAL.SalesDetail d_pod = new DAL.SalesDetail();
                         b_pod.toCopy<DAL.SalesDetail>(d_pod);
-                        d.SalesDetails.Add(d_pod);
+                        s.SalesDetails.Add(d_pod);
                     }
+                    DB.Sales.Add(s);
                     DB.SaveChanges();
-                    P.Id = d.Id;
-                    LogDetailStore(P, LogDetailType.INSERT);
-
-                    return true;
+                    var Sal = Sales_DALtoBLL(s);
+                    Sal.TransactionType=P.TransactionType;
+                    Journal_SaveBySales(Sal);
                 }
-
-
             }
-            catch (Exception ex) { }
-            return false;
         }
         public bool Sales_DeleteByPurchase(BLL.Purchase P)
         {

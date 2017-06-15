@@ -56,6 +56,7 @@ namespace AccountBuddy.SL.Hubs
                         b_SRd.toCopy<DAL.SalesReturnDetail>(d_SRd);
                     }
                     LogDetailStore(P, LogDetailType.UPDATE);
+                    PurchaseReturn_SaveBySalesReturn(P);
                 }
                 Journal_SaveBySalesReturn(P);
                 return true;
@@ -136,6 +137,53 @@ namespace AccountBuddy.SL.Hubs
                 return true;
             }
 
+        }
+
+        void SaleReturn_SaveByPurchaseReturn(BLL.PurchaseReturn PR)
+        {
+            var refNo = string.Format("SAL-R-{0}", PR.Id);
+
+            DAL.SalesReturn sr = DB.SalesReturns.Where(x => x.RefNo == refNo).FirstOrDefault();
+            if (sr != null)
+            {
+                DB.SalesReturnDetails.RemoveRange(sr.SalesReturnDetails);
+                DB.SalesReturns.Remove(sr);
+                DB.SaveChanges();
+            }
+            var pd = PR.PRDetails.FirstOrDefault();
+            var ld = DB.Ledgers.Where(x => x.Id == PR.LedgerId).FirstOrDefault();
+
+            if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
+            {
+                var LName = LedgerNameByCompanyId(Caller.CompanyId);
+
+                var CId = CompanyIdByLedgerName(ld.LedgerName);
+
+                sr = new DAL.SalesReturn();
+                sr.RefNo = refNo;
+                sr.SRDate = PR.PRDate;
+                sr.DiscountAmount = PR.DiscountAmount;
+                sr.ExtraAmount = PR.ExtraAmount;
+                sr.GSTAmount = PR.GSTAmount;
+                sr.ItemAmount = PR.ItemAmount;
+                sr.TotalAmount = PR.TotalAmount;
+                sr.LedgerId = LedgerIdByCompany(LName, CId);
+                sr.TransactionTypeId = PR.TransactionTypeId;
+                if (CId != 0)
+                {
+                    foreach (var b_pod in PR.PRDetails)
+                    {
+                        DAL.SalesReturnDetail d_pod = new DAL.SalesReturnDetail();
+                        b_pod.toCopy<DAL.SalesReturnDetail>(d_pod);
+                        sr.SalesReturnDetails.Add(d_pod);
+                    }
+                    DB.SalesReturns.Add(sr);
+                    DB.SaveChanges();
+                    var SalR = SalesReturn_DALtoBLL(sr);
+                    SalR.TransactionType = PR.TransactionType;
+                    Journal_SaveBySalesReturn(SalR);
+                }
+            }
         }
 
 

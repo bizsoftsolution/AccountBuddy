@@ -60,6 +60,7 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
+                    Journal_SaveByReceipt(PO);
                 }
                 
                 return true;

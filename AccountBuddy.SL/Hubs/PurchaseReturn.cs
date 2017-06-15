@@ -10,13 +10,13 @@ namespace AccountBuddy.SL.Hubs
     {
         #region PurchaseReturn
 
-     
+
 
         public bool PurchaseReturn_Save(BLL.PurchaseReturn P)
         {
             try
             {
-               
+
                 DAL.PurchaseReturn d = DB.PurchaseReturns.Where(x => x.Id == P.Id).FirstOrDefault();
 
                 if (d == null)
@@ -61,56 +61,57 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Journal_SaveByPurchaseReturn(P);
+                SaleReturn_SaveByPurchaseReturn(P);
                 return true;
             }
             catch (Exception ex) { }
             return false;
         }
-        public bool PurchaseReturn_SaveBySalesReturn(BLL.SalesReturn SR)
+        void PurchaseReturn_SaveBySalesReturn(BLL.SalesReturn SR)
         {
-            try
+            var refNo = string.Format("PUR-R-{0}", SR.Id);
+
+            DAL.PurchaseReturn p = DB.PurchaseReturns.Where(x => x.RefNo == refNo).FirstOrDefault();
+            if (p != null)
             {
-                var LName = DB.Ledgers.Where(x => x.Id == SR.LedgerId).FirstOrDefault().LedgerName;
-
-                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
-                {
-
-                    DAL.PurchaseReturn d = DB.PurchaseReturns.Where(x => x.RefNo == SR.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
-                    d.ExtraAmount = SR.ExtraAmount;
-                    d.PRDate = SR.SRDate;
-                    if (d != null)
-                    {
-                        DB.PurchaseReturnDetails.RemoveRange(d.PurchaseReturnDetails);
-                        DB.PurchaseReturns.Remove(d);
-                        DB.SaveChanges();
-                    }
-
-
-                    d = new DAL.PurchaseReturn();
-                    DB.PurchaseReturns.Add(d);
-                    var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
-                    SR.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
-
-                    SR.toCopy<DAL.PurchaseReturn>(d);
-
-
-                    foreach (var b_SRd in SR.SRDetails)
-                    {
-                        DAL.PurchaseReturnDetail d_SRd = new DAL.PurchaseReturnDetail();
-                        b_SRd.toCopy<DAL.PurchaseReturnDetail>(d_SRd);
-                        d.PurchaseReturnDetails.Add(d_SRd);
-                    }
-                    DB.SaveChanges();
-                    SR.Id = d.Id;
-                    LogDetailStore(SR, LogDetailType.INSERT);
-
-                    return true;
-                }
-
-
+                DB.PurchaseReturnDetails.RemoveRange(p.PurchaseReturnDetails);
+                DB.PurchaseReturns.Remove(p);
+                DB.SaveChanges();
             }
-            catch (Exception ex) { }
-            return false;
+            var pd = SR.SRDetails.FirstOrDefault();
+            var ld = DB.Ledgers.Where(x => x.Id == SR.LedgerId).FirstOrDefault();
+
+            if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
+            {
+                var LName = LedgerNameByCompanyId(Caller.CompanyId);
+
+                var CId = CompanyIdByLedgerName(ld.LedgerName);
+
+                p = new DAL.PurchaseReturn();
+                p.RefNo = refNo;
+                p.PRDate = SR.SRDate;
+                p.DiscountAmount = SR.DiscountAmount;
+                p.ExtraAmount = SR.ExtraAmount;
+                p.GSTAmount = SR.GSTAmount;
+                p.ItemAmount = SR.ItemAmount;
+                p.TotalAmount = SR.TotalAmount;
+                p.LedgerId = LedgerIdByCompany(LName, CId);
+                p.TransactionTypeId = SR.TransactionTypeId;
+                if (CId != 0)
+                {
+                    foreach (var b_pod in S.SDetails)
+                    {
+                        DAL.PurchaseReturnDetail d_pod = new DAL.PurchaseReturnDetail();
+                        b_pod.toCopy<DAL.PurchaseReturnDetail>(d_pod);
+                        p.PurchaseReturnDetails.Add(d_pod);
+                    }
+                    DB.PurchaseReturns.Add(p);
+                    DB.SaveChanges();
+                    var Pur = PurchaseReturn_DALtoBLL(p);
+                    Pur.TransactionType = SR.TransactionType;
+                    Journal_SaveByPurchaseReturn(Pur);
+                }
+            }
         }
 
         public bool PurchaseOrder_DeleteBySalesReturn(BLL.SalesReturn PO)
