@@ -63,6 +63,7 @@
     <Compile Include="Journal.cs" />
     <Compile Include="JournalDetail.cs" />
     <Compile Include="Ledger.cs" />
+    <Compile Include="Payable.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="PaymentDetail.cs" />
     <Compile Include="PaymentReceipt.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Receipt.cs" />
     <Compile Include="ReceiptAndPayment.cs" />
     <Compile Include="ReceiptDetail.cs" />
+    <Compile Include="Receivable.cs" />
     <Compile Include="Sale.cs" />
     <Compile Include="SalesDetail.cs" />
     <Compile Include="SalesOrder.cs" />

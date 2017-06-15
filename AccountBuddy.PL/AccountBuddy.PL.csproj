@@ -271,6 +271,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmPayableReceivable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmPaymentReceipt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -498,6 +502,9 @@
     </Compile>
     <Compile Include="frm\Report\frmIncomeAndExpenditurePrint.xaml.cs">
       <DependentUpon>frmIncomeAndExpenditurePrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmPayableReceivable.xaml.cs">
+      <DependentUpon>frmPayableReceivable.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmPaymentReceipt.xaml.cs">
       <DependentUpon>frmPaymentReceipt.xaml</DependentUpon>

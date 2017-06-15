@@ -287,7 +287,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList(); ;
+            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList();
             cmbCustomer.DisplayMemberPath = "LedgerName";
             cmbCustomer.SelectedValuePath = "Id";
 

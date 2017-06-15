@@ -7,7 +7,7 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        public List<BLL.GeneralStock> GeneralStock_List(int ProductId, DateTime dtFrom, DateTime dtTo)
+        public List<BLL.GeneralStock> GeneralStock_List(int? CompanyId, int ProductId, DateTime dtFrom, DateTime dtTo)
         {
             List<BLL.GeneralStock> lstGeneralStock = new List<BLL.GeneralStock>();
 
@@ -29,13 +29,11 @@ namespace AccountBuddy.SL.Hubs
 
                 opqty = (decimal)P.OpeningStock;
 
-                pqty =(decimal) P.PurchaseDetails.Where(x=> x.Purchase.PurchaseDate<dtFrom).Sum(x => x.Quantity);
-                srqty = (decimal)P.SalesReturnDetails.Where(x=> x.SalesReturn.SRDate<dtFrom).Sum(x => x.Quantity);
-                sqty = (decimal)P.SalesDetails.Where(x=> x.Sale.SalesDate<dtFrom).Sum(x => x.Quantity);
-                prqty = (decimal)P.PurchaseReturnDetails.Where(x=> x.PurchaseReturn.PRDate<dtFrom).Sum(x => x.Quantity);
-
-
-
+                pqty =(decimal) P.PurchaseDetails.Where(x=> (CompanyId==null || x.Purchase.Ledger.AccountGroup.CompanyId==CompanyId ) && x.Purchase.PurchaseDate<dtFrom).Sum(x => x.Quantity);
+                srqty = (decimal)P.SalesReturnDetails.Where(x=> (CompanyId == null || x.SalesReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.SalesReturn.SRDate<dtFrom).Sum(x => x.Quantity);
+                sqty = (decimal)P.SalesDetails.Where(x=> (CompanyId == null || x.Sale.Ledger.AccountGroup.CompanyId == CompanyId) && x.Sale.SalesDate<dtFrom).Sum(x => x.Quantity);
+                prqty = (decimal)P.PurchaseReturnDetails.Where(x=> (CompanyId == null || x.PurchaseReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.PurchaseReturn.PRDate<dtFrom).Sum(x => x.Quantity);
+                
                 gl.Inwards = pqty + srqty;
                 gl.Outwards = sqty + prqty;
 
@@ -48,7 +46,7 @@ namespace AccountBuddy.SL.Hubs
                 gl.Ledger.LedgerName = string.Format("Balance {0}", P.ProductName);
                 lstGeneralStock.Add(gl);
 
-                foreach (var pd in P.PurchaseDetails.Where(x => x.Purchase.PurchaseDate >= dtFrom && x.Purchase.PurchaseDate <= dtTo).ToList())
+                foreach (var pd in P.PurchaseDetails.Where(x => (CompanyId == null || x.Purchase.Ledger.AccountGroup.CompanyId == CompanyId) && x.Purchase.PurchaseDate >= dtFrom && x.Purchase.PurchaseDate <= dtTo).ToList())
                 {
                     gl = new BLL.GeneralStock();
                     gl.Product = new BLL.Product();
@@ -71,7 +69,7 @@ namespace AccountBuddy.SL.Hubs
 
         
 
-                foreach (var s in P.SalesDetails.Where(x => x.Sale.SalesDate >= dtFrom && x.Sale.SalesDate <= dtTo).ToList())
+                foreach (var s in P.SalesDetails.Where(x => (CompanyId == null || x.Sale.Ledger.AccountGroup.CompanyId == CompanyId) && x.Sale.SalesDate >= dtFrom && x.Sale.SalesDate <= dtTo).ToList())
                 {
                    
                         gl = new BLL.GeneralStock();
@@ -90,7 +88,7 @@ namespace AccountBuddy.SL.Hubs
                     
 
                 }
-                foreach (var pr in P.PurchaseReturnDetails.Where(x => x.PurchaseReturn.PRDate >= dtFrom && x.PurchaseReturn.PRDate <= dtTo).ToList())
+                foreach (var pr in P.PurchaseReturnDetails.Where(x => (CompanyId == null || x.PurchaseReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.PurchaseReturn.PRDate >= dtFrom && x.PurchaseReturn.PRDate <= dtTo).ToList())
                 {
                     gl = new BLL.GeneralStock();
                     gl.Ledger = new BLL.Ledger();
@@ -108,7 +106,7 @@ namespace AccountBuddy.SL.Hubs
                     lstGeneralStock.Add(gl);
                 }
 
-                foreach (var sr in P.SalesReturnDetails.Where(x => x.SalesReturn.SRDate >= dtFrom && x.SalesReturn.SRDate <= dtTo).ToList())
+                foreach (var sr in P.SalesReturnDetails.Where(x => (CompanyId == null || x.SalesReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.SalesReturn.SRDate >= dtFrom && x.SalesReturn.SRDate <= dtTo).ToList())
                 {
                     gl = new BLL.GeneralStock();
                     gl.Ledger = new BLL.Ledger();
