@@ -19,7 +19,9 @@ namespace AccountBuddy.SL.Controllers
         {
 
             var l1 = DB.Products.Where(x => x.StockGroup.CompanyId == CompanyId)
-                                      .Select(x => new BLL.Product()
+                                .ToList().Select(x=> new Hubs.ABServerHub().Product_DALtoBLL(x))
+                                .ToList()
+                                .Select(x => new BLL.Product()
                                       {
                                           Id = x.Id,
                                           ProductName = x.ProductName,
@@ -29,9 +31,10 @@ namespace AccountBuddy.SL.Controllers
                                           MRP = x.MRP,
                                           StockGroupId = x.StockGroupId,
                                           UOMId = x.UOMId,
-                                          UOMName = x.UOM.Symbol                                                             
+                                          UOMName = x.UOM.Symbol,
+                                          OpeningStock = x.AvailableStock
                                       })
-                                      .ToList();
+                                .ToList();
 
             return Json(l1, JsonRequestBehavior.AllowGet);
         }

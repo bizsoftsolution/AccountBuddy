@@ -229,9 +229,9 @@ namespace AccountBuddy.BLL
 
         #region Methods
 
-        public static List<GeneralStock> ToList(int LedgerId, DateTime dtFrom, DateTime dtTo)
+        public static List<GeneralStock> ToList(int? CompanyId, int ProductId, DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<GeneralStock>>("GeneralStock_List", LedgerId, dtFrom, dtTo).Result;
+            return FMCGHubClient.FMCGHub.Invoke<List<GeneralStock>>("GeneralStock_List", CompanyId, ProductId, dtFrom, dtTo).Result;
         }
 
         #endregion

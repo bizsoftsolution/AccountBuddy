@@ -33,11 +33,11 @@ namespace AccountBuddy.PL.frm.Report
 
 
         }
-        public void LoadReport(int PID, DateTime dtFrom, DateTime dtTo)
+        public void LoadReport(int? CompanyId,int PID, DateTime dtFrom, DateTime dtTo)
         {
             try
             {
-                List<BLL.GeneralStock> list = BLL.GeneralStock.ToList((int)PID, dtFrom, dtTo);
+                List<BLL.GeneralStock> list = BLL.GeneralStock.ToList(CompanyId, (int)PID, dtFrom, dtTo);
                 list = list.Select(x => new BLL.GeneralStock()
                 { LedgerName = x.Ledger.LedgerName, TType=x.TType, Inwards = x.Inwards, Outwards = x.Outwards, BalStock = x.BalStock, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType }).ToList();
 
