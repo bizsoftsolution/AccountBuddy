@@ -73,10 +73,11 @@ namespace AccountBuddy.SL.Hubs
             {
                 var LName = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault().LedgerName;
 
-                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                if (LName.StartsWith("WH-") || LName.StartsWith("DL-"))
                 {
 
-                    DAL.Purchase d = DB.Purchases.Where(x => x.RefNo == S.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
+                    DAL.Ledger l = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault();
+                    DAL.Purchase d = DB.Purchases.Where(x => x.RefNo == S.RefNo && x.Ledger.AccountGroup.CompanyDetail.UnderCompanyId == Caller.CompanyId).FirstOrDefault();
                     if (d != null)
                     {
                         DB.PurchaseDetails.RemoveRange(d.PurchaseDetails);
@@ -91,7 +92,7 @@ namespace AccountBuddy.SL.Hubs
 
                     DB.Purchases.Add(d);
                     var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
-                    S.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
+                    S.LedgerId = LedgerIdByCompany(LNameTo, Caller.CompanyId);
 
                     S.toCopy<DAL.Purchase>(d);
 
