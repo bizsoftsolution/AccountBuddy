@@ -59,6 +59,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Journal_SaveBySales(P);
+                Purchase_SaveBySales(P);
                 return true;
             }
             catch (Exception ex) { }
@@ -71,7 +72,7 @@ namespace AccountBuddy.SL.Hubs
             {
                 var LName = DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault().LedgerName;
 
-                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                if (LName.StartsWith("WH-") || LName.StartsWith("DL-"))
                 {
 
                     DAL.Sale d = DB.Sales.Where(x => x.RefNo == P.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();

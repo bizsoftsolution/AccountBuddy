@@ -97,7 +97,7 @@ namespace AccountBuddy.SL.Hubs
                             var l2 = new BLL.Ledger();
                             var cm2 = DB.CompanyDetails.Where(x => x.Id == cm.UnderCompanyId).FirstOrDefault();
                             cm2.toCopy<BLL.Ledger>(l2);
-                            l2.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Warehouse" ? "CM" : "WH", cm.CompanyName);
+                            l2.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Warehouse" ? "CM" : "WH", cm2.CompanyName);
                             l2.AccountGroupId = AccountGroupIdByCompanyAndKey(cm.Id, BLL.DataKeyValue.SundryCreditors_Key);
                             l2.Id = 0;
                             Ledger_Save(l2);

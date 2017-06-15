@@ -267,6 +267,11 @@
                                             <Report:frmGeneralStock/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Payable And Receivable" FormName="Payable And Receivable">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmPayableReceivable/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                 </ListBox>
                             </Expander>
 
