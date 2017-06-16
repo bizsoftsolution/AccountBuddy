@@ -224,5 +224,15 @@ namespace AccountBuddy.PL.frm.Transaction
         {
 
         }
+
+        private void btnMakepurchase_Click(object sender, RoutedEventArgs e)
+        {
+            if (data.MakePurchase())
+            {
+                MessageBox.Show("Succussfully to Make Purchase");
+                data.Clear();
+                btnMakepurchase.IsEnabled = false;
+            }            
+        }
     }
 }

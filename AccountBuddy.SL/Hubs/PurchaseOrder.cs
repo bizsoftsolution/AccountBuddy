@@ -66,6 +66,49 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
+        public bool PurchaseOrder_MakePurchase(BLL.PurchaseOrder PO)
+        {
+            try
+            {
+                BLL.Purchase P = new BLL.Purchase();
+
+                P.PurchaseDate = PO.PODate.Value;
+                P.RefNo = PO.RefNo;
+                P.LedgerId = PO.LedgerId;
+                P.TransactionType = "Cash";
+                P.TransactionTypeId = 1;
+                P.ItemAmount = PO.ItemAmount.Value;
+                P.DiscountAmount = PO.DiscountAmount.Value;
+                P.GSTAmount = PO.GSTAmount.Value;
+                P.ExtraAmount = PO.Extras.Value;
+                P.TotalAmount = PO.TotalAmount.Value;
+                P.Narration = PO.Narration;               
+
+
+                foreach (var pod in PO.PODetails)
+                {
+                    BLL.PurchaseDetail PD = new BLL.PurchaseDetail() {
+                        PODId = pod.Id,
+                        ProductId =pod.ProductId,
+                        UOMId = pod.UOMId,
+                        UOMName = pod.UOMName,
+                        Quantity = pod.Quantity,
+                        UnitPrice =pod.UnitPrice,
+                        DiscountAmount = pod.DiscountAmount,
+                        GSTAmount = pod.GSTAmount,
+                        ProductName = pod.ProductName,
+                        Amount = pod.Amount
+                    };
+
+
+                    P.PDetails.Add(PD);
+                }
+                return Purchase_Save(P);
+            }
+            catch (Exception ex) { }
+            return true;
+        }
+
         public bool PurchaseOrder_SaveBySalesOrder(BLL.SalesOrder SO)
         {
             try

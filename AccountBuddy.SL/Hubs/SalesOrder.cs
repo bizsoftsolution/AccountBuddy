@@ -68,6 +68,51 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
+        public bool SalesOrder_MakeSales(BLL.SalesOrder SO)
+        {
+            try
+            {
+                BLL.Sale S = new BLL.Sale();
+
+                S.SalesDate = SO.SODate.Value;
+                S.RefNo = SO.RefNo;
+                S.LedgerId = SO.LedgerId.Value;
+                S.TransactionType = "Cash";
+                S.TransactionTypeId = 1;
+                S.ItemAmount = SO.ItemAmount.Value;
+                S.DiscountAmount = SO.DiscountAmount.Value;
+                S.GSTAmount = SO.GSTAmount.Value;
+                S.ExtraAmount = SO.ExtraAmount.Value;
+                S.TotalAmount = SO.TotalAmount.Value;
+                S.Narration = SO.Narration;
+
+
+                foreach (var SOd in SO.SODetails)
+                {
+                    BLL.SalesDetail PD = new BLL.SalesDetail()
+                    {
+                        SODId = SOd.Id,
+                        ProductId = SOd.ProductId.Value,
+                        UOMId = SOd.UOMId.Value,
+                        UOMName = SOd.UOMName,
+                        Quantity = SOd.Quantity.Value,
+                        UnitPrice = SOd.UnitPrice.Value,
+                        DiscountAmount = SOd.DiscountAmount.Value,
+                        GSTAmount = SOd.GSTAmount.Value,
+                        ProductName = SOd.ProductName,
+                        Amount = SOd.Amount.Value
+                    };
+
+
+                    S.SDetails.Add(PD);
+                }
+                return Sales_Save(S);
+            }
+            catch (Exception ex) { }
+            return true;
+        }
+
+
 
         public bool SalesOrder_SaveByPurchaseOrder(BLL.PurchaseOrder PO)
         {
