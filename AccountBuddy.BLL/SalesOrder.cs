@@ -34,6 +34,7 @@ namespace AccountBuddy.BLL
 
         private SalesOrderDetail _SODetail;
         private ObservableCollection<SalesOrderDetail> _SODetails;
+        private string _Status;
 
         #endregion
 
@@ -230,6 +231,22 @@ namespace AccountBuddy.BLL
                 {
                     _Narration = value;
                     NotifyPropertyChanged(nameof(Narration));
+                }
+            }
+        }
+
+        public string Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                if (_Status != value)
+                {
+                    _Status = value;
+                    NotifyPropertyChanged(nameof(Status));
                 }
             }
         }

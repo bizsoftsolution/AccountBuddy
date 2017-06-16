@@ -24,6 +24,7 @@ namespace AccountBuddy.BLL
         private decimal? _Extras;
         private decimal? _TotalAmount;
         private string _Narration;
+        private string _Status;
 
         private string _LedgerName;        
         private string _AmountInwords;
@@ -217,7 +218,22 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+
+        public string Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                if (_Status != value)
+                {
+                    _Status = value;
+                    NotifyPropertyChanged(nameof(Status));
+                }
+            }
+        }
         public string LedgerName
         {
             get
