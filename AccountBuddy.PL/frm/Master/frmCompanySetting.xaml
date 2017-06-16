@@ -159,7 +159,7 @@
                             <DropShadowEffect/>
                         </DataGrid.Effect>
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Users" TextBlock.TextAlignment="Center"  Width="75">
+                            <!--<DataGridTemplateColumn Header="Users" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button   x:Name="btnUserWarehouse" Click="btnUserWarehouse_Click" Tag="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
@@ -167,7 +167,7 @@
                                         </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            </DataGridTemplateColumn>-->
                             <DataGridTemplateColumn Header="Edit" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -216,7 +216,7 @@
                             <DropShadowEffect/>
                         </DataGrid.Effect>
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Users" TextBlock.TextAlignment="Center"  Width="75">
+                            <!--<DataGridTemplateColumn Header="Users" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button   x:Name="btnUserDealer" Click="btnUserDealer_Click" Tag="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
@@ -224,7 +224,7 @@
                                         </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            </DataGridTemplateColumn>-->
 
                             <DataGridTemplateColumn Header="Edit" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
