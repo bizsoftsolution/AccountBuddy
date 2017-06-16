@@ -67,6 +67,7 @@
     <Compile Include="Payment.cs" />
     <Compile Include="PaymentDetail.cs" />
     <Compile Include="PaymentReceipt.cs" />
+    <Compile Include="POPending.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProfitLoss.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="SalesOrderDetail.cs" />
     <Compile Include="SalesReturn.cs" />
     <Compile Include="SalesReturnDetail.cs" />
+    <Compile Include="SOPending.cs" />
     <Compile Include="Staff.cs" />
     <Compile Include="StockGroup.cs" />
     <Compile Include="StockIn.cs" />

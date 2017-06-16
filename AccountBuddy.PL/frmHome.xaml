@@ -175,7 +175,7 @@
                                             <Transaction:frmSalesReturn/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                    <Menu:NavMenuItem MenuName="Stock Inward" FormName="Stock Inward">
+                                    <!--<Menu:NavMenuItem MenuName="Stock Inward" FormName="Stock Inward">
                                         <Menu:NavMenuItem.Content>
                                             <Transaction:frmStockInOut/>
                                         </Menu:NavMenuItem.Content>
@@ -184,7 +184,7 @@
                                         <Menu:NavMenuItem.Content>
                                             <Transaction:frmStockOut/>
                                         </Menu:NavMenuItem.Content>
-                                    </Menu:NavMenuItem>
+                                    </Menu:NavMenuItem>-->
                                     <Menu:NavMenuItem MenuName="Payment" FormName="Payment">
                                         <Menu:NavMenuItem.Content>
                                             <Transaction:frmPayment/>
@@ -270,6 +270,16 @@
                                     <Menu:NavMenuItem MenuName="Payable And Receivable" FormName="Payable And Receivable">
                                         <Menu:NavMenuItem.Content>
                                             <Report:frmPayableReceivable/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Purchase Order Report" FormName="Purchase Order Report">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmPOPending/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Sales Order Report" FormName="Sales Order Report">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmSOPending/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
                                 </ListBox>
