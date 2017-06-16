@@ -133,7 +133,7 @@ namespace AccountBuddy.PL.frm.Transaction
             var rv = data.Find();
             if(data.Id!=0)
             {
-                btnMakesales.IsEnabled = true;
+                btnMakesales.IsEnabled = data.Status== "Pending" ? true: false;
             }
             if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
         }

@@ -249,6 +249,7 @@ namespace AccountBuddy.SL.Hubs
             {
                 PO.PODetails.Add(d_pod.toCopy<BLL.PurchaseOrderDetail>(new BLL.PurchaseOrderDetail()));
             }
+            PO.Status = d.PurchaseOrderDetails.FirstOrDefault().PurchaseDetails.Count() > 0 ? "Purchased" : "Pending";
             return PO;
         }
         public bool Find_PORef(string RefNo, BLL.PurchaseOrder PO)

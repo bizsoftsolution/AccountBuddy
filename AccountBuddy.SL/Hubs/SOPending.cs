@@ -18,14 +18,14 @@ namespace AccountBuddy.SL.Hubs
             {
                 if (l.SalesOrders.Where(x => x.SODate >= dtFrom && x.SODate <= dtTo).Count() != 0)
                 {
-                    var po = l.PurchaseOrders.FirstOrDefault();
+                    var po = l.SalesOrders.FirstOrDefault();
                     tb = new BLL.SOPending();
                     tb.Ledger = LedgerDAL_BLL(l);
 
                     tb.EntryNo = po.RefNo;
                     tb.Amount = po.TotalAmount;
-                    tb.SODate = po.PODate;
-                    tb.Status = "Pending";
+                    tb.SODate = po.SODate;
+                    tb.Status = po.SalesOrderDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Purchased" : "Pending";
                     lstSOPending.Add(tb);
                 }
 
