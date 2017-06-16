@@ -72,6 +72,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            btnMakepurchase.IsEnabled = false;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -140,6 +141,10 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
+            if(data.Id!=0)
+            {
+                btnMakepurchase.IsEnabled = true;
+            }
             if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
 
         }
