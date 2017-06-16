@@ -379,6 +379,18 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public bool MakeSales()
+        {
+            try
+            {
+                return FMCGHubClient.FMCGHub.Invoke<bool>("SalesOrder_MakeSales", this).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public void Clear()
         {
             new SalesOrder().toCopy<SalesOrder>(this);
