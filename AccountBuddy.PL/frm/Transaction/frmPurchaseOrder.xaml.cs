@@ -72,6 +72,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            btnMakepurchase.IsEnabled = false;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -140,6 +141,10 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
+            if(data.Id!=0)
+            {
+                btnMakepurchase.IsEnabled = true;
+            }
             if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
 
         }
@@ -188,6 +193,31 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key).ToList();
             cmbSupplier.DisplayMemberPath = "LedgerName";
             cmbSupplier.SelectedValuePath = "Id";
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtDiscountAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtExtraAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtDiscountAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
         }
     }
 }

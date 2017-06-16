@@ -48,7 +48,7 @@
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="AccountNetwork" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                        <TextBlock Text="Under"/>
+                                        <TextBlock Text="Sub Category"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </ComboBox>

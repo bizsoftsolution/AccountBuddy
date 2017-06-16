@@ -62,6 +62,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            btnMakesales.IsEnabled = false;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -130,6 +131,10 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
+            if(data.Id!=0)
+            {
+                btnMakesales.IsEnabled = true;
+            }
             if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
         }
 
@@ -160,6 +165,26 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbCustomer.DisplayMemberPath = "LedgerName";
             cmbCustomer.SelectedValuePath = "Id";
 
+
+        }
+
+        private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtDiscountAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtExtraAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtExtraAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
     }

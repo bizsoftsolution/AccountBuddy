@@ -151,7 +151,7 @@
                                 </ComboBox>
                             </StackPanel>
 
-                            <GroupBox Header="Credit" Margin="0,10,10,0" >
+                            <GroupBox Header="Credit Limit" Margin="0,10,10,0" >
                                 <StackPanel Orientation="Horizontal">
                                     <TextBox Width="120"  x:Name="txtCreditAmount" TextAlignment="Right" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextChanged="txtCreditAmount_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.CreditAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
                                         <materialDesign:HintAssist.Hint>
