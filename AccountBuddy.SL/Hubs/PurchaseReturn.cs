@@ -99,7 +99,7 @@ namespace AccountBuddy.SL.Hubs
                 p.TransactionTypeId = SR.TransactionTypeId;
                 if (CId != 0)
                 {
-                    foreach (var b_pod in S.SDetails)
+                    foreach (var b_pod in SR.SRDetails)
                     {
                         DAL.PurchaseReturnDetail d_pod = new DAL.PurchaseReturnDetail();
                         b_pod.toCopy<DAL.PurchaseReturnDetail>(d_pod);

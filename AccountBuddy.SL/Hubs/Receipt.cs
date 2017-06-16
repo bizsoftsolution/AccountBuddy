@@ -62,7 +62,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(PO, LogDetailType.UPDATE);
                     Journal_SaveByReceipt(PO);
                 }
-                Journal_SaveByReceipt(PO);
+              
                 return true;
             }
             catch (Exception ex) { }
