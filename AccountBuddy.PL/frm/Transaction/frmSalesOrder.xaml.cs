@@ -187,5 +187,15 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
+
+        private void btnMakesales_Click(object sender, RoutedEventArgs e)
+        {
+            if (data.MakeSales())
+            {
+                MessageBox.Show("Succussfully to Make Sales");
+                data.Clear();
+                btnMakesales.IsEnabled = false;
+            }
+        }
     }
 }
