@@ -384,7 +384,17 @@ namespace AccountBuddy.BLL
                 return false;
             }
         }
-
+        public bool Save_To_Purchase()
+        {
+            try
+            {
+                return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseOrder_Save", this).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         public void Clear()
         {
             new Purchase().toCopy<Purchase>(this);
