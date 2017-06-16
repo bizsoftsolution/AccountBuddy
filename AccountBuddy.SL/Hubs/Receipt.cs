@@ -60,8 +60,9 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
+
                 }
-                
+                Journal_SaveByReceipt(PO);
                 return true;
             }
             catch (Exception ex) { }
@@ -103,11 +104,14 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d != null)
                 {
+                    var P = Receipt_DALtoBLL(d);
                     DB.ReceiptDetails.RemoveRange(d.ReceiptDetails);
                     DB.Receipts.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(Receipt_DALtoBLL(d), LogDetailType.DELETE);
+                    LogDetailStore(P, LogDetailType.DELETE);
+                    Journal_DeleteByReceipt(P);
                 }
+                
                 return true;
             }
             catch (Exception ex) { }
