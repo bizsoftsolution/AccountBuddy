@@ -229,7 +229,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.MakePurchase())
             {
-                MessageBox.Show("Succussfully to Make Purchase");
+                MessageBox.Show("Successfully to Make Purchase");
                 data.Clear();
                 btnMakepurchase.IsEnabled = false;
             }            

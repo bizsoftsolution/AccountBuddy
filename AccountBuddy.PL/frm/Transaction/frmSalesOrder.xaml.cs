@@ -192,7 +192,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.MakeSales())
             {
-                MessageBox.Show("Succussfully to Make Sales");
+                MessageBox.Show("Successfully to Make Sales");
                 data.Clear();
                 btnMakesales.IsEnabled = false;
             }
