@@ -253,7 +253,7 @@ namespace AccountBuddy.SL.Hubs
             {
                 SO.SODetails.Add(d_SOd.toCopy<BLL.SalesOrderDetail>(new BLL.SalesOrderDetail()));
             }
-            SO.Status = d.SalesOrderDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Purchased" : "Pending";
+            SO.Status = d.SalesOrderDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
             return SO;
         }
         public bool Find_SORef(string RefNo, BLL.SalesOrder PO)

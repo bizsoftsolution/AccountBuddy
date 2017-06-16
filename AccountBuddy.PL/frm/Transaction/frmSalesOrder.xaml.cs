@@ -21,7 +21,7 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmSalesOrder : UserControl
     {
-        BLL.SalesOrder data = new BLL.SalesOrder();
+        public BLL.SalesOrder data = new BLL.SalesOrder();
         public frmSalesOrder()
         {
             InitializeComponent();
