@@ -25,7 +25,7 @@ namespace AccountBuddy.SL.Hubs
                     tb.EntryNo = po.RefNo;
                     tb.Amount = po.TotalAmount;
                     tb.PODate = po.PODate;
-                    tb.Status = "Pending";
+                    tb.Status = po.PurchaseOrderDetails.FirstOrDefault().PurchaseDetails.Count()>0?"Purchased" : "Pending";
                     lstPOPending.Add(tb);
                 }
                

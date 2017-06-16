@@ -89,20 +89,17 @@ namespace AccountBuddy.PL.frm.Report
 
         private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var tb = dgvDetails.SelectedItem as BLL.TrialBalance;
-            if (tb != null)
+            try
             {
-                frmGeneralLedger frm = new frmGeneralLedger();
-                App.frmHome.ShowForm(frm);
-
+                var po = dgvDetails.SelectedItem as BLL.SOPending;
+                Transaction.frmSalesOrder f = new Transaction.frmSalesOrder();
+                App.frmHome.ShowForm(f);
                 System.Windows.Forms.Application.DoEvents();
-                frm.cmbAccountName.SelectedValue = tb.Ledger.Id;
-                frm.dtpDateFrom.SelectedDate = dtpDateFrom.SelectedDate;
-                frm.dtpDateTo.SelectedDate = dtpDateTo.SelectedDate;
+                f.data.SearchText = po.EntryNo;
                 System.Windows.Forms.Application.DoEvents();
-                frm.dgvGeneralLedger.ItemsSource = BLL.GeneralLedger.ToList((int)tb.Ledger.Id, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                f.data.Find();
             }
-
+            catch (Exception ex) { }
         }
         #region Button Events
         private Stream CreateStream(string name,

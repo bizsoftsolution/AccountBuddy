@@ -24,7 +24,7 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmPurchaseOrder : UserControl
     {
-        BLL.PurchaseOrder data = new BLL.PurchaseOrder();
+        public BLL.PurchaseOrder data = new BLL.PurchaseOrder();
         public frmPurchaseOrder()
         {
             InitializeComponent();
@@ -143,7 +143,7 @@ namespace AccountBuddy.PL.frm.Transaction
             var rv = data.Find();
             if(data.Id!=0)
             {
-                btnMakepurchase.IsEnabled = true;
+               btnMakepurchase.IsEnabled = data.Status == "Pending" ? true:false;
             }
             if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
 
@@ -229,7 +229,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.MakePurchase())
             {
-                MessageBox.Show("Succussfully to Make Purchase");
+                MessageBox.Show("Successfully to Make Purchase");
                 data.Clear();
                 btnMakepurchase.IsEnabled = false;
             }            
