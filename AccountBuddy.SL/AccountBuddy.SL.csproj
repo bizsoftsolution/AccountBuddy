@@ -170,6 +170,7 @@
     <Compile Include="Hubs\Ledger.cs" />
     <Compile Include="Hubs\Payable.cs" />
     <Compile Include="Hubs\Payment.cs" />
+    <Compile Include="Hubs\POPending.cs" />
     <Compile Include="Hubs\Product.cs" />
     <Compile Include="Hubs\ProfitLoss.cs" />
     <Compile Include="Hubs\Purchase.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Hubs\SalesOrder.cs" />
     <Compile Include="Hubs\SalesReturn.cs" />
     <Compile Include="Hubs\SLUser.cs" />
+    <Compile Include="Hubs\SOPending.cs" />
     <Compile Include="Hubs\StockGroup.cs" />
     <Compile Include="Hubs\StockIn.cs" />
     <Compile Include="Hubs\StockOut.cs" />

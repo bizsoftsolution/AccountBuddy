@@ -283,11 +283,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmPOPending.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmReOrderLevel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="frm\Report\frmReorderLevelReportPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Report\frmSOPending.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -512,11 +520,17 @@
     <Compile Include="frm\Report\frmPaymentReceiptPrint.xaml.cs">
       <DependentUpon>frmPaymentReceiptPrint.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Report\frmPOPending.xaml.cs">
+      <DependentUpon>frmPOPending.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Report\frmReOrderLevel.xaml.cs">
       <DependentUpon>frmReOrderLevel.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmReorderLevelReportPrint.xaml.cs">
       <DependentUpon>frmReorderLevelReportPrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmSOPending.xaml.cs">
+      <DependentUpon>frmSOPending.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmStockReport.xaml.cs">
       <DependentUpon>frmStockReport.xaml</DependentUpon>
