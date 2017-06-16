@@ -60,9 +60,9 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
-
+                    Journal_SaveByReceipt(PO);
                 }
-                Journal_SaveByReceipt(PO);
+              
                 return true;
             }
             catch (Exception ex) { }
@@ -111,7 +111,6 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.DELETE);
                     Journal_DeleteByReceipt(P);
                 }
-                
                 return true;
             }
             catch (Exception ex) { }
