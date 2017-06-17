@@ -207,6 +207,7 @@ namespace AccountBuddy.SL.Hubs
                         SO.SODetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        SO.Status = d.SalesOrderDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
                     }
 
                 }
