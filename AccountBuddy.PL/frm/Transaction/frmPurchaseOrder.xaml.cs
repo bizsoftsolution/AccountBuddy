@@ -25,6 +25,7 @@ namespace AccountBuddy.PL.frm.Transaction
     public partial class frmPurchaseOrder : UserControl
     {
         public BLL.PurchaseOrder data = new BLL.PurchaseOrder();
+        public string FormName = "Purchase Order";
         public frmPurchaseOrder()
         {
             InitializeComponent();
@@ -41,7 +42,9 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.PODetail.ProductId == 0)
             {
-                MessageBox.Show(Message.PL.Empty_Record);
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                cmbItem.Focus();
             }
 
             else
@@ -61,17 +64,23 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
             btnMakepurchase.IsEnabled = false;
+          
+        }
+
+        private void MaxRefNo()
+        {
+            
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
            
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
                 {
-                    MessageBox.Show("Deleted");
+                    MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                     data.Clear();
                 }
             }
@@ -82,17 +91,18 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.RefNo == null)
             {
-                MessageBox.Show("Enter PO Code");
+                MessageBox.Show(string.Format(Message.PL.Transaction_POcode,"PO Code"),FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtRefNo.Focus();
             }
             else if (data.LedgerId == 0)
             {
-                MessageBox.Show("Enter Supplier");
-
+                MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Supplier), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbSupplier.Focus();
             }
             else if (data.PODetails.Count == 0)
             {
-                MessageBox.Show("Enter Product Details");
+                MessageBox.Show(string.Format(Message.PL.Transaction_ItemDetails_Validation), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbItem.Focus();
             }
             else if (data.FindRefNo() == false)
             {
@@ -100,14 +110,14 @@ namespace AccountBuddy.PL.frm.Transaction
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show("Saved Successfully");
+                    MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                 }
             }
             else
             {
-                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo));
-
+                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtRefNo.Focus();
             }
         }
 
@@ -134,8 +144,18 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                btnMakepurchase.IsEnabled = data.Status == "Pending" ? true:false;
             }
-            if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
+            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            
 
+        }
+        private void btnMakepurchase_Click(object sender, RoutedEventArgs e)
+        {
+            if (data.MakePurchase())
+            {
+                MessageBox.Show(string.Format(Message.PL.Transaction_Make_Purchase), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
+                data.Clear();
+                btnMakepurchase.IsEnabled = false;
+            }
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -156,13 +176,15 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 if (data.PODetail.ProductId == 0)
                 {
-                    MessageBox.Show("Enter Product");
+                    MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+
                     cmbItem.Focus();
                 }
 
                 else
                 {
                     data.SaveDetail();
+                    cmbItem.Focus();
                 }
 
             }
@@ -201,22 +223,14 @@ namespace AccountBuddy.PL.frm.Transaction
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtDiscountAmount.Text);
+            textBox.Text = AppLib.NumericOnly(txtExtraAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
 
       
 
-        private void btnMakepurchase_Click(object sender, RoutedEventArgs e)
-        {
-            if (data.MakePurchase())
-            {
-                MessageBox.Show("Successfully to Make Purchase");
-                data.Clear();
-                btnMakepurchase.IsEnabled = false;
-            }            
-        }
+     
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {
@@ -231,6 +245,36 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
             cmbUOM.DisplayMemberPath = "Symbol";
             cmbUOM.SelectedValuePath = "Id";
+        }
+
+        private void txtRate_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtRate.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtQty_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtQty.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtDiscount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtDiscount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
         }
     }
 }

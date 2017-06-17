@@ -204,6 +204,7 @@
           <Property Name="PurchaseRate" Type="money" Nullable="false" />
           <Property Name="SellingRate" Type="money" Nullable="false" />
           <Property Name="MRP" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
           <Property Name="OpeningStock" Type="float" Nullable="false" />
           <Property Name="ReOrderLevel" Type="float" Nullable="false" />
           <Property Name="ProductImage" Type="image" />
@@ -2322,6 +2323,7 @@
           <Property Name="PurchaseRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="SellingRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="MRP" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="OpeningStock" Type="Double" Nullable="false" />
           <Property Name="ReOrderLevel" Type="Double" Nullable="false" />
           <Property Name="ProductImage" Type="Binary" MaxLength="Max" FixedLength="false" />
@@ -3842,6 +3844,7 @@
                 <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
                 <ScalarProperty Name="ReOrderLevel" ColumnName="ReOrderLevel" />
                 <ScalarProperty Name="OpeningStock" ColumnName="OpeningStock" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
                 <ScalarProperty Name="MRP" ColumnName="MRP" />
                 <ScalarProperty Name="SellingRate" ColumnName="SellingRate" />
                 <ScalarProperty Name="PurchaseRate" ColumnName="PurchaseRate" />

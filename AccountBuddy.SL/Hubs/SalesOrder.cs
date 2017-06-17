@@ -117,8 +117,7 @@ namespace AccountBuddy.SL.Hubs
         void SalesOrder_SaveByPurchaseOrder(BLL.PurchaseOrder PO)
         {
             var refNo = string.Format("SO-{0}", PO.Id);
-
-            DAL.SalesOrder p = DB.SalesOrders.Where(x => x.RefNo == refNo).FirstOrDefault();
+            DAL.SalesOrder p = DB.SalesOrders.Where(x => x.RefNo == refNo ).FirstOrDefault();
             if (p != null)
             {
                 DB.SalesOrderDetails.RemoveRange(p.SalesOrderDetails);

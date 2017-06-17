@@ -168,10 +168,28 @@
   <data name="Saved_Alert" xml:space="preserve">
     <value>Saved Successfully</value>
   </data>
+  <data name="Transaction_Empty_Customer" xml:space="preserve">
+    <value>Enter Customer!</value>
+  </data>
   <data name="Transaction_Empty_Product" xml:space="preserve">
     <value>Enter Product</value>
   </data>
+  <data name="Transaction_Empty_Supplier" xml:space="preserve">
+    <value>Enter Supplier!</value>
+  </data>
   <data name="Transaction_ItemDetails_Validation" xml:space="preserve">
     <value>Enter Product Detail</value>
+  </data>
+  <data name="Transaction_Make_Purchase" xml:space="preserve">
+    <value>Successfully to Make Purchase</value>
+  </data>
+  <data name="Transaction_Make_Sales" xml:space="preserve">
+    <value>Successfully to Make Sales</value>
+  </data>
+  <data name="Transaction_Not_Fount" xml:space="preserve">
+    <value>{0}, Not Found !</value>
+  </data>
+  <data name="Transaction_POcode" xml:space="preserve">
+    <value>Enter {0}!</value>
   </data>
 </root>

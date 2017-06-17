@@ -112,7 +112,7 @@ namespace AccountBuddy.SL.Hubs
         void PurchaseOrder_SaveBySalesOrder(BLL.SalesOrder SO)
         {
             var refNo = string.Format("PO-{0}", SO.Id);
-
+          
             DAL.PurchaseOrder p = DB.PurchaseOrders.Where(x => x.RefNo == refNo).FirstOrDefault();
             if (p != null)
             {
@@ -268,6 +268,7 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+
 
         #endregion
     }

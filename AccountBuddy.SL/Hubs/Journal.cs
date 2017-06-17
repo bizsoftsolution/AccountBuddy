@@ -533,11 +533,7 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByStockOut(BLL.StockOut STout)
         {
             var EntryNo = string.Format("STOUT-{0}", STout.Id);
-            var ld = DB.Ledgers.Where(x => x.Id == STout.LedgerId).FirstOrDefault();
-
-            var LName = LedgerNameByCompanyId(Caller.CompanyId);
-
-            var CId = CompanyIdByLedgerName(ld.LedgerName);
+         
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -549,14 +545,14 @@ namespace AccountBuddy.SL.Hubs
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
                     LedgerId = LedgerIdByKey(BLL.DataKeyValue.Stock_Outward_Ledger_Key),
-                    DrAmt = STout.ItemAmount,
+                    CrAmt = STout.ItemAmount,
                     Particulars = STout.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByCompany(LName, CId),
-                CrAmt = STout.ItemAmount,
+                    LedgerId=STout.LedgerId,
+                    DrAmt = STout.ItemAmount,
                     Particulars = STout.Narration
                 });
 
@@ -569,7 +565,7 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = STout.Narration;
                     if (jd.CrAmt != 0)
                     {
-                        jd.LedgerId = LedgerIdByCompany(LName, CId);
+                        jd.LedgerId =STout.LedgerId;
                         jd.CrAmt = STout.ItemAmount;
                     }
                     else
@@ -595,9 +591,6 @@ namespace AccountBuddy.SL.Hubs
             var EntryNo = string.Format("STIN-{0}", STIn.Id);
             var ld = DB.Ledgers.Where(x => x.Id == STIn.LedgerId).FirstOrDefault();
 
-            var LName = LedgerNameByCompanyId(Caller.CompanyId);
-
-            var CId = CompanyIdByLedgerName(ld.LedgerName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -608,15 +601,15 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByCompany(LName ,CId),
-                    DrAmt = STIn.ItemAmount,
+                    LedgerId =STIn.LedgerId,
+                    CrAmt = STIn.ItemAmount,
                     Particulars = STIn.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
                     LedgerId =  LedgerIdByKey(BLL.DataKeyValue.Stock_Inward_Ledger_Key),
-                    CrAmt = STIn.ItemAmount,
+                    DrAmt = STIn.ItemAmount,
                     Particulars = STIn.Narration
                 });
 
@@ -629,7 +622,7 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = STIn.Narration;
                     if (jd.CrAmt != 0)
                     {
-                        jd.LedgerId = LedgerIdByCompany(LName, CId);
+                        jd.LedgerId =STIn.LedgerId;
                         jd.CrAmt = STIn.ItemAmount;
                     }
                     else

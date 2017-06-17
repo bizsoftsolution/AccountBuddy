@@ -105,7 +105,8 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.StockIns.Add(p);
                     DB.SaveChanges();
-                    Journal_SaveByStockOut(SOut);
+                    var sin = StockIn_DALtoBLL(p);
+                    Journal_SaveByStockIn(sin);
                   
                 }
             }

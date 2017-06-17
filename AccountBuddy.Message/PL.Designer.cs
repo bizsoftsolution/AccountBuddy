@@ -214,6 +214,15 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter Customer!.
+        /// </summary>
+        public static string Transaction_Empty_Customer {
+            get {
+                return ResourceManager.GetString("Transaction_Empty_Customer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter Product.
         /// </summary>
         public static string Transaction_Empty_Product {
@@ -223,11 +232,56 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter Supplier!.
+        /// </summary>
+        public static string Transaction_Empty_Supplier {
+            get {
+                return ResourceManager.GetString("Transaction_Empty_Supplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter Product Detail.
         /// </summary>
         public static string Transaction_ItemDetails_Validation {
             get {
                 return ResourceManager.GetString("Transaction_ItemDetails_Validation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully to Make Purchase.
+        /// </summary>
+        public static string Transaction_Make_Purchase {
+            get {
+                return ResourceManager.GetString("Transaction_Make_Purchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully to Make Sales.
+        /// </summary>
+        public static string Transaction_Make_Sales {
+            get {
+                return ResourceManager.GetString("Transaction_Make_Sales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}, Not Found !.
+        /// </summary>
+        public static string Transaction_Not_Fount {
+            get {
+                return ResourceManager.GetString("Transaction_Not_Fount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter {0}!.
+        /// </summary>
+        public static string Transaction_POcode {
+            get {
+                return ResourceManager.GetString("Transaction_POcode", resourceCulture);
             }
         }
     }
