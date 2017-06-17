@@ -61,58 +61,56 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Journal_SaveByStockIn(P);
+                StockOut_SaveByStockIn(P);
                 return true;
             }
             catch (Exception ex) { }
             return false;
         }
-
-        public bool StockIn_SaveBySales(BLL.Sale S)
+        void StockIn_SaveByStockOut(BLL.StockOut SOut)
         {
-            try
+            var refNo = string.Format("STIN-{0}", SOut.Id);
+
+            DAL.StockIn p = DB.StockIns.Where(x => x.RefNo == refNo).FirstOrDefault();
+            if (p != null)
             {
-                var LName = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault().LedgerName;
-
-                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
-                {
-
-                    DAL.StockIn d = DB.StockIns.Where(x => x.RefNo == S.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
-                    if (d != null)
-                    {
-                        DB.StockInDetails.RemoveRange(d.StockInDetails);
-                        DB.StockIns.Remove(d);
-                        DB.SaveChanges();
-                    }
-
-
-                    d = new DAL.StockIn();
-
-                    d.Date = S.SalesDate;
-
-                    DB.StockIns.Add(d);
-                    var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
-                    S.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
-
-                    S.toCopy<DAL.StockIn>(d);
-
-
-                    foreach (var b_SOd in S.SDetails)
-                    {
-                        DAL.StockInDetail d_SOd = new DAL.StockInDetail();
-                        b_SOd.toCopy<DAL.StockInDetail>(d_SOd);
-                        d.StockInDetails.Add(d_SOd);
-                    }
-                    DB.SaveChanges();
-                    S.Id = d.Id;
-                    LogDetailStore(S, LogDetailType.INSERT);
-
-                    return true;
-                }
-
-
+                DB.StockInDetails.RemoveRange(p.StockInDetails);
+                DB.StockIns.Remove(p);
+                DB.SaveChanges();
             }
-            catch (Exception ex) { }
-            return false;
+            var pd = SOut.STOutDetails.FirstOrDefault();
+            var ld = DB.Ledgers.Where(x => x.Id == SOut.LedgerId).FirstOrDefault();
+
+            if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
+            {
+                var LName = LedgerNameByCompanyId(Caller.CompanyId);
+
+                var CId = CompanyIdByLedgerName(LName);
+
+                p = new DAL.StockIn();
+                p.RefNo = refNo;
+                p.Date = SOut.Date;
+              
+                p.ItemAmount = SOut.ItemAmount;
+             
+                p.LedgerId = LedgerIdByCompany(ld.LedgerName, CId);
+                p.Type = "Inward";
+                if (CId != 0)
+                {
+                    foreach (var b_pod in SOut.STOutDetails)
+                    {
+                        DAL.StockInDetail d_pod = new DAL.StockInDetail();
+                        b_pod.toCopy<DAL.StockInDetail>(d_pod);
+                        p.StockInDetails.Add(d_pod);
+                    }
+                    DB.StockIns.Add(p);
+                    DB.SaveChanges();
+                    Journal_SaveByStockOut(SOut);
+                  
+                }
+            }
+           
+
         }
 
         public bool StockIn_DeleteBySales(BLL.Sale s)
@@ -141,9 +139,6 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
-
-
-
 
         public BLL.StockIn StockIn_Find(string SearchText)
         {
