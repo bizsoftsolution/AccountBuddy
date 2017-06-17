@@ -109,51 +109,51 @@ namespace AccountBuddy.SL.Hubs
             return true;
         }
 
-        public bool PurchaseOrder_SaveBySalesOrder(BLL.SalesOrder SO)
+        void PurchaseOrder_SaveBySalesOrder(BLL.SalesOrder SO)
         {
-            try
+            var refNo = string.Format("PO-{0}", SO.Id);
+
+            DAL.PurchaseOrder p = DB.PurchaseOrders.Where(x => x.RefNo == refNo).FirstOrDefault();
+            if (p != null)
             {
-                var LName = DB.Ledgers.Where(x => x.Id == SO.LedgerId).FirstOrDefault().LedgerName;
-
-                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
-                {
-
-                    DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.RefNo == SO.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
-                    d.Extras = SO.ExtraAmount.Value;
-                    d.PODate = SO.SODate.Value;
-                    if (d != null)
-                    {
-                        DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails);
-                        DB.PurchaseOrders.Remove(d);
-                        DB.SaveChanges();
-                    }
-
-
-                    d = new DAL.PurchaseOrder();
-                    DB.PurchaseOrders.Add(d);
-                    var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
-                    SO.LedgerId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
-
-                    SO.toCopy<DAL.PurchaseOrder>(d);
-
-
-                    foreach (var b_SOd in SO.SODetails)
-                    {
-                        DAL.PurchaseOrderDetail d_SOd = new DAL.PurchaseOrderDetail();
-                        b_SOd.toCopy<DAL.PurchaseOrderDetail>(d_SOd);
-                        d.PurchaseOrderDetails.Add(d_SOd);
-                    }
-                    DB.SaveChanges();
-                    SO.Id = d.Id;
-                    LogDetailStore(SO, LogDetailType.INSERT);
-
-                    return true;
-                }
-
-
+                DB.PurchaseOrderDetails.RemoveRange(p.PurchaseOrderDetails);
+                DB.PurchaseOrders.Remove(p);
+                DB.SaveChanges();
             }
-            catch (Exception ex) { }
-            return false;
+            var pd = SO.SODetails.FirstOrDefault();
+            var ld = DB.Ledgers.Where(x => x.Id == SO.LedgerId).FirstOrDefault();
+
+            if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
+            {
+                var LName = LedgerNameByCompanyId(Caller.CompanyId);
+
+                var CId = CompanyIdByLedgerName(ld.LedgerName);
+
+                p = new DAL.PurchaseOrder();
+                p.RefNo = refNo;
+                p.PODate = SO.SODate.Value;
+                p.DiscountAmount = SO.DiscountAmount.Value;
+                p.Extras = SO.ExtraAmount.Value;
+                p.GSTAmount = SO.GSTAmount.Value;
+                p.ItemAmount = SO.ItemAmount.Value;
+                p.TotalAmount = SO.TotalAmount.Value;
+                p.LedgerId = LedgerIdByCompany(LName, CId);
+               
+                if (CId != 0)
+                {
+                    foreach (var b_pod in SO.SODetails)
+                    {
+                        DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
+                        b_pod.toCopy<DAL.PurchaseOrderDetail>(d_pod);
+                        p.PurchaseOrderDetails.Add(d_pod);
+                    }
+                    DB.PurchaseOrders.Add(p);
+                    DB.SaveChanges();
+                   
+                 
+                }
+            }
+
         }
 
         public bool PurchaseOrder_DeleteBySalesOrder(BLL.SalesOrder PO)

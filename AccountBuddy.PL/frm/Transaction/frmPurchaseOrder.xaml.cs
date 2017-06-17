@@ -30,18 +30,6 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            cmbSupplier.ItemsSource = BLL.Supplier.toList;
-            cmbSupplier.DisplayMemberPath = "Ledger.LedgerName";
-            cmbSupplier.SelectedValuePath = "Ledger.Id";
-
-            cmbItem.ItemsSource = BLL.Product.toList;
-            cmbItem.DisplayMemberPath = "ProductName";
-            cmbItem.SelectedValuePath = "Id";
-
-            cmbUOM.ItemsSource = BLL.UOM.toList;
-            cmbUOM.DisplayMemberPath = "Symbol";
-            cmbUOM.SelectedValuePath = "Id";
-
 
             data.Clear();
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-MY");
@@ -195,10 +183,7 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbSupplier.SelectedValuePath = "Id";
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+      
 
         private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -220,10 +205,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         }
 
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
+      
 
         private void btnMakepurchase_Click(object sender, RoutedEventArgs e)
         {
@@ -233,6 +215,21 @@ namespace AccountBuddy.PL.frm.Transaction
                 data.Clear();
                 btnMakepurchase.IsEnabled = false;
             }            
+        }
+
+        private void cmbItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbItem.ItemsSource = BLL.Product.toList.ToList();
+            cmbItem.DisplayMemberPath = "ProductName";
+            cmbItem.SelectedValuePath = "Id";
+        }
+
+        private void cmbUOM_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
+            cmbUOM.DisplayMemberPath = "Symbol";
+            cmbUOM.SelectedValuePath = "Id";
         }
     }
 }
