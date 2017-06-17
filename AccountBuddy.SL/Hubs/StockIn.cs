@@ -85,7 +85,7 @@ namespace AccountBuddy.SL.Hubs
             {
                 var LName = LedgerNameByCompanyId(Caller.CompanyId);
 
-                var CId = CompanyIdByLedgerName(LName);
+                var CId = CompanyIdByLedgerName(ld.LedgerName);
 
                 p = new DAL.StockIn();
                 p.RefNo = refNo;
@@ -93,7 +93,7 @@ namespace AccountBuddy.SL.Hubs
               
                 p.ItemAmount = SOut.ItemAmount;
              
-                p.LedgerId = LedgerIdByCompany(ld.LedgerName, CId);
+                p.LedgerId = LedgerIdByCompany(LName, CId);
                 p.Type = "Inward";
                 if (CId != 0)
                 {

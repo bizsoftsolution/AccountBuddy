@@ -537,7 +537,7 @@ namespace AccountBuddy.SL.Hubs
 
             var LName = LedgerNameByCompanyId(Caller.CompanyId);
 
-            var CId = CompanyIdByLedgerName(LName);
+            var CId = CompanyIdByLedgerName(ld.LedgerName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -555,7 +555,7 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByCompany(ld.LedgerName, CId),
+                    LedgerId = LedgerIdByCompany(LName, CId),
                 CrAmt = STout.ItemAmount,
                     Particulars = STout.Narration
                 });
@@ -569,7 +569,7 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = STout.Narration;
                     if (jd.CrAmt != 0)
                     {
-                        jd.LedgerId = LedgerIdByCompany(ld.LedgerName, CId);
+                        jd.LedgerId = LedgerIdByCompany(LName, CId);
                         jd.CrAmt = STout.ItemAmount;
                     }
                     else
@@ -597,7 +597,7 @@ namespace AccountBuddy.SL.Hubs
 
             var LName = LedgerNameByCompanyId(Caller.CompanyId);
 
-            var CId = CompanyIdByLedgerName(LName);
+            var CId = CompanyIdByLedgerName(ld.LedgerName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -608,7 +608,7 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByCompany(ld.LedgerName, CId),
+                    LedgerId = LedgerIdByCompany(LName ,CId),
                     DrAmt = STIn.ItemAmount,
                     Particulars = STIn.Narration
                 });
@@ -629,7 +629,7 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = STIn.Narration;
                     if (jd.CrAmt != 0)
                     {
-                        jd.LedgerId = LedgerIdByCompany(ld.LedgerName, CId);
+                        jd.LedgerId = LedgerIdByCompany(LName, CId);
                         jd.CrAmt = STIn.ItemAmount;
                     }
                     else
