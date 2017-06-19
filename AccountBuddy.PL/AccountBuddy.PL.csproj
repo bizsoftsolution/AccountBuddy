@@ -247,6 +247,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmCustomerWiseReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmGeneralLedger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -492,6 +496,9 @@
     </Compile>
     <Compile Include="frm\Report\frmBalanceSheetPrint.xaml.cs">
       <DependentUpon>frmBalanceSheetPrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmCustomerWiseReport.xaml.cs">
+      <DependentUpon>frmCustomerWiseReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmGeneralLedger.xaml.cs">
       <DependentUpon>frmGeneralLedger.xaml</DependentUpon>

@@ -13,12 +13,19 @@ namespace AccountBuddy.BLL
         private string _ProductName;
         private string _CustomerName;
         private Ledger _Ledger;
-        private decimal _Month1;
-        private decimal _Month2;
-        private decimal _Month3;
-        private decimal _Month4;
-        private decimal _Month5;
-        private decimal _Month6;
+        private string _Month1;
+        private string _Month2;
+        private string _Month3;
+        private string _Month4;
+        private string _Month5;
+        private string _Month6;
+        private decimal _M1;
+        private decimal _M2;
+        private decimal _M3;
+        private decimal _M4;
+        private decimal _M5;
+        private decimal _M6;
+        private decimal _Amount;
 
         #endregion
 
@@ -55,6 +62,21 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public decimal Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                if (_Amount != value)
+                {
+                    _Amount = value;
+                    NotifyPropertyChanged(nameof(Amount));
+                }
+            }
+        }
 
         public Ledger Ledger
         {
@@ -71,7 +93,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal Month1
+        public string Month1
         {
             get
             {
@@ -86,7 +108,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal Month2
+        public string Month2
         {
             get
             {
@@ -101,7 +123,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal Month3
+        public string Month3
         {
             get
             {
@@ -116,8 +138,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public decimal Month4
+        public string Month4
         {
             get
             {
@@ -132,8 +153,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-        public decimal Month5
+        public string Month5
         {
             get
             {
@@ -148,7 +168,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal Month6
+        public string Month6
         {
             get
             {
@@ -160,6 +180,96 @@ namespace AccountBuddy.BLL
                 {
                     _Month6 = value;
                     NotifyPropertyChanged(nameof(Month6));
+                }
+            }
+        }
+        public decimal M1
+        {
+            get
+            {
+                return _M1;
+            }
+            set
+            {
+                if (_M1 != value)
+                {
+                    _M1 = value;
+                    NotifyPropertyChanged(nameof(M1));
+                }
+            }
+        }
+        public decimal M2
+        {
+            get
+            {
+                return _M2;
+            }
+            set
+            {
+                if (_M2 != value)
+                {
+                    _M2 = value;
+                    NotifyPropertyChanged(nameof(M2));
+                }
+            }
+        }
+        public decimal M3
+        {
+            get
+            {
+                return _M3;
+            }
+            set
+            {
+                if (_M3 != value)
+                {
+                    _M3 = value;
+                    NotifyPropertyChanged(nameof(M3));
+                }
+            }
+        }
+        public decimal M4
+        {
+            get
+            {
+                return _M4;
+            }
+            set
+            {
+                if (_M4 != value)
+                {
+                    _M4 = value;
+                    NotifyPropertyChanged(nameof(M4));
+                }
+            }
+        }
+        public decimal M5
+        {
+            get
+            {
+                return _M5;
+            }
+            set
+            {
+                if (_M5 != value)
+                {
+                    _M5 = value;
+                    NotifyPropertyChanged(nameof(M5));
+                }
+            }
+        }
+        public decimal M6
+        {
+            get
+            {
+                return _M6;
+            }
+            set
+            {
+                if (_M6 != value)
+                {
+                    _M6 = value;
+                    NotifyPropertyChanged(nameof(M6));
                 }
             }
         }
@@ -183,10 +293,10 @@ namespace AccountBuddy.BLL
 
         #region Methods
 
-        //public static List<Customer> ToList(int LedgerId, DateTime dtFrom, DateTime dtTo)
-        //{
-        //    return FMCGHubClient.FMCGHub.Invoke<List<GeneralLedger>>("GeneralLedger_List", LedgerId, dtFrom, dtTo).Result;
-        //}
+        public static List<CustomerWiseReport> ToList(int LedgerId, DateTime dtFrom)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<CustomerWiseReport>>("CustomerWiseReport_List", LedgerId, dtFrom).Result;
+        }
 
         #endregion
     }

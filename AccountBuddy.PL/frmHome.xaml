@@ -282,6 +282,11 @@
                                             <Report:frmSOPending/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Customer Wise Report" FormName="Customer Wise Report">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmCustomerWiseReport/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                 </ListBox>
                             </Expander>
 

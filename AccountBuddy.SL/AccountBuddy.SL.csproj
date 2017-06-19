@@ -163,6 +163,7 @@
     <Compile Include="Hubs\CompanyDetail.cs" />
     <Compile Include="Hubs\CreditLimitType.cs" />
     <Compile Include="Hubs\Customer.cs" />
+    <Compile Include="Hubs\CustomerWiseReport.cs" />
     <Compile Include="Hubs\DataKeyValue.cs" />
     <Compile Include="Hubs\GeneralLedger.cs" />
     <Compile Include="Hubs\GeneralStock.cs" />
