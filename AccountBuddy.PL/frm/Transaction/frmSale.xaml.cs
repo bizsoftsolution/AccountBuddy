@@ -56,9 +56,9 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtQty.Focus();
             }
-            else if (min < data.SDetail.UnitPrice && max > data.SDetail.UnitPrice)
+            else if (min > data.SDetail.UnitPrice || max < data.SDetail.UnitPrice)
             {
-                MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, max, min), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtRate.Focus();
             }
             else
@@ -277,15 +277,14 @@ namespace AccountBuddy.PL.frm.Transaction
                     MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                     cmbItem.Focus();
                 }
-                 else if ( min < data.SDetail.UnitPrice && max > data.SDetail.UnitPrice )
+                else if (min > data.SDetail.UnitPrice || max < data.SDetail.UnitPrice)
                 {
-                     MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, max,min), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                     txtRate.Focus();
                 }
                 else
                 {
                     data.SaveDetail();
-                    cmbItem.Focus();
                 }
             }
         }
