@@ -12,23 +12,23 @@ namespace AccountBuddy.SL.Hubs
             List<BLL.SOPending> lstSOPending = new List<BLL.SOPending>();
             BLL.SOPending tb = new BLL.SOPending();
 
-            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+            var lstLedger = DB.Ledgers.Where(x =>x.AccountGroup.GroupName==BLL.DataKeyValue.SundryDebtors_Key&& x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
 
             foreach (var l in lstLedger)
             {
-                if (l.SalesOrders.Where(x => x.SODate >= dtFrom && x.SODate <= dtTo).Count() != 0)
+                foreach (var pd in l.SalesOrders.Where(x => x.SODate >= dtFrom && x.SODate <= dtTo).ToList())
                 {
-                    var po = l.SalesOrders.FirstOrDefault();
+
+                    var po = l.PurchaseOrders.FirstOrDefault();
                     tb = new BLL.SOPending();
                     tb.Ledger = LedgerDAL_BLL(l);
 
-                    tb.EntryNo = po.RefNo;
-                    tb.Amount = po.TotalAmount;
-                    tb.SODate = po.SODate;
-                    tb.Status = po.SalesOrderDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
+                    tb.EntryNo = pd.RefNo;
+                    tb.Amount = pd.TotalAmount;
+                    tb.SODate = pd.SODate;
+                    tb.Status = pd.SalesOrderDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
                     lstSOPending.Add(tb);
                 }
-
 
 
 

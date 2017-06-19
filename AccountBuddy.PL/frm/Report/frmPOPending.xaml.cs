@@ -83,7 +83,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            dgvDetails.ItemsSource = BLL.POPending.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            dgvDetails.ItemsSource = BLL.POPending.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value).ToList();
             LoadReport();
         }
 
