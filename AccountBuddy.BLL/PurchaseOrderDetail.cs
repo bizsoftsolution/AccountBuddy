@@ -23,21 +23,7 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Property
-        public int RowCount
-        {
-            get
-            {
-                return _RowCount;
-            }
-            set
-            {
-                if (_RowCount != value)
-                {
-                    _RowCount = value;
-                    NotifyPropertyChanged(nameof(RowCount));
-                }
-            }
-        }
+       
 
         public long Id
         {
@@ -154,8 +140,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-      
 
         public decimal GSTAmount
         {

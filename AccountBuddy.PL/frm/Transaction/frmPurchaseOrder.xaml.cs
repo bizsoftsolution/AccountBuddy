@@ -54,7 +54,6 @@ namespace AccountBuddy.PL.frm.Transaction
 
         }
 
-
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             data.ClearDetail();
@@ -67,11 +66,7 @@ namespace AccountBuddy.PL.frm.Transaction
           
         }
 
-        private void MaxRefNo()
-        {
-            
-        }
-
+    
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
            
@@ -177,7 +172,6 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (data.PODetail.ProductId == 0)
                 {
                     MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-
                     cmbItem.Focus();
                 }
 

@@ -284,5 +284,14 @@ namespace AccountBuddy.Message {
                 return ResourceManager.GetString("Transaction_POcode", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selling Rate Between {0} to {1}.
+        /// </summary>
+        public static string Transaction_Selling_Rate {
+            get {
+                return ResourceManager.GetString("Transaction_Selling_Rate", resourceCulture);
+            }
+        }
     }
 }

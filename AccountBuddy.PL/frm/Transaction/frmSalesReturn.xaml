@@ -35,7 +35,6 @@
         <!--#region Form Body-->
         <Grid Grid.Row="1">
 
-
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
@@ -47,7 +46,7 @@
                 <!--#region  Master -->
                 <Grid Grid.Row="0">
                     <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" VerticalAlignment="Top"  Height="79" >
-                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding SRDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="50,27,10,24" Width="100" FontWeight="Bold"  />
+                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding SRDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,10,24" Width="100" FontWeight="Bold"  />
                         <ComboBox x:Name="cmbPType" Text="{Binding TransactionType}" SelectedValue="{Binding TransactionTypeId , Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" Margin="10,12,20,24" FontSize="14" Width="123" Height="43">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
@@ -72,7 +71,7 @@
                 <!--#region  Details-->
                 <Grid Grid.Row="1" Margin="0,0,0,15">
                     <StackPanel  x:Name="stkPurchaseDetails" Orientation="Horizontal" VerticalAlignment="Top">
-                        <TextBox KeyDown="txtBarCode_KeyDown" x:Name="txtBarCode" Margin="50,0,10,0" Text="{Binding SRDetail.ItemCode,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="100">
+                        <TextBox KeyDown="txtBarCode_KeyDown" x:Name="txtBarCode" Margin="10,0,10,0" Text="{Binding SRDetail.ItemCode,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="100">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CardsOutline" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -81,7 +80,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <ComboBox x:Name="cmbItem" Margin="10,0,10,0"  Text="{Binding SRDetail.ProductName}" SelectedValue="{Binding SRDetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="410" >
+                        <ComboBox x:Name="cmbItem" Loaded="cmbItem_Loaded" Margin="10,0,10,0"  Text="{Binding SRDetail.ProductName}" SelectedValue="{Binding SRDetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="410" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -89,7 +88,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <ComboBox x:Name="cmbUOM" Margin="0,0,10,0" Text="{Binding SRDetail.UOMName}" SelectedValue="{Binding SRDetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
+                        <ComboBox x:Name="cmbUOM" Margin="0,0,10,0" Loaded="cmbUOM_Loaded" Text="{Binding SRDetail.UOMName}" SelectedValue="{Binding SRDetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Weight" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -97,7 +96,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox x:Name="txtRate" IsReadOnly="True" Margin="0,0,10,0" Text="{Binding SRDetail.UnitPrice}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="70"  TextAlignment="Right">
+                        <TextBox x:Name="txtRate" TextChanged="txtRate_TextChanged"  Margin="0,0,10,0" Text="{Binding SRDetail.UnitPrice}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="70"  TextAlignment="Right">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -105,12 +104,21 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox x:Name="txtQty" Margin="0,0,10,0" Text="{Binding SRDetail.Quantity}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
+                        <TextBox x:Name="txtQty" TextChanged="txtQty_TextChanged" Margin="0,0,10,0" Text="{Binding SRDetail.Quantity}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CardsOutline" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
 
                                     <TextBlock Text="Qty"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+                        <TextBox x:Name="txtDiscount" TextChanged="txtDiscount_TextChanged" Margin="0,0,10,0" Text="{Binding SRDetail.DiscountAmount}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Sale" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+
+                                    <TextBlock Text="Disc."/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>

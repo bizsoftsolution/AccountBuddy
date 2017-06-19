@@ -66,7 +66,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 var rv = data.Delete();
                 if (rv == true)
                 {
-                    MessageBox.Show("Deleted");
+                    MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                 }
             }

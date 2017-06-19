@@ -23,21 +23,24 @@ namespace AccountBuddy.PL.frm.Transaction
     {
         public AccountBuddy.BLL.StockIn data = new BLL.StockIn();
 
+        public string FormName = "Stock Inward";
+
         public frmStockInOut()
         {
             InitializeComponent();
             this.DataContext = data;
-             data.Clear();
+            data.Clear();
 
         }
 
-        #region Events
+        #region Button Events
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             if (data.STInDetail.ProductId == 0)
             {
-                MessageBox.Show("Enter Product");
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbItem.Focus();
             }
 
             else
@@ -58,12 +61,12 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
                 {
-                    MessageBox.Show("Deleted");
+                    MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                     data.Clear();
                 }
             }
@@ -74,18 +77,18 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.RefNo == null)
             {
-                MessageBox.Show("Enter Reference No");
-
+                MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "Invoice No"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtRefNo.Focus();
             }
-            else if (data.LedgerName == null)
+            else if (data.LedgerId == 0)
             {
-                MessageBox.Show("Enter Supplier");
-
+                MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Supplier), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbSupplier.Focus();
             }
-           
             else if (data.STInDetails.Count == 0)
             {
-                MessageBox.Show("Enter Product Details");
+                MessageBox.Show(string.Format(Message.PL.Transaction_ItemDetails_Validation), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbItem.Focus();
             }
             else if (data.FindRefNo() == false)
             {
@@ -93,14 +96,14 @@ namespace AccountBuddy.PL.frm.Transaction
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                 }
             }
             else
             {
-                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo));
-
+                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtRefNo.Focus();
             }
         }
 
@@ -125,11 +128,12 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
-          
-            if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
+            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
 
         }
+        #endregion
 
+        #region Events 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -145,19 +149,25 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (e.Key == Key.Return && data.STInDetail.ProductId != 0)
             {
-                data.SaveDetail();
+                if (data.STInDetail.ProductId == 0)
+                {
+                    MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    cmbItem.Focus();
+                }
+
+                else
+                {
+                    data.SaveDetail();
+                    cmbItem.Focus();
+                }
             }
         }
 
-
-        #endregion
-
-        #region Methods
-
         #endregion
 
 
 
+        #region Combo Box Load
         private void cmbSupplier_Loaded(object sender, RoutedEventArgs e)
         {
             cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key).ToList();
@@ -168,14 +178,36 @@ namespace AccountBuddy.PL.frm.Transaction
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
 
+        private void cmbItem_Loaded(object sender, RoutedEventArgs e)
+        {
             cmbItem.ItemsSource = BLL.Product.toList.ToList();
             cmbItem.DisplayMemberPath = "ProductName";
             cmbItem.SelectedValuePath = "Id";
+        }
 
-            cmbUOM.ItemsSource = BLL.UOM.toList.ToList() ;
+        private void cmbUOM_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
             cmbUOM.DisplayMemberPath = "Symbol";
             cmbUOM.SelectedValuePath = "Id";
+        }
+        #endregion
+
+        private void txtQty_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void txtDiscount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void txtRate_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

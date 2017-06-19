@@ -114,7 +114,7 @@ namespace AccountBuddy.BLL
                 if (_Quantity != value)
                 {
                     _Quantity = value;
-                    Amount = Convert.ToDecimal(_Quantity) * _UnitPrice;
+                    Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
                     NotifyPropertyChanged(nameof(Quantity));
                 }
             }
@@ -130,7 +130,7 @@ namespace AccountBuddy.BLL
                 if (_UnitPrice != value)
                 {
                     _UnitPrice = value;
-                    Amount = Convert.ToDecimal(_Quantity) * _UnitPrice;
+                    Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
                     NotifyPropertyChanged(nameof(UnitPrice));
                 }
             }
@@ -146,6 +146,7 @@ namespace AccountBuddy.BLL
                 if (_DiscountAmount != value)
                 {
                     _DiscountAmount = value;
+                    Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
                     NotifyPropertyChanged(nameof(DiscountAmount));
                 }
             }

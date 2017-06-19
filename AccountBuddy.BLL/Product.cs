@@ -205,6 +205,8 @@ namespace AccountBuddy.BLL
         private UOM _UOM;
         private decimal _PurchaseRate;
         private decimal _SellingRate;
+        private decimal _MaxSellingRate;
+        private decimal _MinSellingRate;
         private decimal _MRP;
         private decimal _Discount;      
         private double _OpeningStock;
@@ -410,6 +412,36 @@ namespace AccountBuddy.BLL
                 {
                     _SellingRate = value;
                     NotifyPropertyChanged(nameof(SellingRate));
+                }
+            }
+        }
+        public decimal MaxSellingRate
+        {
+            get
+            {
+                return _MaxSellingRate;
+            }
+            set
+            {
+                if (_MaxSellingRate != value)
+                {
+                    _MaxSellingRate = value;
+                    NotifyPropertyChanged(nameof(MaxSellingRate));
+                }
+            }
+        }
+        public decimal MinSellingRate
+        {
+            get
+            {
+                return _MinSellingRate;
+            }
+            set
+            {
+                if (_MinSellingRate != value)
+                {
+                    _MinSellingRate = value;
+                    NotifyPropertyChanged(nameof(MinSellingRate));
                 }
             }
         }

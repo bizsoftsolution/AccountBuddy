@@ -34,8 +34,6 @@
         <!--#endregion-->
         <!--#region Form Body-->
         <Grid Grid.Row="1">
-
-
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
