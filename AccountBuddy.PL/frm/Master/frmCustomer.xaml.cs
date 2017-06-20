@@ -206,7 +206,17 @@ namespace AccountBuddy.PL.frm.Master
 
                 foreach (var p in d.GetType().GetProperties())
                 {
-                    if (p.Name.ToLower().Contains("id") || p.GetValue(d) == null) continue;
+                    if (p.Name.ToLower().Contains("id") ||
+                         p.GetValue(d) == null ||
+                            (p.Name != nameof(data.Ledger.LedgerName) &&
+                                p.Name != nameof(data.Ledger.PersonIncharge) &&
+                                p.Name != nameof(data.Ledger.AddressLine1)&&
+                                p.Name!=nameof(data.Ledger.AddressLine2)&&
+                                p.Name!=nameof(data.Ledger.OPCr)&&
+                                p.Name!=nameof(data.Ledger.OPDr)
+
+
+                             )) continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {

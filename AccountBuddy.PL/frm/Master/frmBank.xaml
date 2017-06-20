@@ -9,7 +9,7 @@
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
            
              d:DesignHeight="650" d:DesignWidth="1200" Background="White" Loaded="UserControl_Loaded">
-    <Grid Height="650" VerticalAlignment="Bottom">
+    <Grid Height="650" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
             <RowDefinition Height="{DynamicResource FormBodyHeight}"/>
@@ -36,7 +36,7 @@
                 <!--#region Form Design-->
                 <Grid Grid.Row="0"   >
 
-                    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,20,0,0">
+                    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="5,20,0,0">
                         <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
                             <TextBox x:Name="txtLedgerName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.LedgerName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                                 <materialDesign:HintAssist.Hint>
@@ -168,10 +168,10 @@
             <!--#region Form Right-->
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="110"/>
-                    <RowDefinition Height="565"/>
+                    <RowDefinition Height="135"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="603" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1">
+                <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  Margin="0" Height="625" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1">
                     <TabControl.Resources>
                         <Style TargetType="TabItem">
                             <Setter Property="Template">
@@ -186,7 +186,7 @@
                                         </Grid>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
-                                                <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
+                                                <Setter TargetName="Panel" Property="Background" Value="Teal" />
                                             </Trigger>
                                             <Trigger Property="IsSelected" Value="False">
                                                 <Setter TargetName="Panel" Property="Background" Value="white" />
@@ -198,14 +198,7 @@
                         </Style>
                     </TabControl.Resources>
 
-                    <TabControl.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </TabControl.RenderTransform>
+
                     <TabItem Header="Details" FontSize="16">
                         <Grid>
                             <Grid.RowDefinitions>

@@ -84,13 +84,13 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (data.Save() == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert,FormName.ToString(),MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(Message.PL.Saved_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                     Grid_Refresh();
                 }
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.StockGroupName),FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.StockGroupName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
@@ -110,7 +110,7 @@ namespace AccountBuddy.PL.frm.Master
                     {
                         if (data.Delete() == true)
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert,FormName.ToString(), MessageBoxButton.OK,MessageBoxImage.Information);
+                            MessageBox.Show(Message.PL.Delete_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                             data.Clear();
                             Grid_Refresh();
                         }
@@ -202,7 +202,12 @@ namespace AccountBuddy.PL.frm.Master
 
                 foreach (var p in d.GetType().GetProperties())
                 {
-                    if (p.Name.ToLower().Contains("id") || p.GetValue(d) == null) continue;
+                    if (p.Name.ToLower().Contains("id") ||
+                         p.GetValue(d) == null ||
+                            (p.Name != nameof(data.StockGroupName) &&
+                                p.Name != nameof(data.underStockGroupName) &&
+                                p.Name != nameof(data.GroupCode)
+ )) continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {
@@ -247,7 +252,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptStockGroup.Reset();
-                ReportDataSource data = new ReportDataSource("StockGroup", BLL.StockGroup.toList.Where(x => StockGroup_Filter(x)).Select(x => new { StockGroupCode=x.GroupCode,StockGroupName= x.StockGroupName, underGroupName = x.UnderStockGroup.StockGroupName }).OrderBy(x => x.StockGroupCode).ToList());
+                ReportDataSource data = new ReportDataSource("StockGroup", BLL.StockGroup.toList.Where(x => StockGroup_Filter(x)).Select(x => new { StockGroupCode = x.GroupCode, StockGroupName = x.StockGroupName, underGroupName = x.UnderStockGroup.StockGroupName }).OrderBy(x => x.StockGroupCode).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptStockGroup.LocalReport.DataSources.Add(data);
                 rptStockGroup.LocalReport.DataSources.Add(data1);

@@ -9,7 +9,7 @@
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
            
              d:DesignHeight="650" d:DesignWidth="1200" Background="White" Loaded="UserControl_Loaded">
-    <Grid Height="650" VerticalAlignment="Bottom">
+    <Grid Height="650" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
             <RowDefinition Height="{DynamicResource FormBodyHeight}"/>
@@ -206,7 +206,7 @@
                     <RowDefinition Height="110"/>
                     <RowDefinition Height="565"/>
                 </Grid.RowDefinitions>
-                <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="603" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1">
+                <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="625" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1">
                     <TabControl.Resources>
                         <Style TargetType="TabItem">
                             <Setter Property="Template">
@@ -221,7 +221,7 @@
                                         </Grid>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
-                                                <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
+                                                <Setter TargetName="Panel" Property="Background" Value="Teal" />
                                             </Trigger>
                                             <Trigger Property="IsSelected" Value="False">
                                                 <Setter TargetName="Panel" Property="Background" Value="white" />

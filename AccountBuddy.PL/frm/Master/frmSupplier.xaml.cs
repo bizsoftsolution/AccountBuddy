@@ -206,7 +206,16 @@ namespace AccountBuddy.PL.frm.Master
 
                 foreach (var p in d.GetType().GetProperties())
                 {
-                    if (p.Name.ToLower().Contains("id") || p.GetValue(d) == null) continue;
+                    if (p.Name.ToLower().Contains("id") ||
+                         p.GetValue(d) == null ||
+                            (p.Name != nameof(data.Ledger.LedgerName) &&
+                                p.Name != nameof(data.Ledger.PersonIncharge) &&
+                                p.Name != nameof(data.Ledger.AddressLine1) &&
+                                p.Name != nameof(data.Ledger.AddressLine2) &&
+                                p.Name != nameof(data.Ledger.OPCr) &&
+                                p.Name != nameof(data.Ledger.OPDr)
+
+                              )) continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {
@@ -277,7 +286,8 @@ namespace AccountBuddy.PL.frm.Master
 
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.Supplier>("Supplier_Save", (Cus) => {
+            BLL.FMCGHubClient.FMCGHub.On<BLL.Supplier>("Supplier_Save", (Cus) =>
+            {
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -286,8 +296,10 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("Supplier_Delete", (Action<int>)((pk) => {
-                this.Dispatcher.Invoke((Action)(() => {
+            BLL.FMCGHubClient.FMCGHub.On("Supplier_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
                     BLL.Supplier led = new BLL.Supplier();
                     led.Find((int)pk);
                     led.Delete((bool)true);
@@ -363,7 +375,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void txtMail_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");            
+            if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
         }
 
     }

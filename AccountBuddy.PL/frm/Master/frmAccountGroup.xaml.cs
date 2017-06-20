@@ -207,6 +207,7 @@ namespace AccountBuddy.PL.frm.Master
                             (   p.Name != nameof(data.GroupName) && 
                                 p.Name !=nameof(data.underGroupName) &&
                                 p.Name !=nameof(data.GroupCode)
+                             
 
                              )
                         ) continue;
