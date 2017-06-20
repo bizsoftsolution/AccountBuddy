@@ -21,42 +21,30 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmSalesReturn : UserControl
     {
-       public BLL.SalesReturn data = new BLL.SalesReturn();
-
+        public BLL.SalesReturn data = new BLL.SalesReturn();
+        public String FormName = "Sales Return";
         public frmSalesReturn()
         {
             InitializeComponent();
             this.DataContext = data;
 
-        
             cmbPType.ItemsSource = BLL.TransactionType.toList;
             cmbPType.DisplayMemberPath = "Type";
             cmbPType.SelectedValuePath = "Id";
 
-            cmbItem.ItemsSource = BLL.Product.toList;
-            cmbItem.DisplayMemberPath = "ProductName";
-            cmbItem.SelectedValuePath = "Id";
-
-            cmbUOM.ItemsSource = BLL.UOM.toList;
-            cmbUOM.DisplayMemberPath = "Symbol";
-            cmbUOM.SelectedValuePath = "Id";
-
-           
-
-           
             data.Clear();
 
         }
 
-        #region Events
+        #region Button Events
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (data.SRDetail.ProductId == null)
+            if (data.SRDetail.ProductId == 0)
             {
-                MessageBox.Show(Message.PL.Transaction_Empty_Product);
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-           
+
             else
             {
                 data.SaveDetail();
@@ -65,22 +53,22 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-data.ClearDetail();
+            data.ClearDetail();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-data.Clear();
+            data.Clear();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
                 {
-                    MessageBox.Show(Message.PL.Delete_confirmation);
+                    MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                 }
             }
@@ -91,35 +79,33 @@ data.Clear();
         {
             if (data.RefNo == null)
             {
-                MessageBox.Show("Enter Ref No");
+                MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "SR Code"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtRefNo.Focus();
             }
-            else if (data.LedgerName == null)
+            else if (data.LedgerId == 0)
             {
-                MessageBox.Show(Message.PL.Empty_Record,"Customer");
+                MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Customer), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbCustomer.Focus();
             }
-            else if (data.TransactionTypeId == null)
-            {
-                MessageBox.Show("Enter Transaction Type");
-                cmbPType.Focus();
-            }
+
             else if (data.SRDetails.Count == 0)
             {
-                MessageBox.Show(Message.PL.Transaction_ItemDetails_Validation);
+                MessageBox.Show(string.Format(Message.PL.Transaction_ItemDetails_Validation), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbItem.Focus();
             }
             else if (data.FindRefNo() == false)
             {
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                 }
             }
             else
             {
-                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo));
-
+                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtRefNo.Focus();
             }
         }
 
@@ -144,9 +130,10 @@ data.Clear();
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
-            if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
+            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+
         }
-    
+
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -160,19 +147,25 @@ data.Clear();
 
         private void txtBarCode_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return && data.SRDetail.ProductId != null)
+            if (e.Key == Key.Return && data.SRDetail.ProductId != 0)
             {
-                data.SaveDetail();
+                if (data.SRDetail.ProductId == 0)
+                {
+                    MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    cmbItem.Focus();
+                }
+
+                else
+                {
+                    data.SaveDetail();
+                    cmbItem.Focus();
+                }
             }
         }
 
         #endregion
 
-        #region Methods
-
-        #endregion
-
-       
+        #region Combobox Load
 
         private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
         {
@@ -182,6 +175,26 @@ data.Clear();
 
         }
 
+        private void cmbItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbItem.ItemsSource = BLL.Product.toList.ToList();
+            cmbItem.DisplayMemberPath = "ProductName";
+            cmbItem.SelectedValuePath = "Id";
+
+
+        }
+
+        private void cmbUOM_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbUOM.ItemsSource = BLL.UOM.toList;
+            cmbUOM.DisplayMemberPath = "Symbol";
+            cmbUOM.SelectedValuePath = "Id";
+
+        }
+
+        #endregion
+
+        #region TextChanged
         private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -201,5 +214,37 @@ data.Clear();
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
+
+        private void txtDiscount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtDiscount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtQty_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtQty.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+      
+        private void txtRate_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtRate.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        #endregion
     }
 }

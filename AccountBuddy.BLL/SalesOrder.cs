@@ -452,6 +452,7 @@ namespace AccountBuddy.BLL
                 SODetail.toCopy<SalesOrderDetail>(pod);
                 ClearDetail();
                 ItemAmount = SODetails.Sum(x => x.Amount);
+           
             }
 
         }

@@ -1,27 +1,34 @@
-﻿using Microsoft.Reporting.WinForms;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
-using System.IO;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
-using System.Drawing.Printing;
-using System.Drawing.Imaging;
 
 namespace AccountBuddy.PL.frm.Report
 {
     /// <summary>
-    /// Interaction logic for frmGeneralLedger.xaml
+    /// Interaction logic for frmCustomerWiseReport.xaml
     /// </summary>
-    public partial class frmGeneralLedger : UserControl
+    public partial class frmCustomerWiseReport : UserControl
     {
         private int m_currentPageIndex;
         private IList<Stream> m_streams;
 
-        public frmGeneralLedger()
+        public frmCustomerWiseReport()
         {
             InitializeComponent();
             rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
@@ -32,107 +39,71 @@ namespace AccountBuddy.PL.frm.Report
             DateTime? dtTo = new DateTime(yy + 1, 3, 31);
 
             dtpDateFrom.SelectedDate = dtFrom;
-            dtpDateTo.SelectedDate = dtTo;
-
-            cmbAccountName.ItemsSource = BLL.Ledger.toList;
-            cmbAccountName.DisplayMemberPath = "AccountName";
-            cmbAccountName.SelectedValuePath = "Id";
+          
+            
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadReport();
+          
+           // LoadReport();
         }
 
 
-        private void LoadReport()
-        {
-            try
-            {
-                List<BLL.GeneralLedger> list = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-                list = list.Select(x => new BLL.GeneralLedger()
-                { AccountName = x.Ledger.AccountName, Particular = x.Particular, CrAmt = x.CrAmt, DrAmt = x.DrAmt, BalAmt = x.BalAmt, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
+        //private void LoadReport()
+        //{
+        //    try
+        //    {
+        //        List<BLL.GeneralLedger> list = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+        //        list = list.Select(x => new BLL.GeneralLedger()
+        //        { AccountName = x.Ledger.AccountName, Particular = x.Particular, CrAmt = x.CrAmt, DrAmt = x.DrAmt, BalAmt = x.BalAmt, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
 
-                try
-                {
-                    rptViewer.Reset();
-                    ReportDataSource data = new ReportDataSource("GeneralLedger", list);
-                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
-                    rptViewer.LocalReport.DataSources.Add(data);
-                    rptViewer.LocalReport.DataSources.Add(data1);
-                    rptViewer.LocalReport.ReportPath = @"rpt\Report\rptGeneralLedger.rdlc";
+        //        try
+        //        {
+        //            rptViewer.Reset();
+        //            ReportDataSource data = new ReportDataSource("GeneralLedger", list);
+        //            ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
+        //            rptViewer.LocalReport.DataSources.Add(data);
+        //            rptViewer.LocalReport.DataSources.Add(data1);
+        //            rptViewer.LocalReport.ReportPath = @"rpt\Report\rptGeneralLedger.rdlc";
 
-                    ReportParameter[] par = new ReportParameter[2];
-                    par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
-                    par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
-                    rptViewer.LocalReport.SetParameters(par);
+        //            ReportParameter[] par = new ReportParameter[2];
+        //            par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
+        //            par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
+        //            rptViewer.LocalReport.SetParameters(par);
 
-                    rptViewer.RefreshReport();
+        //            rptViewer.RefreshReport();
 
-                }
-                catch (Exception ex)
-                {
+        //        }
+        //        catch (Exception ex)
+        //        {
 
-                }
-            }
-            catch (Exception ex)
-            {
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
+        //    }
 
-        }
+        //}
 
-      
+
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if(cmbAccountName.SelectedValue==null)
+            if (cmbAccountName.SelectedValue == null)
             {
                 MessageBox.Show("Enter AccountName..");
                 cmbAccountName.Focus();
             }
             else
             {
-                if (cmbAccountName.SelectedValue != null) dgvGeneralLedger.ItemsSource = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-                LoadReport();
+                if (cmbAccountName.SelectedValue != null) dgvDetails.ItemsSource = BLL.CustomerWiseReport.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value).ToList();
+                //LoadReport();
             }
-         
+
         }
 
-        private void dgvGeneralLedger_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var gl = dgvGeneralLedger.SelectedItem as BLL.GeneralLedger;
-            if (gl != null)
-            {
-                if (gl.EType == 'P')
-                {
-                    Transaction.frmPayment f = new Transaction.frmPayment();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
-                }
-                else if (gl.EType == 'R')
-                {
-                    Transaction.frmReceipt f = new Transaction.frmReceipt();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
-                }
-                else if (gl.EType == 'J')
-                {
-                    Transaction.frmJournal f = new Transaction.frmJournal();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
-                }
-            }
-        }
-
+    
         #region Button Events
         private Stream CreateStream(string name,
   string fileNameExtension, Encoding encoding,
@@ -256,24 +227,24 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
-            if(dgvGeneralLedger.Items.Count != 0)
+            if (dgvDetails.Items.Count != 0)
             {
                 frmGeneralLedgerPrint f = new frmGeneralLedgerPrint();
-                f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+               // f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
                 f.ShowDialog();
             }
             else
             {
                 MessageBox.Show("Enter AccountName");
             }
-          
+
         }
 
         #endregion
 
         private void cmbAccountName_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbAccountName.ItemsSource = BLL.Ledger.toList.ToList();
+            cmbAccountName.ItemsSource = BLL.Ledger.toList.Where(x=>x.AccountGroup.GroupName==BLL.DataKeyValue.SundryDebtors_Key).ToList();
             cmbAccountName.DisplayMemberPath = "AccountName";
             cmbAccountName.SelectedValuePath = "Id";
         }

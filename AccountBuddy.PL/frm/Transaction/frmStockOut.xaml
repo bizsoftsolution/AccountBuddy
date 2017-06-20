@@ -95,7 +95,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox x:Name="txtRate" Margin="0,0,10,0" Text="{Binding STOutDetail.UnitPrice}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="70"  TextAlignment="Right">
+                        <TextBox x:Name="txtRate" TextChanged="txtRate_TextChanged" Margin="0,0,10,0" Text="{Binding STOutDetail.UnitPrice}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="70"  TextAlignment="Right">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -103,7 +103,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox x:Name="txtQty" Margin="0,0,10,0" Text="{Binding STOutDetail.Quantity}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
+                        <TextBox x:Name="txtQty" TextChanged="txtQty_TextChanged" Margin="0,0,10,0" Text="{Binding STOutDetail.Quantity}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CardsOutline" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -134,14 +134,7 @@
                 <Grid Margin="10,2,10,10" Grid.Row="2" x:Name="gvPurchaseDetails">
 
                     <DataGrid x:Name="dgvDetails" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding STOutDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,215,104" >
-                        <DataGrid.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform AngleX="-0.283"/>
-                                <RotateTransform/>
-                                <TranslateTransform X="0.745"/>
-                            </TransformGroup>
-                        </DataGrid.RenderTransform>
+                       
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="FontWeight" Value="Bold" />
@@ -156,6 +149,7 @@
                             <DataGridTextColumn Header="UOM" FontWeight="Bold" Width="100" Binding="{Binding UOMName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTextColumn Header="Rate" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="100" Binding="{Binding UnitPrice, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTextColumn Header="Qty"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="70" Binding="{Binding Quantity, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Discount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="70" Binding="{Binding DiscountAmount, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTemplateColumn Header="Delete" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>

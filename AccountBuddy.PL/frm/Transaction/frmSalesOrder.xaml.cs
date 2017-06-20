@@ -22,32 +22,26 @@ namespace AccountBuddy.PL.frm.Transaction
     public partial class frmSalesOrder : UserControl
     {
         public BLL.SalesOrder data = new BLL.SalesOrder();
+        public string FormName = "Sales Order";
+
         public frmSalesOrder()
         {
             InitializeComponent();
             this.DataContext = data;
 
-           
-
-            cmbItem.ItemsSource = BLL.Product.toList;
-            cmbItem.DisplayMemberPath = "ProductName";
-            cmbItem.SelectedValuePath = "Id";
-
-            cmbUOM.ItemsSource = BLL.UOM.toList;
-            cmbUOM.DisplayMemberPath = "Symbol";
-            cmbUOM.SelectedValuePath = "Id";
-
-
             data.Clear();
 
         }
+
+        #region Button Events
+
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             if (data.SODetail.ProductId == null)
             {
-                MessageBox.Show(Message.PL.Transaction_Empty_Product);
-            }            
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
             else
             {
                 data.SaveDetail();
@@ -67,12 +61,12 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
                 {
-                    MessageBox.Show("Deleted");
+                    MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                 }
             }
@@ -83,30 +77,33 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.RefNo == null)
             {
-                MessageBox.Show(String.Format(Message.PL.Empty_Record,"RefNo"));
+                MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "SO Code"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtRefNo.Focus();
             }
             else if (data.LedgerId == 0)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record,"Ledger Name"));
+                MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Customer), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbCustomer.Focus();
             }
-          
+
             else if (data.SODetails.Count == 0)
             {
-                MessageBox.Show(Message.PL.Transaction_ItemDetails_Validation);
+                MessageBox.Show(string.Format(Message.PL.Transaction_ItemDetails_Validation), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbItem.Focus();
             }
             else if (data.FindRefNo() == false)
             {
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                 }
             }
             else
             {
-                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo));
-
+                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtRefNo.Focus();
             }
         }
 
@@ -135,8 +132,22 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnMakesales.IsEnabled = data.Status== "Pending" ? true: false;
             }
-            if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
+            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
+
+        private void btnMakesales_Click(object sender, RoutedEventArgs e)
+        {
+            if (data.MakeSales())
+            {
+                MessageBox.Show(string.Format(Message.PL.Transaction_Make_Sales), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
+                data.Clear();
+                btnMakesales.IsEnabled = false;
+            }
+        }
+
+        #endregion 
+
+        #region events
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -157,17 +168,9 @@ namespace AccountBuddy.PL.frm.Transaction
             }
         }
 
-       
+        #endregion
 
-        private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
-        {
-            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList(); ;
-            cmbCustomer.DisplayMemberPath = "LedgerName";
-            cmbCustomer.SelectedValuePath = "Id";
-
-
-        }
-
+        #region Textchanged
         private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -188,14 +191,64 @@ namespace AccountBuddy.PL.frm.Transaction
 
         }
 
-        private void btnMakesales_Click(object sender, RoutedEventArgs e)
+        private void txtRate_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (data.MakeSales())
-            {
-                MessageBox.Show("Successfully to Make Sales");
-                data.Clear();
-                btnMakesales.IsEnabled = false;
-            }
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtRate.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
         }
+
+        private void txtQty_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtQty.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtdiscountAmount_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtdiscountAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        #endregion
+
+        #region combo box loading
+        private void cmbItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbItem.ItemsSource = BLL.Product.toList;
+            cmbItem.DisplayMemberPath = "ProductName";
+            cmbItem.SelectedValuePath = "Id";
+
+        }
+
+        private void cmbUOM_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            cmbUOM.ItemsSource = BLL.UOM.toList;
+            cmbUOM.DisplayMemberPath = "Symbol";
+            cmbUOM.SelectedValuePath = "Id";
+
+        }
+        private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList(); ;
+            cmbCustomer.DisplayMemberPath = "LedgerName";
+            cmbCustomer.SelectedValuePath = "Id";
+
+
+        }
+        #endregion
+
     }
 }

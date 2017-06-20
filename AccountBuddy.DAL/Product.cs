@@ -34,7 +34,10 @@ namespace AccountBuddy.DAL
         public int UOMId { get; set; }
         public decimal PurchaseRate { get; set; }
         public decimal SellingRate { get; set; }
+        public decimal MinSellingRate { get; set; }
+        public decimal MaxSellingRate { get; set; }
         public decimal MRP { get; set; }
+        public decimal DiscountAmount { get; set; }
         public double OpeningStock { get; set; }
         public double ReOrderLevel { get; set; }
         public byte[] ProductImage { get; set; }

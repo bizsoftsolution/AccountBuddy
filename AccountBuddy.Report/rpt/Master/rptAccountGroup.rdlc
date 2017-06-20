@@ -92,7 +92,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Under Group</Value>
+                              <Value>Category</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>

@@ -27,7 +27,7 @@ namespace AccountBuddy.BLL
 
         public Product(string ProductCode)
         {
-            Product p = toList.Where(x => x.ItemCode == ProductCode).FirstOrDefault();
+            Product p = toList.Where(x => x.ItemCode.ToLower() == ProductCode.ToLower()).FirstOrDefault();
             if (p == null) p = new Product();
             p.toCopy<Product>(this);
         }
@@ -205,7 +205,10 @@ namespace AccountBuddy.BLL
         private UOM _UOM;
         private decimal _PurchaseRate;
         private decimal _SellingRate;
-        private decimal _MRP;        
+        private decimal _MaxSellingRate;
+        private decimal _MinSellingRate;
+        private decimal _MRP;
+        private decimal _Discount;      
         private double _OpeningStock;
         private double _ReOrderLevel;
 
@@ -225,6 +228,7 @@ namespace AccountBuddy.BLL
         private double? _POQty;
         private double? _SInQty;
         private double? _SOutQty;
+        private decimal _DiscountAmount;
 
         #endregion
 
@@ -411,6 +415,36 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public decimal MaxSellingRate
+        {
+            get
+            {
+                return _MaxSellingRate;
+            }
+            set
+            {
+                if (_MaxSellingRate != value)
+                {
+                    _MaxSellingRate = value;
+                    NotifyPropertyChanged(nameof(MaxSellingRate));
+                }
+            }
+        }
+        public decimal MinSellingRate
+        {
+            get
+            {
+                return _MinSellingRate;
+            }
+            set
+            {
+                if (_MinSellingRate != value)
+                {
+                    _MinSellingRate = value;
+                    NotifyPropertyChanged(nameof(MinSellingRate));
+                }
+            }
+        }
         public decimal MRP
         {
             get
@@ -427,7 +461,22 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+        public decimal DiscountAmount
+        {
+            get
+            {
+                return _DiscountAmount;
+            }
+
+            set
+            {
+                if (_DiscountAmount != value)
+                {
+                    _DiscountAmount = value;
+                    NotifyPropertyChanged(nameof(DiscountAmount));
+                }
+            }
+        }
         public double OpeningStock
         {
             get

@@ -57,6 +57,7 @@
     <Compile Include="CompanyDetail.cs" />
     <Compile Include="CreditLimitType.cs" />
     <Compile Include="Customer.cs" />
+    <Compile Include="CustomerWiseReport.cs" />
     <Compile Include="DataKeyValue.cs" />
     <Compile Include="GeneralLedger.cs" />
     <Compile Include="GeneralStock.cs" />

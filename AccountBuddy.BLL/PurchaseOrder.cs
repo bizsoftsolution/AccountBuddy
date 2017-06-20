@@ -367,8 +367,13 @@ namespace AccountBuddy.BLL
             _PODetails = new ObservableCollection<PurchaseOrderDetail>();
 
             PODate = DateTime.Now;
-
+          
             NotifyAllPropertyChanged();
+        }
+
+        private void MaxRef()
+        {
+           RefNo= FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_MaxRef").Result;
         }
 
         public bool Find()
@@ -420,7 +425,7 @@ namespace AccountBuddy.BLL
             PODetail.toCopy<PurchaseOrderDetail>(pod);
             ClearDetail();
             ItemAmount = PODetails.Sum(x => x.Amount);
-
+         
 
         }
 

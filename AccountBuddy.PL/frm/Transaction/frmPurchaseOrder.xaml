@@ -47,7 +47,7 @@
                 <!--#region  Master -->
                 <Grid Grid.Row="0">
                     <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" VerticalAlignment="Top"  Height="79" >
-                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding PODate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="50,27,10,24" Width="102" FontWeight="Bold"  />
+                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding PODate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="5,27,10,24" Width="100" FontWeight="Bold"  />
                         <ComboBox Loaded="cmbSupplier_Loaded" x:Name="cmbSupplier" Text="{Binding LedgerName}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="330" Height="43" Margin="0,12,0,24">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
@@ -64,7 +64,7 @@
                 <!--#region  Details-->
                 <Grid Grid.Row="1" Margin="0,0,0,15">
                     <StackPanel  x:Name="stkPurchaseDetails" Orientation="Horizontal" VerticalAlignment="Top">
-                        <TextBox KeyDown="txtBarCode_KeyDown" x:Name="txtBarCode" Margin="50,0,10,0" Text="{Binding PODetail.ItemCode,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="90">
+                        <TextBox KeyDown="txtBarCode_KeyDown" x:Name="txtBarCode" Margin="5,0,10,0" Text="{Binding PODetail.ItemCode,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="100">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CardsOutline" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -73,7 +73,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <ComboBox x:Name="cmbItem" Margin="0,0,10,0" Text="{Binding PODetail.ProductName}" SelectedValue="{Binding PODetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
+                        <ComboBox x:Name="cmbItem" Loaded="cmbItem_Loaded" Margin="0,0,10,0" Text="{Binding PODetail.ProductName}" SelectedValue="{Binding PODetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -81,7 +81,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <ComboBox x:Name="cmbUOM" Margin="0,0,10,0" Text="{Binding PODetail.UOMName}" SelectedValue="{Binding PODetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
+                        <ComboBox x:Name="cmbUOM" Loaded="cmbUOM_Loaded" Margin="0,0,10,0" Text="{Binding PODetail.UOMName}" SelectedValue="{Binding PODetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Weight" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -89,7 +89,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox x:Name="txtRate" IsReadOnly="True" Margin="0,0,10,0" Text="{Binding PODetail.UnitPrice}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="70"  TextAlignment="Right">
+                        <TextBox x:Name="txtRate"  Margin="0,0,10,0" Text="{Binding PODetail.UnitPrice}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="70"  TextAlignment="Right" TextChanged="txtRate_TextChanged">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -97,12 +97,21 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox x:Name="txtQty" Margin="0,0,10,0" Text="{Binding PODetail.Quantity}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
+                        <TextBox x:Name="txtQty" Margin="0,0,10,0" Text="{Binding PODetail.Quantity}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right" TextChanged="txtQty_TextChanged">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CardsOutline" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
 
                                     <TextBlock Text="Qty"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+                        <TextBox x:Name="txtDiscount" Margin="0,0,10,0" Text="{Binding PODetail.DiscountAmount}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right" TextChanged="txtDiscount_TextChanged">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Sale" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+
+                                    <TextBlock Text="Disc."/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
@@ -143,6 +152,7 @@
                             <DataGridTextColumn Header="UOM" FontWeight="Bold" Width="75" Binding="{Binding UOMName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTextColumn Header="Rate" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="100" Binding="{Binding UnitPrice, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTextColumn Header="Qty"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="75" Binding="{Binding Quantity, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Discount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="120" Binding="{Binding DiscountAmount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTemplateColumn Header="Delete" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
