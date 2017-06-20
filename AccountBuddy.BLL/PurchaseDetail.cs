@@ -122,9 +122,15 @@ namespace AccountBuddy.BLL
                 {
                     _Quantity = value;
                     Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
+                    if (_ProductId != 0) SetDiscount(new Product(_ProductId));
                     NotifyPropertyChanged(nameof(Quantity));
                 }
             }
+        }
+
+        private void SetDiscount(Product p)
+        {
+            DiscountAmount = p.DiscountAmount * (decimal)Quantity;
         }
 
         public decimal UnitPrice

@@ -23,6 +23,8 @@ namespace AccountBuddy.PL.frm.Transaction
     {
         public AccountBuddy.BLL.StockOut data = new BLL.StockOut();
 
+        public string FormName = "Stock Outward";
+
         public frmStockOut()
         {
             InitializeComponent();
@@ -35,11 +37,25 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            var max = BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
+            var min = BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
+
             if (data.STOutDetail.ProductId == 0)
             {
-                MessageBox.Show("Enter Product");
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbItem.Focus();
             }
-
+            else if (BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() == data.STOutDetail.Quantity)
+            {
+                var v = BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
+                MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                txtQty.Focus();
+            }
+            else if (min > data.STOutDetail.UnitPrice || max < data.STOutDetail.UnitPrice)
+            {
+                MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                txtRate.Focus();
+            }
             else
             {
                 data.SaveDetail();
@@ -145,7 +161,23 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (e.Key == Key.Return && data.STOutDetail.ProductId != 0)
             {
-                data.SaveDetail();
+                var max = BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
+                var min = BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
+
+                if (data.STOutDetail.ProductId == 0)
+                {
+                    MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    cmbItem.Focus();
+                }
+                else if (min > data.STOutDetail.UnitPrice || max < data.STOutDetail.UnitPrice)
+                {
+                    MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    txtRate.Focus();
+                }
+                else
+                {
+                    data.SaveDetail();
+                }
             }
         }
 
@@ -197,6 +229,16 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.Text = AppLib.NumericOnly(txtQty.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
+
+        }
+
+        private void txtDiscount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtDiscount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
     }

@@ -40,11 +40,18 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            var max = BLL.Product.toList.Where(x => x.Id == data.SRDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
+            var min = BLL.Product.toList.Where(x => x.Id == data.SRDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
+
             if (data.SRDetail.ProductId == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-
+            else if (min > data.SRDetail.UnitPrice || max < data.SRDetail.UnitPrice)
+            {
+                MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                txtRate.Focus();
+            }
             else
             {
                 data.SaveDetail();
@@ -149,16 +156,22 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (e.Key == Key.Return && data.SRDetail.ProductId != 0)
             {
+                var max = BLL.Product.toList.Where(x => x.Id == data.SRDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
+                var min = BLL.Product.toList.Where(x => x.Id == data.SRDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
+
                 if (data.SRDetail.ProductId == 0)
                 {
                     MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                     cmbItem.Focus();
                 }
-
+                else if (min > data.SRDetail.UnitPrice || max < data.SRDetail.UnitPrice)
+                {
+                    MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    txtRate.Focus();
+                }
                 else
                 {
                     data.SaveDetail();
-                    cmbItem.Focus();
                 }
             }
         }
