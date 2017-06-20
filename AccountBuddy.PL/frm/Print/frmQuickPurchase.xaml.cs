@@ -35,24 +35,38 @@ namespace AccountBuddy.PL.frm.Print
                 List<BLL.PurchaseDetail> PODList = new List<BLL.PurchaseDetail>();
                 List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
                 List<BLL.Ledger> SList = new List<BLL.Ledger>();
+                List<BLL.Sale> slist = new List<BLL.Sale>();
+                
+
 
                 POList.Add(data);
                 PODList.AddRange(data.PDetails);
+               
                 CList.Add(BLL.UserAccount.User.UserType.Company);
 
+                for (int i = 0; i<=10; i++)
+                {
+                    BLL.Sale d = new BLL.Sale();
+                   
+                    slist.Add(d);
 
+                }
                 rptQuickPurchase.Reset();
                 ReportDataSource data1 = new ReportDataSource("Purchase", POList);
                 ReportDataSource data2 = new ReportDataSource("PurchaseDetail", PODList);
                 ReportDataSource data3 = new ReportDataSource("CompanyDetail", CList);
                 ReportDataSource data4 = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x=>x.Id==data.LedgerId).ToList());
+                ReportDataSource data5 = new ReportDataSource("Sale", slist);
+
 
                 rptQuickPurchase.LocalReport.DataSources.Add(data1);
                 rptQuickPurchase.LocalReport.DataSources.Add(data2);
                 rptQuickPurchase.LocalReport.DataSources.Add(data3);
                 rptQuickPurchase.LocalReport.DataSources.Add(data4);
+                rptQuickPurchase.LocalReport.DataSources.Add(data5);
                 rptQuickPurchase.LocalReport.ReportPath = @"rpt\Transaction\rptPurchase.rdlc";
 
+             
                 rptQuickPurchase.RefreshReport();
 
             }
