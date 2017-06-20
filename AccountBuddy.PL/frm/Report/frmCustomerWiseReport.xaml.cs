@@ -45,6 +45,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+          
            // LoadReport();
         }
 
@@ -96,7 +97,7 @@ namespace AccountBuddy.PL.frm.Report
             }
             else
             {
-                if (cmbAccountName.SelectedValue != null) dgvDetails.ItemsSource = BLL.CustomerWiseReport.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value);
+                if (cmbAccountName.SelectedValue != null) dgvDetails.ItemsSource = BLL.CustomerWiseReport.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value).ToList();
                 //LoadReport();
             }
 

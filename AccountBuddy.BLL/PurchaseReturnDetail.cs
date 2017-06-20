@@ -192,14 +192,20 @@ namespace AccountBuddy.BLL
                 if (_ItemCode != value)
                 {
                     _ItemCode = value;
-                    if (value != "")
-                    {
-                        Product p = new Product(value);
-                        if (p.Id != 0) ProductId = p.Id;
-                    }
+                    if (value != null) SetProductbyItemCode(new Product(_ItemCode.ToLower()));
+
                     NotifyPropertyChanged(nameof(ItemCode));
                 }
             }
+        }
+
+        private void SetProductbyItemCode(Product p)
+        {
+            UOMId = p.UOMId;
+            ProductName = p.ProductName;
+            UnitPrice = p.PurchaseRate;
+            Quantity = p.Id != 0 ? 1 : 0;
+            DiscountAmount = p.DiscountAmount;
         }
 
         public string ProductName
@@ -256,6 +262,7 @@ namespace AccountBuddy.BLL
             ProductName = p.ProductName;
             UnitPrice = p.PurchaseRate;
             Quantity = p.Id != 0 ? 1 : 0;
+            DiscountAmount = p.DiscountAmount;
         }
         #endregion
 

@@ -199,7 +199,7 @@ namespace AccountBuddy.BLL
         {
             UOMId = p.UOMId;
             ProductName = p.ProductName;
-            UnitPrice = p.PurchaseRate;
+            UnitPrice = p.SellingRate;
             Quantity = p.Id != 0 ? 1 : 0;
             DiscountAmount = p.DiscountAmount;
         }
@@ -258,6 +258,7 @@ namespace AccountBuddy.BLL
             ProductName = p.ProductName;
             UnitPrice = p.SellingRate;
             Quantity = p.Id != 0 ? 1 : 0;
+            DiscountAmount = p.DiscountAmount;
         }
         #endregion
 
