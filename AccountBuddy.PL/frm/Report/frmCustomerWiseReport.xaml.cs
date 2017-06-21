@@ -94,11 +94,14 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            btnSearch.IsEnabled = false;
             SetHeading(dtpDateFrom.SelectedDate.Value);
             dgvDetails.ItemsSource = BLL.SalesReport.ToListCustomerWise(dtpDateFrom.SelectedDate.Value).ToList();
+            btnSearch.IsEnabled = true;
+
         }
 
-    
+
         #region Button Events
         private Stream CreateStream(string name,
   string fileNameExtension, Encoding encoding,

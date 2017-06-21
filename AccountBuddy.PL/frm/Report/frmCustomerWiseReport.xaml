@@ -22,7 +22,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Customer Wise Report"/></TextBlock>
+                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Dealer Wise Sales Report"/></TextBlock>
             </Grid>
             <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
 
@@ -66,14 +66,14 @@
                                 </DataGrid.ColumnHeaderStyle>
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Description" FontWeight="Bold" Width="250" Binding="{Binding Description}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="" FontWeight="Bold" Width="200" Binding="{Binding M1}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header=""  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M2, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M3, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header=""  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M4, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header=""  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M5, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M6, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Total" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Description" FontWeight="Bold" Width="350" Binding="{Binding Description}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="" TextBlock.TextAlignment="Right" FontWeight="Bold" Width="120" Binding="{Binding M1,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="" TextBlock.TextAlignment="Right" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M2, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="" TextBlock.TextAlignment="Right" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M3, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="" TextBlock.TextAlignment="Right" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M4, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="" TextBlock.TextAlignment="Right" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M5, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="" TextBlock.TextAlignment="Right" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M6, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Total" TextBlock.TextAlignment="Right" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 
