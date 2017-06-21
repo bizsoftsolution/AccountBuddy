@@ -43,12 +43,12 @@ namespace AccountBuddy.PL.frm.Print
                 PODList.AddRange(data.PDetails);
                
                 CList.Add(BLL.UserAccount.User.UserType.Company);
-
-                for (int i = 0; i<=10; i++)
+                var d = data.PDetails.Count;
+                for (int i = 0; d<= 10;d++)
                 {
-                    BLL.Sale d = new BLL.Sale();
+                    BLL.Sale d1 = new BLL.Sale();
                    
-                    slist.Add(d);
+                    slist.Add(d1);
 
                 }
                 rptQuickPurchase.Reset();

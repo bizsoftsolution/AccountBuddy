@@ -255,7 +255,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 RptLedger.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).Select(x => new {LedgerName= x.AccountName,x.PersonIncharge, x.AddressLine1, x.AddressLine2, x.CityName, x.CreditAmount, x.CreditLimit, CreditLimitTypeName=x.CreditLimitType.LimitType, x.OPCr, x.OPDr }).OrderBy(x => x.LedgerName).ToList());
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).Select(x => new {LedgerName= x.AccountName,x.PersonIncharge, x.AddressLine1, x.AddressLine2, x.CityName, x.CreditAmount, CreditLimitTypeName=x.CreditLimitType.LimitType == "" ? "":x.CreditLimitType.LimitType, x.OPCr, x.OPDr }).OrderBy(x => x.LedgerName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);
