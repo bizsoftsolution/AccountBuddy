@@ -193,7 +193,7 @@ namespace AccountBuddy.PL.frm.Master
         private bool AccountGroup_Filter(object obj)
         {
             bool RValue = false;
-            var d = obj as BLL.AccountGroup;
+           var d = obj as BLL.AccountGroup;
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
@@ -204,9 +204,9 @@ namespace AccountBuddy.PL.frm.Master
                 {
                     if (    p.Name.ToLower().Contains("id") || 
                             p.GetValue(d) == null || 
-                            (   p.Name != nameof(data.GroupName) && 
-                                p.Name !=nameof(data.underGroupName) &&
-                                p.Name !=nameof(data.GroupCode)
+                            (   p.Name != nameof(d.GroupName) && 
+                                p.Name !=nameof(d.UnderAccountGroup.GroupName) &&
+                                p.Name !=nameof(d.GroupCode)
                              
 
                              )
