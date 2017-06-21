@@ -291,6 +291,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmProductWiseSalesReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmReOrderLevel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -529,6 +533,9 @@
     </Compile>
     <Compile Include="frm\Report\frmPOPending.xaml.cs">
       <DependentUpon>frmPOPending.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmProductWiseSalesReport.xaml.cs">
+      <DependentUpon>frmProductWiseSalesReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmReOrderLevel.xaml.cs">
       <DependentUpon>frmReOrderLevel.xaml</DependentUpon>

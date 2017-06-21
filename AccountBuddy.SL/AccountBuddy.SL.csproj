@@ -185,6 +185,7 @@
     <Compile Include="Hubs\Report.cs" />
     <Compile Include="Hubs\Sales.cs" />
     <Compile Include="Hubs\SalesOrder.cs" />
+    <Compile Include="Hubs\SalesReport.cs" />
     <Compile Include="Hubs\SalesReturn.cs" />
     <Compile Include="Hubs\SLUser.cs" />
     <Compile Include="Hubs\SOPending.cs" />

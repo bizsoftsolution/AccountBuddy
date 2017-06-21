@@ -37,20 +37,12 @@
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"  >
 
-                            <ComboBox x:Name="cmbAccountName" Loaded="cmbAccountName_Loaded" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="5" >
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                        <TextBlock Text="Account Name" FontWeight="Bold"/>
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </ComboBox>
 
                             <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="5,20,5,5" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" >
                                         <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                        <TextBlock Text="Date From" FontWeight="Bold"/>
+                                        <TextBlock Text="Report Date" FontWeight="Bold"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </DatePicker>
@@ -74,15 +66,14 @@
                                 </DataGrid.ColumnHeaderStyle>
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Product" FontWeight="Bold" Width="250" Binding="{Binding ProductName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Customer" FontWeight="Bold" Width="250" Binding="{Binding Ledger.LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Amount" FontWeight="Bold" Width="200" Binding="{Binding Amount}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Description" FontWeight="Bold" Width="250" Binding="{Binding Description}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header="" FontWeight="Bold" Width="200" Binding="{Binding M1}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header=""  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M2, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M3, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header=""  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M4, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header=""  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M5, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M6, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Total" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 

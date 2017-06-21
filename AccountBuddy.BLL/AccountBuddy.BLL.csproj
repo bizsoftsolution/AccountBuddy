@@ -86,6 +86,7 @@
     <Compile Include="SalesDetail.cs" />
     <Compile Include="SalesOrder.cs" />
     <Compile Include="SalesOrderDetail.cs" />
+    <Compile Include="SalesReport.cs" />
     <Compile Include="SalesReturn.cs" />
     <Compile Include="SalesReturnDetail.cs" />
     <Compile Include="SOPending.cs" />

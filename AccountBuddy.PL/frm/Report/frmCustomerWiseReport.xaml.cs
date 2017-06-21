@@ -31,16 +31,12 @@ namespace AccountBuddy.PL.frm.Report
         public frmCustomerWiseReport()
         {
             InitializeComponent();
-            rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
+                  
+            dtpDateFrom.SelectedDate = DateTime.Now;
 
-            int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
+            dgvDetails.Columns[1].Header = "Test1";
 
-            DateTime? dtFrom = new DateTime(yy, 4, 1);
-            DateTime? dtTo = new DateTime(yy + 1, 3, 31);
 
-            dtpDateFrom.SelectedDate = dtFrom;
-          
-            
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -90,17 +86,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbAccountName.SelectedValue == null)
-            {
-                MessageBox.Show("Enter AccountName..");
-                cmbAccountName.Focus();
-            }
-            else
-            {
-                if (cmbAccountName.SelectedValue != null) dgvDetails.ItemsSource = BLL.CustomerWiseReport.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value).ToList();
-                //LoadReport();
-            }
-
+            dgvDetails.ItemsSource = BLL.SalesReport.ToListCustomerWise(dtpDateFrom.SelectedDate.Value).ToList();
         }
 
     
@@ -242,11 +228,5 @@ namespace AccountBuddy.PL.frm.Report
 
         #endregion
 
-        private void cmbAccountName_Loaded(object sender, RoutedEventArgs e)
-        {
-            cmbAccountName.ItemsSource = BLL.Ledger.toList.Where(x=>x.AccountGroup.GroupName==BLL.DataKeyValue.SundryDebtors_Key).ToList();
-            cmbAccountName.DisplayMemberPath = "AccountName";
-            cmbAccountName.SelectedValuePath = "Id";
-        }
     }
 }
