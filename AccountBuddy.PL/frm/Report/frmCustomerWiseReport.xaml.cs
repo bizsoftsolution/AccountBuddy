@@ -34,17 +34,25 @@ namespace AccountBuddy.PL.frm.Report
                   
             dtpDateFrom.SelectedDate = DateTime.Now;
 
-            dgvDetails.Columns[1].Header = "Test1";
+            
 
 
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-          
-           // LoadReport();
+            SetHeading( dtpDateFrom.SelectedDate.Value);            
         }
 
+        void SetHeading(DateTime dt)
+        {
+            dgvDetails.Columns[1].Header = string.Format("{0:MMMM}",dt.AddMonths(-5));
+            dgvDetails.Columns[2].Header = string.Format("{0:MMMM}",dt.AddMonths(-4));
+            dgvDetails.Columns[3].Header = string.Format("{0:MMMM}",dt.AddMonths(-3));
+            dgvDetails.Columns[4].Header = string.Format("{0:MMMM}",dt.AddMonths(-2));
+            dgvDetails.Columns[5].Header = string.Format("{0:MMMM}",dt.AddMonths(-1));
+            dgvDetails.Columns[6].Header = string.Format("{0:MMMM}",dt);
+        }
 
         //private void LoadReport()
         //{
@@ -86,6 +94,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            SetHeading(dtpDateFrom.SelectedDate.Value);
             dgvDetails.ItemsSource = BLL.SalesReport.ToListCustomerWise(dtpDateFrom.SelectedDate.Value).ToList();
         }
 
