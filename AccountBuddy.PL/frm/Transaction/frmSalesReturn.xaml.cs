@@ -190,7 +190,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbItem.ItemsSource = BLL.Product.toList.ToList();
+            cmbItem.ItemsSource = BLL.Product.toList.Where(x => x.StockGroup.IsSale != false).ToList();
             cmbItem.DisplayMemberPath = "ProductName";
             cmbItem.SelectedValuePath = "Id";
 

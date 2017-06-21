@@ -13,6 +13,7 @@ namespace AccountBuddy.BLL
     {
         #region Fields
         private static ObservableCollection<StockGroup> _toList;
+        private static ObservableCollection<StockGroup> _StocktoList;
 
         private int _id;
         private string _StockGroupName;
@@ -23,6 +24,8 @@ namespace AccountBuddy.BLL
         private StockGroup _UnderStockGroup;
         private CompanyDetail _Company;
         private string _underStockGroupName;
+        private bool _isPurchase;
+        private bool _isSale;
 
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
@@ -83,6 +86,33 @@ namespace AccountBuddy.BLL
                 _toList = value;
             }
         }
+
+        public static ObservableCollection<StockGroup> StocktoList
+        {
+            get
+            {
+                try
+                {
+                    if (_StocktoList == null)
+                    {
+                        _StocktoList = new ObservableCollection<StockGroup>();
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<StockGroup>>("StockGroup_PrimaryList").Result;
+                        _StocktoList = new ObservableCollection<StockGroup>(l1.OrderBy(x => x.StockGroupNameWithCode));
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return _toList;
+            }
+            set
+            {
+                _toList = value;
+            }
+        }
+
 
         public int Id
         {
@@ -259,6 +289,36 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public bool IsPurchase
+        {
+            get
+            {
+                return _isPurchase;
+            }
+            set
+            {
+                if(_isPurchase!=value)
+                {
+                    _isPurchase=value;
+                    NotifyPropertyChanged(nameof(IsPurchase));
+                }
+            }
+        }
+        public bool IsSale
+        {
+            get
+            {
+                return _isSale;
+            }
+            set
+            {
+                if (_isSale != value)
+                {
+                   _isSale=value;
+                    NotifyPropertyChanged(nameof(IsSale));
+                }
+            }
+        }
         #endregion
 
         #region Property  Changed Event

@@ -534,7 +534,7 @@ namespace AccountBuddy.BLL
             if (c != null)
             {
                 toList.Remove(c);
-                if (isServerCall == false) FMCGHubClient.FMCGHub.Invoke<int>("Company_Delete", c.Id);
+                if (isServerCall == false) FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Delete", c.Id);
                 return true;
             }
             return false;

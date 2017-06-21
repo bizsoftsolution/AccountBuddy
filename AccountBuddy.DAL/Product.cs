@@ -42,7 +42,6 @@ namespace AccountBuddy.DAL
         public double ReOrderLevel { get; set; }
         public byte[] ProductImage { get; set; }
     
-        public virtual StockGroup StockGroup { get; set; }
         public virtual UOM UOM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
@@ -60,5 +59,6 @@ namespace AccountBuddy.DAL
         public virtual ICollection<StockInDetail> StockInDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockOutDetail> StockOutDetails { get; set; }
+        public virtual StockGroup StockGroup { get; set; }
     }
 }

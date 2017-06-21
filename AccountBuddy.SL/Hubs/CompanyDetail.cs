@@ -142,6 +142,7 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
                     d.IsActive = false;
+
                     DB.SaveChanges();
                     LogDetailStore(d.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail()), LogDetailType.DELETE);
                 }

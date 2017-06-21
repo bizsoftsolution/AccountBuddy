@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 
 namespace AccountBuddy.PL.frm.Master
-{                     
+{
     /// <summary>
     /// Interaction logic for frmCompanySetting.xaml
     /// </summary>
@@ -69,13 +69,10 @@ namespace AccountBuddy.PL.frm.Master
                 var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
                 dgvWarehouse.ItemsSource = lstCompany;
 
-                if (lstCompany.Count() > 0)
-                {
-                    dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == lstCompany.FirstOrDefault().Id);
-                }else
-                {
-                    dgvDealer.ItemsSource = new List<BLL.CompanyDetail>();
-                }                               
+
+                dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id).ToList();
+
+
             }
             else
             {
@@ -84,7 +81,7 @@ namespace AccountBuddy.PL.frm.Master
                 btnUser.Visibility = Visibility.Collapsed;
                 btnDelete.Visibility = Visibility.Collapsed;
             }
-            
+
         }
         private void Grid_Refresh()
         {
@@ -149,21 +146,18 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnNewDealer_Click(object sender, RoutedEventArgs e)
         {
-            var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
-            if (cm != null)
-            {
-                frmCompanySignup f = new frmCompanySignup();
-                f.data.UnderCompanyId = cm.Id;
-                f.data.CompanyType = "Dealer";
-                f.Title = "New Dealer";
-                f.ShowDialog();
-                List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
-                if (cm != null)
-                {
-                    lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == cm.Id).ToList();
-                }
-                dgvDealer.ItemsSource = lstCompany;
-            }
+
+            frmCompanySignup f = new frmCompanySignup();
+            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
+            f.data.CompanyType = "Dealer";
+            f.Title = "New Dealer";
+            f.ShowDialog();
+            List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
+
+            lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id).ToList();
+
+            dgvDealer.ItemsSource = lstCompany;
+
         }
 
         private void btnEditWarehouse_Click(object sender, RoutedEventArgs e)
@@ -228,7 +222,7 @@ namespace AccountBuddy.PL.frm.Master
                 List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
                 if (cm != null)
                 {
-                    lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == cm.Id).ToList();
+                    lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id).ToList();
                 }
                 dgvDealer.ItemsSource = lstCompany;
             }
@@ -318,9 +312,8 @@ namespace AccountBuddy.PL.frm.Master
             List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
             if (cm != null)
             {
-                lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == cm.Id).ToList();
-            }
-            dgvDealer.ItemsSource = lstCompany;
+
+            };
         }
 
         #endregion
@@ -381,7 +374,7 @@ namespace AccountBuddy.PL.frm.Master
         private void btnUser_Click(object sender, RoutedEventArgs e)
         {
             try
-            {              
+            {
                 frmUserManager f = new frmUserManager();
                 f.LoadWindow(BLL.UserAccount.User.UserType.CompanyId);
                 f.CompanyId = BLL.UserAccount.User.UserType.CompanyId;

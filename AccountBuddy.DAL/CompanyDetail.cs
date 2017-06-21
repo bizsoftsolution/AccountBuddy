@@ -18,10 +18,10 @@ namespace AccountBuddy.DAL
         public CompanyDetail()
         {
             this.AccountGroups = new HashSet<AccountGroup>();
-            this.StockGroups = new HashSet<StockGroup>();
             this.UOMs = new HashSet<UOM>();
             this.UserAccounts = new HashSet<UserAccount>();
             this.UserTypes = new HashSet<UserType>();
+            this.StockGroups = new HashSet<StockGroup>();
         }
     
         public int Id { get; set; }
@@ -42,12 +42,12 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountGroup> AccountGroups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockGroup> StockGroups { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UOM> UOMs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserAccount> UserAccounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserType> UserTypes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockGroup> StockGroups { get; set; }
     }
 }

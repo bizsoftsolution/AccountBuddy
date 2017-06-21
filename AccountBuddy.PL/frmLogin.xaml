@@ -278,12 +278,7 @@
                             <ComboBox x:Name="cmbCompanyDealerPrimay" GotFocus="cmbCompanyDealerPrimay_GotFocus" IsEditable="True" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="220" Margin="20,11,0,0" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Group" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
-                            <TextBlock Text="Warehouse" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Height="20"  />
-                            <ComboBox x:Name="cmbCompanyDealerWarehouse" GotFocus="cmbCompanyDealerWarehouse_GotFocus" IsEditable="True" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="220" Margin="20,11,0,0" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
-                        </StackPanel>
-
+                       
                         <StackPanel Orientation="Horizontal" Height="42"  >
                             <materialDesign:PackIcon Kind="Sale" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
                             <TextBlock Text="Dealer" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Height="20" Width="77"   />

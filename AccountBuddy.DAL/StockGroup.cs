@@ -26,6 +26,8 @@ namespace AccountBuddy.DAL
         public string GroupCode { get; set; }
         public Nullable<int> UnderGroupId { get; set; }
         public int CompanyId { get; set; }
+        public Nullable<bool> IsPurchase { get; set; }
+        public Nullable<bool> IsSale { get; set; }
     
         public virtual CompanyDetail CompanyDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

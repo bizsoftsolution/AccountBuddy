@@ -54,42 +54,39 @@ namespace AccountBuddy.PL.frm.Report
             dgvDetails.Columns[6].Header = string.Format("{0:MMMM}",dt);
         }
 
-        //private void LoadReport()
-        //{
-        //    try
-        //    {
-        //        List<BLL.GeneralLedger> list = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-        //        list = list.Select(x => new BLL.GeneralLedger()
-        //        { AccountName = x.Ledger.AccountName, Particular = x.Particular, CrAmt = x.CrAmt, DrAmt = x.DrAmt, BalAmt = x.BalAmt, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
+        private void LoadReport()
+        {
+            try
+            {
+                rptViewer.Reset();
+                ReportDataSource data = new ReportDataSource("SalesReport", BLL.SalesReport.ToListCustomerWise(dtpDateFrom.SelectedDate.Value).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
+                rptViewer.LocalReport.DataSources.Add(data);
+                rptViewer.LocalReport.DataSources.Add(data1);
+                rptViewer.LocalReport.ReportPath = @"rpt\Report\rptCustomerWiseSalesReport.rdlc";
 
-        //        try
-        //        {
-        //            rptViewer.Reset();
-        //            ReportDataSource data = new ReportDataSource("GeneralLedger", list);
-        //            ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
-        //            rptViewer.LocalReport.DataSources.Add(data);
-        //            rptViewer.LocalReport.DataSources.Add(data1);
-        //            rptViewer.LocalReport.ReportPath = @"rpt\Report\rptGeneralLedger.rdlc";
+                DateTime dt = dtpDateFrom.SelectedDate.Value;
 
-        //            ReportParameter[] par = new ReportParameter[2];
-        //            par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
-        //            par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
-        //            rptViewer.LocalReport.SetParameters(par);
+                ReportParameter[] par = new ReportParameter[7];
+                par[0] = new ReportParameter("Month1", string.Format("{0:MMMM}", dt.AddMonths(-5)));
+                par[1] = new ReportParameter("Month2", string.Format("{0:MMMM}", dt.AddMonths(-4)));
+                par[2] = new ReportParameter("Month3", string.Format("{0:MMMM}", dt.AddMonths(-3)));
+                par[3] = new ReportParameter("Month4", string.Format("{0:MMMM}", dt.AddMonths(-2)));
+                par[4] = new ReportParameter("Month5", string.Format("{0:MMMM}", dt.AddMonths(-1)));
+                par[5] = new ReportParameter("Month6", string.Format("{0:MMMM}", dt));
 
-        //            rptViewer.RefreshReport();
+                par[6] = new ReportParameter("Title", "Customer Wise Sales Report");
 
-        //        }
-        //        catch (Exception ex)
-        //        {
+                rptViewer.LocalReport.SetParameters(par);
 
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
+                rptViewer.RefreshReport();
+            }
+            catch(Exception ex)
+            {
 
-        //    }
-
-        //}
+            }
+           
+        }
 
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -227,8 +224,9 @@ namespace AccountBuddy.PL.frm.Report
         {
             if (dgvDetails.Items.Count != 0)
             {
-                frmGeneralLedgerPrint f = new frmGeneralLedgerPrint();
-               // f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                frmCustomerWiseSalesReport f = new frmCustomerWiseSalesReport();
+               
+                f.LoadReport(dtpDateFrom.SelectedDate.Value);
                 f.ShowDialog();
             }
             else

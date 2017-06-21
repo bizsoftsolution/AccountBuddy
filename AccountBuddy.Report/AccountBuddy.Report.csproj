@@ -68,6 +68,9 @@
     <EmbeddedResource Include="rpt\Report\rptBalanceSheet.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptCustomerWiseSalesReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Report\rptGeneralLedger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -165,6 +168,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesOrder.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesOrderDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReport.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturn.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturnDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockGroup1.datasource" />

@@ -30,16 +30,35 @@ namespace AccountBuddy.SL.Hubs
             }
             else
             {
-                List<BLL.StockGroup> c=new List<BLL.StockGroup>();
+                List<BLL.StockGroup> c = new List<BLL.StockGroup>();
                 var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
-                if(wh!=null)
+                if (wh != null)
                 {
-                    c= DB.StockGroups.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
+                    c = DB.StockGroups.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
                             .Select(x => StockGroup_DALtoBLL(x)).ToList();
                 }
                 return c;
             }
-           
+
+        }
+        public List<BLL.StockGroup> StockGroup_PrimaryList()
+        {
+
+            List<BLL.StockGroup> rv = new List<BLL.StockGroup>();
+            BLL.StockGroup stg = new BLL.StockGroup();
+            var lst = DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList();
+            var id = DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList();
+            foreach (var i in id)
+            {
+                foreach (var l in lst.Where(x=>x.UnderGroupId!=i.Id).ToList())
+
+                {
+                    rv.toCopy<DAL.StockGroup>(l);
+                 
+                }
+
+            }
+            return rv;
         }
 
         public int StockGroup_Save(BLL.StockGroup agp)

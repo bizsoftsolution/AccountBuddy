@@ -37,7 +37,6 @@
         <EntityTypeShape EntityType="DBFMCGModel.SalesReturn" Width="1.5" PointX="12.5" PointY="37.25" />
         <EntityTypeShape EntityType="DBFMCGModel.SalesReturnDetail" Width="1.5" PointX="18.25" PointY="44.375" />
         <EntityTypeShape EntityType="DBFMCGModel.Staff" Width="1.5" PointX="7.5" PointY="62" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockGroup" Width="1.5" PointX="3" PointY="41.25" />
         <EntityTypeShape EntityType="DBFMCGModel.StockIn" Width="1.5" PointX="7.5" PointY="64.625" />
         <EntityTypeShape EntityType="DBFMCGModel.StockInDetail" Width="1.5" PointX="12.75" PointY="54.75" />
         <EntityTypeShape EntityType="DBFMCGModel.StockOut" Width="1.5" PointX="7.5" PointY="52.875" />
@@ -53,7 +52,6 @@
         <AssociationConnector Association="DBFMCGModel.FK_AccountGroup_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_Ledger_AccountGroup" />
         <AssociationConnector Association="DBFMCGModel.FK_Bank_Ledger" />
-        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_UOM_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_UserAccount_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_UserType_CompanyDetail" />
@@ -81,7 +79,6 @@
         <AssociationConnector Association="DBFMCGModel.FK_LogDetail_UserAccount" />
         <AssociationConnector Association="DBFMCGModel.FK_LogMaster_UserAccount" />
         <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Payment" />
-        <AssociationConnector Association="DBFMCGModel.FK_Product_StockGroup" />
         <AssociationConnector Association="DBFMCGModel.FK_Product_UOM" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseDetail_Product" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrderDetail_Product" />
@@ -112,7 +109,6 @@
         <AssociationConnector Association="DBFMCGModel.FK_SalesReturn_TransactionType" />
         <AssociationConnector Association="DBFMCGModel.FK_SalesReturnDetail_SalesReturn" />
         <AssociationConnector Association="DBFMCGModel.FK_SalesReturnDetail_UOM" />
-        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_StockGroup" />
         <AssociationConnector Association="DBFMCGModel.FK_StockInDetail_StockIn" />
         <AssociationConnector Association="DBFMCGModel.FK_StockInDetail_UOM" />
         <AssociationConnector Association="DBFMCGModel.FK_StockOutDetail_StockOut" />
@@ -120,6 +116,10 @@
         <AssociationConnector Association="DBFMCGModel.FK_UserAccount_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockGroup" Width="1.5" PointX="3" PointY="43" />
+        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_Product_StockGroup" />
+        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_StockGroup" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -196,8 +196,7 @@ namespace AccountBuddy.PL
                     App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
                     this.Hide();
                     cmbCompanyDealerPrimay.Text = "";
-                    cmbCompanyDealerWarehouse.Text = "";
-                    cmbCompanyDealer.Text = "";
+                     cmbCompanyDealer.Text = "";
 
                     txtUserIdDealer.Text = "";
                     txtPasswordDealer.Password = "";
@@ -238,22 +237,11 @@ namespace AccountBuddy.PL
             cmbCompanyWarehouse.DisplayMemberPath = "CompanyName";
         }
 
-        private void cmbCompanyDealerWarehouse_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var cm = cmbCompanyDealerPrimay.SelectedItem as BLL.CompanyDetail;
-            List<BLL.CompanyDetail> lstCom = new List<BLL.CompanyDetail>();
-            if (cm != null)
-            {
-                lstCom = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == cm.Id).ToList();
-            }
-            cmbCompanyDealerWarehouse.ItemsSource = lstCom;
-            cmbCompanyDealerWarehouse.SelectedValuePath = "Id";
-            cmbCompanyDealerWarehouse.DisplayMemberPath = "CompanyName";
-        }
+       
 
         private void cmbCompanyDealer_GotFocus(object sender, RoutedEventArgs e)
         {
-            var cm = cmbCompanyDealerWarehouse.SelectedItem as BLL.CompanyDetail;
+            var cm = cmbCompanyDealerPrimay.SelectedItem as BLL.CompanyDetail;
             List<BLL.CompanyDetail> lstCom = new List<BLL.CompanyDetail>();
             if (cm != null)
             {
@@ -297,7 +285,6 @@ namespace AccountBuddy.PL
             txtPassword.Password = "";
 
             cmbCompanyDealerPrimay.Text = "";
-            cmbCompanyDealerWarehouse.Text = "";
             cmbCompanyDealer.Text = "";
             txtUserIdDealer.Text = "";
             txtPasswordDealer.Password = "";

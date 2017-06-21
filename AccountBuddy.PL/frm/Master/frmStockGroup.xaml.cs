@@ -53,10 +53,7 @@ namespace AccountBuddy.PL.frm.Master
 
             CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Filter = StockGroup_Filter;
             CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
-            cmbUnder.ItemsSource = BLL.StockGroup.toList;
-            cmbUnder.SelectedValuePath = "Id";
-            cmbUnder.DisplayMemberPath = "StockGroupName";
-
+         
 
 
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
@@ -304,5 +301,12 @@ namespace AccountBuddy.PL.frm.Master
             }
         }
 
+        private void cmbUnder_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbUnder.ItemsSource = BLL.StockGroup.StocktoList;
+            cmbUnder.SelectedValuePath = "Id";
+            cmbUnder.DisplayMemberPath = "StockGroupName";
+
+        }
     }
 }

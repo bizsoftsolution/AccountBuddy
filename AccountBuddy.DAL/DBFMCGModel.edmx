@@ -441,6 +441,8 @@
           <Property Name="GroupCode" Type="nvarchar" MaxLength="50" />
           <Property Name="UnderGroupId" Type="int" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="IsPurchase" Type="bit" />
+          <Property Name="IsSale" Type="bit" />
         </EntityType>
         <EntityType Name="StockIn">
           <Key>
@@ -1783,7 +1785,6 @@
           <EntitySet Name="SalesReturns" EntityType="DBFMCGModel.SalesReturn" />
           <EntitySet Name="SalesReturnDetails" EntityType="DBFMCGModel.SalesReturnDetail" />
           <EntitySet Name="Staffs" EntityType="DBFMCGModel.Staff" />
-          <EntitySet Name="StockGroups" EntityType="DBFMCGModel.StockGroup" />
           <EntitySet Name="StockIns" EntityType="DBFMCGModel.StockIn" />
           <EntitySet Name="StockInDetails" EntityType="DBFMCGModel.StockInDetail" />
           <EntitySet Name="StockOuts" EntityType="DBFMCGModel.StockOut" />
@@ -1810,10 +1811,6 @@
           <AssociationSet Name="FK_Bank_Ledger" Association="DBFMCGModel.FK_Bank_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
             <End Role="Bank" EntitySet="Banks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StockGroup_CompanyDetail" Association="DBFMCGModel.FK_StockGroup_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="StockGroup" EntitySet="StockGroups" />
           </AssociationSet>
           <AssociationSet Name="FK_UOM_CompanyDetail" Association="DBFMCGModel.FK_UOM_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
@@ -1922,10 +1919,6 @@
           <AssociationSet Name="FK_PaymentDetail_Payment" Association="DBFMCGModel.FK_PaymentDetail_Payment">
             <End Role="Payment" EntitySet="Payments" />
             <End Role="PaymentDetail" EntitySet="PaymentDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_StockGroup" Association="DBFMCGModel.FK_Product_StockGroup">
-            <End Role="StockGroup" EntitySet="StockGroups" />
-            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_UOM" Association="DBFMCGModel.FK_Product_UOM">
             <End Role="UOM" EntitySet="UOMs" />
@@ -2047,10 +2040,6 @@
             <End Role="UOM" EntitySet="UOMs" />
             <End Role="SalesReturnDetail" EntitySet="SalesReturnDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_StockGroup_StockGroup" Association="DBFMCGModel.FK_StockGroup_StockGroup">
-            <End Role="StockGroup" EntitySet="StockGroups" />
-            <End Role="StockGroup1" EntitySet="StockGroups" />
-          </AssociationSet>
           <AssociationSet Name="FK_StockInDetail_StockIn" Association="DBFMCGModel.FK_StockInDetail_StockIn">
             <End Role="StockIn" EntitySet="StockIns" />
             <End Role="StockInDetail" EntitySet="StockInDetails" />
@@ -2078,6 +2067,19 @@
           <AssociationSet Name="FK_UserTypeDetail_UserTypeFormDetail" Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail">
             <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
+          </AssociationSet>
+          <EntitySet Name="StockGroups" EntityType="DBFMCGModel.StockGroup" />
+          <AssociationSet Name="FK_StockGroup_CompanyDetail" Association="DBFMCGModel.FK_StockGroup_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="StockGroup" EntitySet="StockGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_StockGroup" Association="DBFMCGModel.FK_Product_StockGroup">
+            <End Role="StockGroup" EntitySet="StockGroups" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockGroup_StockGroup" Association="DBFMCGModel.FK_StockGroup_StockGroup">
+            <End Role="StockGroup" EntitySet="StockGroups" />
+            <End Role="StockGroup1" EntitySet="StockGroups" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
@@ -2123,10 +2125,10 @@
           <Property Name="UnderCompanyId" Type="Int32" />
           <Property Name="CompanyType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AccountGroups" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
-          <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
           <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
           <NavigationProperty Name="UserAccounts" Relationship="DBFMCGModel.FK_UserAccount_CompanyDetail" FromRole="CompanyDetail" ToRole="UserAccount" />
           <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
+          <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -2331,7 +2333,6 @@
           <Property Name="OpeningStock" Type="Double" Nullable="false" />
           <Property Name="ReOrderLevel" Type="Double" Nullable="false" />
           <Property Name="ProductImage" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="StockGroup" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="Product" ToRole="StockGroup" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="Product" ToRole="UOM" />
           <NavigationProperty Name="PurchaseDetails" Relationship="DBFMCGModel.FK_PurchaseDetail_Product" FromRole="Product" ToRole="PurchaseDetail" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="DBFMCGModel.FK_PurchaseOrderDetail_Product" FromRole="Product" ToRole="PurchaseOrderDetail" />
@@ -2341,6 +2342,7 @@
           <NavigationProperty Name="SalesReturnDetails" Relationship="DBFMCGModel.FK_SalesReturnDetail_Product" FromRole="Product" ToRole="SalesReturnDetail" />
           <NavigationProperty Name="StockInDetails" Relationship="DBFMCGModel.FK_StockInDetail_Product" FromRole="Product" ToRole="StockInDetail" />
           <NavigationProperty Name="StockOutDetails" Relationship="DBFMCGModel.FK_StockOutDetail_Product" FromRole="Product" ToRole="StockOutDetail" />
+          <NavigationProperty Name="StockGroup" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="Product" ToRole="StockGroup" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -2610,20 +2612,6 @@
           <Property Name="Designation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Staff" ToRole="Ledger" />
         </EntityType>
-        <EntityType Name="StockGroup">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StockGroupName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GroupCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UnderGroupId" Type="Int32" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="StockGroup" ToRole="CompanyDetail" />
-          <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="StockGroup" ToRole="Product" />
-          <NavigationProperty Name="StockGroup1" Relationship="DBFMCGModel.FK_StockGroup_StockGroup" FromRole="StockGroup" ToRole="StockGroup1" />
-          <NavigationProperty Name="StockGroup2" Relationship="DBFMCGModel.FK_StockGroup_StockGroup" FromRole="StockGroup1" ToRole="StockGroup" />
-        </EntityType>
         <EntityType Name="StockIn">
           <Key>
             <PropertyRef Name="Id" />
@@ -2826,18 +2814,6 @@
             </Principal>
             <Dependent Role="Bank">
               <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StockGroup_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
-          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StockGroup">
-              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3162,18 +3138,6 @@
             </Principal>
             <Dependent Role="PaymentDetail">
               <PropertyRef Name="PaymentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_StockGroup">
-          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="1" />
-          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockGroup">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="StockGroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3537,18 +3501,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StockGroup_StockGroup">
-          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.StockGroup" Role="StockGroup1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockGroup">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StockGroup1">
-              <PropertyRef Name="UnderGroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_StockInDetail_StockIn">
           <End Type="DBFMCGModel.StockIn" Role="StockIn" Multiplicity="1" />
           <End Type="DBFMCGModel.StockInDetail" Role="StockInDetail" Multiplicity="*" />
@@ -3630,6 +3582,58 @@
             </Principal>
             <Dependent Role="UserTypeDetail">
               <PropertyRef Name="UserTypeFormDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StockGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockGroupName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GroupCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UnderGroupId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="IsPurchase" Type="Boolean" />
+          <Property Name="IsSale" Type="Boolean" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="StockGroup" ToRole="CompanyDetail" />
+          <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="StockGroup" ToRole="Product" />
+          <NavigationProperty Name="StockGroup1" Relationship="DBFMCGModel.FK_StockGroup_StockGroup" FromRole="StockGroup" ToRole="StockGroup1" />
+          <NavigationProperty Name="StockGroup2" Relationship="DBFMCGModel.FK_StockGroup_StockGroup" FromRole="StockGroup1" ToRole="StockGroup" />
+        </EntityType>
+        <Association Name="FK_StockGroup_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockGroup">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_StockGroup">
+          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="1" />
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="StockGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockGroup_StockGroup">
+          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.StockGroup" Role="StockGroup1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockGroup1">
+              <PropertyRef Name="UnderGroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4098,17 +4102,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StockGroups">
-            <EntityTypeMapping TypeName="DBFMCGModel.StockGroup">
-              <MappingFragment StoreEntitySet="StockGroup">
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="UnderGroupId" ColumnName="UnderGroupId" />
-                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
-                <ScalarProperty Name="StockGroupName" ColumnName="StockGroupName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="StockIns">
             <EntityTypeMapping TypeName="DBFMCGModel.StockIn">
               <MappingFragment StoreEntitySet="StockIn">
@@ -4238,6 +4231,19 @@
                 <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
                 <ScalarProperty Name="FormType" ColumnName="FormType" />
                 <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockGroups">
+            <EntityTypeMapping TypeName="DBFMCGModel.StockGroup">
+              <MappingFragment StoreEntitySet="StockGroup">
+                <ScalarProperty Name="IsSale" ColumnName="IsSale" />
+                <ScalarProperty Name="IsPurchase" ColumnName="IsPurchase" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="UnderGroupId" ColumnName="UnderGroupId" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="StockGroupName" ColumnName="StockGroupName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

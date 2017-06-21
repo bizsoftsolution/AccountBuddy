@@ -175,6 +175,23 @@ namespace AccountBuddy.Common
             }
             return newText;
         }
+
+
+        public static string NumericQtyOnly(string str)
+        {
+            String newText = String.Empty;
+
+            int DotCount = 0;
+            foreach (Char c in str.ToCharArray())
+            {
+                if (Char.IsDigit(c) || Char.IsControl(c) || (c == '.' && DotCount == 0))
+                {
+                    newText += c;
+                    if (c == '.') DotCount += 1;
+                }
+            }
+            return newText;
+        }
         public static bool IsValidEmailAddress(this string s)
         {
             Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");

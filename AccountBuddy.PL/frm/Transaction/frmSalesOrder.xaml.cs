@@ -250,7 +250,7 @@ namespace AccountBuddy.PL.frm.Transaction
         #region combo box loading
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbItem.ItemsSource = BLL.Product.toList;
+            cmbItem.ItemsSource = BLL.Product.toList.Where(x => x.StockGroup.IsSale != false).ToList();
             cmbItem.DisplayMemberPath = "ProductName";
             cmbItem.SelectedValuePath = "Id";
 
