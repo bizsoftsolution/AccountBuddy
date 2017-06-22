@@ -217,8 +217,7 @@
     <None Include="DBFMCGModel.edmx.diagram">
       <DependentUpon>DBFMCGModel.edmx</DependentUpon>
     </None>
-    <None Include="DB\DBFMCG1906.bak" />
-    <None Include="DB\DBFMCG_1406.bak" />
+    <None Include="DB\DBFMCG2206.bak" />
     <None Include="FMCG.xsc">
       <DependentUpon>FMCG.xsd</DependentUpon>
     </None>
