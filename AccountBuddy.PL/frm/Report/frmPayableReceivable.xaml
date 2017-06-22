@@ -87,7 +87,7 @@
                         </WindowsFormsHost>
                     </Grid>
                     <Grid Grid.Row="1" Margin="10,0,104,0">
-                        <StackPanel Orientation="Horizontal" Margin="235,0,300,10" VerticalAlignment="Center" Height="45">
+                        <StackPanel Orientation="Horizontal" Margin="235,0,300,10" VerticalAlignment="Center" Height="45" Visibility="Hidden">
 
                             <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
                                 PDF

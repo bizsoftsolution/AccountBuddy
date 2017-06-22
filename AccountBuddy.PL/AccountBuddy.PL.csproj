@@ -295,6 +295,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmPOPendingPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmProductWiseSalesReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -308,6 +312,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Report\frmSOPending.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Report\frmSOPendingPrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -541,6 +549,9 @@
     <Compile Include="frm\Report\frmPOPending.xaml.cs">
       <DependentUpon>frmPOPending.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Report\frmPOPendingPrint.xaml.cs">
+      <DependentUpon>frmPOPendingPrint.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Report\frmProductWiseSalesReport.xaml.cs">
       <DependentUpon>frmProductWiseSalesReport.xaml</DependentUpon>
     </Compile>
@@ -552,6 +563,9 @@
     </Compile>
     <Compile Include="frm\Report\frmSOPending.xaml.cs">
       <DependentUpon>frmSOPending.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmSOPendingPrint.xaml.cs">
+      <DependentUpon>frmSOPendingPrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmStockReport.xaml.cs">
       <DependentUpon>frmStockReport.xaml</DependentUpon>
@@ -786,6 +800,15 @@
     <Resource Include="Images\fmcg\logo.png" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Aboorvas\aboorvas logo 128.ico" />
+    <Resource Include="Images\Aboorvas\aboorvas logo 256.ico" />
+    <Resource Include="Images\Aboorvas\aboorvas logo 32.ico" />
+    <Resource Include="Images\Aboorvas\aboorvas logo 64.ico" />
+    <Resource Include="Images\Aboorvas\home page – 1 rev 2.png" />
+    <Resource Include="Images\Aboorvas\login page – 2.png" />
+    <Resource Include="Images\Aboorvas\login page – 3 wo box.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

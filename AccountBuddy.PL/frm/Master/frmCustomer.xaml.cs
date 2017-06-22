@@ -286,7 +286,7 @@ namespace AccountBuddy.PL.frm.Master
         }
 
         private void onClientEvents()
-        {
+       {
             BLL.FMCGHubClient.FMCGHub.On<BLL.Customer>("Customer_Save", (Cus) => {
 
                 this.Dispatcher.Invoke(() =>

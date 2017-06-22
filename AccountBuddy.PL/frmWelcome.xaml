@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="Images/fmcg/home page – 2.png" Stretch="None"/>
+            <ImageBrush ImageSource="Images/Aboorvas/home page – 1 rev 2.png" Stretch="None"/>
         </Grid.Background>
 
     </Grid>

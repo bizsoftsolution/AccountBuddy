@@ -18,6 +18,7 @@ namespace AccountBuddy.BLL
         private decimal? _M5;
         private decimal? _M6;
         private decimal? _Amount;
+        
 
         #endregion
 
@@ -54,7 +55,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
+     
         public decimal? M1
         {
             get

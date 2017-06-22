@@ -51,18 +51,18 @@ namespace AccountBuddy.PL.frm.Report
 
         private void LoadReport()
         {
-            List<BLL.TrialBalance> list = BLL.TrialBalance.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-            list = list.Select(x => new BLL.TrialBalance()
-            { AccountName = x.Ledger.AccountName, CrAmt = x.CrAmt, DrAmt = x.DrAmt, CrAmtOP = x.CrAmtOP, DrAmtOP = x.DrAmtOP }).ToList();
+            List<BLL.SOPending> list = BLL.SOPending.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            list = list.Select(x => new BLL.SOPending()
+            { AccountName = x.Ledger.AccountName, Amount=x.Amount, EntryNo=x.EntryNo, Ledger=x.Ledger, SODate=x.SODate, Status=x.Status}).ToList();
 
             try
             {
                 rptViewer.Reset();
-                ReportDataSource data = new ReportDataSource("TrialBalance", list);
+                ReportDataSource data = new ReportDataSource("SOPending", list);
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptViewer.LocalReport.DataSources.Add(data);
                 rptViewer.LocalReport.DataSources.Add(data1);
-                rptViewer.LocalReport.ReportPath = @"rpt\Report\rptTrialBalance.rdlc";
+                rptViewer.LocalReport.ReportPath = @"rpt\Report\rptSOPendingReport.rdlc";
 
                 ReportParameter[] par = new ReportParameter[2];
                 par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
@@ -223,7 +223,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
-            frmTrialBalancePrint f = new frmTrialBalancePrint();
+            frmSOPendingPrint f = new frmSOPendingPrint();
             f.LoadReport(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             f.ShowDialog();
         }
