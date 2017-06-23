@@ -399,18 +399,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="frm\Transaction\Purchase.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="frm\Transaction\SalesOrder.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="frm\Transaction\SalesReturn.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="frm\Vouchers\frmQuickJournalVoucher.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -626,15 +614,6 @@
     </Compile>
     <Compile Include="frm\Transaction\frmStockOut.xaml.cs">
       <DependentUpon>frmStockOut.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="frm\Transaction\Purchase.xaml.cs">
-      <DependentUpon>Purchase.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="frm\Transaction\SalesOrder.xaml.cs">
-      <DependentUpon>SalesOrder.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="frm\Transaction\SalesReturn.xaml.cs">
-      <DependentUpon>SalesReturn.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Vouchers\frmQuickJournalVoucher.xaml.cs">
       <DependentUpon>frmQuickJournalVoucher.xaml</DependentUpon>

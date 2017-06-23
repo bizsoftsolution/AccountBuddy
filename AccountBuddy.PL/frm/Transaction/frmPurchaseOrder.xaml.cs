@@ -63,13 +63,17 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
             btnMakepurchase.IsEnabled = false;
-          
+            if (data.Id != 0)
+            {
+                btnPrint.IsEnabled = true;
+            }
+
         }
 
-    
+
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-           
+
             if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
@@ -86,7 +90,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.RefNo == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Transaction_POcode,"PO Code"),FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "PO Code"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtRefNo.Focus();
             }
             else if (data.LedgerId == 0)
@@ -101,12 +105,16 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             else if (data.FindRefNo() == false)
             {
-              
+
                 var rv = data.Save();
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
+                    if (data.Id != 0)
+                    {
+                        btnPrint.IsEnabled = true;
+                    }
                 }
             }
             else
@@ -135,12 +143,14 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
-            if(data.Id!=0)
+
+            if (data.Id != 0)
             {
-               btnMakepurchase.IsEnabled = data.Status == "Pending" ? true:false;
+                btnMakepurchase.IsEnabled = data.Status == "Pending" ? true : false;
+                btnPrint.IsEnabled = true;
             }
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            
+
 
         }
         private void btnMakepurchase_Click(object sender, RoutedEventArgs e)
@@ -192,7 +202,7 @@ namespace AccountBuddy.PL.frm.Transaction
         }
 
 
-       
+
         private void cmbSupplier_Loaded(object sender, RoutedEventArgs e)
         {
             cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key).ToList();
@@ -200,7 +210,7 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbSupplier.SelectedValuePath = "Id";
         }
 
-      
+
 
         private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -222,9 +232,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         }
 
-      
 
-     
+
+
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {

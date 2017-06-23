@@ -50,7 +50,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbItem.Focus();
             }
-            else if (BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() == data.SDetail.Quantity)
+            else if (BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() <= data.SDetail.Quantity)
             {
                 var v = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
                 MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -74,7 +74,10 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            data.Clear();
+            data.Clear(); if (data.Id != 0)
+            {
+                btnPrint.IsEnabled = true;
+            }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -115,6 +118,10 @@ namespace AccountBuddy.PL.frm.Transaction
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
+                    if (data.Id != 0)
+                    {
+                        btnPrint.IsEnabled = true;
+                    }
                 }
             }
             else
@@ -139,6 +146,10 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             var rv = data.Find();
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (data.Id != 0)
+            {
+                btnPrint.IsEnabled = true;
+            }
         }
 
         #endregion

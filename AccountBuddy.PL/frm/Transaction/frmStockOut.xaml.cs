@@ -70,6 +70,8 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            btnPrint.IsEnabled = true;
+
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -111,6 +113,10 @@ namespace AccountBuddy.PL.frm.Transaction
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
                     data.Clear();
+                    if (data.Id != 0)
+                    {
+                        btnPrint.IsEnabled = true;
+                    }
                 }
             }
             else
@@ -143,7 +149,10 @@ namespace AccountBuddy.PL.frm.Transaction
             var rv = data.Find();
 
             if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
-
+            if (data.Id != 0)
+            {
+                btnPrint.IsEnabled = true;
+            }
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
