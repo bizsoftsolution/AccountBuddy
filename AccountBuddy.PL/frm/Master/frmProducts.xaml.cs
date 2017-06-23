@@ -221,7 +221,15 @@ namespace AccountBuddy.PL.frm.Master
 
                 foreach (var p in d.GetType().GetProperties())
                 {
-                    if (p.Name.ToLower().Contains("id") || p.GetValue(d) == null) continue;
+                    if (p.Name.ToLower().Contains("id") || p.GetValue(d) == null
+                         ||(p.Name != nameof(d.ProductName) &&
+                                p.Name != nameof(d.ItemCode) &&
+                                p.Name != nameof(d.SellingRate)&&
+                                p.Name!=nameof(d.MinSellingRate)&&
+                                p.Name!=nameof(d.MaxSellingRate) &&
+                                p.Name!=nameof(d.SellingRate))
+
+                        ) continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {

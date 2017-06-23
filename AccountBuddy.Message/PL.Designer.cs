@@ -61,7 +61,7 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not delete this Record!.
+        ///   Looks up a localized string similar to Record Could not be Deleted!.
         /// </summary>
         public static string Cant_Delete_Alert {
             get {
@@ -250,7 +250,7 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successfully to Make Purchase.
+        ///   Looks up a localized string similar to Purchase Done!!.
         /// </summary>
         public static string Transaction_Make_Purchase {
             get {
@@ -259,7 +259,7 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successfully to Make Sales.
+        ///   Looks up a localized string similar to Sales Done!!.
         /// </summary>
         public static string Transaction_Make_Sales {
             get {
