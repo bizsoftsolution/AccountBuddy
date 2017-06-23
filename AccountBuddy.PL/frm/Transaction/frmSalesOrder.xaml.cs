@@ -65,6 +65,8 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
             btnMakesales.IsEnabled = false;
+            btnPrint.IsEnabled = false;
+
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -106,6 +108,10 @@ namespace AccountBuddy.PL.frm.Transaction
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
+                    if (data.Id != 0)
+                    {
+                        btnPrint.IsEnabled = true;
+                    }
                 }
             }
             else
@@ -136,9 +142,11 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
-            if(data.Id!=0)
+            if (data.Id != 0)
             {
-                btnMakesales.IsEnabled = data.Status== "Pending" ? true: false;
+                btnMakesales.IsEnabled = data.Status == "Pending" ? true : false; if (data.Id != 0)
+                    btnPrint.IsEnabled = true;
+
             }
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
@@ -170,7 +178,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void txtBarCode_KeyDown(object sender, KeyEventArgs e)
         {
-           
+
             if (e.Key == Key.Return && data.SODetail.ProductId != null)
             {
                 var max = BLL.Product.toList.Where(x => x.Id == data.SODetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();

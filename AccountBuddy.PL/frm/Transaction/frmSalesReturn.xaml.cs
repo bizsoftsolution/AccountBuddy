@@ -66,6 +66,9 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+
+            btnPrint.IsEnabled = true;
+
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -107,6 +110,10 @@ namespace AccountBuddy.PL.frm.Transaction
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
+                    if (data.Id != 0)
+                    {
+                        btnPrint.IsEnabled = true;
+                    }
                 }
             }
             else
@@ -138,7 +145,10 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             var rv = data.Find();
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-
+            if (data.Id != 0)
+            {
+                btnPrint.IsEnabled = true;
+            }
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -247,7 +257,7 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
-      
+
         private void txtRate_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;

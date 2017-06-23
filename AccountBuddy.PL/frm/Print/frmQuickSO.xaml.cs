@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace AccountBuddy.PL.frm.Print
 {
@@ -44,7 +45,7 @@ namespace AccountBuddy.PL.frm.Print
 
                 rptQuickSalesOrder.Reset();
                 ReportDataSource data1 = new ReportDataSource("SalesOrder", POList);
-                ReportDataSource data2 = new ReportDataSource("SalesOrderDetail", PODList);
+                ReportDataSource data2 = new ReportDataSource("SalesOrderDetail", GetDetails(data));
                 ReportDataSource data3 = new ReportDataSource("CompanyDetail", CList);
                 ReportDataSource data4 = new ReportDataSource("Ledger", CustomerList);
 
@@ -61,6 +62,58 @@ namespace AccountBuddy.PL.frm.Print
             {
 
             }
+        }
+
+        public DataTable GetDetails(BLL.SalesOrder data)
+        {
+            int NoRecPerPage = 20;
+            var dataSet = new DataSet();
+            DataTable dt = new DataTable();
+            dataSet.Tables.Add(dt);
+
+            dt.Columns.Add("ProductName");
+            dt.Columns.Add("Quantity");
+            dt.Columns.Add("UnitPrice");
+            dt.Columns.Add("UOMName");
+            dt.Columns.Add("Amount");
+            dt.Columns.Add("Id");
+
+            var newRow = dt.NewRow();
+
+
+            int n = 0;
+            foreach (var element in data.SODetails)
+            {
+                newRow = dt.NewRow();
+                n = n + 1;
+                // fill the properties into the cells
+                newRow["ProductName"] = element.ProductName;
+                newRow["Quantity"] = element.Quantity == 0 ? "" : element.Quantity.ToString();
+                newRow["UnitPrice"] = element.UnitPrice == 0 ? "" : element.UnitPrice.ToString();
+                newRow["UOMName"] = element.UOMName;
+                newRow["Amount"] = element.Amount;
+                newRow["Id"] = n.ToString();
+
+                dt.Rows.Add(newRow);
+            }
+
+
+
+            for (int i = 0; i < NoRecPerPage - data.SODetails.Count(); i++)
+            {
+                newRow = dt.NewRow();
+
+                // fill the properties into the cells
+                newRow["ProductName"] = "";
+                newRow["Quantity"] = "";
+                newRow["UnitPrice"] = "";
+                newRow["Amount"] = "";
+                newRow["Id"] = "";
+
+                dt.Rows.Add(newRow);
+            }
+            return dt;
+
         }
 
     }

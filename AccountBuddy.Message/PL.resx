@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cant_Delete_Alert" xml:space="preserve">
-    <value>Could not delete this Record!</value>
+    <value>Record Could not be Deleted!</value>
   </data>
   <data name="Delete_Alert" xml:space="preserve">
     <value>Deleted Successfully</value>
@@ -181,10 +181,10 @@
     <value>Enter Product Detail</value>
   </data>
   <data name="Transaction_Make_Purchase" xml:space="preserve">
-    <value>Successfully to Make Purchase</value>
+    <value>Purchase Done!!</value>
   </data>
   <data name="Transaction_Make_Sales" xml:space="preserve">
-    <value>Successfully to Make Sales</value>
+    <value>Sales Done!!</value>
   </data>
   <data name="Transaction_Not_Fount" xml:space="preserve">
     <value>{0}, Not Found !</value>

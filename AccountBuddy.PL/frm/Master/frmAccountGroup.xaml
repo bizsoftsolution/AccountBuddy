@@ -69,12 +69,15 @@
 
                 <!--#region Buttons-->
                 <Grid Grid.Row="1">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE" Click="btnSave_Click" Margin="5 5" />
-                        <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE" Click="btnDelete_Click"  Margin="5 5" />
-                        <Button Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Click="btnClear_Click" Margin="5 5" />
-                    </StackPanel>
-                </Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE" Click="btnSave_Click" Margin="5 5" />
+                            <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE" Click="btnDelete_Click"  Margin="5 5" />
+                            <Button Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Click="btnClear_Click" Margin="5 5" />
+                        </StackPanel>
+
+                    </ScrollViewer>
+                 </Grid>
                 <!--#endregion-->
 
             </Grid>
@@ -128,42 +131,43 @@
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="top" Margin="20" >
-                                    <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  TextChanged="txtSearch_TextChanged">
-                                        <materialDesign:HintAssist.Hint>
-                                            <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                                <TextBlock Text="Search Text" FontWeight="Bold"/>
-                                            </StackPanel>
-                                        </materialDesign:HintAssist.Hint>
-                                    </TextBox>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                        <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5"/>
-                                        <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked"  Margin="5"/>
-                                        <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Margin="5"/>
-                                        <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Margin="5"/>
+                                <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="top" Margin="20" >
+                                        <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  TextChanged="txtSearch_TextChanged">
+                                            <materialDesign:HintAssist.Hint>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                    <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </materialDesign:HintAssist.Hint>
+                                        </TextBox>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5"/>
+                                            <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked"  Margin="5"/>
+                                            <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Margin="5"/>
+                                            <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Margin="5"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-
+                                </ScrollViewer>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <StackPanel>
-                                    <DataGrid x:Name="dgvAccount" Height="350" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" SelectionChanged="dgvAccount_SelectionChanged" MouseDoubleClick="dgvAccount_MouseDoubleClick" Margin="10">
+                                <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+
+                                    <DataGrid x:Name="dgvAccount"  Height="350" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" SelectionChanged="dgvAccount_SelectionChanged" MouseDoubleClick="dgvAccount_MouseDoubleClick" Margin="10,0,10,5">
                                         <DataGrid.ColumnHeaderStyle>
                                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                                 <Setter Property="FontWeight" Value="Bold" />
                                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                             </Style>
                                         </DataGrid.ColumnHeaderStyle>
-                                       
+
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Order Code" FontWeight="Bold" Width="100" Binding="{Binding GroupCode}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                             <DataGridTextColumn Header="Group Name" FontWeight="Bold" Width="200" Binding="{Binding GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                             <DataGridTextColumn Header="Category" FontWeight="Bold" Width="200" Binding="{Binding UnderAccountGroup.GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
-
-                                </StackPanel>
+                                </ScrollViewer>
 
                             </Grid>
                 

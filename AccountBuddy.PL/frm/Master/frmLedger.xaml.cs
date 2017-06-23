@@ -57,7 +57,7 @@ namespace AccountBuddy.PL.frm.Master
             cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.ToList();
             cmbAccountGroupId.DisplayMemberPath = "GroupName";
             cmbAccountGroupId.SelectedValuePath = "Id";
-           
+
 
 
             cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
@@ -210,7 +210,13 @@ namespace AccountBuddy.PL.frm.Master
 
                 foreach (var p in d.GetType().GetProperties())
                 {
-                    if (p.Name.ToLower().Contains("id") || p.GetValue(d) == null) continue;
+                    if (p.Name.ToLower().Contains("id") || p.GetValue(d) == null
+                       || (p.Name != nameof(d.LedgerName) &&
+                                p.Name != nameof(d.PersonIncharge) &&
+                                p.Name != nameof(d.OPCr) &&
+                                p.Name != nameof(d.OPDr) &&
+                                p.Name != nameof(d.CityName))
+                        ) continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {
@@ -255,7 +261,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 RptLedger.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).Select(x => new {LedgerName= x.AccountName,x.PersonIncharge, x.AddressLine1, x.AddressLine2, x.CityName, x.CreditAmount, CreditLimitTypeName=x.CreditLimitType.LimitType == "" ? "":x.CreditLimitType.LimitType, x.OPCr, x.OPDr }).OrderBy(x => x.LedgerName).ToList());
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).Select(x => new { LedgerName = x.AccountName, x.PersonIncharge, x.AddressLine1, x.AddressLine2, x.CityName, x.CreditAmount, CreditLimitTypeName = x.CreditLimitType.LimitType == "" ? "" : x.CreditLimitType.LimitType, x.OPCr, x.OPDr }).OrderBy(x => x.LedgerName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);
@@ -274,7 +280,8 @@ namespace AccountBuddy.PL.frm.Master
 
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.Ledger>("Ledger_Save", (led) => {
+            BLL.FMCGHubClient.FMCGHub.On<BLL.Ledger>("Ledger_Save", (led) =>
+            {
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -283,8 +290,10 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("Ledger_Delete", (Action<int>)((pk) => {
-                this.Dispatcher.Invoke((Action)(() => {
+            BLL.FMCGHubClient.FMCGHub.On("Ledger_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
                     BLL.Ledger led = new BLL.Ledger();
                     led.Find((int)pk);
                     led.Delete((bool)true);
@@ -303,7 +312,7 @@ namespace AccountBuddy.PL.frm.Master
             textBox.Text = AppLib.NumericOnly(txtCreditAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
         }
-    
+
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
         {
             Grid_Refresh();

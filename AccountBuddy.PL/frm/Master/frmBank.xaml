@@ -36,7 +36,7 @@
                 <!--#region Form Design-->
                 <Grid Grid.Row="0"   >
 
-                    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="5,20,0,0">
+                    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
                             <TextBox x:Name="txtLedgerName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.LedgerName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                                 <materialDesign:HintAssist.Hint>
