@@ -20,7 +20,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else if (Caller.CompanyType == "Warehouse")
                 {
-                    CompanyId = Caller.UnderCompanyId;
+                    CompanyId = Caller.UnderCompanyId.Value;
                 }
                 else
                 {
@@ -133,7 +133,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else if (Caller.CompanyType == "Warehouse")
                 {
-                    CompanyId = Caller.UnderCompanyId;
+                    CompanyId = Caller.UnderCompanyId.Value;
                 }
                 else
                 {

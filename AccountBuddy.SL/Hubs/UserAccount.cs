@@ -26,13 +26,13 @@ namespace AccountBuddy.SL.Hubs
 
                                                 && x.LoginId == LoginId
                                                 
-                                                && x.Password == Password && x.CompanyDetail.IsActive!=false)
+                                                && x.Password == Password && x.UserType.CompanyDetail.IsActive!=false)
                                    .FirstOrDefault();
             if (ua != null)
             {
                 Groups.Add(Context.ConnectionId, ua.UserType.CompanyId.ToString());
                 Caller.CompanyId = ua.UserType.CompanyId;
-                Caller.UnderCompanyId = ua.UserType.CompanyDetail.UnderCompanyId.Value;
+                Caller.UnderCompanyId = ua.UserType.CompanyDetail.UnderCompanyId;
                 Caller.CompanyType= ua.UserType.CompanyDetail.CompanyType;
                 Caller.UserId = ua.Id;
                 Caller.AccYear = AccYear;

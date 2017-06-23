@@ -85,87 +85,38 @@ namespace AccountBuddy.SL.Hubs
                     if (d.Id != 0)
                     {
                         CompanySetup(cm);
-                        if ((d.UnderCompanyId ?? 0) != 0)
+                        if (d.UnderCompanyId != null)
                         {
-                            var l1 = new BLL.Ledger();
-                            cm.toCopy<BLL.Ledger>(l1);
-                            l1.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Warehouse" ? "WH" : "DL", cm.CompanyName);
-                            l1.AccountGroupId = AccountGroupIdByCompanyAndKey(d.UnderCompanyId.Value, BLL.DataKeyValue.SundryDebtors_Key);
-                            l1.Id = 0;
-                            Ledger_Save(l1);
+                            var lstCompany = DB.CompanyDetails.Where(x => x.Id == d.UnderCompanyId || (x.Id != d.Id && x.UnderCompanyId == d.UnderCompanyId)).ToList();                            
+                            int AGId = DB.DataKeyValues.Where(x => x.CompanyId == cm.Id && x.DataKey == BLL.DataKeyValue.BranchDivisions_Key).FirstOrDefault().DataValue;
 
-
-                            var Wh = new BLL.Ledger();
-                            var cmp = DB.CompanyDetails.Where(x => x.UnderCompanyId == Caller.CompanyId && x.CompanyType == "Warehouse" && x.Id != cm.Id).ToList();
-                            if (cmp.Count >= 1)
+                            foreach (var c in lstCompany)
                             {
-                                foreach (var w in cmp)
-                                {
-                                    w.toCopy<BLL.Ledger>(Wh);
-                                    Wh.LedgerName = string.Format("{0}-{1}", "WH", w.CompanyName);
-                                    Wh.AccountGroupId = AccountGroupIdByCompanyAndKey(cm.Id, BLL.DataKeyValue.SundryDebtors_Key);
-                                    Wh.Id = 0;
-                                    Ledger_Save(Wh);
+                                DAL.Ledger dl1 = new DAL.Ledger();
+                                dl1.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), cm.CompanyName);
+                                dl1.AccountGroupId = DB.DataKeyValues.Where(x => x.CompanyId == c.Id && x.DataKey == BLL.DataKeyValue.BranchDivisions_Key).FirstOrDefault().DataValue;
+                                dl1.AddressLine1 = cm.AddressLine1;
+                                dl1.AddressLine2 = cm.AddressLine2;
+                                dl1.CityName = cm.CityName;
+                                dl1.EMailId = cm.EMailId;
+                                dl1.GSTNo = cm.GSTNo;
+                                dl1.MobileNo = cm.MobileNo;
+                                dl1.TelephoneNo = cm.TelephoneNo;
 
+                                DAL.Ledger dl2 = new DAL.Ledger();
+                                dl2.LedgerName = string.Format("{0}-{1}", c.CompanyType == "Company" ? "CM" : (c.CompanyType == "Warehouse" ? "WH" : "DL"), c.CompanyName);
+                                dl2.AccountGroupId = AGId;
+                                dl2.AddressLine1 = c.AddressLine1;
+                                dl2.AddressLine2 = c.AddressLine2;
+                                dl2.CityName = c.CityName;
+                                dl2.EMailId = c.EMailId;
+                                dl2.GSTNo = c.GSTNo;
+                                dl2.MobileNo = c.MobileNo;
+                                dl2.TelephoneNo = c.TelephoneNo;
 
-                                    var unW = new BLL.Ledger();
-                                    var cmpw2 = DB.CompanyDetails.Where(x => x.Id == w.Id).FirstOrDefault();
-                                    cmpw2.toCopy<BLL.Ledger>(unW);
-                                   
-                                    unW.LedgerName = string.Format("{0}-{1}", "WH", cmpw2.CompanyName);
-                                    unW.AccountGroupId = AccountGroupIdByCompanyAndKey(cm.Id, BLL.DataKeyValue.SundryCreditors_Key);
-                                    unW.Id = 0;
-                                    Ledger_Save(unW);
-
-                                }
-                            }
-                            else
-                            {
-                                var l2 = new BLL.Ledger();
-                                var cm2 = DB.CompanyDetails.Where(x => x.Id == cm.UnderCompanyId).FirstOrDefault();
-                                cm2.toCopy<BLL.Ledger>(l2);
-                                l2.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Warehouse" ? "CM" : "WH", cm2.CompanyName);
-                                l2.AccountGroupId = AccountGroupIdByCompanyAndKey(cm.Id, BLL.DataKeyValue.SundryCreditors_Key);
-                                l2.Id = 0;
-                                Ledger_Save(l2);
-
-                            }
-
-
-                            var Dl = new BLL.Ledger();
-                            var cmp1 = DB.CompanyDetails.Where(x => x.UnderCompanyId == Caller.CompanyId && x.CompanyType == "Dealer" && x.Id != cm.Id).ToList();
-                            if (cmp1.Count >= 1)
-                            {
-                                foreach (var w in cmp1)
-                                {
-                                    w.toCopy<BLL.Ledger>(Dl);
-                                    Dl.LedgerName = string.Format("{0}-{1}", "DL", w.CompanyName);
-                                    Dl.AccountGroupId = AccountGroupIdByCompanyAndKey(cm.Id, BLL.DataKeyValue.SundryDebtors_Key);
-                                    Dl.Id = 0;
-                                    Ledger_Save(Dl);
-
-                                    var unW = new BLL.Ledger();
-                                    var cmpw2 = DB.CompanyDetails.Where(x => x.Id == w.Id).FirstOrDefault();
-                                    cmpw2.toCopy<BLL.Ledger>(unW);
-                                   unW.LedgerName = string.Format("{0}-{1}", "DL", cmpw2.CompanyName);
-                                    unW.AccountGroupId = AccountGroupIdByCompanyAndKey(cm.Id, BLL.DataKeyValue.SundryCreditors_Key);
-                                    unW.Id = 0;
-                                    Ledger_Save(unW);
-
-
-                                }
-                            }
-                            else
-                                {
-                                var l3 = new BLL.Ledger();
-                                var cm3 = DB.CompanyDetails.Where(x => x.Id == cm.UnderCompanyId).FirstOrDefault();
-                                cm3.toCopy<BLL.Ledger>(l3);
-                                l3.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Dealer" ? "CM" : "DL", cm3.CompanyName);
-                                l3.AccountGroupId = AccountGroupIdByCompanyAndKey(cm.Id, BLL.DataKeyValue.SundryCreditors_Key);
-                                l3.Id = 0;
-                                Ledger_Save(l3);
                             }
                         }
+                        
                     }
                 }
                 else
@@ -234,7 +185,6 @@ namespace AccountBuddy.SL.Hubs
             ua.LoginId = cmp.UserId;
             ua.UserName = cmp.UserId;
             ua.Password = cmp.Password;
-            ua.UnderCompanyId = cmp.Id;
 
             DAL.UserType ut = new DAL.UserType();
             ut.TypeOfUser = BLL.DataKeyValue.Administrator_Key;

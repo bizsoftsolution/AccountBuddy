@@ -799,7 +799,10 @@
     <Resource Include="Images\fmcg\home page – 2.png" />
     <Resource Include="Images\fmcg\logo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Aboorvas\ABOORVASS_BG.png" />
+    <Resource Include="Images\Aboorvas\ABOORVASS_LOGIN.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Aboorvas\aboorvas logo 128.ico" />
     <Resource Include="Images\Aboorvas\aboorvas logo 256.ico" />
