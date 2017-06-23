@@ -130,7 +130,7 @@
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
                         <Button Margin="0,0,10,0" x:Name="btnAdd" Background="Transparent" BorderThickness="1" ToolTip="Add Item"  Width="57" Height="36" Click="btnAdd_Click"  >
-                            <materialDesign:PackIcon Kind="CartPlus" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />
+                            <materialDesign:PackIcon Kind="Plus" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />
                         </Button>
                         <Button x:Name="btnRefresh" BorderThickness="1" ToolTip="Refresh" Background="Transparent"  Width="60" Height="36" Click="btnRefresh_Click" >
                             <materialDesign:PackIcon Kind="Refresh" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />
@@ -179,19 +179,19 @@
                 </Grid>
                 <!--#endregion-->
                 <!--#region Buttons-->
-                <Grid Grid.Row="3"  >
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-                        <Button Click="btnSave_Click" Width="80" Height="30" x:Name="btnSave" Content="SAVE"   Margin="5 5" />
-                        <Button Click="btnDelete_Click" Width="80" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
-                        <Button Click="btnClear_Click"  Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />
-                        <Button Click="btnPrint_Click"  Width="80" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" />
-                        <TextBox Text="{Binding SearchText}" Width="100" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                <Grid Grid.Row="3" Margin="0,0,0,-21"  >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Button Click="btnSave_Click" Width="100" Height="30" x:Name="btnSave" Content="SAVE"   Margin="5 5" />
+                        <Button Click="btnDelete_Click" Width="100" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
+                        <Button Click="btnClear_Click"  Width="100" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />
+                        <Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" />
+                        <CheckBox x:Name="ckbAutoPrint" Width="100" Margin="5 5">AutoPrint</CheckBox>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <TextBox Text="{Binding SearchText}" Width="90" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,19" FontWeight="Bold"/>
                         <Button Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" Margin="5 5" />
 
                     </StackPanel>
-                    <TextBlock x:Name="lblAmountInWords"  Width="auto" FontWeight="Black" Margin="771,0,0,0" FontSize="17" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="auto"/>
-                    <TextBlock x:Name="lblAmount" Width="auto" FontWeight="Black"  FontSize="17" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="auto" Margin="846,28,0,0"/>
-
                 </Grid>
                 <!--#endregion-->
 

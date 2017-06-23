@@ -136,7 +136,7 @@
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
                         <Button Margin="0,0,10,0" x:Name="btnAdd" Background="Transparent" BorderThickness="1" ToolTip="Add Item"  Width="57" Height="36" Click="btnAdd_Click"  >
-                            <materialDesign:PackIcon Kind="CartPlus" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />
+                            <materialDesign:PackIcon Kind="Plus" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />
                         </Button>
                         <Button x:Name="btnRefresh" BorderThickness="1" ToolTip="Refresh" Background="Transparent"  Width="60" Height="36" Click="btnRefresh_Click" >
                             <materialDesign:PackIcon Kind="Refresh" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />

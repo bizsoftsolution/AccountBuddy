@@ -104,6 +104,10 @@ namespace AccountBuddy.PL.frm.Transaction
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
+                    if(ckbAutoPrint.IsChecked==true)
+                    {
+                        Print();
+                    }
                     if (data.Id != 0)
                     {
                         btnPrint.IsEnabled = true;
@@ -133,11 +137,14 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
+            Print();
+        }
+        void Print()
+        {
             frm.Print.frmQuickPReturn f = new Print.frmQuickPReturn();
             f.LoadReport(data);
             f.ShowDialog();
         }
-
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();

@@ -118,7 +118,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
-                    if (data.Id != 0)
+                     if (data.Id != 0)
                     {
                         btnPrint.IsEnabled = true;
                     }
@@ -183,6 +183,10 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
+            PrintBill();
+        }
+        void PrintBill()
+        {
             if (rdbBillPrint.IsChecked == true)
             {
 
@@ -236,7 +240,6 @@ namespace AccountBuddy.PL.frm.Transaction
                 f.ShowDialog();
             }
         }
-
         private void PrnPurchaseOrder_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             System.Drawing.Font textfont = new System.Drawing.Font("Courier New", 8, System.Drawing.FontStyle.Regular);
