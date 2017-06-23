@@ -265,7 +265,7 @@ namespace AccountBuddy.SL.Hubs
             if (LName.StartsWith("CM-"))
             {
                 var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
-                var LId=  LedgerIdByCompany(LNameTo, Caller.UnderCompanyId);
+                var LId=  LedgerIdByCompany(LNameTo, Caller.UnderCompanyId.Value);
 
                 d2 = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId && x.RefNo == RefNo ).FirstOrDefault();
                 if (d2 != null)

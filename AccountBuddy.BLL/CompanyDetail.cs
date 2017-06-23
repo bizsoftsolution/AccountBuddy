@@ -38,7 +38,7 @@ namespace AccountBuddy.BLL
         private string _UserId;
         private string _Password;
 
-        private int _UnderCompanyId;
+        private int? _UnderCompanyId;
         private string _CompanyType;
 
         #endregion
@@ -127,7 +127,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public int UnderCompanyId
+        public int? UnderCompanyId
         {
             get
             {

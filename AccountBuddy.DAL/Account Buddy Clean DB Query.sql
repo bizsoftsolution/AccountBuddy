@@ -47,7 +47,6 @@ delete from UOM
 
 
 delete from DataKeyValue
-delete from CompanyDetail
 
 delete from UserTypeDetail
 delete from UserAccount
@@ -57,3 +56,4 @@ delete from LogDetail
 delete from LogMaster
 
 delete from ErrorLog
+delete from CompanyDetail
