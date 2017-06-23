@@ -547,7 +547,7 @@
   <Width>6.03014in</Width>
   <Page>
     <PageHeader>
-      <Height>2.62029in</Height>
+      <Height>2.63071in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1126,7 +1126,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>S.NO:</Value>
+                          <Value>BILL.NO:</Value>
                           <Style>
                             <FontSize>9pt</FontSize>
                             <FontWeight>Bold</FontWeight>

@@ -118,10 +118,8 @@ namespace AccountBuddy.PL.frm.Transaction
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
-                     if (data.Id != 0)
-                    {
-                        btnPrint.IsEnabled = true;
-                    }
+                    btnPrint.IsEnabled = false;
+
                 }
             }
             else

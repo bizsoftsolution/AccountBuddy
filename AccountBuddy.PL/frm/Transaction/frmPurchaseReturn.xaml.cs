@@ -103,15 +103,16 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    data.Clear();
-                    if(ckbAutoPrint.IsChecked==true)
+
+                    if (ckbAutoPrint.IsChecked == true)
                     {
                         Print();
                     }
-                    if (data.Id != 0)
-                    {
-                        btnPrint.IsEnabled = true;
-                    }
+
+                    data.Clear();
+
+                    btnPrint.IsEnabled =false;
+
                 }
             }
             else

@@ -65,7 +65,7 @@ namespace AccountBuddy.PL.frm.Print
 
         public DataTable GetDetails(BLL.PurchaseReturn data)
         {
-            int NoRecPerPage = 20;
+            int NoRecPerPage = 12;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);
@@ -96,7 +96,13 @@ namespace AccountBuddy.PL.frm.Print
                 dt.Rows.Add(newRow);
             }
 
-
+            newRow = dt.NewRow();
+            newRow["ProductName"] = string.Format("----------- No Of Products {0}----------", data.PRDetails.Count());
+            newRow["Quantity"] = "";
+            newRow["UnitPrice"] = "";
+            newRow["Amount"] = "";
+            newRow["Id"] = "";
+            dt.Rows.Add(newRow);
 
             for (int i = 0; i < NoRecPerPage - data.PRDetails.Count(); i++)
             {

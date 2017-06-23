@@ -73,7 +73,7 @@ namespace AccountBuddy.PL.frm.Report
                 int? CompanyId = cm == null ? null : (int?)cm.Id;
 
                 List<BLL.GeneralStock> list = BLL.GeneralStock.ToList(CompanyId,(int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-             
+                list = list.Select(x => new BLL.GeneralStock(){ LedgerName = x.Ledger.LedgerName, BalStock=x.BalStock,EDate= x.EDate,EId= x.EId, EntryNo= x.EntryNo, Inwards=x.Inwards, Outwards=x.Outwards, Particular=x.Particular, Product=x.Product, TType= x.TType }).ToList();
                 try
                 {
                     rptViewer.Reset();

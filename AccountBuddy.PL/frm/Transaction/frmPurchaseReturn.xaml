@@ -207,7 +207,7 @@
                         <Button Click="btnSave_Click" Width="100" Height="30" x:Name="btnSave" Content="SAVE"   Margin="5 5" />
                         <Button Click="btnDelete_Click" Width="100" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
                         <Button Click="btnClear_Click"  Width="100" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />
-                        <Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" />
+                        <Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" IsEnabled="False"/>
                         <CheckBox x:Name="ckbAutoPrint" Margin="10" FontWeight="Bold" Width="100">Autoprint</CheckBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
