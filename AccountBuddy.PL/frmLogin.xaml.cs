@@ -49,15 +49,18 @@ namespace AccountBuddy.PL
         #region company 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbCompany.Text == "")
+            var tv = trvCompany.SelectedItem as TreeViewItem;
+            if (tv == null)
             {
                 MessageBox.Show(Message.PL.Login_CompanyName_Validation);
-                cmbCompany.Focus();
+            }else if (tv.Tag.ToString() == "")
+            {
+                MessageBox.Show(Message.PL.Login_CompanyName_Validation);
             }
-            else if (txtUserId.Text == "")
+            else if (txtLoginId.Text == "")
             {
                 MessageBox.Show(Message.PL.Login_UserName_validation);
-                txtUserId.Focus();
+                txtLoginId.Focus();
             }
             else if (txtPassword.Password == "")
             {
@@ -66,19 +69,16 @@ namespace AccountBuddy.PL
             }
             else
             {
-                string RValue = BLL.UserAccount.Login("", cmbCompany.Text, txtUserId.Text, txtPassword.Password);
+                string RValue = BLL.UserAccount.Login("", tv.Header.ToString(), txtLoginId.Text, txtPassword.Password);
 
                 if (RValue == "")
                 {
                     App.frmHome = new frmHome();
                     App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
                     this.Hide();
-                    cmbCompany.Text = "";
-                    txtUserId.Text = "";
-                    txtPassword.Password = "";
                     App.frmHome.ShowDialog();
+                    ClearForm();
                     this.Show();
-                    cmbCompany.Focus();
                 }
                 else
                 {
@@ -86,7 +86,8 @@ namespace AccountBuddy.PL
                     ClearForm();
                 }
             }
-            
+
+
         }
 
         private void btnSignup_Click(object sender, RoutedEventArgs e)
@@ -95,7 +96,7 @@ namespace AccountBuddy.PL
             frmCompanySignup f = new frmCompanySignup();
             f.data.CompanyType = "Company";
             f.ShowDialog();
-
+            ClearForm();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -106,152 +107,11 @@ namespace AccountBuddy.PL
 
         #endregion
 
-        #region  Warehouse
-        private void btnLoginWarehouse_Click(object sender, RoutedEventArgs e)
-        {
-            if (cmbCompanyWarehousePrimay.Text == "")
-            {
-                MessageBox.Show(Message.PL.Login_CompanyName_Validation);
-                cmbCompanyWarehousePrimay.Focus();
-            }
 
-            else if (cmbCompanyWarehouse.Text == "")
-            {
-                MessageBox.Show(Message.PL.Login_Warehouse_Validation);
-                cmbCompanyWarehouse.Focus();
-            }
-            else if (txtUserIdWarehouse.Text == "")
-            {
-                MessageBox.Show(Message.PL.Login_UserName_validation);
-                txtUserIdWarehouse.Focus();
-            }
-            else if (txtPasswordWarehouse.Password == "")
-            {
-                MessageBox.Show(Message.PL.Login_Password_Validation);
-                txtPasswordWarehouse.Focus();
-            }
-            else
-            {
-                string RValue = BLL.UserAccount.Login("", cmbCompanyWarehouse.Text, txtUserIdWarehouse.Text, txtPasswordWarehouse.Password);
-
-                if ( RValue == "")
-                {
-                    App.frmHome = new frmHome();
-                    App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
-                    this.Hide();
-                    cmbCompanyWarehousePrimay.Text = "";
-                    cmbCompanyWarehouse.Text = "";
-                    txtUserIdWarehouse.Text = "";
-                    txtPasswordWarehouse.Password = "";
-                    App.frmHome.ShowDialog();
-                    this.Show();
-                    cmbCompanyWarehousePrimay.Focus();
-                }
-                else
-                {
-                    MessageBox.Show(RValue);
-                    ClearForm();
-                }
-            }
-            
-        }
-
-        private void btnClearWarehouse_Click(object sender, RoutedEventArgs e)
-        {
-            ClearForm();
-        }
-
-        #endregion
-
-        #region Dealer
-        private void btnLoginDealer_Click(object sender, RoutedEventArgs e)
-        {
-            if (cmbCompanyDealerPrimay.Text == "")
-            {
-                MessageBox.Show(Message.PL.Login_CompanyName_Validation);
-                cmbCompanyDealerPrimay.Focus();
-            }
-
-            else if (cmbCompanyDealer.Text == "")
-            {
-                MessageBox.Show(Message.PL.Login_Dealer_Validation);
-                cmbCompanyDealer.Focus();
-            }
-            else if (txtUserIdDealer.Text == "")
-            {
-                MessageBox.Show(Message.PL.Login_UserName_validation);
-                txtUserIdDealer.Focus();
-            }
-            else if (txtPasswordDealer.Password == "")
-            {
-                MessageBox.Show(Message.PL.Login_Password_Validation);
-                txtPasswordDealer.Focus();
-            }
-            else
-            {
-                string RValue = BLL.UserAccount.Login("", cmbCompanyDealer.Text, txtUserIdDealer.Text, txtPasswordDealer.Password);
-                if (RValue == "" )
-                {
-                    App.frmHome = new frmHome();
-                    App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
-                    this.Hide();
-                    cmbCompanyDealerPrimay.Text = "";
-                     cmbCompanyDealer.Text = "";
-
-                    txtUserIdDealer.Text = "";
-                    txtPasswordDealer.Password = "";
-                    App.frmHome.ShowDialog();
-                    this.Show();
-                    cmbCompanyDealerPrimay.Focus();
-                }
-                else
-                {
-                    MessageBox.Show(RValue);
-                    ClearForm();
-                }
-            }
-            
-        }
-
-        private void btnClearDealer_Click(object sender, RoutedEventArgs e)
-        {
-
-            ClearForm();
-        }
-
-        #endregion
         #endregion
 
 
         #region Events
-        private void cmbCompanyWarehouse_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var cm = cmbCompanyWarehousePrimay.SelectedItem as BLL.CompanyDetail;
-            List<BLL.CompanyDetail> lstCom = new List<BLL.CompanyDetail>();
-            if (cm != null)
-            {
-                lstCom = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == cm.Id).ToList();
-            }
-            cmbCompanyWarehouse.ItemsSource = lstCom;
-            cmbCompanyWarehouse.SelectedValuePath = "Id";
-            cmbCompanyWarehouse.DisplayMemberPath = "CompanyName";
-        }
-
-       
-
-        private void cmbCompanyDealer_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var cm = cmbCompanyDealerPrimay.SelectedItem as BLL.CompanyDetail;
-            List<BLL.CompanyDetail> lstCom = new List<BLL.CompanyDetail>();
-            if (cm != null)
-            {
-                lstCom = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == cm.Id).ToList();
-            }
-            cmbCompanyDealer.ItemsSource = lstCom;
-            cmbCompanyDealer.SelectedValuePath = "Id";
-            cmbCompanyDealer.DisplayMemberPath = "CompanyName";
-        }
-
         private void txtPassword_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Command == ApplicationCommands.Cut ||
@@ -280,70 +140,75 @@ namespace AccountBuddy.PL
         #region Methods
         private void ClearForm()
         {
-            cmbCompany.Text = "";
-            txtUserId.Text = "";
-            txtPassword.Password = "";
 
-            cmbCompanyDealerPrimay.Text = "";
-            cmbCompanyDealer.Text = "";
-            txtUserIdDealer.Text = "";
-            txtPasswordDealer.Password = "";
+            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Company").ToList();
 
-            cmbCompanyWarehousePrimay.Text = "";
-            cmbCompanyWarehouse.Text = "";
-            txtUserIdWarehouse.Text = "";
-            txtPasswordWarehouse.Password = "";
+            trvCompany.Items.Clear();
+            if (lstCompany.Count() == 0)
+            {
+                trvCompany.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                trvCompany.Visibility = Visibility.Visible;
+                foreach (var cm in lstCompany)
+                {
+                    var lstWarehouse = BLL.CompanyDetail.toList.Where(x => x.UnderCompanyId == cm.Id && x.CompanyType == "Warehouse").ToList();
+                    var lstDealer = BLL.CompanyDetail.toList.Where(x => x.UnderCompanyId == cm.Id && x.CompanyType == "Dealer").ToList();
+
+                    TreeViewItem tvi = new TreeViewItem();
+                    tvi.Header = cm.CompanyName;
+                    tvi.Tag = cm.CompanyType;
+                    if(lstWarehouse.Count()==0 && lstDealer.Count() == 0)
+                    {
+                        TreeViewItem tviWH = new TreeViewItem();
+                        tviWH.Header = " ";
+                        tviWH.Tag = "";
+                        tvi.Items.Add(tviWH);
+                    }
+                    if (lstWarehouse.Count()>0)
+                    {
+                        TreeViewItem tviWH = new TreeViewItem();
+                        tviWH.Header = "WareHouse";
+                        tviWH.Tag = "";
+                        foreach(var wh in lstWarehouse)
+                        {
+                            TreeViewItem tviWHCH = new TreeViewItem();
+                            tviWHCH.Header = wh.CompanyName;
+                            tviWHCH.Tag = wh.CompanyType;
+                            tviWH.Items.Add(tviWHCH);
+                        }
+
+                        tvi.Items.Add(tviWH);
+                    }
+                    
+                    if (lstDealer.Count() > 0)
+                    {
+                        TreeViewItem tviDL = new TreeViewItem();
+                        tviDL.Header = "Dealer";
+                        tviDL.Tag = "";
+                        foreach (var dl in lstDealer)
+                        {
+                            TreeViewItem tviDLCH = new TreeViewItem();
+                            tviDLCH.Header = dl.CompanyName;
+                            tviDLCH.Tag = dl.CompanyType;
+                            tviDL.Items.Add(tviDLCH);
+                        }
+
+                        tvi.Items.Add(tviDL);
+                    }
+                    trvCompany.Items.Add(tvi);
+                }
+            }
         }
 
         #endregion
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var l1 = BLL.CompanyDetail.toList;
-            cmbCompany.ItemsSource = l1;
-            cmbCompany.SelectedValuePath = "Id";
-            cmbCompany.DisplayMemberPath = "CompanyName";
-
-            cmbCompanyWarehousePrimay.ItemsSource = l1;
-            cmbCompanyWarehousePrimay.SelectedValuePath = "Id";
-            cmbCompanyWarehousePrimay.DisplayMemberPath = "CompanyName";
-
-            cmbCompanyDealerPrimay.ItemsSource = l1;
-            cmbCompanyDealerPrimay.SelectedValuePath = "Id";
-            cmbCompanyDealerPrimay.DisplayMemberPath = "CompanyName";
-
-            CollectionViewSource.GetDefaultView(cmbCompany.ItemsSource).Filter = Company_Filter;
-            CollectionViewSource.GetDefaultView(cmbCompany.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription("CompanyName", System.ComponentModel.ListSortDirection.Ascending));
-
+            ClearForm();
         }
 
-        bool Company_Filter(object o)
-        {
-            var c = o as BLL.CompanyDetail;
-            return c.CompanyType == "Company";
-        }
-        void Company_Refresh()
-        {
-            try
-            {
-                CollectionViewSource.GetDefaultView(cmbCompany.ItemsSource).Refresh();
-            }
-            catch (Exception ex) { };
-        }
 
-        private void cmbCompany_GotFocus(object sender, RoutedEventArgs e)
-        {
-            Company_Refresh();
-        }
-
-        private void cmbCompanyWarehousePrimay_GotFocus(object sender, RoutedEventArgs e)
-        {
-            Company_Refresh();
-        }
-
-        private void cmbCompanyDealerPrimay_GotFocus(object sender, RoutedEventArgs e)
-        {
-            Company_Refresh();
-        }
     }
 }

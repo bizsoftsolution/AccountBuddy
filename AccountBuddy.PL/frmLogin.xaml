@@ -13,7 +13,7 @@
                        
                        Closing="MetroWindow_Closing" Icon="Images/Aboorvas/aboorvas logo 256.ico" Loaded="MetroWindow_Loaded" >
     <Window.Background>
-        <ImageBrush ImageSource="Images/fmcg/fmcg login page.png"/>
+        <ImageBrush ImageSource="Images/Aboorvas/ABOORVASS_LOGIN.png"/>
     </Window.Background>
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="CommandBinding_Executed" />
@@ -136,176 +136,84 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        
+        <Style x:Key="VerticalSeparatorStyle" 
+       TargetType="{x:Type Separator}"
+       BasedOn="{StaticResource {x:Type Separator}}">
+            <Setter Property="Margin" Value="6,0,6,0"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <TransformCollection>
+                                <RotateTransform Angle="90"/>
+                            </TransformCollection>
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <!-- End of Flat ComboBox -->
     </Window.Resources>
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="280*"/>
-            <ColumnDefinition Width="380"/>
-            <ColumnDefinition Width="27*"/>
+            <ColumnDefinition Width="249*"/>
+            <ColumnDefinition Width="513"/>
+            <ColumnDefinition Width="232*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="210"/>
-            <RowDefinition Height="290*"/>
-            <RowDefinition Height="131*"/>
+            <RowDefinition Height="307"/>
+            <RowDefinition Height="196*"/>
+            <RowDefinition Height="129*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid Grid.Column="1" Grid.Row="0">
             <!--<Image x:Name="image" HorizontalAlignment="Center" Height="150" VerticalAlignment="Center" Width="150" Source="Image/logo Only.png" />-->
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="1" >
-            <Grid.Background>
-                <SolidColorBrush Color="White"/>
-            </Grid.Background>
+        <Grid Grid.Column="1" Grid.Row="1"  >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <StackPanel Orientation="Vertical" Margin="10,10,10,10">
+                    <TreeView x:Name="trvCompany" Width="230" Height="145" HorizontalAlignment="Left" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                    
+                </StackPanel>
+                
+            </Grid>
 
-            <TabControl Background="#0fff" BorderBrush="Black" BorderThickness="1" Margin="0">
-                <TabControl.Resources>
-                    <Style TargetType="TabItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="TabItem">
-                                    <Grid Name="Panel">
-                                        <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        ContentSource="Header"
-                                                        
-                                         Margin="10,2"/>
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Panel" Property="Background" Value="lightgray" />
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="False">
-                                            <Setter TargetName="Panel" Property="Background" Value="white" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.Resources>
-                <TabControl.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </TabControl.RenderTransform>
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal"  >
-                            <materialDesign:PackIcon Kind="Office" Height="16" Width="16" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                            <TextBlock Text="Company"  Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Width="68"  />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <StackPanel Orientation="Vertical" Margin="10,20,10,0">
-                        <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Office" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
-                            <TextBlock Text="Company" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="70" Height="20"  />
-                            <ComboBox x:Name="cmbCompany" IsEditable="True" GotFocus="cmbCompany_GotFocus"  Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="220" Margin="20,9,0,2" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
+            <Grid Grid.Column="1">
+                <Separator Style="{DynamicResource VerticalSeparatorStyle}" />
+            </Grid>
+            <Grid Grid.Column="2">
+                <StackPanel Orientation="Vertical">
+                    <TextBox x:Name="txtLoginId" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.PersonIncharge,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+                        <materialDesign:HintAssist.Hint>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                <TextBlock Text="Login Id"/>
+                            </StackPanel>
+                        </materialDesign:HintAssist.Hint>
+                    </TextBox>
 
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Height="38" >
-                            <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"/>
-                            <TextBlock Text="User Id" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" FontSize="14.667" FontWeight="Bold" Width="70" Margin="0,18,0,0"  />
-                            <TextBox x:Name="txtUserId" Foreground="{DynamicResource PrimaryHueDarkBrush}"   FontSize="16" FontWeight="Bold" Width="220" Margin="20,7,0,0" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Height="46" >
-                            <materialDesign:PackIcon Kind="Key" Height="24" Width="24" Foreground="{DynamicResource PrimaryHueDarkBrush}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,20,0,2"/>
-                            <TextBlock Text="Password" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14.667" FontWeight="Bold"   Width="70" Margin="0,24,0,2" Height="20"   />
-                            <PasswordBox x:Name="txtPassword" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="220" Margin="20,13,0,2" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
-                            <Button x:Name="btnLogin" Content="SIGN IN"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="55,10,0,10" Click="btnLogin_Click" />
-                            <Button x:Name="btnSignup" Content="SIGN UP"  HorizontalAlignment="Left"  VerticalAlignment="Top" Width="90" Height="35"   Margin="10,10,0,10" Click="btnSignup_Click"  />
-                            <Button x:Name="btnClear" Content="CLEAR" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="10,10,0,0"  Click="btnClear_Click" />
-
-                        </StackPanel>
+                    <PasswordBox x:Name="txtPassword" Margin="0,10,0,0"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontWeight="Bold" FontSize="14">
+                        <materialDesign:HintAssist.Hint>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Key" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                <TextBlock Text="Password"/>
+                            </StackPanel>
+                        </materialDesign:HintAssist.Hint>
+                    </PasswordBox>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Button Content="SIGN IN" Click="btnLogin_Click" Margin="10,0,0,0" FontSize="10" Width="70" Height="25" />
+                        <Button Content="SIGN UP" Click="btnSignup_Click" Margin="10,0,0,0" FontSize="10" Width="70" Height="25"/>
+                        <Button Content="CLEAR" Click="btnClear_Click"  Margin="10,0,0,0" FontSize="10" Width="70" Height="25"/>
                     </StackPanel>
-
-                </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal"  >
-                            <materialDesign:PackIcon Kind="Group" Height="16" Width="16" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                            <TextBlock Text="Warehouse"  Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Width="68"  />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <StackPanel Orientation="Vertical" Margin="10">
-                        <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Office" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
-                            <TextBlock Text="Company" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Height="20"  />
-                            <ComboBox x:Name="cmbCompanyWarehousePrimay" GotFocus="cmbCompanyWarehousePrimay_GotFocus" IsEditable="True"  Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="220" Margin="20,11,0,0" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}" />
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Group" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
-                            <TextBlock Text="Warehouse" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold"   />
-                            <ComboBox x:Name="cmbCompanyWarehouse"  IsEditable="True" GotFocus="cmbCompanyWarehouse_GotFocus" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="220" Margin="20,11,0,0"  OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" Height="38" >
-                            <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"/>
-                            <TextBlock Text="User Id" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Margin="0,0,0,-4" Height="20"  />
-                            <TextBox x:Name="txtUserIdWarehouse" Foreground="{DynamicResource PrimaryHueDarkBrush}"   FontSize="16" FontWeight="Bold" Width="220" Margin="20,5,0,2"/>
-
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Height="46" >
-                            <materialDesign:PackIcon Kind="Key" Height="24" Width="24" Foreground="{DynamicResource PrimaryHueDarkBrush}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,20,0,2"/>
-                            <TextBlock Text="Password" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14.667" FontWeight="Bold"   Width="77" Margin="0,26,0,0" Height="20"   />
-                            <PasswordBox x:Name="txtPasswordWarehouse" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="220" Margin="20,15,0,0"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <Button x:Name="btnLoginWarehouse" Content="SIGN IN"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="150,10,10,10" Click="btnLoginWarehouse_Click" />
-                            <Button x:Name="btnClearWarehouse" Content="CLEAR"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="10"  Click="btnClearWarehouse_Click" />
-                        </StackPanel>
-                    </StackPanel>
-
-                </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal"  >
-                            <materialDesign:PackIcon Kind="Sale" Height="16" Width="16" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                            <TextBlock Text="Dealer" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12" FontWeight="Bold" Width="68"  />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Office" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
-                            <TextBlock Text="Company" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Height="20"  />
-                            <ComboBox x:Name="cmbCompanyDealerPrimay" GotFocus="cmbCompanyDealerPrimay_GotFocus" IsEditable="True" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="220" Margin="20,11,0,0" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
-                        </StackPanel>
-
-                       
-                        <StackPanel Orientation="Horizontal" Height="42"  >
-                            <materialDesign:PackIcon Kind="Sale" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"  />
-                            <TextBlock Text="Dealer" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Height="20" Width="77"   />
-                            <ComboBox x:Name="cmbCompanyDealer" GotFocus="cmbCompanyDealer_GotFocus" IsEditable="True"  Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="220" Margin="20,11,0,0" OverridesDefaultStyle="True" Style="{StaticResource ComboBoxFlatStyle}"/>
-                        </StackPanel>
-
-
-                        <StackPanel Orientation="Horizontal" Height="46" >
-                            <materialDesign:PackIcon Kind="Account" Height="26" Width="26" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,17,0,0"/>
-                            <TextBlock Text="User Id" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="14.667" FontWeight="Bold" Width="77" Height="20"  />
-                            <TextBox x:Name="txtUserIdDealer" Foreground="{DynamicResource PrimaryHueDarkBrush}"   FontSize="16" FontWeight="Bold" Width="220" Margin="20,11,0,0" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Height="46" >
-                            <materialDesign:PackIcon Kind="Key" Height="24" Width="24" Foreground="{DynamicResource PrimaryHueDarkBrush}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,20,0,2"/>
-                            <TextBlock Text="Password" Foreground="{DynamicResource PrimaryHueDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14.667" FontWeight="Bold"   Width="77" Margin="0,24,0,0" Height="20"   />
-                            <PasswordBox x:Name="txtPasswordDealer" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted" Foreground="{DynamicResource PrimaryHueDarkBrush}"  FontSize="16" FontWeight="Bold" Width="220" Margin="20,11,0,0" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0">
-                            <Button x:Name="btnLoginDealer" Content="SIGN IN"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="150,10,10,10" Click="btnLoginDealer_Click" />
-                            <Button x:Name="btnClearDealer" Content="CLEAR"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="35"   Margin="10"  Click="btnClearDealer_Click" />
-                        </StackPanel>
-                    </StackPanel>
-
-                </TabItem>
-            </TabControl>
-
-
+                </StackPanel>
+            </Grid>
         </Grid>
         <Grid Grid.Row="3" Grid.ColumnSpan="3"/>
         <Rectangle Fill="{DynamicResource PrimaryHueDarkBrush}" Height="40" Stroke="Black" VerticalAlignment="Top" StrokeThickness="0" Grid.ColumnSpan="3" Grid.Row="3"/>
