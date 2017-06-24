@@ -109,15 +109,14 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    if(ckbAutoprint.IsChecked==true)
+                    if (ckbAutoprint.IsChecked == true)
                     {
                         print();
                     }
                     data.Clear();
-                    if (data.Id != 0)
-                    {
-                        btnPrint.IsEnabled = true;
-                    }
+
+                    btnPrint.IsEnabled = false;
+
                 }
             }
             else
@@ -147,7 +146,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             var rv = data.Find();
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            if(data.Id!=0)
+            if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
             }
@@ -214,7 +213,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbItem.ItemsSource = Product.toList.Where(x=>x.StockGroup.IsPurchase!=false).ToList();
+            cmbItem.ItemsSource = Product.toList.Where(x => x.StockGroup.IsPurchase != false).ToList();
             cmbItem.DisplayMemberPath = "ProductName";
             cmbItem.SelectedValuePath = "Id";
         }
@@ -283,6 +282,6 @@ namespace AccountBuddy.PL.frm.Transaction
 
         #endregion
 
-       
+
     }
 }

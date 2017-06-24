@@ -102,6 +102,8 @@ namespace AccountBuddy.SL.Hubs
                                 dl1.GSTNo = cm.GSTNo;
                                 dl1.MobileNo = cm.MobileNo;
                                 dl1.TelephoneNo = cm.TelephoneNo;
+                                DB.Ledgers.Add(dl1);
+                                DB.SaveChanges();
 
                                 DAL.Ledger dl2 = new DAL.Ledger();
                                 dl2.LedgerName = string.Format("{0}-{1}", c.CompanyType == "Company" ? "CM" : (c.CompanyType == "Warehouse" ? "WH" : "DL"), c.CompanyName);
@@ -113,6 +115,9 @@ namespace AccountBuddy.SL.Hubs
                                 dl2.GSTNo = c.GSTNo;
                                 dl2.MobileNo = c.MobileNo;
                                 dl2.TelephoneNo = c.TelephoneNo;
+                                DB.Ledgers.Add(dl2);
+                                DB.SaveChanges();
+
 
                             }
                         }

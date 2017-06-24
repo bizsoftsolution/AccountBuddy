@@ -267,7 +267,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -533,7 +532,7 @@
     <Height>0.56943in</Height>
     <Style />
   </Body>
-  <Width>6.04563in</Width>
+  <Width>5.98313in</Width>
   <Page>
     <PageHeader>
       <Height>2.69791in</Height>
@@ -1537,7 +1536,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>=First(Fields!ItemAmount.Value, "SalesOrder")</Value>
-                      <Style />
+                      <Style>
+                        <Format>'RM' 0.00;('RM' 0.00)</Format>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -1559,6 +1560,7 @@
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
+                <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
               </Style>
             </Textbox>
             <Textbox Name="DiscountAmount">
@@ -1569,7 +1571,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>=First(Fields!DiscountAmount.Value, "SalesOrder")</Value>
-                      <Style />
+                      <Style>
+                        <Format>'RM' 0.00;('RM' 0.00)</Format>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -1591,6 +1595,7 @@
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
+                <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
               </Style>
             </Textbox>
             <Textbox Name="GSTAmount">
@@ -1601,7 +1606,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>=First(Fields!GSTAmount.Value, "SalesOrder")</Value>
-                      <Style />
+                      <Style>
+                        <Format>'RM' 0.00;('RM' 0.00)</Format>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -1623,6 +1630,7 @@
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
+                <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
               </Style>
             </Textbox>
             <Textbox Name="Extras">
@@ -1633,7 +1641,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>=First(Fields!ExtraAmount.Value, "SalesOrder")</Value>
-                      <Style />
+                      <Style>
+                        <Format>'RM' 0.00;('RM' 0.00)</Format>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -1655,6 +1665,7 @@
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
+                <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
               </Style>
             </Textbox>
             <Textbox Name="TotalAmount">
@@ -1665,7 +1676,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>=First(Fields!TotalAmount.Value, "SalesOrder")</Value>
-                      <Style />
+                      <Style>
+                        <Format>'RM' 0.00;('RM' 0.00)</Format>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -1687,6 +1700,7 @@
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
+                <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
               </Style>
             </Textbox>
           </ReportItems>

@@ -9,16 +9,16 @@
               <Width>0.45247in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.04295in</Width>
+              <Width>2.50822in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.81934in</Width>
+              <Width>0.4571in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66208in</Width>
+              <Width>0.78819in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.65855in</Width>
+              <Width>0.43056in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.1609in</Width>
@@ -544,7 +544,7 @@
         <Top>0.04167in</Top>
         <Left>0.03581in</Left>
         <Height>0.5in</Height>
-        <Width>5.79627in</Width>
+        <Width>5.79744in</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -564,7 +564,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.625in</Height>
+    <Height>0.60417in</Height>
     <Style />
   </Body>
   <Width>5.98833in</Width>
@@ -663,7 +663,7 @@
           <Top>0.5682in</Top>
           <Left>1.5161in</Left>
           <Height>0.23611in</Height>
-          <Width>1.45834in</Width>
+          <Width>1.47223in</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -1252,7 +1252,7 @@
                         <TextRun>
                           <Value>=First(Fields!PODate.Value, "PurchaseOrder")</Value>
                           <Style>
-                            <Format>yyyy-MM-dd</Format>
+                            <Format>dd-MM-yyyy</Format>
                           </Style>
                         </TextRun>
                       </TextRuns>

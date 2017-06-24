@@ -1118,7 +1118,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>PR NO:</Value>
+                          <Value>INV.NO:</Value>
                           <Style>
                             <FontSize>9pt</FontSize>
                             <FontWeight>Bold</FontWeight>
@@ -1220,7 +1220,7 @@
                         <TextRun>
                           <Value>=First(Fields!PRDate.Value, "PurchaseReturn")</Value>
                           <Style>
-                            <Format>yyyy-MM-dd</Format>
+                            <Format>dd-MM-yyyy</Format>
                           </Style>
                         </TextRun>
                       </TextRuns>

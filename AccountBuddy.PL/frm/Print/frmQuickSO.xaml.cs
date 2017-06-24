@@ -66,7 +66,7 @@ namespace AccountBuddy.PL.frm.Print
 
         public DataTable GetDetails(BLL.SalesOrder data)
         {
-            int NoRecPerPage = 20;
+            int NoRecPerPage = 12;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);
@@ -98,7 +98,13 @@ namespace AccountBuddy.PL.frm.Print
             }
 
 
-
+            newRow = dt.NewRow();
+            newRow["ProductName"] = string.Format("----------- No Of Products {0}----------", data.SODetails.Count());
+            newRow["Quantity"] = "";
+            newRow["UnitPrice"] = "";
+            newRow["Amount"] = "";
+            newRow["Id"] = "";
+            dt.Rows.Add(newRow);
             for (int i = 0; i < NoRecPerPage - data.SODetails.Count(); i++)
             {
                 newRow = dt.NewRow();

@@ -254,14 +254,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox51">
+                    <Textbox Name="Id">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=RowNumber(nothing)</Value>
+                              <Value>=Fields!Id.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -270,7 +270,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox51</rd:DefaultName>
+                      <rd:DefaultName>Id</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -1032,7 +1032,7 @@
                         <TextRun>
                           <Value>=First(Fields!PurchaseDate.Value, "Purchase")</Value>
                           <Style>
-                            <Format>yyyy-MM-dd</Format>
+                            <Format>dd-MM-yyyy</Format>
                           </Style>
                         </TextRun>
                       </TextRuns>
@@ -1216,9 +1216,9 @@
           </Paragraphs>
           <rd:DefaultName>PostalCode</rd:DefaultName>
           <Top>0.55208in</Top>
-          <Left>2.74307in</Left>
+          <Left>2.71528in</Left>
           <Height>0.23611in</Height>
-          <Width>1.04167in</Width>
+          <Width>1.06946in</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border>

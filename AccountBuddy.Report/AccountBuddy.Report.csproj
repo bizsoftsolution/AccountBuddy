@@ -127,7 +127,9 @@
     <EmbeddedResource Include="rpt\Transaction\rptReceiptVoucher.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="rpt\Transaction\rptSalesReturn.rdlc" />
+    <EmbeddedResource Include="rpt\Transaction\rptSalesReturn.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptStockOut.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

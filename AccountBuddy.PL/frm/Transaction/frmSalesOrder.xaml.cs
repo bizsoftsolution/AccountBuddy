@@ -107,11 +107,15 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    data.Clear();
-                    if (data.Id != 0)
+                    if (ckbAutoPrint.IsChecked == true)
                     {
-                        btnPrint.IsEnabled = true;
+                        Print();
                     }
+
+                    data.Clear();
+
+                    btnPrint.IsEnabled = false;
+
                 }
             }
             else
@@ -134,11 +138,14 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
+            Print();
+        }
+        void Print()
+        {
             frm.Print.frmQuickSO f = new Print.frmQuickSO();
             f.LoadReport(data);
             f.ShowDialog();
         }
-
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
