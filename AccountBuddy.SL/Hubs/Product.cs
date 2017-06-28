@@ -18,14 +18,14 @@ namespace AccountBuddy.SL.Hubs
             ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
 
             ProductsTo.UOM = ProductsFrom.UOM == null ? null: UOM_DALtoBLL(ProductsFrom.UOM);
-            ProductsTo.POQty = ProductsFrom.PurchaseOrderDetails.Sum(x => x.Quantity);
-            ProductsTo.PQty = ProductsFrom.PurchaseDetails.Sum(x => x.Quantity);
-            ProductsTo.PRQty = ProductsFrom.PurchaseReturnDetails.Sum(x => x.Quantity);
-            ProductsTo.SOQty = ProductsFrom.SalesOrderDetails.Sum(x => x.Quantity);
-            ProductsTo.SQty = ProductsFrom.SalesDetails.Sum(x => x.Quantity);
-            ProductsTo.SRQty= ProductsFrom.SalesReturnDetails.Sum(x => x.Quantity);
-            ProductsTo.SInQty = ProductsFrom.StockInDetails.Sum(x => x.Quantity);
-            ProductsTo.SOutQty = ProductsFrom.StockOutDetails.Sum(x => x.Quantity);
+            ProductsTo.POQty = ProductsFrom.PurchaseOrderDetails.Where(x=> x.PurchaseOrder.Ledger.AccountGroup.CompanyId==Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.PQty = ProductsFrom.PurchaseDetails.Where(x => x.Purchase.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.PRQty = ProductsFrom.PurchaseReturnDetails.Where(x => x.PurchaseReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SOQty = ProductsFrom.SalesOrderDetails.Where(x => x.SalesOrder.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SQty = ProductsFrom.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SRQty= ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SInQty = ProductsFrom.StockInDetails.Where(x => x.StockIn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SOutQty = ProductsFrom.StockOutDetails.Where(x => x.StockOut.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
             return ProductsTo;
         }
 
