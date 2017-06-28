@@ -9,7 +9,7 @@
          
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
           
-             d:DesignHeight="700" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
+             d:DesignHeight="736.162" d:DesignWidth="1143.911" Background="White" Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
@@ -143,7 +143,7 @@
                 <Grid Margin="10,2,10,10" Grid.Row="2" x:Name="gvPurchaseDetails">
 
                     <DataGrid x:Name="dgvDetails" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding STOutDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,215,104" >
-                       
+
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="FontWeight" Value="Bold" />
