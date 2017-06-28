@@ -361,7 +361,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+                var cm = dgvDealer.SelectedItem as BLL.CompanyDetail;
                 frmUserManager f = new frmUserManager();
                 f.LoadWindow(cm.Id);
                 f.CompanyId = cm.Id;

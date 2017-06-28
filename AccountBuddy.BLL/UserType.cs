@@ -304,7 +304,11 @@ namespace AccountBuddy.BLL
             return RValue;
 
         }
-
-        #endregion
+        public static void Init()
+        {
+            _toList = null;
+            UserPermission = null;        
+        }
+            #endregion
+        }
     }
-}

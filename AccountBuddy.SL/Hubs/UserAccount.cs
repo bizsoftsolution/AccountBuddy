@@ -52,8 +52,10 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.UserAccount> UserAccount_List()
         {
-            return DB.UserAccounts.Where(x => x.UserType.CompanyDetail.Id == Caller.CompanyId).ToList()
+            var l1 = DB.UserAccounts.Where(x => x.UserType.CompanyDetail.Id == Caller.CompanyId || x.UserType.CompanyDetail.UnderCompanyId == Caller.CompanyId ).ToList()
                                   .Select(x=> UserAccountDAL_BLL(x)).ToList();
+
+            return l1;
         }
 
         public int UserAccount_Save(BLL.UserAccount ua)

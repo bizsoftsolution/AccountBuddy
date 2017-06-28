@@ -45,6 +45,8 @@ namespace AccountBuddy.PL
             if (data.Save() == true)
             {
                 MessageBox.Show(Message.PL.Saved_Alert);
+                BLL.UserType.Init();
+                BLL.UserAccount.Init();
                 IsForcedClose = true;
                 Close();
             }

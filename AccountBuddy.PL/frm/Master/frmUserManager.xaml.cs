@@ -52,7 +52,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             frmUser f = new frmUser();
             f.UnderCompanyId = CompanyId;
-            f.data.UnderCompanyId = CompanyId;
+            f.LoadWindow(CompanyId);
             f.ShowDialog();
             LoadWindow(CompanyId);
             //f.data.UserType.CompanyId = userId;
@@ -65,7 +65,8 @@ namespace AccountBuddy.PL.frm.Master
 
             frmUser f = new frmUser();
             f.UnderCompanyId = CompanyId;
-            u.toCopy<BLL.UserAccount>(f.data);
+            f.LoadWindow(CompanyId);
+            u.toCopy<BLL.UserAccount>(f.data);            
             f.ShowDialog();
             LoadWindow(CompanyId);
 
@@ -94,13 +95,12 @@ namespace AccountBuddy.PL.frm.Master
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadWindow(CompanyId);
-
+         
         }
 
-        public void LoadWindow(int userId)
-        {
-            dgvUsers.ItemsSource = BLL.UserAccount.toList.Where(x => x.UnderCompanyId == userId).ToList();
+        public void LoadWindow(int CompanyId)
+        {                       
+            dgvUsers.ItemsSource = BLL.UserAccount.toList.Where(x => x.UserType.CompanyId == CompanyId).ToList();
         }
 
     }

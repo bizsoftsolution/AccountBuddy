@@ -28,8 +28,7 @@ namespace AccountBuddy.BLL
         private string _loginId;
         private string _password;
         private int _UserTypeId;
-        private UserType _UserType;
-        private int _UnderCompanyId;
+        private UserType _UserType;        
         #endregion
 
         #region Property
@@ -122,21 +121,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public int UnderCompanyId
-        {
-            get
-            {
-                return _UnderCompanyId;
-            }
-            set
-            {
-                if (_UnderCompanyId != value)
-                {
-                    _UnderCompanyId = value;
-                    NotifyPropertyChanged(nameof(UnderCompanyId));
-                }
-            }
-        }
+
         public string UserName
         {
             get
@@ -452,7 +437,7 @@ namespace AccountBuddy.BLL
         }
 
 
-        static void Init()
+        public static void Init()
         {
             _toList = null;
             UserPermission = null;

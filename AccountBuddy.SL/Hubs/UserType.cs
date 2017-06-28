@@ -27,7 +27,7 @@ namespace AccountBuddy.SL.Hubs
      
         public List<BLL.UserType> UserType_List()
         {
-            return DB.UserTypes.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+            return DB.UserTypes.Where(x => x.CompanyId == Caller.CompanyId || x.CompanyDetail.UnderCompanyId==Caller.CompanyId).ToList()
                                .Select(x=> UserTypeDAL_BLL(x)).ToList();
         }
 
@@ -39,10 +39,9 @@ namespace AccountBuddy.SL.Hubs
                 
                 if (d == null)
                 {
-                    var c = DB.CompanyDetails.Where(x => x.Id == Caller.CompanyId).FirstOrDefault();
+                    var c = DB.CompanyDetails.Where(x => x.Id == ut.CompanyId).FirstOrDefault();
 
                     d = new DAL.UserType();
-                    d.CompanyId = c.Id;
                     c.UserTypes.Add(d);
                     ut.toCopy<DAL.UserType>(d);
 
@@ -52,7 +51,6 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
                     ut.Id = d.Id;
-                    ut.CompanyId = c.Id;
                     ut.Company = c.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
                     LogDetailStore(ut, LogDetailType.INSERT);
                 }

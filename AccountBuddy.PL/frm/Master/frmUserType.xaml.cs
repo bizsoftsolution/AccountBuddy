@@ -25,7 +25,7 @@ namespace AccountBuddy.PL.frm.Master
 
         public static string FormName = "UserType";
         BLL.UserType data = new BLL.UserType();
-        
+        public int UnderCompanyId;
         #endregion
 
         #region Constructor
@@ -44,12 +44,15 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvDetail.ItemsSource = BLL.UserType.toList;
+            
+        }
+        public void LoadWindow(int CompanyId)
+        {
+            dgvDetail.ItemsSource = BLL.UserType.toList.Where(x=> x.CompanyId==UnderCompanyId).ToList();
             Clear();
             btnSave.Visibility = (BLL.UserType.UserPermission.AllowInsert || BLL.UserType.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.UserType.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }
-
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -108,6 +111,7 @@ namespace AccountBuddy.PL.frm.Master
         private void Clear()
         {
             data.Clear();
+            data.CompanyId = UnderCompanyId;
             ckbAllViewForm.IsChecked = false;
             ckbAllAllowInsert.IsChecked = false;
             ckbAllAllowUpdate.IsChecked = false;
