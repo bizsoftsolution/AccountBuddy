@@ -23,6 +23,7 @@ namespace AccountBuddy.DAL
         public long Id { get; set; }
         public System.DateTime PODate { get; set; }
         public string RefNo { get; set; }
+        public string RefCode { get; set; }
         public int LedgerId { get; set; }
         public decimal ItemAmount { get; set; }
         public decimal DiscountAmount { get; set; }

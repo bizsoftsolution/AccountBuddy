@@ -41,6 +41,7 @@ delete from Ledger
 
 delete from AccountGroup
 
+delete from ProductDetail
 delete from Product
 delete from StockGroup
 delete from UOM

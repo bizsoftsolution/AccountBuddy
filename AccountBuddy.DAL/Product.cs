@@ -17,6 +17,7 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            this.ProductDetails = new HashSet<ProductDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
             this.PurchaseReturnDetails = new HashSet<PurchaseReturnDetail>();
@@ -37,13 +38,12 @@ namespace AccountBuddy.DAL
         public decimal MinSellingRate { get; set; }
         public decimal MaxSellingRate { get; set; }
         public decimal MRP { get; set; }
-        public decimal DiscountAmount { get; set; }
-        public double OpeningStock { get; set; }
-        public double ReOrderLevel { get; set; }
         public byte[] ProductImage { get; set; }
     
         public virtual StockGroup StockGroup { get; set; }
         public virtual UOM UOM { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductDetail> ProductDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

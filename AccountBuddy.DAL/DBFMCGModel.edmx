@@ -90,6 +90,7 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EntryNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="JournalDate" Type="date" Nullable="false" />
           <Property Name="Amount" Type="money" Nullable="false" />
           <Property Name="Particular" Type="nvarchar(max)" />
@@ -168,6 +169,7 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EntryNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="PaymentDate" Type="date" Nullable="false" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="PaymentMode" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -206,10 +208,17 @@
           <Property Name="MinSellingRate" Type="money" Nullable="false" />
           <Property Name="MaxSellingRate" Type="money" Nullable="false" />
           <Property Name="MRP" Type="money" Nullable="false" />
-          <Property Name="DiscountAmount" Type="money" Nullable="false" />
-          <Property Name="OpeningStock" Type="float" Nullable="false" />
-          <Property Name="ReOrderLevel" Type="float" Nullable="false" />
           <Property Name="ProductImage" Type="image" />
+        </EntityType>
+        <EntityType Name="ProductDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="OpeningStock" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ReorderLevel" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -218,6 +227,7 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PurchaseDate" Type="date" Nullable="false" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="TransactionTypeId" Type="int" Nullable="false" />
           <Property Name="ItemAmount" Type="money" Nullable="false" />
@@ -249,6 +259,7 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PODate" Type="date" Nullable="false" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="ItemAmount" Type="money" Nullable="false" />
           <Property Name="DiscountAmount" Type="money" Nullable="false" />
@@ -278,6 +289,7 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PRDate" Type="date" Nullable="false" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="TransactionTypeId" Type="int" Nullable="false" />
           <Property Name="ItemAmount" Type="money" Nullable="false" />
@@ -308,6 +320,7 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EntryNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ReceiptDate" Type="date" Nullable="false" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="ReceiptMode" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -339,6 +352,7 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SalesDate" Type="date" Nullable="false" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="TransactionTypeId" Type="int" Nullable="false" />
           <Property Name="ItemAmount" Type="money" Nullable="false" />
@@ -370,6 +384,7 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SODate" Type="date" Nullable="false" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="ItemAmount" Type="money" Nullable="false" />
           <Property Name="DiscountAmount" Type="money" Nullable="false" />
@@ -399,6 +414,7 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SRDate" Type="date" Nullable="false" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="TransactionTypeId" Type="int" Nullable="false" />
           <Property Name="ItemAmount" Type="money" Nullable="false" />
@@ -451,6 +467,7 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ItemAmount" Type="money" Nullable="false" />
@@ -477,6 +494,7 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ItemAmount" Type="money" Nullable="false" />
@@ -790,6 +808,30 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="UOMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductDetail_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="0..1" />
+          <End Role="ProductDetail" Type="Self.ProductDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductDetail">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ProductDetail" Type="Self.ProductDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductDetail">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1435,6 +1477,7 @@
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentDetail" EntityType="Self.PaymentDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductDetail" EntityType="Self.ProductDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
@@ -1537,6 +1580,14 @@
           <AssociationSet Name="FK_Product_UOM" Association="Self.FK_Product_UOM">
             <End Role="UOM" EntitySet="UOM" />
             <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductDetail_CompanyDetail" Association="Self.FK_ProductDetail_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="ProductDetail" EntitySet="ProductDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductDetail_Product" Association="Self.FK_ProductDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductDetail" EntitySet="ProductDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Purchase_Ledger" Association="Self.FK_Purchase_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
@@ -1769,6 +1820,7 @@
           <EntitySet Name="Payments" EntityType="DBFMCGModel.Payment" />
           <EntitySet Name="PaymentDetails" EntityType="DBFMCGModel.PaymentDetail" />
           <EntitySet Name="Products" EntityType="DBFMCGModel.Product" />
+          <EntitySet Name="ProductDetails" EntityType="DBFMCGModel.ProductDetail" />
           <EntitySet Name="Purchases" EntityType="DBFMCGModel.Purchase" />
           <EntitySet Name="PurchaseDetails" EntityType="DBFMCGModel.PurchaseDetail" />
           <EntitySet Name="PurchaseOrders" EntityType="DBFMCGModel.PurchaseOrder" />
@@ -1815,6 +1867,10 @@
           <AssociationSet Name="FK_CompanyDetail_CompanyDetail" Association="DBFMCGModel.FK_CompanyDetail_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
             <End Role="CompanyDetail1" EntitySet="CompanyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductDetail_CompanyDetail" Association="DBFMCGModel.FK_ProductDetail_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="ProductDetail" EntitySet="ProductDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_StockGroup_CompanyDetail" Association="DBFMCGModel.FK_StockGroup_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
@@ -1931,6 +1987,10 @@
           <AssociationSet Name="FK_Product_UOM" Association="DBFMCGModel.FK_Product_UOM">
             <End Role="UOM" EntitySet="UOMs" />
             <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductDetail_Product" Association="DBFMCGModel.FK_ProductDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductDetail" EntitySet="ProductDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseDetail_Product" Association="DBFMCGModel.FK_PurchaseDetail_Product">
             <End Role="Product" EntitySet="Products" />
@@ -2126,6 +2186,7 @@
           <NavigationProperty Name="AccountGroups" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
           <NavigationProperty Name="CompanyDetail1" Relationship="DBFMCGModel.FK_CompanyDetail_CompanyDetail" FromRole="CompanyDetail" ToRole="CompanyDetail1" />
           <NavigationProperty Name="CompanyDetail2" Relationship="DBFMCGModel.FK_CompanyDetail_CompanyDetail" FromRole="CompanyDetail1" ToRole="CompanyDetail" />
+          <NavigationProperty Name="ProductDetails" Relationship="DBFMCGModel.FK_ProductDetail_CompanyDetail" FromRole="CompanyDetail" ToRole="ProductDetail" />
           <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
           <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
           <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
@@ -2180,6 +2241,7 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EntryNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="JournalDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Particular" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -2287,6 +2349,7 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EntryNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="PaymentMode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2329,12 +2392,10 @@
           <Property Name="MinSellingRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="MaxSellingRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="MRP" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="OpeningStock" Type="Double" Nullable="false" />
-          <Property Name="ReOrderLevel" Type="Double" Nullable="false" />
           <Property Name="ProductImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="StockGroup" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="Product" ToRole="StockGroup" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="Product" ToRole="UOM" />
+          <NavigationProperty Name="ProductDetails" Relationship="DBFMCGModel.FK_ProductDetail_Product" FromRole="Product" ToRole="ProductDetail" />
           <NavigationProperty Name="PurchaseDetails" Relationship="DBFMCGModel.FK_PurchaseDetail_Product" FromRole="Product" ToRole="PurchaseDetail" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="DBFMCGModel.FK_PurchaseOrderDetail_Product" FromRole="Product" ToRole="PurchaseOrderDetail" />
           <NavigationProperty Name="PurchaseReturnDetails" Relationship="DBFMCGModel.FK_PurchaseReturnDetail_Product" FromRole="Product" ToRole="PurchaseReturnDetail" />
@@ -2344,6 +2405,18 @@
           <NavigationProperty Name="StockInDetails" Relationship="DBFMCGModel.FK_StockInDetail_Product" FromRole="Product" ToRole="StockInDetail" />
           <NavigationProperty Name="StockOutDetails" Relationship="DBFMCGModel.FK_StockOutDetail_Product" FromRole="Product" ToRole="StockOutDetail" />
         </EntityType>
+        <EntityType Name="ProductDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="OpeningStock" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ReorderLevel" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_ProductDetail_CompanyDetail" FromRole="ProductDetail" ToRole="CompanyDetail" />
+          <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_ProductDetail_Product" FromRole="ProductDetail" ToRole="Product" />
+        </EntityType>
         <EntityType Name="Purchase">
           <Key>
             <PropertyRef Name="Id" />
@@ -2351,6 +2424,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
           <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
@@ -2390,6 +2464,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PODate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
@@ -2425,6 +2500,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PRDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
           <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
@@ -2462,6 +2538,7 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EntryNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="ReceiptMode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2497,6 +2574,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SalesDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
           <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
@@ -2536,6 +2614,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SODate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
@@ -2571,6 +2650,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SRDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
           <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
@@ -2635,6 +2715,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
@@ -2666,6 +2747,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
@@ -2840,6 +2922,18 @@
             </Principal>
             <Dependent Role="CompanyDetail1">
               <PropertyRef Name="UnderCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductDetail_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.ProductDetail" Role="ProductDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductDetail">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3188,6 +3282,18 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="UOMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductDetail_Product">
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.ProductDetail" Role="ProductDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductDetail">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3737,6 +3843,7 @@
                 <ScalarProperty Name="Particular" ColumnName="Particular" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="JournalDate" ColumnName="JournalDate" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -3828,6 +3935,7 @@
                 <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -3848,9 +3956,6 @@
             <EntityTypeMapping TypeName="DBFMCGModel.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
-                <ScalarProperty Name="ReOrderLevel" ColumnName="ReOrderLevel" />
-                <ScalarProperty Name="OpeningStock" ColumnName="OpeningStock" />
-                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
                 <ScalarProperty Name="MRP" ColumnName="MRP" />
                 <ScalarProperty Name="MaxSellingRate" ColumnName="MaxSellingRate" />
                 <ScalarProperty Name="MinSellingRate" ColumnName="MinSellingRate" />
@@ -3860,6 +3965,17 @@
                 <ScalarProperty Name="StockGroupId" ColumnName="StockGroupId" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductDetails">
+            <EntityTypeMapping TypeName="DBFMCGModel.ProductDetail">
+              <MappingFragment StoreEntitySet="ProductDetail">
+                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
+                <ScalarProperty Name="OpeningStock" ColumnName="OpeningStock" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3875,6 +3991,7 @@
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -3907,6 +4024,7 @@
                 <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="PODate" ColumnName="PODate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -3939,6 +4057,7 @@
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="PRDate" ColumnName="PRDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -3977,6 +4096,7 @@
                 <ScalarProperty Name="ReceiptMode" ColumnName="ReceiptMode" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="EntryNo" ColumnName="EntryNo" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -4004,6 +4124,7 @@
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="SalesDate" ColumnName="SalesDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -4036,6 +4157,7 @@
                 <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="SODate" ColumnName="SODate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -4068,6 +4190,7 @@
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="SRDate" ColumnName="SRDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -4120,6 +4243,7 @@
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -4148,6 +4272,7 @@
                 <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
                 <ScalarProperty Name="RefNo" ColumnName="RefNo" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

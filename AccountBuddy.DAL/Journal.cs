@@ -22,6 +22,7 @@ namespace AccountBuddy.DAL
     
         public long Id { get; set; }
         public string EntryNo { get; set; }
+        public string RefCode { get; set; }
         public System.DateTime JournalDate { get; set; }
         public decimal Amount { get; set; }
         public string Particular { get; set; }

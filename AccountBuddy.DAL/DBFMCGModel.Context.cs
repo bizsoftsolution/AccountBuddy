@@ -42,6 +42,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductDetail> ProductDetails { get; set; }
         public virtual DbSet<Purchase> Purchases { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }

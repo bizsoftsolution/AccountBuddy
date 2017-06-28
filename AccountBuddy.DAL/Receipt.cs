@@ -22,6 +22,7 @@ namespace AccountBuddy.DAL
     
         public long Id { get; set; }
         public string EntryNo { get; set; }
+        public string RefCode { get; set; }
         public System.DateTime ReceiptDate { get; set; }
         public int LedgerId { get; set; }
         public string ReceiptMode { get; set; }
