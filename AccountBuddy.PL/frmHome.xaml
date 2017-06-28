@@ -282,14 +282,10 @@
                                             <Report:frmSOPending/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                    <Menu:NavMenuItem MenuName="Customer Wise Sales Report" FormName="Customer Wise Sales Report">
+                                   
+                                    <Menu:NavMenuItem MenuName="Sales Report" FormName="Sales Report">
                                         <Menu:NavMenuItem.Content>
-                                            <Report:frmCustomerWiseReport/>
-                                        </Menu:NavMenuItem.Content>
-                                    </Menu:NavMenuItem>
-                                    <Menu:NavMenuItem MenuName="Product Wise Sales Report" FormName="Product Wise Sales Report">
-                                        <Menu:NavMenuItem.Content>
-                                            <Report:frmProductWiseSalesReport/>
+                                            <Report:frmSalesReport/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
                                 </ListBox>

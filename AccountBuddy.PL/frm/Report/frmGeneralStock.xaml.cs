@@ -54,9 +54,7 @@ namespace AccountBuddy.PL.frm.Report
             dtpDateFrom.SelectedDate = dtFrom;
             dtpDateTo.SelectedDate = dtTo;
 
-            cmbProduct.ItemsSource = BLL.Product.toList;
-            cmbProduct.DisplayMemberPath = "ProductName";
-            cmbProduct.SelectedValuePath = "Id";
+           
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -306,5 +304,17 @@ namespace AccountBuddy.PL.frm.Report
         }
 
         #endregion
+
+        private void cmbProduct_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbProduct.ItemsSource = BLL.Product.toList.ToList() ;
+            cmbProduct.DisplayMemberPath = "ProductName";
+            cmbProduct.SelectedValuePath = "Id";
+        }
+
+        private void cmbCompany_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

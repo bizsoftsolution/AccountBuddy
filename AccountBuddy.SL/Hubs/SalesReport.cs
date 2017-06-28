@@ -7,6 +7,447 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
+        public List<BLL.SalesReport> SalesReport_List(DateTime dtFrom,DateTime dtTo,bool isMonthly,string ReportType)
+        {
+            BLL.SalesReport sr = new BLL.SalesReport();
+
+            List<BLL.SalesReport> rv = new List<BLL.SalesReport>();
+            
+            var l1 = DB.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.CompanyDetail.CompanyType == "Dealer" && 
+                                                x.Sale.Ledger.AccountGroup.CompanyDetail.UnderCompanyId==Caller.CompanyId && 
+                                                x.Sale.SalesDate >= dtFrom && 
+                                                x.Sale.SalesDate <= dtTo)
+                                    .Select(x=> new {
+                                                        x.ProductId,
+                                                        x.Product.ProductName,
+                                                        x.Sale.Ledger.AccountGroup.CompanyId,
+                                                        x.Sale.Ledger.AccountGroup.CompanyDetail.CompanyName,
+                                                        x.Sale.SalesDate,
+                                                        x.Amount
+                                                    })
+                                    .ToList();
+
+            int n = Math.Abs((dtTo.Year * 12 + (dtTo.Month - 1)) - (dtFrom.Year * 12 + (dtFrom.Month - 1)));
+            if (isMonthly == false) n =n/2;
+            if (n > 12) n = 12;
+
+            if (l1.Count() > 0)
+            {
+                #region DealerWise
+                if (ReportType == "DealerWise")
+                {
+                    var l2 = l1.GroupBy(x => x.CompanyName).ToList();
+
+                    decimal[] gtamt = new decimal[12];
+
+                    foreach (var d1 in l2)
+                    {
+                        var l3 = d1.GroupBy(x => x.ProductName).ToList();
+                        decimal[] tamt = new decimal[12];
+
+
+                        sr = new BLL.SalesReport();
+                        sr.Description = d1.Key;
+                        rv.Add(sr);
+
+
+                        foreach (var d2 in l3)
+                        {
+                            decimal[] amt = new decimal[12];
+
+                            for (int i = 0; i < n; i++)
+                            {
+
+                                amt[i] = isMonthly == true ? 0 : 1;
+
+                                if (isMonthly == true)
+                                {
+                                    DateTime dt = dtFrom.AddMonths(i);
+                                    amt[i] = d2.Where(x => x.SalesDate.Year == dt.Year && x.SalesDate.Month == dt.Month).Sum(x => x.Amount);
+                                }
+                                else
+                                {
+                                    DateTime dt = dtFrom.AddYears(i);
+                                    amt[i] = d2.Where(x => x.SalesDate.Year == dt.Year).Sum(x => x.Amount);
+                                }
+                            }
+
+                            sr = new BLL.SalesReport();
+                            sr.Amount = amt.Sum();
+
+                            if (sr.Amount > 0)
+                            {
+                                sr.Description = string.Format("   {0}", d2.Key);
+                                sr.M1 = amt[0];
+                                sr.M2 = amt[1];
+                                sr.M3 = amt[2];
+                                sr.M4 = amt[3];
+                                sr.M5 = amt[4];
+                                sr.M6 = amt[5];
+                                sr.M7 = amt[6];
+                                sr.M8 = amt[7];
+                                sr.M9 = amt[8];
+                                sr.M10 = amt[9];
+                                sr.M11 = amt[10];
+                                sr.M12 = amt[11];
+                                rv.Add(sr);
+                            }
+
+                            for (int i = 0; i < 12; i++)
+                            {
+                                tamt[i] += amt[i];
+                            }
+
+                        }
+                        sr = new BLL.SalesReport();
+                        sr.Amount = tamt.Sum();
+
+                        if (sr.Amount == 0)
+                        {
+                            rv.RemoveAt(rv.Count() - 1);
+                        }
+                        else
+                        {
+                            sr.Description = string.Format("Total {0}", d1.Key);
+                            sr.M1 = tamt[0];
+                            sr.M2 = tamt[1];
+                            sr.M3 = tamt[2];
+                            sr.M4 = tamt[3];
+                            sr.M5 = tamt[4];
+                            sr.M6 = tamt[5];
+                            sr.M7 = tamt[6];
+                            sr.M8 = tamt[7];
+                            sr.M9 = tamt[8];
+                            sr.M10 = tamt[9];
+                            sr.M11 = tamt[10];
+                            sr.M12 = tamt[11];
+                            rv.Add(sr);
+
+                            rv.Add(new BLL.SalesReport());
+                        }
+
+                        for (int i = 0; i < 12; i++)
+                        {
+                            gtamt[i] += tamt[i];
+                        }
+                    }
+                    sr = new BLL.SalesReport();
+                    sr.Amount = gtamt.Sum();
+
+                    if (sr.Amount != 0)
+                    {
+                        sr.Description = string.Format("Grand Total");
+                        sr.M1 = gtamt[0];
+                        sr.M2 = gtamt[1];
+                        sr.M3 = gtamt[2];
+                        sr.M4 = gtamt[3];
+                        sr.M5 = gtamt[4];
+                        sr.M6 = gtamt[5];
+                        sr.M7 = gtamt[6];
+                        sr.M8 = gtamt[7];
+                        sr.M9 = gtamt[8];
+                        sr.M10 = gtamt[9];
+                        sr.M11 = gtamt[10];
+                        sr.M12 = gtamt[11];
+                        rv.Add(sr);
+
+                        rv.Add(new BLL.SalesReport());
+                    }
+
+                }
+                #endregion
+
+                #region ProductWise
+                if (ReportType == "ProductWise")
+                {
+                    var l2 = l1.GroupBy(x => x.ProductName).ToList();
+
+                    decimal[] gtamt = new decimal[12];
+
+                    foreach (var d1 in l2)
+                    {
+                        var l3 = d1.GroupBy(x => x.CompanyName).ToList();
+                        decimal[] tamt = new decimal[12];
+
+
+                        sr = new BLL.SalesReport();
+                        sr.Description = d1.Key;
+                        rv.Add(sr);
+
+
+                        foreach (var d2 in l3)
+                        {
+                            decimal[] amt = new decimal[12];
+
+                            for (int i = 0; i < n; i++)
+                            {
+
+                                amt[i] = isMonthly == true ? 0 : 1;
+
+                                if (isMonthly == true)
+                                {
+                                    DateTime dt = dtFrom.AddMonths(i);
+                                    amt[i] = d2.Where(x => x.SalesDate.Year == dt.Year && x.SalesDate.Month == dt.Month).Sum(x => x.Amount);
+                                }
+                                else
+                                {
+                                    DateTime dt = dtFrom.AddYears(i);
+                                    amt[i] = d2.Where(x => x.SalesDate.Year == dt.Year).Sum(x => x.Amount);
+                                }
+                            }
+
+                            sr = new BLL.SalesReport();
+                            sr.Amount = amt.Sum();
+
+                            if (sr.Amount > 0)
+                            {
+                                sr.Description = string.Format("   {0}", d2.Key);
+                                sr.M1 = amt[0];
+                                sr.M2 = amt[1];
+                                sr.M3 = amt[2];
+                                sr.M4 = amt[3];
+                                sr.M5 = amt[4];
+                                sr.M6 = amt[5];
+                                sr.M7 = amt[6];
+                                sr.M8 = amt[7];
+                                sr.M9 = amt[8];
+                                sr.M10 = amt[9];
+                                sr.M11 = amt[10];
+                                sr.M12 = amt[11];
+                                rv.Add(sr);
+                            }
+
+                            for (int i = 0; i < 12; i++)
+                            {
+                                tamt[i] += amt[i];
+                            }
+
+                        }
+                        sr = new BLL.SalesReport();
+                        sr.Amount = tamt.Sum();
+
+                        if (sr.Amount == 0)
+                        {
+                            rv.RemoveAt(rv.Count() - 1);
+                        }
+                        else
+                        {
+                            sr.Description = string.Format("Total {0}", d1.Key);
+                            sr.M1 = tamt[0];
+                            sr.M2 = tamt[1];
+                            sr.M3 = tamt[2];
+                            sr.M4 = tamt[3];
+                            sr.M5 = tamt[4];
+                            sr.M6 = tamt[5];
+                            sr.M7 = tamt[6];
+                            sr.M8 = tamt[7];
+                            sr.M9 = tamt[8];
+                            sr.M10 = tamt[9];
+                            sr.M11 = tamt[10];
+                            sr.M12 = tamt[11];
+                            rv.Add(sr);
+
+                            rv.Add(new BLL.SalesReport());
+                        }
+
+                        for (int i = 0; i < 12; i++)
+                        {
+                            gtamt[i] += tamt[i];
+                        }
+                    }
+                    sr = new BLL.SalesReport();
+                    sr.Amount = gtamt.Sum();
+
+                    if (sr.Amount != 0)
+                    {
+                        sr.Description = string.Format("Grand Total");
+                        sr.M1 = gtamt[0];
+                        sr.M2 = gtamt[1];
+                        sr.M3 = gtamt[2];
+                        sr.M4 = gtamt[3];
+                        sr.M5 = gtamt[4];
+                        sr.M6 = gtamt[5];
+                        sr.M7 = gtamt[6];
+                        sr.M8 = gtamt[7];
+                        sr.M9 = gtamt[8];
+                        sr.M10 = gtamt[9];
+                        sr.M11 = gtamt[10];
+                        sr.M12 = gtamt[11];
+                        rv.Add(sr);
+
+                        rv.Add(new BLL.SalesReport());
+                    }
+
+                }
+                #endregion
+
+                #region DealerSummary
+                if (ReportType == "DealerSummary")
+                {
+                    var l2 = l1.GroupBy(x => x.CompanyName).ToList();
+
+                    decimal[] gtamt = new decimal[12];
+
+                    foreach (var d1 in l2)
+                    {
+                       decimal[] tamt = new decimal[12];
+                        
+                        for (int i = 0; i < n; i++)
+                        {
+
+                            tamt[i] = isMonthly == true ? 0 : 1;
+
+                            if (isMonthly == true)
+                            {
+                                DateTime dt = dtFrom.AddMonths(i);
+                                tamt[i] = d1.Where(x => x.SalesDate.Year == dt.Year && x.SalesDate.Month == dt.Month).Sum(x => x.Amount);
+                            }
+                            else
+                            {
+                                DateTime dt = dtFrom.AddYears(i);
+                                tamt[i] = d1.Where(x => x.SalesDate.Year == dt.Year).Sum(x => x.Amount);
+                            }
+                        }
+
+                        sr = new BLL.SalesReport();
+                        sr.Amount = tamt.Sum();
+
+                        if (sr.Amount > 0)
+                        {
+                            sr.Description = string.Format("{0}", d1.Key);
+                            sr.M1 = tamt[0];
+                            sr.M2 = tamt[1];
+                            sr.M3 = tamt[2];
+                            sr.M4 = tamt[3];
+                            sr.M5 = tamt[4];
+                            sr.M6 = tamt[5];
+                            sr.M7 = tamt[6];
+                            sr.M8 = tamt[7];
+                            sr.M9 = tamt[8];
+                            sr.M10 = tamt[9];
+                            sr.M11 = tamt[10];
+                            sr.M12 = tamt[11];
+                            rv.Add(sr);
+                        }
+                        
+                        for (int i = 0; i < 12; i++)
+                        {
+                            gtamt[i] += tamt[i];
+                        }
+                    }
+                    sr = new BLL.SalesReport();
+                    sr.Amount = gtamt.Sum();
+
+                    if (sr.Amount != 0)
+                    {
+                        sr.Description = string.Format("Total");
+                        sr.M1 = gtamt[0];
+                        sr.M2 = gtamt[1];
+                        sr.M3 = gtamt[2];
+                        sr.M4 = gtamt[3];
+                        sr.M5 = gtamt[4];
+                        sr.M6 = gtamt[5];
+                        sr.M7 = gtamt[6];
+                        sr.M8 = gtamt[7];
+                        sr.M9 = gtamt[8];
+                        sr.M10 = gtamt[9];
+                        sr.M11 = gtamt[10];
+                        sr.M12 = gtamt[11];
+                        rv.Add(sr);
+
+                        rv.Add(new BLL.SalesReport());
+                    }
+
+                }
+                #endregion
+
+                #region ProductSummary
+                if (ReportType == "ProductSummary")
+                {
+                    var l2 = l1.GroupBy(x => x.ProductName).ToList();
+
+                    decimal[] gtamt = new decimal[12];
+
+                    foreach (var d1 in l2)
+                    {
+                        decimal[] tamt = new decimal[12];
+
+                        for (int i = 0; i < n; i++)
+                        {
+
+                            tamt[i] = isMonthly == true ? 0 : 1;
+
+                            if (isMonthly == true)
+                            {
+                                DateTime dt = dtFrom.AddMonths(i);
+                                tamt[i] = d1.Where(x => x.SalesDate.Year == dt.Year && x.SalesDate.Month == dt.Month).Sum(x => x.Amount);
+                            }
+                            else
+                            {
+                                DateTime dt = dtFrom.AddYears(i);
+                                tamt[i] = d1.Where(x => x.SalesDate.Year == dt.Year).Sum(x => x.Amount);
+                            }
+                        }
+
+                        sr = new BLL.SalesReport();
+                        sr.Amount = tamt.Sum();
+
+                        if (sr.Amount > 0)
+                        {
+                            sr.Description = string.Format("{0}", d1.Key);
+                            sr.M1 = tamt[0];
+                            sr.M2 = tamt[1];
+                            sr.M3 = tamt[2];
+                            sr.M4 = tamt[3];
+                            sr.M5 = tamt[4];
+                            sr.M6 = tamt[5];
+                            sr.M7 = tamt[6];
+                            sr.M8 = tamt[7];
+                            sr.M9 = tamt[8];
+                            sr.M10 = tamt[9];
+                            sr.M11 = tamt[10];
+                            sr.M12 = tamt[11];
+                            rv.Add(sr);
+                        }
+
+                        for (int i = 0; i < 12; i++)
+                        {
+                            gtamt[i] += tamt[i];
+                        }
+                    }
+                    sr = new BLL.SalesReport();
+                    sr.Amount = gtamt.Sum();
+
+                    if (sr.Amount != 0)
+                    {
+                        sr.Description = string.Format("Total");
+                        sr.M1 = gtamt[0];
+                        sr.M2 = gtamt[1];
+                        sr.M3 = gtamt[2];
+                        sr.M4 = gtamt[3];
+                        sr.M5 = gtamt[4];
+                        sr.M6 = gtamt[5];
+                        sr.M7 = gtamt[6];
+                        sr.M8 = gtamt[7];
+                        sr.M9 = gtamt[8];
+                        sr.M10 = gtamt[9];
+                        sr.M11 = gtamt[10];
+                        sr.M12 = gtamt[11];
+                        rv.Add(sr);
+
+                        rv.Add(new BLL.SalesReport());
+                    }
+
+                }
+                #endregion
+
+            }
+
+
+
+            return rv;
+        }
+
         public List<BLL.SalesReport> SalesReport_ListCustomerWise(DateTime dt)
         {
             List<BLL.SalesReport> rv = new List<BLL.SalesReport>();
@@ -47,12 +488,18 @@ namespace AccountBuddy.SL.Hubs
 
                             sr.Description =String.Format("  {0}", p.ProductName);
 
-                            sr.M1 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(-5));
-                            sr.M2 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(-4));
-                            sr.M3 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(-3));
-                            sr.M4 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(-2));
-                            sr.M5 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(-1));
-                            sr.M6 = GetSalesAmount(dl.Id, p.Id, dt);
+                            sr.M1 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(1));
+                            sr.M2 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(2));
+                            sr.M3 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(3));
+                            sr.M4 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(4));
+                            sr.M5 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(5));
+                            sr.M6 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(6));
+                            sr.M7 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(7));
+                            sr.M8 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(8));
+                            sr.M9 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(9));
+                            sr.M10 = GetSalesAmount(dl.Id, p.Id, dt.AddMonths(10));
+                            sr.M11= GetSalesAmount(dl.Id, p.Id, dt.AddMonths(11));
+                            sr.M12= GetSalesAmount(dl.Id, p.Id, dt.AddMonths(12));
 
                             sr.Amount = sr.M1 + sr.M2 + sr.M3 + sr.M4 + sr.M5 + sr.M6;
                             TotM1 += sr.M1.Value;

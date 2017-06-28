@@ -17,6 +17,12 @@ namespace AccountBuddy.BLL
         private decimal? _M4;
         private decimal? _M5;
         private decimal? _M6;
+        private decimal? _M7;
+        private decimal? _M8;
+        private decimal? _M9;
+        private decimal? _M10;
+        private decimal? _M11;
+        private decimal? _M12;
         private decimal? _Amount;
         
 
@@ -146,6 +152,96 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public decimal? M7
+        {
+            get
+            {
+                return _M7;
+            }
+            set
+            {
+                if (_M7 != value)
+                {
+                    _M7 = value;
+                    NotifyPropertyChanged(nameof(M7));
+                }
+            }
+        }
+        public decimal? M8
+        {
+            get
+            {
+                return _M7;
+            }
+            set
+            {
+                if (_M7 != value)
+                {
+                    _M7 = value;
+                    NotifyPropertyChanged(nameof(M7));
+                }
+            }
+        }
+        public decimal? M9
+        {
+            get
+            {
+                return _M9;
+            }
+            set
+            {
+                if (_M9 != value)
+                {
+                    _M9 = value;
+                    NotifyPropertyChanged(nameof(M9));
+                }
+            }
+        }
+        public decimal? M10
+        {
+            get
+            {
+                return _M10;
+            }
+            set
+            {
+                if (_M10 != value)
+                {
+                    _M10 = value;
+                    NotifyPropertyChanged(nameof(M10));
+                }
+            }
+        }
+        public decimal? M11
+        {
+            get
+            {
+                return _M11;
+            }
+            set
+            {
+                if (_M11 != value)
+                {
+                    _M11 = value;
+                    NotifyPropertyChanged(nameof(M11));
+                }
+            }
+        }
+        public decimal? M12
+        {
+            get
+            {
+                return _M12;
+            }
+            set
+            {
+                if (_M12 != value)
+                {
+                    _M12 = value;
+                    NotifyPropertyChanged(nameof(M12));
+                }
+            }
+        }
         #endregion
 
         #region Property  Changed Event
@@ -166,6 +262,10 @@ namespace AccountBuddy.BLL
 
         #region Methods
 
+        public static List<SalesReport> ToList(DateTime dtFrom,DateTime dtTo, bool isMonthly, string ReportType)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<SalesReport>>("SalesReport_List", dtFrom,dtTo,isMonthly,ReportType).Result;
+        }
         public static List<SalesReport> ToListCustomerWise(DateTime dtFrom)
         {
             return FMCGHubClient.FMCGHub.Invoke<List<SalesReport>>("SalesReport_ListCustomerWise", dtFrom).Result;
