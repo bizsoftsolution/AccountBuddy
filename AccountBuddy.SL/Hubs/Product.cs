@@ -112,6 +112,7 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
                     var p = Product_DALtoBLL(d);
+                    DB.ProductDetails.RemoveRange(d.ProductDetails);
                     DB.Products.Remove(d);
                     //Ledger_Delete((int)d.LedgerId);
                     DB.SaveChanges();
