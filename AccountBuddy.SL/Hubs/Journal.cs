@@ -168,30 +168,32 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByPurchase(BLL.Purchase P)
         {
             var EntryNo = string.Format("PUR-{0}", P.Id);
+            var LName = LedgerNameByCompanyId(Caller.CompanyId);
+            var CId = CompanyIdByLedgerName(LName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
                 j.EntryNo = EntryNo;
-
+              
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = P.TransactionType == "Cash" ? LedgerIdByKey(BLL.DataKeyValue.CashLedger_Key) : P.LedgerId,
+                    LedgerId = P.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId):P.LedgerId,
                     CrAmt = P.TotalAmount,
                     Particulars = P.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKey(BLL.DataKeyValue.PurchaseAccount_Ledger_Key),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key,CId),
                     DrAmt = P.ItemAmount - P.DiscountAmount + P.ExtraAmount,
                     Particulars = P.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKey(BLL.DataKeyValue.Output_Tax_Ledger_Key),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Output_Tax_Ledger_Key,CId),
                     DrAmt = P.GSTAmount,
                     Particulars = P.Narration
                 });
@@ -205,12 +207,12 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = P.Narration;
                     if (jd.CrAmt != 0)
                     {
-                        jd.LedgerId = P.TransactionType == "Cash" ? LedgerIdByKey(BLL.DataKeyValue.CashLedger_Key) : P.LedgerId;
+                        jd.LedgerId = P.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId;
                         jd.CrAmt = P.TotalAmount;
                     }
                     else
                     {
-                        jd.DrAmt = jd.LedgerId == LedgerIdByKey(BLL.DataKeyValue.PurchaseAccount_Ledger_Key) ? P.ItemAmount - P.DiscountAmount + P.ExtraAmount : P.GSTAmount;
+                        jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key, CId) ? P.ItemAmount - P.DiscountAmount + P.ExtraAmount : P.GSTAmount;
                     }
                 }
             }
@@ -227,6 +229,8 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveBySalesReturn(BLL.SalesReturn SR)
         {
             var EntryNo = string.Format("SRN-{0}", SR.Id);
+            var LName = LedgerNameByCompanyId(Caller.CompanyId);
+            var CId = CompanyIdByLedgerName(LName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -236,21 +240,21 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = SR.TransactionType == "Cash" ? LedgerIdByKey(BLL.DataKeyValue.CashLedger_Key) : SR.LedgerId,
+                    LedgerId = SR.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : SR.LedgerId,
                     CrAmt = SR.TotalAmount,
                     Particulars = SR.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKey(BLL.DataKeyValue.Sales_Return_Ledger_Key),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Sales_Return_Ledger_Key, CId),
                     DrAmt = SR.ItemAmount - SR.DiscountAmount + SR.ExtraAmount,
                     Particulars = SR.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKey(BLL.DataKeyValue.Output_Tax_Ledger_Key),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Output_Tax_Ledger_Key, CId),
                     DrAmt = SR.GSTAmount,
                     Particulars = SR.Narration
                 });
@@ -264,12 +268,12 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = SR.Narration;
                     if (jd.CrAmt != 0)
                     {
-                        jd.LedgerId = SR.TransactionType == "Cash" ? LedgerIdByKey(BLL.DataKeyValue.CashLedger_Key) : SR.LedgerId;
+                        jd.LedgerId = SR.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : SR.LedgerId;
                         jd.CrAmt = SR.TotalAmount;
                     }
                     else
                     {
-                        jd.DrAmt = jd.LedgerId == LedgerIdByKey(BLL.DataKeyValue.Sales_Return_Ledger_Key) ? SR.ItemAmount - SR.DiscountAmount + SR.ExtraAmount : SR.GSTAmount;
+                        jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.Sales_Return_Ledger_Key, CId) ? SR.ItemAmount - SR.DiscountAmount + SR.ExtraAmount : SR.GSTAmount;
                     }
                 }
             }
@@ -286,6 +290,8 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveBySales(BLL.Sale S)
         {
             var EntryNo = string.Format("SAL-{0}", S.Id);
+            var LName = LedgerNameByCompanyId(Caller.CompanyId);
+            var CId = CompanyIdByLedgerName(LName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -295,21 +301,21 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = S.TransactionType == "Cash" ? LedgerIdByKey(BLL.DataKeyValue.CashLedger_Key) : S.LedgerId,
+                    LedgerId = S.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : S.LedgerId,
                     DrAmt = S.TotalAmount,
                     Particulars = S.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKey(BLL.DataKeyValue.SalesAccount_Ledger_Key),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SalesAccount_Ledger_Key, CId),
                     CrAmt = S.ItemAmount - S.DiscountAmount + S.ExtraAmount,
                     Particulars = S.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKey(BLL.DataKeyValue.Input_Tax_Ledger_Key),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Input_Tax_Ledger_Key, CId),
                     CrAmt = S.GSTAmount,
                     Particulars = S.Narration
                 });
@@ -323,12 +329,12 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = S.Narration;
                     if (jd.DrAmt != 0)
                     {
-                        jd.LedgerId = S.TransactionType == "Cash" ? LedgerIdByKey(BLL.DataKeyValue.CashLedger_Key) : S.LedgerId;
+                        jd.LedgerId = S.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : S.LedgerId;
                         jd.DrAmt = S.TotalAmount;
                     }
                     else
                     {
-                        jd.CrAmt = jd.LedgerId == LedgerIdByKey(BLL.DataKeyValue.SalesAccount_Ledger_Key) ? S.ItemAmount - S.DiscountAmount + S.ExtraAmount : S.GSTAmount;
+                        jd.CrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.SalesAccount_Ledger_Key,CId) ? S.ItemAmount - S.DiscountAmount + S.ExtraAmount : S.GSTAmount;
                     }
                 }
             }
@@ -345,6 +351,8 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByPurchaseReturn(BLL.PurchaseReturn PR)
         {
             var EntryNo = string.Format("PRN-{0}", PR.Id);
+            var LName = LedgerNameByCompanyId(Caller.CompanyId);
+            var CId = CompanyIdByLedgerName(LName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -354,21 +362,21 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = PR.TransactionType == "Cash" ? LedgerIdByKey(BLL.DataKeyValue.CashLedger_Key) : PR.LedgerId,
+                    LedgerId = PR.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : PR.LedgerId,
                     DrAmt = PR.TotalAmount,
                     Particulars = PR.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKey(BLL.DataKeyValue.Purchase_Return_Ledger_Key),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Purchase_Return_Ledger_Key, CId),
                     CrAmt = PR.ItemAmount - PR.DiscountAmount + PR.ExtraAmount,
                     Particulars = PR.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKey(BLL.DataKeyValue.Input_Tax_Ledger_Key),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Input_Tax_Ledger_Key,CId),
                     CrAmt = PR.GSTAmount,
                     Particulars = PR.Narration
                 });
@@ -382,12 +390,12 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = PR.Narration;
                     if (jd.DrAmt != 0)
                     {
-                        jd.LedgerId = PR.TransactionType == "Cash" ? LedgerIdByKey(BLL.DataKeyValue.CashLedger_Key) : PR.LedgerId;
+                        jd.LedgerId = PR.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : PR.LedgerId;
                         jd.DrAmt = PR.TotalAmount;
                     }
                     else
                     {
-                        jd.CrAmt = jd.LedgerId == LedgerIdByKey(BLL.DataKeyValue.Purchase_Return_Ledger_Key) ? PR.ItemAmount - PR.DiscountAmount + PR.ExtraAmount : PR.GSTAmount;
+                        jd.CrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.Purchase_Return_Ledger_Key, CId) ? PR.ItemAmount - PR.DiscountAmount + PR.ExtraAmount : PR.GSTAmount;
                     }
                 }
             }
@@ -533,7 +541,9 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByStockOut(BLL.StockOut STout)
         {
             var EntryNo = string.Format("STOUT-{0}", STout.Id);
-         
+            var LName = LedgerNameByCompanyId(Caller.CompanyId);
+            var CId = CompanyIdByLedgerName(LName);
+
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -544,7 +554,7 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKey(BLL.DataKeyValue.Stock_Outward_Ledger_Key),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Stock_Outward_Ledger_Key, CId),
                     CrAmt = STout.ItemAmount,
                     Particulars = STout.Narration
                 });
@@ -590,6 +600,8 @@ namespace AccountBuddy.SL.Hubs
         {
             var EntryNo = string.Format("STIN-{0}", STIn.Id);
             var ld = DB.Ledgers.Where(x => x.Id == STIn.LedgerId).FirstOrDefault();
+            var LName = LedgerNameByCompanyId(Caller.CompanyId);
+            var CId = CompanyIdByLedgerName(LName);
 
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
@@ -601,14 +613,14 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId =STIn.LedgerId,
+                    LedgerId = STIn.LedgerId,
                     CrAmt = STIn.ItemAmount,
                     Particulars = STIn.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId =  LedgerIdByKey(BLL.DataKeyValue.Stock_Inward_Ledger_Key),
+                    LedgerId =LedgerIdByKeyAndCompany(BLL.DataKeyValue.Stock_Inward_Ledger_Key, CId),
                     DrAmt = STIn.ItemAmount,
                     Particulars = STIn.Narration
                 });
