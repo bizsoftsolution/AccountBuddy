@@ -27,7 +27,7 @@ namespace AccountBuddy.SL.Hubs
 
                 gl.Product = Product_DALtoBLL(P);
 
-               // opqty = (decimal)P.OpeningStock;
+                opqty = (decimal)P.ProductDetails.FirstOrDefault().OpeningStock;
 
                 pqty =(decimal) P.PurchaseDetails.Where(x=> (CompanyId==null || x.Purchase.Ledger.AccountGroup.CompanyId==CompanyId ) && x.Purchase.PurchaseDate<dtFrom).Sum(x => x.Quantity);
                 srqty = (decimal)P.SalesReturnDetails.Where(x=> (CompanyId == null || x.SalesReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.SalesReturn.SRDate<dtFrom).Sum(x => x.Quantity);
@@ -38,7 +38,7 @@ namespace AccountBuddy.SL.Hubs
                 gl.Outwards = sqty + prqty;
 
 
-               // BalQty += ( ( opqty + gl.Inwards) - gl.Outwards) ;
+                BalQty += ( ( opqty + gl.Inwards) - gl.Outwards) ;
 
                 gl.BalStock = Math.Abs(BalQty);
 
