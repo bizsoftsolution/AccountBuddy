@@ -17,8 +17,8 @@ namespace AccountBuddy.DAL
         public int Id { get; set; }
         public Nullable<int> ProductId { get; set; }
         public Nullable<int> CompanyId { get; set; }
-        public Nullable<decimal> OpeningStock { get; set; }
-        public Nullable<decimal> ReorderLevel { get; set; }
+        public double OpeningStock { get; set; }
+        public double ReorderLevel { get; set; }
     
         public virtual CompanyDetail CompanyDetail { get; set; }
         public virtual Product Product { get; set; }

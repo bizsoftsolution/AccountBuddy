@@ -16,14 +16,18 @@ namespace AccountBuddy.SL.Hubs
             BLL.Product ProductsTo = ProductsFrom.toCopy<BLL.Product>(new BLL.Product());
 
             ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
+            var pd = ProductsFrom.ProductDetails.Where(x => x.CompanyId == Caller.CompanyId).FirstOrDefault();
+            if (pd == null) pd = new DAL.ProductDetail();
 
-            ProductsTo.UOM = ProductsFrom.UOM == null ? null: UOM_DALtoBLL(ProductsFrom.UOM);
-            ProductsTo.POQty = ProductsFrom.PurchaseOrderDetails.Where(x=> x.PurchaseOrder.Ledger.AccountGroup.CompanyId==Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.UOM = ProductsFrom.UOM == null ? null : UOM_DALtoBLL(ProductsFrom.UOM);
+            ProductsTo.OpeningStock = pd.OpeningStock;
+            ProductsTo.ReOrderLevel = pd.ReorderLevel;
+            ProductsTo.POQty = ProductsFrom.PurchaseOrderDetails.Where(x => x.PurchaseOrder.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
             ProductsTo.PQty = ProductsFrom.PurchaseDetails.Where(x => x.Purchase.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
             ProductsTo.PRQty = ProductsFrom.PurchaseReturnDetails.Where(x => x.PurchaseReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
             ProductsTo.SOQty = ProductsFrom.SalesOrderDetails.Where(x => x.SalesOrder.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
             ProductsTo.SQty = ProductsFrom.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.SRQty= ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SRQty = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
             ProductsTo.SInQty = ProductsFrom.StockInDetails.Where(x => x.StockIn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
             ProductsTo.SOutQty = ProductsFrom.StockOutDetails.Where(x => x.StockOut.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
             return ProductsTo;
@@ -32,30 +36,24 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.Product> Product_List()
         {
 
-            if (Caller.CompanyType == "Warehouse")
+            if (Caller.CompanyType == "Company")
             {
-                return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.UnderCompanyId).ToList()
-                            .Select(x => Product_DALtoBLL(x)).ToList();
-            }
-            else if(Caller.CompanyType == "Dealer")
-            {
-                var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
-                return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == wh.UnderCompanyId).ToList()
-                           .Select(x => Product_DALtoBLL(x)).ToList();
+                return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+                             .Select(x => Product_DALtoBLL(x)).ToList();
             }
             else
             {
-                return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
-                            .Select(x => Product_DALtoBLL(x)).ToList();
-            }
+                return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.UnderCompanyId).ToList()
+                           .Select(x => Product_DALtoBLL(x)).ToList();
 
+            }
         }
-        
+
         public BLL.Product Product_Save(BLL.Product pro)
         {
             try
             {
-                
+
                 DAL.Product d = DB.Products.Where(x => x.Id == pro.Id).FirstOrDefault();
                 if (d == null)
                 {
@@ -64,14 +62,32 @@ namespace AccountBuddy.SL.Hubs
 
                     pro.toCopy<DAL.Product>(d);
 
+                    DAL.ProductDetail pd = new DAL.ProductDetail();
+
+                    d.ProductDetails.Add(pd);
+                    pd.CompanyId = Caller.CompanyId;
+                    pd.OpeningStock = pro.OpeningStock;
+                    pd.ReorderLevel = pro.ReOrderLevel;
+
+
                     DB.SaveChanges();
                     pro.Id = d.Id;
-                    LogDetailStore(pro, LogDetailType.INSERT);                   
+                    LogDetailStore(pro, LogDetailType.INSERT);
                 }
                 else
                 {
                     pro.toCopy<DAL.Product>(d);
                     //Ledger_Save(pro.Ledger);
+                    var pd = d.ProductDetails.Where(x => x.CompanyId == Caller.CompanyId).FirstOrDefault();
+                    if (pd == null)
+                    {
+                        pd = new DAL.ProductDetail();
+                        d.ProductDetails.Add(pd);
+                        pd.CompanyId = Caller.CompanyId;
+                    }
+                    pd.OpeningStock = pro.OpeningStock;
+                    pd.ReorderLevel = pro.ReOrderLevel;
+
                     DB.SaveChanges();
                 }
                 if (d.Id != 0)
@@ -81,7 +97,7 @@ namespace AccountBuddy.SL.Hubs
 
                     return p;
                 }
-                
+
             }
             catch (Exception ex) { }
             return new BLL.Product();
@@ -93,7 +109,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 var d = DB.Products.Where(x => x.Id == pk).FirstOrDefault();
-                if (d != null )
+                if (d != null)
                 {
                     var p = Product_DALtoBLL(d);
                     DB.Products.Remove(d);
@@ -120,8 +136,8 @@ namespace AccountBuddy.SL.Hubs
                    p.PurchaseDetails.Count() == 0 &&
                    p.PurchaseReturnDetails.Count() == 0 &&
                    p.SalesOrderDetails.Count() == 0 &&
-                   p.SalesDetails.Count() == 0 && 
-                   p.SalesReturnDetails.Count()==0;
+                   p.SalesDetails.Count() == 0 &&
+                   p.SalesReturnDetails.Count() == 0;
 
             return rv;
         }

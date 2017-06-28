@@ -217,8 +217,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="int" />
           <Property Name="CompanyId" Type="int" />
-          <Property Name="OpeningStock" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ReorderLevel" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="OpeningStock" Type="float" Nullable="false" />
+          <Property Name="ReorderLevel" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -2412,8 +2412,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductId" Type="Int32" />
           <Property Name="CompanyId" Type="Int32" />
-          <Property Name="OpeningStock" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ReorderLevel" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="OpeningStock" Type="Double" Nullable="false" />
+          <Property Name="ReorderLevel" Type="Double" Nullable="false" />
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_ProductDetail_CompanyDetail" FromRole="ProductDetail" ToRole="CompanyDetail" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_ProductDetail_Product" FromRole="ProductDetail" ToRole="Product" />
         </EntityType>
