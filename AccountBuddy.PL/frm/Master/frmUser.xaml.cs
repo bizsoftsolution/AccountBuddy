@@ -27,12 +27,15 @@ namespace AccountBuddy.PL.frm.Master
             InitializeComponent();
 
             this.DataContext = data;            
+           
+        }
+        public void LoadWindow(int CompanyId)
+        {
             btnUserTypeSetting.Visibility = BLL.UserType.UserPermission.IsViewForm ? Visibility.Visible : Visibility.Collapsed;
-            cmbUserType.ItemsSource = BLL.UserType.toList;
+            cmbUserType.ItemsSource = BLL.UserType.toList.Where(x => x.CompanyId == UnderCompanyId).ToList();
             cmbUserType.DisplayMemberPath = "TypeOfUser";
             cmbUserType.SelectedValuePath = "Id";
         }
-
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -40,8 +43,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            data.Clear();
-            data.UnderCompanyId = UnderCompanyId;
+            data.Clear();            
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -66,6 +68,8 @@ namespace AccountBuddy.PL.frm.Master
         private void btnUserTypeSetting_Click(object sender, RoutedEventArgs e)
         {
             frmUserType frm = new frmUserType();
+            frm.UnderCompanyId = UnderCompanyId;
+            frm.LoadWindow(UnderCompanyId);
             frm.ShowDialog();
         }
     }
