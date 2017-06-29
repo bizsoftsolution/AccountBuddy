@@ -24,6 +24,7 @@ namespace AccountBuddy.BLL
         private StockGroup _UnderStockGroup;
         private CompanyDetail _Company;
         private string _underStockGroupName;
+        private List<StockGroup> _SubStockGroup;
         private bool _isPurchase;
         private bool _isSale;
 
@@ -86,7 +87,20 @@ namespace AccountBuddy.BLL
                 _toList = value;
             }
         }
+        public static List<StockGroup> toGroup(int? UGId)
+        {
 
+            List<StockGroup> RV = new List<StockGroup>();
+
+            foreach (var sg in toList.Where(x => x.UnderGroupId == UGId).OrderBy(x => x.GroupCode).ThenBy(x => x.StockGroupName).ToList())
+            {
+                sg.SubStockGroup = toGroup(sg.Id);
+                RV.Add(sg);
+            }
+
+            return RV;
+
+        }
         public static ObservableCollection<StockGroup> StocktoList
         {
             get
@@ -219,6 +233,22 @@ namespace AccountBuddy.BLL
                     _UnderStockGroup = value;
                     NotifyPropertyChanged(nameof(UnderStockGroup));
                     NotifyPropertyChanged(nameof(AccountPath));
+                }
+            }
+        }
+
+        public List<StockGroup> SubStockGroup
+        {
+            get
+            {
+                return _SubStockGroup;
+            }
+            set
+            {
+                if (_SubStockGroup!= value)
+                {
+                    _SubStockGroup = value;
+                    NotifyPropertyChanged(nameof(SubStockGroup));
                 }
             }
         }

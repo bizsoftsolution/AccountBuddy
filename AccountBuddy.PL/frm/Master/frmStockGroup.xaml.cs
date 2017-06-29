@@ -53,8 +53,8 @@ namespace AccountBuddy.PL.frm.Master
 
             CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Filter = StockGroup_Filter;
             CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
-         
 
+            trvStock.ItemsSource = BLL.StockGroup.toGroup(null);
 
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
@@ -303,10 +303,25 @@ namespace AccountBuddy.PL.frm.Master
 
         private void cmbUnder_Loaded(object sender, RoutedEventArgs e)
         {
+            
+        }
+
+        private void cmbUnder_GotFocus(object sender, RoutedEventArgs e)
+        {
             var PSGIds = BLL.Product.toList.Select(x => x.StockGroupId).ToList();
-            cmbUnder.ItemsSource = BLL.StockGroup.toList.Where(x=> !PSGIds.Contains(x.Id)).ToList();
+            cmbUnder.ItemsSource = BLL.StockGroup.toList.Where(x => !PSGIds.Contains(x.Id)).ToList();
             cmbUnder.SelectedValuePath = "Id";
             cmbUnder.DisplayMemberPath = "StockGroupName";
+        }
+
+        private void trvStock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var d = trvStock.SelectedItem as BLL.StockGroup;
+            if (d != null)
+            {
+                data.Find(d.Id);
+            }
+
         }
     }
 }
