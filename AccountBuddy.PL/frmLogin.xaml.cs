@@ -53,7 +53,8 @@ namespace AccountBuddy.PL
             if (tv == null)
             {
                 MessageBox.Show(Message.PL.Login_CompanyName_Validation);
-            }else if (tv.Tag.ToString() == "")
+            }
+            else if (tv.Tag.ToString() == "")
             {
                 MessageBox.Show(Message.PL.Login_CompanyName_Validation);
             }
@@ -102,7 +103,6 @@ namespace AccountBuddy.PL
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             ClearForm();
-
         }
 
         #endregion
@@ -140,7 +140,8 @@ namespace AccountBuddy.PL
         #region Methods
         private void ClearForm()
         {
-
+            txtLoginId.Text = "";
+            txtPassword.Password = "";
             var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Company").ToList();
 
             trvCompany.Items.Clear();
@@ -159,19 +160,19 @@ namespace AccountBuddy.PL
                     TreeViewItem tvi = new TreeViewItem();
                     tvi.Header = cm.CompanyName;
                     tvi.Tag = cm.CompanyType;
-                    if(lstWarehouse.Count()==0 && lstDealer.Count() == 0)
+                    if (lstWarehouse.Count() == 0 && lstDealer.Count() == 0)
                     {
                         TreeViewItem tviWH = new TreeViewItem();
                         tviWH.Header = " ";
                         tviWH.Tag = "";
                         tvi.Items.Add(tviWH);
                     }
-                    if (lstWarehouse.Count()>0)
+                    if (lstWarehouse.Count() > 0)
                     {
                         TreeViewItem tviWH = new TreeViewItem();
                         tviWH.Header = "WareHouse";
                         tviWH.Tag = "";
-                        foreach(var wh in lstWarehouse)
+                        foreach (var wh in lstWarehouse)
                         {
                             TreeViewItem tviWHCH = new TreeViewItem();
                             tviWHCH.Header = wh.CompanyName;
@@ -181,7 +182,7 @@ namespace AccountBuddy.PL
 
                         tvi.Items.Add(tviWH);
                     }
-                    
+
                     if (lstDealer.Count() > 0)
                     {
                         TreeViewItem tviDL = new TreeViewItem();
