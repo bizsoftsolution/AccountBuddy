@@ -136,7 +136,7 @@ namespace AccountBuddy.PL.frm.Report
                     Transaction.frmSale f = new Transaction.frmSale();
                     App.frmHome.ShowForm(f);
                     System.Windows.Forms.Application.DoEvents();
-                    //f.data.SearchText = gl.RefEntryNo;
+                    f.data.SearchText = gl.RefEntryNo;
                     System.Windows.Forms.Application.DoEvents();
                     f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                 }

@@ -169,7 +169,7 @@ namespace AccountBuddy.SL.Hubs
         {
             var EntryNo = string.Format("PUR-{0}", P.Id);
             var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
+            var CId = CompanyIdByLedgerName(P.LedgerName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -230,7 +230,7 @@ namespace AccountBuddy.SL.Hubs
         {
             var EntryNo = string.Format("SRN-{0}", SR.Id);
             var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
+            var CId = CompanyIdByLedgerName(SR.LedgerName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -291,7 +291,7 @@ namespace AccountBuddy.SL.Hubs
         {
             var EntryNo = string.Format("SAL-{0}", S.Id);
             var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
+            var CId = CompanyIdByLedgerName(S.LedgerName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -352,7 +352,7 @@ namespace AccountBuddy.SL.Hubs
         {
             var EntryNo = string.Format("PRN-{0}", PR.Id);
             var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
+            var CId = CompanyIdByLedgerName(PR.LedgerName);
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
@@ -542,7 +542,7 @@ namespace AccountBuddy.SL.Hubs
         {
             var EntryNo = string.Format("SOUT-{0}", STout.Id);
             var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
+            var CId = CompanyIdByLedgerName(STout.LedgerName);
 
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
@@ -601,7 +601,7 @@ namespace AccountBuddy.SL.Hubs
             var EntryNo = string.Format("SIN-{0}", STIn.Id);
             var ld = DB.Ledgers.Where(x => x.Id == STIn.LedgerId).FirstOrDefault();
             var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
+            var CId = CompanyIdByLedgerName(STIn.LedgerName);
 
 
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
