@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Master"
+             xmlns:bll="clr-namespace:AccountBuddy.BLL;assembly=AccountBuddy.BLL"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
              mc:Ignorable="d" 
@@ -44,7 +45,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <ComboBox x:Name="cmbUnder"  IsEditable="True"  SelectedValue="{Binding UnderGroupId,Mode=TwoWay}" SelectedItem="{Binding UnderAccountGroup,Mode=TwoWay}" Text="{Binding UnderAccountGroup.GroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" >
+                            <ComboBox x:Name="cmbUnder"  IsEditable="True" GotFocus="cmbUnder_GotFocus"  SelectedValue="{Binding UnderGroupId,Mode=TwoWay}" SelectedItem="{Binding UnderAccountGroup,Mode=TwoWay}" Text="{Binding UnderAccountGroup.GroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="AccountNetwork" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -77,7 +78,7 @@
                         </StackPanel>
 
                     </ScrollViewer>
-                 </Grid>
+                </Grid>
                 <!--#endregion-->
 
             </Grid>
@@ -127,10 +128,10 @@
 
                         <Grid Grid.Row="0" Margin="0,0,10,20" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="130"></RowDefinition>
+                                <RowDefinition Height="59"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
+                            <Grid Grid.Row="0" Visibility="Collapsed">
                                 <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="top" Margin="20" >
                                         <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  TextChanged="txtSearch_TextChanged">
@@ -152,32 +153,42 @@
                             </Grid>
                             <Grid Grid.Row="1">
                                 <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <StackPanel >
+                                        <DataGrid Visibility="Collapsed" x:Name="dgvAccount"  Height="149" Width="500" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" SelectionChanged="dgvAccount_SelectionChanged" MouseDoubleClick="dgvAccount_MouseDoubleClick">
+                                            <DataGrid.ColumnHeaderStyle>
+                                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                </Style>
+                                            </DataGrid.ColumnHeaderStyle>
 
-                                    <DataGrid x:Name="dgvAccount"  Height="350" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" SelectionChanged="dgvAccount_SelectionChanged" MouseDoubleClick="dgvAccount_MouseDoubleClick" Margin="10,0,10,5">
-                                        <DataGrid.ColumnHeaderStyle>
-                                            <Style TargetType="{x:Type DataGridColumnHeader}">
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                            </Style>
-                                        </DataGrid.ColumnHeaderStyle>
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Order Code" FontWeight="Bold" Width="100" Binding="{Binding GroupCode}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                                <DataGridTextColumn Header="Group Name" FontWeight="Bold" Width="200" Binding="{Binding GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                                <DataGridTextColumn Header="Category" FontWeight="Bold" Width="200" Binding="{Binding UnderAccountGroup.GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
 
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Order Code" FontWeight="Bold" Width="100" Binding="{Binding GroupCode}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                            <DataGridTextColumn Header="Group Name" FontWeight="Bold" Width="200" Binding="{Binding GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                            <DataGridTextColumn Header="Category" FontWeight="Bold" Width="200" Binding="{Binding UnderAccountGroup.GroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
+                                        <TreeView x:Name="trvAccount" MouseDoubleClick="trvAccount_MouseDoubleClick">
+                                            <TreeView.Resources>
+                                                <HierarchicalDataTemplate DataType="{x:Type bll:AccountGroup}" ItemsSource="{Binding SubAccountGroup}">
+                                                    <TextBlock Text="{Binding Path=GroupNameWithCode}" />
+                                                </HierarchicalDataTemplate>
+                                            </TreeView.Resources>
+                                        </TreeView>
+                                    </StackPanel>
+                                    
                                 </ScrollViewer>
 
                             </Grid>
-                
+
                         </Grid>
 
                     </TabItem>
                     <TabItem Header="Report" FontSize="16">
                         <Grid Grid.Row="0" Margin="0,0,4,-14">
-                            
-         
+
+
                             <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  Grid.Row="1" Margin="20">
                                 <rv:ReportViewer x:Name="RptAccount"/>
                             </WindowsFormsHost>

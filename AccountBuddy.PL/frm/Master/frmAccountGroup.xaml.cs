@@ -50,13 +50,14 @@ namespace AccountBuddy.PL.frm.Master
         {
             BLL.AccountGroup.Init();
             dgvAccount.ItemsSource = BLL.AccountGroup.toList;
+            trvAccount.ItemsSource = BLL.AccountGroup.toGroup(BLL.DataKeyValue.Primary_Value);
 
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Filter = AccountGroup_Filter;
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
-            cmbUnder.ItemsSource = BLL.AccountGroup.toList;
-            cmbUnder.SelectedValuePath = "Id";
-            cmbUnder.DisplayMemberPath = "GroupNameWithCode";
 
+            
+
+            
 
             rptContain.IsChecked = true;
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
@@ -307,6 +308,27 @@ namespace AccountBuddy.PL.frm.Master
             }
         }
 
+        private void trvAccount_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var d = trvAccount.SelectedItem as BLL.AccountGroup;
+                if (d != null)
+                {
+                    data.Find(d.Id);
+                }
+            }
+            catch(Exception ex) { }
+            
 
+        }
+
+        private void cmbUnder_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var LAGIds = BLL.Ledger.toList.Select(x => x.AccountGroupId).ToList();
+            cmbUnder.ItemsSource = BLL.AccountGroup.toList.Where(x => !LAGIds.Contains(x.Id)).ToList();
+            cmbUnder.SelectedValuePath = "Id";
+            cmbUnder.DisplayMemberPath = "GroupNameWithCode";
+        }
     }
 }

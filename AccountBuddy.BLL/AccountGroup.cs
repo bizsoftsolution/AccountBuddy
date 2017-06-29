@@ -14,7 +14,7 @@ namespace AccountBuddy.BLL
     {
         #region Fields
         private static ObservableCollection<AccountGroup> _toList;
-     
+        
         private int _id;
         private string _groupName;
         private string _groupNameWithCode;
@@ -22,6 +22,7 @@ namespace AccountBuddy.BLL
         private int? _underGroupId;
         private int _companyId;
         private AccountGroup _UnderAccountGroup;
+        private List<AccountGroup> _SubAccountGroup;
         private CompanyDetail _Company;
         private string _underGroupName;
 
@@ -84,7 +85,20 @@ namespace AccountBuddy.BLL
                 _toList = value;
             }
         }
+        public static List<AccountGroup> toGroup(int? UGId)
+        {
+            
+            List<AccountGroup> RV = new List<AccountGroup>();
 
+            foreach(var ag in toList.Where(x=> x.UnderGroupId == UGId).OrderBy(x=>  x.GroupCode).ThenBy(x=> x.GroupName).ToList())
+            {
+                ag.SubAccountGroup = toGroup(ag.Id);
+                RV.Add(ag);
+            }
+
+            return RV;
+            
+        }
         public int Id
         {
             get
@@ -190,6 +204,21 @@ namespace AccountBuddy.BLL
                     _UnderAccountGroup = value;
                     NotifyPropertyChanged(nameof(UnderAccountGroup));
                     NotifyPropertyChanged(nameof(AccountPath));
+                }
+            }
+        }
+        public List<AccountGroup> SubAccountGroup
+        {
+            get
+            {
+                return _SubAccountGroup;
+            }
+            set
+            {
+                if (_SubAccountGroup != value)
+                {
+                    _SubAccountGroup = value;
+                    NotifyPropertyChanged(nameof(SubAccountGroup));                    
                 }
             }
         }

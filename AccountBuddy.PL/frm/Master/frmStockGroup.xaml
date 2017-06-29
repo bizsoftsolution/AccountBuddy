@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Master"
+             xmlns:bll="clr-namespace:AccountBuddy.BLL;assembly=AccountBuddy.BLL"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
              mc:Ignorable="d" 
@@ -44,7 +45,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <ComboBox x:Name="cmbUnder" Loaded="cmbUnder_Loaded" IsEditable="True"  SelectedValue="{Binding UnderGroupId,Mode=TwoWay}" SelectedItem="{Binding UnderStockGroup,Mode=TwoWay}" Text="{Binding UnderStockGroup.StockGroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" >
+                            <ComboBox x:Name="cmbUnder" GotFocus="cmbUnder_GotFocus" Loaded="cmbUnder_Loaded" IsEditable="True"  SelectedValue="{Binding UnderGroupId,Mode=TwoWay}" SelectedItem="{Binding UnderStockGroup,Mode=TwoWay}" Text="{Binding UnderStockGroup.StockGroupName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="AccountNetwork" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -126,12 +127,12 @@
                     </TabControl.RenderTransform>
                     <TabItem Header="Details" FontSize="16">
 
-                        <Grid Grid.Row="0" Margin="0,0,10,20" >
+                        <Grid Grid.Row="0"  Margin="0,0,10,20" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="130"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
+                            <Grid Grid.Row="0" Visibility="Collapsed">
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="top" Margin="20" >
                                     <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  TextChanged="txtSearch_TextChanged">
                                         <materialDesign:HintAssist.Hint>
@@ -152,7 +153,7 @@
                             </Grid>
                             <Grid Grid.Row="1">
                                 <StackPanel>
-                                    <DataGrid x:Name="dgvStock" Height="350" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" SelectionChanged="dgvStock_SelectionChanged" MouseDoubleClick="dgvStock_MouseDoubleClick" Margin="10">
+                                    <DataGrid Visibility="Collapsed" x:Name="dgvStock" Height="180" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" SelectionChanged="dgvStock_SelectionChanged" MouseDoubleClick="dgvStock_MouseDoubleClick" Margin="10">
                                         <DataGrid.ColumnHeaderStyle>
                                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                                 <Setter Property="FontWeight" Value="Bold" />
@@ -167,6 +168,13 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
 
+                                    <TreeView x:Name="trvStock" MouseDoubleClick="trvStock_MouseDoubleClick">
+                                        <TreeView.Resources>
+                                            <HierarchicalDataTemplate DataType="{x:Type bll:StockGroup}" ItemsSource="{Binding SubStockGroup}">
+                                                <TextBlock Text="{Binding Path=StockGroupNameWithCode}" />
+                                            </HierarchicalDataTemplate>
+                                        </TreeView.Resources>
+                                    </TreeView>
                                 </StackPanel>
 
                             </Grid>

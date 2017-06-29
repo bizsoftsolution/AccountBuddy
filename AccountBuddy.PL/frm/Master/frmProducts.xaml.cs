@@ -53,7 +53,8 @@ namespace AccountBuddy.PL.frm.Master
             CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).Filter = Product_Filter;
             CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.ProductName), System.ComponentModel.ListSortDirection.Ascending));
 
-            cmbStockGroupId.ItemsSource = BLL.StockGroup.toList.Where(x=> !BLL.StockGroup.toList.Select(y=> y.UnderGroupId).Contains(x.Id)).ToList();
+            var SUIds = BLL.StockGroup.toList.Select(x => x.UnderGroupId).ToList();
+            cmbStockGroupId.ItemsSource = BLL.StockGroup.toList.Where(x=> !SUIds.Contains(x.Id)).ToList();
             cmbStockGroupId.DisplayMemberPath = "StockGroupName";
             cmbStockGroupId.SelectedValuePath = "Id";
 

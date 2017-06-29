@@ -54,7 +54,9 @@ namespace AccountBuddy.PL.frm.Master
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).Filter = Ledger_Filter;
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.AccountName), System.ComponentModel.ListSortDirection.Ascending));
 
-            cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.ToList();
+            var AUGIds = BLL.AccountGroup.toList.Select(x => x.UnderGroupId).ToList();
+
+            cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.Where(x=> !AUGIds.Contains(x.Id)).ToList();
             cmbAccountGroupId.DisplayMemberPath = "GroupName";
             cmbAccountGroupId.SelectedValuePath = "Id";
 
