@@ -412,7 +412,22 @@ namespace AccountBuddy.BLL
                 return false;
             }
         }
-
+        public bool FindById(int Id)
+        {
+            try
+            {
+                Sale S = FMCGHubClient.FMCGHub.Invoke<Sale>("Sales_FindById", Id).Result;
+                if (S.Id == 0) return false;
+                S.toCopy<Sale>(this);
+                this.SDetails = S.SDetails;
+                NotifyAllPropertyChanged();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         public bool Delete()
         {
             try

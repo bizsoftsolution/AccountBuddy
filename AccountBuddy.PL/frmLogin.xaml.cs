@@ -142,7 +142,7 @@ namespace AccountBuddy.PL
         {
             txtLoginId.Text = "";
             txtPassword.Password = "";
-            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Company").ToList();
+            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.IsActive == true && x.CompanyType == "Company").ToList();
 
             trvCompany.Items.Clear();
             if (lstCompany.Count() == 0)
@@ -154,8 +154,8 @@ namespace AccountBuddy.PL
                 trvCompany.Visibility = Visibility.Visible;
                 foreach (var cm in lstCompany)
                 {
-                    var lstWarehouse = BLL.CompanyDetail.toList.Where(x => x.UnderCompanyId == cm.Id && x.CompanyType == "Warehouse").ToList();
-                    var lstDealer = BLL.CompanyDetail.toList.Where(x => x.UnderCompanyId == cm.Id && x.CompanyType == "Dealer").ToList();
+                    var lstWarehouse = BLL.CompanyDetail.toList.Where(x => x.IsActive==true && x.UnderCompanyId == cm.Id && x.CompanyType == "Warehouse").ToList();
+                    var lstDealer = BLL.CompanyDetail.toList.Where(x => x.IsActive == true && x.UnderCompanyId == cm.Id && x.CompanyType == "Dealer").ToList();
 
                     TreeViewItem tvi = new TreeViewItem();
                     tvi.Header = cm.CompanyName;

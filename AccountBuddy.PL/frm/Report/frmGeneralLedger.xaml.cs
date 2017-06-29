@@ -103,7 +103,7 @@ namespace AccountBuddy.PL.frm.Report
             var gl = dgvGeneralLedger.SelectedItem as BLL.GeneralLedger;
             if (gl != null)
             {
-                if (gl.EType == 'P')
+                if (gl.EType == "P")
                 {
                     Transaction.frmPayment f = new Transaction.frmPayment();
                     App.frmHome.ShowForm(f);
@@ -112,7 +112,7 @@ namespace AccountBuddy.PL.frm.Report
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
-                else if (gl.EType == 'R')
+                else if (gl.EType == "R")
                 {
                     Transaction.frmReceipt f = new Transaction.frmReceipt();
                     App.frmHome.ShowForm(f);
@@ -121,14 +121,73 @@ namespace AccountBuddy.PL.frm.Report
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
-                else if (gl.EType == 'J')
+                else if (gl.EType == "J")
                 {
                     Transaction.frmJournal f = new Transaction.frmJournal();
                     App.frmHome.ShowForm(f);
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = gl.EntryNo;
+
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
+                }
+                else if (gl.EType=="SAL")
+                {
+                    Transaction.frmSale f = new Transaction.frmSale();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    //f.data.SearchText = gl.RefEntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                }
+                else if (gl.EType == "PUR")
+                {
+                    Transaction.frmPurchase f = new Transaction.frmPurchase();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.RefEntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                }
+                else if (gl.EType == "SRN")
+                {
+                    Transaction.frmSalesReturn f = new Transaction.frmSalesReturn();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.RefEntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+
+                }
+                else if (gl.EType == "PRN")
+                {
+                    Transaction.frmPurchaseReturn f = new Transaction.frmPurchaseReturn();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.RefEntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+
+                }
+                else if (gl.EType == "STOUT")
+                {
+                    Transaction.frmStockOut f = new Transaction.frmStockOut();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.RefEntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+
+                }
+                else if (gl.EType == "STIN")
+                {
+                    Transaction.frmStockInOut f = new Transaction.frmStockInOut();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.RefEntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+
                 }
             }
         }

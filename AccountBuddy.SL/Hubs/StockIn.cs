@@ -69,7 +69,7 @@ namespace AccountBuddy.SL.Hubs
         }
         void StockIn_SaveByStockOut(BLL.StockOut SOut)
         {
-            var refNo = string.Format("STIN-{0}", SOut.Id);
+            var refNo = string.Format("SIN-{0}", SOut.Id);
 
             DAL.StockIn p = DB.StockIns.Where(x => x.RefNo == refNo).FirstOrDefault();
             if (p != null)
@@ -148,6 +148,34 @@ namespace AccountBuddy.SL.Hubs
             {
 
                 DAL.StockIn d = DB.StockIns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
+                DB.Entry(d).Reload();
+                if (d != null)
+                {
+
+                    d.toCopy<BLL.StockIn>(P);
+                    P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+
+                    foreach (var d_pod in d.StockInDetails)
+                    {
+                        BLL.StockInDetail b_pod = new BLL.StockInDetail();
+                        d_pod.toCopy<BLL.StockInDetail>(b_pod);
+                        P.STInDetails.Add(b_pod);
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                    }
+
+                }
+            }
+            catch (Exception ex) { }
+            return P;
+        }
+        public BLL.StockIn StockIn_FindById(int Id)
+        {
+            BLL.StockIn P = new BLL.StockIn();
+            try
+            {
+
+                DAL.StockIn d = DB.StockIns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == Id).FirstOrDefault();
                 DB.Entry(d).Reload();
                 if (d != null)
                 {

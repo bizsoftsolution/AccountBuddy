@@ -71,7 +71,7 @@ namespace AccountBuddy.SL.Hubs
 
         void StockOut_SaveByStockIn(BLL.StockIn STIn)
         {
-            var refNo = string.Format("STIn-{0}", STIn.Id);
+            var refNo = string.Format("SOUT-{0}", STIn.Id);
 
             DAL.StockOut p = DB.StockOuts.Where(x => x.RefNo == refNo).FirstOrDefault();
             if (p != null)
@@ -172,6 +172,35 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return P;
         }
+        public BLL.StockOut StockOut_FindById(int ID)
+        {
+            BLL.StockOut P = new BLL.StockOut();
+            try
+            {
+
+                DAL.StockOut d = DB.StockOuts.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                DB.Entry(d).Reload();
+                if (d != null)
+                {
+
+                    d.toCopy<BLL.StockOut>(P);
+                    P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+
+                    foreach (var d_pod in d.StockOutDetails)
+                    {
+                        BLL.StockOutDetail b_pod = new BLL.StockOutDetail();
+                        d_pod.toCopy<BLL.StockOutDetail>(b_pod);
+                        P.STOutDetails.Add(b_pod);
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                    }
+
+                }
+            }
+            catch (Exception ex) { }
+            return P;
+        }
+
 
         public bool StockOut_Delete(long pk)
         {

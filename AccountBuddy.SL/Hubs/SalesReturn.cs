@@ -186,6 +186,34 @@ namespace AccountBuddy.SL.Hubs
             }
         }
 
+        public BLL.SalesReturn SalesReturn_FindById(int ID)
+        {
+            BLL.SalesReturn P = new BLL.SalesReturn();
+            try
+            {
+
+                DAL.SalesReturn d = DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                DB.Entry(d).Reload();
+                if (d != null)
+                {
+
+                    d.toCopy<BLL.SalesReturn>(P);
+                    P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    foreach (var d_pod in d.SalesReturnDetails)
+                    {
+                        BLL.SalesReturnDetail b_pod = new BLL.SalesReturnDetail();
+                        d_pod.toCopy<BLL.SalesReturnDetail>(b_pod);
+                        P.SRDetails.Add(b_pod);
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                    }
+
+                }
+            }
+            catch (Exception ex) { }
+            return P;
+        }
 
         #endregion
 

@@ -66,11 +66,11 @@ namespace AccountBuddy.PL.frm.Master
             iProductImage.Tag = data.Logo;
             if (data.CompanyType == "Company")
             {
-                var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive!=false);
+                var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive==true);
                 dgvWarehouse.ItemsSource = lstCompany;
 
 
-                dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive != false).ToList();
+                dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
 
 
             }
@@ -90,7 +90,7 @@ namespace AccountBuddy.PL.frm.Master
                 CollectionViewSource.GetDefaultView(dgvWarehouse.ItemsSource).Refresh();
                 CollectionViewSource.GetDefaultView(dgvDealer.ItemsSource).Refresh();
 
-                dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive != false).ToList();
+                dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
 
             }
             catch (Exception ex) { };
@@ -101,7 +101,8 @@ namespace AccountBuddy.PL.frm.Master
         #region ButtonEvents
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
+        {            
+
             if (!BLL.UserAccount.AllowInsert(FormName))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
@@ -109,9 +110,9 @@ namespace AccountBuddy.PL.frm.Master
             else if (!BLL.UserAccount.AllowUpdate(FormName))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
-            }
+            }            
             else
-            {
+            {                                
                 if (data.Save() == true)
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
@@ -143,8 +144,11 @@ namespace AccountBuddy.PL.frm.Master
             f.data.CompanyType = "Warehouse";
             f.Title = "New Warehouse";
             f.ShowDialog();
-            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
+            List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
+
+            lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive==true).ToList();
             dgvWarehouse.ItemsSource = lstCompany;
+           
         }
 
         private void btnNewDealer_Click(object sender, RoutedEventArgs e)
@@ -157,7 +161,7 @@ namespace AccountBuddy.PL.frm.Master
             f.ShowDialog();
             List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
 
-            lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id).ToList();
+            lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
 
             dgvDealer.ItemsSource = lstCompany;
 
@@ -174,7 +178,7 @@ namespace AccountBuddy.PL.frm.Master
             f.Title = "Edit Warehouse";
             f.gbxLogin.Visibility = Visibility.Collapsed;
             f.ShowDialog();
-            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
+            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
             dgvWarehouse.ItemsSource = lstCompany;
         }
 
@@ -225,7 +229,7 @@ namespace AccountBuddy.PL.frm.Master
                 List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
                 if (cm != null)
                 {
-                    lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id).ToList();
+                    lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
                 }
                 dgvDealer.ItemsSource = lstCompany;
             }

@@ -415,6 +415,23 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public bool FindById(int Id)
+        {
+            try
+            {
+                SalesReturn po = FMCGHubClient.FMCGHub.Invoke<SalesReturn>("SalesReturn_FindById", Id).Result;
+                if (po.Id == 0) return false;
+                po.toCopy<SalesReturn>(this);
+                this.SRDetails = po.SRDetails;
+                NotifyAllPropertyChanged();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public bool Delete()
         {
             try

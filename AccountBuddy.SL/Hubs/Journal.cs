@@ -540,7 +540,7 @@ namespace AccountBuddy.SL.Hubs
 
         void Journal_SaveByStockOut(BLL.StockOut STout)
         {
-            var EntryNo = string.Format("STOUT-{0}", STout.Id);
+            var EntryNo = string.Format("SOUT-{0}", STout.Id);
             var LName = LedgerNameByCompanyId(Caller.CompanyId);
             var CId = CompanyIdByLedgerName(LName);
 
@@ -590,7 +590,7 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteByStockOut(BLL.StockOut P)
         {
-            var EntryNo = string.Format("STOUT-{0}", P.Id);
+            var EntryNo = string.Format("SOUT-{0}", P.Id);
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
@@ -598,7 +598,7 @@ namespace AccountBuddy.SL.Hubs
 
         void Journal_SaveByStockIn(BLL.StockIn STIn)
         {
-            var EntryNo = string.Format("STIN-{0}", STIn.Id);
+            var EntryNo = string.Format("SIN-{0}", STIn.Id);
             var ld = DB.Ledgers.Where(x => x.Id == STIn.LedgerId).FirstOrDefault();
             var LName = LedgerNameByCompanyId(Caller.CompanyId);
             var CId = CompanyIdByLedgerName(LName);
@@ -649,7 +649,7 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteByStockIn(BLL.StockIn P)
         {
-            var EntryNo = string.Format("STIN-{0}", P.Id);
+            var EntryNo = string.Format("SIN-{0}", P.Id);
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }

@@ -170,7 +170,34 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return P;
         }
+        public BLL.Sale Sales_FindById(int Id)
+        {
+            BLL.Sale P = new BLL.Sale();
+            try
+            {
 
+                DAL.Sale d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == Id).FirstOrDefault();
+                DB.Entry(d).Reload();
+                if (d != null)
+                {
+
+                    d.toCopy<BLL.Sale>(P);
+                    P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    foreach (var d_pod in d.SalesDetails)
+                    {
+                        BLL.SalesDetail b_pod = new BLL.SalesDetail();
+                        d_pod.toCopy<BLL.SalesDetail>(b_pod);
+                        P.SDetails.Add(b_pod);
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                    }
+
+                }
+            }
+            catch (Exception ex) { }
+            return P;
+        }
         public bool Sales_Delete(long pk)
         {
             try

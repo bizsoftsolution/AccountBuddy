@@ -57,8 +57,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.CompanyDetail> CompanyDetail_List()
         {
-            return DB.CompanyDetails.Where(x => x.IsActive != false).ToList()
-                             .Select(x => CompanyDetailDAL_BLL(x)).ToList();
+            return DB.CompanyDetails.ToList().Select(x => CompanyDetailDAL_BLL(x)).ToList();
         }
 
         int AccountGroupIdByCompanyAndKey(int CompanyId, string key)

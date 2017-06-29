@@ -287,7 +287,22 @@ namespace AccountBuddy.BLL
                 return false;
             }
         }
-
+        public bool FindById(int id)
+        {
+            try
+            {
+                StockOut po = FMCGHubClient.FMCGHub.Invoke<StockOut>("StockOut_FindById", id).Result;
+                if (po.Id == 0) return false;
+                po.toCopy<StockOut>(this);
+                this.STOutDetails = po.STOutDetails;
+                NotifyAllPropertyChanged();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         public bool Delete()
         {
             try

@@ -11,7 +11,7 @@ namespace AccountBuddy.BLL
     {
         #region Fields
         private long _EId;
-        private Char _EType;
+        private string _EType;
         private DateTime? _EDate;
         private String _EntryNo;        
         private string _RefNo;
@@ -21,7 +21,7 @@ namespace AccountBuddy.BLL
         private decimal _BalAmt;
         private string _AccountName;
         private string _Particular;
-
+        private string _RefEntryNo;
         #endregion
 
         #region Property
@@ -41,7 +41,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public char EType
+        public string EType
         {
             get
             {
@@ -83,6 +83,21 @@ namespace AccountBuddy.BLL
                 {
                     _RefNo = value;
                     NotifyPropertyChanged(nameof(RefNo));
+                }
+            }
+        }
+        public string RefEntryNo
+        {
+            get
+            {
+                return _RefEntryNo;
+            }
+            set
+            {
+                if (_RefEntryNo != value)
+                {
+                    _RefEntryNo = value;
+                    NotifyPropertyChanged(nameof(RefEntryNo));
                 }
             }
         }

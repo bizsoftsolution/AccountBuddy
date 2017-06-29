@@ -483,19 +483,28 @@ namespace AccountBuddy.BLL
         {
             bool RValue = true;
             lstValidation.Clear();
+            var cm = toList.Where(x => x.CompanyName == CompanyName && x.CompanyType == CompanyType&& x.UnderCompanyId==UnderCompanyId).FirstOrDefault();
 
-            
             if (string.IsNullOrWhiteSpace(CompanyName))
             {
                 lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Required_Data, nameof(CompanyName)) });
                 RValue = false;
             }
-            else if (toList.Where(x => x.CompanyName.ToLower() == CompanyName.ToLower() && x.Id != Id).Count() > 0)
+            else if (cm!=null)
             {
-                lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Existing_Data, CompanyName) });
-                RValue = false;
+                if (cm.IsActive == false)
+                {
+                    lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format("{0} is Deleted {1}. Please Contact DENARIUSOFT Administrator.",CompanyName,CompanyType) });
+                    RValue = false;
+                }
+                else if (cm.Id != Id)
+                {
+                    lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Existing_Data, CompanyName) });
+                    RValue = false;
+                }
+                
             }
-            if (Id == 0)
+            else if (Id == 0)
             {
                 if (string.IsNullOrWhiteSpace(UserId))
                 {

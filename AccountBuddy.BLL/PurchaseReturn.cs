@@ -410,7 +410,22 @@ namespace AccountBuddy.BLL
                 return false;
             }
         }
-
+        public bool FindById(int Id)
+        {
+            try
+            {
+                PurchaseReturn po = FMCGHubClient.FMCGHub.Invoke<PurchaseReturn>("PurchaseReturn_FindById", Id).Result;
+                if (po.Id == 0) return false;
+                po.toCopy<PurchaseReturn>(this);
+                this.PRDetails = po.PRDetails;
+                NotifyAllPropertyChanged();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         public bool Delete()
         {
             try
