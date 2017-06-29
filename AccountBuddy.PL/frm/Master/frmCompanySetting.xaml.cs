@@ -66,11 +66,11 @@ namespace AccountBuddy.PL.frm.Master
             iProductImage.Tag = data.Logo;
             if (data.CompanyType == "Company")
             {
-                var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id);
+                var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive!=false);
                 dgvWarehouse.ItemsSource = lstCompany;
 
 
-                dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id).ToList();
+                dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive != false).ToList();
 
 
             }
@@ -89,6 +89,9 @@ namespace AccountBuddy.PL.frm.Master
             {
                 CollectionViewSource.GetDefaultView(dgvWarehouse.ItemsSource).Refresh();
                 CollectionViewSource.GetDefaultView(dgvDealer.ItemsSource).Refresh();
+
+                dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive != false).ToList();
+
             }
             catch (Exception ex) { };
 
