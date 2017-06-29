@@ -49,6 +49,7 @@ namespace AccountBuddy.BLL
         public static void HubConnect()
         {
             //            _hubCon = new HubConnection("http://110.4.40.46/fmcgsl/SignalR");
+            //_hubCon = new HubConnection("http://ubs3/fmcg/SignalR");
             _hubCon = new HubConnection("http://localhost:51068/SignalR");
             _fmcgHub = _hubCon.CreateHubProxy("ABServerHub");
             _hubCon.Start(new LongPollingTransport()).Wait();
