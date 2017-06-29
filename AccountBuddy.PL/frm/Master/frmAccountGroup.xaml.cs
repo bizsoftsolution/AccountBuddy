@@ -53,7 +53,9 @@ namespace AccountBuddy.PL.frm.Master
 
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Filter = AccountGroup_Filter;
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
-            cmbUnder.ItemsSource = BLL.AccountGroup.toList;
+
+            var LAGIds = BLL.Ledger.toList.Select(x => x.AccountGroupId).ToList();
+            cmbUnder.ItemsSource = BLL.AccountGroup.toList.Where(x=> !LAGIds.Contains(x.Id)).ToList();
             cmbUnder.SelectedValuePath = "Id";
             cmbUnder.DisplayMemberPath = "GroupNameWithCode";
 

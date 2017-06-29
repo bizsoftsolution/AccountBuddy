@@ -303,10 +303,10 @@ namespace AccountBuddy.PL.frm.Master
 
         private void cmbUnder_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbUnder.ItemsSource = BLL.StockGroup.StocktoList;
+            var PSGIds = BLL.Product.toList.Select(x => x.StockGroupId).ToList();
+            cmbUnder.ItemsSource = BLL.StockGroup.toList.Where(x=> !PSGIds.Contains(x.Id)).ToList();
             cmbUnder.SelectedValuePath = "Id";
             cmbUnder.DisplayMemberPath = "StockGroupName";
-
         }
     }
 }
