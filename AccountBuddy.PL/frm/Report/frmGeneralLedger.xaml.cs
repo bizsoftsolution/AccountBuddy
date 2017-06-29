@@ -169,7 +169,7 @@ namespace AccountBuddy.PL.frm.Report
                     f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
 
                 }
-                else if (gl.EType == "STOUT")
+                else if (gl.EType == "SOUT")
                 {
                     Transaction.frmStockOut f = new Transaction.frmStockOut();
                     App.frmHome.ShowForm(f);
@@ -179,7 +179,7 @@ namespace AccountBuddy.PL.frm.Report
                     f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
 
                 }
-                else if (gl.EType == "STIN")
+                else if (gl.EType == "SIN")
                 {
                     Transaction.frmStockInOut f = new Transaction.frmStockInOut();
                     App.frmHome.ShowForm(f);
