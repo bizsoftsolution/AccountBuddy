@@ -140,6 +140,7 @@ namespace AccountBuddy.PL.frm.Master
         private void btnNewWareHouse_Click(object sender, RoutedEventArgs e)
         {
             frmCompanySignup f = new frmCompanySignup();
+            f.data.Clear();
             f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
             f.data.CompanyType = "Warehouse";
             f.Title = "New Warehouse";
@@ -155,6 +156,7 @@ namespace AccountBuddy.PL.frm.Master
         {
 
             frmCompanySignup f = new frmCompanySignup();
+            f.data.Clear();
             f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
             f.data.CompanyType = "Dealer";
             f.Title = "New Dealer";

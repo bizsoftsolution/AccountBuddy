@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.IO;
 
 namespace AccountBuddy.SL.Hubs
 {
@@ -258,6 +259,8 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
 
         }
+
+        
         #endregion
 
     }
