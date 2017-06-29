@@ -230,6 +230,13 @@ namespace AccountBuddy.Common
             return img;
         }
 
-
+        public static void WriteLog(String str)
+        {
+            
+            using (StreamWriter writer = new StreamWriter(Path.GetTempPath()+"FMCG_log.txt", true))
+            {
+                writer.WriteLine(string.Format("{0:dd/MM/yyyy hh:mm:ss} => {1}", DateTime.Now, str));
+            }
+        }
     }
 }

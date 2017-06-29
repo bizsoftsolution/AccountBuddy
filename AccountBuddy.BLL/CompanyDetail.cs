@@ -462,7 +462,7 @@ namespace AccountBuddy.BLL
         {
            new CompanyDetail().toCopy<CompanyDetail>(this);
            IsReadOnly = !UserPermission.AllowInsert;
-           
+           IsActive = true;
            NotifyAllPropertyChanged();
         }
 

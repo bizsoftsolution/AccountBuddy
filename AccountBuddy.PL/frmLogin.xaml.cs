@@ -95,13 +95,15 @@ namespace AccountBuddy.PL
         {
 
             frmCompanySignup f = new frmCompanySignup();
-            f.data.CompanyType = "Company";
+            f.data.Clear();
+            f.data.CompanyType = "Company";            
             f.ShowDialog();
             ClearForm();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
+            Common.AppLib.WriteLog("Login_Clear");
             ClearForm();
         }
 

@@ -50,7 +50,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             BLL.AccountGroup.Init();
             dgvAccount.ItemsSource = BLL.AccountGroup.toList;
-            trvAccount.ItemsSource = BLL.AccountGroup.toGroup(BLL.DataKeyValue.Primary_Value);
+            
 
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Filter = AccountGroup_Filter;
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
@@ -63,8 +63,7 @@ namespace AccountBuddy.PL.frm.Master
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
-            data.Clear();
-        
+            clear();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -86,7 +85,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (data.Save() == true)
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
-                    data.Clear();
+                    clear();
                     Grid_Refresh();
                 }
                 else
@@ -112,13 +111,13 @@ namespace AccountBuddy.PL.frm.Master
                         if (data.Delete() == true)
                         {
                             MessageBox.Show(Message.PL.Delete_Alert);
-                            data.Clear();
+                            clear();
                             Grid_Refresh();
                         }
                         else
                         {
                             MessageBox.Show(Message.PL.Cant_Delete_Alert);
-                            data.Clear();
+                            clear();
                         }
 
                     }
@@ -322,7 +321,11 @@ namespace AccountBuddy.PL.frm.Master
             
 
         }
-
+       void clear()
+        {
+            data.Clear();
+            trvAccount.ItemsSource = BLL.AccountGroup.toGroup(BLL.DataKeyValue.Primary_Value);
+        }
         private void cmbUnder_GotFocus(object sender, RoutedEventArgs e)
         {
             var LAGIds = BLL.Ledger.toList.Select(x => x.AccountGroupId).ToList();

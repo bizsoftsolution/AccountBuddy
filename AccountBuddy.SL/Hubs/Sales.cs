@@ -229,18 +229,23 @@ namespace AccountBuddy.SL.Hubs
             return S;
         }
         public bool Find_SRef(string RefNo, BLL.Sale PO)
-
         {
-            DAL.Sale d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
-            if (d == null)
+            try
             {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+                Common.AppLib.WriteLog(string.Format("Find_SRef: RefNo={0}, SaleId = {1}", RefNo, PO.Id));
+                DAL.Sale d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
 
+                if (d == null)
+                {
+                    Common.AppLib.WriteLog(string.Format("Find_SRef is return false"));
+                    return false;
+                }                
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog("Error on Find_SRef");
+            }
+            return true;
         }
 
         #endregion

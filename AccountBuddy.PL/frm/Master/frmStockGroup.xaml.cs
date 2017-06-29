@@ -54,12 +54,11 @@ namespace AccountBuddy.PL.frm.Master
             CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Filter = StockGroup_Filter;
             CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
 
-            trvStock.ItemsSource = BLL.StockGroup.toGroup(null);
-
+            
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
-            data.Clear();
+            Clear();
 
         }
 
@@ -82,7 +81,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (data.Save() == true)
                 {
                     MessageBox.Show(Message.PL.Saved_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
-                    data.Clear();
+                    Clear();
                     Grid_Refresh();
                 }
                 else
@@ -108,13 +107,14 @@ namespace AccountBuddy.PL.frm.Master
                         if (data.Delete() == true)
                         {
                             MessageBox.Show(Message.PL.Delete_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
-                            data.Clear();
+                            Clear();
                             Grid_Refresh();
+                            
                         }
                         else
                         {
                             MessageBox.Show(Message.PL.Cant_Delete_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-                            data.Clear();
+                            Clear();
                         }
 
                     }
@@ -130,9 +130,14 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            data.Clear();
+            Clear();
         }
 
+        void Clear()
+        {
+            data.Clear();
+            trvStock.ItemsSource = BLL.StockGroup.toGroup(null);
+        }
         private void dgvStock_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var d = dgvStock.SelectedItem as BLL.StockGroup;
