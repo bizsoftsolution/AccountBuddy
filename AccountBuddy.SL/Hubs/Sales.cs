@@ -87,69 +87,58 @@ namespace AccountBuddy.SL.Hubs
 
        void Sales_SaveByPurchase(DAL.Purchase P)
         {
-            var refNo = string.Format("SAL-{0}", P.Id);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
 
-            DAL.Sale s = DB.Sales.Where(x => x.RefNo == refNo).FirstOrDefault();
-            if (s != null)
-            {
-                DB.SalesDetails.RemoveRange(s.SalesDetails);
-                DB.Sales.Remove(s);
-                DB.SaveChanges();
-            }
-            var ld = P.Ledger;
-
-            if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
+            DAL.Sale s = DB.Sales.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            if (P.Ledger.LedgerName.StartsWith("CM-") || P.Ledger.LedgerName.StartsWith("WH-") || P.Ledger.LedgerName.StartsWith("DL-"))
             {
                 var LName = LedgerNameByCompanyId(Caller.CompanyId);
+                var CId = CompanyIdByLedgerName(P.Ledger.LedgerName);
+                var LId = LedgerIdByCompany(LName, CId);
 
-                var CId = CompanyIdByLedgerName(ld.LedgerName);
-
-                s = new DAL.Sale();
-                s.RefNo = refNo;
-                s.SalesDate  =P.PurchaseDate;
-                s.DiscountAmount = P.DiscountAmount;
-                s.ExtraAmount = P.ExtraAmount;
-                s.GSTAmount = P.GSTAmount;
-                s.ItemAmount = P.ItemAmount;
-                s.TotalAmount = P.TotalAmount;
-                s.LedgerId = LedgerIdByCompany(LName, CId);
-                s.TransactionTypeId = P.TransactionTypeId;
-                if (CId != 0)
+                if (LId != 0)
                 {
+                    if (s == null)
+                    {
+                        s = new DAL.Sale();
+                        s.RefNo = Sales_NewRefNoByCompanyId(CId);
+                        s.RefCode = RefCode;
+                        DB.Sales.Add(s);
+                    }
+                    else
+                    {
+                        DB.SalesDetails.RemoveRange(s.SalesDetails);
+                    }
+
+                    s.SalesDate = P.PurchaseDate;
+                    s.DiscountAmount = P.DiscountAmount;
+                    s.ExtraAmount = P.ExtraAmount;
+                    s.GSTAmount = P.GSTAmount;
+                    s.ItemAmount = P.ItemAmount;
+                    s.TotalAmount = P.TotalAmount;
+                    s.LedgerId = LId;
+                    s.TransactionTypeId = P.TransactionTypeId;
                     foreach (var b_pod in P.PurchaseDetails)
                     {
                         DAL.SalesDetail d_pod = new DAL.SalesDetail();
                         b_pod.toCopy<DAL.SalesDetail>(d_pod);
                         s.SalesDetails.Add(d_pod);
                     }
-                    DB.Sales.Add(s);
-                    DB.SaveChanges();                    
+                    DB.SaveChanges();
                     Journal_SaveBySales(s);
                 }
             }
         }
-        public bool Sales_DeleteByPurchase(BLL.Purchase P)
+        public bool Sales_DeleteByPurchase(DAL.Purchase P)
         {
             try
             {
-                var LName = DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault().LedgerName;
-
-                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
+                DAL.Sale d = DB.Sales.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (d != null)
                 {
-
-                    DAL.Sale d = DB.Sales.Where(x => x.RefNo == P.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
-
-                    if (d != null)
-                    {
-                        DB.SalesDetails.RemoveRange(d.SalesDetails);
-                        DB.Sales.Remove(d);
-                        DB.SaveChanges();
-                    }
-
-                    return true;
+                    Sales_Delete(d.Id);
                 }
-
-
             }
             catch (Exception ex) { }
             return false;

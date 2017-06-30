@@ -110,7 +110,7 @@ namespace AccountBuddy.SL.Hubs
                     }
                     else
                     {
-                        p.PurchaseDetails.Clear();
+                        DB.PurchaseDetails.RemoveRange(p.PurchaseDetails);
                     }
 
                     p.PurchaseDate = S.SalesDate;
@@ -199,6 +199,7 @@ namespace AccountBuddy.SL.Hubs
                 DB.SaveChanges();
                 LogDetailStore(P, LogDetailType.DELETE);
                 Journal_DeleteByPurchase(P);
+                Sales_DeleteByPurchase(d);
                 return true;
             }
 
