@@ -47,7 +47,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         DAL.SalesDetail d_pod = new DAL.SalesDetail();
                         b_pod.toCopy<DAL.SalesDetail>(d_pod);
-                        d.SalesDetails.Add(d_pod);
+                       d.SalesDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
 
@@ -79,13 +79,14 @@ namespace AccountBuddy.SL.Hubs
                 Clients.Clients(OtherLoginClientsOnGroup).Sales_RefNoRefresh(Sales_NewRefNo());
                 Journal_SaveBySales(d);
                 Purchase_SaveBySales(d);
-                return true;
+         return true;
             }
             catch (Exception ex) { }
             return false;
         }
 
-       void Sales_SaveByPurchase(DAL.Purchase P)
+        #region Purchase
+        void Sales_SaveByPurchase(DAL.Purchase P)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
 
@@ -111,7 +112,7 @@ namespace AccountBuddy.SL.Hubs
                     }
 
                     s.SalesDate = P.PurchaseDate;
-                    s.DiscountAmount = P.DiscountAmount;
+                  s.DiscountAmount = P.DiscountAmount;
                     s.ExtraAmount = P.ExtraAmount;
                     s.GSTAmount = P.GSTAmount;
                     s.ItemAmount = P.ItemAmount;
@@ -143,7 +144,7 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
-
+        #endregion
 
 
         public BLL.Sale Sales_Find(string SearchText)

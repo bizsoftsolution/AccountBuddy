@@ -26,7 +26,7 @@ namespace AccountBuddy.SL.Hubs
                                      .OrderByDescending(x => x.EntryNo)
                                      .FirstOrDefault();
 
-            if (d != null) No = Convert.ToInt64(d.EntryNo.Substring(Prefix.Length ), 16);
+            if (d != null) No = Convert.ToInt64(d.EntryNo.Substring(Prefix.Length), 16);
 
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
@@ -184,6 +184,7 @@ namespace AccountBuddy.SL.Hubs
             return string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), cm.CompanyName);
         }
 
+        #region Purchase
         void Journal_SaveByPurchase(DAL.Purchase P)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
@@ -197,21 +198,21 @@ namespace AccountBuddy.SL.Hubs
                 j.RefCode = RefCode;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId):P.LedgerId,
+                    LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId,
                     CrAmt = P.TotalAmount,
                     Particulars = P.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key,CId),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key, CId),
                     DrAmt = P.ItemAmount - P.DiscountAmount + P.ExtraAmount,
                     Particulars = P.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Output_Tax_Ledger_Key,CId),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Output_Tax_Ledger_Key, CId),
                     DrAmt = P.GSTAmount,
                     Particulars = P.Narration
                 });
@@ -225,7 +226,7 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = P.Narration;
                     if (jd.CrAmt != 0)
                     {
-                        jd.LedgerId = P.TransactionTypeId==1? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId;
+                        jd.LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId;
                         jd.CrAmt = P.TotalAmount;
                     }
                     else
@@ -244,21 +245,26 @@ namespace AccountBuddy.SL.Hubs
             DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
-        void Journal_SaveBySalesReturn(BLL.SalesReturn SR)
-        {
-            var EntryNo = string.Format("SRN-{0}", SR.Id);
-            var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+        #endregion
+
+        #region sales return 
+        void Journal_SaveBySalesReturn(DAL.SalesReturn SR)
+        {
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
+
+            var CId = SR.Ledger.AccountGroup.CompanyId;
+
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = EntryNo;
+                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.RefCode = RefCode;
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = SR.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : SR.LedgerId,
+                    LedgerId = SR.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : SR.LedgerId,
                     CrAmt = SR.TotalAmount,
                     Particulars = SR.Narration
                 });
@@ -286,7 +292,7 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = SR.Narration;
                     if (jd.CrAmt != 0)
                     {
-                        jd.LedgerId = SR.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : SR.LedgerId;
+                        jd.LedgerId = SR.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : SR.LedgerId;
                         jd.CrAmt = SR.TotalAmount;
                     }
                     else
@@ -300,11 +306,14 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteBySalesReturn(BLL.SalesReturn SR)
         {
-            var EntryNo = string.Format("SRN-{0}", SR.Id);
-
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
-            if (j == null) Journal_Delete(j.Id);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn,SR.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            if (j != null) Journal_Delete(j.Id);
         }
+        #endregion
+
+        #region Sales
+
         void Journal_SaveBySales(DAL.Sale S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
@@ -352,7 +361,7 @@ namespace AccountBuddy.SL.Hubs
                     }
                     else
                     {
-                        jd.CrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.SalesAccount_Ledger_Key,CId) ? S.ItemAmount - S.DiscountAmount + S.ExtraAmount : S.GSTAmount;
+                        jd.CrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.SalesAccount_Ledger_Key, CId) ? S.ItemAmount - S.DiscountAmount + S.ExtraAmount : S.GSTAmount;
                     }
                 }
             }
@@ -366,21 +375,24 @@ namespace AccountBuddy.SL.Hubs
             DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
-        void Journal_SaveByPurchaseReturn(BLL.PurchaseReturn PR)
-        {
-            var EntryNo = string.Format("PRN-{0}", PR.Id);
-            var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
+        #endregion
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+        #region Purchase Return
+        void Journal_SaveByPurchaseReturn(DAL.PurchaseReturn PR)
+        {
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, PR.Id);
+            var CId = PR.Ledger.AccountGroup.CompanyId;
+
+
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = EntryNo;
-
+                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.RefCode = RefCode;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = PR.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : PR.LedgerId,
+                    LedgerId = PR.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : PR.LedgerId,
                     DrAmt = PR.TotalAmount,
                     Particulars = PR.Narration
                 });
@@ -394,7 +406,7 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Input_Tax_Ledger_Key,CId),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Input_Tax_Ledger_Key, CId),
                     CrAmt = PR.GSTAmount,
                     Particulars = PR.Narration
                 });
@@ -408,7 +420,7 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = PR.Narration;
                     if (jd.DrAmt != 0)
                     {
-                        jd.LedgerId = PR.TransactionType == "Cash" ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : PR.LedgerId;
+                        jd.LedgerId = PR.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : PR.LedgerId;
                         jd.DrAmt = PR.TotalAmount;
                     }
                     else
@@ -422,13 +434,14 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteByPurchaseReturn(BLL.PurchaseReturn PR)
         {
-            var EntryNo = string.Format("PRN-{0}", PR.Id);
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
-            if (j == null) Journal_Delete(j.Id);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, PR.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            if (j != null) Journal_Delete(j.Id);
         }
+        #endregion
 
-
+        #region Payment
         void Journal_SaveByPayment(BLL.Payment P)
         {
             var EntryNo = string.Format("PMT-{0}", P.Id);
@@ -490,6 +503,9 @@ namespace AccountBuddy.SL.Hubs
             if (j != null) Journal_Delete(j.Id);
         }
 
+        #endregion
+
+        #region Receipt
         void Journal_SaveByReceipt(BLL.Receipt R)
         {
             var EntryNo = string.Format("RPT-{0}", R.Id);
@@ -551,24 +567,22 @@ namespace AccountBuddy.SL.Hubs
             DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
+        #endregion
 
-        #region Stock Out
-    
+        #region Stockout
 
-
-        void Journal_SaveByStockOut(BLL.StockOut STout)
+        void Journal_SaveByStockOut(DAL.StockOut STout)
         {
-            var EntryNo = string.Format("SOUT-{0}", STout.Id);
-            var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, STout.Id);
+            var CId = STout.Ledger.AccountGroup.CompanyId;
 
-
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = EntryNo;
-               
+                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.RefCode = RefCode;
+
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
@@ -579,7 +593,7 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId=STout.LedgerId,
+                    LedgerId = STout.LedgerId,
                     DrAmt = STout.ItemAmount,
                     Particulars = STout.Narration
                 });
@@ -593,12 +607,12 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = STout.Narration;
                     if (jd.CrAmt != 0)
                     {
-                        jd.LedgerId =STout.LedgerId;
+                        jd.LedgerId = STout.LedgerId;
                         jd.CrAmt = STout.ItemAmount;
                     }
                     else
                     {
-                        jd.DrAmt =  STout.ItemAmount ;
+                        jd.DrAmt = STout.ItemAmount;
                     }
                 }
             }
@@ -608,25 +622,27 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteByStockOut(BLL.StockOut P)
         {
-            var EntryNo = string.Format("SOUT-{0}", P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, P.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
 
+        #endregion
 
-        void Journal_SaveByStockIn(BLL.StockIn STIn)
+        #region Stock In
+        void Journal_SaveByStockIn(DAL.StockIn STIn)
         {
-            var EntryNo = string.Format("SIN-{0}", STIn.Id);
-            var ld = DB.Ledgers.Where(x => x.Id == STIn.LedgerId).FirstOrDefault();
-            var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, STIn.Id);
+            var CId = STIn.Ledger.AccountGroup.CompanyId;
 
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = EntryNo;
+                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.RefCode = RefCode;
 
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
@@ -638,7 +654,7 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId =LedgerIdByKeyAndCompany(BLL.DataKeyValue.Stock_Inward_Ledger_Key, CId),
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Stock_Inward_Ledger_Key, CId),
                     DrAmt = STIn.ItemAmount,
                     Particulars = STIn.Narration
                 });
@@ -652,7 +668,7 @@ namespace AccountBuddy.SL.Hubs
                     jd.Particulars = STIn.Narration;
                     if (jd.CrAmt != 0)
                     {
-                        jd.LedgerId =STIn.LedgerId;
+                        jd.LedgerId = STIn.LedgerId;
                         jd.CrAmt = STIn.ItemAmount;
                     }
                     else
@@ -667,8 +683,9 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteByStockIn(BLL.StockIn P)
         {
-            var EntryNo = string.Format("SIN-{0}", P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, P.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
