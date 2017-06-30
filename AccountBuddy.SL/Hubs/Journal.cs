@@ -11,14 +11,18 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
         #region Journal        
-
         public string Journal_NewRefNo()
+        {
+            return Journal_NewRefNoByCompanyId(Caller.CompanyId);
+        }
+
+        public string Journal_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Journal, dt, dt.Month);
             long No = 0;
 
-            var d = DB.Journals.Where(x => x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.EntryNo.StartsWith(Prefix))
+            var d = DB.Journals.Where(x => x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == CompanyId && x.EntryNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.EntryNo)
                                      .FirstOrDefault();
 
@@ -26,6 +30,7 @@ namespace AccountBuddy.SL.Hubs
 
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
+
         public bool Journal_Save(BLL.Journal PO)
         {
             try
@@ -181,16 +186,15 @@ namespace AccountBuddy.SL.Hubs
 
         void Journal_SaveByPurchase(DAL.Purchase P)
         {
-            var EntryNo = string.Format("PUR-{0}", P.Id);
-            var LName = LedgerNameByCompanyId(Caller.CompanyId);
-            var CId = CompanyIdByLedgerName(LName);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
+            var CId = P.Ledger.AccountGroup.CompanyId;
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = EntryNo;
-              
+                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.RefCode = RefCode;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
                     LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId):P.LedgerId,
@@ -236,8 +240,8 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteByPurchase(BLL.Purchase P)
         {
-            var EntryNo = string.Format("PUR-{0}", P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         void Journal_SaveBySalesReturn(BLL.SalesReturn SR)
@@ -303,16 +307,16 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_SaveBySales(DAL.Sale S)
         {
-            var EntryNo = string.Format("SAL-{0}", S.Id);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
 
             var CId = S.Ledger.AccountGroup.CompanyId;
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = EntryNo;
-
+                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.RefCode = RefCode;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
                     LedgerId = S.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : S.LedgerId,
@@ -357,10 +361,10 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteBySales(BLL.Sale S)
         {
-            var EntryNo = string.Format("SAL-{0}", S.Id);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
-            if (j == null) Journal_Delete(j.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            if (j != null) Journal_Delete(j.Id);
         }
         void Journal_SaveByPurchaseReturn(BLL.PurchaseReturn PR)
         {

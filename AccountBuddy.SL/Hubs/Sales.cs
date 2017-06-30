@@ -12,11 +12,15 @@ namespace AccountBuddy.SL.Hubs
         #region Sales
         public string Sales_NewRefNo()
         {
+            return Sales_NewRefNoByCompanyId(Caller.CompanyId);
+        }
+        public string Sales_NewRefNoByCompanyId(int CompanyId)
+        {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Sales, dt, dt.Month);
             long No = 0;
 
-            var d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
@@ -222,6 +226,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.Sales.Remove(d);
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
+                    Purchase_DeleteBySales(d);
                     Journal_DeleteBySales(P);
                 }
                 return true;
