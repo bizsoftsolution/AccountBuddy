@@ -532,7 +532,7 @@
         <DataSetName>StockInDetail</DataSetName>
         <Top>0.12028cm</Top>
         <Left>0.14122cm</Left>
-        <Height>1.29701cm</Height>
+        <Height>1.29702cm</Height>
         <Width>15.23114cm</Width>
         <Style>
           <Border>
@@ -979,9 +979,10 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>Textbox25</rd:DefaultName>
-                  <Top>0.38889in</Top>
+                  <Top>0.82987in</Top>
+                  <Left>0.03526cm</Left>
                   <Height>0.25in</Height>
-                  <Width>0.5625in</Width>
+                  <Width>0.60417in</Width>
                   <ZIndex>3</ZIndex>
                   <Style>
                     <Border>
@@ -1001,7 +1002,9 @@
                       <TextRuns>
                         <TextRun>
                           <Value>=First(Fields!RefNo.Value, "StockIn")</Value>
-                          <Style />
+                          <Style>
+                            <FontSize>9pt</FontSize>
+                          </Style>
                         </TextRun>
                       </TextRuns>
                       <Style>
@@ -1010,10 +1013,10 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>RefNo</rd:DefaultName>
-                  <Top>0.38889in</Top>
-                  <Left>0.63194in</Left>
+                  <Top>1.10764in</Top>
+                  <Left>0.02777in</Left>
                   <Height>0.25in</Height>
-                  <Width>0.85417in</Width>
+                  <Width>1.51042in</Width>
                   <ZIndex>4</ZIndex>
                   <Style>
                     <Border>
@@ -1044,10 +1047,10 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>Textbox27</rd:DefaultName>
-                  <Top>0.80208in</Top>
-                  <Left>0.01389in</Left>
+                  <Top>0.38888in</Top>
+                  <Left>0.02777in</Left>
                   <Height>0.25in</Height>
-                  <Width>0.54861in</Width>
+                  <Width>0.46529in</Width>
                   <ZIndex>5</ZIndex>
                   <Style>
                     <Border>
@@ -1078,8 +1081,8 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>PODate</rd:DefaultName>
-                  <Top>0.80208in</Top>
-                  <Left>0.63194in</Left>
+                  <Top>0.38888in</Top>
+                  <Left>0.59028in</Left>
                   <Height>0.25in</Height>
                   <Width>0.89236in</Width>
                   <ZIndex>6</ZIndex>
@@ -1093,23 +1096,12 @@
                     <PaddingBottom>2pt</PaddingBottom>
                   </Style>
                 </Textbox>
-                <Line Name="Line11">
-                  <Top>1.07986in</Top>
-                  <Height>0in</Height>
-                  <Width>1.63194in</Width>
-                  <ZIndex>7</ZIndex>
-                  <Style>
-                    <Border>
-                      <Style>Solid</Style>
-                    </Border>
-                  </Style>
-                </Line>
                 <Line Name="Line12">
                   <Top>0.31944in</Top>
                   <Left>0.5625in</Left>
-                  <Height>1.36458in</Height>
+                  <Height>0.45487in</Height>
                   <Width>0in</Width>
-                  <ZIndex>8</ZIndex>
+                  <ZIndex>7</ZIndex>
                   <Style>
                     <Border>
                       <Style>Solid</Style>

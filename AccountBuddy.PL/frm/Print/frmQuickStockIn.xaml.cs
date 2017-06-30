@@ -95,7 +95,13 @@ namespace AccountBuddy.PL.frm.Print
                 dt.Rows.Add(newRow);
             }
 
-
+            newRow = dt.NewRow();
+            newRow["ProductName"] = string.Format("----------- No Of Products {0}----------", data.STInDetails.Count());
+            newRow["Quantity"] = "";
+            newRow["UnitPrice"] = "";
+            newRow["Amount"] = "";
+            newRow["Id"] = "";
+            dt.Rows.Add(newRow);
 
             for (int i = 0; i < NoRecPerPage - data.STInDetails.Count(); i++)
             {

@@ -923,72 +923,6 @@
                     </Border>
                   </Style>
                 </Line>
-                <Textbox Name="Textbox25">
-                  <CanGrow>true</CanGrow>
-                  <KeepTogether>true</KeepTogether>
-                  <Paragraphs>
-                    <Paragraph>
-                      <TextRuns>
-                        <TextRun>
-                          <Value>INV. NO:</Value>
-                          <Style>
-                            <FontSize>8pt</FontSize>
-                            <FontWeight>Bold</FontWeight>
-                          </Style>
-                        </TextRun>
-                      </TextRuns>
-                      <Style>
-                        <TextAlign>Left</TextAlign>
-                      </Style>
-                    </Paragraph>
-                  </Paragraphs>
-                  <rd:DefaultName>Textbox25</rd:DefaultName>
-                  <Top>0.38889in</Top>
-                  <Height>0.25in</Height>
-                  <Width>0.5625in</Width>
-                  <ZIndex>3</ZIndex>
-                  <Style>
-                    <Border>
-                      <Style>None</Style>
-                    </Border>
-                    <PaddingLeft>2pt</PaddingLeft>
-                    <PaddingRight>2pt</PaddingRight>
-                    <PaddingTop>2pt</PaddingTop>
-                    <PaddingBottom>2pt</PaddingBottom>
-                  </Style>
-                </Textbox>
-                <Textbox Name="RefNo">
-                  <CanGrow>true</CanGrow>
-                  <KeepTogether>true</KeepTogether>
-                  <Paragraphs>
-                    <Paragraph>
-                      <TextRuns>
-                        <TextRun>
-                          <Value>=First(Fields!RefNo.Value, "Purchase")</Value>
-                          <Style />
-                        </TextRun>
-                      </TextRuns>
-                      <Style>
-                        <TextAlign>Left</TextAlign>
-                      </Style>
-                    </Paragraph>
-                  </Paragraphs>
-                  <rd:DefaultName>RefNo</rd:DefaultName>
-                  <Top>0.38889in</Top>
-                  <Left>0.63194in</Left>
-                  <Height>0.25in</Height>
-                  <Width>0.85417in</Width>
-                  <ZIndex>4</ZIndex>
-                  <Style>
-                    <Border>
-                      <Style>None</Style>
-                    </Border>
-                    <PaddingLeft>2pt</PaddingLeft>
-                    <PaddingRight>2pt</PaddingRight>
-                    <PaddingTop>2pt</PaddingTop>
-                    <PaddingBottom>2pt</PaddingBottom>
-                  </Style>
-                </Textbox>
                 <Textbox Name="Textbox27">
                   <CanGrow>true</CanGrow>
                   <KeepTogether>true</KeepTogether>
@@ -1008,11 +942,11 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>Textbox27</rd:DefaultName>
-                  <Top>0.80208in</Top>
-                  <Left>0.01389in</Left>
+                  <Top>0.38888in</Top>
+                  <Left>0.02779in</Left>
                   <Height>0.25in</Height>
                   <Width>0.54861in</Width>
-                  <ZIndex>5</ZIndex>
+                  <ZIndex>3</ZIndex>
                   <Style>
                     <Border>
                       <Style>None</Style>
@@ -1042,10 +976,56 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>PODate</rd:DefaultName>
-                  <Top>0.80208in</Top>
-                  <Left>0.63194in</Left>
+                  <Top>0.38888in</Top>
+                  <Left>0.64584in</Left>
                   <Height>0.25in</Height>
                   <Width>0.89236in</Width>
+                  <ZIndex>4</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                </Textbox>
+                <Line Name="Line12">
+                  <Top>0.31944in</Top>
+                  <Left>0.5625in</Left>
+                  <Height>0.45487in</Height>
+                  <Width>0in</Width>
+                  <ZIndex>5</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>Solid</Style>
+                    </Border>
+                  </Style>
+                </Line>
+                <Textbox Name="RefNo">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=First(Fields!RefNo.Value, "Purchase")</Value>
+                          <Style>
+                            <FontSize>9pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Left</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>RefNo</rd:DefaultName>
+                  <Top>1.02431in</Top>
+                  <Left>0.02083in</Left>
+                  <Height>0.25in</Height>
+                  <Width>1.46528in</Width>
                   <ZIndex>6</ZIndex>
                   <Style>
                     <Border>
@@ -1057,35 +1037,47 @@
                     <PaddingBottom>2pt</PaddingBottom>
                   </Style>
                 </Textbox>
-                <Line Name="Line11">
-                  <Top>1.07986in</Top>
-                  <Height>0in</Height>
-                  <Width>1.53819in</Width>
+                <Textbox Name="Textbox25">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>INV. NO:</Value>
+                          <Style>
+                            <FontSize>8pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Left</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox25</rd:DefaultName>
+                  <Top>0.76042in</Top>
+                  <Left>0.07059cm</Left>
+                  <Height>0.25in</Height>
+                  <Width>0.5625in</Width>
                   <ZIndex>7</ZIndex>
                   <Style>
                     <Border>
-                      <Style>Solid</Style>
+                      <Style>None</Style>
                     </Border>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
                   </Style>
-                </Line>
-                <Line Name="Line12">
-                  <Top>0.31944in</Top>
-                  <Left>0.5625in</Left>
-                  <Height>1.36458in</Height>
-                  <Width>0in</Width>
-                  <ZIndex>8</ZIndex>
-                  <Style>
-                    <Border>
-                      <Style>Solid</Style>
-                    </Border>
-                  </Style>
-                </Line>
+                </Textbox>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
               <Top>0.05208in</Top>
               <Left>4.22917in</Left>
               <Height>1.68403in</Height>
-              <Width>1.5382in</Width>
+              <Width>1.54159in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>

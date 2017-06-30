@@ -1134,14 +1134,15 @@
                         </TextRun>
                       </TextRuns>
                       <Style>
-                        <TextAlign>Right</TextAlign>
+                        <TextAlign>Left</TextAlign>
                       </Style>
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>Textbox25</rd:DefaultName>
-                  <Top>0.38889in</Top>
+                  <Top>0.7882in</Top>
+                  <Left>0.05292cm</Left>
                   <Height>0.25in</Height>
-                  <Width>0.5625in</Width>
+                  <Width>0.73958in</Width>
                   <ZIndex>3</ZIndex>
                   <Style>
                     <Border>
@@ -1161,7 +1162,9 @@
                       <TextRuns>
                         <TextRun>
                           <Value>=First(Fields!RefNo.Value, "Sale")</Value>
-                          <Style />
+                          <Style>
+                            <FontSize>9pt</FontSize>
+                          </Style>
                         </TextRun>
                       </TextRuns>
                       <Style>
@@ -1170,10 +1173,10 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>RefNo</rd:DefaultName>
-                  <Top>0.38889in</Top>
-                  <Left>0.59028in</Left>
+                  <Top>1.05209in</Top>
+                  <Left>0.02083in</Left>
                   <Height>0.25in</Height>
-                  <Width>0.75in</Width>
+                  <Width>1.46528in</Width>
                   <ZIndex>4</ZIndex>
                   <Style>
                     <Border>
@@ -1204,10 +1207,10 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>Textbox27</rd:DefaultName>
-                  <Top>0.80208in</Top>
+                  <Top>0.48611in</Top>
                   <Left>0.01389in</Left>
                   <Height>0.25in</Height>
-                  <Width>0.54861in</Width>
+                  <Width>0.49305in</Width>
                   <ZIndex>5</ZIndex>
                   <Style>
                     <Border>
@@ -1238,10 +1241,10 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>PODate</rd:DefaultName>
-                  <Top>0.80208in</Top>
-                  <Left>0.5625in</Left>
+                  <Top>0.49653in</Top>
+                  <Left>0.57521in</Left>
                   <Height>0.25in</Height>
-                  <Width>0.9618in</Width>
+                  <Width>0.9109in</Width>
                   <ZIndex>6</ZIndex>
                   <Style>
                     <Border>
@@ -1253,23 +1256,12 @@
                     <PaddingBottom>2pt</PaddingBottom>
                   </Style>
                 </Textbox>
-                <Line Name="Line11">
-                  <Top>1.07986in</Top>
-                  <Height>0in</Height>
-                  <Width>1.53819in</Width>
-                  <ZIndex>7</ZIndex>
-                  <Style>
-                    <Border>
-                      <Style>Solid</Style>
-                    </Border>
-                  </Style>
-                </Line>
                 <Line Name="Line12">
                   <Top>0.31944in</Top>
                   <Left>0.5625in</Left>
-                  <Height>1.36458in</Height>
+                  <Height>0.45487in</Height>
                   <Width>0in</Width>
-                  <ZIndex>8</ZIndex>
+                  <ZIndex>7</ZIndex>
                   <Style>
                     <Border>
                       <Style>Solid</Style>

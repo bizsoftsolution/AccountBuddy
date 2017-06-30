@@ -20,7 +20,7 @@ namespace AccountBuddy.SL.Hubs
                                      .OrderByDescending(x=> x.RefNo)
                                      .FirstOrDefault();
 
-            if (d != null)  No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length-1), 16);
+            if (d != null)  No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length), 16);
             
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
