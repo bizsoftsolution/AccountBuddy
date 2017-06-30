@@ -74,8 +74,8 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).Purchase_RefNoRefresh(Purchase_NewRefNo());
-                Journal_SaveByPurchase(P);
-                Sales_SaveByPurchase(P);
+                Journal_SaveByPurchase(d);
+                Sales_SaveByPurchase(d);
                 return true;
             }
             
@@ -83,51 +83,52 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-       void Purchase_SaveBySales(BLL.Sale S)
+       void Purchase_SaveBySales(DAL.Sale S)
         {
-            var refNo = string.Format("PUR-{0}", S.Id);
+            var RefCode = string.Format("SAL-{0}",S.Id);
 
-            DAL.Purchase p = DB.Purchases.Where(x => x.RefNo == refNo).FirstOrDefault();
-            if (p != null)
-            {
-                DB.PurchaseDetails.RemoveRange(p.PurchaseDetails);
-                DB.Purchases.Remove(p);
-                DB.SaveChanges();
-            }
-            var pd = S.SDetails.FirstOrDefault();
-            var ld = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault();
+            DAL.Purchase p = DB.Purchases.Where(x => x.RefCode == RefCode).FirstOrDefault();
 
-            if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
-            {
-                var LName = LedgerNameByCompanyId(Caller.CompanyId);
-
-                var CId = CompanyIdByLedgerName(ld.LedgerName);
-
-                p = new DAL.Purchase();                
-                p.RefNo = refNo;
-                p.PurchaseDate = S.SalesDate;
-                p.DiscountAmount = S.DiscountAmount;
-                p.ExtraAmount = S.ExtraAmount;
-                p.GSTAmount = S.GSTAmount;
-                p.ItemAmount = S.ItemAmount;
-                p.TotalAmount = S.TotalAmount;
-                p.LedgerId = LedgerIdByCompany(LName, CId);
-                p.TransactionTypeId = S.TransactionTypeId;
-                if (CId != 0)
+            if (p == null)
+            {                
+                if (S.Ledger.LedgerName.StartsWith("CM-") || S.Ledger.LedgerName.StartsWith("WH-") || S.Ledger.LedgerName.StartsWith("DL-"))
                 {
-                    foreach (var b_pod in S.SDetails)
+                    var LName = LedgerNameByCompanyId(Caller.CompanyId);
+                    var CId = CompanyIdByLedgerName(S.Ledger.LedgerName);
+                    var LId = LedgerIdByCompany(LName, CId);
+
+                    if (LId != 0)
                     {
-                        DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
-                        b_pod.toCopy<DAL.PurchaseDetail>(d_pod);
-                        p.PurchaseDetails.Add(d_pod);
+                        p = new DAL.Purchase();
+                        p.RefNo = Purchase_NewRefNo();
+                        p.RefCode = RefCode;
+                        p.PurchaseDate = S.SalesDate;
+                        p.DiscountAmount = S.DiscountAmount;
+                        p.ExtraAmount = S.ExtraAmount;
+                        p.GSTAmount = S.GSTAmount;
+                        p.ItemAmount = S.ItemAmount;
+                        p.TotalAmount = S.TotalAmount;
+                        p.LedgerId = LId;
+                        p.TransactionTypeId = S.TransactionTypeId;
+                        foreach (var b_pod in S.SalesDetails)
+                        {
+                            DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
+                            b_pod.toCopy<DAL.PurchaseDetail>(d_pod);
+                            p.PurchaseDetails.Add(d_pod);
+                        }
+                        DB.Purchases.Add(p);
+                        DB.SaveChanges();
+                        Journal_SaveByPurchase(p);
                     }
-                    DB.Purchases.Add(p);
-                    DB.SaveChanges();
-                    var Pur = Purchase_DALtoBLL(p);
-                    Pur.TransactionType = S.TransactionType;
-                    Journal_SaveByPurchase(Pur);
-                }                
+                }
             }
+            else 
+            {                
+                
+            }
+            
+           
+            
             
         }
     

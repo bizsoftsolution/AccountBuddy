@@ -73,15 +73,15 @@ namespace AccountBuddy.SL.Hubs
                    
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).Sales_RefNoRefresh(Sales_NewRefNo());
-                Journal_SaveBySales(P);
-                Purchase_SaveBySales(P);
+                Journal_SaveBySales(d);
+                Purchase_SaveBySales(d);
                 return true;
             }
             catch (Exception ex) { }
             return false;
         }
 
-       void Sales_SaveByPurchase(BLL.Purchase P)
+       void Sales_SaveByPurchase(DAL.Purchase P)
         {
             var refNo = string.Format("SAL-{0}", P.Id);
 
@@ -92,8 +92,7 @@ namespace AccountBuddy.SL.Hubs
                 DB.Sales.Remove(s);
                 DB.SaveChanges();
             }
-            var pd = P.PDetails.FirstOrDefault();
-            var ld = DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault();
+            var ld = P.Ledger;
 
             if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
             {
@@ -113,17 +112,15 @@ namespace AccountBuddy.SL.Hubs
                 s.TransactionTypeId = P.TransactionTypeId;
                 if (CId != 0)
                 {
-                    foreach (var b_pod in P.PDetails)
+                    foreach (var b_pod in P.PurchaseDetails)
                     {
                         DAL.SalesDetail d_pod = new DAL.SalesDetail();
                         b_pod.toCopy<DAL.SalesDetail>(d_pod);
                         s.SalesDetails.Add(d_pod);
                     }
                     DB.Sales.Add(s);
-                    DB.SaveChanges();
-                    var Sal = Sales_DALtoBLL(s);
-                    Sal.TransactionType=P.TransactionType;
-                    Journal_SaveBySales(Sal);
+                    DB.SaveChanges();                    
+                    Journal_SaveBySales(s);
                 }
             }
         }
