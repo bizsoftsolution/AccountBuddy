@@ -10,7 +10,6 @@ namespace AccountBuddy.SL.Hubs
     {
         #region PurchaseReturn
 
-
         public string PurchaseReturn_NewRefNo()
         {
             DateTime dt = DateTime.Now;
@@ -127,7 +126,6 @@ namespace AccountBuddy.SL.Hubs
                 }
             }
         }
-
         public bool PurchaseReturn_DeleteBySalesReturn(BLL.SalesReturn PO)
         {
             try
@@ -154,8 +152,6 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
-
-
         public BLL.PurchaseReturn PurchaseReturn_Find(string SearchText)
         {
             BLL.PurchaseReturn P = new BLL.PurchaseReturn();
@@ -184,7 +180,6 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return P;
         }
-
         public bool PurchaseReturn_Delete(long pk)
         {
             try
@@ -205,7 +200,6 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
-
         public BLL.PurchaseReturn PurchaseReturn_DALtoBLL(DAL.PurchaseReturn d)
         {
             BLL.PurchaseReturn PR = d.toCopy<BLL.PurchaseReturn>(new BLL.PurchaseReturn());

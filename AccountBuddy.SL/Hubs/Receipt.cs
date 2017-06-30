@@ -16,11 +16,11 @@ namespace AccountBuddy.SL.Hubs
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Receipt, dt, dt.Month);
             long No = 0;
 
-            var d = DB.Receipts.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
-                                     .OrderByDescending(x => x.RefNo)
+            var d = DB.Receipts.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.EntryNo.StartsWith(Prefix))
+                                     .OrderByDescending(x => x.EntryNo)
                                      .FirstOrDefault();
 
-            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length ), 16);
+            if (d != null) No = Convert.ToInt64(d.EntryNo.Substring(Prefix.Length ), 16);
 
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
