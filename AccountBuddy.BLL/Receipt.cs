@@ -615,7 +615,7 @@ namespace AccountBuddy.BLL
 
             ReceiptDate = DateTime.Now;
             IsReadOnly = !UserPermission.AllowInsert;
-
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("Receipt_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 

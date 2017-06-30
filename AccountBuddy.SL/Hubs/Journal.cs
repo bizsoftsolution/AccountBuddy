@@ -12,7 +12,20 @@ namespace AccountBuddy.SL.Hubs
     {
         #region Journal        
 
+        public string Journal_NewRefNo()
+        {
+            DateTime dt = DateTime.Now;
+            string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Journal, dt, dt.Month);
+            long No = 0;
 
+            var d = DB.Journals.Where(x => x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.EntryNo.StartsWith(Prefix))
+                                     .OrderByDescending(x => x.EntryNo)
+                                     .FirstOrDefault();
+
+            if (d != null) No = Convert.ToInt64(d.EntryNo.Substring(Prefix.Length - 1), 16);
+
+            return string.Format("{0}{1:X5}", Prefix, No + 1);
+        }
         public bool Journal_Save(BLL.Journal PO)
         {
             try
@@ -63,6 +76,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
 
+                Clients.Clients(OtherLoginClientsOnGroup).Journal_RefNoRefresh(Journal_NewRefNo());
                 return true;
             }
             catch (Exception ex) { }

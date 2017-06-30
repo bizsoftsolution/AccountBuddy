@@ -9,7 +9,20 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
         #region SalesReturn
-        
+        public string SalesReturn_NewRefNo()
+        {
+            DateTime dt = DateTime.Now;
+            string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.SalesReturn, dt, dt.Month);
+            long No = 0;
+
+            var d = DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
+                                     .OrderByDescending(x => x.RefNo)
+                                     .FirstOrDefault();
+
+            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length - 1), 16);
+
+            return string.Format("{0}{1:X5}", Prefix, No + 1);
+        }
         public bool SalesReturn_Save(BLL.SalesReturn P)
         {
             try
@@ -58,6 +71,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.UPDATE);
                     PurchaseReturn_SaveBySalesReturn(P);
                 }
+                Clients.Clients(OtherLoginClientsOnGroup).SalesReturn_RefNoRefresh(SalesReturn_NewRefNo());
                 Journal_SaveBySalesReturn(P);
                 return true;
             }

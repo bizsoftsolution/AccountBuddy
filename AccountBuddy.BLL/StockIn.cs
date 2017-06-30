@@ -267,7 +267,7 @@ namespace AccountBuddy.BLL
             this.STInDetails = new ObservableCollection<StockInDetail>();
 
             Date = DateTime.Now;
-
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("StockIn_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 

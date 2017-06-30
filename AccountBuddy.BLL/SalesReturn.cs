@@ -394,7 +394,7 @@ namespace AccountBuddy.BLL
             this.SRDetails = new ObservableCollection<SalesReturnDetail>();
 
             SRDate = DateTime.Now;
-
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("SalesReturn_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 

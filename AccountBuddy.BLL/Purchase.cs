@@ -402,7 +402,7 @@ namespace AccountBuddy.BLL
             this.PDetails = new ObservableCollection<PurchaseDetail>();
 
             PurchaseDate = DateTime.Now;
-
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("Purchase_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 

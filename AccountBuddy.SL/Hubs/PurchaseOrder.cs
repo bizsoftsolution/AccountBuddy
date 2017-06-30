@@ -10,6 +10,21 @@ namespace AccountBuddy.SL.Hubs
     {
         #region Purchase Order       
 
+        public string PurchaseOrder_NewRefNo()
+        {
+            DateTime dt = DateTime.Now;
+            string Prefix = string.Format("{0}{1:yy}{2:X}",BLL.FormPrefix.PurchaseOrder,dt,dt.Month);
+            long No = 0;
+
+            var d = DB.PurchaseOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
+                                     .OrderByDescending(x=> x.RefNo)
+                                     .FirstOrDefault();
+
+            if (d != null)  No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length-1), 16);
+            
+            return string.Format("{0}{1:X5}", Prefix, No + 1);
+        }
+
         public bool PurchaseOrder_Save(BLL.PurchaseOrder PO)
         {
             try
@@ -58,6 +73,8 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
+
+                Clients.Clients(OtherLoginClientsOnGroup).PurchaseOrder_RefNoRefresh(PurchaseOrder_NewRefNo());
 
                 SalesOrder_SaveByPurchaseOrder(PO);
                 return true;

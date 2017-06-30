@@ -29,11 +29,19 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-          
-            
+            onClientEvents();
+        }
+        private void onClientEvents()
+        {
+            BLL.FMCGHubClient.FMCGHub.On<String>("Payment_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    data.RefNo = RefNo;
+                });
+            });
         }
 
-       
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {

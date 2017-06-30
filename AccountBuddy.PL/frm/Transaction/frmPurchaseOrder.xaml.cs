@@ -1,4 +1,5 @@
 ﻿using AccountBuddy.Common;
+using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,17 @@ namespace AccountBuddy.PL.frm.Transaction
             data.Clear();
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-MY");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-MY");
-
+            onClientEvents();
+        }
+        private void onClientEvents()
+        {
+            BLL.FMCGHubClient.FMCGHub.On<String>("PurchaseOrder_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    data.RefNo = RefNo;
+                });
+            });
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)

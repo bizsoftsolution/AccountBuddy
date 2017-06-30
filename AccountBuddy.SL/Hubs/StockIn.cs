@@ -9,7 +9,20 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
         #region StockIn      
+        public string StockIn_NewRefNo()
+        {
+            DateTime dt = DateTime.Now;
+            string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.StockIn, dt, dt.Month);
+            long No = 0;
 
+            var d = DB.StockIns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
+                                     .OrderByDescending(x => x.RefNo)
+                                     .FirstOrDefault();
+
+            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length - 1), 16);
+
+            return string.Format("{0}{1:X5}", Prefix, No + 1);
+        }
         public bool StockIn_Save(BLL.StockIn P)
         {
             try
@@ -60,6 +73,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
+                Clients.Clients(OtherLoginClientsOnGroup).StockIn_RefNoRefresh(StockIn_NewRefNo());
                 Journal_SaveByStockIn(P);
                 StockOut_SaveByStockIn(P);
                 return true;

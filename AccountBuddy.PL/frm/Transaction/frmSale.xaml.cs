@@ -1,4 +1,5 @@
 ﻿using AccountBuddy.Common;
+using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -35,7 +36,17 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbPType.SelectedValuePath = "Id";
 
             data.Clear();
-
+            onClientEvents();
+        }
+        private void onClientEvents()
+        {
+            BLL.FMCGHubClient.FMCGHub.On<String>("Sales_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    data.RefNo = RefNo;
+                });
+            });
         }
 
         #region Button Events

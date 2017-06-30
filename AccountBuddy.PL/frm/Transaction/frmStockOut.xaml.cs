@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AccountBuddy.Common;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace AccountBuddy.PL.frm.Transaction
 {
@@ -30,7 +31,17 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-
+            onClientEvents();
+        }
+        private void onClientEvents()
+        {
+            BLL.FMCGHubClient.FMCGHub.On<String>("StockOut_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    data.RefNo = RefNo;
+                });
+            });
         }
 
         #region Events

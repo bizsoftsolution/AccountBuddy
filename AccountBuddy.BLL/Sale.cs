@@ -392,7 +392,7 @@ namespace AccountBuddy.BLL
            _SDetails = new ObservableCollection<SalesDetail>();
 
             SalesDate = DateTime.Now;
-
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("Sales_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 

@@ -9,7 +9,20 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
         #region Purchase      
+        public string Purchase_NewRefNo()
+        {
+            DateTime dt = DateTime.Now;
+            string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Purchase, dt, dt.Month);
+            long No = 0;
 
+            var d = DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
+                                     .OrderByDescending(x => x.RefNo)
+                                     .FirstOrDefault();
+
+            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length - 1), 16);
+
+            return string.Format("{0}{1:X5}", Prefix, No + 1);
+        }
         public bool Purchase_Save(BLL.Purchase P)
         {
             try
@@ -60,10 +73,12 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
+                Clients.Clients(OtherLoginClientsOnGroup).Purchase_RefNoRefresh(Purchase_NewRefNo());
                 Journal_SaveByPurchase(P);
                 Sales_SaveByPurchase(P);
                 return true;
             }
+            
             catch (Exception ex) { }
             return false;
         }

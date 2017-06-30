@@ -1,4 +1,5 @@
 ﻿using AccountBuddy.Common;
+using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +35,18 @@ namespace AccountBuddy.PL.frm.Transaction
 
             data.Clear();
 
+            onClientEvents();
         }
-
+        private void onClientEvents()
+        {
+            BLL.FMCGHubClient.FMCGHub.On<String>("PurchaseReturn_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    data.RefNo = RefNo;
+                });
+            });
+        }
         #region Button Events
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)

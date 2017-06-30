@@ -10,7 +10,20 @@ namespace AccountBuddy.SL.Hubs
     {
 
         #region Sales
-     
+        public string Sales_NewRefNo()
+        {
+            DateTime dt = DateTime.Now;
+            string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Sales, dt, dt.Month);
+            long No = 0;
+
+            var d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
+                                     .OrderByDescending(x => x.RefNo)
+                                     .FirstOrDefault();
+
+            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length - 1), 16);
+
+            return string.Format("{0}{1:X5}", Prefix, No + 1);
+        }
         public bool Sales_Save(BLL.Sale P)
         {
             try
@@ -59,6 +72,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.UPDATE);
                    
                 }
+                Clients.Clients(OtherLoginClientsOnGroup).Sales_RefNoRefresh(Sales_NewRefNo());
                 Journal_SaveBySales(P);
                 Purchase_SaveBySales(P);
                 return true;

@@ -330,7 +330,7 @@ namespace AccountBuddy.BLL
 
             JournalDate = DateTime.Now;
             IsReadOnly = !UserPermission.AllowInsert;
-
+            EntryNo = FMCGHubClient.FMCGHub.Invoke<string>("Journal_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 

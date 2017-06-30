@@ -59,6 +59,7 @@
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerWiseReport.cs" />
     <Compile Include="DataKeyValue.cs" />
+    <Compile Include="FormPrefix.cs" />
     <Compile Include="GeneralLedger.cs" />
     <Compile Include="GeneralStock.cs" />
     <Compile Include="Journal.cs" />

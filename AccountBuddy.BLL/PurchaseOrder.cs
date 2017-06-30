@@ -367,7 +367,7 @@ namespace AccountBuddy.BLL
             _PODetails = new ObservableCollection<PurchaseOrderDetail>();
 
             PODate = DateTime.Now;
-          
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_NewRefNo").Result;          
             NotifyAllPropertyChanged();
         }
 

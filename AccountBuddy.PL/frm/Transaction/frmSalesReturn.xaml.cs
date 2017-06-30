@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AccountBuddy.Common;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace AccountBuddy.PL.frm.Transaction
 {
@@ -33,7 +34,17 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbPType.SelectedValuePath = "Id";
 
             data.Clear();
-
+            onClientEvents();
+        }
+        private void onClientEvents()
+        {
+            BLL.FMCGHubClient.FMCGHub.On<String>("SalesReturn_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    data.RefNo = RefNo;
+                });
+            });
         }
 
         #region Button Events

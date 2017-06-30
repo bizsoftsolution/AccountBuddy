@@ -390,7 +390,7 @@ namespace AccountBuddy.BLL
             this.PRDetails = new ObservableCollection<PurchaseReturnDetail>();
 
             PRDate = DateTime.Now;
-
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseReturn_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 

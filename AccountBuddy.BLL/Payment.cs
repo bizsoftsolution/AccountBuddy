@@ -652,7 +652,7 @@ namespace AccountBuddy.BLL
 
             PaymentDate = DateTime.Now;
             IsReadOnly = !UserPermission.AllowInsert;
-
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("Payment_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 

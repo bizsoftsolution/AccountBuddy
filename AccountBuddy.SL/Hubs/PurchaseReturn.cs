@@ -11,7 +11,20 @@ namespace AccountBuddy.SL.Hubs
         #region PurchaseReturn
 
 
+        public string PurchaseReturn_NewRefNo()
+        {
+            DateTime dt = DateTime.Now;
+            string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.PurchaseReturn, dt, dt.Month);
+            long No = 0;
 
+            var d = DB.PurchaseReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
+                                     .OrderByDescending(x => x.RefNo)
+                                     .FirstOrDefault();
+
+            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length - 1), 16);
+
+            return string.Format("{0}{1:X5}", Prefix, No + 1);
+        }
         public bool PurchaseReturn_Save(BLL.PurchaseReturn P)
         {
             try
@@ -60,6 +73,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
+                Clients.Clients(OtherLoginClientsOnGroup).PurchaseReturn_RefNoRefresh(PurchaseReturn_NewRefNo());
                 Journal_SaveByPurchaseReturn(P);
                 SaleReturn_SaveByPurchaseReturn(P);
                 return true;
@@ -114,7 +128,7 @@ namespace AccountBuddy.SL.Hubs
             }
         }
 
-        public bool PurchaseOrder_DeleteBySalesReturn(BLL.SalesReturn PO)
+        public bool PurchaseReturn_DeleteBySalesReturn(BLL.SalesReturn PO)
         {
             try
             {
