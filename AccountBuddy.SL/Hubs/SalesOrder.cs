@@ -11,11 +11,15 @@ namespace AccountBuddy.SL.Hubs
         #region Sales Order     
         public string SalesOrder_NewRefNo()
         {
+            return SalesOrder_NewRefNoByCompanyId(Caller.CompanyId);
+        }
+        public string SalesOrder_NewRefNoByCompanyId(int CompanyId)
+        {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.SalesOrder, dt, dt.Month);
             long No = 0;
 
-            var d = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
@@ -72,7 +76,7 @@ namespace AccountBuddy.SL.Hubs
                 }                
                 Clients.Clients(OtherLoginClientsOnGroup).SalesOrder_RefNoRefresh(SalesOrder_NewRefNo());
                 Clients.Clients(OtherLoginClientsOnGroup).SalesOrder_SOPendingSave(SO);
-                PurchaseOrder_SaveBySalesOrder(SO);
+                PurchaseOrder_SaveBySalesOrder(d);
                 return true;
                 
             }
@@ -197,8 +201,7 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
-        
-
+  
         public BLL.SalesOrder SalesOrder_Find(string SearchText)
         {
             BLL.SalesOrder SO = new BLL.SalesOrder();
@@ -242,7 +245,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
 
                     LogDetailStore(s, LogDetailType.DELETE);
-                    PurchaseOrder_DeleteBySalesOrder(s);
+                    PurchaseOrder_DeleteBySalesOrder(d);
                 }
                 return true;
             }
@@ -302,6 +305,66 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+
+        #region PurchaseOrder
+        void SalesOrder_SaveByPurchaseOrder(DAL.PurchaseOrder P)
+        {
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseOrder, P.Id);
+
+            DAL.SalesOrder s = DB.SalesOrders.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            if (P.Ledger.LedgerName.StartsWith("CM-") || P.Ledger.LedgerName.StartsWith("WH-") || P.Ledger.LedgerName.StartsWith("DL-"))
+            {
+                var LName = LedgerNameByCompanyId(Caller.CompanyId);
+                var CId = CompanyIdByLedgerName(P.Ledger.LedgerName);
+                var LId = LedgerIdByCompany(LName, CId);
+
+                if (LId != 0)
+                {
+                    if (s == null)
+                    {
+                        s = new DAL.SalesOrder();
+                        s.RefNo = SalesOrder_NewRefNoByCompanyId(CId);
+                        s.RefCode = RefCode;
+                        DB.SalesOrders.Add(s);
+                    }
+                    else
+                    {
+                        DB.SalesOrderDetails.RemoveRange(s.SalesOrderDetails);
+                    }
+
+                    s.SODate = P.PODate;
+                    s.DiscountAmount = P.DiscountAmount;
+                    s.ExtraAmount = P.Extras;
+                    s.GSTAmount = P.GSTAmount;
+                    s.ItemAmount = P.ItemAmount;
+                    s.TotalAmount = P.TotalAmount;
+                    s.LedgerId = LId;
+                    foreach (var b_pod in P.PurchaseOrderDetails)
+                    {
+                        DAL.SalesOrderDetail d_pod = new DAL.SalesOrderDetail();
+                        b_pod.toCopy<DAL.SalesOrderDetail>(d_pod);
+                        s.SalesOrderDetails.Add(d_pod);
+                    }
+                    DB.SaveChanges();
+            
+                }
+            }
+        }
+        public bool SalesOrder_DeleteByPurchaseOrder(DAL.PurchaseOrder P)
+        {
+            try
+            {
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseOrder, P.Id);
+                DAL.SalesOrder d = DB.SalesOrders.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (d != null)
+                {
+                    SalesOrder_Delete(d.Id);
+                }
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+        #endregion
 
         #endregion
     }

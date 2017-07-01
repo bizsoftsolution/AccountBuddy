@@ -219,7 +219,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
@@ -284,7 +284,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = SR.RefNo;//Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
@@ -349,7 +349,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = S.RefNo;// Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
@@ -413,7 +413,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = PR.RefNo;//Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
@@ -480,7 +480,7 @@ namespace AccountBuddy.SL.Hubs
                 if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
                 {
                     j = new DAL.Journal();
-                    j.EntryNo = EntryNo;
+                    j.EntryNo = P.EntryNo;
                     j.JournalDate = P.PaymentDate;
 
                     var CId = CompanyIdByLedgerName(ld.LedgerName);
@@ -544,7 +544,7 @@ namespace AccountBuddy.SL.Hubs
                 if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
                 {
                     j = new DAL.Journal();
-                    j.EntryNo = EntryNo;
+                    j.EntryNo = R.EntryNo;
                     j.JournalDate = R.ReceiptDate;
 
                     var CId = CompanyIdByLedgerName(ld.LedgerName);
@@ -605,7 +605,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = STout.RefNo;// Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
 
 
@@ -666,7 +666,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = STIn.RefNo;// Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
 
 

@@ -18,6 +18,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="CommandBinding_Executed" />
     </Window.CommandBindings>
+    
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="Close" />
     </Window.InputBindings>
@@ -199,7 +200,7 @@
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
 
-                    <PasswordBox x:Name="txtPassword" Margin="0,10,0,0"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontWeight="Bold" FontSize="14">
+                    <PasswordBox x:Name="txtPassword" Margin="0,10,0,0"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontWeight="Bold" FontSize="14" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Key" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />

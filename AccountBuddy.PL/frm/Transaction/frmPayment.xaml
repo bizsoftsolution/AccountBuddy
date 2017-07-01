@@ -98,8 +98,8 @@
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <TextBox x:Name="txtEntryNo" IsReadOnly="{Binding IsReadOnly}" Text="{Binding EntryNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
-                        <TextBox x:Name="txtPayTo" IsReadOnly="{Binding IsReadOnly}" Text="{Binding PayTo, Mode=TwoWay}" Width="385" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>                        
+                        <TextBox x:Name="txtEntryNo"  IsReadOnly="{Binding IsReadOnly}" Text="{Binding EntryNo, Mode=TwoWay}" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold" Width="150" TextAlignment="Right"/>
+                        <TextBox x:Name="txtPayTo" IsReadOnly="{Binding IsReadOnly}" Text="{Binding PayTo, Mode=TwoWay}" Width="365" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>                        
                     </StackPanel>
 
                     <GroupBox Margin="10,10,10,0" Header="Cheque Detail" Visibility="{Binding IsShowChequeDetail,Converter={StaticResource VisibilityConverter}}">
