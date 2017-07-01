@@ -188,7 +188,7 @@
                         <CheckBox Margin="10" x:Name="ckbAutoPrint" FontWeight="Bold" Width="100">Autoprint</CheckBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <Button   Width="200" Height="30" x:Name="btnMakesales" Content="Make Sales" Margin="5 5" IsEnabled="False" Click="btnMakesales_Click"/>
+                        <Button   Width="200" Height="30" x:Name="btnMakesales" Content="MAKE SALES" Margin="5 5" IsEnabled="False" Click="btnMakesales_Click"/>
                         <TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="SO Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold" Height="41"/>
                         <Button Margin="10" Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" />
 

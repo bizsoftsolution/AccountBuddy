@@ -53,7 +53,7 @@ namespace AccountBuddy.PL.frm.Report
         {
             List<BLL.SOPending> list = BLL.SOPending.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             list = list.Select(x => new BLL.SOPending()
-            { AccountName = x.Ledger.AccountName, Amount=x.Amount, EntryNo=x.EntryNo, Ledger=x.Ledger, SODate=x.SODate, Status=x.Status}).ToList();
+            { AccountName = x.Ledger.AccountName, Amount = x.Amount, EntryNo = x.EntryNo, Ledger = x.Ledger, SODate = x.SODate, Status = x.Status }).ToList();
 
             try
             {
@@ -98,6 +98,13 @@ namespace AccountBuddy.PL.frm.Report
                 f.data.SearchText = po.EntryNo;
                 System.Windows.Forms.Application.DoEvents();
                 f.data.Find();
+                f.btnMakesales.IsEnabled = f.data.Status == "Pending" ? true : false; if (f.data.Id != 0)
+                    if (f.data.RefCode != null)
+                    {
+                        f.btnSave.IsEnabled = false;
+                        f.btnDelete.IsEnabled = true;
+
+                    }
             }
             catch (Exception ex) { }
         }
