@@ -166,6 +166,11 @@ namespace AccountBuddy.PL.frm.Transaction
                     btnPrint.IsEnabled = true;
 
             }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = true;
+                btnDelete.IsEnabled = true;
+            }
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 

@@ -165,8 +165,13 @@ namespace AccountBuddy.PL.frm.Transaction
                 btnMakepurchase.IsEnabled = data.Status == "Pending" ? true : false;
                 btnPrint.IsEnabled = true;
             }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = true;
+                btnDelete.IsEnabled = true;
+            }
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-
+          
 
         }
         private void btnMakepurchase_Click(object sender, RoutedEventArgs e)

@@ -52,6 +52,7 @@ namespace AccountBuddy.BLL
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
         private bool _IsEnabled;
+        private string _RefCode;
         #endregion
 
         #region Property
@@ -148,6 +149,21 @@ namespace AccountBuddy.BLL
                 {
                     _EntryNo = value;
                     NotifyPropertyChanged(nameof(EntryNo));
+                }
+            }
+        }
+        public string RefCode
+        {
+            get
+            {
+                return _RefCode;
+            }
+            set
+            {
+                if (_RefCode != value)
+                {
+                    _RefCode = value;
+                    NotifyPropertyChanged(nameof(RefCode));
                 }
             }
         }

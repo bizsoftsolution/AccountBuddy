@@ -35,6 +35,7 @@ namespace AccountBuddy.BLL
 
         private SalesDetail _SDetail;
         private ObservableCollection<SalesDetail> _SDetails;
+        private string _RefCode;
 
         #endregion
 
@@ -86,6 +87,22 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public string RefCode
+        {
+            get
+            {
+                return _RefCode;
+            }
+            set
+            {
+                if (_RefCode != value)
+                {
+                    _RefCode = value;
+                    NotifyPropertyChanged(nameof(RefCode));
+                }
+            }
+        }
+
         public int LedgerId
         {
             get

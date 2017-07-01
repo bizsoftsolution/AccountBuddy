@@ -37,11 +37,12 @@ namespace AccountBuddy.BLL
 
         private PurchaseDetail _PDetail;
         private ObservableCollection<PurchaseDetail> _PDetails;
+        private string _RefCode;
 
         #endregion
 
         #region Property
-        
+
         public long Id
         {
             get
@@ -88,7 +89,21 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+        public string RefCode
+        {
+            get
+            {
+                return _RefCode;
+            }
+            set
+            {
+                if (_RefCode != value)
+                {
+                    _RefCode = value;
+                    NotifyPropertyChanged(nameof(RefCode));
+                }
+            }
+        }
         public int LedgerId
         {
             get

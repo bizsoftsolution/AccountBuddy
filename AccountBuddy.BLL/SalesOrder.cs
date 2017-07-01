@@ -35,6 +35,7 @@ namespace AccountBuddy.BLL
         private SalesOrderDetail _SODetail;
         private ObservableCollection<SalesOrderDetail> _SODetails;
         private string _Status;
+        private string _RefCode;
 
         #endregion
 
@@ -102,6 +103,21 @@ namespace AccountBuddy.BLL
                 {
                     _RefNo = value;
                     NotifyPropertyChanged(nameof(RefNo));
+                }
+            }
+        }
+        public string RefCode
+        {
+            get
+            {
+                return _RefCode;
+            }
+            set
+            {
+                if (_RefCode != value)
+                {
+                    _RefCode = value;
+                    NotifyPropertyChanged(nameof(RefCode));
                 }
             }
         }

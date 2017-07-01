@@ -164,6 +164,11 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnPrint.IsEnabled = true;
             }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = true;
+                btnDelete.IsEnabled = true;
+            }
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)

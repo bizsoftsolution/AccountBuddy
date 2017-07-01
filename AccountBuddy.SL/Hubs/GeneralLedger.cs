@@ -68,7 +68,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.Ledger = LedgerDAL_BLL(pd.Payment.Ledger);
                     gl.Particular = pd.Particular;
                     gl.EId = pd.Payment.Id;
-                    gl.EType = "P";
+                    gl.EType = BLL.FormPrefix.Payment;
                     gl.EDate = pd.Payment.PaymentDate;
                     gl.RefNo = pd.Payment.PaymentMode == "Cheque" ? pd.Payment.ChequeNo : pd.Payment.RefNo;
                     gl.EntryNo = pd.Payment.EntryNo;
@@ -89,7 +89,7 @@ namespace AccountBuddy.SL.Hubs
                         gl.Ledger = LedgerDAL_BLL(pd.Ledger);
                         gl.Particular = pd.Particular;
                         gl.EId = p.Id;
-                        gl.EType = "P";
+                        gl.EType = BLL.FormPrefix.Payment;
                         gl.EDate = p.PaymentDate;
                         gl.RefNo = p.PaymentMode == "Cheque" ? p.ChequeNo : p.RefNo;
                         gl.EntryNo = p.EntryNo;
@@ -110,7 +110,7 @@ namespace AccountBuddy.SL.Hubs
                         gl.Ledger = LedgerDAL_BLL(rd.Ledger);
                         gl.Particular = rd.Particulars;
                         gl.EId = r.Id;
-                        gl.EType = "R";
+                        gl.EType = BLL.FormPrefix.Receipt;
                         gl.EDate = r.ReceiptDate;
                         gl.RefNo = r.ReceiptMode == "Cheque" ? r.ChequeNo : r.RefNo;
                         gl.EntryNo = r.EntryNo;
@@ -129,7 +129,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.Ledger = LedgerDAL_BLL(rd.Receipt.Ledger);
                     gl.Particular = rd.Particulars;
                     gl.EId = rd.Receipt.Id;
-                    gl.EType = "R";
+                    gl.EType =BLL.FormPrefix.Receipt;
                     gl.EDate = rd.Receipt.ReceiptDate;
                     gl.RefNo = rd.Receipt.ReceiptMode == "Cheque" ? rd.Receipt.ChequeNo : rd.Receipt.RefNo;
                     gl.EntryNo = rd.Receipt.EntryNo;
@@ -148,45 +148,56 @@ namespace AccountBuddy.SL.Hubs
                     gl.Ledger = LedgerDAL_BLL(jd.Journal.JournalDetails.Where(x => (jd.DrAmt != 0 && x.CrAmt != 0) || (jd.CrAmt != 0 && x.DrAmt != 0)).FirstOrDefault().Ledger);
                     gl.Particular = jd.Particulars;
                     gl.EId = jd.Journal.Id;
-                    if (jd.Journal.EntryNo.StartsWith("SAL"))
+                    if (jd.Journal.RefCode != null)
                     {
-                        gl.EType = "SAL";
-                        gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 4));
-                    }
-                    else if (jd.Journal.EntryNo.StartsWith("PUR"))
-                    {
-                        gl.EType = "PUR";
-                        gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 4));
-                    }
-                    else if (jd.Journal.EntryNo.StartsWith("PUR"))
-                    {
-                        gl.EType = "PUR";
-                        gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 4));
-                    }
-                    else if (jd.Journal.EntryNo.StartsWith("SRN"))
-                    {
-                        gl.EType = "SRN";
-                        gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 4));
-                    }
-                    else if (jd.Journal.EntryNo.StartsWith("PRN"))
-                    {
-                        gl.EType = "PRN";
-                        gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 4));
-                    }
-                    else if (jd.Journal.EntryNo.StartsWith("SOUT"))
-                    {
-                        gl.EType = "SOUT";
-                        gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 4));
-                    }
-                    else if (jd.Journal.EntryNo.StartsWith("SIN"))
-                    {
-                        gl.EType = "SIN";
-                        gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 4));
+                        gl.RefCode = jd.Journal.RefCode;
+
+                        if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Sales))
+                        {
+                            gl.EType = BLL.FormPrefix.Sales;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Purchase))
+                        {
+                            gl.EType = BLL.FormPrefix.Purchase;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.SalesReturn))
+                        {
+                            gl.EType = BLL.FormPrefix.SalesReturn;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.PurchaseReturn))
+                        {
+                            gl.EType = BLL.FormPrefix.PurchaseReturn;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockIn))
+                        {
+                            gl.EType = BLL.FormPrefix.StockIn;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockOut))
+                        {
+                            gl.EType = BLL.FormPrefix.StockOut;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Payment))
+                        {
+                            gl.EType = BLL.FormPrefix.Payment;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                        else if(jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Receipt))
+                        {
+                            gl.EType = BLL.FormPrefix.Receipt;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                      
                     }
                     else
                     {
-                        gl.EType = "J";
-                       
+                        gl.EType = BLL.FormPrefix.Journal;
+                        gl.RefEntryNo = gl.EntryNo;
                     }
 
                     gl.EDate = jd.Journal.JournalDate;
