@@ -8,20 +8,24 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region StockOut      
-        public string StockOut_NewRefNo()
+        #region StockOut 
+        private string StockOut_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.StockOut, dt, dt.Month);
             long No = 0;
 
-            var d = DB.StockOuts.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = DB.StockOuts.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
-            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length ), 16);
+            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length), 16);
 
             return string.Format("{0}{1:X5}", Prefix, No + 1);
+        }
+        public string StockOut_NewRefNo()
+        {
+            return StockOut_NewRefNoByCompanyId(Caller.CompanyId);
         }
         public bool StockOut_Save(BLL.StockOut P)
         {
@@ -72,90 +76,73 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
-                   
+
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).StockOut_RefNoRefresh(StockOut_NewRefNo());
-                Journal_SaveByStockOut(P);
-                StockIn_SaveByStockOut(P);
+                Journal_SaveByStockOut(d);
+                StockIn_SaveByStockOut(d);
                 return true;
             }
             catch (Exception ex) { }
             return false;
         }
 
-        void StockOut_SaveByStockIn(BLL.StockIn STIn)
+        #region Stock In
+        void StockOut_SaveByStockIn(DAL.StockIn P)
         {
-            var refNo = string.Format("SOUT-{0}", STIn.Id);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, P.Id);
 
-            DAL.StockOut p = DB.StockOuts.Where(x => x.RefNo == refNo).FirstOrDefault();
-            if (p != null)
-            {
-                DB.StockOutDetails.RemoveRange(p.StockOutDetails);
-                DB.StockOuts.Remove(p);
-                DB.SaveChanges();
-            }
-            var pd = STIn.STInDetails.FirstOrDefault();
-            var ld = DB.Ledgers.Where(x => x.Id == STIn.LedgerId).FirstOrDefault();
-
-            if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
+            DAL.StockOut s = DB.StockOuts.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            if (P.Ledger.LedgerName.StartsWith("CM-") || P.Ledger.LedgerName.StartsWith("WH-") || P.Ledger.LedgerName.StartsWith("DL-"))
             {
                 var LName = LedgerNameByCompanyId(Caller.CompanyId);
+                var CId = CompanyIdByLedgerName(P.Ledger.LedgerName);
+                var LId = LedgerIdByCompany(LName, CId);
 
-                var CId = CompanyIdByLedgerName(ld.LedgerName);
-
-                p = new DAL.StockOut();
-                p.RefNo = refNo;
-                p.Date = STIn.Date;
-
-                p.ItemAmount = STIn.ItemAmount;
-
-                p.LedgerId = LedgerIdByCompany(LName, CId);
-                p.Type = "Outward";
-                if (CId != 0)
+                if (LId != 0)
                 {
-                    foreach (var b_pod in STIn.STInDetails)
+                    if (s == null)
+                    {
+                        s = new DAL.StockOut();
+                        s.RefNo = StockOut_NewRefNoByCompanyId(CId);
+                        s.RefCode = RefCode;
+                        DB.StockOuts.Add(s);
+                    }
+                    else
+                    {
+                        DB.StockOutDetails.RemoveRange(s.StockOutDetails);
+                    }
+
+                    s.Date = P.Date;
+                    s.ItemAmount = P.ItemAmount;
+                    s.LedgerId = LId;
+                    s.Type = "Outwards";
+                    foreach (var b_pod in P.StockInDetails)
                     {
                         DAL.StockOutDetail d_pod = new DAL.StockOutDetail();
                         b_pod.toCopy<DAL.StockOutDetail>(d_pod);
-                        p.StockOutDetails.Add(d_pod);
+                        s.StockOutDetails.Add(d_pod);
                     }
-                    DB.StockOuts.Add(p);
                     DB.SaveChanges();
-                  
+                    Journal_SaveByStockOut(s);
                 }
-                var sin = StockOut_DALtoBLL(p);
-                Journal_SaveByStockOut(sin);
             }
         }
-
-        public bool StockOut_DeleteByStockIn(BLL.Sale s)
+        public bool StockOut_DeleteByStockIn(DAL.StockIn s)
         {
             try
             {
-                var LName = DB.Ledgers.Where(x => x.Id == s.LedgerId).FirstOrDefault().LedgerName;
-
-                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, s.Id);
+                DAL.StockOut d = DB.StockOuts.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (d != null)
                 {
-
-                    DAL.Sale d = DB.Sales.Where(x => x.RefNo == s.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
-
-                    if (d != null)
-                    {
-                        DB.SalesDetails.RemoveRange(d.SalesDetails);
-                        DB.Sales.Remove(d);
-                        DB.SaveChanges();
-                    }
-
-                    return true;
+                    StockOut_Delete(d.Id);
                 }
-
-
             }
             catch (Exception ex) { }
             return false;
         }
-
-
+        #endregion
 
 
         public BLL.StockOut StockOut_Find(string SearchText)
@@ -229,7 +216,8 @@ namespace AccountBuddy.SL.Hubs
                     DB.StockOuts.Remove(d);
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
-                    // Journal_DeleteByStockOut(P);
+                    Journal_DeleteByStockOut(P);
+                    StockIn_DeleteByStockOut(d);
                     return true;
                 }
 

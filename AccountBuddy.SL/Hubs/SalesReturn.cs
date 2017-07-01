@@ -11,11 +11,15 @@ namespace AccountBuddy.SL.Hubs
         #region SalesReturn
         public string SalesReturn_NewRefNo()
         {
+            return SalesReturn_NewRefNoByCompanyId(Caller.CompanyId);
+        }
+        public string SalesReturn_NewRefNoByCompanyId(int CompanyId)
+        {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.SalesReturn, dt, dt.Month);
             long No = 0;
 
-            var d = DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
@@ -69,10 +73,10 @@ namespace AccountBuddy.SL.Hubs
                         b_SRd.toCopy<DAL.SalesReturnDetail>(d_SRd);
                     }
                     LogDetailStore(P, LogDetailType.UPDATE);
-                    PurchaseReturn_SaveBySalesReturn(P);
+                    PurchaseReturn_SaveBySalesReturn(d);
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).SalesReturn_RefNoRefresh(SalesReturn_NewRefNo());
-                Journal_SaveBySalesReturn(P);
+                Journal_SaveBySalesReturn(d);
                 return true;
             }
             catch (Exception ex) { }
@@ -122,6 +126,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
                     Journal_DeleteBySalesReturn(P);
+                    PurchaseReturn_DeleteBySalesReturn(d);
                 }
                 return true;
             }
@@ -153,53 +158,66 @@ namespace AccountBuddy.SL.Hubs
 
         }
 
-        void SaleReturn_SaveByPurchaseReturn(BLL.PurchaseReturn PR)
+        #region Purchase Return 
+        void SaleReturn_SaveByPurchaseReturn(DAL.PurchaseReturn PR)
         {
-            var refNo = string.Format("SAL-R-{0}", PR.Id);
+             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, PR.Id);
 
-            DAL.SalesReturn sr = DB.SalesReturns.Where(x => x.RefNo == refNo).FirstOrDefault();
-            if (sr != null)
-            {
-                DB.SalesReturnDetails.RemoveRange(sr.SalesReturnDetails);
-                DB.SalesReturns.Remove(sr);
-                DB.SaveChanges();
-            }
-            var pd = PR.PRDetails.FirstOrDefault();
-            var ld = DB.Ledgers.Where(x => x.Id == PR.LedgerId).FirstOrDefault();
-
-            if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
+            DAL.SalesReturn s = DB.SalesReturns.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            if (PR.Ledger.LedgerName.StartsWith("CM-") || PR.Ledger.LedgerName.StartsWith("WH-") || PR.Ledger.LedgerName.StartsWith("DL-"))
             {
                 var LName = LedgerNameByCompanyId(Caller.CompanyId);
+                var CId = CompanyIdByLedgerName(PR.Ledger.LedgerName);
+                var LId = LedgerIdByCompany(LName, CId);
 
-                var CId = CompanyIdByLedgerName(ld.LedgerName);
-
-                sr = new DAL.SalesReturn();
-                sr.RefNo = refNo;
-                sr.SRDate = PR.PRDate;
-                sr.DiscountAmount = PR.DiscountAmount;
-                sr.ExtraAmount = PR.ExtraAmount;
-                sr.GSTAmount = PR.GSTAmount;
-                sr.ItemAmount = PR.ItemAmount;
-                sr.TotalAmount = PR.TotalAmount;
-                sr.LedgerId = LedgerIdByCompany(LName, CId);
-                sr.TransactionTypeId = PR.TransactionTypeId;
-                if (CId != 0)
+                if (LId != 0)
                 {
-                    foreach (var b_pod in PR.PRDetails)
+                    if (s == null)
+                    {
+                        s = new DAL.SalesReturn();
+                        s.RefNo = SalesReturn_NewRefNoByCompanyId(CId);
+                        s.RefCode = RefCode;
+                        DB.SalesReturns.Add(s);
+                    }
+                    else
+                    {
+                       DB.SalesReturnDetails.RemoveRange(s.SalesReturnDetails);
+                    }
+
+                    s.SRDate = PR.PRDate;
+                    s.DiscountAmount = PR.DiscountAmount;
+                    s.ExtraAmount = PR.ExtraAmount;
+                    s.GSTAmount = PR.GSTAmount;
+                    s.ItemAmount = PR.ItemAmount;
+                    s.TotalAmount = PR.TotalAmount;
+                    s.LedgerId = LId;
+                    s.TransactionTypeId = PR.TransactionTypeId;
+                    foreach (var b_pod in PR.PurchaseReturnDetails)
                     {
                         DAL.SalesReturnDetail d_pod = new DAL.SalesReturnDetail();
                         b_pod.toCopy<DAL.SalesReturnDetail>(d_pod);
-                        sr.SalesReturnDetails.Add(d_pod);
+                        s.SalesReturnDetails.Add(d_pod);
                     }
-                    DB.SalesReturns.Add(sr);
                     DB.SaveChanges();
-                    var SalR = SalesReturn_DALtoBLL(sr);
-                    SalR.TransactionType = PR.TransactionType;
-                    Journal_SaveBySalesReturn(SalR);
+                    Journal_SaveBySalesReturn(s);
                 }
             }
         }
-
+        public bool SalesReturn_DeleteByPurchaseReturn(DAL.PurchaseReturn P)
+        {
+            try
+            {
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, P.Id);
+                DAL.SalesReturn d = DB.SalesReturns.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (d != null)
+                {
+                    SalesReturn_Delete(d.Id);
+                }
+            }
+            catch (Exception ex) { }
+            return false;
+        }
+        #endregion
         public BLL.SalesReturn SalesReturn_FindById(int ID)
         {
             BLL.SalesReturn P = new BLL.SalesReturn();
