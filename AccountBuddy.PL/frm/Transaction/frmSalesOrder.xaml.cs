@@ -231,7 +231,7 @@ namespace AccountBuddy.PL.frm.Transaction
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtdiscountAmount.Text);
+            textBox.Text = AppLib.NumericOnly(txtDiscountAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
