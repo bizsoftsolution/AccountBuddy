@@ -53,9 +53,9 @@ namespace AccountBuddy.SL.Hubs
                 }
                 var b = Customer_DALtoBLL(d);
 
-                // Clients.Clients(OtherLoginClientsOnGroup).Customer_Save(b);
-                Clients.All.Customer_Save(b);
-                WriteLog("Customer_Save", BLL.UserAccount.User.Id,BLL.UserAccount.User.UserType.CompanyId , "Connection Timedout");
+                Clients.Clients(OtherLoginClientsOnGroup).Customer_Save(b);
+                //Clients.All.Customer_Save(b);
+               // WriteLog("Customer_Save", BLL.UserAccount.User.Id,BLL.UserAccount.User.UserType.CompanyId , "Connection Timedout");
                 return b;
             }
             catch (Exception ex)
