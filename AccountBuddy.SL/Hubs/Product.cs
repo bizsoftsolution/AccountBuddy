@@ -96,7 +96,7 @@ namespace AccountBuddy.SL.Hubs
                     
                     return p;
                 }
-                Clients.Clients(OtherLoginClientsOnGroup).Product_Save(p);
+                Clients.Clients(OtherLoginClientsOnGroup).Product_Save(Product_DALtoBLL(d));
 
             }
             catch (Exception ex)
