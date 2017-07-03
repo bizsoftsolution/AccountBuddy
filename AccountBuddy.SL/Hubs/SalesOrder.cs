@@ -131,77 +131,7 @@ namespace AccountBuddy.SL.Hubs
 
 
 
-        void SalesOrder_SaveByPurchaseOrder(BLL.PurchaseOrder PO)
-        {
-            var refNo = string.Format("SO-{0}", PO.Id);
-            DAL.SalesOrder p = DB.SalesOrders.Where(x => x.RefNo == refNo ).FirstOrDefault();
-            if (p != null)
-            {
-                DB.SalesOrderDetails.RemoveRange(p.SalesOrderDetails);
-                DB.SalesOrders.Remove(p);
-                DB.SaveChanges();
-            }
-            var pd = PO.PODetails.FirstOrDefault();
-            var ld = DB.Ledgers.Where(x => x.Id == PO.LedgerId).FirstOrDefault();
-
-            if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
-            {
-                var LName = LedgerNameByCompanyId(Caller.CompanyId);
-
-                var CId = CompanyIdByLedgerName(ld.LedgerName);
-
-                p = new DAL.SalesOrder();
-                p.RefNo = refNo;
-                p.SODate = PO.PODate.Value;
-                p.DiscountAmount = PO.DiscountAmount.Value;
-                p.ExtraAmount = PO.Extras.Value;
-                p.GSTAmount = PO.GSTAmount.Value;
-                p.ItemAmount = PO.ItemAmount.Value;
-                p.TotalAmount = PO.TotalAmount.Value;
-                p.LedgerId = LedgerIdByCompany(LName, CId);
-               
-                if (CId != 0)
-                {
-                    foreach (var b_pod in PO.PODetails)
-                    {
-                        DAL.SalesOrderDetail d_pod = new DAL.SalesOrderDetail();
-                        b_pod.toCopy<DAL.SalesOrderDetail>(d_pod);
-                        p.SalesOrderDetails.Add(d_pod);
-                    }
-                    DB.SalesOrders.Add(p);
-                    DB.SaveChanges();
-                   
-                 
-                }
-            }
-        }
-        public bool SalesOrder_DeleteByPurchaseOrder(BLL.PurchaseOrder PO)
-        {
-            try
-            {
-                var LName = DB.Ledgers.Where(x => x.Id == PO.LedgerId).FirstOrDefault().LedgerName;
-
-                if (LName.StartsWith("CM-") || LName.StartsWith("WH-"))
-                {
-
-                    DAL.SalesOrder d = DB.SalesOrders.Where(x => x.RefNo == PO.RefNo && x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId).FirstOrDefault();
-
-                    if (d != null)
-                    {
-                        DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails);
-                        DB.SalesOrders.Remove(d);
-                        DB.SaveChanges();
-                    }
-
-                    return true;
-                }
-
-
-            }
-            catch (Exception ex) { }
-            return false;
-        }
-  
+       
         public BLL.SalesOrder SalesOrder_Find(string SearchText)
         {
             BLL.SalesOrder SO = new BLL.SalesOrder();

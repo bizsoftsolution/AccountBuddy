@@ -165,6 +165,7 @@
     <Compile Include="Hubs\Customer.cs" />
     <Compile Include="Hubs\CustomerWiseReport.cs" />
     <Compile Include="Hubs\DataKeyValue.cs" />
+    <Compile Include="Hubs\FmcgWriteLogSL.cs" />
     <Compile Include="Hubs\GeneralLedger.cs" />
     <Compile Include="Hubs\GeneralStock.cs" />
     <Compile Include="Hubs\Journal.cs" />

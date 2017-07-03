@@ -99,7 +99,10 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                WriteErrorLog("Product", "Product_Save", BLL.UserAccount.User.Id, Caller.CompanyId, ex.Message);
+            }
             return new BLL.Product();
         }
 

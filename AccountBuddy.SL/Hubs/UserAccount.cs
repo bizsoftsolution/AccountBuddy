@@ -17,43 +17,55 @@ namespace AccountBuddy.SL.Hubs
             b.UserType = UserTypeDAL_BLL(d.UserType);
             return b;
         }
-        
+
         public BLL.UserAccount UserAccount_Login(string AccYear, String CompanyName, String LoginId, String Password)
         {
+            var rv = new BLL.UserAccount();
 
-            DAL.UserAccount ua = DB.UserAccounts
-                                   .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
-
-                                                && x.LoginId == LoginId
-                                                
-                                                && x.Password == Password && x.UserType.CompanyDetail.IsActive!=false)
-                                   .FirstOrDefault();
-            if (ua != null)
+            try
             {
-                Groups.Add(Context.ConnectionId, ua.UserType.CompanyId.ToString());
-                Caller.CompanyId = ua.UserType.CompanyId;
-                Caller.UnderCompanyId = ua.UserType.CompanyDetail.UnderCompanyId;
-                Caller.CompanyType= ua.UserType.CompanyDetail.CompanyType;
-                Caller.UserId = ua.Id;
-                Caller.AccYear = AccYear;
-                BLL.UserAccount u = UserAccountDAL_BLL(ua);
-                int yy = DateTime.Now.Month < 4 ? DateTime.Now.Year - 1 : DateTime.Now.Year;
-                if(AccYear.Length>4) int.TryParse(AccYear.Substring(0, 4), out yy);
-                u.UserType.Company.LoginAccYear = yy;
-                return u;
+                DAL.UserAccount ua = DB.UserAccounts
+                                  .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
+
+                                               && x.LoginId == LoginId
+
+                                               && x.Password == Password && x.UserType.CompanyDetail.IsActive != false)
+                                  .FirstOrDefault();
+                if (ua != null)
+                {
+                    Groups.Add(Context.ConnectionId, ua.UserType.CompanyId.ToString());
+                    Caller.CompanyId = ua.UserType.CompanyId;
+                    Caller.UnderCompanyId = ua.UserType.CompanyDetail.UnderCompanyId;
+                    Caller.CompanyType = ua.UserType.CompanyDetail.CompanyType;
+                    Caller.UserId = ua.Id;
+                    Caller.AccYear = AccYear;
+                    rv = UserAccountDAL_BLL(ua);
+                    int yy = DateTime.Now.Month < 4 ? DateTime.Now.Year - 1 : DateTime.Now.Year;
+                    if (AccYear.Length > 4) int.TryParse(AccYear.Substring(0, 4), out yy);
+                    rv.UserType.Company.LoginAccYear = yy;
+                    return rv;
+
+                }
+                else
+                {
+                    return rv;
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return new BLL.UserAccount();
+
+                WriteErrorLog("Login", "UserAccount_Login",  rv.Id,  Caller.CompanyId,ex.Message);
+                return rv;
             }
 
-            
+
         }
 
         public List<BLL.UserAccount> UserAccount_List()
         {
-            var l1 = DB.UserAccounts.Where(x => x.UserType.CompanyDetail.Id == Caller.CompanyId || x.UserType.CompanyDetail.UnderCompanyId == Caller.CompanyId ).ToList()
-                                  .Select(x=> UserAccountDAL_BLL(x)).ToList();
+            var l1 = DB.UserAccounts.Where(x => x.UserType.CompanyDetail.Id == Caller.CompanyId || x.UserType.CompanyDetail.UnderCompanyId == Caller.CompanyId).ToList()
+                                  .Select(x => UserAccountDAL_BLL(x)).ToList();
 
             return l1;
         }
@@ -62,7 +74,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                
+
                 DAL.UserAccount d = DB.UserAccounts.Where(x => x.Id == ua.Id).FirstOrDefault();
 
                 if (d == null)
@@ -98,7 +110,7 @@ namespace AccountBuddy.SL.Hubs
                 var d = DB.UserAccounts.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null)
                 {
-                    var ld=DB.LogDetails.Where(x => x.LogMaster.EntityTypeId == pk);
+                    var ld = DB.LogDetails.Where(x => x.LogMaster.EntityTypeId == pk);
                     DB.LogDetails.RemoveRange(ld);
                     DB.SaveChanges();
 
@@ -107,14 +119,14 @@ namespace AccountBuddy.SL.Hubs
 
                     DB.UserAccounts.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(d.toCopy<BLL.UserAccount>(new BLL.UserAccount()), LogDetailType.DELETE);                    
+                    LogDetailStore(d.toCopy<BLL.UserAccount>(new BLL.UserAccount()), LogDetailType.DELETE);
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).UserAccount_Delete(pk);
                 Clients.All.delete(pk);
             }
             catch (Exception ex) { }
         }
-        
+
         #endregion
     }
 }
