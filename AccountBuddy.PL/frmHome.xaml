@@ -282,10 +282,15 @@
                                             <Report:frmSOPending/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                   
-                                    <Menu:NavMenuItem MenuName="Sales Report" FormName="Sales Report">
+
+                                    <Menu:NavMenuItem MenuName="Dealer Sales Report" FormName="Dealer Sales Report">
                                         <Menu:NavMenuItem.Content>
                                             <Report:frmSalesReport/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Customer Sales Report" FormName="Customer Sales Report">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmCustomerSalesReport/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
                                 </ListBox>

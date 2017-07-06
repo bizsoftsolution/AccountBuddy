@@ -250,6 +250,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmCustomerSalesReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmCustomerWiseReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -507,6 +511,9 @@
     </Compile>
     <Compile Include="frm\Report\frmBalanceSheetPrint.xaml.cs">
       <DependentUpon>frmBalanceSheetPrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmCustomerSalesReport.xaml.cs">
+      <DependentUpon>frmCustomerSalesReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmCustomerWiseReport.xaml.cs">
       <DependentUpon>frmCustomerWiseReport.xaml</DependentUpon>
@@ -806,6 +813,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="aboorvas logo 256.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LogoFrame.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

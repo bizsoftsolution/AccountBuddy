@@ -68,7 +68,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
 
-            btnPrint.IsEnabled = true;
+            btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
         }

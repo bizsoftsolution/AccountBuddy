@@ -58,28 +58,28 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                rptViewer.Reset();
-                ReportDataSource data = new ReportDataSource("SalesReport", BLL.SalesReport.ToListCustomerWise(dtpDateFrom.SelectedDate.Value).ToList());
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
-                rptViewer.LocalReport.DataSources.Add(data);
-                rptViewer.LocalReport.DataSources.Add(data1);
-                rptViewer.LocalReport.ReportPath = @"rpt\Report\rptCustomerWiseSalesReport.rdlc";
+            //    rptViewer.Reset();
+            //    ReportDataSource data = new ReportDataSource("SalesReport", BLL.SalesReport.ToListCustomerWise(dtpDateFrom.SelectedDate.Value).ToList());
+            //    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
+            //    rptViewer.LocalReport.DataSources.Add(data);
+            //    rptViewer.LocalReport.DataSources.Add(data1);
+            //    rptViewer.LocalReport.ReportPath = @"rpt\Report\rptCustomerWiseSalesReport.rdlc";
 
-                DateTime dt = dtpDateFrom.SelectedDate.Value;
+            //    DateTime dt = dtpDateFrom.SelectedDate.Value;
 
-                ReportParameter[] par = new ReportParameter[7];
-                par[0] = new ReportParameter("Month1", string.Format("{0:MMMM}", dt.AddMonths(-5)));
-                par[1] = new ReportParameter("Month2", string.Format("{0:MMMM}", dt.AddMonths(-4)));
-                par[2] = new ReportParameter("Month3", string.Format("{0:MMMM}", dt.AddMonths(-3)));
-                par[3] = new ReportParameter("Month4", string.Format("{0:MMMM}", dt.AddMonths(-2)));
-                par[4] = new ReportParameter("Month5", string.Format("{0:MMMM}", dt.AddMonths(-1)));
-                par[5] = new ReportParameter("Month6", string.Format("{0:MMMM}", dt));
+            //    ReportParameter[] par = new ReportParameter[7];
+            //    par[0] = new ReportParameter("Month1", string.Format("{0:MMMM}", dt.AddMonths(-5)));
+            //    par[1] = new ReportParameter("Month2", string.Format("{0:MMMM}", dt.AddMonths(-4)));
+            //    par[2] = new ReportParameter("Month3", string.Format("{0:MMMM}", dt.AddMonths(-3)));
+            //    par[3] = new ReportParameter("Month4", string.Format("{0:MMMM}", dt.AddMonths(-2)));
+            //    par[4] = new ReportParameter("Month5", string.Format("{0:MMMM}", dt.AddMonths(-1)));
+            //    par[5] = new ReportParameter("Month6", string.Format("{0:MMMM}", dt));
 
-                par[6] = new ReportParameter("Title", "Customer Wise Sales Report");
+            //    par[6] = new ReportParameter("Title", "Customer Wise Sales Report");
 
-                rptViewer.LocalReport.SetParameters(par);
+            //    rptViewer.LocalReport.SetParameters(par);
 
-                rptViewer.RefreshReport();
+            //    rptViewer.RefreshReport();
             }
             catch(Exception ex)
             {
@@ -91,10 +91,10 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            btnSearch.IsEnabled = false;
-            SetHeading(dtpDateFrom.SelectedDate.Value);
-            dgvDetails.ItemsSource = BLL.SalesReport.ToListCustomerWise(dtpDateFrom.SelectedDate.Value).ToList();
-            btnSearch.IsEnabled = true;
+            //btnSearch.IsEnabled = false;
+            //SetHeading(dtpDateFrom.SelectedDate.Value);
+            //dgvDetails.ItemsSource = BLL.SalesReport.ToListCustomerWise(dtpDateFrom.SelectedDate.Value).ToList();
+            //btnSearch.IsEnabled = true;
 
         }
 

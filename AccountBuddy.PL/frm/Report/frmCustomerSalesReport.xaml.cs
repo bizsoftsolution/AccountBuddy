@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AccountBuddy.PL.frm.Report
 {
     /// <summary>
-    /// Interaction logic for frmSalesReport.xaml
+    /// Interaction logic for frmCustomerSalesReport.xaml
     /// </summary>
-    public partial class frmSalesReport : UserControl
+    public partial class frmCustomerSalesReport : UserControl
     {
-        public frmSalesReport()
+        public frmCustomerSalesReport()
         {
             InitializeComponent();
             int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
@@ -34,12 +34,13 @@ namespace AccountBuddy.PL.frm.Report
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            SetHeading(dtpDateFrom.SelectedDate.Value,dtpDateTo.SelectedDate.Value);
+            SetHeading(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
         }
-        void SetHeading(DateTime dtFrom,DateTime dtTo)
+        void SetHeading(DateTime dtFrom, DateTime dtTo)
         {
 
-            for(int i = 1; i <=12; i++) {
+            for (int i = 1; i <= 12; i++)
+            {
                 dgvDetails.Columns[i].Visibility = Visibility.Hidden;
             }
 
@@ -49,26 +50,27 @@ namespace AccountBuddy.PL.frm.Report
             if (n > 12) n = 12;
             for (int i = 0; i < n; i++)
             {
-                dgvDetails.Columns[i + 1].Header = rdbMonthlyWise.IsChecked == true? string.Format("{0:MMM-yyyy}", dtFrom.AddMonths(i)) : string.Format("{0:yyyy}", dtFrom.AddYears(i));
+                dgvDetails.Columns[i + 1].Header = rdbMonthlyWise.IsChecked == true ? string.Format("{0:MMM-yyyy}", dtFrom.AddMonths(i)) : string.Format("{0:yyyy}", dtFrom.AddYears(i));
                 dgvDetails.Columns[i + 1].Visibility = Visibility.Visible;
             }
-            
+
         }
 
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             SetHeading(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-            bool isMonthly = rdbMonthlyWise.IsChecked==true;
+            bool isMonthly = rdbMonthlyWise.IsChecked == true;
 
             string ReportType = "";
-            if (rdbDealerWise.IsChecked == true) ReportType = "DealerWise";
-            if (rdbDealerSummary.IsChecked == true) ReportType = "DealerSummary";
+            if (rdbCustomerWise.IsChecked == true) ReportType = "CustomerrWise";
+            if (rdbCustomerSummary.IsChecked == true) ReportType = "CustomerSummary";
             if (rdbProductWise.IsChecked == true) ReportType = "ProductWise";
             if (rdbProductSummary.IsChecked == true) ReportType = "ProductSummary";
 
-            dgvDetails.ItemsSource = BLL.SalesReport.ToListCustomerWise(dtpDateFrom.SelectedDate.Value,dtpDateTo.SelectedDate.Value,isMonthly,ReportType);
-            
+            dgvDetails.ItemsSource = BLL.SalesReport.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, isMonthly, ReportType);
+
         }
+
     }
 }

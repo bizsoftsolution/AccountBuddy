@@ -21,7 +21,7 @@ namespace AccountBuddy.PL.frm.Report
     /// </summary>
     public partial class frmCustomerWiseSalesReport : MetroWindow
     {
-       
+
         public frmCustomerWiseSalesReport()
         {
             InitializeComponent();
@@ -33,42 +33,36 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                List<BLL.SalesReport> list = BLL.SalesReport.ToListCustomerWise( dt);
-               
-                try
-                {
-                    RptViewer.Reset();
-                    ReportDataSource data = new ReportDataSource("SalesReport", list);
-                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
-                    RptViewer.LocalReport.DataSources.Add(data);
-                    RptViewer.LocalReport.DataSources.Add(data1);
-                    RptViewer.LocalReport.ReportPath = @"rpt\Report\rptCustomerWiseSalesReport.rdlc";
+                //    List<BLL.SalesReport> list = BLL.SalesReport.ToListCustomerWise( dt);
 
-                    ReportParameter[] par = new ReportParameter[7];
-                    par[0] = new ReportParameter("Month1", string.Format("{0:MMMM}", dt.AddMonths(-5)));
-                    par[1] = new ReportParameter("Month2", string.Format("{0:MMMM}", dt.AddMonths(-4)));
-                    par[2] = new ReportParameter("Month3", string.Format("{0:MMMM}", dt.AddMonths(-3)));
-                    par[3] = new ReportParameter("Month4", string.Format("{0:MMMM}", dt.AddMonths(-2)));
-                    par[4] = new ReportParameter("Month5", string.Format("{0:MMMM}", dt.AddMonths(-1)));
-                    par[5] = new ReportParameter("Month6", string.Format("{0:MMMM}", dt));
+                //    try
+                //    {
+                //        RptViewer.Reset();
+                //        ReportDataSource data = new ReportDataSource("SalesReport", list);
+                //        ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
+                //        RptViewer.LocalReport.DataSources.Add(data);
+                //        RptViewer.LocalReport.DataSources.Add(data1);
+                //        RptViewer.LocalReport.ReportPath = @"rpt\Report\rptCustomerWiseSalesReport.rdlc";
 
-                    par[6] = new ReportParameter("Title", "Customer Wise Sales Report");
+                //        ReportParameter[] par = new ReportParameter[7];
+                //        par[0] = new ReportParameter("Month1", string.Format("{0:MMMM}", dt.AddMonths(-5)));
+                //        par[1] = new ReportParameter("Month2", string.Format("{0:MMMM}", dt.AddMonths(-4)));
+                //        par[2] = new ReportParameter("Month3", string.Format("{0:MMMM}", dt.AddMonths(-3)));
+                //        par[3] = new ReportParameter("Month4", string.Format("{0:MMMM}", dt.AddMonths(-2)));
+                //        par[4] = new ReportParameter("Month5", string.Format("{0:MMMM}", dt.AddMonths(-1)));
+                //        par[5] = new ReportParameter("Month6", string.Format("{0:MMMM}", dt));
 
-                    RptViewer.LocalReport.SetParameters(par);
+                //        par[6] = new ReportParameter("Title", "Customer Wise Sales Report");
 
-                    RptViewer.RefreshReport();
+                //        RptViewer.LocalReport.SetParameters(par);
 
-                }
-                catch (Exception ex)
-                {
+                //        RptViewer.RefreshReport();
 
-                }
             }
             catch (Exception ex)
             {
 
             }
-
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -76,4 +70,7 @@ namespace AccountBuddy.PL.frm.Report
 
         }
     }
+
 }
+
+
