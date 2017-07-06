@@ -16,9 +16,8 @@ namespace AccountBuddy.SL.Hubs
 
             foreach (var l in lstLedger)
             {
-                foreach (var pd in l.PurchaseOrders.Where(x => x.PODate >= dtFrom && x.PODate <= dtTo).ToList())
+                foreach (var pd in l.PurchaseOrders.Where(x => x.PODate >= dtFrom && x.PODate <= dtTo && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
                 {
-
                     var po = l.PurchaseOrders.FirstOrDefault();
                     tb = new BLL.POPending();
                     tb.Ledger = LedgerDAL_BLL(l);
@@ -31,15 +30,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-
-
-
-
-
-
-
-
-
+            
             return lstPOPending;
         }
 

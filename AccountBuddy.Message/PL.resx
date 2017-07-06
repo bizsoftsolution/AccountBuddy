@@ -159,6 +159,9 @@
   <data name="Login_Warehouse_Validation" xml:space="preserve">
     <value>Enter warehouse !</value>
   </data>
+  <data name="Password_Exist" xml:space="preserve">
+    <value>Password_Exist!</value>
+  </data>
   <data name="Product_Available_Stock" xml:space="preserve">
     <value>Available Stock {0}</value>
   </data>
@@ -194,5 +197,8 @@
   </data>
   <data name="Transaction_Selling_Rate" xml:space="preserve">
     <value>Selling Rate Between {0} to {1}</value>
+  </data>
+  <data name="User_Id_Exist" xml:space="preserve">
+    <value>UserId Already Exist!</value>
   </data>
 </root>

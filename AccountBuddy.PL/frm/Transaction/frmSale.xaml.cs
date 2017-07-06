@@ -85,10 +85,13 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            data.Clear(); if (data.Id != 0)
+            data.Clear();
+            if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
             }
+            btnSave.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

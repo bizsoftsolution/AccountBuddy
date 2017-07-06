@@ -228,32 +228,35 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             var l1 = dgvBankReconciliation.ItemsSource;
-
-            foreach(var d in l1)
+            if(l1!=null)
             {
-                var b = d as BLL.BankReconcilation;
-                if (b != null)
+                foreach (var d in l1)
                 {
-                    if (b.EType == 'P')
+                    var b = d as BLL.BankReconcilation;
+                    if (b != null)
                     {
-                        BLL.Payment p = new BLL.Payment();
-                        p.SearchText = b.EntryNo;
-                        p.Find();
-                        p.Status = b.IsCompleted ? "Completed" : "Proccess";
-                        p.Save();
-                    }
-                    else if (b.EType == 'R')
-                    {
-                        BLL.Receipt R = new BLL.Receipt();
-                        R.SearchText = b.EntryNo;
-                        R.Find();
-                        R.Status = b.IsCompleted ? "Completed" : "Proccess";
-                        R.Save();
+                        if (b.EType == 'P')
+                        {
+                            BLL.Payment p = new BLL.Payment();
+                            p.SearchText = b.EntryNo;
+                            p.Find();
+                            p.Status = b.IsCompleted ? "Completed" : "Proccess";
+                            p.Save();
+                        }
+                        else if (b.EType == 'R')
+                        {
+                            BLL.Receipt R = new BLL.Receipt();
+                            R.SearchText = b.EntryNo;
+                            R.Find();
+                            R.Status = b.IsCompleted ? "Completed" : "Proccess";
+                            R.Save();
+                        }
                     }
                 }
+                MessageBox.Show(Message.PL.Saved_Alert);
+                App.frmHome.ShowWelcome();
             }
-            MessageBox.Show(Message.PL.Saved_Alert);
-            App.frmHome.ShowWelcome();
+            
         }
 
         private void ckbStatus_Checked(object sender, RoutedEventArgs e)

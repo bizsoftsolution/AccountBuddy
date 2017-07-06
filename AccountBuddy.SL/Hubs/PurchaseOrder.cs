@@ -93,7 +93,7 @@ namespace AccountBuddy.SL.Hubs
                 BLL.Purchase P = new BLL.Purchase();
 
                 P.PurchaseDate = PO.PODate.Value;
-                P.RefNo = PO.RefNo;
+                P.RefNo =Purchase_NewRefNo();
                 P.LedgerId = PO.LedgerId;
                 P.TransactionType = "Cash";
                 P.TransactionTypeId = 1;

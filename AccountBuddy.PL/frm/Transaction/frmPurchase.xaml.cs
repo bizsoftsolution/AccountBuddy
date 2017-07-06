@@ -163,8 +163,8 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             if (data.RefCode != null)
             {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
+                btnSave.IsEnabled = false;
+                btnDelete.IsEnabled = false;
             }
         }
 
@@ -214,6 +214,8 @@ namespace AccountBuddy.PL.frm.Transaction
         void Clear()
         {
             data.Clear();
+            btnSave.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
         #endregion
 

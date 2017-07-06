@@ -16,7 +16,7 @@ namespace AccountBuddy.SL.Hubs
 
             foreach (var l in lstLedger)
             {
-                foreach (var pd in l.SalesOrders.Where(x => x.SODate >= dtFrom && x.SODate <= dtTo).ToList())
+                foreach (var pd in l.SalesOrders.Where(x => x.SODate >= dtFrom && x.SODate <= dtTo && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).ToList())
                 {
 
                     var po = l.PurchaseOrders.FirstOrDefault();

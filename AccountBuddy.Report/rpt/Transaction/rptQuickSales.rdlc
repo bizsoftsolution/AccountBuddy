@@ -547,7 +547,7 @@
   <Width>6.03014in</Width>
   <Page>
     <PageHeader>
-      <Height>2.63071in</Height>
+      <Height>2.89807in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1283,7 +1283,7 @@
             </Rectangle>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Top>0.80431in</Top>
+          <Top>1.05431in</Top>
           <Left>0.16208in</Left>
           <Height>1.80209in</Height>
           <Width>5.80556in</Width>
@@ -1294,6 +1294,40 @@
             </Border>
           </Style>
         </Rectangle>
+        <Textbox Name="Textbox1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>SALES INVOICE </Value>
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Top>0.80431in</Top>
+          <Left>1.64819in</Left>
+          <Height>0.25in</Height>
+          <Width>2.39236in</Width>
+          <ZIndex>6</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
       </ReportItems>
       <Style>
         <Border>

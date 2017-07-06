@@ -484,6 +484,7 @@ namespace AccountBuddy.BLL
             bool RValue = true;
             lstValidation.Clear();
             var cm = toList.Where(x => x.CompanyName == CompanyName && x.CompanyType == CompanyType&& x.UnderCompanyId==UnderCompanyId).FirstOrDefault();
+            var user = BLL.UserAccount.toList.Where(x =>  x.UserType.Company.UnderCompanyId == UnderCompanyId && x.UserName ==UserId).FirstOrDefault();
 
             if (string.IsNullOrWhiteSpace(CompanyName))
             {
@@ -502,8 +503,18 @@ namespace AccountBuddy.BLL
                     lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Existing_Data, CompanyName) });
                     RValue = false;
                 }
+               
                 
             }
+            else if(user!=null)
+            {
+                 if (user.UserName == UserId)
+                {
+                    lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.PL.User_Id_Exist, CompanyName) });
+                    RValue = false;
+                }
+            }
+          
             else if (Id == 0)
             {
                 if (string.IsNullOrWhiteSpace(UserId))
@@ -517,6 +528,7 @@ namespace AccountBuddy.BLL
                     lstValidation.Add(new Validation() { Name = nameof(Password), Message = string.Format(Message.BLL.Required_Data, nameof(Password)) });
                     RValue = false;
                 }
+               
 
             }
 

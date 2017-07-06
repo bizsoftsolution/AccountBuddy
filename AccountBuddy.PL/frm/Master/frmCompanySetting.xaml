@@ -148,7 +148,7 @@
             <GroupBox Name="gbxWareHouse" Header="Warehouse" Margin="10" Height="250" >
                 <StackPanel Orientation="Vertical">
                     <Button Content="New Warehouse" Name="btnNewWareHouse" Click="btnNewWareHouse_Click" Width="150" HorizontalAlignment="Right" Margin="0" />
-                    <DataGrid x:Name="dgvWarehouse" CanUserAddRows="True"  SelectionChanged="dgvWarehouse_SelectionChanged" CanUserSortColumns="True"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="150" Margin="10">
+                    <DataGrid x:Name="dgvWarehouse" CanUserAddRows="False"  SelectionChanged="dgvWarehouse_SelectionChanged" CanUserSortColumns="True"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="150" Margin="10">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="FontWeight" Value="Bold" />

@@ -92,7 +92,7 @@ namespace AccountBuddy.SL.Hubs
                 BLL.Sale S = new BLL.Sale();
 
                 S.SalesDate = SO.SODate.Value;
-                S.RefNo = SO.RefNo;
+                S.RefNo =Sales_NewRefNo();
                 S.LedgerId = SO.LedgerId.Value;
                 S.TransactionType = "Cash";
                 S.TransactionTypeId = 1;

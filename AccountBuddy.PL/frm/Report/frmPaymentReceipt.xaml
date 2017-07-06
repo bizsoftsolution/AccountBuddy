@@ -81,12 +81,12 @@
                                 <ComboBox x:Name="cmbstatus" Width="170" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Margin="10" Height="40" >
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Status"/>
+                                            <TextBlock Text="Status" FontWeight="Bold"/>
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
-                                    <ComboBoxItem>Process</ComboBoxItem>
-                                    <ComboBoxItem>Completed</ComboBoxItem>
-                                    <ComboBoxItem>Returned</ComboBoxItem>
+                                    <ComboBoxItem Content="Process"/>
+                                    <ComboBoxItem Content="Completed"/>
+                                    <ComboBoxItem Content="Returned"/>
 
                                 </ComboBox>
                                 <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
@@ -99,7 +99,7 @@
 
                         <Grid Grid.Row="0"  >
 
-                            <DataGrid x:Name="dgvReceiptAndPayment" MouseDoubleClick="dgvReceiptAndPayment_MouseDoubleClick" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" Margin="100,10,100,10">
+                            <DataGrid x:Name="dgvReceiptAndPayment" MouseDoubleClick="dgvReceiptAndPayment_MouseDoubleClick" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" Margin="105,10,95,10">
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
                                         <Setter Property="FontWeight" Value="Bold" />
@@ -113,7 +113,7 @@
                                     <DataGridTextColumn Header="Entry No" FontWeight="Bold" Width="100" Binding="{Binding EntryNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header="Cheque/Ref No" FontWeight="Bold" Width="120" Binding="{Binding RefNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding Ledger.AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 

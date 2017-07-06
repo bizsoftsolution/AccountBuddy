@@ -115,7 +115,7 @@ namespace AccountBuddy.PL.frm.Report
                 if (f.data.RefCode!=null)
                 {
                     f.btnSave.IsEnabled = false;
-                    f.btnDelete.IsEnabled = true;
+                    f.btnDelete.IsEnabled = false;
                 }
             }
             catch (Exception ex) { }

@@ -375,12 +375,16 @@ namespace AccountBuddy.BLL
                 lstValidation.Add(new Validation() { Name = nameof(LoginId), Message = string.Format(Message.BLL.Required_Data, nameof(LoginId)) });
                 RValue = false;
             }
-            else if (toList.Where(x => x.LoginId.ToLower() == LoginId.ToLower() && x.Id != Id).Count() > 0)
+            else if (toList.Where(x => x.UserType.CompanyId == UserType.CompanyId && x.Id!=Id&& x.LoginId.ToLower() == LoginId.ToLower()).Count() > 0)
             {
                 lstValidation.Add(new Validation() { Name = nameof(LoginId), Message = string.Format(Message.BLL.Existing_Data, LoginId) });
                 RValue = false;
             }
-
+            else if (toList.Where(x =>x.Id==0 && x.UserType.CompanyId==UserType.CompanyId && x.LoginId.ToLower() == LoginId.ToLower()).Count() > 0 )
+            {
+                lstValidation.Add(new Validation() { Name = nameof(LoginId), Message = string.Format(Message.BLL.Existing_Data, LoginId) });
+                RValue = false;
+            }
             if (string.IsNullOrWhiteSpace(Password))
             {
                 lstValidation.Add(new Validation() { Name = nameof(Password), Message = string.Format(Message.BLL.Required_Data, nameof(Password)) });
