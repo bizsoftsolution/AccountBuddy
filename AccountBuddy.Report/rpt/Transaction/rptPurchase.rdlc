@@ -18,10 +18,10 @@
               <Width>0.73772in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.42421in</Width>
+              <Width>0.46588in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.16722in</Width>
+              <Width>1.14929in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -53,9 +53,6 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -89,9 +86,6 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -125,9 +119,6 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -161,9 +152,6 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -197,9 +185,6 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -233,12 +218,6 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
-                        <RightBorder>
-                          <Style>None</Style>
-                        </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -366,7 +345,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!UnitPrice.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>f2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -434,7 +415,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Amount.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>f2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -481,27 +464,16 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <DataSetName>PurchaseDetail</DataSetName>
         <Top>0.17639cm</Top>
         <Left>0.10724cm</Left>
         <Height>0.47222in</Height>
-        <Width>5.80558in</Width>
+        <Width>5.82932in</Width>
         <Style>
           <Border>
-            <Style>None</Style>
+            <Style>Solid</Style>
           </Border>
-          <TopBorder>
-            <Style>Solid</Style>
-          </TopBorder>
-          <BottomBorder>
-            <Style>Solid</Style>
-          </BottomBorder>
-          <LeftBorder>
-            <Style>Solid</Style>
-          </LeftBorder>
-          <RightBorder>
-            <Style>Solid</Style>
-          </RightBorder>
         </Style>
       </Tablix>
     </ReportItems>
@@ -511,7 +483,7 @@
   <Width>5.94793in</Width>
   <Page>
     <PageHeader>
-      <Height>2.65278in</Height>
+      <Height>3.1632in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1023,7 +995,7 @@
                   </Paragraphs>
                   <rd:DefaultName>RefNo</rd:DefaultName>
                   <Top>1.02431in</Top>
-                  <Left>0.02083in</Left>
+                  <Left>0.02779in</Left>
                   <Height>0.25in</Height>
                   <Width>1.46528in</Width>
                   <ZIndex>6</ZIndex>
@@ -1087,7 +1059,7 @@
             </Rectangle>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Top>0.81597in</Top>
+          <Top>1.31027in</Top>
           <Left>0.05209in</Left>
           <Height>1.80556in</Height>
           <Width>5.81945in</Width>
@@ -1097,15 +1069,18 @@
             </Border>
           </Style>
         </Rectangle>
-        <Textbox Name="AddressLine1">
+        <Textbox Name="CompanyName">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=First(Fields!AddressLine1.Value, "CompanyDetail")</Value>
-                  <Style />
+                  <Value>=First(Fields!CompanyName.Value, "CompanyDetail")</Value>
+                  <Style>
+                    <FontSize>16pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style>
@@ -1113,11 +1088,11 @@
               </Style>
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>AddressLine1</rd:DefaultName>
-          <Top>0.30208in</Top>
-          <Left>0.32639in</Left>
-          <Height>0.25in</Height>
-          <Width>2.38889in</Width>
+          <rd:DefaultName>CompanyName</rd:DefaultName>
+          <Top>0.13862cm</Top>
+          <Left>5.20673cm</Left>
+          <Height>0.27083in</Height>
+          <Width>3.6793in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -1129,89 +1104,33 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Textbox Name="CompanyName">
+        <Textbox Name="AddressLine1">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=First(Fields!CompanyName.Value, "CompanyDetail")</Value>
+                  <Value>=First(Fields!AddressLine1.Value, "CompanyDetail")</Value>
                   <Style>
-                    <FontSize>16pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Center</TextAlign>
+                <TextAlign>Right</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>CompanyName</rd:DefaultName>
-          <Left>0.62056cm</Left>
-          <Height>0.30208in</Height>
-          <Width>5.23139in</Width>
+          <rd:DefaultName>AddressLine1</rd:DefaultName>
+          <Top>0.32541in</Top>
+          <Left>2.42837in</Left>
+          <Height>0.18056in</Height>
+          <Width>3.30082in</Width>
           <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="AddressLine2">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!AddressLine2.Value, "CompanyDetail")</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>AddressLine2</rd:DefaultName>
-          <Top>0.30208in</Top>
-          <Left>2.72917in</Left>
-          <Height>0.25in</Height>
-          <Width>2.74653in</Width>
-          <ZIndex>3</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="PostalCode">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!PostalCode.Value, "CompanyDetail")</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>PostalCode</rd:DefaultName>
-          <Top>0.55208in</Top>
-          <Left>2.71528in</Left>
-          <Height>0.23611in</Height>
-          <Width>1.06946in</Width>
-          <ZIndex>4</ZIndex>
+          <Visibility>
+            <Hidden>=IIf(First(Fields!AddressLine1.Value, "CompanyDetail")="", true, false)</Hidden>
+          </Visibility>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1230,11 +1149,9 @@
               <TextRuns>
                 <TextRun>
                   <Value>=First(Fields!CityName.Value, "CompanyDetail")</Value>
-                  <Style />
-                </TextRun>
-                <TextRun>
-                  <Value>,</Value>
-                  <Style />
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style>
@@ -1243,11 +1160,14 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>CityName</rd:DefaultName>
-          <Top>0.55208in</Top>
-          <Left>1.39236in</Left>
-          <Height>0.25in</Height>
-          <Width>1.32292in</Width>
-          <ZIndex>5</ZIndex>
+          <Top>0.68653in</Top>
+          <Left>2.47698in</Left>
+          <Height>0.19444in</Height>
+          <Width>3.25221in</Width>
+          <ZIndex>3</ZIndex>
+          <Visibility>
+            <Hidden>=IIf(First(Fields!CityName.Value, "CompanyDetail")="", true, false)</Hidden>
+          </Visibility>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1258,6 +1178,109 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
+        <Textbox Name="PostalCode">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=First(Fields!PostalCode.Value, "CompanyDetail")</Value>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>PostalCode</rd:DefaultName>
+          <Top>0.88097in</Top>
+          <Left>2.47698in</Left>
+          <Height>0.22445in</Height>
+          <Width>3.25221in</Width>
+          <ZIndex>4</ZIndex>
+          <Visibility>
+            <Hidden>=IIf(First(Fields!CityName.Value, "CompanyDetail")="", true, false)</Hidden>
+          </Visibility>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="AddressLine2">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=First(Fields!AddressLine2.Value, "CompanyDetail")</Value>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>AddressLine2</rd:DefaultName>
+          <Top>0.50597in</Top>
+          <Left>2.47004in</Left>
+          <Height>0.18056in</Height>
+          <Width>3.25915in</Width>
+          <ZIndex>5</ZIndex>
+          <Visibility>
+            <Hidden>=IIf(First(Fields!AddressLine2.Value, "CompanyDetail")="", true, false)</Hidden>
+          </Visibility>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Line Name="Line11">
+          <Top>1.24082in</Top>
+          <Left>0.12503in</Left>
+          <Height>0in</Height>
+          <Width>5.54513in</Width>
+          <ZIndex>6</ZIndex>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+              <Width>2pt</Width>
+            </Border>
+          </Style>
+        </Line>
+        <Image Name="Image1">
+          <Source>Database</Source>
+          <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
+          <MIMEType>image/jpeg</MIMEType>
+          <Sizing>FitProportional</Sizing>
+          <Top>0.11236in</Top>
+          <Left>0.12503in</Left>
+          <Height>0.99306in</Height>
+          <Width>1.35068in</Width>
+          <ZIndex>7</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
       </ReportItems>
       <Style>
         <Border>
@@ -1266,7 +1289,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>3.29859in</Height>
+      <Height>2.47567in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1287,8 +1310,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox29</rd:DefaultName>
-          <Top>2.53817in</Top>
-          <Left>0.22224in</Left>
+          <Top>2.14234in</Top>
+          <Left>0.26638in</Left>
           <Height>0.25in</Height>
           <Width>1.88781in</Width>
           <Style>
@@ -1318,8 +1341,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox30</rd:DefaultName>
-          <Top>2.53817in</Top>
-          <Left>3.73372in</Left>
+          <Top>2.14234in</Top>
+          <Left>3.77786in</Left>
           <Height>0.25in</Height>
           <Width>1.88781in</Width>
           <ZIndex>1</ZIndex>
@@ -1334,8 +1357,8 @@
           </Style>
         </Textbox>
         <Line Name="Line9">
-          <Top>2.41317in</Top>
-          <Left>0.24431in</Left>
+          <Top>2.01734in</Top>
+          <Left>0.28845in</Left>
           <Height>0in</Height>
           <Width>1.88781in</Width>
           <ZIndex>2</ZIndex>
@@ -1346,8 +1369,8 @@
           </Style>
         </Line>
         <Line Name="Line10">
-          <Top>2.41317in</Top>
-          <Left>3.73372in</Left>
+          <Top>2.01734in</Top>
+          <Left>3.77786in</Left>
           <Height>0in</Height>
           <Width>1.88781in</Width>
           <ZIndex>3</ZIndex>

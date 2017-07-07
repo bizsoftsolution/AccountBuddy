@@ -454,8 +454,9 @@ namespace AccountBuddy.SL.Hubs
 
             List<BLL.SalesReport> rv = new List<BLL.SalesReport>();
 
-            var l1 = DB.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.GroupName==BLL.DataKeyValue.SundryDebtors_Key &&
+            var l1 = DB.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.GroupName==BLL.DataKeyValue.SundryDebtors_Key && 
                                                 x.Sale.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId &&
+
                                                 x.Sale.SalesDate >= dtFrom &&
                                                 x.Sale.SalesDate <= dtTo)
                                     .Select(x => new {
@@ -464,7 +465,8 @@ namespace AccountBuddy.SL.Hubs
                                         x.Sale.Ledger.AccountGroup.CompanyId,
                                         x.Sale.Ledger.AccountGroup.CompanyDetail.CompanyName,
                                         x.Sale.SalesDate,
-                                        x.Amount
+                                        x.Amount, 
+                                        x.Sale.Ledger.LedgerName
                                     })
                                     .ToList();
 
@@ -477,7 +479,7 @@ namespace AccountBuddy.SL.Hubs
                 #region CustomeWise
                 if (ReportType == "CustomerWise")
                 {
-                    var l2 = l1.GroupBy(x => x.CompanyName).ToList();
+                    var l2 = l1.GroupBy(x => x.LedgerName).ToList();
 
                     decimal[] gtamt = new decimal[12];
 
@@ -607,7 +609,7 @@ namespace AccountBuddy.SL.Hubs
 
                     foreach (var d1 in l2)
                     {
-                        var l3 = d1.GroupBy(x => x.CompanyName).ToList();
+                        var l3 = d1.GroupBy(x => x.LedgerName).ToList();
                         decimal[] tamt = new decimal[12];
 
 
@@ -723,9 +725,9 @@ namespace AccountBuddy.SL.Hubs
                 #endregion
 
                 #region CustomeSummary
-                if (ReportType == "CustomeSummary")
+                if (ReportType == "CustomerSummary")
                 {
-                    var l2 = l1.GroupBy(x => x.CompanyName).ToList();
+                    var l2 = l1.GroupBy(x => x.LedgerName).ToList();
 
                     decimal[] gtamt = new decimal[12];
 

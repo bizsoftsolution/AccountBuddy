@@ -216,7 +216,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 prnPurchaseOrder.PrintController = new System.Drawing.Printing.StandardPrintController();
 
                 TextToPrint = PrintLine(BLL.UserAccount.User.UserType.Company.CompanyName, PrintTextAlignType.Center);
-                TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine1), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine1), PrintTextAlignType.Left);
                 TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine2), PrintTextAlignType.Center);
                 TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.CityName), PrintTextAlignType.Center);
 

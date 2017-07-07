@@ -117,6 +117,11 @@
                                             <Master:frmLedger/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Staff" FormName="Staff">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmStaff/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Unit Of Measurement" FormName="UOM">
                                         <Menu:NavMenuItem.Content>
                                             <Master:frmUOM/>

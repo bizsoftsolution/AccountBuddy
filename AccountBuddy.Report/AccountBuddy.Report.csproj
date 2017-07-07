@@ -59,6 +59,9 @@
     <EmbeddedResource Include="rpt\Master\rptProducts.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Master\rptStaff.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Master\rptStockGroup.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -179,6 +182,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturn.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturnDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SOPending.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Staff.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockGroup1.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockIn.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockInDetail.datasource" />

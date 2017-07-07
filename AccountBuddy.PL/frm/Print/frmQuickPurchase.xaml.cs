@@ -91,23 +91,16 @@ namespace AccountBuddy.PL.frm.Print
             {
                 newRow = dt.NewRow();
                 n = n + 1;
-                // fill the properties into the cells
                 newRow["ProductName"] = element.ProductName;
                 newRow["Quantity"] = element.Quantity == 0 ? "" : element.Quantity.ToString();
-                newRow["UnitPrice"] = element.UnitPrice == 0 ? "" : element.UnitPrice.ToString();
+                newRow["UnitPrice"] = element.UnitPrice == 0 ? "" : String.Format("{0:0.00}", element.UnitPrice);
                 newRow["UOMName"] = element.UOMName;
-                newRow["Amount"] = element.Amount;
+                newRow["Amount"] = String.Format("{0:0.00}", element.Amount);
                 newRow["Id"] = n.ToString();
 
                 dt.Rows.Add(newRow);
             }
-            newRow = dt.NewRow();
-            newRow["ProductName"] = string.Format("----------- No Of Products {0}----------", data.PDetails.Count());
-            newRow["Quantity"] = "";
-            newRow["UnitPrice"] = "";
-            newRow["Amount"] = "";
-            newRow["Id"] = "";
-            dt.Rows.Add(newRow);
+           
             for (int i = 0; i < NoRecPerPage - data.PDetails.Count(); i++)
             {
                 newRow = dt.NewRow();

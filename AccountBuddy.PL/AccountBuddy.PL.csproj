@@ -185,6 +185,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmStaff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmStockGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -410,6 +414,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmStockProcess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Vouchers\frmQuickJournalVoucher.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -462,6 +470,9 @@
     </Compile>
     <Compile Include="frm\Master\frmProducts.xaml.cs">
       <DependentUpon>frmProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmStaff.xaml.cs">
+      <DependentUpon>frmStaff.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmStockGroup.xaml.cs">
       <DependentUpon>frmStockGroup.xaml</DependentUpon>
@@ -631,6 +642,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmStockOut.xaml.cs">
       <DependentUpon>frmStockOut.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmStockProcess.xaml.cs">
+      <DependentUpon>frmStockProcess.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Vouchers\frmQuickJournalVoucher.xaml.cs">
       <DependentUpon>frmQuickJournalVoucher.xaml</DependentUpon>
