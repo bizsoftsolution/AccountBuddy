@@ -84,6 +84,15 @@
           <Property Name="ErrorAt" Type="datetime" />
           <Property Name="ErrorMessage" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="JobWorker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LedgerId" Type="int" />
+          <Property Name="Salary" Type="money" />
+          <Property Name="Role" Type="nvarchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="Journal">
           <Key>
             <PropertyRef Name="Id" />
@@ -447,6 +456,8 @@
           <Property Name="LedgerId" Type="int" />
           <Property Name="Salary" Type="money" />
           <Property Name="Designation" Type="nvarchar" MaxLength="150" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="DOJ" Type="datetime" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -639,6 +650,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Customer">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobWorkers_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
+          <End Role="JobWorker" Type="Self.JobWorker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobWorker">
               <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1468,6 +1491,7 @@
           <EntitySet Name="DataKeyValue" EntityType="Self.DataKeyValue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityType" EntityType="Self.EntityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobWorker" EntityType="Self.JobWorker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JournalDetail" EntityType="Self.JournalDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ledger" EntityType="Self.Ledger" Schema="dbo" store:Type="Tables" />
@@ -1524,6 +1548,10 @@
           <AssociationSet Name="FK_Customer_Ledger" Association="Self.FK_Customer_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
             <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobWorkers_Ledger" Association="Self.FK_JobWorkers_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="JobWorker" EntitySet="JobWorker" />
           </AssociationSet>
           <AssociationSet Name="FK_JournalDetail_Journal" Association="Self.FK_JournalDetail_Journal">
             <End Role="Journal" EntitySet="Journal" />
@@ -1835,7 +1863,6 @@
           <EntitySet Name="SalesOrderDetails" EntityType="DBFMCGModel.SalesOrderDetail" />
           <EntitySet Name="SalesReturns" EntityType="DBFMCGModel.SalesReturn" />
           <EntitySet Name="SalesReturnDetails" EntityType="DBFMCGModel.SalesReturnDetail" />
-          <EntitySet Name="Staffs" EntityType="DBFMCGModel.Staff" />
           <EntitySet Name="StockGroups" EntityType="DBFMCGModel.StockGroup" />
           <EntitySet Name="StockIns" EntityType="DBFMCGModel.StockIn" />
           <EntitySet Name="StockInDetails" EntityType="DBFMCGModel.StockInDetail" />
@@ -1943,10 +1970,6 @@
           <AssociationSet Name="FK_SalesReturn_Ledger" Association="DBFMCGModel.FK_SalesReturn_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
             <End Role="SalesReturn" EntitySet="SalesReturns" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Staff_Ledger" Association="DBFMCGModel.FK_Staff_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Staff" EntitySet="Staffs" />
           </AssociationSet>
           <AssociationSet Name="FK_StockIn_Ledger" Association="DBFMCGModel.FK_StockIn_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
@@ -2140,6 +2163,16 @@
             <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
           </AssociationSet>
+          <EntitySet Name="JobWorkers" EntityType="DBFMCGModel.JobWorker" />
+          <AssociationSet Name="FK_JobWorkers_Ledger" Association="DBFMCGModel.FK_JobWorkers_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="JobWorker" EntitySet="JobWorkers" />
+          </AssociationSet>
+          <EntitySet Name="Staffs" EntityType="DBFMCGModel.Staff" />
+          <AssociationSet Name="FK_Staff_Ledger" Association="DBFMCGModel.FK_Staff_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -2299,10 +2332,11 @@
           <NavigationProperty Name="Sales" Relationship="DBFMCGModel.FK_Sale_Ledger" FromRole="Ledger" ToRole="Sale" />
           <NavigationProperty Name="SalesOrders" Relationship="DBFMCGModel.FK_SalesOrder_Ledger" FromRole="Ledger" ToRole="SalesOrder" />
           <NavigationProperty Name="SalesReturns" Relationship="DBFMCGModel.FK_SalesReturn_Ledger" FromRole="Ledger" ToRole="SalesReturn" />
-          <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Ledger" ToRole="Staff" />
           <NavigationProperty Name="StockIns" Relationship="DBFMCGModel.FK_StockIn_Ledger" FromRole="Ledger" ToRole="StockIn" />
           <NavigationProperty Name="StockOuts" Relationship="DBFMCGModel.FK_StockOut_Ledger" FromRole="Ledger" ToRole="StockOut" />
           <NavigationProperty Name="Suppliers" Relationship="DBFMCGModel.FK_Supplier_Ledger" FromRole="Ledger" ToRole="Supplier" />
+          <NavigationProperty Name="JobWorkers" Relationship="DBFMCGModel.FK_JobWorkers_Ledger" FromRole="Ledger" ToRole="JobWorker" />
+          <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Ledger" ToRole="Staff" />
         </EntityType>
         <EntityType Name="LogDetail">
           <Key>
@@ -2681,16 +2715,6 @@
           <NavigationProperty Name="SalesDetail" Relationship="DBFMCGModel.FK_SalesReturnDetail_SalesDetail" FromRole="SalesReturnDetail" ToRole="SalesDetail" />
           <NavigationProperty Name="SalesReturn" Relationship="DBFMCGModel.FK_SalesReturnDetail_SalesReturn" FromRole="SalesReturnDetail" ToRole="SalesReturn" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_SalesReturnDetail_UOM" FromRole="SalesReturnDetail" ToRole="UOM" />
-        </EntityType>
-        <EntityType Name="Staff">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LedgerId" Type="Int32" />
-          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Designation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Staff" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -3149,18 +3173,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SalesReturn">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Staff_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Staff">
               <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -3741,6 +3753,52 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="JobWorker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LedgerId" Type="Int32" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Role" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_JobWorkers_Ledger" FromRole="JobWorker" ToRole="Ledger" />
+        </EntityType>
+        <Association Name="FK_JobWorkers_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.JobWorker" Role="JobWorker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobWorker">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LedgerId" Type="Int32" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Designation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="DOJ" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Staff" ToRole="Ledger" />
+        </EntityType>
+        <Association Name="FK_Staff_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4213,16 +4271,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Staffs">
-            <EntityTypeMapping TypeName="DBFMCGModel.Staff">
-              <MappingFragment StoreEntitySet="Staff">
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="StockGroups">
             <EntityTypeMapping TypeName="DBFMCGModel.StockGroup">
               <MappingFragment StoreEntitySet="StockGroup">
@@ -4366,6 +4414,28 @@
                 <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
                 <ScalarProperty Name="FormType" ColumnName="FormType" />
                 <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobWorkers">
+            <EntityTypeMapping TypeName="DBFMCGModel.JobWorker">
+              <MappingFragment StoreEntitySet="JobWorker">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="DBFMCGModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="DOJ" ColumnName="DOJ" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

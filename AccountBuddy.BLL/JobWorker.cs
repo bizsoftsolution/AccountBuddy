@@ -9,20 +9,18 @@ using AccountBuddy.Common;
 
 namespace AccountBuddy.BLL
 {
-   public class Staff : INotifyPropertyChanged
+    public class JobWorker : INotifyPropertyChanged
     {
         #region Fileds
 
-        private static ObservableCollection<Staff> _toList;
+        private static ObservableCollection<JobWorker> _toList;
 
         private int _Id;
         private int _LedgerId;
         private Ledger _Ledger;
         private decimal _Salary;
-        private string _Designation;
-        private DateTime _DOB;
-        private DateTime _DOJ;
-
+        private string _Role;
+     
 
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
@@ -85,11 +83,11 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public static ObservableCollection<Staff> toList
+        public static ObservableCollection<JobWorker> toList
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<Staff>(FMCGHubClient.FMCGHub.Invoke<List<Staff>>("Staff_List").Result);
+                if (_toList == null) _toList = new ObservableCollection<JobWorker>(FMCGHubClient.FMCGHub.Invoke<List<JobWorker>>("JobWorker_List").Result);
                 return _toList;
             }
             set
@@ -154,7 +152,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                  return _Salary;
+                return _Salary;
             }
 
             set
@@ -163,57 +161,23 @@ namespace AccountBuddy.BLL
                 {
                     _Salary = value;
                     NotifyPropertyChanged(nameof(Salary));
-                    
-                }
-            }
-        }
-        public string Designation
-        {
-            get
-            {
-                return _Designation;
-            }
-
-            set
-            {
-                if (_Designation != value)
-                {
-                    _Designation = value;
-                    NotifyPropertyChanged(nameof(Designation));
 
                 }
             }
         }
-        public DateTime DOB
+        public string Role
         {
             get
             {
-                return _DOB;
+                return _Role;
             }
 
             set
             {
-                if (_DOB != value)
+                if (_Role != value)
                 {
-                    _DOB = value;
-                    NotifyPropertyChanged(nameof(DOB));
-
-                }
-            }
-        }
-        public DateTime DOJ
-        {
-            get
-            {
-                return _DOJ;
-            }
-
-            set
-            {
-                if (_DOJ != value)
-                {
-                    _DOJ = value;
-                    NotifyPropertyChanged(nameof(DOJ));
+                    _Role = value;
+                    NotifyPropertyChanged(nameof(Role));
 
                 }
             }
@@ -246,7 +210,7 @@ namespace AccountBuddy.BLL
             {
                 if (isServerCall == false)
                 {
-                    var d = FMCGHubClient.FMCGHub.Invoke<Staff>("Staff_Save", this).Result;
+                    var d = FMCGHubClient.FMCGHub.Invoke<JobWorker>("JobWorker_Save", this).Result;
                     if (d.Id != 0)
                     {
                         if (Id == 0)
@@ -258,7 +222,7 @@ namespace AccountBuddy.BLL
                         {
                             var d1 = toList.Where(x => x.Id == d.Id).FirstOrDefault();
                             var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
-                            d.toCopy<Staff>(d1);
+                            d.toCopy<JobWorker>(d1);
                             d.Ledger.toCopy<Ledger>(l1);
                         }
                         return true;
@@ -270,12 +234,12 @@ namespace AccountBuddy.BLL
                     var l1 = Ledger.toList.Where(x => x.Id == LedgerId).FirstOrDefault();
                     if (d1 == null)
                     {
-                        d1 = new Staff();
+                        d1 = new JobWorker();
                         toList.Add(d1);
                         l1 = new Ledger();
                         Ledger.toList.Add(l1);
                     }
-                    this.toCopy<Staff>(d1);
+                    this.toCopy<JobWorker>(d1);
                     this.Ledger.toCopy<Ledger>(l1);
                 }
             }
@@ -285,12 +249,10 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Staff().toCopy<Staff>(this);
+            new JobWorker().toCopy<JobWorker>(this);
             this.Ledger.Clear();
             this.Ledger.AccountGroupId = BLL.DataKeyValue.SundryCreditors;
 
-            DOB = DateTime.Now;
-            DOJ = DateTime.Now;
             NotifyAllPropertyChanged();
         }
 
@@ -299,7 +261,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<Staff>(this);
+                d.toCopy<JobWorker>(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
 
                 return true;
@@ -318,7 +280,7 @@ namespace AccountBuddy.BLL
 
                 if (isServerCall == false)
                 {
-                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("Staff_Delete", this.Id).Result;
+                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("JobWorker_Delete", this.Id).Result;
                     if (rv == true)
                     {
                         toList.Remove(d);

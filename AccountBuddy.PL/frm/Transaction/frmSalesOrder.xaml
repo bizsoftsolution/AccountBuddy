@@ -101,7 +101,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox x:Name="txtdiscountAmount" TextChanged="txtDiscountAmount_TextChanged" Margin="0,0,10,0" Text="{Binding SODetail.DiscountAmount,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
+                        <TextBox x:Name="txtdiscountAmount" IsReadOnly="False"  TextChanged="txtDiscountAmount_TextChanged" Margin="0,0,10,0" Text="{Binding SODetail.DiscountAmount,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Sale" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -162,7 +162,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Orientation="Horizontal" Margin="50,273,0,0">
-                        <TextBox x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding AmountInwords}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"   TextAlignment="Left"  Width="600"/>
+                        <TextBox IsReadOnly="True" x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding AmountInwords}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"   TextAlignment="Left"  Width="600"/>
                     </StackPanel>
                     <Grid Grid.Row="1" Grid.Column="1" Margin="0">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="185">

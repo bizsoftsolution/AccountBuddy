@@ -180,7 +180,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding AmountInwords}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"  RenderTransformOrigin="0.5,0.375" TextAlignment="Left" Margin="10,250,10,10" Width="597"/>
+                        <TextBox IsReadOnly="True" x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding AmountInwords}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"  RenderTransformOrigin="0.5,0.375" TextAlignment="Left" Margin="10,250,10,10" Width="597"/>
                     </StackPanel>
 
 

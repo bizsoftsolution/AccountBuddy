@@ -12,32 +12,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Reporting.WinForms;
 
 namespace AccountBuddy.PL.frm.Master
 {
     /// <summary>
-    /// Interaction logic for frmStaff.xaml
+    /// Interaction logic for frmJobWorker.xaml
     /// </summary>
-    public partial class frmStaff : UserControl
+    public partial class frmJobWorker : UserControl
     {
         #region Field
 
-        public static string FormName = "Staff";
-        BLL.Staff data = new BLL.Staff();
+        public static string FormName = "JobWorker";
+        BLL.JobWorker data = new BLL.JobWorker();
 
         #endregion
 
         #region Constructor
 
-        public frmStaff()
+        public frmJobWorker()
         {
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-            rptStaff.SetDisplayMode(DisplayMode.PrintLayout);
+            rptJobWorker.SetDisplayMode(DisplayMode.PrintLayout);
             onClientEvents();
         }
 
@@ -48,10 +47,10 @@ namespace AccountBuddy.PL.frm.Master
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             BLL.Supplier.Init();
-            dgvStaff.ItemsSource = BLL.Staff.toList;
+            dgvJobWorker.ItemsSource = BLL.JobWorker.toList;
 
-            CollectionViewSource.GetDefaultView(dgvStaff.ItemsSource).Filter = Staff_Filter;
-            CollectionViewSource.GetDefaultView(dgvStaff.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.LedgerName), System.ComponentModel.ListSortDirection.Ascending));
+            CollectionViewSource.GetDefaultView(dgvJobWorker.ItemsSource).Filter = JobWorker_Filter;
+            CollectionViewSource.GetDefaultView(dgvJobWorker.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.LedgerName), System.ComponentModel.ListSortDirection.Ascending));
 
             rptContain.IsChecked = true;
 
@@ -64,16 +63,13 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Ledger.LedgerName == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Staff Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "JobWorker Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Designation == null)
+            else if (data.Role == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Deignation"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Role"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-           else if (data.Salary == 0)
-            {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Salary"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+           
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
@@ -138,9 +134,9 @@ namespace AccountBuddy.PL.frm.Master
         }
 
 
-        private void dgvStaff_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dgvJobWorker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvStaff.SelectedItem as BLL.Staff;
+            var d = dgvJobWorker.SelectedItem as BLL.JobWorker;
             if (d != null)
             {
                 data.Find(d.Id);
@@ -197,10 +193,10 @@ namespace AccountBuddy.PL.frm.Master
 
         #region Methods
 
-        private bool Staff_Filter(object obj)
+        private bool JobWorker_Filter(object obj)
         {
             bool RValue = false;
-            var d = obj as BLL.Staff;
+            var d = obj as BLL.JobWorker;
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
@@ -212,8 +208,6 @@ namespace AccountBuddy.PL.frm.Master
                     if (p.Name.ToLower().Contains("id") ||
                          p.GetValue(d) == null ||
                             (p.Name != nameof(data.Ledger.LedgerName) &&
-                                p.Name != nameof(data.Designation) &&
-                                p.Name != nameof(data.Salary) &&
                                 p.Name != nameof(data.Ledger.AddressLine2) &&
                                 p.Name != nameof(data.Ledger.AddressLine2)
 
@@ -251,7 +245,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                CollectionViewSource.GetDefaultView(dgvStaff.ItemsSource).Refresh();
+                CollectionViewSource.GetDefaultView(dgvJobWorker.ItemsSource).Refresh();
             }
             catch (Exception ex) { };
 
@@ -261,27 +255,27 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                rptStaff.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Staff.toList.Where(x => Staff_Filter(x)).Select(x => new { x.Ledger.LedgerName, AccountName=x.Designation, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.TelephoneNo, x.Ledger.MobileNo, OPCr=x.Salary }).OrderBy(x => x.LedgerName).ToList());
+                rptJobWorker.Reset();
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.JobWorker.toList.Where(x => JobWorker_Filter(x)).Select(x => new { x.Ledger.LedgerName, AccountName = x.Role, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.TelephoneNo, x.Ledger.MobileNo, OPCr = x.Salary }).OrderBy(x => x.LedgerName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
-                rptStaff.LocalReport.DataSources.Add(data);
-                rptStaff.LocalReport.DataSources.Add(data1);
+                rptJobWorker.LocalReport.DataSources.Add(data);
+                rptJobWorker.LocalReport.DataSources.Add(data1);
 
-                rptStaff.LocalReport.ReportPath = @"rpt\master\rptStaff.rdlc";
-                rptStaff.RefreshReport();
+                rptJobWorker.LocalReport.ReportPath = @"rpt\master\rptJobWorker.rdlc";
+                rptJobWorker.RefreshReport();
 
             }
             catch (Exception ex)
             {
 
             }
-
+            +
 
         }
 
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.Staff>("Staff_Save", (Cus) =>
+            BLL.FMCGHubClient.FMCGHub.On<BLL.JobWorker>("JobWorker_Save", (Cus) =>
             {
 
                 this.Dispatcher.Invoke(() =>
@@ -291,11 +285,11 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("Staff_Delete", (Action<int>)((pk) =>
+            BLL.FMCGHubClient.FMCGHub.On("JobWorker_Delete", (Action<int>)((pk) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    BLL.Staff led = new BLL.Staff();
+                    BLL.JobWorker led = new BLL.JobWorker();
                     led.Find((int)pk);
                     led.Delete((bool)true);
                 });
@@ -305,7 +299,7 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-     
+
 
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -322,11 +316,11 @@ namespace AccountBuddy.PL.frm.Master
             Grid_Refresh();
         }
 
-       
 
-        private void dgvStaff_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+
+        private void dgvJobWorker_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvStaff.SelectedItem as BLL.Supplier;
+            var d = dgvJobWorker.SelectedItem as BLL.Supplier;
             if (d != null)
             {
                 data.Find(d.Id);
@@ -359,4 +353,5 @@ namespace AccountBuddy.PL.frm.Master
         }
 
     }
+
 }

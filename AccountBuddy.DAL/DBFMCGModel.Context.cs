@@ -57,7 +57,6 @@ namespace AccountBuddy.DAL
         public virtual DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
         public virtual DbSet<SalesReturn> SalesReturns { get; set; }
         public virtual DbSet<SalesReturnDetail> SalesReturnDetails { get; set; }
-        public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<StockGroup> StockGroups { get; set; }
         public virtual DbSet<StockIn> StockIns { get; set; }
         public virtual DbSet<StockInDetail> StockInDetails { get; set; }
@@ -70,5 +69,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<UserTypeFormDetail> UserTypeFormDetails { get; set; }
+        public virtual DbSet<JobWorker> JobWorkers { get; set; }
+        public virtual DbSet<Staff> Staffs { get; set; }
     }
 }

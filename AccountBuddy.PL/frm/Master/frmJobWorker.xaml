@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="AccountBuddy.PL.frm.Master.frmStaff"
+﻿<UserControl x:Class="AccountBuddy.PL.frm.Master.frmJobWorker"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Master"
              mc:Ignorable="d" 
-                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
            
              d:DesignHeight="650" d:DesignWidth="1200" Background="White" Loaded="UserControl_Loaded">
@@ -17,7 +17,7 @@
         <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
         <!--#region Form Head -->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Staff"/></TextBlock>
+            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Job Seeker"/></TextBlock>
         </Grid>
         <!--#endregion-->
         <!--#region Form Body-->
@@ -38,12 +38,28 @@
 
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                            <TextBox x:Name="txtStaffName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.LedgerName, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+
+                            <!--<StackPanel Orientation="Horizontal">
+                                <ComboBox Width="200" Name="cmbAccountGroupId"  IsEditable="True" SelectedValue="{Binding AccountGroupId,Mode=TwoWay}" FontWeight="Bold" FontSize="14" SelectedItem="{Binding Ledger.AccountGroup,Mode=TwoWay}" Text ="{Binding AccountGroup.GroupName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal" Width="151">
+                                            <materialDesign:PackIcon  Kind="CashMultiple" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                            <TextBlock Text="Account Group" />
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+
+                                </ComboBox>
+                                <TextBlock Margin="10,0,10,0"  FontWeight="Bold" FontSize="14"  VerticalAlignment="Bottom">AC Code</TextBlock>
+                                <TextBox Text="{Binding Ledger.AccountGroup.GroupCode,Mode=OneWay}" IsReadOnly="True" FontWeight="Bold" FontSize="14"  TextAlignment="Right" Width="30" />
+                                <TextBlock VerticalAlignment="Bottom" FontSize="22"> -</TextBlock>
+                                <TextBox Text="{Binding Ledger.LedgerCode}" FontWeight="Bold" FontSize="14"  Width="30"/>
+                            </StackPanel>-->
+                            <TextBox x:Name="txtName" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" Text="{Binding Ledger.LedgerName, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
 
-                                        <TextBlock Text="Staff Name"/>
+                                        <TextBlock Text="Name"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
@@ -63,15 +79,15 @@
                                 <TextBlock VerticalAlignment="Bottom" FontSize="22"> -</TextBlock>
                                 <TextBox Text="{Binding Ledger.LedgerCode}" FontWeight="Bold" FontSize="14"  Width="30"/>
                             </StackPanel>-->
-                            <TextBox x:Name="txtDesignation" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Designation,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+                            <TextBox x:Name="txtRole" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" Text="{Binding Role, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                        <TextBlock Text="Designation"/>
+                                        <TextBlock Text="Role"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <TextBox   x:Name="txtAddress1" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.AddressLine1, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
+                            <TextBox   x:Name="txtAddress1" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.AddressLine1, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Width="331">
                                         <materialDesign:PackIcon  Kind="AccountLocation" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -79,7 +95,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <TextBox   x:Name="txtAddress2" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.AddressLine2, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
+                            <TextBox   x:Name="txtAddress2" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.AddressLine2, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Width="331">
                                         <materialDesign:PackIcon  Kind="AccountLocation" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -87,7 +103,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <TextBox x:Name="txtCityName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.CityName,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+                            <TextBox x:Name="txtCityName" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" Text="{Binding Ledger.CityName, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="AccountLocation" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -96,7 +112,7 @@
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
 
-                            <TextBox x:Name="txtMobile" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" PreviewTextInput="NumericOnly" Text="{Binding Ledger.MobileNo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" materialDesign:TransitionAssist.DisableTransitions="True">
+                            <TextBox x:Name="txtMobile" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" PreviewTextInput="NumericOnly" Text="{Binding Ledger.MobileNo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" materialDesign:TransitionAssist.DisableTransitions="True">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Width="331">
                                         <materialDesign:PackIcon Kind="Phone" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -105,7 +121,7 @@
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
 
-                            <TextBox   x:Name="txtTelephone" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" PreviewTextInput="NumericOnly" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.TelephoneNo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TransitionAssist.DisableTransitions="True" >
+                            <TextBox   x:Name="txtTelephone" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" PreviewTextInput="NumericOnly" FontWeight="Bold" FontSize="14" Text="{Binding Ledger.TelephoneNo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TransitionAssist.DisableTransitions="True" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Width="331">
                                         <materialDesign:PackIcon  Kind="PhoneClassic" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -114,7 +130,7 @@
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
 
-                            <TextBox   x:Name="txtMail" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" FontWeight="Bold" TextChanged="txtMail_TextChanged" LostFocus="txtMail_LostFocus" FontSize="14" Text="{Binding Ledger.EMailId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
+                            <TextBox   x:Name="txtMail" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" FontWeight="Bold" TextChanged="txtMail_TextChanged" LostFocus="txtMail_LostFocus" FontSize="14" Text="{Binding Ledger.EMailId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Width="329">
                                         <materialDesign:PackIcon  Kind="Email" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -122,7 +138,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <TextBox   x:Name="txtSalary" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" PreviewTextInput="NumericOnly" FontWeight="Bold" FontSize="14" Text="{Binding Salary, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
+                            <!--<TextBox   x:Name="txtSalary" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" PreviewTextInput="NumericOnly" FontWeight="Bold" FontSize="14" Text="{Binding Salary, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Width="151">
                                         <materialDesign:PackIcon  Kind="CreditCardPlus" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -131,10 +147,10 @@
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
                             <StackPanel Orientation="Horizontal">
-                                <DatePicker x:Name="dtpDOB" materialDesign:HintAssist.Hint="Date of Birth"  SelectedDate="{Binding DOB,Mode=TwoWay}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,20,10" Width="100" FontWeight="Bold"  />
-                                <DatePicker x:Name="dtpDOJ" materialDesign:HintAssist.Hint="Date of Join"  SelectedDate="{Binding DOJ,Mode=TwoWay}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,20,10" Width="100" FontWeight="Bold"  />
+                                <DatePicker x:Name="dtpDOB" materialDesign:HintAssist.Hint="Date of Birth"  SelectedDate="{Binding DOB, Mode=TwoWay}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,20,10" Width="100" FontWeight="Bold"  />
+                                <DatePicker x:Name="dtpDOJ" materialDesign:HintAssist.Hint="Date of Join"  SelectedDate="{Binding DOJ, Mode=TwoWay}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,20,10" Width="100" FontWeight="Bold"  />
 
-                            </StackPanel>                           
+                            </StackPanel>-->
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
@@ -222,7 +238,7 @@
 
                             </Grid>
                             <Grid Grid.Row="1">
-                                <DataGrid x:Name="dgvStaff" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="30,30,10,10" SelectionChanged="dgvStaff_SelectionChanged" MouseDoubleClick="dgvStaff_MouseDoubleClick" >
+                                <DataGrid x:Name="dgvJobWorker" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="30,30,10,10" SelectionChanged="dgvJobWorker_SelectionChanged" MouseDoubleClick="dgvJobWorker_MouseDoubleClick" >
                                     <DataGrid.ColumnHeaderStyle>
                                         <Style TargetType="{x:Type DataGridColumnHeader}">
                                             <Setter Property="FontWeight" Value="Bold" />
@@ -231,16 +247,15 @@
                                     </DataGrid.ColumnHeaderStyle>
 
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Staff Name" FontWeight="Bold" Width="250" Binding="{Binding Ledger.LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Designation" FontWeight="Bold" Width="200" Binding="{Binding Designation}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Name" FontWeight="Bold" Width="250" Binding="{Binding Ledger.LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                        <DataGridTextColumn Header="Role" FontWeight="Bold" Width="200" Binding="{Binding Role}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="Address Line 1" FontWeight="Bold" Width="200" Binding="{Binding Ledger.AddressLine1}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="Address Line 2" FontWeight="Bold" Width="200" Binding="{Binding Ledger.AddressLine2}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                         <DataGridTextColumn Header="City" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CityName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="Mobile No" FontWeight="Bold" Width="200" Binding="{Binding Ledger.MobileNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="Telephone No" FontWeight="Bold" Width="200" Binding="{Binding Ledger.TelephoneNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="EMail" FontWeight="Bold" Width="200" Binding="{Binding Ledger.EMailId}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Salary" FontWeight="Bold" Width="200" Binding="{Binding Salary}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                         </DataGrid.Columns>
+                                    </DataGrid.Columns>
                                 </DataGrid>
 
                             </Grid>
@@ -250,7 +265,7 @@
                     <TabItem Header="Report" FontSize="16">
                         <Grid Grid.Row="0" Margin="0,0,4,-14">
                             <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="550"  Margin="20">
-                                <rv:ReportViewer x:Name="rptStaff"/>
+                                <rv:ReportViewer x:Name="rptJobWorker"/>
                             </WindowsFormsHost>
 
                         </Grid>

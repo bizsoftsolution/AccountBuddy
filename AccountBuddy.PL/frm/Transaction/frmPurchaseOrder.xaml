@@ -135,7 +135,7 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="300"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <DataGrid Grid.Column="0" x:Name="dgvDetails" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding PODetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="50,25,10,75"   BorderThickness="1" >
+                    <DataGrid Grid.Column="0" x:Name="dgvDetails" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding PODetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,25,10,75"   BorderThickness="1" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="FontWeight" Value="Bold" />
@@ -164,7 +164,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Orientation="Horizontal" Margin="50,250,0,0">
-                        <TextBox x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding AmountInwords}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"   TextAlignment="Left"  Width="600"/>
+                        <TextBox IsReadOnly="True" x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding AmountInwords}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"   TextAlignment="Left"  Width="600"/>
                     </StackPanel>
                     <Grid Grid.Row="1" Grid.Column="1" Margin="0,20">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="170">

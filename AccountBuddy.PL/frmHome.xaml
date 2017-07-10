@@ -122,6 +122,11 @@
                                             <Master:frmStaff/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Job Worker" FormName="Job Worker">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmJobWorker/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Unit Of Measurement" FormName="UOM">
                                         <Menu:NavMenuItem.Content>
                                             <Master:frmUOM/>
