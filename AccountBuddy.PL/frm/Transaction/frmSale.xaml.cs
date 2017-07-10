@@ -53,6 +53,8 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            BLL.Product.Init();
+          
             var max = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
             var min = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
 
@@ -131,9 +133,18 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    if(ckbAutoPrint.IsChecked==true)
+                    {
+                        PrintBill();
+                    }
+
                     data.Clear();
                     btnPrint.IsEnabled = false;
 
+                }
+                else
+                {
+                   
                 }
             }
             else

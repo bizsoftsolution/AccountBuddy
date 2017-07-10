@@ -25,10 +25,7 @@
         </Grid.RowDefinitions>
         <!--#region Form Head -->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-            <StackPanel Orientation="Horizontal">
-
-                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Width="1000" ><Run Text="Purchase Order"/></TextBlock>
-            </StackPanel>
+            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Width="1000" ><Run Text="Purchase Order"/></TextBlock>
         </Grid>
         <Border BorderBrush="Black" Grid.RowSpan="2" BorderThickness="1"></Border>
         <!--#endregion-->

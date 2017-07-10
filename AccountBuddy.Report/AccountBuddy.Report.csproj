@@ -86,7 +86,9 @@
     <EmbeddedResource Include="rpt\Report\rptPaymentReceipt.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="rpt\Report\rptPOPendingReport.rdlc" />
+    <EmbeddedResource Include="rpt\Report\rptPOPendingReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Report\rptReorderLevelReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

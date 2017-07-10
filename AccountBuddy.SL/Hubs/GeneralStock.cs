@@ -19,7 +19,7 @@ namespace AccountBuddy.SL.Hubs
 
             #region Ledger
 
-            decimal opqty,sqty, prqty, srqty, pqty, BalQty, Inwards,Outwards;
+            decimal opqty, sqty, prqty, srqty, pqty, BalQty, StIn, StOut;
             BalQty = 0;
             foreach (var P in lstProduct)
             {
@@ -29,16 +29,18 @@ namespace AccountBuddy.SL.Hubs
 
                 opqty = (decimal)P.ProductDetails.FirstOrDefault().OpeningStock;
 
-                pqty =(decimal) P.PurchaseDetails.Where(x=> (CompanyId==null || x.Purchase.Ledger.AccountGroup.CompanyId==CompanyId ) && x.Purchase.PurchaseDate<dtFrom).Sum(x => x.Quantity);
-                srqty = (decimal)P.SalesReturnDetails.Where(x=> (CompanyId == null || x.SalesReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.SalesReturn.SRDate<dtFrom).Sum(x => x.Quantity);
-                sqty = (decimal)P.SalesDetails.Where(x=> (CompanyId == null || x.Sale.Ledger.AccountGroup.CompanyId == CompanyId) && x.Sale.SalesDate<dtFrom).Sum(x => x.Quantity);
-                prqty = (decimal)P.PurchaseReturnDetails.Where(x=> (CompanyId == null || x.PurchaseReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.PurchaseReturn.PRDate<dtFrom).Sum(x => x.Quantity);
-                
-                gl.Inwards = pqty + srqty;
-                gl.Outwards = sqty + prqty;
+                pqty = (decimal)P.PurchaseDetails.Where(x => (CompanyId == null || x.Purchase.Ledger.AccountGroup.CompanyId == CompanyId) && x.Purchase.PurchaseDate < dtFrom).Sum(x => x.Quantity);
+                srqty = (decimal)P.SalesReturnDetails.Where(x => (CompanyId == null || x.SalesReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.SalesReturn.SRDate < dtFrom).Sum(x => x.Quantity);
+                sqty = (decimal)P.SalesDetails.Where(x => (CompanyId == null || x.Sale.Ledger.AccountGroup.CompanyId == CompanyId) && x.Sale.SalesDate < dtFrom).Sum(x => x.Quantity);
+                prqty = (decimal)P.PurchaseReturnDetails.Where(x => (CompanyId == null || x.PurchaseReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.PurchaseReturn.PRDate < dtFrom).Sum(x => x.Quantity);
+                StIn = (decimal)P.StockInDetails.Where(x => (CompanyId == null || x.StockIn.Ledger.AccountGroup.CompanyId == CompanyId) && x.StockIn.Date < dtFrom).Sum(x => x.Quantity);
+                StOut = (decimal)P.StockOutDetails.Where(x => (CompanyId == null || x.StockOut.Ledger.AccountGroup.CompanyId == CompanyId) && x.StockOut.Date < dtFrom).Sum(x => x.Quantity);
+
+                gl.Inwards = pqty + srqty + StIn;
+                gl.Outwards = sqty + prqty + StOut;
 
 
-                BalQty += ( ( opqty + gl.Inwards) - gl.Outwards) ;
+                BalQty += ((opqty + gl.Inwards) - gl.Outwards);
 
                 gl.BalStock = Math.Abs(BalQty);
 
@@ -59,7 +61,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.Ledger = new BLL.Ledger();
                     gl.Ledger = LedgerDAL_BLL(pd.Purchase.Ledger);
                     gl.EntryNo = pd.Purchase.RefNo;
-                    gl.Inwards =(decimal) pd.Quantity;
+                    gl.Inwards = (decimal)pd.Quantity;
                     gl.Outwards = 0;
                     BalQty += (gl.Inwards - gl.Outwards);
                     gl.BalStock = Math.Abs(BalQty);
@@ -67,25 +69,25 @@ namespace AccountBuddy.SL.Hubs
                 }
 
 
-        
+
 
                 foreach (var s in P.SalesDetails.Where(x => (CompanyId == null || x.Sale.Ledger.AccountGroup.CompanyId == CompanyId) && x.Sale.SalesDate >= dtFrom && x.Sale.SalesDate <= dtTo).ToList())
                 {
-                   
-                        gl = new BLL.GeneralStock();
-                        gl.Ledger = new BLL.Ledger();
-                        gl.Ledger = LedgerDAL_BLL(s.Sale.Ledger);
-                        gl.EId = s.Id;
-                        gl.EType = "S";
-                        gl.EDate = s.Sale.SalesDate;
-                        gl.TType = string.Format("{0} - Sales", s.Sale.TransactionType.Type);
-                        gl.EntryNo = s.Sale.RefNo;
-                        gl.Outwards =(decimal) s.Quantity;
-                        gl.Inwards = 0;
-                        BalQty += (gl.Inwards - gl.Outwards);
-                        gl.BalStock = Math.Abs(BalQty);
-                        lstGeneralStock.Add(gl);
-                    
+
+                    gl = new BLL.GeneralStock();
+                    gl.Ledger = new BLL.Ledger();
+                    gl.Ledger = LedgerDAL_BLL(s.Sale.Ledger);
+                    gl.EId = s.Id;
+                    gl.EType = "S";
+                    gl.EDate = s.Sale.SalesDate;
+                    gl.TType = string.Format("{0} - Sales", s.Sale.TransactionType.Type);
+                    gl.EntryNo = s.Sale.RefNo;
+                    gl.Outwards = (decimal)s.Quantity;
+                    gl.Inwards = 0;
+                    BalQty += (gl.Inwards - gl.Outwards);
+                    gl.BalStock = Math.Abs(BalQty);
+                    lstGeneralStock.Add(gl);
+
 
                 }
                 foreach (var pr in P.PurchaseReturnDetails.Where(x => (CompanyId == null || x.PurchaseReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.PurchaseReturn.PRDate >= dtFrom && x.PurchaseReturn.PRDate <= dtTo).ToList())
@@ -93,7 +95,7 @@ namespace AccountBuddy.SL.Hubs
                     gl = new BLL.GeneralStock();
                     gl.Ledger = new BLL.Ledger();
                     gl.Ledger = LedgerDAL_BLL(pr.PurchaseReturn.Ledger);
-                    
+
                     gl.EId = pr.PurchaseReturn.Id;
                     gl.EType = "PR";
                     gl.EDate = pr.PurchaseReturn.PRDate;
@@ -112,7 +114,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.Ledger = new BLL.Ledger();
 
                     gl.Ledger = LedgerDAL_BLL(sr.SalesReturn.Ledger);
-                
+
                     gl.EId = sr.SalesReturn.Id;
                     gl.EType = "SR";
                     gl.EDate = sr.SalesReturn.SRDate;
@@ -121,10 +123,50 @@ namespace AccountBuddy.SL.Hubs
                     gl.TType = string.Format("{0} - Sales Return", sr.SalesReturn.TransactionType.Type);
                     gl.Inwards = (decimal)sr.Quantity;
                     gl.Outwards = 0;
-                    BalQty += (gl.Inwards- gl.Outwards);
+                    BalQty += (gl.Inwards - gl.Outwards);
                     gl.BalStock = Math.Abs(BalQty);
                     lstGeneralStock.Add(gl);
                 }
+                foreach (var sIn in P.StockInDetails.Where(x => (CompanyId == null || x.StockIn.Ledger.AccountGroup.CompanyId == CompanyId) && x.StockIn.Date >= dtFrom && x.StockIn.Date <= dtTo).ToList())
+                {
+                    gl = new BLL.GeneralStock();
+                    gl.Ledger = new BLL.Ledger();
+
+                    gl.Ledger = LedgerDAL_BLL(sIn.StockIn.Ledger);
+
+                    gl.EId = sIn.StockIn.Id;
+                    gl.EType = "SIn";
+                    gl.EDate = sIn.StockIn.Date;
+
+                    gl.EntryNo = sIn.StockIn.RefNo;
+                    gl.TType = string.Format("{0} - Stock Inwards", sIn.StockIn.Type);
+                    gl.Inwards = (decimal)sIn.Quantity;
+                    gl.Outwards = 0;
+                    BalQty += (gl.Inwards - gl.Outwards);
+                    gl.BalStock = Math.Abs(BalQty);
+                    lstGeneralStock.Add(gl);
+                }
+                foreach (var sIn in P.StockOutDetails.Where(x => (CompanyId == null || x.StockOut.Ledger.AccountGroup.CompanyId == CompanyId) && x.StockOut.Date >= dtFrom && x.StockOut.Date <= dtTo).ToList())
+                {
+                    gl = new BLL.GeneralStock();
+                    gl.Ledger = new BLL.Ledger();
+
+                    gl.Ledger = LedgerDAL_BLL(sIn.StockOut.Ledger);
+
+                    gl.EId = sIn.StockOut.Id;
+                    gl.EType = "SOut";
+                    gl.EDate = sIn.StockOut.Date;
+
+                    gl.EntryNo = sIn.StockOut.RefNo;
+                    gl.TType = string.Format("{0} - Stock Outwards", sIn.StockOut.Type);
+                    gl.Inwards = 0;
+                    gl.Outwards = (decimal)sIn.Quantity;
+                    BalQty += (gl.Inwards - gl.Outwards);
+                    gl.BalStock = Math.Abs(BalQty);
+                    lstGeneralStock.Add(gl);
+                }
+
+
                 gl = new BLL.GeneralStock();
                 gl.Ledger = new BLL.Ledger();
                 gl.Ledger.LedgerName = "Total";

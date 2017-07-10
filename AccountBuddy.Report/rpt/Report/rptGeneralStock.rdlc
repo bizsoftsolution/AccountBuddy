@@ -9,7 +9,7 @@
               <Width>1.97083cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.78562cm</Width>
+              <Width>2.60584cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.20896cm</Width>
@@ -523,10 +523,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>GeneralStock</DataSetName>
-        <Top>0.86113cm</Top>
+        <Top>0.82585cm</Top>
         <Left>2.24973cm</Left>
         <Height>1.2cm</Height>
-        <Width>20.51624cm</Width>
+        <Width>21.33646cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -546,13 +546,15 @@
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DateFrom</rd:DefaultName>
-        <Top>0.26113cm</Top>
-        <Left>4.22057cm</Left>
-        <Height>0.52944cm</Height>
+        <Top>0.17639cm</Top>
+        <Left>4.63508cm</Left>
+        <Height>0.56472cm</Height>
         <Width>2.60583cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
@@ -578,12 +580,14 @@
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DateTo</rd:DefaultName>
-        <Top>0.33169cm</Top>
-        <Left>20.26598cm</Left>
+        <Top>0.22585cm</Top>
+        <Left>20.30126cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
         <ZIndex>2</ZIndex>
@@ -604,20 +608,22 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Dat From:</Value>
+                <Value>Date From:</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox21</rd:DefaultName>
-        <Top>0.25259cm</Top>
-        <Left>2.35557cm</Left>
-        <Height>0.6cm</Height>
-        <Width>1.82972cm</Width>
+        <Top>0.17639cm</Top>
+        <Left>2.53542cm</Left>
+        <Height>0.6762cm</Height>
+        <Width>2.06439cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -648,8 +654,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox22</rd:DefaultName>
-        <Top>0.26113cm</Top>
-        <Left>17.76598cm</Left>
+        <Top>0.22585cm</Top>
+        <Left>17.69542cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
         <ZIndex>4</ZIndex>
@@ -670,7 +676,7 @@
   <Width>9.84871in</Width>
   <Page>
     <PageHeader>
-      <Height>1.85208cm</Height>
+      <Height>1.74625cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -694,7 +700,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.25208cm</Top>
+          <Top>1.07569cm</Top>
           <Left>2.50015cm</Left>
           <Height>0.6cm</Height>
           <Width>20.01542cm</Width>
