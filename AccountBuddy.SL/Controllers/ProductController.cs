@@ -1,9 +1,9 @@
-﻿using System;
+﻿using AccountBuddy.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
 namespace AccountBuddy.SL.Controllers
 {
     public class ProductController : Controller
@@ -14,28 +14,41 @@ namespace AccountBuddy.SL.Controllers
         {
             return View();
         }
-
+        public BLL.Product Product_DALtoBLL(DAL.Product ProductsFrom, int CompanyId)
+        {
+            BLL.Product ProductsTo = ProductsFrom.toCopy<BLL.Product>(new BLL.Product());
+            var pd = ProductsFrom.ProductDetails.Where(x => x.CompanyId == CompanyId).FirstOrDefault();
+            if (pd == null) pd = new DAL.ProductDetail();
+            ProductsTo.OpeningStock = pd.OpeningStock;
+            ProductsTo.ReOrderLevel = pd.ReorderLevel;
+            ProductsTo.POQty = ProductsFrom.PurchaseOrderDetails.Where(x => x.PurchaseOrder.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
+            ProductsTo.PQty = ProductsFrom.PurchaseDetails.Where(x => x.Purchase.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
+            ProductsTo.PRQty = ProductsFrom.PurchaseReturnDetails.Where(x => x.PurchaseReturn.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SOQty = ProductsFrom.SalesOrderDetails.Where(x => x.SalesOrder.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SQty = ProductsFrom.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SRQty = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SInQty = ProductsFrom.StockInDetails.Where(x => x.StockIn.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SOutQty = ProductsFrom.StockOutDetails.Where(x => x.StockOut.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
+            return ProductsTo;
+        }
         public JsonResult toList(int CompanyId)
         {
-
             var l1 = DB.Products.Where(x => x.StockGroup.CompanyId == CompanyId)
-                                .ToList().Select(x=> new Hubs.ABServerHub().Product_DALtoBLL(x))
                                 .ToList()
+                                .ToList().Select(x => Product_DALtoBLL(x, CompanyId))
                                 .Select(x => new BLL.Product()
-                                      {
-                                          Id = x.Id,
-                                          ProductName = x.ProductName,
-                                          ItemCode = x.ItemCode,
-                                          PurchaseRate = x.PurchaseRate,
-                                          SellingRate = x.SellingRate,
-                                          MRP = x.MRP,
-                                          StockGroupId = x.StockGroupId,
-                                          UOMId = x.UOMId,
-                                          UOMName = x.UOM.Symbol,
-                                          OpeningStock = x.AvailableStock
-                                      })
+                                {
+                                    Id = x.Id,
+                                    ProductName = x.ProductName,
+                                    ItemCode = x.ItemCode,
+                                    PurchaseRate = x.PurchaseRate,
+                                    SellingRate = x.SellingRate,
+                                    MRP = x.MRP,
+                                    StockGroupId = x.StockGroupId,
+                                    UOMId = x.UOMId,
+                                    OpeningStock = x.AvailableStock
+                                })
                                 .ToList();
-
             return Json(l1, JsonRequestBehavior.AllowGet);
         }
     }
