@@ -53,6 +53,8 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            BLL.Product.Init();
+          
             var max = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
             var min = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
 
@@ -61,7 +63,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbItem.Focus();
             }
-            else if (BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() <= data.SDetail.Quantity)
+            else if (BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() < data.SDetail.Quantity)
             {
                 var v = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
                 MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -85,10 +87,13 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            data.Clear(); if (data.Id != 0)
+            data.Clear();
+            if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
             }
+            btnSave.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -128,9 +133,18 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
+                    if(ckbAutoPrint.IsChecked==true)
+                    {
+                        PrintBill();
+                    }
+
                     data.Clear();
                     btnPrint.IsEnabled = false;
 
+                }
+                else
+                {
+                   
                 }
             }
             else
@@ -158,6 +172,11 @@ namespace AccountBuddy.PL.frm.Transaction
             if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
+            }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = true;
+                btnDelete.IsEnabled = true;
             }
         }
 
@@ -208,7 +227,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 prnPurchaseOrder.PrintController = new System.Drawing.Printing.StandardPrintController();
 
                 TextToPrint = PrintLine(BLL.UserAccount.User.UserType.Company.CompanyName, PrintTextAlignType.Center);
-                TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine1), PrintTextAlignType.Center);
+                TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine1), PrintTextAlignType.Left);
                 TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine2), PrintTextAlignType.Center);
                 TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.CityName), PrintTextAlignType.Center);
 

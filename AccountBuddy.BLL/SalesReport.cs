@@ -266,10 +266,14 @@ namespace AccountBuddy.BLL
         {
             return FMCGHubClient.FMCGHub.Invoke<List<SalesReport>>("SalesReport_List", dtFrom,dtTo,isMonthly,ReportType).Result;
         }
-        public static List<SalesReport> ToListCustomerWise(DateTime dtFrom)
+        public static List<SalesReport> ToListCustomerWise(DateTime dtFrom, DateTime dtTo, bool isMonthly, string ReportType)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<SalesReport>>("SalesReport_ListCustomerWise", dtFrom).Result;
+            return FMCGHubClient.FMCGHub.Invoke<List<SalesReport>>("SalesReport_ListCustomerWise", dtFrom, dtTo, isMonthly, ReportType).Result;
         }
+        //public static List<SalesReport> ToListCustomerWise(DateTime dtFrom)
+        //{
+        //    return FMCGHubClient.FMCGHub.Invoke<List<SalesReport>>("SalesReport_ListCustomerWise", dtFrom).Result;
+        //}
         public static List<SalesReport> ToListProductWise(DateTime dtFrom)
         {
             return FMCGHubClient.FMCGHub.Invoke<List<SalesReport>>("SalesReport_ListProductWise", dtFrom).Result;

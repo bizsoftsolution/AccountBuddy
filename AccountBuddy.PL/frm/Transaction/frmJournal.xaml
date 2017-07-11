@@ -60,12 +60,8 @@
         <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="5" Margin="0,0,0,-15" />
 
         <!--#region Heading-->
-        <Grid Grid.Row="0">
-            <StackPanel  Background="Black">
-                <Grid Grid.Row="0" Height="25" Margin="0,0,10,0" >
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  TextAlignment="Center" FontSize="18" Width="512" Height="30" Margin="238,1,330,-1" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5" Text="Journal "/>
-                </Grid>
-            </StackPanel>
+        <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  TextAlignment="Center" FontSize="18" Width="512" Height="30" Margin="238,1,330,-1" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5" Text="Journal "/>
         </Grid>
         <!--#endregion-->
 
@@ -74,7 +70,7 @@
             <StackPanel Orientation="Vertical" Margin="0,25,0,0">
                 <StackPanel Orientation="Horizontal">
                     <DatePicker x:Name="dtpJournalDate" materialDesign:HintAssist.Hint="Date"  SelectedDate="{Binding JournalDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,0,0" Width="100" FontWeight="Bold"  />
-                    <TextBox x:Name="txtEntryNo" IsReadOnly="{Binding IsReadOnly}"  Text="{Binding EntryNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                    <TextBox  x:Name="txtEntryNo" IsReadOnly="True"  Text="{Binding EntryNo, Mode=TwoWay}" Width="120" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <ComboBox x:Name="cmbDebitAC"  IsEditable="True" Text="{Binding JDetail.LedgerName}" SelectedValue="{Binding JDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" >
@@ -149,7 +145,7 @@
                     <CheckBox Name="ckxAutoPrint">Auto Print</CheckBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,85,0">
-                    <TextBox Text="{Binding SearchText}" Width="85" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                    <TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
                     <Button Click="btnsearch_Click" Width="85"  Height="30" x:Name="btnsearch" Content="SEARCH" Margin="5 5" />
 
                 </StackPanel>

@@ -22,6 +22,7 @@ namespace AccountBuddy.BLL
         private string _AccountName;
         private string _Particular;
         private string _RefEntryNo;
+        private string _RefCode;
         #endregion
 
         #region Property
@@ -83,6 +84,21 @@ namespace AccountBuddy.BLL
                 {
                     _RefNo = value;
                     NotifyPropertyChanged(nameof(RefNo));
+                }
+            }
+        }
+        public string RefCode
+        {
+            get
+            {
+                return _RefCode;
+            }
+            set
+            {
+                if (_RefCode != value)
+                {
+                    _RefCode = value;
+                    NotifyPropertyChanged(nameof(RefCode));
                 }
             }
         }

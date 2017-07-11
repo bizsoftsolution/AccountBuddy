@@ -18,6 +18,8 @@ namespace AccountBuddy.DAL
         public Nullable<int> LedgerId { get; set; }
         public Nullable<decimal> Salary { get; set; }
         public string Designation { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
+        public Nullable<System.DateTime> DOJ { get; set; }
     
         public virtual Ledger Ledger { get; set; }
     }

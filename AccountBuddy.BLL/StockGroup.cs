@@ -386,7 +386,8 @@ namespace AccountBuddy.BLL
                 this.toCopy<StockGroup>(d);
                 if (isServerCall == false)
                 {
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("StockGroup_Save", this).Result;
+                    StockGroup sg = new StockGroup() { StockGroupName = this.StockGroupName, UnderGroupId = this.UnderGroupId, GroupCode = this.GroupCode, IsPurchase=this.IsPurchase, IsSale=this.IsSale };
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("StockGroup_Save", sg).Result;
                     d.Id = i;
                 }
 

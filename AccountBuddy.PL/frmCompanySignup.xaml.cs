@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL
 {
@@ -26,7 +28,7 @@ namespace AccountBuddy.PL
         {
             InitializeComponent();
             this.DataContext = data;
-            IsForcedClose = false;            
+            IsForcedClose = false;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -37,12 +39,12 @@ namespace AccountBuddy.PL
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
-            txtPassword.Password = "";            
+            txtPassword.Password = "";
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            
+
 
             if (data.Save() == true)
             {
@@ -68,13 +70,13 @@ namespace AccountBuddy.PL
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
             String newText = String.Empty;
-            
+
             int AtCount = 0;
             foreach (Char c in textBox.Text.ToCharArray())
             {
                 if (Char.IsLetterOrDigit(c) || Char.IsControl(c) || (c == '.' || c == '_') || (c == '@' && AtCount == 0))
                 {
-                    newText += c;                    
+                    newText += c;
                     if (c == '@') AtCount += 1;
                 }
             }
@@ -104,7 +106,7 @@ namespace AccountBuddy.PL
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (IsForcedClose==false && MessageBox.Show("Are you sure to close the signup?", "Close", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+            if (IsForcedClose == false && MessageBox.Show("Are you sure to close the signup?", "Close", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
             {
                 e.Cancel = true;
             }
@@ -112,7 +114,37 @@ namespace AccountBuddy.PL
 
         private void txtMail_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txtMail.Text !="" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+            if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+        }
+
+        private void btnImage_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                OpenFileDialog OpenDialogBox = new OpenFileDialog();
+                OpenDialogBox.DefaultExt = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+                OpenDialogBox.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+
+                var browsefile = OpenDialogBox.ShowDialog();
+                if (browsefile == true)
+                {
+                    string sFileName = OpenDialogBox.FileName.ToString();
+                    if (!string.IsNullOrEmpty(sFileName))
+                    {
+                        ImageSource imageSource = new BitmapImage(new Uri(sFileName));
+
+                        iProductImage.Source = imageSource;
+                        iProductImage.Tag = AppLib.ReadImageFile(sFileName);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            { }
+
+
+
         }
     }
 }

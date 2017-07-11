@@ -56,9 +56,9 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbItem.Focus();
             }
-            else if (av <= data.STOutDetail.Quantity)
+            else if (av < data.STOutDetail.Quantity)
             {
-              
+
                 MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, av), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtQty.Focus();
             }
@@ -80,11 +80,15 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            data.Clear();
-            btnPrint.IsEnabled = true;
-
+            clear();
         }
-
+        void clear()
+        {
+            data.Clear();
+            btnPrint.IsEnabled = false;
+            btnSave.IsEnabled = true;
+            btnDelete.IsEnabled = true;
+        }
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -93,7 +97,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show("Deleted");
-                    data.Clear();
+                    data.Clear(); clear();
                 }
             }
 
@@ -123,11 +127,12 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
-                    data.Clear();
-                    if (data.Id != 0)
+                    if(ckbAutoPrint.IsChecked==true)
                     {
-                        btnPrint.IsEnabled = true;
+                        Print();
                     }
+                    data.Clear();
+                    clear();
                 }
             }
             else
@@ -150,11 +155,15 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
+            Print();
+        }
+        void Print()
+        {
+
             frmQuickStockOut f = new frmQuickStockOut();
             f.LoadReport(data);
             f.ShowDialog();
         }
-       
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
@@ -163,6 +172,11 @@ namespace AccountBuddy.PL.frm.Transaction
             if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
+            }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = false;
+                btnDelete.IsEnabled = false;
             }
         }
 

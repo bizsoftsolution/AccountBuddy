@@ -12,13 +12,12 @@ namespace AccountBuddy.SL.Hubs
             List<BLL.POPending> lstPOPending = new List<BLL.POPending>();
             BLL.POPending tb = new BLL.POPending();
 
-            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key && x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName==BLL.DataKeyValue.BranchDivisions_Key && x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
 
             foreach (var l in lstLedger)
             {
-                foreach (var pd in l.PurchaseOrders.Where(x => x.PODate >= dtFrom && x.PODate <= dtTo).ToList())
+                foreach (var pd in l.PurchaseOrders.Where(x => x.PODate >= dtFrom && x.PODate <= dtTo && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
                 {
-
                     var po = l.PurchaseOrders.FirstOrDefault();
                     tb = new BLL.POPending();
                     tb.Ledger = LedgerDAL_BLL(l);
@@ -31,15 +30,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-
-
-
-
-
-
-
-
-
+            
             return lstPOPending;
         }
 

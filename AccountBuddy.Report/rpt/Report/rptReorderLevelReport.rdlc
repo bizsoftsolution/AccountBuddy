@@ -15,13 +15,13 @@
               <Width>3.16146cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.37438cm</Width>
+              <Width>2.89138cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.62688cm</Width>
+              <Width>2.05021cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.70625cm</Width>
+              <Width>2.79104cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -167,7 +167,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>SOQty</Value>
+                              <Value>Sale Order</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -199,7 +199,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>POQty</Value>
+                              <Value>Purchase Order</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -438,7 +438,7 @@
         <Top>0.17639cm</Top>
         <Left>1.04224cm</Left>
         <Height>1.2cm</Height>
-        <Width>19.61854cm</Width>
+        <Width>20.64368cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -607,8 +607,8 @@
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
     <LeftMargin>2cm</LeftMargin>
     <RightMargin>2cm</RightMargin>
     <TopMargin>2cm</TopMargin>

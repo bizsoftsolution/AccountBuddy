@@ -26,10 +26,8 @@
         <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
         <!--#region Form Head -->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-            <StackPanel Orientation="Horizontal">
 
-                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Width="1099" Margin="0,0,0,1"><Run Text="Stock Outward"/></TextBlock>
-            </StackPanel>
+            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Width="1099" Margin="0,0,0,1"><Run Text="Stock Outward"/></TextBlock>
         </Grid>
         <!--#endregion-->
         <!--#region Form Body-->
@@ -63,7 +61,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox Text="{Binding RefNo, Mode=TwoWay}" Width="73" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                        <TextBox Text="{Binding RefNo, Mode=TwoWay}" Width="120" IsReadOnly="True" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
 
                     </StackPanel>
                 </Grid>
@@ -121,7 +119,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox x:Name="txtAmount" Margin="0,0,10,0" Text="{Binding STOutDetail.Amount}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="90" TextAlignment="Right">
+                        <TextBox x:Name="txtAmount" IsReadOnly="True" Margin="0,0,10,0" Text="{Binding STOutDetail.Amount}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="90" TextAlignment="Right">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CashMultiple" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -173,7 +171,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding AmountInwords}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"  RenderTransformOrigin="0.5,0.375" TextAlignment="Left" Margin="10,250,10,10" Width="597"/>
+                        <TextBox IsReadOnly="True" x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding AmountInwords}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"  RenderTransformOrigin="0.5,0.375" TextAlignment="Left" Margin="10,250,10,10" Width="597"/>
                     </StackPanel>
 
                 </Grid>
@@ -188,7 +186,7 @@
                         <CheckBox x:Name="ckbAutoPrint" Width="100" Margin="5 5">AutoPrint</CheckBox>
                     </StackPanel>
                     <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                        <TextBox Text="{Binding SearchText}" Width="90" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,19" FontWeight="Bold"/>
+                        <TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,19" FontWeight="Bold"/>
                         <Button Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" Margin="5 5" />
 
                     </StackPanel>

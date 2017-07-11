@@ -32,7 +32,7 @@
             </Grid.ColumnDefinitions>
             <!--#region Form Left-->
             <Grid Grid.Column="0" Margin="10,0,10,0" Grid.Row="0">
-                
+
                 <!--#endregion-->
                 <!--#region Form Design-->
                 <Grid Grid.Row="0"  >
@@ -79,12 +79,12 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        
-                        
+
+
                     </StackPanel>
                 </Grid>
                 <!--#endregion-->
-                
+
                 <!--#endregion-->
             </Grid>
 
@@ -125,18 +125,22 @@
                             </StackPanel>
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
-                              <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <Button Width="80" Height="30" x:Name="btnUser" Content="USERS"  Margin="10" Click="btnUser_Click"  />
                         <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="10" Click="btnSave_Click"  />
                         <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"  Margin="10" Click="btnDelete_Click" />
-                             </StackPanel>
+                    </StackPanel>
 
                 </StackPanel>
             </Grid>
             <!--#endregion-->
             <Grid Grid.Column="3">
-                <Button Width="80" Visibility="Collapsed" Height="30" x:Name="btnImage" Content="Logo"  Margin="16,140,30,100" Click="btnImage_Click"  />
-                <Image x:Name="iProductImage" HorizontalAlignment="Left" Tag="{Binding Logo, Mode=TwoWay}"  VerticalAlignment="Top"  Width="120" RenderTransformOrigin="0.5,0.44" Height="60" />
+                <Button Width="80"  Height="30" x:Name="btnImage" Content="Logo"  Margin="14,195,32,45" Click="btnImage_Click"  />
+                <Border Margin="6,60,14,100" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                    <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="150" Height="100"  />
+
+                </Border>
+
 
             </Grid>
         </Grid>
@@ -148,7 +152,7 @@
             <GroupBox Name="gbxWareHouse" Header="Warehouse" Margin="10" Height="250" >
                 <StackPanel Orientation="Vertical">
                     <Button Content="New Warehouse" Name="btnNewWareHouse" Click="btnNewWareHouse_Click" Width="150" HorizontalAlignment="Right" Margin="0" />
-                    <DataGrid x:Name="dgvWarehouse" CanUserAddRows="True"  SelectionChanged="dgvWarehouse_SelectionChanged" CanUserSortColumns="True"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="150" Margin="10">
+                    <DataGrid x:Name="dgvWarehouse" CanUserAddRows="False"  SelectionChanged="dgvWarehouse_SelectionChanged" CanUserSortColumns="True"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="150" Margin="10">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="FontWeight" Value="Bold" />
@@ -259,7 +263,7 @@
 
             </GroupBox>
         </Grid>
-     
+
 
     </Grid>
 </UserControl>

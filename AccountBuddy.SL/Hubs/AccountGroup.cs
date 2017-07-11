@@ -71,7 +71,7 @@ namespace AccountBuddy.SL.Hubs
                         LogDetailStore(d.toCopy<BLL.AccountGroup>(new BLL.AccountGroup()), LogDetailType.DELETE);
                     }
 
-                    Clients.Clients(OtherLoginClientsOnGroup).SAccountGroup_Delete(pk);
+                    Clients.Clients(OtherLoginClientsOnGroup).AccountGroup_Delete(pk);
                     Clients.All.delete(pk);
                     rv = true;
                 }

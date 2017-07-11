@@ -152,9 +152,10 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnPrint.IsEnabled = true;
             }
-            else
+            if (data.RefCode != null)
             {
-                btnPrint.IsEnabled = false;
+                btnSave.IsEnabled = true;
+                btnDelete.IsEnabled = true;
             }
             if (rv == false) MessageBox.Show(String.Format("Data Not Found"));
         }

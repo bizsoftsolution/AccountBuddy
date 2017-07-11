@@ -77,7 +77,8 @@ namespace AccountBuddy.PL.frm.Transaction
             data.Clear();
             btnMakesales.IsEnabled = false;
             btnPrint.IsEnabled = false;
-
+            btnSave.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -166,6 +167,11 @@ namespace AccountBuddy.PL.frm.Transaction
                     btnPrint.IsEnabled = true;
 
             }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = true;
+                btnDelete.IsEnabled = true;
+            }
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
@@ -226,7 +232,7 @@ namespace AccountBuddy.PL.frm.Transaction
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtdiscountAmount.Text);
+            textBox.Text = AppLib.NumericOnly(txtDiscountAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }

@@ -113,6 +113,31 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return PO;
         }
+        public BLL.Journal Journal_FindById(int id)
+        {
+            BLL.Journal PO = new BLL.Journal();
+            try
+            {
+
+                DAL.Journal d = DB.Journals.Where(x => x.Id == id && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                DB.Entry(d).Reload();
+                if (d != null)
+                {
+
+                    d.toCopy<BLL.Journal>(PO);
+                    foreach (var d_pod in d.JournalDetails)
+                    {
+                        BLL.JournalDetail b_pod = new BLL.JournalDetail();
+                        d_pod.toCopy<BLL.JournalDetail>(b_pod);
+                        PO.JDetails.Add(b_pod);
+                        b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    }
+
+                }
+            }
+            catch (Exception ex) { }
+            return PO;
+        }
 
         public bool Journal_Delete(long pk)
         {
@@ -194,7 +219,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
@@ -259,7 +284,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = SR.RefNo;//Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
@@ -324,7 +349,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = S.RefNo;// Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
@@ -388,7 +413,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = PR.RefNo;//Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
@@ -455,7 +480,7 @@ namespace AccountBuddy.SL.Hubs
                 if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
                 {
                     j = new DAL.Journal();
-                    j.EntryNo = EntryNo;
+                    j.EntryNo = P.EntryNo;
                     j.JournalDate = P.PaymentDate;
 
                     var CId = CompanyIdByLedgerName(ld.LedgerName);
@@ -519,7 +544,7 @@ namespace AccountBuddy.SL.Hubs
                 if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
                 {
                     j = new DAL.Journal();
-                    j.EntryNo = EntryNo;
+                    j.EntryNo = R.EntryNo;
                     j.JournalDate = R.ReceiptDate;
 
                     var CId = CompanyIdByLedgerName(ld.LedgerName);
@@ -580,7 +605,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = STout.RefNo;// Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
 
 
@@ -633,7 +658,7 @@ namespace AccountBuddy.SL.Hubs
         #region Stock In
         void Journal_SaveByStockIn(DAL.StockIn STIn)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, STIn.Id);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, STIn.Id);
             var CId = STIn.Ledger.AccountGroup.CompanyId;
 
 
@@ -641,7 +666,7 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.EntryNo = STIn.RefNo;// Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
 
 

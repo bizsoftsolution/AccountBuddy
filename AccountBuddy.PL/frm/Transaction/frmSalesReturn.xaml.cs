@@ -78,8 +78,9 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
 
-            btnPrint.IsEnabled = true;
-
+            btnPrint.IsEnabled = false;
+            btnSave.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -166,6 +167,11 @@ namespace AccountBuddy.PL.frm.Transaction
             if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
+            }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = true;
+                btnDelete.IsEnabled = true;
             }
         }
 

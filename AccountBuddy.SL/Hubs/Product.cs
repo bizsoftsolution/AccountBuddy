@@ -93,13 +93,16 @@ namespace AccountBuddy.SL.Hubs
                 if (d.Id != 0)
                 {
                     var p = Product_DALtoBLL(d);
-                    Clients.Clients(OtherLoginClientsOnGroup).Product_Save(p);
-
+                    
                     return p;
                 }
+                Clients.Clients(OtherLoginClientsOnGroup).Product_Save(Product_DALtoBLL(d));
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                WriteErrorLog("Product", "Product_Save", BLL.UserAccount.User.Id, Caller.CompanyId, ex.Message);
+            }
             return new BLL.Product();
         }
 

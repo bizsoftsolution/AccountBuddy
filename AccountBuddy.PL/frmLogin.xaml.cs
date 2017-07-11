@@ -52,7 +52,7 @@ namespace AccountBuddy.PL
             var tv = trvCompany.SelectedItem as TreeViewItem;
             if (tv == null)
             {
-                MessageBox.Show(Message.PL.Login_CompanyName_Validation);
+                MessageBox.Show("Select Company!");
             }
             else if (tv.Tag.ToString() == "")
             {

@@ -35,7 +35,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="50*"/>
-
+                <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
             <!--#region Form Left-->
             <Grid Grid.Column="0" Margin="20,0,10,0">
@@ -157,11 +157,19 @@
                             </StackPanel>
                         </StackPanel>
                     </GroupBox>
-                    
+
                 </StackPanel>
             </Grid>
             <!--#endregion-->
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="316,10,0,0">
+                <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"  Margin="30,155,37,171" Click="btnImage_Click"  />
+                <Border Margin="0,35,10,226" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                    <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="150" Height="100"  />
 
+                </Border>
+
+
+            </Grid>
         </Grid>
     </Grid>
 </metro:MetroWindow>

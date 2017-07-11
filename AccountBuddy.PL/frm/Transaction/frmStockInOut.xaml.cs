@@ -67,9 +67,10 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
-           
-                btnPrint.IsEnabled = true;
-           
+
+            btnPrint.IsEnabled = false;
+            btnSave.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -110,15 +111,13 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    data.Clear();
-                    if(ckbAutoPrint.IsChecked==true)
+                    if (ckbAutoPrint.IsChecked == true)
                     {
                         Print();
                     }
-                    if (data.Id != 0)
-                    {
-                        btnPrint.IsEnabled = true;
-                    }
+                    data.Clear();
+                    btnPrint.IsEnabled = false;
+
                 }
             }
             else
@@ -144,7 +143,7 @@ namespace AccountBuddy.PL.frm.Transaction
             Print();
         }
 
-       void Print()
+        void Print()
         {
             frm.Print.frmQuickStockIn f = new Print.frmQuickStockIn();
             f.LoadReport(data);
@@ -158,6 +157,11 @@ namespace AccountBuddy.PL.frm.Transaction
             if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
+            }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = true;
+                btnDelete.IsEnabled = true;
             }
         }
         #endregion

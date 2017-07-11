@@ -23,7 +23,7 @@ namespace AccountBuddy.SL.Hubs
             foreach (var l in lstLedger)
             {
                 
-                foreach (var pd in l.PaymentDetails.Where(x => x.Payment.Status== "Proccess" && x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).ToList())
+                foreach (var pd in l.PaymentDetails.Where(x => x.Payment.Status== "Process" && x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).ToList())
                 {
                     gl = new BLL.BankReconcilation();
                     gl.Ledger = new BLL.Ledger();
@@ -40,7 +40,7 @@ namespace AccountBuddy.SL.Hubs
                     lstBankReconcilation.Add(gl);
                 }
 
-                foreach (var p in l.Payments.Where(x => x.Status == "Proccess" && x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).ToList())
+                foreach (var p in l.Payments.Where(x => x.Status == "Process" && x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).ToList())
                 {
                     foreach (var pd in p.PaymentDetails)
                     {
@@ -59,7 +59,7 @@ namespace AccountBuddy.SL.Hubs
                     }
                 }
 
-                foreach (var r in l.Receipts.Where(x => x.Status == "Proccess" && x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).ToList())
+                foreach (var r in l.Receipts.Where(x => x.Status == "Process" && x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).ToList())
                 {
                     foreach (var rd in r.ReceiptDetails)
                     {
@@ -78,7 +78,7 @@ namespace AccountBuddy.SL.Hubs
                     }
 
                 }
-                foreach (var rd in l.ReceiptDetails.Where(x => x.Receipt.Status == "Proccess" && x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).ToList())
+                foreach (var rd in l.ReceiptDetails.Where(x => x.Receipt.Status == "Process" && x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).ToList())
                 {
                     gl = new BLL.BankReconcilation();
                     gl.Ledger = new BLL.Ledger();

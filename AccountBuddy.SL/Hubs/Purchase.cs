@@ -135,8 +135,6 @@ namespace AccountBuddy.SL.Hubs
 
 
         }
-
-
         public bool Purchase_DeleteBySales(DAL.Sale s)
         {
             try

@@ -51,11 +51,17 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            BLL.Product.Init();
             if (data.PRDetail.ProductId == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-
+            else if (BLL.Product.toList.Where(x => x.Id == data.PRDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() < data.PRDetail.Quantity)
+            {
+                var v = BLL.Product.toList.Where(x => x.Id == data.PRDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
+                MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                txtQty.Focus();
+            }
             else
             {
                 data.SaveDetail();
@@ -75,6 +81,8 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnPrint.IsEnabled = true;
             }
+            btnSave.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -164,6 +172,11 @@ namespace AccountBuddy.PL.frm.Transaction
             if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
+            }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = true;
+                btnDelete.IsEnabled = true;
             }
         }
 

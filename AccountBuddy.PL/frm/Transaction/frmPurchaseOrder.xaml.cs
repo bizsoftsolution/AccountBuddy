@@ -31,14 +31,17 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             InitializeComponent();
             this.DataContext = data;
-
+           CultureInfo cultureInfo = new CultureInfo("en-US");  
 
             data.Clear();
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-MY");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-MY");
+            DateTimeFormatInfo dateInfo = new DateTimeFormatInfo();
+            dateInfo.ShortDatePattern = "MM/yyyy";
+            cultureInfo.DateTimeFormat = dateInfo;
             onClientEvents();
         }
-        private void onClientEvents()
+        private void onClientEvents()                 
         {
             BLL.FMCGHubClient.FMCGHub.On<String>("PurchaseOrder_RefNoRefresh", (RefNo) =>
             {
@@ -72,15 +75,16 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
+            Clear();
+        }
+        void Clear()
+        {
             data.Clear();
             btnMakepurchase.IsEnabled = false;
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-
+            btnPrint.IsEnabled = false;
+            btnSave.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
-
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -91,7 +95,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    data.Clear();
+                    data.Clear(); Clear();
                 }
             }
 
@@ -121,15 +125,12 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    data.Clear();
-                    if (ckbAutoprint.IsChecked==true)
+                    if (ckbAutoprint.IsChecked == true)
                     {
                         LoadReport();
                     }
-                    if (data.Id != 0)
-                    {
-                        btnPrint.IsEnabled = true;
-                    }
+                    data.Clear();
+                    Clear();
                 }
             }
             else
@@ -154,8 +155,8 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             LoadReport();
         }
-       
-    
+
+
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
@@ -164,6 +165,11 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnMakepurchase.IsEnabled = data.Status == "Pending" ? true : false;
                 btnPrint.IsEnabled = true;
+            }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = true;
+                btnDelete.IsEnabled = true;
             }
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
 
@@ -212,7 +218,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void LoadReport()
         {
-            
+
             frm.Print.frmQuickPO f = new Print.frmQuickPO();
             f.LoadReport(data);
             f.ShowDialog();
@@ -222,7 +228,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbSupplier_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName==BLL.DataKeyValue.BranchDivisions_Key).ToList();
+            cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
             cmbSupplier.DisplayMemberPath = "LedgerName";
             cmbSupplier.SelectedValuePath = "Id";
         }

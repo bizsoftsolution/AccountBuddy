@@ -265,7 +265,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Prevoius Balance Dr.</Value>
+                              <Value>Previous Balance Dr.</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>

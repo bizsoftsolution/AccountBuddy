@@ -117,6 +117,16 @@
                                             <Master:frmLedger/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Staff" FormName="Staff">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmStaff/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Job Worker" FormName="Job Worker">
+                                        <Menu:NavMenuItem.Content>
+                                            <Master:frmJobWorker/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Unit Of Measurement" FormName="UOM">
                                         <Menu:NavMenuItem.Content>
                                             <Master:frmUOM/>
@@ -282,10 +292,15 @@
                                             <Report:frmSOPending/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                   
-                                    <Menu:NavMenuItem MenuName="Sales Report" FormName="Sales Report">
+
+                                    <Menu:NavMenuItem MenuName="Dealer Sales Report" FormName="Dealer Sales Report">
                                         <Menu:NavMenuItem.Content>
                                             <Report:frmSalesReport/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Customer Sales Report" FormName="Customer Sales Report">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmCustomerSalesReport/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
                                 </ListBox>

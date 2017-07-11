@@ -53,10 +53,16 @@
     <EmbeddedResource Include="rpt\Master\rptBank.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Master\rptJobWorker.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Master\RptLedger.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Master\rptProducts.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Master\rptStaff.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Master\rptStockGroup.rdlc">
@@ -83,7 +89,9 @@
     <EmbeddedResource Include="rpt\Report\rptPaymentReceipt.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="rpt\Report\rptPOPendingReport.rdlc" />
+    <EmbeddedResource Include="rpt\Report\rptPOPendingReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Report\rptReorderLevelReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -179,6 +187,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturn.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturnDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SOPending.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Staff.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockGroup1.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockIn.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockInDetail.datasource" />

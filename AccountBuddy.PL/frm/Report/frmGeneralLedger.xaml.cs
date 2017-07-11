@@ -82,10 +82,10 @@ namespace AccountBuddy.PL.frm.Report
 
         }
 
-      
+
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if(cmbAccountName.SelectedValue==null)
+            if (cmbAccountName.SelectedValue == null)
             {
                 MessageBox.Show("Enter AccountName..");
                 cmbAccountName.Focus();
@@ -95,7 +95,7 @@ namespace AccountBuddy.PL.frm.Report
                 if (cmbAccountName.SelectedValue != null) dgvGeneralLedger.ItemsSource = BLL.GeneralLedger.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
                 LoadReport();
             }
-         
+
         }
 
         private void dgvGeneralLedger_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -103,91 +103,159 @@ namespace AccountBuddy.PL.frm.Report
             var gl = dgvGeneralLedger.SelectedItem as BLL.GeneralLedger;
             if (gl != null)
             {
-                if (gl.EType == "P")
+                if (gl.EType != null)
                 {
-                    Transaction.frmPayment f = new Transaction.frmPayment();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
+                    if (gl.EType.StartsWith(BLL.FormPrefix.Payment))
+                    {
+                        Transaction.frmPayment f = new Transaction.frmPayment();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.EntryNo;
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.Find();
+                        f.btnPrint.IsEnabled = true;
+                        if(f.data.RefCode!=null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
+                    else if (gl.EType.StartsWith(BLL.FormPrefix.Receipt))
+                    {
+                        Transaction.frmReceipt f = new Transaction.frmReceipt();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.EntryNo;
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.Find();
+                        f.btnPrint.IsEnabled = true;
+                        if (f.data.RefCode != null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
+                    else if (gl.EType.StartsWith(BLL.FormPrefix.Journal))
+                    {
+                        Transaction.frmJournal f = new Transaction.frmJournal();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.EntryNo;
+
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.Find();
+                        f.btnPrint.IsEnabled = true;
+                        if (f.data.RefCode != null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
+                    else if (gl.EType.StartsWith(BLL.FormPrefix.Sales))
+                    {
+                        Transaction.frmSale f = new Transaction.frmSale();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.RefEntryNo;
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.btnPrint.IsEnabled = true;
+                        if (f.data.RefCode != null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
+                    else if (gl.EType.StartsWith(BLL.FormPrefix.Purchase))
+                    {
+                        Transaction.frmPurchase f = new Transaction.frmPurchase();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.RefEntryNo;
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.btnPrint.IsEnabled = true;
+                        if (f.data.RefCode != null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
+                    else if (gl.EType.StartsWith(BLL.FormPrefix.SalesReturn))
+                    {
+                        Transaction.frmSalesReturn f = new Transaction.frmSalesReturn();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.RefEntryNo;
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.btnPrint.IsEnabled = true;
+                        if (f.data.RefCode != null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
+                    else if (gl.EType.StartsWith(BLL.FormPrefix.PurchaseReturn))
+                    {
+                        Transaction.frmPurchaseReturn f = new Transaction.frmPurchaseReturn();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.RefEntryNo;
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.btnPrint.IsEnabled = true;
+                        if (f.data.RefCode != null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
+                    else if (gl.EType.StartsWith(BLL.FormPrefix.StockOut))
+                    {
+                        Transaction.frmStockOut f = new Transaction.frmStockOut();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.RefEntryNo;
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.btnPrint.IsEnabled = true;
+                        if (f.data.RefCode != null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
+                    else if (gl.EType.StartsWith(BLL.FormPrefix.StockIn))
+                    {
+                        Transaction.frmStockInOut f = new Transaction.frmStockInOut();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.RefEntryNo;
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.btnPrint.IsEnabled = true;
+                        if (f.data.RefCode != null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
                 }
-                else if (gl.EType == "R")
-                {
-                    Transaction.frmReceipt f = new Transaction.frmReceipt();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
-                }
-                else if (gl.EType == "J")
+                else
                 {
                     Transaction.frmJournal f = new Transaction.frmJournal();
                     App.frmHome.ShowForm(f);
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = gl.EntryNo;
-
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
-                }
-                else if (gl.EType=="SAL")
-                {
-                    Transaction.frmSale f = new Transaction.frmSale();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.RefEntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
-                }
-                else if (gl.EType == "PUR")
-                {
-                    Transaction.frmPurchase f = new Transaction.frmPurchase();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.RefEntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
-                }
-                else if (gl.EType == "SRN")
-                {
-                    Transaction.frmSalesReturn f = new Transaction.frmSalesReturn();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.RefEntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
-
-                }
-                else if (gl.EType == "PRN")
-                {
-                    Transaction.frmPurchaseReturn f = new Transaction.frmPurchaseReturn();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.RefEntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
-
-                }
-                else if (gl.EType == "SOUT")
-                {
-                    Transaction.frmStockOut f = new Transaction.frmStockOut();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.RefEntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
-
-                }
-                else if (gl.EType == "SIN")
-                {
-                    Transaction.frmStockInOut f = new Transaction.frmStockInOut();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.RefEntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
-
+                    f.btnPrint.IsEnabled = true;
+                    //if (f.data.RefCode != null)
+                    //{
+                    //    f.btnSave.IsEnabled = false;
+                    //    f.btnDelete.IsEnabled = false;
+                    //}
                 }
             }
         }
@@ -315,7 +383,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
-            if(dgvGeneralLedger.Items.Count != 0)
+            if (dgvGeneralLedger.Items.Count != 0)
             {
                 frmGeneralLedgerPrint f = new frmGeneralLedgerPrint();
                 f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
@@ -325,7 +393,7 @@ namespace AccountBuddy.PL.frm.Report
             {
                 MessageBox.Show("Enter AccountName");
             }
-          
+
         }
 
         #endregion

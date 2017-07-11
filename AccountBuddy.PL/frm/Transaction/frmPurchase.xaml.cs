@@ -161,6 +161,11 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnPrint.IsEnabled = true;
             }
+            if (data.RefCode != null)
+            {
+                btnSave.IsEnabled = false;
+                btnDelete.IsEnabled = false;
+            }
         }
 
         #endregion
@@ -209,6 +214,8 @@ namespace AccountBuddy.PL.frm.Transaction
         void Clear()
         {
             data.Clear();
+            btnSave.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
         #endregion
 

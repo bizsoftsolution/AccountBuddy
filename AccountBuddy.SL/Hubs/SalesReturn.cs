@@ -73,10 +73,10 @@ namespace AccountBuddy.SL.Hubs
                         b_SRd.toCopy<DAL.SalesReturnDetail>(d_SRd);
                     }
                     LogDetailStore(P, LogDetailType.UPDATE);
-                    PurchaseReturn_SaveBySalesReturn(d);
-                }
+                      }
                 Clients.Clients(OtherLoginClientsOnGroup).SalesReturn_RefNoRefresh(SalesReturn_NewRefNo());
                 Journal_SaveBySalesReturn(d);
+                PurchaseReturn_SaveBySalesReturn(d);
                 return true;
             }
             catch (Exception ex) { }

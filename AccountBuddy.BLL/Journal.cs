@@ -30,6 +30,7 @@ namespace AccountBuddy.BLL
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
         private bool _IsEnabled;
+        private string _RefCode;
         #endregion
 
         #region Property
@@ -80,6 +81,21 @@ namespace AccountBuddy.BLL
                 {
                     _EntryNo = value;
                     NotifyPropertyChanged(nameof(EntryNo));
+                }
+            }
+        }
+        public string RefCode
+        {
+            get
+            {
+                return _RefCode;
+            }
+            set
+            {
+                if (_RefCode != value)
+                {
+                    _RefCode = value;
+                    NotifyPropertyChanged(nameof(RefCode));
                 }
             }
         }
@@ -339,6 +355,24 @@ namespace AccountBuddy.BLL
             try
             {
                 Journal po = FMCGHubClient.FMCGHub.Invoke<Journal>("Journal_Find", SearchText).Result;
+                if (po.Id == 0) return false;
+                po.toCopy<Journal>(this);
+                this.JDetails = po.JDetails;
+                IsReadOnly = !UserPermission.AllowInsert;
+
+                NotifyAllPropertyChanged();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public bool FindById(int Id)
+        {
+            try
+            {
+                Journal po = FMCGHubClient.FMCGHub.Invoke<Journal>("Journal_FindById", Id).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Journal>(this);
                 this.JDetails = po.JDetails;

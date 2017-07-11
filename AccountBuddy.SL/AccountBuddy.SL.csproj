@@ -165,8 +165,10 @@
     <Compile Include="Hubs\Customer.cs" />
     <Compile Include="Hubs\CustomerWiseReport.cs" />
     <Compile Include="Hubs\DataKeyValue.cs" />
+    <Compile Include="Hubs\FmcgWriteLogSL.cs" />
     <Compile Include="Hubs\GeneralLedger.cs" />
     <Compile Include="Hubs\GeneralStock.cs" />
+    <Compile Include="Hubs\JobWorker.cs" />
     <Compile Include="Hubs\Journal.cs" />
     <Compile Include="Hubs\Ledger.cs" />
     <Compile Include="Hubs\Payable.cs" />
@@ -189,6 +191,7 @@
     <Compile Include="Hubs\SalesReturn.cs" />
     <Compile Include="Hubs\SLUser.cs" />
     <Compile Include="Hubs\SOPending.cs" />
+    <Compile Include="Hubs\Staff.cs" />
     <Compile Include="Hubs\StockGroup.cs" />
     <Compile Include="Hubs\StockIn.cs" />
     <Compile Include="Hubs\StockOut.cs" />

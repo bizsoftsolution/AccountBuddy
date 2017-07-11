@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +44,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
                 rptViewer.Reset();
                 ReportDataSource data1 = new ReportDataSource("StockOut", STList);
-                ReportDataSource data2 = new ReportDataSource("StockOutDetail", STDList);
+                ReportDataSource data2 = new ReportDataSource("StockOutDetail", GetDetails(data));
                 ReportDataSource data3 = new ReportDataSource("CompanyDetail", CList);
                 ReportDataSource data4 = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => x.Id == data.LedgerId).ToList());
 
@@ -61,6 +62,56 @@ namespace AccountBuddy.PL.frm.Transaction
 
             }
         }
+        public DataTable GetDetails(BLL.StockOut data)
+        {
+            int NoRecPerPage = 12;
+            var dataSet = new DataSet();
+            DataTable dt = new DataTable();
+            dataSet.Tables.Add(dt);
+
+            dt.Columns.Add("ProductName");
+            dt.Columns.Add("Quantity");
+            dt.Columns.Add("UnitPrice");
+            dt.Columns.Add("UOMName");
+            dt.Columns.Add("Amount");
+            dt.Columns.Add("Id");
+
+            var newRow = dt.NewRow();
+
+
+            int n = 0;
+            foreach (var element in data.STOutDetails)
+            {
+                newRow = dt.NewRow();
+                n = n + 1;
+                newRow["ProductName"] = element.ProductName;
+                newRow["Quantity"] = element.Quantity == 0 ? "" : element.Quantity.ToString();
+                newRow["UnitPrice"] = element.UnitPrice == 0 ? "" : String.Format("{0:0.00}",element.UnitPrice
+                    );
+                newRow["UOMName"] = element.UOMName;
+                newRow["Amount"] = String.Format("{0:0.00}", element.Amount);
+                newRow["Id"] = n.ToString();
+
+                dt.Rows.Add(newRow);
+            }
+
+
+            for (int i = 0; i < NoRecPerPage - data.STOutDetails.Count(); i++)
+            {
+                newRow = dt.NewRow();
+
+                newRow["ProductName"] = "";
+                newRow["Quantity"] = "";
+                newRow["UnitPrice"] = "";
+                newRow["Amount"] = "";
+                newRow["Id"] = "";
+
+                dt.Rows.Add(newRow);
+            }
+            return dt;
+
+        }
+
 
     }
 }

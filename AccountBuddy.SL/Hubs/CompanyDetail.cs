@@ -145,7 +145,8 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                 }
 
-                Clients.All.CompanyDetail_Save(cm);
+                //  Clients.All.CompanyDetail_Save(cm);
+                Clients.Clients(OtherLoginClientsOnGroup).CompanyDetail_Save(cm); 
 
                 return cm.Id;
             }

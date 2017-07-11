@@ -652,7 +652,7 @@
     <Height>0.61458in</Height>
     <Style />
   </Body>
-  <Width>9.11868in</Width>
+  <Width>9.1291in</Width>
   <Page>
     <PageHeader>
       <Height>1.905cm</Height>
@@ -679,7 +679,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox19</rd:DefaultName>
-          <Top>1.0728cm</Top>
+          <Top>1.10807cm</Top>
           <Left>5.95188cm</Left>
           <Height>0.77929cm</Height>
           <Width>11.25771cm</Width>
@@ -751,13 +751,16 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
+          <Top>0.03528cm</Top>
           <Left>2.94979cm</Left>
           <Height>0.6cm</Height>
-          <Width>2.5cm</Width>
+          <Width>1.20354cm</Width>
           <Style>
             <Border>
               <Style>None</Style>

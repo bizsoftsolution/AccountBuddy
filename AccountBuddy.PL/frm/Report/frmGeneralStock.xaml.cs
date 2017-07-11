@@ -105,7 +105,12 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbProduct.SelectedValue == null)
+            if (cmbCompany.SelectedValue == null)
+            {
+                MessageBox.Show("Enter Company..");
+                cmbCompany.Focus();
+            }
+            else if (cmbProduct.SelectedValue == null)
             {
                 MessageBox.Show("Enter Product..");
                 cmbProduct.Focus();
@@ -290,11 +295,15 @@ namespace AccountBuddy.PL.frm.Report
         {
             if (dgvGeneralStock.Items.Count != 0)
             {
-                var cm = cmbCompany.SelectedItem as BLL.CompanyDetail;
-                int? CompanyId = cm == null ? null : (int?)cm.Id;
-                frmGeneralStockPrint f = new frmGeneralStockPrint();
-                f.LoadReport(CompanyId,(int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-                f.ShowDialog();
+                if (cmbProduct.SelectedItem != null)
+                {
+                    var cm = cmbCompany.SelectedItem as BLL.CompanyDetail;
+                    int? CompanyId = cm == null ? null : (int?)cm.Id;
+                    frmGeneralStockPrint f = new frmGeneralStockPrint();
+                    f.LoadReport(CompanyId, (int)cmbProduct.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                    f.ShowDialog();
+                }
+               
             }
             else
             {

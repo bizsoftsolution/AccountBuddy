@@ -187,6 +187,15 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password_Exist!.
+        /// </summary>
+        public static string Password_Exist {
+            get {
+                return ResourceManager.GetString("Password_Exist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Available Stock {0}.
         /// </summary>
         public static string Product_Available_Stock {
@@ -291,6 +300,15 @@ namespace AccountBuddy.Message {
         public static string Transaction_Selling_Rate {
             get {
                 return ResourceManager.GetString("Transaction_Selling_Rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UserId Already Exist!.
+        /// </summary>
+        public static string User_Id_Exist {
+            get {
+                return ResourceManager.GetString("User_Id_Exist", resourceCulture);
             }
         }
     }
