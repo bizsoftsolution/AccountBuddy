@@ -267,9 +267,9 @@ namespace AccountBuddy.PL.frm.Master
             }
             catch (Exception ex)
             {
-
+                
             }
-            +
+         
 
         }
 

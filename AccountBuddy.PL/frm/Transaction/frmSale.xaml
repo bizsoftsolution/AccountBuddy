@@ -192,7 +192,7 @@
                         <Button Click="btnDelete_Click" Width="100" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
                         <Button Click="btnClear_Click"  Width="100" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />
 
-                        <Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" />
+                        <Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" IsEnabled="False" />
                         <CheckBox x:Name="ckbAutoPrint" Content="Auto Print" FontWeight="Bold"></CheckBox>
                             <RadioButton x:Name="rdbReport" Margin="0,10">A4 Print</RadioButton>
                         <RadioButton x:Name="rdbBillPrint" IsChecked="True" Margin="0,10,10,0">POS Print</RadioButton>
