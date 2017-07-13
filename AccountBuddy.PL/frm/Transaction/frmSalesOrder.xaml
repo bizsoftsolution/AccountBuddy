@@ -52,7 +52,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox x:Name="txtRefNo"  Text="{Binding RefNo, Mode=TwoWay}" Width="120" IsReadOnly="True" materialDesign:HintAssist.Hint="SO Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,12,10,24" FontWeight="Bold"/>
+                        <TextBox x:Name="txtRefNo"  Text="{Binding RefNo, Mode=TwoWay}" Width="120" IsReadOnly="True" materialDesign:HintAssist.Hint="SO Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,12,10,24" FontWeight="Bold"  MaxLength="10"/>
                     </StackPanel>
                 </Grid>
                 <!--#endregion-->

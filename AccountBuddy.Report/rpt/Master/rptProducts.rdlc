@@ -656,21 +656,22 @@
   <Width>9.30314in</Width>
   <Page>
     <PageHeader>
-      <Height>1.89328cm</Height>
+      <Height>4.24807cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Textbox Name="CompanyName">
+        <Textbox Name="Textbox2">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=First(Fields!CompanyName.Value, "CompanyDetail")</Value>
+                  <Value>PRODUCTS LIST</Value>
                   <Style>
                     <FontSize>14pt</FontSize>
                     <FontWeight>Bold</FontWeight>
+                    <TextDecoration>None</TextDecoration>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -679,10 +680,10 @@
               </Style>
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>CompanyName</rd:DefaultName>
-          <Top>0.31432cm</Top>
-          <Left>4.70029cm</Left>
-          <Height>0.70583cm</Height>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>3.49386cm</Top>
+          <Left>5.07071cm</Left>
+          <Height>0.75422cm</Height>
           <Width>12.87167cm</Width>
           <Style>
             <Border>
@@ -694,30 +695,30 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Textbox Name="Textbox2">
+        <Textbox Name="CompanyName">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>PRODUCTS LIST</Value>
+                  <Value>=First(Fields!CompanyName.Value, "CompanyDetail")</Value>
                   <Style>
-                    <FontSize>14pt</FontSize>
-                    <TextDecoration>None</TextDecoration>
+                    <FontSize>16pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Center</TextAlign>
+                <TextAlign>Right</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>1.09071cm</Top>
-          <Left>4.70029cm</Left>
-          <Height>0.78521cm</Height>
-          <Width>12.87167cm</Width>
+          <rd:DefaultName>CompanyName</rd:DefaultName>
+          <Top>0.41903cm</Top>
+          <Left>12.70525cm</Left>
+          <Height>0.33333in</Height>
+          <Width>3.6793in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -729,6 +730,183 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
+        <Textbox Name="AddressLine3">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=First(Fields!AddressLine1.Value, "CompanyDetail")</Value>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>AddressLine1</rd:DefaultName>
+          <Top>0.4983in</Top>
+          <Left>5.38055in</Left>
+          <Height>0.18056in</Height>
+          <Width>3.30082in</Width>
+          <ZIndex>2</ZIndex>
+          <Visibility>
+            <Hidden>=Microsoft.VisualBasic.Interaction.IIf(First(Fields!AddressLine1.Value, "CompanyDetail") = "", True, False)</Hidden>
+          </Visibility>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="CityName2">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=First(Fields!CityName.Value, "CompanyDetail")</Value>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>CityName</rd:DefaultName>
+          <Top>0.85942in</Top>
+          <Left>5.41527in</Left>
+          <Height>0.19444in</Height>
+          <Width>3.2661in</Width>
+          <ZIndex>3</ZIndex>
+          <Visibility>
+            <Hidden>=Microsoft.VisualBasic.Interaction.IIf(First(Fields!CityName.Value, "CompanyDetail") = "", True, False)</Hidden>
+          </Visibility>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="PostalCode">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=First(Fields!PostalCode.Value, "CompanyDetail")</Value>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>PostalCode</rd:DefaultName>
+          <Top>1.05386in</Top>
+          <Left>5.40138in</Left>
+          <Height>0.22445in</Height>
+          <Width>3.27999in</Width>
+          <ZIndex>4</ZIndex>
+          <Visibility>
+            <Hidden>=Microsoft.VisualBasic.Interaction.IIf(First(Fields!CityName.Value, "CompanyDetail") = "", True, False)</Hidden>
+          </Visibility>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="AddressLine4">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=First(Fields!AddressLine2.Value, "CompanyDetail")</Value>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>AddressLine2</rd:DefaultName>
+          <Top>0.67886in</Top>
+          <Left>5.42222in</Left>
+          <Height>0.18056in</Height>
+          <Width>3.25915in</Width>
+          <ZIndex>5</ZIndex>
+          <Visibility>
+            <Hidden>=Microsoft.VisualBasic.Interaction.IIf(First(Fields!AddressLine2.Value, "CompanyDetail") = "", True, False)</Hidden>
+          </Visibility>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Image Name="Image1">
+          <Source>Database</Source>
+          <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
+          <MIMEType>image/jpeg</MIMEType>
+          <Sizing>FitProportional</Sizing>
+          <Top>0.26443in</Top>
+          <Left>0.62177in</Left>
+          <Height>1.01388in</Height>
+          <Width>1.32985in</Width>
+          <ZIndex>6</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
+        <Line Name="Line11">
+          <Top>1.34776in</Top>
+          <Left>0.62177in</Left>
+          <Height>0in</Height>
+          <Width>8.0596in</Width>
+          <ZIndex>7</ZIndex>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+              <Width>2pt</Width>
+            </Border>
+          </Style>
+        </Line>
       </ReportItems>
       <Style>
         <Border>

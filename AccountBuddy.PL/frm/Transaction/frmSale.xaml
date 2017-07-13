@@ -60,7 +60,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox x:Name="txtRefNo" Text="{Binding RefNo, Mode=TwoWay}" Width="120" IsReadOnly="True" materialDesign:HintAssist.Hint="Bill No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                        <TextBox x:Name="txtRefNo" Text="{Binding RefNo, Mode=TwoWay}" Width="120" IsReadOnly="True" materialDesign:HintAssist.Hint="Bill No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"  MaxLength="10"/>
                     </StackPanel>
                 </Grid>
                 <!--#endregion-->

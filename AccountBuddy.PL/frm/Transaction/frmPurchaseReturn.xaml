@@ -64,9 +64,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-
-
-                        <TextBox x:Name="txtRefNo" Text="{Binding RefNo, Mode=TwoWay}" Width="120"  IsReadOnly="True" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                        <TextBox x:Name="txtRefNo"  MaxLength="10" Text="{Binding RefNo, Mode=TwoWay}" Width="120"  IsReadOnly="True" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
 
                     </StackPanel>
 
