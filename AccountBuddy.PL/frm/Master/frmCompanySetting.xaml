@@ -75,7 +75,7 @@
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                    <TextBlock Text="PostalCode"/>
+                                    <TextBlock Text="Postal Code"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
@@ -135,8 +135,8 @@
             </Grid>
             <!--#endregion-->
             <Grid Grid.Column="3">
-                <Button Width="80"  Height="30" x:Name="btnImage" Content="Logo"  Margin="14,195,32,45" Click="btnImage_Click"  />
-                <Border Margin="6,60,14,100" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                <Button Width="80"  Height="30" x:Name="btnImage" Content="Logo"  Margin="14,147,33,93" Click="btnImage_Click"  />
+                <Border Margin="6,27,14,133" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="150" Height="100"  />
 
                 </Border>

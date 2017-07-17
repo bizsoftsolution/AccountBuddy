@@ -36,8 +36,8 @@
 
                     <Grid Grid.Row="0" Margin="10,0,9,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="600"></ColumnDefinition>
-                            <ColumnDefinition Width="600"></ColumnDefinition>
+                            <ColumnDefinition Width="650"></ColumnDefinition>
+                            <ColumnDefinition Width="650"></ColumnDefinition>
 
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Row="0" Margin="10" Grid.Column="0" >

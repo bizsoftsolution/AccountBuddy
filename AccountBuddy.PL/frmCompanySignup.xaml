@@ -85,7 +85,7 @@
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                    <TextBlock Text="PostalCode"/>
+                                    <TextBlock Text="Postal Code"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>

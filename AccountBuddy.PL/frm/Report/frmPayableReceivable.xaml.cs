@@ -39,8 +39,8 @@ namespace AccountBuddy.PL.frm.Report
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvPayable.ItemsSource = BLL.Payable.ToList(DateTime.Now.Date);
-            dgvReceivable.ItemsSource = BLL.Receivable.ToList(DateTime.Now.Date);
+            dgvPayable.ItemsSource = BLL.Payable.ToList(DateTime.Now);
+            dgvReceivable.ItemsSource = BLL.Receivable.ToList(DateTime.Now);
            // LoadReport();
         }
 

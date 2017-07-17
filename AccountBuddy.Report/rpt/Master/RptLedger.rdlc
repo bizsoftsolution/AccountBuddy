@@ -200,7 +200,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>OPDr</Value>
+                              <Value>OP Dr</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -234,7 +234,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>OPCr</Value>
+                              <Value>OP Cr</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
