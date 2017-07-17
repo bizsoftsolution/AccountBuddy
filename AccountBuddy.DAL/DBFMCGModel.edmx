@@ -84,6 +84,66 @@
           <Property Name="ErrorAt" Type="datetime" />
           <Property Name="ErrorMessage" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="JobOrderIssue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JODate" Type="date" Nullable="false" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="JobWorkerId" Type="int" Nullable="false" />
+          <Property Name="ItemAmount" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Extras" Type="money" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="Narration" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="JobOrderIssueDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JOId" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JobOrderReceived">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JRDate" Type="date" Nullable="false" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="JobWorkerId" Type="int" Nullable="false" />
+          <Property Name="ItemAmount" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="ExtraAmount" Type="money" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="Narration" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="JobOrderReceivedDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="JRId" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+        </EntityType>
         <EntityType Name="JobWorker">
           <Key>
             <PropertyRef Name="Id" />
@@ -651,6 +711,102 @@
             </Principal>
             <Dependent Role="Customer">
               <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderIssue_JobWorker">
+          <End Role="JobWorker" Type="Self.JobWorker" Multiplicity="1" />
+          <End Role="JobOrderIssue" Type="Self.JobOrderIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobWorker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderIssue">
+              <PropertyRef Name="JobWorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderIssueDetail_JobOrderIssue">
+          <End Role="JobOrderIssue" Type="Self.JobOrderIssue" Multiplicity="1" />
+          <End Role="JobOrderIssueDetail" Type="Self.JobOrderIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobOrderIssue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderIssueDetail">
+              <PropertyRef Name="JOId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderIssueDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="JobOrderIssueDetail" Type="Self.JobOrderIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderIssueDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderIssueDetail_UOM">
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
+          <End Role="JobOrderIssueDetail" Type="Self.JobOrderIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UOM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderIssueDetail">
+              <PropertyRef Name="UOMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderReceived_JobWorker">
+          <End Role="JobWorker" Type="Self.JobWorker" Multiplicity="1" />
+          <End Role="JobOrderReceived" Type="Self.JobOrderReceived" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobWorker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderReceived">
+              <PropertyRef Name="JobWorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderReceivedDetail_JobOrderReceived">
+          <End Role="JobOrderReceived" Type="Self.JobOrderReceived" Multiplicity="1" />
+          <End Role="JobOrderReceivedDetail" Type="Self.JobOrderReceivedDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobOrderReceived">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderReceivedDetail">
+              <PropertyRef Name="JRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderReceivedDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="JobOrderReceivedDetail" Type="Self.JobOrderReceivedDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderReceivedDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderReceivedDetail_UOM">
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
+          <End Role="JobOrderReceivedDetail" Type="Self.JobOrderReceivedDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UOM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderReceivedDetail">
+              <PropertyRef Name="UOMId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1491,6 +1647,10 @@
           <EntitySet Name="DataKeyValue" EntityType="Self.DataKeyValue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityType" EntityType="Self.EntityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobOrderIssue" EntityType="Self.JobOrderIssue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobOrderIssueDetail" EntityType="Self.JobOrderIssueDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobOrderReceived" EntityType="Self.JobOrderReceived" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobOrderReceivedDetail" EntityType="Self.JobOrderReceivedDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobWorker" EntityType="Self.JobWorker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JournalDetail" EntityType="Self.JournalDetail" Schema="dbo" store:Type="Tables" />
@@ -1548,6 +1708,38 @@
           <AssociationSet Name="FK_Customer_Ledger" Association="Self.FK_Customer_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
             <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderIssue_JobWorker" Association="Self.FK_JobOrderIssue_JobWorker">
+            <End Role="JobWorker" EntitySet="JobWorker" />
+            <End Role="JobOrderIssue" EntitySet="JobOrderIssue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderIssueDetail_JobOrderIssue" Association="Self.FK_JobOrderIssueDetail_JobOrderIssue">
+            <End Role="JobOrderIssue" EntitySet="JobOrderIssue" />
+            <End Role="JobOrderIssueDetail" EntitySet="JobOrderIssueDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderIssueDetail_Product" Association="Self.FK_JobOrderIssueDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="JobOrderIssueDetail" EntitySet="JobOrderIssueDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderIssueDetail_UOM" Association="Self.FK_JobOrderIssueDetail_UOM">
+            <End Role="UOM" EntitySet="UOM" />
+            <End Role="JobOrderIssueDetail" EntitySet="JobOrderIssueDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderReceived_JobWorker" Association="Self.FK_JobOrderReceived_JobWorker">
+            <End Role="JobWorker" EntitySet="JobWorker" />
+            <End Role="JobOrderReceived" EntitySet="JobOrderReceived" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderReceivedDetail_JobOrderReceived" Association="Self.FK_JobOrderReceivedDetail_JobOrderReceived">
+            <End Role="JobOrderReceived" EntitySet="JobOrderReceived" />
+            <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderReceivedDetail_Product" Association="Self.FK_JobOrderReceivedDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderReceivedDetail_UOM" Association="Self.FK_JobOrderReceivedDetail_UOM">
+            <End Role="UOM" EntitySet="UOM" />
+            <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_JobWorkers_Ledger" Association="Self.FK_JobWorkers_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
@@ -1839,6 +2031,10 @@
           <EntitySet Name="DataKeyValues" EntityType="DBFMCGModel.DataKeyValue" />
           <EntitySet Name="EntityTypes" EntityType="DBFMCGModel.EntityType" />
           <EntitySet Name="ErrorLogs" EntityType="DBFMCGModel.ErrorLog" />
+          <EntitySet Name="JobOrderIssues" EntityType="DBFMCGModel.JobOrderIssue" />
+          <EntitySet Name="JobOrderIssueDetails" EntityType="DBFMCGModel.JobOrderIssueDetail" />
+          <EntitySet Name="JobOrderReceiveds" EntityType="DBFMCGModel.JobOrderReceived" />
+          <EntitySet Name="JobWorkers" EntityType="DBFMCGModel.JobWorker" />
           <EntitySet Name="Journals" EntityType="DBFMCGModel.Journal" />
           <EntitySet Name="JournalDetails" EntityType="DBFMCGModel.JournalDetail" />
           <EntitySet Name="Ledgers" EntityType="DBFMCGModel.Ledger" />
@@ -1863,6 +2059,7 @@
           <EntitySet Name="SalesOrderDetails" EntityType="DBFMCGModel.SalesOrderDetail" />
           <EntitySet Name="SalesReturns" EntityType="DBFMCGModel.SalesReturn" />
           <EntitySet Name="SalesReturnDetails" EntityType="DBFMCGModel.SalesReturnDetail" />
+          <EntitySet Name="Staffs" EntityType="DBFMCGModel.Staff" />
           <EntitySet Name="StockGroups" EntityType="DBFMCGModel.StockGroup" />
           <EntitySet Name="StockIns" EntityType="DBFMCGModel.StockIn" />
           <EntitySet Name="StockInDetails" EntityType="DBFMCGModel.StockInDetail" />
@@ -1923,6 +2120,30 @@
             <End Role="EntityType" EntitySet="EntityTypes" />
             <End Role="LogMaster" EntitySet="LogMasters" />
           </AssociationSet>
+          <AssociationSet Name="FK_JobOrderIssue_JobWorker" Association="DBFMCGModel.FK_JobOrderIssue_JobWorker">
+            <End Role="JobWorker" EntitySet="JobWorkers" />
+            <End Role="JobOrderIssue" EntitySet="JobOrderIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderIssueDetail_JobOrderIssue" Association="DBFMCGModel.FK_JobOrderIssueDetail_JobOrderIssue">
+            <End Role="JobOrderIssue" EntitySet="JobOrderIssues" />
+            <End Role="JobOrderIssueDetail" EntitySet="JobOrderIssueDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderIssueDetail_Product" Association="DBFMCGModel.FK_JobOrderIssueDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="JobOrderIssueDetail" EntitySet="JobOrderIssueDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderIssueDetail_UOM" Association="DBFMCGModel.FK_JobOrderIssueDetail_UOM">
+            <End Role="UOM" EntitySet="UOMs" />
+            <End Role="JobOrderIssueDetail" EntitySet="JobOrderIssueDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderReceived_JobWorker" Association="DBFMCGModel.FK_JobOrderReceived_JobWorker">
+            <End Role="JobWorker" EntitySet="JobWorkers" />
+            <End Role="JobOrderReceived" EntitySet="JobOrderReceiveds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobWorkers_Ledger" Association="DBFMCGModel.FK_JobWorkers_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="JobWorker" EntitySet="JobWorkers" />
+          </AssociationSet>
           <AssociationSet Name="FK_JournalDetail_Journal" Association="DBFMCGModel.FK_JournalDetail_Journal">
             <End Role="Journal" EntitySet="Journals" />
             <End Role="JournalDetail" EntitySet="JournalDetails" />
@@ -1970,6 +2191,10 @@
           <AssociationSet Name="FK_SalesReturn_Ledger" Association="DBFMCGModel.FK_SalesReturn_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
             <End Role="SalesReturn" EntitySet="SalesReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Ledger" Association="DBFMCGModel.FK_Staff_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Staff" EntitySet="Staffs" />
           </AssociationSet>
           <AssociationSet Name="FK_StockIn_Ledger" Association="DBFMCGModel.FK_StockIn_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
@@ -2163,15 +2388,18 @@
             <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
           </AssociationSet>
-          <EntitySet Name="JobWorkers" EntityType="DBFMCGModel.JobWorker" />
-          <AssociationSet Name="FK_JobWorkers_Ledger" Association="DBFMCGModel.FK_JobWorkers_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="JobWorker" EntitySet="JobWorkers" />
+          <EntitySet Name="JobOrderReceivedDetails" EntityType="DBFMCGModel.JobOrderReceivedDetail" />
+          <AssociationSet Name="FK_JobOrderReceivedDetail_JobOrderReceived" Association="DBFMCGModel.FK_JobOrderReceivedDetail_JobOrderReceived">
+            <End Role="JobOrderReceived" EntitySet="JobOrderReceiveds" />
+            <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetails" />
           </AssociationSet>
-          <EntitySet Name="Staffs" EntityType="DBFMCGModel.Staff" />
-          <AssociationSet Name="FK_Staff_Ledger" Association="DBFMCGModel.FK_Staff_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Staff" EntitySet="Staffs" />
+          <AssociationSet Name="FK_JobOrderReceivedDetail_Product" Association="DBFMCGModel.FK_JobOrderReceivedDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOrderReceivedDetail_UOM" Association="DBFMCGModel.FK_JobOrderReceivedDetail_UOM">
+            <End Role="UOM" EntitySet="UOMs" />
+            <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
@@ -2268,6 +2496,71 @@
           <Property Name="ErrorAt" Type="DateTime" Precision="3" />
           <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="JobOrderIssue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JODate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JobWorkerId" Type="Int32" Nullable="false" />
+          <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Extras" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JobWorker" Relationship="DBFMCGModel.FK_JobOrderIssue_JobWorker" FromRole="JobOrderIssue" ToRole="JobWorker" />
+          <NavigationProperty Name="JobOrderIssueDetails" Relationship="DBFMCGModel.FK_JobOrderIssueDetail_JobOrderIssue" FromRole="JobOrderIssue" ToRole="JobOrderIssueDetail" />
+        </EntityType>
+        <EntityType Name="JobOrderIssueDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JOId" Type="Int64" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="JobOrderIssue" Relationship="DBFMCGModel.FK_JobOrderIssueDetail_JobOrderIssue" FromRole="JobOrderIssueDetail" ToRole="JobOrderIssue" />
+          <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_JobOrderIssueDetail_Product" FromRole="JobOrderIssueDetail" ToRole="Product" />
+          <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_JobOrderIssueDetail_UOM" FromRole="JobOrderIssueDetail" ToRole="UOM" />
+        </EntityType>
+        <EntityType Name="JobOrderReceived">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JRDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JobWorkerId" Type="Int32" Nullable="false" />
+          <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ExtraAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JobWorker" Relationship="DBFMCGModel.FK_JobOrderReceived_JobWorker" FromRole="JobOrderReceived" ToRole="JobWorker" />
+          <NavigationProperty Name="JobOrderReceivedDetails" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_JobOrderReceived" FromRole="JobOrderReceived" ToRole="JobOrderReceivedDetail" />
+        </EntityType>
+        <EntityType Name="JobWorker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LedgerId" Type="Int32" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Role" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JobOrderIssues" Relationship="DBFMCGModel.FK_JobOrderIssue_JobWorker" FromRole="JobWorker" ToRole="JobOrderIssue" />
+          <NavigationProperty Name="JobOrderReceiveds" Relationship="DBFMCGModel.FK_JobOrderReceived_JobWorker" FromRole="JobWorker" ToRole="JobOrderReceived" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_JobWorkers_Ledger" FromRole="JobWorker" ToRole="Ledger" />
+        </EntityType>
         <EntityType Name="Journal">
           <Key>
             <PropertyRef Name="Id" />
@@ -2321,6 +2614,7 @@
           <NavigationProperty Name="Banks" Relationship="DBFMCGModel.FK_Bank_Ledger" FromRole="Ledger" ToRole="Bank" />
           <NavigationProperty Name="CreditLimitType" Relationship="DBFMCGModel.FK_Ledger_CreditLimitType" FromRole="Ledger" ToRole="CreditLimitType" />
           <NavigationProperty Name="Customers" Relationship="DBFMCGModel.FK_Customer_Ledger" FromRole="Ledger" ToRole="Customer" />
+          <NavigationProperty Name="JobWorkers" Relationship="DBFMCGModel.FK_JobWorkers_Ledger" FromRole="Ledger" ToRole="JobWorker" />
           <NavigationProperty Name="JournalDetails" Relationship="DBFMCGModel.FK_JournalDetail_Ledger" FromRole="Ledger" ToRole="JournalDetail" />
           <NavigationProperty Name="Payments" Relationship="DBFMCGModel.FK_Payment_Ledger" FromRole="Ledger" ToRole="Payment" />
           <NavigationProperty Name="PaymentDetails" Relationship="DBFMCGModel.FK_PaymentDetail_Ledger" FromRole="Ledger" ToRole="PaymentDetail" />
@@ -2332,11 +2626,10 @@
           <NavigationProperty Name="Sales" Relationship="DBFMCGModel.FK_Sale_Ledger" FromRole="Ledger" ToRole="Sale" />
           <NavigationProperty Name="SalesOrders" Relationship="DBFMCGModel.FK_SalesOrder_Ledger" FromRole="Ledger" ToRole="SalesOrder" />
           <NavigationProperty Name="SalesReturns" Relationship="DBFMCGModel.FK_SalesReturn_Ledger" FromRole="Ledger" ToRole="SalesReturn" />
+          <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Ledger" ToRole="Staff" />
           <NavigationProperty Name="StockIns" Relationship="DBFMCGModel.FK_StockIn_Ledger" FromRole="Ledger" ToRole="StockIn" />
           <NavigationProperty Name="StockOuts" Relationship="DBFMCGModel.FK_StockOut_Ledger" FromRole="Ledger" ToRole="StockOut" />
           <NavigationProperty Name="Suppliers" Relationship="DBFMCGModel.FK_Supplier_Ledger" FromRole="Ledger" ToRole="Supplier" />
-          <NavigationProperty Name="JobWorkers" Relationship="DBFMCGModel.FK_JobWorkers_Ledger" FromRole="Ledger" ToRole="JobWorker" />
-          <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Ledger" ToRole="Staff" />
         </EntityType>
         <EntityType Name="LogDetail">
           <Key>
@@ -2427,6 +2720,7 @@
           <Property Name="MaxSellingRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="MRP" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ProductImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="JobOrderIssueDetails" Relationship="DBFMCGModel.FK_JobOrderIssueDetail_Product" FromRole="Product" ToRole="JobOrderIssueDetail" />
           <NavigationProperty Name="StockGroup" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="Product" ToRole="StockGroup" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="Product" ToRole="UOM" />
           <NavigationProperty Name="ProductDetails" Relationship="DBFMCGModel.FK_ProductDetail_Product" FromRole="Product" ToRole="ProductDetail" />
@@ -2438,6 +2732,7 @@
           <NavigationProperty Name="SalesReturnDetails" Relationship="DBFMCGModel.FK_SalesReturnDetail_Product" FromRole="Product" ToRole="SalesReturnDetail" />
           <NavigationProperty Name="StockInDetails" Relationship="DBFMCGModel.FK_StockInDetail_Product" FromRole="Product" ToRole="StockInDetail" />
           <NavigationProperty Name="StockOutDetails" Relationship="DBFMCGModel.FK_StockOutDetail_Product" FromRole="Product" ToRole="StockOutDetail" />
+          <NavigationProperty Name="JobOrderReceivedDetails" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_Product" FromRole="Product" ToRole="JobOrderReceivedDetail" />
         </EntityType>
         <EntityType Name="ProductDetail">
           <Key>
@@ -2716,6 +3011,18 @@
           <NavigationProperty Name="SalesReturn" Relationship="DBFMCGModel.FK_SalesReturnDetail_SalesReturn" FromRole="SalesReturnDetail" ToRole="SalesReturn" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_SalesReturnDetail_UOM" FromRole="SalesReturnDetail" ToRole="UOM" />
         </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LedgerId" Type="Int32" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Designation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="DOJ" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Staff" ToRole="Ledger" />
+        </EntityType>
         <EntityType Name="StockGroup">
           <Key>
             <PropertyRef Name="Id" />
@@ -2824,6 +3131,7 @@
           <Property Name="Symbol" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="UOM" ToRole="CompanyDetail" />
+          <NavigationProperty Name="JobOrderIssueDetails" Relationship="DBFMCGModel.FK_JobOrderIssueDetail_UOM" FromRole="UOM" ToRole="JobOrderIssueDetail" />
           <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="UOM" ToRole="Product" />
           <NavigationProperty Name="PurchaseDetails" Relationship="DBFMCGModel.FK_PurchaseDetail_UOM" FromRole="UOM" ToRole="PurchaseDetail" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="DBFMCGModel.FK_PurchaseOrderDetail_UOM" FromRole="UOM" ToRole="PurchaseOrderDetail" />
@@ -2833,6 +3141,7 @@
           <NavigationProperty Name="SalesReturnDetails" Relationship="DBFMCGModel.FK_SalesReturnDetail_UOM" FromRole="UOM" ToRole="SalesReturnDetail" />
           <NavigationProperty Name="StockInDetails" Relationship="DBFMCGModel.FK_StockInDetail_UOM" FromRole="UOM" ToRole="StockInDetail" />
           <NavigationProperty Name="StockOutDetails" Relationship="DBFMCGModel.FK_StockOutDetail_UOM" FromRole="UOM" ToRole="StockOutDetail" />
+          <NavigationProperty Name="JobOrderReceivedDetails" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_UOM" FromRole="UOM" ToRole="JobOrderReceivedDetail" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -3033,6 +3342,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_JobOrderIssue_JobWorker">
+          <End Type="DBFMCGModel.JobWorker" Role="JobWorker" Multiplicity="1" />
+          <End Type="DBFMCGModel.JobOrderIssue" Role="JobOrderIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobWorker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderIssue">
+              <PropertyRef Name="JobWorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderIssueDetail_JobOrderIssue">
+          <End Type="DBFMCGModel.JobOrderIssue" Role="JobOrderIssue" Multiplicity="1" />
+          <End Type="DBFMCGModel.JobOrderIssueDetail" Role="JobOrderIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobOrderIssue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderIssueDetail">
+              <PropertyRef Name="JOId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderIssueDetail_Product">
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DBFMCGModel.JobOrderIssueDetail" Role="JobOrderIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderIssueDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderIssueDetail_UOM">
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
+          <End Type="DBFMCGModel.JobOrderIssueDetail" Role="JobOrderIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UOM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderIssueDetail">
+              <PropertyRef Name="UOMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderReceived_JobWorker">
+          <End Type="DBFMCGModel.JobWorker" Role="JobWorker" Multiplicity="1" />
+          <End Type="DBFMCGModel.JobOrderReceived" Role="JobOrderReceived" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobWorker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderReceived">
+              <PropertyRef Name="JobWorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobWorkers_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.JobWorker" Role="JobWorker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobWorker">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_JournalDetail_Journal">
           <End Type="DBFMCGModel.Journal" Role="Journal" Multiplicity="1" />
           <End Type="DBFMCGModel.JournalDetail" Role="JournalDetail" Multiplicity="*" />
@@ -3173,6 +3554,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SalesReturn">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
               <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -3753,49 +4146,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="JobWorker">
+        <EntityType Name="JobOrderReceivedDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LedgerId" Type="Int32" />
-          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Role" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_JobWorkers_Ledger" FromRole="JobWorker" ToRole="Ledger" />
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="JRId" Type="Int64" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="JobOrderReceived" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_JobOrderReceived" FromRole="JobOrderReceivedDetail" ToRole="JobOrderReceived" />
+          <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_Product" FromRole="JobOrderReceivedDetail" ToRole="Product" />
+          <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_UOM" FromRole="JobOrderReceivedDetail" ToRole="UOM" />
         </EntityType>
-        <Association Name="FK_JobWorkers_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.JobWorker" Role="JobWorker" Multiplicity="*" />
+        <Association Name="FK_JobOrderReceivedDetail_JobOrderReceived">
+          <End Type="DBFMCGModel.JobOrderReceived" Role="JobOrderReceived" Multiplicity="1" />
+          <End Type="DBFMCGModel.JobOrderReceivedDetail" Role="JobOrderReceivedDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Ledger">
+            <Principal Role="JobOrderReceived">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="JobWorker">
-              <PropertyRef Name="LedgerId" />
+            <Dependent Role="JobOrderReceivedDetail">
+              <PropertyRef Name="JRId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Staff">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LedgerId" Type="Int32" />
-          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Designation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="DOB" Type="DateTime" Precision="3" />
-          <Property Name="DOJ" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Staff" ToRole="Ledger" />
-        </EntityType>
-        <Association Name="FK_Staff_Ledger">
-          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="*" />
+        <Association Name="FK_JobOrderReceivedDetail_Product">
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DBFMCGModel.JobOrderReceivedDetail" Role="JobOrderReceivedDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Ledger">
+            <Principal Role="Product">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Staff">
-              <PropertyRef Name="LedgerId" />
+            <Dependent Role="JobOrderReceivedDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderReceivedDetail_UOM">
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
+          <End Type="DBFMCGModel.JobOrderReceivedDetail" Role="JobOrderReceivedDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UOM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderReceivedDetail">
+              <PropertyRef Name="UOMId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3888,6 +4288,65 @@
                 <ScalarProperty Name="ErrorBy" ColumnName="ErrorBy" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="EntityTypeId" ColumnName="EntityTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobOrderIssues">
+            <EntityTypeMapping TypeName="DBFMCGModel.JobOrderIssue">
+              <MappingFragment StoreEntitySet="JobOrderIssue">
+                <ScalarProperty Name="Narration" ColumnName="Narration" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="Extras" ColumnName="Extras" />
+                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
+                <ScalarProperty Name="JobWorkerId" ColumnName="JobWorkerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="JODate" ColumnName="JODate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobOrderIssueDetails">
+            <EntityTypeMapping TypeName="DBFMCGModel.JobOrderIssueDetail">
+              <MappingFragment StoreEntitySet="JobOrderIssueDetail">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UOMId" ColumnName="UOMId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="JOId" ColumnName="JOId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobOrderReceiveds">
+            <EntityTypeMapping TypeName="DBFMCGModel.JobOrderReceived">
+              <MappingFragment StoreEntitySet="JobOrderReceived">
+                <ScalarProperty Name="Narration" ColumnName="Narration" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="ExtraAmount" ColumnName="ExtraAmount" />
+                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
+                <ScalarProperty Name="JobWorkerId" ColumnName="JobWorkerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="JRDate" ColumnName="JRDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobWorkers">
+            <EntityTypeMapping TypeName="DBFMCGModel.JobWorker">
+              <MappingFragment StoreEntitySet="JobWorker">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4271,6 +4730,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="DBFMCGModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="DOJ" ColumnName="DOJ" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="StockGroups">
             <EntityTypeMapping TypeName="DBFMCGModel.StockGroup">
               <MappingFragment StoreEntitySet="StockGroup">
@@ -4418,24 +4889,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="JobWorkers">
-            <EntityTypeMapping TypeName="DBFMCGModel.JobWorker">
-              <MappingFragment StoreEntitySet="JobWorker">
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Staffs">
-            <EntityTypeMapping TypeName="DBFMCGModel.Staff">
-              <MappingFragment StoreEntitySet="Staff">
-                <ScalarProperty Name="DOJ" ColumnName="DOJ" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+          <EntitySetMapping Name="JobOrderReceivedDetails">
+            <EntityTypeMapping TypeName="DBFMCGModel.JobOrderReceivedDetail">
+              <MappingFragment StoreEntitySet="JobOrderReceivedDetail">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UOMId" ColumnName="UOMId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="JRId" ColumnName="JRId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

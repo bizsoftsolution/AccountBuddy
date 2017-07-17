@@ -62,6 +62,10 @@
     <Compile Include="FormPrefix.cs" />
     <Compile Include="GeneralLedger.cs" />
     <Compile Include="GeneralStock.cs" />
+    <Compile Include="JobOrderIssue.cs" />
+    <Compile Include="JobOrderIssueDetail.cs" />
+    <Compile Include="JobOrderReceived.cs" />
+    <Compile Include="JobOrderReceivedDetail.cs" />
     <Compile Include="JobWorker.cs" />
     <Compile Include="Journal.cs" />
     <Compile Include="JournalDetail.cs" />

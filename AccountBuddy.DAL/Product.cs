@@ -17,6 +17,7 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            this.JobOrderIssueDetails = new HashSet<JobOrderIssueDetail>();
             this.ProductDetails = new HashSet<ProductDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
@@ -26,6 +27,7 @@ namespace AccountBuddy.DAL
             this.SalesReturnDetails = new HashSet<SalesReturnDetail>();
             this.StockInDetails = new HashSet<StockInDetail>();
             this.StockOutDetails = new HashSet<StockOutDetail>();
+            this.JobOrderReceivedDetails = new HashSet<JobOrderReceivedDetail>();
         }
     
         public int Id { get; set; }
@@ -40,6 +42,8 @@ namespace AccountBuddy.DAL
         public decimal MRP { get; set; }
         public byte[] ProductImage { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobOrderIssueDetail> JobOrderIssueDetails { get; set; }
         public virtual StockGroup StockGroup { get; set; }
         public virtual UOM UOM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -60,5 +64,7 @@ namespace AccountBuddy.DAL
         public virtual ICollection<StockInDetail> StockInDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockOutDetail> StockOutDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobOrderReceivedDetail> JobOrderReceivedDetails { get; set; }
     }
 }

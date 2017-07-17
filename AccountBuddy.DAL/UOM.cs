@@ -17,6 +17,7 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UOM()
         {
+            this.JobOrderIssueDetails = new HashSet<JobOrderIssueDetail>();
             this.Products = new HashSet<Product>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
@@ -26,6 +27,7 @@ namespace AccountBuddy.DAL
             this.SalesReturnDetails = new HashSet<SalesReturnDetail>();
             this.StockInDetails = new HashSet<StockInDetail>();
             this.StockOutDetails = new HashSet<StockOutDetail>();
+            this.JobOrderReceivedDetails = new HashSet<JobOrderReceivedDetail>();
         }
     
         public int Id { get; set; }
@@ -34,6 +36,8 @@ namespace AccountBuddy.DAL
         public int CompanyId { get; set; }
     
         public virtual CompanyDetail CompanyDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobOrderIssueDetail> JobOrderIssueDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -52,5 +56,7 @@ namespace AccountBuddy.DAL
         public virtual ICollection<StockInDetail> StockInDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockOutDetail> StockOutDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobOrderReceivedDetail> JobOrderReceivedDetails { get; set; }
     }
 }

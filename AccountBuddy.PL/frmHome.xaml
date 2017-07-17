@@ -221,7 +221,16 @@
                                             <Transaction:frmLedgerOpening/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-
+                                    <Menu:NavMenuItem MenuName="Job Order Issue" FormName="Job Order Issue">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmJobOrderIssue/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Job Order Received" FormName="Job Order Received">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmJobOrderReceived/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                 </ListBox>
 
                             </Expander>

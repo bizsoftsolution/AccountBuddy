@@ -98,6 +98,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FMCG.xsd</DependentUpon>
     </Compile>
+    <Compile Include="JobOrderIssue.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobOrderIssueDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobOrderReceived.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobOrderReceivedDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="JobWorker.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
