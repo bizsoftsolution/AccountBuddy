@@ -75,5 +75,9 @@ namespace AccountBuddy.DAL
         public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<UserTypeFormDetail> UserTypeFormDetails { get; set; }
         public virtual DbSet<JobOrderReceivedDetail> JobOrderReceivedDetails { get; set; }
+        public virtual DbSet<StockInProcess> StockInProcesses { get; set; }
+        public virtual DbSet<StockInProcessDetail> StockInProcessDetails { get; set; }
+        public virtual DbSet<StockSeparated> StockSeparateds { get; set; }
+        public virtual DbSet<StockSeperatedDetail> StockSeperatedDetails { get; set; }
     }
 }

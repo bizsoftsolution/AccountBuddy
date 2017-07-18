@@ -438,6 +438,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmStockInProcess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmStockOut.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -688,6 +692,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmStockInOut.xaml.cs">
       <DependentUpon>frmStockInOut.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmStockInProcess.xaml.cs">
+      <DependentUpon>frmStockInProcess.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmStockOut.xaml.cs">
       <DependentUpon>frmStockOut.xaml</DependentUpon>

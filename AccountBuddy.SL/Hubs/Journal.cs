@@ -331,7 +331,7 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteBySalesReturn(BLL.SalesReturn SR)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn,SR.Id);
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
             DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
@@ -715,6 +715,69 @@ namespace AccountBuddy.SL.Hubs
         }
         #endregion
 
+        //#region StockInProcess
+        //void Journal_SaveByJobOrderIssue(DAL.JobOrderIssue P)
+        //{
+        //    string RefCode = string.Format("{0}{1}", BLL.FormPrefix.JobOrderIssue, P.Id);
+        //    var CId = P.JobWorker.Ledger.AccountGroup.CompanyId;
+
+        //    DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+        //    if (j == null)
+        //    {
+        //        j = new DAL.Journal();
+        //        j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
+        //        j.RefCode = RefCode;
+        //        j.JournalDetails.Add(new DAL.JournalDetail()
+        //        {
+        //            LedgerId = P.JobWorkerId,
+        //            CrAmt = P.TotalAmount,
+        //            Particulars = P.Narration
+        //        });
+
+        //        j.JournalDetails.Add(new DAL.JournalDetail()
+        //        {
+        //            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key, CId),
+        //            DrAmt = P.ItemAmount - P.DiscountAmount + P.Extras,
+        //            Particulars = P.Narration
+        //        });
+
+        //        j.JournalDetails.Add(new DAL.JournalDetail()
+        //        {
+        //            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Output_Tax_Ledger_Key, CId),
+        //            DrAmt = P.GSTAmount,
+        //            Particulars = P.Narration
+        //        });
+
+        //        DB.Journals.Add(j);
+        //    }
+        //    else
+        //    {
+        //        foreach (var jd in j.JournalDetails)
+        //        {
+        //            jd.Particulars = P.Narration;
+        //            if (jd.CrAmt != 0)
+        //            {
+        //                jd.LedgerId = P.JobWorkerId;
+        //                jd.CrAmt = P.TotalAmount;
+        //            }
+        //            else
+        //            {
+        //                jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key, CId) ? P.ItemAmount - P.DiscountAmount + P.Extras : P.GSTAmount;
+        //            }
+        //        }
+        //    }
+
+        //    j.JournalDate = P.JODate;
+        //    DB.SaveChanges();
+        //}
+        //void Journal_DeleteByJobOrderIssue(BLL.Purchase P)
+        //{
+        //    string RefCode = string.Format("{0}{1}", BLL.FormPrefix.JobOrderIssue, P.Id);
+        //    DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+        //    if (j != null) Journal_Delete(j.Id);
+        //}
+
+        //#endregion
         #endregion
     }
 }

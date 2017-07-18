@@ -101,8 +101,12 @@
     <Compile Include="StockGroup.cs" />
     <Compile Include="StockIn.cs" />
     <Compile Include="StockInDetail.cs" />
+    <Compile Include="StockInProcess.cs" />
+    <Compile Include="StockInProcessDetail.cs" />
     <Compile Include="StockOut.cs" />
     <Compile Include="StockOutDetail.cs" />
+    <Compile Include="StockSeperated.cs" />
+    <Compile Include="StockSeperatedDetail.cs" />
     <Compile Include="Supplier.cs" />
     <Compile Include="TransactionType.cs" />
     <Compile Include="TrialBalance.cs" />

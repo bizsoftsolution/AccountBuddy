@@ -26,6 +26,9 @@ namespace AccountBuddy.BLL
         public static string JobOrderIssue = "JI";
         public static string JobOrderReceived = "JR";
 
+        public static string StockInProcess = "SP";
+        public static string StockSeparated = "SS";
+
 
     }
 }

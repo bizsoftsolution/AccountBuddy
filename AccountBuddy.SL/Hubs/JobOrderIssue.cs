@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AccountBuddy.Common;
+using AccountBuddy.DAL;
 
 namespace AccountBuddy.SL.Hubs
 {
@@ -75,7 +76,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).JobOrderIssue_RefNoRefresh(JobOrderIssue_NewRefNo());
-            
+                Journal_SaveByJobOrderIssue(d);
                 return true;
 
             }
@@ -84,7 +85,9 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-          public BLL.JobOrderIssue JobOrderIssue_Find(string SearchText)
+     
+
+        public BLL.JobOrderIssue JobOrderIssue_Find(string SearchText)
         {
             BLL.JobOrderIssue SO = new BLL.JobOrderIssue();
             try
@@ -125,6 +128,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.JobOrderIssueDetails.RemoveRange(d.JobOrderIssueDetails);
                     DB.JobOrderIssues.Remove(d);
                     DB.SaveChanges();
+                    Journal_DeleteByJobOrderIssue(P);
 
                     LogDetailStore(s, LogDetailType.DELETE);
 
@@ -134,6 +138,8 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
+
+       
 
         public List<BLL.JobOrderIssue> JobOrderIssue_JOPendingList()
         {

@@ -40,7 +40,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox14</rd:DefaultName>
@@ -207,7 +209,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>JODate</rd:DefaultName>
@@ -373,10 +377,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>JOPending</DataSetName>
-        <Top>0.50564cm</Top>
+        <Top>0.17639cm</Top>
         <Left>0.65673cm</Left>
         <Height>1.2cm</Height>
-        <Width>21.66772cm</Width>
+        <Width>21.66773cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -384,13 +388,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.71875in</Height>
+    <Height>0.625in</Height>
     <Style />
   </Body>
   <Width>9.2181in</Width>
   <Page>
     <PageHeader>
-      <Height>5.31202cm</Height>
+      <Height>5.20619cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -415,7 +419,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>3.60931cm</Top>
-          <Left>2.1904cm</Left>
+          <Left>2.5079cm</Left>
           <Height>0.78521cm</Height>
           <Width>18.74542cm</Width>
           <Style>
@@ -441,12 +445,14 @@
                   </Style>
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>DateTo</rd:DefaultName>
           <Top>4.50035cm</Top>
-          <Left>18.43582cm</Left>
+          <Left>18.75332cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <ZIndex>1</ZIndex>
@@ -473,12 +479,14 @@
                   </Style>
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>DateFrom</rd:DefaultName>
           <Top>4.50035cm</Top>
-          <Left>4.38645cm</Left>
+          <Left>4.70395cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <ZIndex>2</ZIndex>
@@ -499,7 +507,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Date From:</Value>
+                  <Value>Date From :</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -512,7 +520,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox5</rd:DefaultName>
           <Top>4.50035cm</Top>
-          <Left>1.85117cm</Left>
+          <Left>2.16867cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <ZIndex>3</ZIndex>
@@ -533,7 +541,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Date To:</Value>
+                  <Value>Date To :</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -546,7 +554,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox6</rd:DefaultName>
           <Top>4.50035cm</Top>
-          <Left>15.90054cm</Left>
+          <Left>16.21804cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <ZIndex>4</ZIndex>
@@ -581,7 +589,7 @@
           </Paragraphs>
           <rd:DefaultName>CompanyName</rd:DefaultName>
           <Top>0.56975cm</Top>
-          <Left>12.70871cm</Left>
+          <Left>13.02621cm</Left>
           <Height>0.33333in</Height>
           <Width>3.6793in</Width>
           <ZIndex>5</ZIndex>
@@ -615,7 +623,7 @@
           </Paragraphs>
           <rd:DefaultName>AddressLine1</rd:DefaultName>
           <Top>0.55764in</Top>
-          <Left>5.38192in</Left>
+          <Left>5.50692in</Left>
           <Height>0.18056in</Height>
           <Width>3.30082in</Width>
           <ZIndex>6</ZIndex>
@@ -652,7 +660,7 @@
           </Paragraphs>
           <rd:DefaultName>CityName</rd:DefaultName>
           <Top>0.91876in</Top>
-          <Left>5.41664in</Left>
+          <Left>5.54164in</Left>
           <Height>0.19444in</Height>
           <Width>3.2661in</Width>
           <ZIndex>7</ZIndex>
@@ -689,7 +697,7 @@
           </Paragraphs>
           <rd:DefaultName>PostalCode</rd:DefaultName>
           <Top>1.1132in</Top>
-          <Left>5.40275in</Left>
+          <Left>5.52775in</Left>
           <Height>0.22445in</Height>
           <Width>3.27999in</Width>
           <ZIndex>8</ZIndex>
@@ -726,7 +734,7 @@
           </Paragraphs>
           <rd:DefaultName>AddressLine2</rd:DefaultName>
           <Top>0.7382in</Top>
-          <Left>5.42359in</Left>
+          <Left>5.54859in</Left>
           <Height>0.18056in</Height>
           <Width>3.25915in</Width>
           <ZIndex>9</ZIndex>
@@ -749,7 +757,7 @@
           <MIMEType>image/jpeg</MIMEType>
           <Sizing>FitProportional</Sizing>
           <Top>0.26821in</Top>
-          <Left>0.25856in</Left>
+          <Left>0.38356in</Left>
           <Height>1.01388in</Height>
           <Width>1.32985in</Width>
           <ZIndex>10</ZIndex>
@@ -761,7 +769,7 @@
         </Image>
         <Line Name="Line11">
           <Top>1.35154in</Top>
-          <Left>0.25856in</Left>
+          <Left>0.38356in</Left>
           <Height>0in</Height>
           <Width>8.5306in</Width>
           <ZIndex>11</ZIndex>
@@ -791,7 +799,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Page No:</Value>
+                  <Value>Page No :</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -802,9 +810,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox17</rd:DefaultName>
           <Top>0.07056cm</Top>
-          <Left>1.21705cm</Left>
+          <Left>0.97424cm</Left>
           <Height>0.6cm</Height>
-          <Width>1.73271cm</Width>
+          <Width>1.97552cm</Width>
           <Style>
             <Border>
               <Style>None</Style>

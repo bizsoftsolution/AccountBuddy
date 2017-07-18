@@ -22,7 +22,7 @@ namespace AccountBuddy.BLL
         private decimal? _ItemAmount;
         private decimal? _DiscountAmount;
         private decimal? _GSTAmount;
-        private decimal? _ExtraAmount;
+        private decimal? _Extras;
         private decimal? _TotalAmount;
         private string _Narration;
         private int? _CompanyId;
@@ -201,19 +201,19 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? ExtraAmount
+        public decimal? Extras
         {
             get
             {
-                if (_ExtraAmount == null) _ExtraAmount = 0;
-                return _ExtraAmount;
+                if (_Extras == null) _Extras = 0;
+                return _Extras;
             }
             set
             {
-                if (_ExtraAmount != value)
+                if (_Extras != value)
                 {
-                    _ExtraAmount = value;
-                    NotifyPropertyChanged(nameof(ExtraAmount));
+                    _Extras = value;
+                    NotifyPropertyChanged(nameof(Extras));
                     if (value != null) SetAmount();
                 }
             }
@@ -500,7 +500,7 @@ namespace AccountBuddy.BLL
         private void SetAmount()
         {
             GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
-            TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+            TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (Extras ?? 0);
         }
 
         public bool FindRefNo()

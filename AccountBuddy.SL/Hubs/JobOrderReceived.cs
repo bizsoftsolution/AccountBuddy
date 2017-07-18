@@ -84,10 +84,6 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-
-
-
-
         public BLL.JobOrderReceived JobOrderReceived_Find(string SearchText)
         {
             BLL.JobOrderReceived SO = new BLL.JobOrderReceived();
