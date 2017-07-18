@@ -15,6 +15,7 @@ namespace AccountBuddy.DAL
     public partial class JobOrderReceivedDetail
     {
         public long Id { get; set; }
+        public Nullable<long> JODId { get; set; }
         public long JRId { get; set; }
         public int ProductId { get; set; }
         public int UOMId { get; set; }
@@ -24,6 +25,7 @@ namespace AccountBuddy.DAL
         public decimal GSTAmount { get; set; }
         public decimal Amount { get; set; }
     
+        public virtual JobOrderIssueDetail JobOrderIssueDetail { get; set; }
         public virtual JobOrderReceived JobOrderReceived { get; set; }
         public virtual Product Product { get; set; }
         public virtual UOM UOM { get; set; }

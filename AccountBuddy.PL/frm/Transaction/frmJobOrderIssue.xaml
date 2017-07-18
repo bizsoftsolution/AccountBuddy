@@ -42,8 +42,8 @@
                 <!--#region  Master -->
                 <Grid Grid.Row="0">
                     <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" VerticalAlignment="Top"  Height="79" >
-                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding SODate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="5,27,10,24" Width="100" FontWeight="Bold"  />
-                        <ComboBox x:Name="cmbJobWorker" Loaded="cmbJobWorker_Loaded" Text="{Binding LedgerName}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="300" Height="43" Margin="10,10,10,24">
+                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding JODate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="5,27,10,24" Width="100" FontWeight="Bold"  />
+                        <ComboBox x:Name="cmbJobWorker" Loaded="cmbJobWorker_Loaded" Text="{Binding JobWorkerName}" SelectedValue="{Binding JobWorkerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="300" Height="43" Margin="10,10,10,24">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -100,7 +100,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox x:Name="txtdiscountAmount" IsReadOnly="False"  TextChanged="txtDiscountAmount_TextChanged" Margin="0,0,10,0" Text="{Binding JODetail.DiscountAmount,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
+                        <TextBox x:Name="txtdiscountAmount"   TextChanged="txtdiscountAmount_TextChanged" Margin="0,0,10,0" Text="{Binding JODetail.DiscountAmount,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Sale" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -185,6 +185,7 @@
                         <CheckBox Margin="10" x:Name="ckbAutoPrint" FontWeight="Bold" Width="100">Autoprint</CheckBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        <Button   Width="200" Height="30" x:Name="btnJobReceived" Content="JOB RECEIVED" Click="btnJobReceived_Click"  Margin="5 5" IsEnabled="False"/>
                         <TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="JO Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold" Height="41"/>
                         <Button Margin="10" Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" />
 

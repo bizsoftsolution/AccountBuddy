@@ -148,8 +148,8 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         void Print()
         {
-            frm.Print.frmQuickSO f = new Print.frmQuickSO();
-            //f.LoadReport(data);
+            frm.Print.frmJobOrderReceived f = new Print.frmJobOrderReceived();
+           f.LoadReport(data);
             f.ShowDialog();
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
@@ -246,7 +246,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         }
 
-        private void txtdiscountAmount_TextChanged_1(object sender, TextChangedEventArgs e)
+        private void txtdiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
@@ -277,7 +277,8 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void cmbJobWorker_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbJobWorker.ItemsSource = BLL.JobWorker.toList.ToList(); ;
+            cmbJobWorker.ItemsSource = BLL.JobWorker.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
+
             cmbJobWorker.DisplayMemberPath = "Ledger.LedgerName";
             cmbJobWorker.SelectedValuePath = "Id";
 

@@ -134,7 +134,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JODId" Type="bigint" />
           <Property Name="JRId" Type="bigint" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="UOMId" Type="int" Nullable="false" />
@@ -771,6 +772,18 @@
             </Principal>
             <Dependent Role="JobOrderReceived">
               <PropertyRef Name="JobWorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOrderReceivedDetail_JobOrderIssueDetail">
+          <End Role="JobOrderIssueDetail" Type="Self.JobOrderIssueDetail" Multiplicity="0..1" />
+          <End Role="JobOrderReceivedDetail" Type="Self.JobOrderReceivedDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobOrderIssueDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderReceivedDetail">
+              <PropertyRef Name="JODId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1729,6 +1742,10 @@
             <End Role="JobWorker" EntitySet="JobWorker" />
             <End Role="JobOrderReceived" EntitySet="JobOrderReceived" />
           </AssociationSet>
+          <AssociationSet Name="FK_JobOrderReceivedDetail_JobOrderIssueDetail" Association="Self.FK_JobOrderReceivedDetail_JobOrderIssueDetail">
+            <End Role="JobOrderIssueDetail" EntitySet="JobOrderIssueDetail" />
+            <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_JobOrderReceivedDetail_JobOrderReceived" Association="Self.FK_JobOrderReceivedDetail_JobOrderReceived">
             <End Role="JobOrderReceived" EntitySet="JobOrderReceived" />
             <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetail" />
@@ -2389,6 +2406,10 @@
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
           </AssociationSet>
           <EntitySet Name="JobOrderReceivedDetails" EntityType="DBFMCGModel.JobOrderReceivedDetail" />
+          <AssociationSet Name="FK_JobOrderReceivedDetail_JobOrderIssueDetail" Association="DBFMCGModel.FK_JobOrderReceivedDetail_JobOrderIssueDetail">
+            <End Role="JobOrderIssueDetail" EntitySet="JobOrderIssueDetails" />
+            <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_JobOrderReceivedDetail_JobOrderReceived" Association="DBFMCGModel.FK_JobOrderReceivedDetail_JobOrderReceived">
             <End Role="JobOrderReceived" EntitySet="JobOrderReceiveds" />
             <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetails" />
@@ -2401,7 +2422,7 @@
             <End Role="UOM" EntitySet="UOMs" />
             <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetails" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
             <PropertyRef Name="Id" />
@@ -2530,6 +2551,7 @@
           <NavigationProperty Name="JobOrderIssue" Relationship="DBFMCGModel.FK_JobOrderIssueDetail_JobOrderIssue" FromRole="JobOrderIssueDetail" ToRole="JobOrderIssue" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_JobOrderIssueDetail_Product" FromRole="JobOrderIssueDetail" ToRole="Product" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_JobOrderIssueDetail_UOM" FromRole="JobOrderIssueDetail" ToRole="UOM" />
+          <NavigationProperty Name="JobOrderReceivedDetails" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_JobOrderIssueDetail" FromRole="JobOrderIssueDetail" ToRole="JobOrderReceivedDetail" />
         </EntityType>
         <EntityType Name="JobOrderReceived">
           <Key>
@@ -4150,7 +4172,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JODId" Type="Int64" />
           <Property Name="JRId" Type="Int64" Nullable="false" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="UOMId" Type="Int32" Nullable="false" />
@@ -4159,10 +4182,23 @@
           <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="JobOrderIssueDetail" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_JobOrderIssueDetail" FromRole="JobOrderReceivedDetail" ToRole="JobOrderIssueDetail" />
           <NavigationProperty Name="JobOrderReceived" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_JobOrderReceived" FromRole="JobOrderReceivedDetail" ToRole="JobOrderReceived" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_Product" FromRole="JobOrderReceivedDetail" ToRole="Product" />
           <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_UOM" FromRole="JobOrderReceivedDetail" ToRole="UOM" />
         </EntityType>
+        <Association Name="FK_JobOrderReceivedDetail_JobOrderIssueDetail">
+          <End Type="DBFMCGModel.JobOrderIssueDetail" Role="JobOrderIssueDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.JobOrderReceivedDetail" Role="JobOrderReceivedDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobOrderIssueDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobOrderReceivedDetail">
+              <PropertyRef Name="JODId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_JobOrderReceivedDetail_JobOrderReceived">
           <End Type="DBFMCGModel.JobOrderReceived" Role="JobOrderReceived" Multiplicity="1" />
           <End Type="DBFMCGModel.JobOrderReceivedDetail" Role="JobOrderReceivedDetail" Multiplicity="*" />
@@ -4900,6 +4936,7 @@
                 <ScalarProperty Name="UOMId" ColumnName="UOMId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="JRId" ColumnName="JRId" />
+                <ScalarProperty Name="JODId" ColumnName="JODId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -301,7 +301,11 @@
                                             <Report:frmSOPending/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-
+                                    <Menu:NavMenuItem MenuName="Job Order Report" FormName="Sales Order Report">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmJobOrderPendingReport/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Dealer Sales Report" FormName="Dealer Sales Report">
                                         <Menu:NavMenuItem.Content>
                                             <Report:frmSalesReport/>

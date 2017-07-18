@@ -183,6 +183,9 @@
   <data name="Transaction_ItemDetails_Validation" xml:space="preserve">
     <value>Enter Product Detail</value>
   </data>
+  <data name="Transaction_Job_Received" xml:space="preserve">
+    <value>Job has been Received!</value>
+  </data>
   <data name="Transaction_Make_Purchase" xml:space="preserve">
     <value>Purchase Done!!</value>
   </data>

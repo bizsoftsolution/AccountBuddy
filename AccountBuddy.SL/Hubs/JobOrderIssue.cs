@@ -84,11 +84,7 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-
-
-
-
-        public BLL.JobOrderIssue JobOrderIssue_Find(string SearchText)
+          public BLL.JobOrderIssue JobOrderIssue_Find(string SearchText)
         {
             BLL.JobOrderIssue SO = new BLL.JobOrderIssue();
             try
@@ -108,7 +104,7 @@ namespace AccountBuddy.SL.Hubs
                         SO.JODetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
-                        //  SO.Status = d.JobOrderIssueDetails.FirstOrDefault()..Count() > 0 ? "Sold" : "Pending";
+                        SO.Status = d.JobOrderIssueDetails.FirstOrDefault().JobOrderReceivedDetails.Count()> 0 ? "Received" : "Pending";
                     }
 
                 }
@@ -156,9 +152,9 @@ namespace AccountBuddy.SL.Hubs
             //SO.Status = d.JobOrderIssueDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
             return SO;
         }
-        public bool Find_JORef(string RefNo, BLL.JobOrderIssue JO)
+        public bool Find_JOIssueRef(string RefNo, BLL.JobOrderIssue JO)
         {
-            DAL.JobOrderIssue d1 = DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != JO.Id).FirstOrDefault();
+            DAL.JobOrderIssue d1 = DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo && x.Id!=JO.Id).FirstOrDefault();
 
             if (d1 == null)
             {
@@ -170,6 +166,51 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+
+        public bool JobOrderIssue_MakeReceieved(BLL.JobOrderIssue JO)
+        {
+            try
+            {
+                BLL.JobOrderReceived P = new BLL.JobOrderReceived();
+
+                P.JRDate = JO.JODate.Value;
+                P.RefNo = JobOrderReceived_NewRefNo();
+                P.JobWorkerId = JO.JobWorkerId;
+              
+                P.ItemAmount = JO.ItemAmount.Value;
+                P.DiscountAmount = JO.DiscountAmount.Value;
+                P.GSTAmount = JO.GSTAmount.Value;
+                P.ExtraAmount = JO.ExtraAmount.Value;
+                P.TotalAmount = JO.TotalAmount.Value;
+                P.Narration = JO.Narration;
+
+
+                foreach (var pod in JO.JODetails)
+                {
+                    BLL.JobOrderReceivedDetail PD = new BLL.JobOrderReceivedDetail()
+                    {
+                        JODId = pod.Id,
+                        ProductId = pod.ProductId,
+                        UOMId = pod.UOMId,
+                        UOMName = pod.UOMName,
+                        Quantity = pod.Quantity,
+                        UnitPrice = pod.UnitPrice,
+                        DiscountAmount = pod.DiscountAmount,
+                        GSTAmount = pod.GSTAmount,
+                        ProductName = pod.ProductName,
+                        Amount = pod.Amount
+                    };
+
+
+                    P.JRDetails.Add(PD);
+                }
+                return JobOrderReceived_Save(P);
+            }
+            catch (Exception ex) { }
+            return true;
+        }
+
+
         #endregion
     }
 }

@@ -96,7 +96,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "JO Code"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtRefNo.Focus();
             }
-            else if (data.JobWorkerId == 0)
+            else if (data.JobWorkerId == null)
             {
                 MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Customer), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbJobWorker.Focus();
@@ -148,8 +148,8 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         void Print()
         {
-            frm.Print.frmQuickSO f = new Print.frmQuickSO();
-            //f.LoadReport(data);
+            frm.Print.frmJobOrderIssue f = new Print.frmJobOrderIssue();
+            f.LoadReport(data);
             f.ShowDialog();
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
@@ -246,7 +246,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         }
 
-        private void txtdiscountAmount_TextChanged_1(object sender, TextChangedEventArgs e)
+        private void txtdiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
@@ -277,12 +277,22 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void cmbJobWorker_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbJobWorker.ItemsSource = BLL.JobWorker.toList.ToList(); ;
+            cmbJobWorker.ItemsSource = BLL.JobWorker.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
             cmbJobWorker.DisplayMemberPath = "Ledger.LedgerName";
             cmbJobWorker.SelectedValuePath = "Id";
 
 
         }
         #endregion
+
+        private void btnJobReceived_Click(object sender, RoutedEventArgs e)
+        {
+            if (data.MakeReceived())
+            {
+                MessageBox.Show(string.Format(Message.PL.Transaction_Job_Received), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
+                data.Clear();
+                btnJobReceived.IsEnabled = false;
+            }
+        }
     }
 }

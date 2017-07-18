@@ -373,6 +373,21 @@ namespace AccountBuddy.BLL
         {
             if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(ProperName));
         }
+
+        public bool MakeReceived()
+        {
+             
+            try
+            {
+                return FMCGHubClient.FMCGHub.Invoke<bool>("JobOrderIssue_MakeReceieved", this).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        
+    }
+
         private void NotifyAllPropertyChanged()
         {
             foreach (var p in this.GetType().GetProperties()) NotifyPropertyChanged(p.Name);
@@ -493,8 +508,8 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_JORef", RefNo, this).Result;
-              
+                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_JOIssueRef", RefNo, this).Result;
+
             }
             catch (Exception ex)
             {

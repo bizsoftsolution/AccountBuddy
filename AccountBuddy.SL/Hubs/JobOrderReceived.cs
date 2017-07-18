@@ -156,7 +156,7 @@ namespace AccountBuddy.SL.Hubs
             //SO.Status = d.JobOrderReceivedDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
             return SO;
         }
-        public bool Find_JORef(string RefNo, BLL.JobOrderReceived JO)
+        public bool Find_JobReceiveRef(string RefNo, BLL.JobOrderReceived JO)
         {
             DAL.JobOrderReceived d1 = DB.JobOrderReceiveds.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != JO.Id).FirstOrDefault();
 

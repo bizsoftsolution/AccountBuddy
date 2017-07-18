@@ -14,6 +14,12 @@ namespace AccountBuddy.DAL
     
     public partial class JobOrderIssueDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public JobOrderIssueDetail()
+        {
+            this.JobOrderReceivedDetails = new HashSet<JobOrderReceivedDetail>();
+        }
+    
         public long Id { get; set; }
         public long JOId { get; set; }
         public int ProductId { get; set; }
@@ -27,5 +33,7 @@ namespace AccountBuddy.DAL
         public virtual JobOrderIssue JobOrderIssue { get; set; }
         public virtual Product Product { get; set; }
         public virtual UOM UOM { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobOrderReceivedDetail> JobOrderReceivedDetails { get; set; }
     }
 }

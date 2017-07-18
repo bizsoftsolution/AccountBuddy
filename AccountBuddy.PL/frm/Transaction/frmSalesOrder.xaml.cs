@@ -267,7 +267,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         }
 
-        private void txtdiscountAmount_TextChanged_1(object sender, TextChangedEventArgs e)
+        private void txtdiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
@@ -306,5 +306,6 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         #endregion
 
+       
     }
 }

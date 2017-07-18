@@ -133,7 +133,8 @@
         <AssociationConnector Association="DBFMCGModel.FK_UserAccount_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" />
-        <EntityTypeShape EntityType="DBFMCGModel.JobOrderReceivedDetail" Width="1.5" PointX="10.75" PointY="33.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.JobOrderReceivedDetail" Width="1.5" PointX="12" PointY="33.25" />
+        <AssociationConnector Association="DBFMCGModel.FK_JobOrderReceivedDetail_JobOrderIssueDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_JobOrderReceivedDetail_JobOrderReceived" />
         <AssociationConnector Association="DBFMCGModel.FK_JobOrderReceivedDetail_Product" />
         <AssociationConnector Association="DBFMCGModel.FK_JobOrderReceivedDetail_UOM" />

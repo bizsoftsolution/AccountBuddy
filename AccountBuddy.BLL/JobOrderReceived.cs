@@ -493,7 +493,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_SORef", RefNo, this).Result;
+                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_JobReceiveRef", RefNo, this).Result;
             }
             catch (Exception ex)
             {
