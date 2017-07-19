@@ -75,7 +75,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).StockSeperated_RefNoRefresh(StockSeperated_NewRefNo());
-
+                Journal_SaveByStockSeparated(d);
                 return true;
 
             }
@@ -127,7 +127,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
 
                     LogDetailStore(s, LogDetailType.DELETE);
-
+                    Journal_DeleteByStockSeparated(s);
                 }
                 return true;
             }
@@ -166,6 +166,34 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+        public BLL.StockSeperated StockSeperated_FindById(int ID)
+        {
+            BLL.StockSeperated P = new BLL.StockSeperated();
+            try
+            {
+
+                DAL.StockSeparated d = DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                DB.Entry(d).Reload();
+                if (d != null)
+                {
+
+                    d.toCopy<BLL.StockSeperated>(P);
+                    P.StaffName = (d.Staff ?? DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
+                    foreach (var d_pod in d.StockSeperatedDetails)
+                    {
+                        BLL.StockSeperatedDetail b_pod = new BLL.StockSeperatedDetail();
+                        d_pod.toCopy<BLL.StockSeperatedDetail>(b_pod);
+                        P.SSDetails.Add(b_pod);
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                    }
+
+                }
+            }
+            catch (Exception ex) { }
+            return P;
+        }
+
         #endregion
     }
 

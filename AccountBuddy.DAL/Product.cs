@@ -18,6 +18,7 @@ namespace AccountBuddy.DAL
         public Product()
         {
             this.JobOrderIssueDetails = new HashSet<JobOrderIssueDetail>();
+            this.JobOrderReceivedDetails = new HashSet<JobOrderReceivedDetail>();
             this.ProductDetails = new HashSet<ProductDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
@@ -26,9 +27,8 @@ namespace AccountBuddy.DAL
             this.SalesOrderDetails = new HashSet<SalesOrderDetail>();
             this.SalesReturnDetails = new HashSet<SalesReturnDetail>();
             this.StockInDetails = new HashSet<StockInDetail>();
-            this.StockOutDetails = new HashSet<StockOutDetail>();
-            this.JobOrderReceivedDetails = new HashSet<JobOrderReceivedDetail>();
             this.StockInProcessDetails = new HashSet<StockInProcessDetail>();
+            this.StockOutDetails = new HashSet<StockOutDetail>();
             this.StockSeperatedDetails = new HashSet<StockSeperatedDetail>();
         }
     
@@ -46,6 +46,8 @@ namespace AccountBuddy.DAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JobOrderIssueDetail> JobOrderIssueDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobOrderReceivedDetail> JobOrderReceivedDetails { get; set; }
         public virtual StockGroup StockGroup { get; set; }
         public virtual UOM UOM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -65,11 +67,9 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockInDetail> StockInDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockOutDetail> StockOutDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<JobOrderReceivedDetail> JobOrderReceivedDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockInProcessDetail> StockInProcessDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockOutDetail> StockOutDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockSeperatedDetail> StockSeperatedDetails { get; set; }
     }

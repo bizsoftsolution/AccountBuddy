@@ -370,6 +370,21 @@ namespace AccountBuddy.SL.Hubs
             insertDataKeyValue(pr.CompanyId, sd.GroupName, sd.Id);
 
 
+            DAL.Ledger SP = new DAL.Ledger();
+            SP.LedgerName = BLL.DataKeyValue.StockInProcess_Ledger_Key;
+            SP.AccountGroupId = SIH.Id;
+            DB.Ledgers.Add(SP);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, SP.LedgerName, SP.Id);
+
+            DAL.Ledger SS = new DAL.Ledger();
+            SS.LedgerName = BLL.DataKeyValue.StockSeperated_Ledger_Key;
+            SS.AccountGroupId = SIH.Id;
+            DB.Ledgers.Add(SS);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, SS.LedgerName, SS.Id);
+
+
 
             #endregion
 
@@ -619,6 +634,13 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, SRL.LedgerName, SRL.Id);
 
+            DAL.Ledger JR = new DAL.Ledger();
+            JR.LedgerName = BLL.DataKeyValue.JobOrderReceived_Ledger_Key;
+            JR.AccountGroupId = Inc.Id;
+            DB.Ledgers.Add(JR);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, JR.LedgerName, JR.Id);
+
 
         }
 
@@ -633,7 +655,7 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, Exp.GroupName, Exp.Id);
 
-            #region Direct Income
+            #region Direct Expense
 
             DAL.AccountGroup DExp = new DAL.AccountGroup();
             DExp.GroupName = BLL.DataKeyValue.DirectExpenses_Key;
@@ -646,7 +668,7 @@ namespace AccountBuddy.SL.Hubs
 
             #endregion
 
-            #region Indirect Income
+            #region Indirect Expense
 
             DAL.AccountGroup IndExp = new DAL.AccountGroup();
             IndExp.GroupName = BLL.DataKeyValue.IndirectExpense_Key;
@@ -667,6 +689,7 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, Pur.GroupName, Pur.Id);
 
+         
 
             DAL.Ledger PurL = new DAL.Ledger();
             PurL.LedgerName = BLL.DataKeyValue.PurchaseAccount_Ledger_Key;
@@ -682,7 +705,14 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, PRL.LedgerName, PRL.Id);
 
+            DAL.Ledger JO = new DAL.Ledger();
+            JO.LedgerName = BLL.DataKeyValue.JobOrderIssued_Ledger_Key;
+            JO.AccountGroupId = Exp.Id;
+            DB.Ledgers.Add(JO);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, JO.LedgerName, JO.Id);
 
+         
 
         }
 

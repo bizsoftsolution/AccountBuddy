@@ -450,6 +450,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmStockSeparated.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Vouchers\frmQuickJournalVoucher.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -701,6 +705,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmStockProcess.xaml.cs">
       <DependentUpon>frmStockProcess.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmStockSeparated.xaml.cs">
+      <DependentUpon>frmStockSeparated.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Vouchers\frmQuickJournalVoucher.xaml.cs">
       <DependentUpon>frmQuickJournalVoucher.xaml</DependentUpon>

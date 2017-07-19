@@ -47,6 +47,22 @@ namespace AccountBuddy.BLL
 
             }
         }
+        public double? SOQty
+        {
+            get
+            {
+                return _SOQty;
+            }
+            set
+            {
+                if (_SOQty != value)
+                {
+                    _SOQty = value;
+                    NotifyPropertyChanged(nameof(SOQty));
+                }
+
+            }
+        }
 
         public double? PQty
         {
@@ -60,6 +76,23 @@ namespace AccountBuddy.BLL
                 {
                     _PQty = value;
                     NotifyPropertyChanged(nameof(PQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
+
+            }
+        }
+        public double? SRQty
+        {
+            get
+            {
+                return _SRQty;
+            }
+            set
+            {
+                if (_SRQty != value)
+                {
+                    _SRQty = value;
+                    NotifyPropertyChanged(nameof(SRQty));
                     NotifyPropertyChanged(nameof(AvailableStock));
                 }
 
@@ -83,24 +116,6 @@ namespace AccountBuddy.BLL
 
             }
         }
-
-        public double? SOQty
-        {
-            get
-            {
-                return _SOQty;
-            }
-            set
-            {
-                if (_SOQty != value)
-                {
-                    _SOQty = value;
-                    NotifyPropertyChanged(nameof(SOQty));
-                }
-
-            }
-        }
-
         public double? SQty
         {
             get
@@ -118,30 +133,12 @@ namespace AccountBuddy.BLL
 
             }
         }
-
-        public double? SRQty
-        {
-            get
-            {
-                return _SRQty;
-            }
-            set
-            {
-                if (_SRQty != value)
-                {
-                    _SRQty = value;
-                    NotifyPropertyChanged(nameof(SRQty));
-                    NotifyPropertyChanged(nameof(AvailableStock));
-                }
-
-            }
-        }
-
+       
         public double AvailableStock
         {
             get
             {
-                return (OpeningStock  + (PQty?? 0) + (SRQty??0 )+ (SInQty??0)) - ((SQty??0)  + (PRQty??0)+(SOutQty??0));
+                return (OpeningStock  + (PQty?? 0) + (SRQty??0 )+ (SInQty??0)+ (JRQty??0)+(SSQty??0)) - ((SQty??0)  + (PRQty??0)+(SOutQty??0) +(JOQty??0)+(SPQty??0));
             }
         }
 
@@ -189,6 +186,78 @@ namespace AccountBuddy.BLL
 
             }
         }
+
+        public double? JOQty
+        {
+            get
+            {
+                return _JOQty;
+            }
+            set
+            {
+                if (_JOQty != value)
+                {
+                    _JOQty = value;
+                    NotifyPropertyChanged(nameof(JOQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
+
+            }
+        }
+        public double? JRQty
+        {
+            get
+            {
+                return _JRQty;
+            }
+            set
+            {
+                if (_JRQty != value)
+                {
+                    _JRQty = value;
+                    NotifyPropertyChanged(nameof(JRQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
+
+            }
+        }
+
+        public double? SPQty
+        {
+            get
+            {
+                return _SPQty;
+            }
+            set
+            {
+                if (_SPQty != value)
+                {
+                    _SPQty = value;
+                    NotifyPropertyChanged(nameof(SPQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
+
+            }
+        }
+        public double? SSQty
+        {
+            get
+            {
+                return _SSQty;
+            }
+            set
+            {
+                if (_SSQty != value)
+                {
+                    _SSQty = value;
+                    NotifyPropertyChanged(nameof(SSQty));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
+
+            }
+        }
+
+
         #endregion
 
 
@@ -228,6 +297,12 @@ namespace AccountBuddy.BLL
         private double? _POQty;
         private double? _SInQty;
         private double? _SOutQty;
+        private double? _JOQty;
+        private double? _JRQty;
+        private double? _SPQty;
+        private double? _SSQty;
+
+
         private decimal _DiscountAmount;
 
         #endregion
@@ -334,8 +409,7 @@ namespace AccountBuddy.BLL
                    
                 }
             }
-        }
-        
+        }      
         public int StockGroupId
         {
             get

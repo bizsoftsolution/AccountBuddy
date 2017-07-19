@@ -19,7 +19,7 @@ namespace AccountBuddy.SL.Hubs
 
             #region Ledger
 
-            decimal opqty, sqty, prqty, srqty, pqty, BalQty, StIn, StOut;
+            decimal opqty, sqty, prqty, srqty, pqty, BalQty, StIn, StOut, JOQty, JRQty,SSQty, SPQty;
             BalQty = 0;
             foreach (var P in lstProduct)
             {
@@ -35,9 +35,13 @@ namespace AccountBuddy.SL.Hubs
                 prqty = (decimal)P.PurchaseReturnDetails.Where(x => (CompanyId == null || x.PurchaseReturn.Ledger.AccountGroup.CompanyId == CompanyId) && x.PurchaseReturn.PRDate < dtFrom).Sum(x => x.Quantity);
                 StIn = (decimal)P.StockInDetails.Where(x => (CompanyId == null || x.StockIn.Ledger.AccountGroup.CompanyId == CompanyId) && x.StockIn.Date < dtFrom).Sum(x => x.Quantity);
                 StOut = (decimal)P.StockOutDetails.Where(x => (CompanyId == null || x.StockOut.Ledger.AccountGroup.CompanyId == CompanyId) && x.StockOut.Date < dtFrom).Sum(x => x.Quantity);
+                JOQty = (decimal)P.JobOrderIssueDetails.Where(x => (CompanyId == null || x.JobOrderIssue.JobWorker.Ledger.AccountGroup.CompanyId == CompanyId) && x.JobOrderIssue.JODate < dtFrom).Sum(x => x.Quantity);
+                JRQty = (decimal)P.JobOrderReceivedDetails.Where(x => (CompanyId == null || x.JobOrderReceived.JobWorker.Ledger.AccountGroup.CompanyId == CompanyId) && x.JobOrderReceived.JRDate < dtFrom).Sum(x => x.Quantity);
+               SPQty = (decimal)P.StockInProcessDetails.Where(x => (CompanyId == null || x.StockInProcess.Staff.Ledger.AccountGroup.CompanyId == CompanyId) && x.StockInProcess.SPDate < dtFrom).Sum(x => x.Quantity);
+                SSQty = (decimal)P.StockSeperatedDetails.Where(x => (CompanyId == null || x.StockSeparated.Staff.Ledger.AccountGroup.CompanyId == CompanyId) && x.StockSeparated.Date < dtFrom).Sum(x => x.Quantity);
 
-                gl.Inwards = pqty + srqty + StIn;
-                gl.Outwards = sqty + prqty + StOut;
+                gl.Inwards = pqty + srqty + StIn+JRQty;
+                gl.Outwards = sqty + prqty + StOut+JOQty;
 
 
                 BalQty += ((opqty + gl.Inwards) - gl.Outwards);
@@ -165,8 +169,82 @@ namespace AccountBuddy.SL.Hubs
                     gl.BalStock = Math.Abs(BalQty);
                     lstGeneralStock.Add(gl);
                 }
+                foreach (var JO in P.JobOrderIssueDetails.Where(x => (CompanyId == null || x.JobOrderIssue.JobWorker.Ledger.AccountGroup.CompanyId == CompanyId) && x.JobOrderIssue.JODate >= dtFrom && x.JobOrderIssue.JODate <= dtTo).ToList())
+                {
+                    gl = new BLL.GeneralStock();
+                    gl.Ledger = new BLL.Ledger();
 
+                    gl.Ledger = LedgerDAL_BLL(JO.JobOrderIssue.JobWorker.Ledger);
 
+                    gl.EId = JO.JobOrderIssue.Id;
+                    gl.EType = "JO";
+                    gl.EDate = JO.JobOrderIssue.JODate;
+
+                    gl.EntryNo = JO.JobOrderIssue.RefNo;
+                    gl.TType = string.Format("{0} - Job Order","Issued");
+                    gl.Inwards = 0;
+                    gl.Outwards = (decimal)JO.Quantity;
+                    BalQty += (gl.Inwards - gl.Outwards);
+                    gl.BalStock = Math.Abs(BalQty);
+                    lstGeneralStock.Add(gl);
+                }
+                foreach (var JR in P.JobOrderReceivedDetails.Where(x => (CompanyId == null || x.JobOrderReceived.JobWorker.Ledger.AccountGroup.CompanyId == CompanyId) && x.JobOrderReceived.JRDate >= dtFrom && x.JobOrderReceived.JRDate <= dtTo).ToList())
+                {
+                    gl = new BLL.GeneralStock();
+                    gl.Ledger = new BLL.Ledger();
+
+                    gl.Ledger = LedgerDAL_BLL(JR.JobOrderReceived.JobWorker.Ledger);
+
+                    gl.EId = JR.JobOrderReceived.Id;
+                    gl.EType = "JR";
+                    gl.EDate = JR.JobOrderReceived.JRDate;
+
+                    gl.EntryNo = JR.JobOrderReceived.RefNo;
+                    gl.TType = string.Format("{0} - Job Order", "Received");
+                    gl.Inwards = (decimal)JR.Quantity;
+                    gl.Outwards = 0;
+                    BalQty += (gl.Inwards - gl.Outwards);
+                    gl.BalStock = Math.Abs(BalQty);
+                    lstGeneralStock.Add(gl);
+                }
+                foreach (var SP in P.StockInProcessDetails.Where(x => (CompanyId == null || x.StockInProcess.Staff.Ledger.AccountGroup.CompanyId == CompanyId) && x.StockInProcess.SPDate >= dtFrom && x.StockInProcess.SPDate <= dtTo).ToList())
+                {
+                    gl = new BLL.GeneralStock();
+                    gl.Ledger = new BLL.Ledger();
+
+                    gl.Ledger = LedgerDAL_BLL(SP.StockInProcess.Staff.Ledger);
+
+                    gl.EId = SP.StockInProcess.Id;
+                    gl.EType = "SP";
+                    gl.EDate = SP.StockInProcess.SPDate;
+
+                    gl.EntryNo = SP.StockInProcess.RefNo;
+                    gl.TType = string.Format("Stock In Process");
+                    gl.Inwards = 0;
+                    gl.Outwards = (decimal)SP.Quantity;
+                    BalQty += (gl.Inwards - gl.Outwards);
+                    gl.BalStock = Math.Abs(BalQty);
+                    lstGeneralStock.Add(gl);
+                }
+                foreach (var SS in P.StockSeperatedDetails.Where(x => (CompanyId == null || x.StockSeparated.Staff.Ledger.AccountGroup.CompanyId == CompanyId) && x.StockSeparated.Date >= dtFrom && x.StockSeparated.Date <= dtTo).ToList())
+                {
+                    gl = new BLL.GeneralStock();
+                    gl.Ledger = new BLL.Ledger();
+
+                    gl.Ledger = LedgerDAL_BLL(SS.StockSeparated.Staff.Ledger);
+
+                    gl.EId = SS.StockSeparated.Id;
+                    gl.EType = "SS";
+                    gl.EDate = SS.StockSeparated.Date;
+
+                    gl.EntryNo = SS.StockSeparated.RefNo;
+                    gl.TType = string.Format("Stock Separated");
+                    gl.Inwards = (decimal)SS.Quantity;
+                    gl.Outwards =0 ;
+                    BalQty += (gl.Inwards - gl.Outwards);
+                    gl.BalStock = Math.Abs(BalQty);
+                    lstGeneralStock.Add(gl);
+                }
                 gl = new BLL.GeneralStock();
                 gl.Ledger = new BLL.Ledger();
                 gl.Ledger.LedgerName = "Total";

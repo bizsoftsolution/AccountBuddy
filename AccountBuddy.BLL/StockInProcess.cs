@@ -433,6 +433,22 @@ namespace AccountBuddy.BLL
                 return false;
             }
         }
+        public bool FindById(int Id)
+        {
+            try
+            {
+                StockInProcess po = FMCGHubClient.FMCGHub.Invoke<StockInProcess>("StockInProcess_FindById", Id).Result;
+                if (po.Id == 0) return false;
+                po.toCopy<StockInProcess>(this);
+                this.STPDetails = po.STPDetails;
+                NotifyAllPropertyChanged();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         #endregion
 
         #region Detail

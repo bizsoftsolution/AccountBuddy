@@ -17,7 +17,7 @@ namespace AccountBuddy.BLL
         private long _Id;
         private DateTime? _Date;
         private string _RefNo;
-        private string _JRNo;
+        private string _SSNo;
         private int? _StaffId;
         private decimal? _ItemAmount;
         private decimal? _DiscountAmount;
@@ -104,18 +104,18 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string JRNo
+        public string SSNo
         {
             get
             {
-                return _JRNo;
+                return _SSNo;
             }
             set
             {
-                if (_JRNo != value)
+                if (_SSNo != value)
                 {
-                    _JRNo = value;
-                    NotifyPropertyChanged(nameof(JRNo));
+                    _SSNo = value;
+                    NotifyPropertyChanged(nameof(SSNo));
                 }
             }
         }
@@ -411,6 +411,22 @@ namespace AccountBuddy.BLL
             try
             {
                 return FMCGHubClient.FMCGHub.Invoke<bool>("StockSeperated_Delete", this.Id).Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public bool FindById(int Id)
+        {
+            try
+            {
+                StockSeperated po = FMCGHubClient.FMCGHub.Invoke<StockSeperated>("StockSeperated_FindById", Id).Result;
+                if (po.Id == 0) return false;
+                po.toCopy<StockSeperated>(this);
+                this.SSDetails = po.SSDetails;
+                NotifyAllPropertyChanged();
+                return true;
             }
             catch (Exception ex)
             {

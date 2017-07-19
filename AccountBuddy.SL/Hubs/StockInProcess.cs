@@ -75,7 +75,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).StockInProcess_RefNoRefresh(StockInProcess_NewRefNo());
-
+                Journal_SaveByStockInProcess(d);
                 return true;
 
             }
@@ -127,7 +127,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
 
                     LogDetailStore(s, LogDetailType.DELETE);
-
+                    Journal_DeleteByStockInProcess(s);
                 }
                 return true;
             }
@@ -166,8 +166,35 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+        public BLL.StockInProcess StockInProcess_FindById(int ID)
+        {
+            BLL.StockInProcess P = new BLL.StockInProcess();
+            try
+            {
+
+                DAL.StockInProcess d = DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                DB.Entry(d).Reload();
+                if (d != null)
+                {
+
+                    d.toCopy<BLL.StockInProcess>(P);
+                    P.StaffName = (d.Staff ?? DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
+                    foreach (var d_pod in d.StockInProcessDetails)
+                    {
+                        BLL.StockInProcessDetail b_pod = new BLL.StockInProcessDetail();
+                        d_pod.toCopy<BLL.StockInProcessDetail>(b_pod);
+                        P.STPDetails.Add(b_pod);
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                    }
+
+                }
+            }
+            catch (Exception ex) { }
+            return P;
+        }
 
     }
 
-        #endregion
-    }
+    #endregion
+}

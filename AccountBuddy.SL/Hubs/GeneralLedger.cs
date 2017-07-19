@@ -182,6 +182,26 @@ namespace AccountBuddy.SL.Hubs
                             gl.EType = BLL.FormPrefix.StockOut;
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
+                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.JobOrderIssue))
+                        {
+                            gl.EType = BLL.FormPrefix.JobOrderIssue;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.JobOrderReceived))
+                        {
+                            gl.EType = BLL.FormPrefix.JobOrderReceived;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockInProcess))
+                        {
+                            gl.EType = BLL.FormPrefix.StockInProcess;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
+                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockSeparated))
+                        {
+                            gl.EType = BLL.FormPrefix.StockSeparated;
+                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
+                        }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Payment))
                         {
                             gl.EType = BLL.FormPrefix.Payment;

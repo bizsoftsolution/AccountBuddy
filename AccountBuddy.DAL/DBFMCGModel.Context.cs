@@ -36,6 +36,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<JobOrderIssue> JobOrderIssues { get; set; }
         public virtual DbSet<JobOrderIssueDetail> JobOrderIssueDetails { get; set; }
         public virtual DbSet<JobOrderReceived> JobOrderReceiveds { get; set; }
+        public virtual DbSet<JobOrderReceivedDetail> JobOrderReceivedDetails { get; set; }
         public virtual DbSet<JobWorker> JobWorkers { get; set; }
         public virtual DbSet<Journal> Journals { get; set; }
         public virtual DbSet<JournalDetail> JournalDetails { get; set; }
@@ -65,8 +66,12 @@ namespace AccountBuddy.DAL
         public virtual DbSet<StockGroup> StockGroups { get; set; }
         public virtual DbSet<StockIn> StockIns { get; set; }
         public virtual DbSet<StockInDetail> StockInDetails { get; set; }
+        public virtual DbSet<StockInProcess> StockInProcesses { get; set; }
+        public virtual DbSet<StockInProcessDetail> StockInProcessDetails { get; set; }
         public virtual DbSet<StockOut> StockOuts { get; set; }
         public virtual DbSet<StockOutDetail> StockOutDetails { get; set; }
+        public virtual DbSet<StockSeparated> StockSeparateds { get; set; }
+        public virtual DbSet<StockSeperatedDetail> StockSeperatedDetails { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<TransactionType> TransactionTypes { get; set; }
         public virtual DbSet<UOM> UOMs { get; set; }
@@ -74,10 +79,5 @@ namespace AccountBuddy.DAL
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<UserTypeFormDetail> UserTypeFormDetails { get; set; }
-        public virtual DbSet<JobOrderReceivedDetail> JobOrderReceivedDetails { get; set; }
-        public virtual DbSet<StockInProcess> StockInProcesses { get; set; }
-        public virtual DbSet<StockInProcessDetail> StockInProcessDetails { get; set; }
-        public virtual DbSet<StockSeparated> StockSeparateds { get; set; }
-        public virtual DbSet<StockSeperatedDetail> StockSeperatedDetails { get; set; }
     }
 }

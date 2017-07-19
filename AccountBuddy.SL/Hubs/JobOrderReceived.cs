@@ -75,7 +75,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).JobOrderReceived_RefNoRefresh(JobOrderReceived_NewRefNo());
-               
+                Journal_SaveByJobOrderReceived(d);
                 return true;
 
             }
@@ -127,7 +127,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
 
                     LogDetailStore(s, LogDetailType.DELETE);
-
+                    Journal_DeleteByJobOrderReceived(s);
                 }
                 return true;
             }
@@ -166,6 +166,35 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+
+        public BLL.JobOrderReceived JobOrderReceived_FindById(int ID)
+        {
+            BLL.JobOrderReceived P = new BLL.JobOrderReceived();
+            try
+            {
+
+                DAL.JobOrderReceived d = DB.JobOrderReceiveds.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                DB.Entry(d).Reload();
+                if (d != null)
+                {
+
+                    d.toCopy<BLL.JobOrderReceived>(P);
+                    P.JobWorkerName = (d.JobWorker ?? DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
+                    foreach (var d_pod in d.JobOrderReceivedDetails)
+                    {
+                        BLL.JobOrderReceivedDetail b_pod = new BLL.JobOrderReceivedDetail();
+                        d_pod.toCopy<BLL.JobOrderReceivedDetail>(b_pod);
+                        P.JRDetails.Add(b_pod);
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                    }
+
+                }
+            }
+            catch (Exception ex) { }
+            return P;
+        }
+
         #endregion
     }
 }

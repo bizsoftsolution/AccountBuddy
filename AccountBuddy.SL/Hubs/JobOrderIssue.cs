@@ -84,10 +84,7 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return false;
         }
-
-     
-
-        public BLL.JobOrderIssue JobOrderIssue_Find(string SearchText)
+  public BLL.JobOrderIssue JobOrderIssue_Find(string SearchText)
         {
             BLL.JobOrderIssue SO = new BLL.JobOrderIssue();
             try
@@ -128,9 +125,9 @@ namespace AccountBuddy.SL.Hubs
                     DB.JobOrderIssueDetails.RemoveRange(d.JobOrderIssueDetails);
                     DB.JobOrderIssues.Remove(d);
                     DB.SaveChanges();
-                    Journal_DeleteByJobOrderIssue(P);
-
+                   
                     LogDetailStore(s, LogDetailType.DELETE);
+                     Journal_DeleteByJobOrderIssue(s);
 
                 }
                 return true;
@@ -186,7 +183,7 @@ namespace AccountBuddy.SL.Hubs
                 P.ItemAmount = JO.ItemAmount.Value;
                 P.DiscountAmount = JO.DiscountAmount.Value;
                 P.GSTAmount = JO.GSTAmount.Value;
-                P.ExtraAmount = JO.ExtraAmount.Value;
+                P.Extras= JO.Extras.Value;
                 P.TotalAmount = JO.TotalAmount.Value;
                 P.Narration = JO.Narration;
 
@@ -216,6 +213,33 @@ namespace AccountBuddy.SL.Hubs
             return true;
         }
 
+        public BLL.JobOrderIssue JobOrderIssue_FindById(int ID)
+        {
+            BLL.JobOrderIssue P = new BLL.JobOrderIssue();
+            try
+            {
+
+                DAL.JobOrderIssue d = DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                DB.Entry(d).Reload();
+                if (d != null)
+                {
+
+                    d.toCopy<BLL.JobOrderIssue>(P);
+                    P.JobWorkerName= (d.JobWorker ?? DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
+                     foreach (var d_pod in d.JobOrderIssueDetails)
+                    {
+                        BLL.JobOrderIssueDetail b_pod = new BLL.JobOrderIssueDetail();
+                        d_pod.toCopy<BLL.JobOrderIssueDetail>(b_pod);
+                        P.JODetails.Add(b_pod);
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                    }
+
+                }
+            }
+            catch (Exception ex) { }
+            return P;
+        }
 
         #endregion
     }

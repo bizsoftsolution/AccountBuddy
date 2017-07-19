@@ -451,6 +451,23 @@ namespace AccountBuddy.BLL
                 return false;
             }
         }
+
+        public bool FindById(int Id)
+        {
+            try
+            {
+                JobOrderIssue po = FMCGHubClient.FMCGHub.Invoke<JobOrderIssue>("JobOrderIssue_FindById", Id).Result;
+                if (po.Id == 0) return false;
+                po.toCopy<JobOrderIssue>(this);
+                this.JODetails = po.JODetails;
+                NotifyAllPropertyChanged();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         #endregion
 
         #region Detail
