@@ -48,7 +48,7 @@ namespace AccountBuddy.PL.frm.Report
             int n = Math.Abs((dtTo.Year * 12 + (dtTo.Month - 1)) - (dtFrom.Year * 12 + (dtFrom.Month - 1)));
             if (rdbYearWise.IsChecked == true) n = n / 12;
             if (n > 12) n = 12;
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i <= n; i++)
             {
                 dgvDetails.Columns[i + 1].Header = rdbMonthlyWise.IsChecked == true ? string.Format("{0:MMM-yyyy}", dtFrom.AddMonths(i)) : string.Format("{0:yyyy}", dtFrom.AddYears(i));
                 dgvDetails.Columns[i + 1].Visibility = Visibility.Visible;
