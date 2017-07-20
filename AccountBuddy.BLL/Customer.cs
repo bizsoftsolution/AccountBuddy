@@ -62,7 +62,6 @@ namespace AccountBuddy.BLL
                 IsEnabled = !value;
             }
         }
-
         public bool IsEnabled
         {
             get

@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
+
 namespace AccountBuddy.Common
 {
     public static class AppLib
@@ -29,15 +30,25 @@ namespace AccountBuddy.Common
             frmUOM, 
             frmStockGroup, 
             frmProducts,
+            frmCustomFormat,
             frmPayment, 
             frmReceipt, 
             frmJournal,
+             frmPurchase, 
+             frmSales, 
+             frmJobOrderIssue, 
+             frmJobOrderReceived, 
+             frmStockInProcess, 
+             frmStockSeparated
            
         }
 
     
-        public static string CurrencyName1 = "RINGGIT";
-        public static string CurrencyName2 = "CEN";
+        public static string CurrencyName1 ;
+        public static string CurrencyName2 ;
+        public static bool IsPrefix;
+        public static bool IsSuffix;
+
         public static T toCopy<T>(this object objSource, T objDestination)
         {
             try
@@ -80,8 +91,16 @@ namespace AccountBuddy.Common
             int number2 = int.Parse(Nums[1]);
 
             String words = "";
+            if(IsPrefix==true)
+            {
+                words = string.Format("{0}{1} {2} ", CurrencyName1, number1 > 1 ? "S" : "", number1.ToWords());
 
-            words = string.Format("{0} {1}{2} ", number1.ToWords(), CurrencyName1, number1 > 1 ? "S" : "");
+            }
+            else
+            {
+                words = string.Format("{0} {1}{2} ",  number1.ToWords(), CurrencyName1, number1 > 1 ? "S" : "");
+
+            }
             if (number2 > 0) words = string.Format("{0} AND {1} {2} {3}", words, number2.ToWords(), CurrencyName2, number2 > 1 ? "" : "");
             //if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
             words = string.Format("{0} ONLY", words);

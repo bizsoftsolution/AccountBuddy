@@ -209,8 +209,6 @@ namespace AccountBuddy.PL.frm.Transaction
             }
         }
 
-
-
         #endregion
 
         #region Methods
@@ -224,8 +222,6 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbSupplier.DisplayMemberPath = "LedgerName";
             cmbSupplier.SelectedValuePath = "Id";
         }
-
-
 
         private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -246,7 +242,6 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
-
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {

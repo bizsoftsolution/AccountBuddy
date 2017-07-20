@@ -177,6 +177,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmCustomFormat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Master\frmCustomSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmJobWorker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -500,6 +508,12 @@
     </Compile>
     <Compile Include="frm\Master\frmCustomer.xaml.cs">
       <DependentUpon>frmCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmCustomFormat.xaml.cs">
+      <DependentUpon>frmCustomFormat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmCustomSetting.xaml.cs">
+      <DependentUpon>frmCustomSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmJobWorker.xaml.cs">
       <DependentUpon>frmJobWorker.xaml</DependentUpon>

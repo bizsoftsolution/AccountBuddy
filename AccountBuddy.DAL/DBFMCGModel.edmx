@@ -57,6 +57,20 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="CustomFormat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CurrencySymbol" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrencyName1" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsPrefix" Type="bit" />
+          <Property Name="IsSuffix" Type="bit" />
+          <Property Name="CurrencyName2" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateFormat" Type="nvarchar" MaxLength="150" />
+          <Property Name="NumberFormat" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyId" Type="int" />
+        </EntityType>
         <EntityType Name="DataKeyValue">
           <Key>
             <PropertyRef Name="Id" />
@@ -773,6 +787,18 @@
             </Principal>
             <Dependent Role="Customer">
               <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomFormat_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="0..1" />
+          <End Role="CustomFormat" Type="Self.CustomFormat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomFormat">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1826,6 +1852,7 @@
           <EntitySet Name="CompanyDetail" EntityType="Self.CompanyDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CreditLimitType" EntityType="Self.CreditLimitType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomFormat" EntityType="Self.CustomFormat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataKeyValue" EntityType="Self.DataKeyValue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityType" EntityType="Self.EntityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
@@ -1894,6 +1921,10 @@
           <AssociationSet Name="FK_Customer_Ledger" Association="Self.FK_Customer_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
             <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomFormat_CompanyDetail" Association="Self.FK_CustomFormat_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="CustomFormat" EntitySet="CustomFormat" />
           </AssociationSet>
           <AssociationSet Name="FK_JobOrderIssue_JobWorker" Association="Self.FK_JobOrderIssue_JobWorker">
             <End Role="JobWorker" EntitySet="JobWorker" />
@@ -2671,6 +2702,11 @@
             <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
           </AssociationSet>
+          <EntitySet Name="CustomFormats" EntityType="DBFMCGModel.CustomFormat" />
+          <AssociationSet Name="FK_CustomFormat_CompanyDetail" Association="DBFMCGModel.FK_CustomFormat_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="CustomFormat" EntitySet="CustomFormats" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -2721,6 +2757,7 @@
           <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
           <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
           <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
+          <NavigationProperty Name="CustomFormats" Relationship="DBFMCGModel.FK_CustomFormat_CompanyDetail" FromRole="CompanyDetail" ToRole="CustomFormat" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -4671,6 +4708,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CustomFormat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CurrencySymbol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyName1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsPrefix" Type="Boolean" />
+          <Property Name="IsSuffix" Type="Boolean" />
+          <Property Name="CurrencyName2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateFormat" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NumberFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_CustomFormat_CompanyDetail" FromRole="CustomFormat" ToRole="CompanyDetail" />
+        </EntityType>
+        <Association Name="FK_CustomFormat_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.CustomFormat" Role="CustomFormat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomFormat">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5438,6 +5502,21 @@
                 <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
                 <ScalarProperty Name="FormType" ColumnName="FormType" />
                 <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomFormats">
+            <EntityTypeMapping TypeName="DBFMCGModel.CustomFormat">
+              <MappingFragment StoreEntitySet="CustomFormat">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="NumberFormat" ColumnName="NumberFormat" />
+                <ScalarProperty Name="DateFormat" ColumnName="DateFormat" />
+                <ScalarProperty Name="CurrencyName2" ColumnName="CurrencyName2" />
+                <ScalarProperty Name="IsSuffix" ColumnName="IsSuffix" />
+                <ScalarProperty Name="IsPrefix" ColumnName="IsPrefix" />
+                <ScalarProperty Name="CurrencyName1" ColumnName="CurrencyName1" />
+                <ScalarProperty Name="CurrencySymbol" ColumnName="CurrencySymbol" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

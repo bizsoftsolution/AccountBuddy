@@ -6,11 +6,8 @@
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Master"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"                        
-                 xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
-         
+             xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
              d:DesignHeight="700" d:DesignWidth="800" Background="white" Loaded="UserControl_Loaded">
-
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
@@ -24,7 +21,7 @@
         </Grid>
         <!--#endregion-->
         <!--#region Form Body-->
-        <Grid Grid.Row="1" Margin="20,30,20,0">
+        <Grid Grid.Row="1" Margin="20,0,20,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="50*"/>
@@ -130,14 +127,17 @@
                         <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="10" Click="btnSave_Click"  />
                         <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"  Margin="10" Click="btnDelete_Click" />
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
 
+                        <Button Width="80" Height="30" x:Name="btnSetting" Content="Setting"  Margin="10" Click="btnSetting_Click" />
+                    </StackPanel>
                 </StackPanel>
             </Grid>
             <!--#endregion-->
             <Grid Grid.Column="3">
-                <Button Width="80"  Height="30" x:Name="btnImage" Content="Logo"  Margin="14,147,33,93" Click="btnImage_Click"  />
-                <Border Margin="6,27,14,133" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-                    <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="150" Height="100"  />
+                <Button Width="80"  Height="30" x:Name="btnImage" Content="Logo"  Margin="21,172,26,98" Click="btnImage_Click"  />
+                <Border Margin="6,70,14,133" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                    <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="147" Height="99" Margin="-23,-3,-19,-1"  />
 
                 </Border>
 
@@ -149,7 +149,7 @@
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Name="gbxWareHouse" Header="Warehouse" Margin="10" Height="250" >
+            <GroupBox Name="gbxWareHouse" Header="Warehouse" Margin="10,25,10,63" >
                 <StackPanel Orientation="Vertical">
                     <Button Content="New Warehouse" Name="btnNewWareHouse" Click="btnNewWareHouse_Click" Width="150" HorizontalAlignment="Right" Margin="0" />
                     <DataGrid x:Name="dgvWarehouse" CanUserAddRows="False"  SelectionChanged="dgvWarehouse_SelectionChanged" CanUserSortColumns="True"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="150" Margin="10">
@@ -206,7 +206,7 @@
                 </StackPanel>
 
             </GroupBox>
-            <GroupBox Name="gbxDealer" Header="Dealer" Grid.Column="1" Margin="10" Height="250" >
+            <GroupBox Name="gbxDealer" Header="Dealer" Grid.Column="1" Margin="10,25,10,63" >
                 <StackPanel Orientation="Vertical">
                     <Button Content="New Dealer" Name="btnNewDealer" Click="btnNewDealer_Click" Width="150" HorizontalAlignment="Right" Margin="0" />
                     <DataGrid x:Name="dgvDealer" CanUserAddRows="False" CanUserSortColumns="True"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="10" Height="150">

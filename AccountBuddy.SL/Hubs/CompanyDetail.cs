@@ -176,9 +176,9 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(d.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail()), LogDetailType.DELETE);
                 }
 
-                //var uac = DB.UserAccounts.Where(x => x.UserType.CompanyId == d.Id);
-                //DB.UserAccounts.RemoveRange(uac);
-                //DB.SaveChanges();
+                var uac = DB.UserAccounts.Where(x => x.UserType.CompanyId == d.Id);
+               DB.UserAccounts.RemoveRange(uac);
+                DB.SaveChanges();
 
                 Clients.Clients(OtherLoginClientsOnGroup).CompanyDetail_Delete(pk);
                 Clients.All.delete(pk);

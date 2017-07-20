@@ -392,5 +392,16 @@ namespace AccountBuddy.PL.frm.Master
             }
             catch (Exception ex) { }
         }
+
+        private void btnSetting_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                frmCustomSetting f = new frmCustomSetting();
+                f.LoadWindow();
+                f.ShowDialog();
+            }
+            catch (Exception ex) { }
+        }
     }
 }

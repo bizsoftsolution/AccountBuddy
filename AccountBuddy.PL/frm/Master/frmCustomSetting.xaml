@@ -1,0 +1,117 @@
+﻿<Controls:MetroWindow x:Class="AccountBuddy.PL.frm.Master.frmCustomSetting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AccountBuddy.PL.frm.Master"
+        mc:Ignorable="d"
+          xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"              
+      Title="Custom Setting" Height="550" Width="800" Closing="MetroWindow_Closing" WindowStartupLocation="CenterScreen" >
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="CommandBinding_Executed" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="Close" />
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="3" />
+        <!--#region Form Head -->
+        <!--<Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
+            <TextBlock x:Name="lblHead" Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Custom Format"/></TextBlock>
+        </Grid>-->
+        <!--#endregion-->
+        <!--#region Form Body-->
+        <Grid Grid.Row="1" Margin="50,30,50,0">
+
+            <Grid Grid.Row="0"  >
+                <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtCurrencySymbol" MaxLength="100" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding CurrencySymbol, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="10" TextChanged="txtCurrencySymbol_TextChanged">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FormatText" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                    <TextBlock Text="Currency Symbol"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+                        <TextBox x:Name="txtSampleCurrencySymbol" IsReadOnly="True" MaxLength="100"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="300" Margin="10">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FormatText" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                    <TextBlock Text="Sample"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtCurrencyName1" MaxLength="100" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" FontWeight="Bold" FontSize="14" Text="{Binding CurrencyName1, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto" Width="350" Margin="10" TextChanged="txtCurrencyName1_TextChanged">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal" Width="331">
+                                    <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                    <TextBlock Text="Currency Name1" />
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+                        <TextBox x:Name="txtCurrencyName2" MaxLength="100" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" FontWeight="Bold" FontSize="14" Text="{Binding CurrencyName2, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto" Width="300" Margin="10" TextChanged="txtCurrencyName2_TextChanged">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal" Width="331">
+                                    <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                    <TextBlock Text="Currency Name2" />
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="40" Margin="10,10,340,10" >
+                        <RadioButton FontSize="14" IsChecked="{Binding IsPrefix, Mode=TwoWay}" HorizontalAlignment="Center"  Margin="10" Content="Prefix" Width="105"/>
+                        <RadioButton  FontSize="14" IsChecked="{Binding IsSuffix, Mode=TwoWay}" HorizontalAlignment="Center"  Margin="10" Width="130" Content="Suffix"/>
+                    </StackPanel>
+
+                    <TextBox x:Name="txtSampleCurrencyName1" IsReadOnly="True"   MaxLength="100"  FontWeight="Bold" FontSize="14"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto" Margin="10,10,25,10" TextWrapping="Wrap">
+                        <materialDesign:HintAssist.Hint>
+                            <StackPanel Orientation="Horizontal" Width="331">
+                                <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                <TextBlock Text="Sample" />
+                            </StackPanel>
+                        </materialDesign:HintAssist.Hint>
+                    </TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtDateFormat" MaxLength="50" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding DateFormat,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="10">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Calendar" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                    <TextBlock Text="Date Format"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+                        <TextBox x:Name="txtNumberFormat" MaxLength="10"  IsReadOnly="{Binding IsReadOnly,Mode=OneWay}"  Text="{Binding NumberFormat,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="300" Margin="10">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Numeric0Box" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                    <TextBlock Text="Number Format"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+
+                    </StackPanel>
+
+
+
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="10" Click="btnSave_Click"  />
+                <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"  Margin="10" Click="btnDelete_Click" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

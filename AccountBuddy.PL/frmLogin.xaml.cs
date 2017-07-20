@@ -74,12 +74,14 @@ namespace AccountBuddy.PL
 
                 if (RValue == "")
                 {
+                  
                     App.frmHome = new frmHome();
                     App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
                     this.Hide();
                     App.frmHome.ShowDialog();
                     ClearForm();
                     this.Show();
+                  
                 }
                 else
                 {

@@ -28,6 +28,12 @@ namespace AccountBuddy.PL
             ShowWelcome();
             onClientEvents();
             IsForcedClose = false;
+            var V = BLL.CustomFormat.toList;
+            Common.AppLib.CurrencyName1 = V.FirstOrDefault().CurrencyName1;
+            Common.AppLib.CurrencyName2 = V.FirstOrDefault().CurrencyName2;
+            Common.AppLib.IsPrefix = V.FirstOrDefault().IsPrefix;
+            Common.AppLib.IsSuffix = V.FirstOrDefault().IsSuffix;
+
         }
         public void ShowWelcome()
         {
