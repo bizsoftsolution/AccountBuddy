@@ -271,7 +271,7 @@ namespace AccountBuddy.PL.frm.Report
                         f.data.SearchText = gl.RefEntryNo;
                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
-                        f.btnPrint.IsEnabled = true;
+                       // f.btnPrint.IsEnabled = true;
 
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.StockSeparated))
@@ -282,7 +282,7 @@ namespace AccountBuddy.PL.frm.Report
                         f.data.SearchText = gl.RefEntryNo;
                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
-                        f.btnPrint.IsEnabled = true;
+                        //f.btnPrint.IsEnabled = true;
 
                     }
                 }

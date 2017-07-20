@@ -1,3 +1,14 @@
+delete from JobOrderIssueDetail
+delete from JobOrderIssue
+
+delete from JobOrderReceivedDetail
+delete from JobOrderReceived
+
+delete from StockInProcessDetail
+delete from StockInProcess
+
+delete from StockSeparatedDetail
+delete from StockSeparated
 
 delete from StockInDetail
 delete from StockIn
