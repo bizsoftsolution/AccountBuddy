@@ -62,13 +62,20 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CurrencySymbol" Type="nvarchar" MaxLength="50" />
-          <Property Name="CurrencyName1" Type="nvarchar" MaxLength="150" />
-          <Property Name="IsPrefix" Type="bit" />
-          <Property Name="IsSuffix" Type="bit" />
-          <Property Name="CurrencyName2" Type="nvarchar" MaxLength="150" />
-          <Property Name="DateFormat" Type="nvarchar" MaxLength="150" />
-          <Property Name="NumberFormat" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrencyPositiveSymbolPrefix" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrencyPositiveSymbolSuffix" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrencyNegativeSymbolPrefix" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrencyNegativeSymbolSuffix" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrencyToWordPrefix" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrencyToWordSuffix" Type="nvarchar" MaxLength="50" />
+          <Property Name="DecimalToWordPrefix" Type="nvarchar" MaxLength="50" />
+          <Property Name="DecimalToWordSuffix" Type="nvarchar" MaxLength="50" />
+          <Property Name="DecimalSymbol" Type="nvarchar" MaxLength="50" />
+          <Property Name="NoOfDigitAfterDecimal" Type="int" />
+          <Property Name="DigitGroupingSymbol" Type="nvarchar" MaxLength="50" />
+          <Property Name="DigitGroupingBy" Type="int" />
+          <Property Name="CurrencyCaseSensitive" Type="int" />
+          <Property Name="IsDisplayWithOnlyOnSuffix" Type="bit" />
           <Property Name="CompanyId" Type="int" />
         </EntityType>
         <EntityType Name="DataKeyValue">
@@ -4713,13 +4720,20 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CurrencySymbol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CurrencyName1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="IsPrefix" Type="Boolean" />
-          <Property Name="IsSuffix" Type="Boolean" />
-          <Property Name="CurrencyName2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="DateFormat" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="NumberFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyPositiveSymbolPrefix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyPositiveSymbolSuffix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyNegativeSymbolPrefix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyNegativeSymbolSuffix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyToWordPrefix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyToWordSuffix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DecimalToWordPrefix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DecimalToWordSuffix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DecimalSymbol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NoOfDigitAfterDecimal" Type="Int32" />
+          <Property Name="DigitGroupingSymbol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DigitGroupingBy" Type="Int32" />
+          <Property Name="CurrencyCaseSensitive" Type="Int32" />
+          <Property Name="IsDisplayWithOnlyOnSuffix" Type="Boolean" />
           <Property Name="CompanyId" Type="Int32" />
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_CustomFormat_CompanyDetail" FromRole="CustomFormat" ToRole="CompanyDetail" />
         </EntityType>
@@ -5510,13 +5524,20 @@
             <EntityTypeMapping TypeName="DBFMCGModel.CustomFormat">
               <MappingFragment StoreEntitySet="CustomFormat">
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="NumberFormat" ColumnName="NumberFormat" />
-                <ScalarProperty Name="DateFormat" ColumnName="DateFormat" />
-                <ScalarProperty Name="CurrencyName2" ColumnName="CurrencyName2" />
-                <ScalarProperty Name="IsSuffix" ColumnName="IsSuffix" />
-                <ScalarProperty Name="IsPrefix" ColumnName="IsPrefix" />
-                <ScalarProperty Name="CurrencyName1" ColumnName="CurrencyName1" />
-                <ScalarProperty Name="CurrencySymbol" ColumnName="CurrencySymbol" />
+                <ScalarProperty Name="IsDisplayWithOnlyOnSuffix" ColumnName="IsDisplayWithOnlyOnSuffix" />
+                <ScalarProperty Name="CurrencyCaseSensitive" ColumnName="CurrencyCaseSensitive" />
+                <ScalarProperty Name="DigitGroupingBy" ColumnName="DigitGroupingBy" />
+                <ScalarProperty Name="DigitGroupingSymbol" ColumnName="DigitGroupingSymbol" />
+                <ScalarProperty Name="NoOfDigitAfterDecimal" ColumnName="NoOfDigitAfterDecimal" />
+                <ScalarProperty Name="DecimalSymbol" ColumnName="DecimalSymbol" />
+                <ScalarProperty Name="DecimalToWordSuffix" ColumnName="DecimalToWordSuffix" />
+                <ScalarProperty Name="DecimalToWordPrefix" ColumnName="DecimalToWordPrefix" />
+                <ScalarProperty Name="CurrencyToWordSuffix" ColumnName="CurrencyToWordSuffix" />
+                <ScalarProperty Name="CurrencyToWordPrefix" ColumnName="CurrencyToWordPrefix" />
+                <ScalarProperty Name="CurrencyNegativeSymbolSuffix" ColumnName="CurrencyNegativeSymbolSuffix" />
+                <ScalarProperty Name="CurrencyNegativeSymbolPrefix" ColumnName="CurrencyNegativeSymbolPrefix" />
+                <ScalarProperty Name="CurrencyPositiveSymbolSuffix" ColumnName="CurrencyPositiveSymbolSuffix" />
+                <ScalarProperty Name="CurrencyPositiveSymbolPrefix" ColumnName="CurrencyPositiveSymbolPrefix" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

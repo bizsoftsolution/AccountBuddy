@@ -151,7 +151,7 @@
         <AssociationConnector Association="DBFMCGModel.FK_UserAccount_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" />
-        <EntityTypeShape EntityType="DBFMCGModel.CustomFormat" Width="1.5" PointX="3.75" PointY="34.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.CustomFormat" Width="1.5" PointX="3.75" PointY="55.875" />
         <AssociationConnector Association="DBFMCGModel.FK_CustomFormat_CompanyDetail" />
       </Diagram>
     </edmx:Diagrams>

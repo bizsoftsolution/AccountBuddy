@@ -15,13 +15,20 @@ namespace AccountBuddy.DAL
     public partial class CustomFormat
     {
         public int Id { get; set; }
-        public string CurrencySymbol { get; set; }
-        public string CurrencyName1 { get; set; }
-        public Nullable<bool> IsPrefix { get; set; }
-        public Nullable<bool> IsSuffix { get; set; }
-        public string CurrencyName2 { get; set; }
-        public string DateFormat { get; set; }
-        public string NumberFormat { get; set; }
+        public string CurrencyPositiveSymbolPrefix { get; set; }
+        public string CurrencyPositiveSymbolSuffix { get; set; }
+        public string CurrencyNegativeSymbolPrefix { get; set; }
+        public string CurrencyNegativeSymbolSuffix { get; set; }
+        public string CurrencyToWordPrefix { get; set; }
+        public string CurrencyToWordSuffix { get; set; }
+        public string DecimalToWordPrefix { get; set; }
+        public string DecimalToWordSuffix { get; set; }
+        public string DecimalSymbol { get; set; }
+        public Nullable<int> NoOfDigitAfterDecimal { get; set; }
+        public string DigitGroupingSymbol { get; set; }
+        public Nullable<int> DigitGroupingBy { get; set; }
+        public Nullable<int> CurrencyCaseSensitive { get; set; }
+        public Nullable<bool> IsDisplayWithOnlyOnSuffix { get; set; }
         public Nullable<int> CompanyId { get; set; }
     
         public virtual CompanyDetail CompanyDetail { get; set; }

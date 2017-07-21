@@ -408,5 +408,10 @@ namespace AccountBuddy.PL.frm.Master
         {
 
         }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

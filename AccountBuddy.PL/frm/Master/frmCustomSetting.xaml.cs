@@ -56,10 +56,9 @@ namespace AccountBuddy.PL.frm.Master
         public void LoadWindow()
         {
             BLL.CustomFormat.Init();
-
             data.Find(BLL.UserAccount.User.UserType.CompanyId);
-            txtSampleCurrencySymbol.Text = string.Format("{0} {1}", txtCurrencySymbol.Text, "123456789.10");
-            setSample();
+        
+            //setSample();
         }
         #region ButtonEvents
 
@@ -102,47 +101,40 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-        private void txtCurrencySymbol_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            txtSampleCurrencySymbol.Text = string.Format("{0}{1}", txtCurrencySymbol.Text, "123456789.10");
-        }
+      
+     
+        //private void setSample()
+        //{
+        //    if (data.CurrencyPositiveSymbolPrefix !=null )
+        //    {
+        //        words = string.Format("{0}{1} {2} ", txtCurrencyName1.Text, number1 > 1 ? "S" : "", "One Hundred And Twenty Three Million Four Hundred And Fifty Six Thousand Seven Hundred And Eighty Nine");
+        //       // words = string.Format("{0} {2} ", txtCurrencyName1.Text, number1 > 1 ? "S" : "", "One Hundred And Twenty Three Million Four Hundred And Fifty Six Thousand Seven Hundred And Eighty Nine");
 
-        private void txtCurrencyName1_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            setSample();
-        }
+        //    }
+        //    else
+        //    {
+        //        words = string.Format("{0} {1}{2} ", "One Hundred And Twenty Three Million Four Hundred And Fifty Six Thousand Seven Hundred And Eighty Nine", txtCurrencyName1.Text, number1 > 1 ? "S" : "");
 
-        private void setSample()
-        {
-            if (data.IsPrefix == true)
-            {
-                words = string.Format("{0}{1} {2} ", txtCurrencyName1.Text, number1 > 1 ? "S" : "", "One Hundred And Twenty Three Million Four Hundred And Fifty Six Thousand Seven Hundred And Eighty Nine");
-               // words = string.Format("{0} {2} ", txtCurrencyName1.Text, number1 > 1 ? "S" : "", "One Hundred And Twenty Three Million Four Hundred And Fifty Six Thousand Seven Hundred And Eighty Nine");
+        //    }
+        //    if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, "Ten", txtCurrencyName2.Text, number2 > 1 ? "s" : "");
+        //    words = string.Format("{0} ONLY", words).ToUpper();
 
-            }
-            else
-            {
-                words = string.Format("{0} {1}{2} ", "One Hundred And Twenty Three Million Four Hundred And Fifty Six Thousand Seven Hundred And Eighty Nine", txtCurrencyName1.Text, number1 > 1 ? "S" : "");
+        //    txtSampleCurrencyName1.Text = words;
 
-            }
-            if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, "Ten", txtCurrencyName2.Text, number2 > 1 ? "s" : "");
-            words = string.Format("{0} ONLY", words).ToUpper();
-
-            txtSampleCurrencyName1.Text = words;
-
-        }
+        //}
 
         private void txtCurrencyName2_TextChanged(object sender, TextChangedEventArgs e)
         {
-            setSample();
+            //setSample();
         }
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (IsForcedClose == false && MessageBox.Show("Are you sure to close the signup?", "Close", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+            if (IsForcedClose == false && MessageBox.Show("Are you sure to close the Custom Settings?", "Close", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
             {
                 e.Cancel = true;
             }
+            BLL.CustomFormat.SetDataFormat();
         }
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -158,12 +150,12 @@ namespace AccountBuddy.PL.frm.Master
 
         private void rdbPrefix_Checked(object sender, RoutedEventArgs e)
         {
-            setSample();
+          //  setSample();
         }
 
         private void rdbSuffix_Checked(object sender, RoutedEventArgs e)
         {
-            setSample();
+           // setSample();
         }
     }
 }

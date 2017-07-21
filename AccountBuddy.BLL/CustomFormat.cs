@@ -16,20 +16,32 @@ namespace AccountBuddy.BLL
         private static ObservableCollection<CustomFormat> _toList;
 
         private int _Id;
-        private string _CurrencySymbol;
-        private string _CurrencyName1;
-        private string _CurrencyName2;
-        private string _DateFormat;
-        private string _NumberFormat;
+        private string _CurrencyPositiveSymbolPrefix;
+        private string _CurrencyPositiveSymbolSuffix;
+        private string _CurrencyNegativeSymbolPrefix;
+        private string _CurrencyNegativeSymbolSuffix;
+        private string _CurrencyToWordPrefix;
+
+        private string _CurrencyToWordSuffix;
+        private string _DecimalToWordPrefix;
+        private string _DecimalToWordSuffix;
+        private string _DecimalSymbol;
+        private string _DigitGroupingSymbol;
+
+        private int _NoOfDigitAfterDecimal;
+        private int _CurrencyCaseSensitive;
+        private bool _IsDisplayWithOnlyOnSuffix;
+
         private int _CompanyId;
+
+        private decimal? _SampleCurrency;
 
         private CompanyDetail _Company;
 
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
-        private bool _IsPrefix;
         private CustomFormat d;
-        private bool _IsSuffix;
+        private bool _IsEnabled;
 
 
         #endregion
@@ -68,23 +80,24 @@ namespace AccountBuddy.BLL
                     _IsReadOnly = value;
                     NotifyPropertyChanged(nameof(IsReadOnly));
                 }
-                IsEnabled = !value;
+                _IsEnabled = !value;
             }
         }
         public bool IsEnabled
         {
             get
             {
-                return _IsPrefix;
+                return _IsEnabled;
             }
 
             set
             {
-                if (_IsPrefix != value)
+                if (_IsEnabled != value)
                 {
-                    _IsPrefix = value;
-                    NotifyPropertyChanged(nameof(IsEnabled));
+                    _IsEnabled = value;
+                    NotifyPropertyChanged(nameof(IsReadOnly));
                 }
+             
             }
         }
         public static ObservableCollection<CustomFormat> toList
@@ -116,118 +129,220 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string CurrencySymbol
+        public string CurrencyPositiveSymbolPrefix
         {
             get
             {
-                return _CurrencySymbol;
+                return _CurrencyPositiveSymbolPrefix;
             }
 
             set
             {
-                if (_CurrencySymbol != value)
+                if (_CurrencyPositiveSymbolPrefix != value)
                 {
-                    _CurrencySymbol = value;
-                    NotifyPropertyChanged(nameof(CurrencySymbol));
+                    _CurrencyPositiveSymbolPrefix = value;
+                  
+                    NotifyPropertyChanged(nameof(CurrencyPositiveSymbolPrefix));
                 }
             }
         }
-        public string CurrencyName1
+        public string CurrencyPositiveSymbolSuffix
         {
             get
             {
-                return _CurrencyName1;
+                return _CurrencyPositiveSymbolSuffix;
             }
 
             set
             {
-                if (_CurrencyName1 != value)
+                if (_CurrencyPositiveSymbolSuffix != value)
                 {
-                    _CurrencyName1 = value;
-                    NotifyPropertyChanged(nameof(CurrencyName1));
+                    _CurrencyPositiveSymbolSuffix = value;
+                    NotifyPropertyChanged(nameof(CurrencyPositiveSymbolSuffix));
                 }
             }
         }
-        public string CurrencyName2
+        public string CurrencyNegativeSymbolPrefix
         {
             get
             {
-                return _CurrencyName2;
+                return _CurrencyNegativeSymbolPrefix;
             }
 
             set
             {
-                if (_CurrencyName2 != value)
+                if (_CurrencyNegativeSymbolPrefix != value)
                 {
-                    _CurrencyName2 = value;
-                    NotifyPropertyChanged(nameof(CurrencyName2));
+                    _CurrencyNegativeSymbolPrefix = value;
+                    NotifyPropertyChanged(nameof(CurrencyNegativeSymbolPrefix));
                 }
             }
         }
-        public string DateFormat
+        public string CurrencyNegativeSymbolSuffix
         {
             get
             {
-                return _DateFormat;
+                return _CurrencyNegativeSymbolSuffix;
             }
 
             set
             {
-                if (_DateFormat != value)
+                if (_CurrencyNegativeSymbolSuffix != value)
                 {
-                    _DateFormat = value;
-                    NotifyPropertyChanged(nameof(DateFormat));
+                    _CurrencyNegativeSymbolSuffix = value;
+                    NotifyPropertyChanged(nameof(CurrencyNegativeSymbolSuffix));
                 }
             }
         }
-        public string NumberFormat
+        public string CurrencyToWordPrefix
         {
             get
             {
-                return _NumberFormat;
+                return _CurrencyToWordPrefix;
             }
 
             set
             {
-                if (_NumberFormat != value)
+                if (_CurrencyToWordPrefix != value)
                 {
-                    _NumberFormat = value;
-                    NotifyPropertyChanged(nameof(NumberFormat));
+                    _CurrencyToWordPrefix = value;
+                    NotifyPropertyChanged(nameof(CurrencyToWordPrefix));
                 }
             }
         }
-        public bool IsPrefix
+        public string CurrencyToWordSuffix
         {
             get
             {
-                return _IsPrefix;
+                return _CurrencyToWordSuffix;
             }
 
             set
             {
-                if (_IsPrefix != value)
+                if (_CurrencyToWordSuffix != value)
                 {
-                    _IsPrefix = value;
-                    NotifyPropertyChanged(nameof(IsPrefix));
+                    _CurrencyToWordSuffix = value;
+                    NotifyPropertyChanged(nameof(CurrencyToWordSuffix));
                 }
             }
         }
-        public bool IsSuffix
+        public string DecimalToWordPrefix
         {
             get
             {
-                return _IsSuffix;
+                return _DecimalToWordPrefix;
             }
 
             set
             {
-                if (_IsSuffix != value)
+                if (_DecimalToWordPrefix != value)
                 {
-                    _IsSuffix = value;
-                    NotifyPropertyChanged(nameof(IsSuffix));
+                    _DecimalToWordPrefix = value;
+                    NotifyPropertyChanged(nameof(DecimalToWordPrefix));
                 }
             }
         }
+
+        public string DecimalToWordSuffix
+        {
+            get
+            {
+                return _DecimalToWordSuffix;
+            }
+
+            set
+            {
+                if (_DecimalToWordSuffix != value)
+                {
+                    _DecimalToWordSuffix = value;
+                    NotifyPropertyChanged(nameof(DecimalToWordSuffix));
+                }
+            }
+        }
+        public string DecimalSymbol
+        {
+            get
+            {
+                return _DecimalSymbol;
+            }
+
+            set
+            {
+                if (_DecimalSymbol != value)
+                {
+                    _DecimalSymbol = value;
+                    NotifyPropertyChanged(nameof(DecimalSymbol));
+                }
+            }
+        }
+
+        public string DigitGroupingSymbol
+        {
+            get
+            {
+                return _DigitGroupingSymbol;
+            }
+
+            set
+            {
+                if (_DigitGroupingSymbol != value)
+                {
+                    _DigitGroupingSymbol = value;
+                    NotifyPropertyChanged(nameof(DigitGroupingSymbol));
+                }
+            }
+        }
+        public int NoOfDigitAfterDecimal
+        {
+            get
+            {
+                return _NoOfDigitAfterDecimal;
+            }
+
+            set
+            {
+                if (_NoOfDigitAfterDecimal != value)
+                {
+                    _NoOfDigitAfterDecimal = value;
+                    NotifyPropertyChanged(nameof(NoOfDigitAfterDecimal));
+                }
+            }
+        }
+        public int CurrencyCaseSensitive
+        {
+            get
+            {
+                return _CurrencyCaseSensitive;
+            }
+
+            set
+            {
+                if (_CurrencyCaseSensitive != value)
+                {
+                    _CurrencyCaseSensitive = value;
+                    NotifyPropertyChanged(nameof(CurrencyCaseSensitive));
+                }
+            }
+        }
+
+
+        public bool IsDisplayWithOnlyOnSuffix
+        {
+            get
+            {
+                return _IsDisplayWithOnlyOnSuffix;
+            }
+
+            set
+            {
+                if (_IsDisplayWithOnlyOnSuffix != value)
+                {
+                    _IsDisplayWithOnlyOnSuffix = value;
+                    NotifyPropertyChanged(nameof(IsDisplayWithOnlyOnSuffix));
+                }
+            }
+        }
+
         public int CompanyId
         {
             get
@@ -261,6 +376,7 @@ namespace AccountBuddy.BLL
             }
         }
 
+      
         #endregion
 
         #region Property  Changed Event
@@ -302,12 +418,8 @@ namespace AccountBuddy.BLL
                     var i = FMCGHubClient.FMCGHub.Invoke<int>("CustomFormat_Save", this).Result;
                     d.Id = i;
                 }
-                var V = BLL.CustomFormat.toList;
-                Common.AppLib.CurrencyName1 = V.FirstOrDefault().CurrencyName1;
-                Common.AppLib.CurrencyName2 = V.FirstOrDefault().CurrencyName2;
-                Common.AppLib.IsPrefix = V.FirstOrDefault().IsPrefix;
-                Common.AppLib.IsSuffix = V.FirstOrDefault().IsSuffix;
-                return true;
+                SetDataFormat();
+            return true;
               
             }
             catch (Exception ex) { }
@@ -381,7 +493,18 @@ namespace AccountBuddy.BLL
             _toList = null;
         }
 
-      
+        public static void SetDataFormat()
+        {            
+            CustomFormat V = new CustomFormat();
+            V.Find(UserAccount.User.UserType.CompanyId);
+
+            Common.AppLib.CurrencyToWordPrefix = V.CurrencyToWordPrefix;
+            Common.AppLib.CurrencyToWordSuffix = V.CurrencyToWordSuffix;
+            Common.AppLib.DecimalToWordPrefix = V.DecimalToWordPrefix;
+            Common.AppLib.DecimalToWordSuffix = V.DecimalToWordSuffix;
+            Common.AppLib.IsDisplayWithOnlyOnSuffix = V.IsDisplayWithOnlyOnSuffix;
+           
+        }      
 
 
         #endregion

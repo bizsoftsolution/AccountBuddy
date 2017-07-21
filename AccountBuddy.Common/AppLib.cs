@@ -43,11 +43,14 @@ namespace AccountBuddy.Common
            
         }
 
-    
-        public static string CurrencyName1 ;
-        public static string CurrencyName2 ;
-        public static bool IsPrefix;
-        public static bool IsSuffix;
+
+        public static string CurrencyToWordPrefix ;
+        public static string CurrencyToWordSuffix;
+
+        public static string DecimalToWordSuffix;
+        public static string DecimalToWordPrefix;
+
+        public static bool IsDisplayWithOnlyOnSuffix;
 
         public static T toCopy<T>(this object objSource, T objDestination)
         {
@@ -94,19 +97,37 @@ namespace AccountBuddy.Common
                 int number2 = int.Parse(Nums[1]);
 
           
-                if (IsPrefix == true)
+                if (CurrencyToWordPrefix != null)
                 {
-                    words = string.Format("{0}{1} {2} ", CurrencyName1.ToUpper(), number1 > 1 ? "S" : "", number1.ToWords());
+                    words = string.Format("{0}{1} {2} ", CurrencyToWordPrefix.ToUpper(), number1 > 1 ? "S" : "", number1.ToWords());
+
+                }
+                else 
+                {
+                    words = string.Format("{0} {1}{2} ", number1.ToWords(), CurrencyToWordSuffix.ToUpper(), number1 > 1 ? "S" : "");
+
+                }
+                if (DecimalToWordSuffix != null)
+                {
+                    if (number2 > 0) words = string.Format("{0} AND {1} {2} {3}", words, number2.ToWords(), DecimalToWordSuffix.ToUpper(), number2 > 1 ? "S" : "");
 
                 }
                 else
                 {
-                    words = string.Format("{0} {1}{2} ", number1.ToWords(), CurrencyName1.ToUpper(), number1 > 1 ? "S" : "");
+                    if (number2 > 0) words = string.Format("{0} AND {1} {2} {3}", words, DecimalToWordSuffix.ToUpper(), number2 > 1 ? "S" : "", number2.ToWords());
 
                 }
-                if (number2 > 0) words = string.Format("{0} AND {1} {2} {3}", words, number2.ToWords(), CurrencyName2.ToUpper(), number2 > 1 ? "" : "");
                 //if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
-                words = string.Format("{0} ONLY", words);
+                if(IsDisplayWithOnlyOnSuffix!=false)
+                {
+                    words = string.Format("{0} ONLY", words);
+
+                }
+                else
+                {
+                    words = string.Format("{0}", words);
+
+                }
                 return words;
             }
            
@@ -121,6 +142,17 @@ namespace AccountBuddy.Common
             if (Number == null) return "";
             return Number.Value.ToCurrencyInWords();            
         }
+
+        //public static string ToCurrencyWithSymbol(this decimal? Number)
+        //{
+        //    return (Number == null ? 0 : Number.Value).ToCurrencyWithSymbol();
+        //}
+
+        //public static string ToCurrencyWithSymbol(this decimal Number)
+        //{
+        //    return string.Format("{0}{1}{2}",IsPrefix?CurrencySymbol:"",Number, IsSuffix ? CurrencySymbol : "");
+        //}
+
 
         public static string ToWords(this int number1)
         {
