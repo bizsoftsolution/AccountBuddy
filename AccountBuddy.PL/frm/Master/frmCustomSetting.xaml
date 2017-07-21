@@ -70,8 +70,8 @@
                         </TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="40" Margin="10,10,340,10" >
-                        <RadioButton FontSize="14" IsChecked="{Binding IsPrefix, Mode=TwoWay}" HorizontalAlignment="Center"  Margin="10" Content="Prefix" Width="105"/>
-                        <RadioButton  FontSize="14" IsChecked="{Binding IsSuffix, Mode=TwoWay}" HorizontalAlignment="Center"  Margin="10" Width="130" Content="Suffix"/>
+                        <RadioButton x:Name="rdbPrefix" FontSize="14" IsChecked="{Binding IsPrefix, Mode=TwoWay}" HorizontalAlignment="Center"  Margin="10" Content="Prefix" Width="105" Checked="rdbPrefix_Checked"/>
+                        <RadioButton x:Name="rdbSuffix"  FontSize="14" IsChecked="{Binding IsSuffix, Mode=TwoWay}" HorizontalAlignment="Center"  Margin="10" Width="130" Content="Suffix" Checked="rdbSuffix_Checked"/>
                     </StackPanel>
 
                     <TextBox x:Name="txtSampleCurrencyName1" IsReadOnly="True"   MaxLength="100"  FontWeight="Bold" FontSize="14"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" AcceptsReturn="True"  VerticalScrollBarVisibility="Auto" Margin="10,10,25,10" TextWrapping="Wrap">

@@ -84,28 +84,37 @@ namespace AccountBuddy.Common
         #region NumberToWords
         public static string ToCurrencyInWords(this decimal Number)
         {
-            if (Number == 0) return "";
-            string[] Nums = string.Format("{0:0.00}", Number).Split('.');
-
-            int number1 = int.Parse(Nums[0]);
-            int number2 = int.Parse(Nums[1]);
-
             String words = "";
-            if(IsPrefix==true)
+            try
             {
-                words = string.Format("{0}{1} {2} ", CurrencyName1, number1 > 1 ? "S" : "", number1.ToWords());
+                if (Number == 0) return "";
+                string[] Nums = string.Format("{0:0.00}", Number).Split('.');
+
+                int number1 = int.Parse(Nums[0]);
+                int number2 = int.Parse(Nums[1]);
+
+          
+                if (IsPrefix == true)
+                {
+                    words = string.Format("{0}{1} {2} ", CurrencyName1.ToUpper(), number1 > 1 ? "S" : "", number1.ToWords());
+
+                }
+                else
+                {
+                    words = string.Format("{0} {1}{2} ", number1.ToWords(), CurrencyName1.ToUpper(), number1 > 1 ? "S" : "");
+
+                }
+                if (number2 > 0) words = string.Format("{0} AND {1} {2} {3}", words, number2.ToWords(), CurrencyName2.ToUpper(), number2 > 1 ? "" : "");
+                //if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
+                words = string.Format("{0} ONLY", words);
+                return words;
+            }
+           
+            catch(Exception ex)
+            {
 
             }
-            else
-            {
-                words = string.Format("{0} {1}{2} ",  number1.ToWords(), CurrencyName1, number1 > 1 ? "S" : "");
-
-            }
-            if (number2 > 0) words = string.Format("{0} AND {1} {2} {3}", words, number2.ToWords(), CurrencyName2, number2 > 1 ? "" : "");
-            //if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
-            words = string.Format("{0} ONLY", words);
             return words;
-
         }
         public static string ToCurrencyInWords(this decimal? Number)
         {

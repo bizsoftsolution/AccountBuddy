@@ -16,12 +16,13 @@
         </Grid.RowDefinitions>
         <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="3" />
         <!--#region Form Head -->
-        <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
+        <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}" Margin="0,0,0,295" Grid.RowSpan="2">
             <TextBlock x:Name="lblHead" Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Company Detail"/></TextBlock>
+           
         </Grid>
         <!--#endregion-->
         <!--#region Form Body-->
-        <Grid Grid.Row="1" Margin="20,0,20,0">
+        <Grid Grid.Row="1" Margin="20,10,20,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="50*"/>
@@ -126,17 +127,22 @@
                         <Button Width="80" Height="30" x:Name="btnUser" Content="USERS"  Margin="10" Click="btnUser_Click"  />
                         <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="10" Click="btnSave_Click"  />
                         <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"  Margin="10" Click="btnDelete_Click" />
+                        <Button Width="88" Height="30" x:Name="btnSetting" Content="SETTING"  Margin="10" Click="btnSetting_Click" />
+                        <!--<Button x:Name="btnSetting" HorizontalAlignment="Right"  Background="Transparent" ToolTip="Setting" Height="30" Width="50" BorderThickness="0" BorderBrush="Transparent" Click="btnSetting_Click" Margin="0,0,5,0">
+                            <materialDesign:PackIcon  Kind="Settings" Foreground="{DynamicResource PrimaryHueLightBrush}" >
+                            </materialDesign:PackIcon>
+                        </Button>-->
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
 
-                        <Button Width="80" Height="30" x:Name="btnSetting" Content="Setting"  Margin="10" Click="btnSetting_Click" />
+
                     </StackPanel>
                 </StackPanel>
             </Grid>
             <!--#endregion-->
             <Grid Grid.Column="3">
-                <Button Width="80"  Height="30" x:Name="btnImage" Content="Logo"  Margin="21,172,26,98" Click="btnImage_Click"  />
-                <Border Margin="6,70,14,133" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"  Margin="21,172,26,85" Click="btnImage_Click"  />
+                <Border Margin="6,40,14,133" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="147" Height="99" Margin="-23,-3,-19,-1"  />
 
                 </Border>

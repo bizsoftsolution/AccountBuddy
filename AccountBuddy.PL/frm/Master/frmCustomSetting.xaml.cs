@@ -104,7 +104,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void txtCurrencySymbol_TextChanged(object sender, TextChangedEventArgs e)
         {
-            txtSampleCurrencySymbol.Text = string.Format("{0} {1}", txtCurrencySymbol.Text, "123456789.10");
+            txtSampleCurrencySymbol.Text = string.Format("{0}{1}", txtCurrencySymbol.Text, "123456789.10");
         }
 
         private void txtCurrencyName1_TextChanged(object sender, TextChangedEventArgs e)
@@ -117,6 +117,7 @@ namespace AccountBuddy.PL.frm.Master
             if (data.IsPrefix == true)
             {
                 words = string.Format("{0}{1} {2} ", txtCurrencyName1.Text, number1 > 1 ? "S" : "", "One Hundred And Twenty Three Million Four Hundred And Fifty Six Thousand Seven Hundred And Eighty Nine");
+               // words = string.Format("{0} {2} ", txtCurrencyName1.Text, number1 > 1 ? "S" : "", "One Hundred And Twenty Three Million Four Hundred And Fifty Six Thousand Seven Hundred And Eighty Nine");
 
             }
             else
@@ -124,7 +125,7 @@ namespace AccountBuddy.PL.frm.Master
                 words = string.Format("{0} {1}{2} ", "One Hundred And Twenty Three Million Four Hundred And Fifty Six Thousand Seven Hundred And Eighty Nine", txtCurrencyName1.Text, number1 > 1 ? "S" : "");
 
             }
-            if (number2 > 0) words = string.Format("{0} AND {1} {2} {3}", words, "Ten", txtCurrencyName2.Text, number2 > 1 ? "s" : "");
+            if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, "Ten", txtCurrencyName2.Text, number2 > 1 ? "s" : "");
             words = string.Format("{0} ONLY", words).ToUpper();
 
             txtSampleCurrencyName1.Text = words;
@@ -149,6 +150,20 @@ namespace AccountBuddy.PL.frm.Master
          
             Close();
         }
-    
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rdbPrefix_Checked(object sender, RoutedEventArgs e)
+        {
+            setSample();
+        }
+
+        private void rdbSuffix_Checked(object sender, RoutedEventArgs e)
+        {
+            setSample();
+        }
     }
 }

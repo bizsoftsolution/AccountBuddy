@@ -403,5 +403,10 @@ namespace AccountBuddy.PL.frm.Master
             }
             catch (Exception ex) { }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
