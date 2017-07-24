@@ -22,33 +22,37 @@ namespace AccountBuddy.Common
             frmCompanySetting,
             frmUser,
             frmUserType,
-            frmAccountGroup, 
-            frmLedger, 
-            frmSupplier, 
-            frmCustomer, 
-            frmStaff, 
-            frmUOM, 
-            frmStockGroup, 
+            frmAccountGroup,
+            frmLedger,
+            frmSupplier,
+            frmCustomer,
+            frmStaff,
+            frmUOM,
+            frmStockGroup,
             frmProducts,
             frmCustomFormat,
-            frmPayment, 
-            frmReceipt, 
+            frmPayment,
+            frmReceipt,
             frmJournal,
-             frmPurchase, 
-             frmSales, 
-             frmJobOrderIssue, 
-             frmJobOrderReceived, 
-             frmStockInProcess, 
-             frmStockSeparated
-           
+            frmPurchase,
+            frmSales,
+            frmJobOrderIssue,
+            frmJobOrderReceived,
+            frmStockInProcess,
+            frmStockSeparated
+
         }
 
 
-        public static string CurrencyToWordPrefix ;
+        public static string CurrencyToWordPrefix;
         public static string CurrencyToWordSuffix;
 
         public static string DecimalToWordSuffix;
         public static string DecimalToWordPrefix;
+
+        public static string CurrencySymbolPrefix;
+        public static string CurrencySymbolSuffix;
+
 
         public static bool IsDisplayWithOnlyOnSuffix;
 
@@ -70,7 +74,7 @@ namespace AccountBuddy.Common
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -96,29 +100,29 @@ namespace AccountBuddy.Common
                 int number1 = int.Parse(Nums[0]);
                 int number2 = int.Parse(Nums[1]);
 
-          
+
                 if (CurrencyToWordPrefix != null)
                 {
                     words = string.Format("{0}{1} {2} ", CurrencyToWordPrefix.ToUpper(), number1 > 1 ? "S" : "", number1.ToWords());
 
                 }
-                else 
+                else
                 {
                     words = string.Format("{0} {1}{2} ", number1.ToWords(), CurrencyToWordSuffix.ToUpper(), number1 > 1 ? "S" : "");
 
                 }
                 if (DecimalToWordSuffix != null)
                 {
-                    if (number2 > 0) words = string.Format("{0} AND {1} {2} {3}", words, number2.ToWords(), DecimalToWordSuffix.ToUpper(), number2 > 1 ? "S" : "");
+                    if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), DecimalToWordSuffix.ToUpper(), number2 > 1 ? "S" : "");
 
                 }
                 else
                 {
-                    if (number2 > 0) words = string.Format("{0} AND {1} {2} {3}", words, DecimalToWordSuffix.ToUpper(), number2 > 1 ? "S" : "", number2.ToWords());
+                    if (number2 > 0) words = string.Format("{0} AND {1}{2} {3}", words, DecimalToWordSuffix.ToUpper(), number2 > 1 ? "S" : "", number2.ToWords());
 
                 }
                 //if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
-                if(IsDisplayWithOnlyOnSuffix!=false)
+                if (IsDisplayWithOnlyOnSuffix != false)
                 {
                     words = string.Format("{0} ONLY", words);
 
@@ -130,8 +134,8 @@ namespace AccountBuddy.Common
                 }
                 return words;
             }
-           
-            catch(Exception ex)
+
+            catch (Exception ex)
             {
 
             }
@@ -140,18 +144,47 @@ namespace AccountBuddy.Common
         public static string ToCurrencyInWords(this decimal? Number)
         {
             if (Number == null) return "";
-            return Number.Value.ToCurrencyInWords();            
+            return Number.Value.ToCurrencyInWords();
         }
 
-        //public static string ToCurrencyWithSymbol(this decimal? Number)
-        //{
-        //    return (Number == null ? 0 : Number.Value).ToCurrencyWithSymbol();
-        //}
+        public static string ToCurrencySymbol(this decimal? Number)
+        {
+            return Number == null ? "" : Number.Value.ToCurrencySymbol();
+        }
 
-        //public static string ToCurrencyWithSymbol(this decimal Number)
-        //{
-        //    return string.Format("{0}{1}{2}",IsPrefix?CurrencySymbol:"",Number, IsSuffix ? CurrencySymbol : "");
-        //}
+        public static string ToCurrencySymbol(this decimal Number)
+        {
+            try
+            {
+                return string.Format("RM", Number);
+            }
+            catch (Exception ex) { }
+            return "";
+        }
+
+        public static string ToNumberFormat(this decimal? Number)
+        {
+            return Number == null ? "" : Number.Value.ToNumberFormat();
+       
+        }
+
+        public static string ToNumberFormat(this decimal Number)
+        {
+            return string.Format("RM {0}..", Number);
+        }
+
+        public static string ToDateFormat(this DateTime? dt)
+        {
+            return dt == null ? "" : dt.Value.ToDateFormat();
+        }
+
+        public static string ToDateFormat(this DateTime dt)
+        {            
+           
+            return  string.Format("{0:yyyy}",dt);
+        }
+
+
 
 
         public static string ToWords(this int number1)
@@ -193,18 +226,18 @@ namespace AccountBuddy.Common
                     var tensMap = new[] { "Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
 
                     if (number1 < 20)
-                        words +=  unitsMap[number1];
+                        words += unitsMap[number1];
                     else
                     {
-                        words +=  tensMap[number1 / 10];
+                        words += tensMap[number1 / 10];
                         if ((number1 % 10) > 0)
                             // words += "-" + unitsMap[number1 % 10];
                             words += " " + unitsMap[number1 % 10];
                     }
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -258,7 +291,7 @@ namespace AccountBuddy.Common
             return regex.IsMatch(s);
         }
 
-        
+
         #region Print
 
 
@@ -292,8 +325,8 @@ namespace AccountBuddy.Common
 
         public static void WriteLog(String str)
         {
-            
-            using (StreamWriter writer = new StreamWriter(Path.GetTempPath()+"FMCG_log.txt", true))
+
+            using (StreamWriter writer = new StreamWriter(Path.GetTempPath() + "FMCG_log.txt", true))
             {
                 writer.WriteLine(string.Format("{0:dd/MM/yyyy hh:mm:ss} => {1}", DateTime.Now, str));
             }

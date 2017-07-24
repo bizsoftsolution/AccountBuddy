@@ -201,14 +201,7 @@
                         </Style>
                     </TabControl.Resources>
 
-                    <TabControl.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </TabControl.RenderTransform>
+                   
                     <TabItem Header="Details" FontSize="16">
                         <Grid>
                             <Grid.RowDefinitions>

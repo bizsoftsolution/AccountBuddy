@@ -27,6 +27,7 @@ namespace AccountBuddy.PL.frm.Transaction
     {
         public BLL.PurchaseOrder data = new BLL.PurchaseOrder();
         public string FormName = "Purchase Order";
+
         public frmPurchaseOrder()
         {
             InitializeComponent();
@@ -41,6 +42,7 @@ namespace AccountBuddy.PL.frm.Transaction
             cultureInfo.DateTimeFormat = dateInfo;
             onClientEvents();
         }
+
         private void onClientEvents()                 
         {
             BLL.FMCGHubClient.FMCGHub.On<String>("PurchaseOrder_RefNoRefresh", (RefNo) =>
@@ -77,6 +79,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             Clear();
         }
+
         void Clear()
         {
             data.Clear();
@@ -156,7 +159,6 @@ namespace AccountBuddy.PL.frm.Transaction
             LoadReport();
         }
 
-
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
@@ -175,6 +177,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
 
         }
+
         private void btnMakepurchase_Click(object sender, RoutedEventArgs e)
         {
             if (data.MakePurchase())
@@ -224,16 +227,12 @@ namespace AccountBuddy.PL.frm.Transaction
             f.ShowDialog();
         }
 
-
-
         private void cmbSupplier_Loaded(object sender, RoutedEventArgs e)
         {
             cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
             cmbSupplier.DisplayMemberPath = "LedgerName";
             cmbSupplier.SelectedValuePath = "Id";
         }
-
-
 
         private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -254,10 +253,6 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
-
-
-
-
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {

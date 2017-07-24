@@ -511,7 +511,6 @@ namespace AccountBuddy.BLL
         }
         #endregion
 
-
         private void SetAmount()
         {
             GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;

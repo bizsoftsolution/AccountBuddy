@@ -478,6 +478,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Conversion\CurrencyInWordConverter.cs" />
+    <Compile Include="Conversion\CurrencySymbolConverter.cs" />
+    <Compile Include="Conversion\DateFormatConverter.cs" />
+    <Compile Include="Conversion\NumberFormatConverter.cs" />
     <Compile Include="Conversion\SumValues.cs" />
     <Compile Include="Conversion\VisibilityConverter.cs" />
     <Compile Include="CTRL\DataGridNumericColumn.cs" />

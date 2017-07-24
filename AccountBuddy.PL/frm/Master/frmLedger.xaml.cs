@@ -269,6 +269,10 @@ namespace AccountBuddy.PL.frm.Master
                 RptLedger.LocalReport.DataSources.Add(data1);
                 RptLedger.LocalReport.ReportPath = @"rpt\master\RptLedger.rdlc";
 
+                ReportParameter[] param = new ReportParameter[1];
+                param[0] = new ReportParameter("Title", "LEDGER LIST");
+
+
                 RptLedger.RefreshReport();
 
             }
@@ -371,7 +375,12 @@ namespace AccountBuddy.PL.frm.Master
 
         private void txtMail_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+            if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
+            {
+                MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+                txtMail.Focus();
+
+            }
 
         }
     }

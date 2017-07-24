@@ -712,7 +712,16 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, JO.LedgerName, JO.Id);
 
-         
+            DAL.AccountGroup salary = new DAL.AccountGroup();
+            salary.GroupName = BLL.DataKeyValue.Salary_Key;
+            salary.GroupCode = "340";
+            salary.CompanyId = pr.CompanyId;
+            salary.UnderGroupId = IndExp.Id;
+            DB.AccountGroups.Add(salary);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, salary.GroupName, salary.Id);
+
+
 
         }
 

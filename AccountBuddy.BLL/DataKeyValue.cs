@@ -686,6 +686,21 @@ namespace AccountBuddy.BLL
                 return toList.Where(x => x.DataKey == IndirectExpense_Key).FirstOrDefault().DataValue;
             }
         }
+        public static string Salary_Key
+        {
+            get
+            {
+                return "Salary";
+            }
+
+        }
+        public static int Salary_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Salary_Key).FirstOrDefault().DataValue;
+            }
+        }
         public static string PurchaseAccount_Key
         {
             get

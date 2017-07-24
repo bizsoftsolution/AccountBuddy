@@ -7,7 +7,7 @@ delete from JobOrderReceived
 delete from StockInProcessDetail
 delete from StockInProcess
 
-delete from StockSeparatedDetail
+delete from StockSeperatedDetail
 delete from StockSeparated
 
 delete from StockInDetail
@@ -50,6 +50,7 @@ delete from Sale
 delete from SalesReturnDetail
 delete from SalesReturn
 
+delete from CustomFormat
 delete from Ledger
 
 delete from AccountGroup
