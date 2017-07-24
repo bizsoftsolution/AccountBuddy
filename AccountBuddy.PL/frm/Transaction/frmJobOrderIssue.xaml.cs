@@ -69,6 +69,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            btnJobReceived.IsEnabled = false;
 
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
@@ -157,14 +158,12 @@ namespace AccountBuddy.PL.frm.Transaction
             var rv = data.Find();
             if (data.Id != 0)
             {
-                btnPrint.IsEnabled = true;
+                btnJobReceived.IsEnabled = data.Status == "Pending" ? true : false; if (data.Id != 0)
+
+                    btnPrint.IsEnabled = true;
 
             }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
+           
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 

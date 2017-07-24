@@ -410,8 +410,6 @@ namespace AccountBuddy.BLL
             }
         }
 
-       
-
         public void Clear()
         {
             new JobOrderIssue().toCopy<JobOrderIssue>(this);

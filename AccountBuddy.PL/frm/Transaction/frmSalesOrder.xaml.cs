@@ -163,7 +163,7 @@ namespace AccountBuddy.PL.frm.Transaction
             var rv = data.Find();
             if (data.Id != 0)
             {
-                btnMakesales.IsEnabled = data.Status == "Pending" ? true : false; if (data.Id != 0)
+                btnMakesales.IsEnabled = data.Status == "Pending" ? true : false;
                     btnPrint.IsEnabled = true;
 
             }

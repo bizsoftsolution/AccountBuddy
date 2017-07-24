@@ -250,6 +250,8 @@ namespace AccountBuddy.PL.frm.Report
                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.btnPrint.IsEnabled = true;
+                       f.btnJobReceived.IsEnabled = f.data.Status == "Pending" ? true : false;
+
 
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.JobOrderReceived))
