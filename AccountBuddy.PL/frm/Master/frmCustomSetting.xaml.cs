@@ -57,8 +57,8 @@ namespace AccountBuddy.PL.frm.Master
         {
             BLL.CustomFormat.Init();
             data.Find(BLL.UserAccount.User.UserType.CompanyId);
-        
-            //setSample();
+
+            
         }
         #region ButtonEvents
 
@@ -101,8 +101,8 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-      
-     
+
+
         //private void setSample()
         //{
         //    if (data.CurrencyPositiveSymbolPrefix !=null )
@@ -123,10 +123,6 @@ namespace AccountBuddy.PL.frm.Master
 
         //}
 
-        private void txtCurrencyName2_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //setSample();
-        }
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -139,7 +135,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-         
+
             Close();
         }
 
@@ -148,14 +144,5 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
-        private void rdbPrefix_Checked(object sender, RoutedEventArgs e)
-        {
-          //  setSample();
-        }
-
-        private void rdbSuffix_Checked(object sender, RoutedEventArgs e)
-        {
-           // setSample();
-        }
     }
 }

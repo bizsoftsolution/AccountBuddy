@@ -52,9 +52,15 @@ namespace AccountBuddy.Common
 
         public static string CurrencyPositiveSymbolPrefix;
         public static string CurrencyPositiveSymbolSuffix;
-        public static string NumberFormat;
 
+        public static string CurrencyNegativeSymbolPrefix;
+        public static string CurrencyNegativeSymbolSuffix;
+        public static string DecimalSymbol;
+        public static string DigitGroupingSymbol;
         public static bool IsDisplayWithOnlyOnSuffix;
+        public static int NoOfDigitAfterDecimal;
+        public static int DigitGroupingBy;
+        public static int CurrencyCaseSensitive;
 
         public static T toCopy<T>(this object objSource, T objDestination)
         {

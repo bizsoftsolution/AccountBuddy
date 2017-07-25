@@ -27,6 +27,7 @@ namespace AccountBuddy.BLL
         private string _DecimalToWordSuffix;
         private string _DecimalSymbol;
         private string _DigitGroupingSymbol;
+        private int _DigitGroupingBy;
 
         private int _NoOfDigitAfterDecimal;
         private int _CurrencyCaseSensitive;
@@ -35,6 +36,8 @@ namespace AccountBuddy.BLL
         private int _CompanyId;
 
         private decimal? _SampleCurrency;
+        private decimal? _SampleCurrencyPositive;
+        private decimal? _SampleCurrencyNegative;
 
         private CompanyDetail _Company;
 
@@ -141,8 +144,10 @@ namespace AccountBuddy.BLL
                 if (_CurrencyPositiveSymbolPrefix != value)
                 {
                     _CurrencyPositiveSymbolPrefix = value;
-                  
+                    Common.AppLib.CurrencyPositiveSymbolPrefix = value;
                     NotifyPropertyChanged(nameof(CurrencyPositiveSymbolPrefix));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
+
                 }
             }
         }
@@ -158,7 +163,9 @@ namespace AccountBuddy.BLL
                 if (_CurrencyPositiveSymbolSuffix != value)
                 {
                     _CurrencyPositiveSymbolSuffix = value;
+                    Common.AppLib.CurrencyPositiveSymbolSuffix = value;
                     NotifyPropertyChanged(nameof(CurrencyPositiveSymbolSuffix));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
@@ -174,7 +181,9 @@ namespace AccountBuddy.BLL
                 if (_CurrencyNegativeSymbolPrefix != value)
                 {
                     _CurrencyNegativeSymbolPrefix = value;
+                    Common.AppLib.CurrencyNegativeSymbolPrefix = value;
                     NotifyPropertyChanged(nameof(CurrencyNegativeSymbolPrefix));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
@@ -190,7 +199,9 @@ namespace AccountBuddy.BLL
                 if (_CurrencyNegativeSymbolSuffix != value)
                 {
                     _CurrencyNegativeSymbolSuffix = value;
+                    Common.AppLib.CurrencyNegativeSymbolPrefix = value;
                     NotifyPropertyChanged(nameof(CurrencyNegativeSymbolSuffix));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
@@ -206,7 +217,9 @@ namespace AccountBuddy.BLL
                 if (_CurrencyToWordPrefix != value)
                 {
                     _CurrencyToWordPrefix = value;
+                    Common.AppLib.CurrencyToWordPrefix = value;
                     NotifyPropertyChanged(nameof(CurrencyToWordPrefix));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
@@ -222,7 +235,9 @@ namespace AccountBuddy.BLL
                 if (_CurrencyToWordSuffix != value)
                 {
                     _CurrencyToWordSuffix = value;
+                    Common.AppLib.CurrencyToWordSuffix = value;
                     NotifyPropertyChanged(nameof(CurrencyToWordSuffix));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
@@ -238,7 +253,9 @@ namespace AccountBuddy.BLL
                 if (_DecimalToWordPrefix != value)
                 {
                     _DecimalToWordPrefix = value;
+                    Common.AppLib.DecimalToWordPrefix = value;
                     NotifyPropertyChanged(nameof(DecimalToWordPrefix));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
@@ -255,7 +272,9 @@ namespace AccountBuddy.BLL
                 if (_DecimalToWordSuffix != value)
                 {
                     _DecimalToWordSuffix = value;
+                    Common.AppLib.DecimalToWordSuffix = value;
                     NotifyPropertyChanged(nameof(DecimalToWordSuffix));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
@@ -271,7 +290,27 @@ namespace AccountBuddy.BLL
                 if (_DecimalSymbol != value)
                 {
                     _DecimalSymbol = value;
+                    Common.AppLib.DecimalSymbol = value;
                     NotifyPropertyChanged(nameof(DecimalSymbol));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
+                }
+            }
+        }
+        public int DigitGroupingBy
+        {
+            get
+            {
+                return _DigitGroupingBy;
+            }
+
+            set
+            {
+                if (_DigitGroupingBy != value)
+                {
+                    _DigitGroupingBy = value;
+                    Common.AppLib.DigitGroupingBy = value;
+                    NotifyPropertyChanged(nameof(DigitGroupingBy));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
@@ -288,7 +327,9 @@ namespace AccountBuddy.BLL
                 if (_DigitGroupingSymbol != value)
                 {
                     _DigitGroupingSymbol = value;
+                    Common.AppLib.DigitGroupingSymbol = value;
                     NotifyPropertyChanged(nameof(DigitGroupingSymbol));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
@@ -304,7 +345,9 @@ namespace AccountBuddy.BLL
                 if (_NoOfDigitAfterDecimal != value)
                 {
                     _NoOfDigitAfterDecimal = value;
+                    Common.AppLib.NoOfDigitAfterDecimal = value;
                     NotifyPropertyChanged(nameof(NoOfDigitAfterDecimal));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
@@ -320,12 +363,12 @@ namespace AccountBuddy.BLL
                 if (_CurrencyCaseSensitive != value)
                 {
                     _CurrencyCaseSensitive = value;
+                    Common.AppLib.CurrencyCaseSensitive = value;
                     NotifyPropertyChanged(nameof(CurrencyCaseSensitive));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
-
-
         public bool IsDisplayWithOnlyOnSuffix
         {
             get
@@ -338,10 +381,82 @@ namespace AccountBuddy.BLL
                 if (_IsDisplayWithOnlyOnSuffix != value)
                 {
                     _IsDisplayWithOnlyOnSuffix = value;
+                    Common.AppLib.IsDisplayWithOnlyOnSuffix = value;
                     NotifyPropertyChanged(nameof(IsDisplayWithOnlyOnSuffix));
+                    NotifyPropertyChanged(nameof(SampleCurrency));
                 }
             }
         }
+
+
+        public decimal? SampleCurrency
+        {
+            get
+            {
+                return _SampleCurrency;
+            }
+
+            set
+            {
+                if (_SampleCurrency != value)
+                {
+                    _SampleCurrency = value;
+                    if (value == null)
+                    {
+                        SampleCurrencyPositive = null;
+                    }
+                    else
+                    {
+                        SampleCurrencyPositive = Math.Abs(value.Value);
+                    }
+                    NotifyPropertyChanged(nameof(SampleCurrency));
+                }
+            }
+        }
+
+        public decimal? SampleCurrencyPositive
+        {
+            get
+            {
+                return _SampleCurrencyPositive;
+            }
+
+            set
+            {
+                if (_SampleCurrencyPositive != value)
+                {
+                    _SampleCurrencyPositive = value;
+                    if (value == null)
+                    {
+                        SampleCurrencyNegative= null;
+                    }
+                    else
+                    {
+                        SampleCurrencyNegative = value * -1;
+                    }
+                    NotifyPropertyChanged(nameof(SampleCurrencyPositive));
+                }
+            }
+        }
+
+
+        public decimal? SampleCurrencyNegative
+        {
+            get
+            {
+                return _SampleCurrencyNegative;
+            }
+
+            set
+            {
+                if (_SampleCurrencyNegative != value)
+                {
+                    _SampleCurrencyNegative = value;
+                    NotifyPropertyChanged(nameof(SampleCurrencyNegative));
+                }
+            }
+        }
+
 
         public int CompanyId
         {
