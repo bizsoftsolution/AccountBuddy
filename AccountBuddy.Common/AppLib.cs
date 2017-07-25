@@ -113,12 +113,12 @@ namespace AccountBuddy.Common
                 }
                 if (DecimalToWordSuffix != null)
                 {
-                    if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), DecimalToWordSuffix.ToUpper(), number2 > 1 ? "" : "");
+                    if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), DecimalToWordSuffix.ToUpper(), number2 > 1 ? "s" : "");
 
                 }
                 else
                 {
-                    if (number2 > 0) words = string.Format("{0} AND {1}{2} {3}", words, DecimalToWordSuffix.ToUpper(), number2 > 1 ? "" : "", number2.ToWords());
+                    if (number2 > 0) words = string.Format("{0} AND {1}{2} {3}", words, DecimalToWordSuffix.ToUpper(), number2 > 1 ? "s" : "", number2.ToWords());
 
                 }
                 //if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
