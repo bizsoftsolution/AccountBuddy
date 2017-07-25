@@ -36,6 +36,8 @@ namespace AccountBuddy.PL.frm.Transaction
             data.Clear();
 
             onClientEvents();
+            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencySymbolPrefix);
+            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencySymbolPrefix);
         }
         private void onClientEvents()
         {
@@ -107,7 +109,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             else if (data.LedgerId == 0)
             {
-                MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Customer), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Supplier), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbSupplier.Focus();
             }
 
@@ -209,8 +211,6 @@ namespace AccountBuddy.PL.frm.Transaction
             }
         }
 
-
-
         #endregion
 
         #region Methods
@@ -224,8 +224,6 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbSupplier.DisplayMemberPath = "LedgerName";
             cmbSupplier.SelectedValuePath = "Id";
         }
-
-
 
         private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -246,7 +244,6 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
-
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {

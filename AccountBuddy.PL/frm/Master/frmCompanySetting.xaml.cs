@@ -29,7 +29,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             InitializeComponent();
             this.DataContext = data;
-
+            
             onClientEvents();
         }
 
@@ -391,6 +391,27 @@ namespace AccountBuddy.PL.frm.Master
                 f.ShowDialog();
             }
             catch (Exception ex) { }
+        }
+
+        private void btnSetting_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                frmCustomSetting f = new frmCustomSetting();
+                f.LoadWindow();
+                f.ShowDialog();
+            }
+            catch (Exception ex) { }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

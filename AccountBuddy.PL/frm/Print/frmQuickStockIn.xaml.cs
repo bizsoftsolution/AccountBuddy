@@ -75,6 +75,7 @@ namespace AccountBuddy.PL.frm.Print
             dt.Columns.Add("UOMName");
             dt.Columns.Add("Amount");
             dt.Columns.Add("Id");
+            dt.Columns.Add("DiscountAmount");
 
             var newRow = dt.NewRow();
 
@@ -90,6 +91,7 @@ namespace AccountBuddy.PL.frm.Print
                 newRow["UOMName"] = element.UOMName;
                 newRow["Amount"] = String.Format("{0:0.00}", element.Amount);
                 newRow["Id"] = n.ToString();
+                newRow["DiscountAmount"] = element.DiscountAmount == 0 ? "" : String.Format("{0:0.00}", element.DiscountAmount);
 
                 dt.Rows.Add(newRow);
             }
@@ -105,6 +107,7 @@ namespace AccountBuddy.PL.frm.Print
                 newRow["UnitPrice"] = "";
                 newRow["Amount"] = "";
                 newRow["Id"] = "";
+                newRow["DiscountAmount"] = "";
 
                 dt.Rows.Add(newRow);
             }

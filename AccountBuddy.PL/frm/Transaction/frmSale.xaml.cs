@@ -35,8 +35,13 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbPType.DisplayMemberPath = "Type";
             cmbPType.SelectedValuePath = "Id";
 
+            lblDiscountAmount.Text = string.Format("{0}({1})",  "Discount Amount", AccountBuddy.Common.AppLib.CurrencySymbolPrefix);
+
+            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencySymbolPrefix);
+
             data.Clear();
             onClientEvents();
+
         }
         private void onClientEvents()
         {
@@ -54,7 +59,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             BLL.Product.Init();
-          
+
             var max = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
             var min = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
 
@@ -133,7 +138,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    if(ckbAutoPrint.IsChecked==true)
+                    if (ckbAutoPrint.IsChecked == true)
                     {
                         PrintBill();
                     }
@@ -144,7 +149,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 }
                 else
                 {
-                   
+
                 }
             }
             else
@@ -227,7 +232,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 prnPurchaseOrder.PrintController = new System.Drawing.Printing.StandardPrintController();
 
                 TextToPrint = PrintLine(BLL.UserAccount.User.UserType.Company.CompanyName, PrintTextAlignType.Center);
-                TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine1), PrintTextAlignType.Left);
+                TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine1), PrintTextAlignType.Center);
                 TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.AddressLine2), PrintTextAlignType.Center);
                 TextToPrint += PrintLine(string.Format("{0}", BLL.UserAccount.User.UserType.Company.CityName), PrintTextAlignType.Center);
 
@@ -370,7 +375,7 @@ namespace AccountBuddy.PL.frm.Transaction
             Int32 selectionLength = textBox.SelectionLength;
             textBox.Text = AppLib.NumericOnly(txtDiscountAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
+            
         }
 
         private void txtExtraAmount_TextChanged(object sender, TextChangedEventArgs e)
@@ -378,9 +383,11 @@ namespace AccountBuddy.PL.frm.Transaction
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtExtraAmount.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
+            textBox.Text = AppLib.NumericOnly(txtExtraAmount.Text);
+
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+          
         }
 
         private void txtRate_TextChanged(object sender, TextChangedEventArgs e)

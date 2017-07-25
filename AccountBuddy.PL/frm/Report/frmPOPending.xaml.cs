@@ -108,6 +108,7 @@ namespace AccountBuddy.PL.frm.Report
                 f.btnMakepurchase.IsEnabled = f.data.Status == "Pending" ? true : false; if (f.data.Id != 0)
                     if (f.data.RefCode != null)
                     {
+                        f.btnMakepurchase.IsEnabled = false;
                         f.btnSave.IsEnabled = false;
                         f.btnDelete.IsEnabled = true;
 

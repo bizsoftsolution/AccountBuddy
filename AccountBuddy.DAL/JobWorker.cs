@@ -14,11 +14,22 @@ namespace AccountBuddy.DAL
     
     public partial class JobWorker
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public JobWorker()
+        {
+            this.JobOrderIssues = new HashSet<JobOrderIssue>();
+            this.JobOrderReceiveds = new HashSet<JobOrderReceived>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> LedgerId { get; set; }
         public Nullable<decimal> Salary { get; set; }
         public string Role { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobOrderIssue> JobOrderIssues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobOrderReceived> JobOrderReceiveds { get; set; }
         public virtual Ledger Ledger { get; set; }
     }
 }

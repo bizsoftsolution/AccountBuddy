@@ -21,16 +21,13 @@ namespace AccountBuddy.SL.Hubs
         public BLL.UserAccount UserAccount_Login(string AccYear, String CompanyName, String LoginId, String Password)
         {
             var rv = new BLL.UserAccount();
-
             try
             {
                 DAL.UserAccount ua = DB.UserAccounts
                                   .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
-
-                                               && x.LoginId == LoginId
-
-                                               && x.Password == Password && x.UserType.CompanyDetail.IsActive != false)
-                                  .FirstOrDefault();
+                                    && x.LoginId == LoginId
+                                    && x.Password == Password && x.UserType.CompanyDetail.IsActive != false)
+                                    .FirstOrDefault();
                 if (ua != null)
                 {
                     Groups.Add(Context.ConnectionId, ua.UserType.CompanyId.ToString());
@@ -55,7 +52,7 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex)
             {
 
-                WriteErrorLog("Login", "UserAccount_Login",  rv.Id,  Caller.CompanyId,ex.Message);
+                WriteErrorLog("Login", "UserAccount_Login", rv.Id, Caller.CompanyId, ex.Message);
                 return rv;
             }
 

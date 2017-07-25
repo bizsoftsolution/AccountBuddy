@@ -36,7 +36,7 @@
                 <Grid Grid.Row="0"  >
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                            <TextBox  x:Name="txtSymbol" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Symbol, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
+                            <TextBox MaxLength="150" x:Name="txtSymbol" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Symbol, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Width="350" >
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Weight" Height="25" Width="25" />
@@ -44,8 +44,8 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                         
-                            <TextBox x:Name="txtFormalName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding FormalName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" >
+
+                            <TextBox x:Name="txtFormalName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding FormalName, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Width="350" MaxLength="150">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Sort" Height="25" Width="25" />

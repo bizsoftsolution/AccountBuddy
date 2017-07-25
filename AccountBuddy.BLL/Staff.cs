@@ -287,7 +287,7 @@ namespace AccountBuddy.BLL
         {
             new Staff().toCopy<Staff>(this);
             this.Ledger.Clear();
-            this.Ledger.AccountGroupId = BLL.DataKeyValue.SundryCreditors;
+            this.Ledger.AccountGroupId = BLL.DataKeyValue.Salary_Value;
 
             DOB = DateTime.Now;
             DOJ = DateTime.Now;

@@ -14,6 +14,13 @@ namespace AccountBuddy.DAL
     
     public partial class Staff
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Staff()
+        {
+            this.StockInProcesses = new HashSet<StockInProcess>();
+            this.StockSeparateds = new HashSet<StockSeparated>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> LedgerId { get; set; }
         public Nullable<decimal> Salary { get; set; }
@@ -22,5 +29,9 @@ namespace AccountBuddy.DAL
         public Nullable<System.DateTime> DOJ { get; set; }
     
         public virtual Ledger Ledger { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockInProcess> StockInProcesses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockSeparated> StockSeparateds { get; set; }
     }
 }

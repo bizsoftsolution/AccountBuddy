@@ -235,7 +235,7 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
-
+        #endregion
         #region PurchaseOrder
         void SalesOrder_SaveByPurchaseOrder(DAL.PurchaseOrder P)
         {
@@ -296,6 +296,6 @@ namespace AccountBuddy.SL.Hubs
         }
         #endregion
 
-        #endregion
+        
     }
 }

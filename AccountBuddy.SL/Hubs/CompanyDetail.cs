@@ -57,7 +57,16 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.CompanyDetail> CompanyDetail_List()
         {
-            return DB.CompanyDetails.ToList().Select(x => CompanyDetailDAL_BLL(x)).ToList();
+            List<BLL.CompanyDetail> rv;
+            try
+            {
+             rv= DB.CompanyDetails.ToList().Select(x => CompanyDetailDAL_BLL(x)).ToList();
+                return rv;
+            }
+            catch(Exception ex)
+            {
+                return rv=new List<BLL.CompanyDetail>();
+            }
         }
 
         int AccountGroupIdByCompanyAndKey(int CompanyId, string key)
@@ -167,9 +176,9 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(d.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail()), LogDetailType.DELETE);
                 }
 
-                //var uac = DB.UserAccounts.Where(x => x.UserType.CompanyId == d.Id);
-                //DB.UserAccounts.RemoveRange(uac);
-                //DB.SaveChanges();
+                var uac = DB.UserAccounts.Where(x => x.UserType.CompanyId == d.Id);
+               DB.UserAccounts.RemoveRange(uac);
+                DB.SaveChanges();
 
                 Clients.Clients(OtherLoginClientsOnGroup).CompanyDetail_Delete(pk);
                 Clients.All.delete(pk);
@@ -359,6 +368,21 @@ namespace AccountBuddy.SL.Hubs
             DB.AccountGroups.Add(sd);
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, sd.GroupName, sd.Id);
+
+
+            DAL.Ledger SP = new DAL.Ledger();
+            SP.LedgerName = BLL.DataKeyValue.StockInProcess_Ledger_Key;
+            SP.AccountGroupId = SIH.Id;
+            DB.Ledgers.Add(SP);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, SP.LedgerName, SP.Id);
+
+            DAL.Ledger SS = new DAL.Ledger();
+            SS.LedgerName = BLL.DataKeyValue.StockSeperated_Ledger_Key;
+            SS.AccountGroupId = SIH.Id;
+            DB.Ledgers.Add(SS);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, SS.LedgerName, SS.Id);
 
 
 
@@ -610,6 +634,13 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, SRL.LedgerName, SRL.Id);
 
+            DAL.Ledger JR = new DAL.Ledger();
+            JR.LedgerName = BLL.DataKeyValue.JobOrderReceived_Ledger_Key;
+            JR.AccountGroupId = Inc.Id;
+            DB.Ledgers.Add(JR);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, JR.LedgerName, JR.Id);
+
 
         }
 
@@ -624,7 +655,7 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, Exp.GroupName, Exp.Id);
 
-            #region Direct Income
+            #region Direct Expense
 
             DAL.AccountGroup DExp = new DAL.AccountGroup();
             DExp.GroupName = BLL.DataKeyValue.DirectExpenses_Key;
@@ -637,7 +668,7 @@ namespace AccountBuddy.SL.Hubs
 
             #endregion
 
-            #region Indirect Income
+            #region Indirect Expense
 
             DAL.AccountGroup IndExp = new DAL.AccountGroup();
             IndExp.GroupName = BLL.DataKeyValue.IndirectExpense_Key;
@@ -658,6 +689,7 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, Pur.GroupName, Pur.Id);
 
+         
 
             DAL.Ledger PurL = new DAL.Ledger();
             PurL.LedgerName = BLL.DataKeyValue.PurchaseAccount_Ledger_Key;
@@ -672,6 +704,22 @@ namespace AccountBuddy.SL.Hubs
             DB.Ledgers.Add(PRL);
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, PRL.LedgerName, PRL.Id);
+
+            DAL.Ledger JO = new DAL.Ledger();
+            JO.LedgerName = BLL.DataKeyValue.JobOrderIssued_Ledger_Key;
+            JO.AccountGroupId = Exp.Id;
+            DB.Ledgers.Add(JO);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, JO.LedgerName, JO.Id);
+
+            DAL.AccountGroup salary = new DAL.AccountGroup();
+            salary.GroupName = BLL.DataKeyValue.Salary_Key;
+            salary.GroupCode = "340";
+            salary.CompanyId = pr.CompanyId;
+            salary.UnderGroupId = IndExp.Id;
+            DB.AccountGroups.Add(salary);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, salary.GroupName, salary.Id);
 
 
 

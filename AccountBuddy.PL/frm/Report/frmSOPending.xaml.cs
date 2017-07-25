@@ -98,13 +98,14 @@ namespace AccountBuddy.PL.frm.Report
                 f.data.SearchText = po.EntryNo;
                 System.Windows.Forms.Application.DoEvents();
                 f.data.Find();
-                f.btnMakesales.IsEnabled = f.data.Status == "Pending" ? true : false; if (f.data.Id != 0)
-                    if (f.data.RefCode != null)
-                    {
-                        f.btnSave.IsEnabled = false;
-                        f.btnDelete.IsEnabled = false;
+                f.btnMakesales.IsEnabled = f.data.Status == "Pending" ? true : false;
+                if (f.data.RefCode != null)
+                {
+                    f.btnMakesales.IsEnabled = true;
+                    f.btnSave.IsEnabled = false;
+                    f.btnDelete.IsEnabled = false;
 
-                    }
+                }
             }
             catch (Exception ex) { }
         }

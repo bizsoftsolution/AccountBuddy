@@ -167,6 +167,42 @@ namespace AccountBuddy.PL.frm.Report
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
+                else if (gl.EType == "SS")
+                {
+                    Transaction.frmStockSeparated f = new Transaction.frmStockSeparated();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+                else if (gl.EType == "SP")
+                {
+                    Transaction.frmStockInProcess f = new Transaction.frmStockInProcess();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+                else if (gl.EType == "JO")
+                {
+                    Transaction.frmJobOrderIssue f = new Transaction.frmJobOrderIssue();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
+                else if (gl.EType == "JR")
+                {
+                    Transaction.frmJobOrderReceived f = new Transaction.frmJobOrderReceived();
+                    App.frmHome.ShowForm(f);
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.SearchText = gl.EntryNo;
+                    System.Windows.Forms.Application.DoEvents();
+                    f.data.Find();
+                }
             }
         }
 

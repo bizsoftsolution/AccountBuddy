@@ -1,3 +1,14 @@
+delete from JobOrderIssueDetail
+delete from JobOrderIssue
+
+delete from JobOrderReceivedDetail
+delete from JobOrderReceived
+
+delete from StockInProcessDetail
+delete from StockInProcess
+
+delete from StockSeperatedDetail
+delete from StockSeparated
 
 delete from StockInDetail
 delete from StockIn
@@ -14,6 +25,8 @@ delete from Receipt
 delete from JournalDetail
 delete from Journal
 
+delete from JobWorker
+delete from Staff
 delete from Supplier
 delete from Customer
 delete from Bank
@@ -37,6 +50,7 @@ delete from Sale
 delete from SalesReturnDetail
 delete from SalesReturn
 
+delete from CustomFormat
 delete from Ledger
 
 delete from AccountGroup

@@ -28,6 +28,9 @@ namespace AccountBuddy.PL
             ShowWelcome();
             onClientEvents();
             IsForcedClose = false;
+            BLL.CustomFormat.SetDataFormat();
+            
+
         }
         public void ShowWelcome()
         {

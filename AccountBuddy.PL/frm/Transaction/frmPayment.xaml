@@ -48,6 +48,10 @@
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="TextAlignment" Value="Right"/>
             </Style>
+            <Conversion:NumberFormatConverter x:Key="NumberFormat"/>
+            <Conversion:CurrencySymbolConverter x:Key="CurrencySymbolFormat"/>
+            <Conversion:CurrencyInWordConverter x:Key="CurrencyInWordFormat"/>
+            <Conversion:DateFormatConverter x:Key="DateFormat"/>
         </ResourceDictionary>
 
     </UserControl.Resources>
@@ -77,10 +81,10 @@
                 <StackPanel Orientation="Vertical" Margin="0,25,0,0">
                     <StackPanel Orientation="Horizontal">
                         <DatePicker x:Name="dtpPaymentDate"   materialDesign:HintAssist.Hint="Date"  SelectedDate="{Binding PaymentDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,0,0" Width="100" FontWeight="Bold"  />
-                        <ComboBox x:Name="cmbPayMode" IsReadOnly="{Binding IsReadOnly}" SelectedItem="{Binding PaymentMode, Mode=TwoWay}"   ItemsSource="{Binding PayModeList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="125" Height="43" Margin="10,0,0,0" >
+                        <ComboBox x:Name="cmbPayMode"  IsReadOnly="{Binding IsReadOnly}" SelectedItem="{Binding PaymentMode, Mode=TwoWay}"   ItemsSource="{Binding PayModeList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="125" Height="43" Margin="10,0,0,0" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Pay Mode"/>
+                                    <TextBlock Text="Pay Mode" />
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
 
@@ -95,13 +99,13 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <TextBox x:Name="txtEntryNo"  IsReadOnly="True" Text="{Binding EntryNo, Mode=TwoWay}" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold" Width="150" TextAlignment="Right"/>
-                        <TextBox x:Name="txtPayTo" IsReadOnly="{Binding IsReadOnly}" Text="{Binding PayTo, Mode=TwoWay}" Width="335" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                        <TextBox x:Name="txtPayTo" MaxLength="50" IsReadOnly="{Binding IsReadOnly}" Text="{Binding PayTo, Mode=TwoWay}" Width="335" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                     </StackPanel>
 
                     <GroupBox Margin="10,10,10,0" Header="Cheque Detail" Visibility="{Binding IsShowChequeDetail,Converter={StaticResource VisibilityConverter}}">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <TextBox x:Name="txtChequeNo" TextChanged="txtChequeNo_TextChanged" Text="{Binding ChequeNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Cheque No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
+                                <TextBox  x:Name="txtChequeNo"  MaxLength="50" TextChanged="txtChequeNo_TextChanged" Text="{Binding ChequeNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Cheque No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
                                 <DatePicker x:Name="dtpChequeDate" materialDesign:HintAssist.Hint="Cheque Date"  SelectedDate="{Binding ChequeDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,15,10,0" Width="100" FontWeight="Bold"  />
                                 <ComboBox SelectedValue="{Binding Status, Mode=TwoWay}" ItemsSource="{Binding StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="80" Margin="0,0,0,0">
                                     <materialDesign:HintAssist.Hint>
@@ -119,7 +123,7 @@
 
                     <GroupBox Margin="10,10,10,0" Header="Online" Visibility="{Binding IsShowOnlineDetail,Converter={StaticResource VisibilityConverter}}">
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Text="{Binding RefNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Ref. No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
+                            <TextBox Text="{Binding RefNo, Mode=TwoWay}" MaxLength="50" Width="100" materialDesign:HintAssist.Hint="Ref. No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
                             <DatePicker materialDesign:HintAssist.Hint="Transaction Date"  SelectedDate="{Binding ClearDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,15,10,0" Width="120" FontWeight="Bold"  />
                             <ComboBox SelectedValue="{Binding Status, Mode=TwoWay}" ItemsSource="{Binding StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="100" >
                                 <materialDesign:HintAssist.Hint>
@@ -133,7 +137,7 @@
 
                     <GroupBox Margin="10,10,10,0" Header="Telegraphic Transfer" Visibility="{Binding IsShowTTDetail,Converter={StaticResource VisibilityConverter}}">
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Text="{Binding RefNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Ref. No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
+                            <TextBox Text="{Binding RefNo, Mode=TwoWay}" MaxLength="50" Width="100" materialDesign:HintAssist.Hint="Ref. No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
                             <DatePicker materialDesign:HintAssist.Hint="Transaction Date"  SelectedDate="{Binding ClearDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,15,10,0" Width="120" FontWeight="Bold"  />
                             <ComboBox  SelectedValue="{Binding Status, Mode=TwoWay}" ItemsSource="{Binding StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="100" Margin="0,0,0,0">
                                 <materialDesign:HintAssist.Hint>
@@ -149,7 +153,7 @@
                         <TextBox Text="{Binding Particulars, Mode=TwoWay}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
                     </GroupBox>
                     <GroupBox Header="Amount in Words" Margin="10,10,10,0">
-                        <TextBlock x:Name="lblAmountInWords" Text="{Binding AmountInwords}"  Width="auto" FontWeight="Black" Margin="0,0,0,0" FontSize="17" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Height="auto"/>
+                        <TextBlock x:Name="lblAmountInWords" Text="{Binding Amount, Mode=TwoWay,Converter={StaticResource CurrencyInWordFormat}}"  Width="auto" FontWeight="Black" Margin="0,0,0,0" FontSize="17" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Height="auto"/>
                     </GroupBox>
 
                 </StackPanel>
@@ -170,7 +174,7 @@
                         <Button   Width="75" Height="30" x:Name="btnDClear" Content="CLEAR" Margin="10,0,0,0" Click="btnDClear_Click" />
                     </StackPanel>
                     <GroupBox Header="Detail Particulars" Margin="10,10,10,0">
-                        <TextBox Text="{Binding PDetail.Particular, Mode=TwoWay}" IsReadOnly="{Binding IsReadOnly}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
+                        <TextBox Text="{Binding PDetail.Particular, Mode=TwoWay}" MaxLength="500" IsReadOnly="{Binding IsReadOnly}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
                     </GroupBox>
                     <GroupBox Height="250" Margin="10,25,10,0" Header="Payment Details">
                         <DataGrid x:Name="dgvDetails" ItemsSource="{Binding PDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10"  BorderThickness="1">

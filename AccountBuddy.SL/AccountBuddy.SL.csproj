@@ -166,10 +166,13 @@
     <Compile Include="Hubs\CreditLimitType.cs" />
     <Compile Include="Hubs\Customer.cs" />
     <Compile Include="Hubs\CustomerWiseReport.cs" />
+    <Compile Include="Hubs\CustomFormat.cs" />
     <Compile Include="Hubs\DataKeyValue.cs" />
     <Compile Include="Hubs\FmcgWriteLogSL.cs" />
     <Compile Include="Hubs\GeneralLedger.cs" />
     <Compile Include="Hubs\GeneralStock.cs" />
+    <Compile Include="Hubs\JobOrderIssue.cs" />
+    <Compile Include="Hubs\JobOrderReceived.cs" />
     <Compile Include="Hubs\JobWorker.cs" />
     <Compile Include="Hubs\Journal.cs" />
     <Compile Include="Hubs\Ledger.cs" />
@@ -196,7 +199,9 @@
     <Compile Include="Hubs\Staff.cs" />
     <Compile Include="Hubs\StockGroup.cs" />
     <Compile Include="Hubs\StockIn.cs" />
+    <Compile Include="Hubs\StockInProcess.cs" />
     <Compile Include="Hubs\StockOut.cs" />
+    <Compile Include="Hubs\StockSeperated.cs" />
     <Compile Include="Hubs\Supplier.cs" />
     <Compile Include="Hubs\TransactionType.cs" />
     <Compile Include="Hubs\TrialBalance.cs" />
@@ -205,6 +210,7 @@
     <Compile Include="Hubs\UserType.cs" />
     <Compile Include="Hubs\UserTypeDetail.cs" />
     <Compile Include="Hubs\UserTypeFormDetail.cs" />
+    <Compile Include="Hubs\JOPending.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

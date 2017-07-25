@@ -143,7 +143,7 @@
                                             <Master:frmProducts/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-
+                                   
                                 </ListBox>
                             </Expander>
 
@@ -221,7 +221,26 @@
                                             <Transaction:frmLedgerOpening/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-
+                                    <Menu:NavMenuItem MenuName="Job Order Issue" FormName="Job Order Issue">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmJobOrderIssue/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Job Order Received" FormName="Job Order Received">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmJobOrderReceived/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Stock In Process" FormName="Stock In Process">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmStockInProcess/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Stock Separated" FormName="Stock Separated">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmStockSeparated/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                 </ListBox>
 
                             </Expander>
@@ -292,7 +311,11 @@
                                             <Report:frmSOPending/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-
+                                    <Menu:NavMenuItem MenuName="Job Order Report" FormName="Sales Order Report">
+                                        <Menu:NavMenuItem.Content>
+                                            <Report:frmJobOrderPendingReport/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Dealer Sales Report" FormName="Dealer Sales Report">
                                         <Menu:NavMenuItem.Content>
                                             <Report:frmSalesReport/>

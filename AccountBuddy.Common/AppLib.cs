@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
+
 namespace AccountBuddy.Common
 {
     public static class AppLib
@@ -21,23 +22,40 @@ namespace AccountBuddy.Common
             frmCompanySetting,
             frmUser,
             frmUserType,
-            frmAccountGroup, 
-            frmLedger, 
-            frmSupplier, 
-            frmCustomer, 
-            frmStaff, 
-            frmUOM, 
-            frmStockGroup, 
+            frmAccountGroup,
+            frmLedger,
+            frmSupplier,
+            frmCustomer,
+            frmStaff,
+            frmUOM,
+            frmStockGroup,
             frmProducts,
-            frmPayment, 
-            frmReceipt, 
+            frmCustomFormat,
+            frmPayment,
+            frmReceipt,
             frmJournal,
-           
+            frmPurchase,
+            frmSales,
+            frmJobOrderIssue,
+            frmJobOrderReceived,
+            frmStockInProcess,
+            frmStockSeparated
+
         }
 
-    
-        public static string CurrencyName1 = "RINGGIT";
-        public static string CurrencyName2 = "SEN";
+
+        public static string CurrencyToWordPrefix;
+        public static string CurrencyToWordSuffix;
+
+        public static string DecimalToWordSuffix;
+        public static string DecimalToWordPrefix;
+
+        public static string CurrencySymbolPrefix="RM";
+        public static string CurrencySymbolSuffix = "RM";
+
+
+        public static bool IsDisplayWithOnlyOnSuffix;
+
         public static T toCopy<T>(this object objSource, T objDestination)
         {
             try
@@ -56,7 +74,7 @@ namespace AccountBuddy.Common
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -73,26 +91,101 @@ namespace AccountBuddy.Common
         #region NumberToWords
         public static string ToCurrencyInWords(this decimal Number)
         {
-            if (Number == 0) return "";
-            string[] Nums = string.Format("{0:0.00}", Number).Split('.');
-
-            int number1 = int.Parse(Nums[0]);
-            int number2 = int.Parse(Nums[1]);
-
             String words = "";
+            try
+            {
+                if (Number == 0) return "";
+                string[] Nums = string.Format("{0:0.00}", Number).Split('.');
 
-            words = string.Format("{0} {1}{2} ", number1.ToWords(), CurrencyName1, number1 > 1 ? "S" : "");
-            if (number2 > 0) words = string.Format("{0} AND {1} {2} {3}", words, number2.ToWords(), CurrencyName2, number2 > 1 ? "" : "");
-            //if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
-            words = string.Format("{0} ONLY", words);
+                int number1 = int.Parse(Nums[0]);
+                int number2 = int.Parse(Nums[1]);
+
+
+                if (CurrencyToWordPrefix != null)
+                {
+                    words = string.Format("{0}{1} {2} ", CurrencyToWordPrefix.ToUpper(), number1 > 1 ? "" : "", number1.ToWords());
+
+                }
+                else
+                {
+                    words = string.Format("{0} {1}{2} ", number1.ToWords(), CurrencyToWordSuffix.ToUpper(), number1 > 1 ? "" : "");
+
+                }
+                if (DecimalToWordSuffix != null)
+                {
+                    if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), DecimalToWordSuffix.ToUpper(), number2 > 1 ? "s" : "");
+
+                }
+                else
+                {
+                    if (number2 > 0) words = string.Format("{0} AND {1}{2} {3}", words, DecimalToWordSuffix.ToUpper(), number2 > 1 ? "s" : "", number2.ToWords());
+
+                }
+                //if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
+                if (IsDisplayWithOnlyOnSuffix != false)
+                {
+                    words = string.Format("{0} ONLY", words);
+
+                }
+                else
+                {
+                    words = string.Format("{0}", words);
+
+                }
+                return words;
+            }
+
+            catch (Exception ex)
+            {
+
+            }
             return words;
-
         }
         public static string ToCurrencyInWords(this decimal? Number)
         {
             if (Number == null) return "";
-            return Number.Value.ToCurrencyInWords();            
+            return Number.Value.ToCurrencyInWords();
         }
+
+        public static string ToCurrencySymbol(this decimal? Number)
+        {
+            return Number == null ? "" : Number.Value.ToCurrencySymbol();
+        }
+
+        public static string ToCurrencySymbol(this decimal Number)
+        {
+            try
+            {
+                return string.Format("RM", Number);
+            }
+            catch (Exception ex) { }
+            return "";
+        }
+
+        public static string ToNumberFormat(this decimal? Number)
+        {
+            return Number == null ? "" : Number.Value.ToNumberFormat();
+       
+        }
+
+        public static string ToNumberFormat(this decimal Number)
+        {
+            return string.Format("RM {0:0.00}", Number);
+        }
+
+        public static string ToDateFormat(this DateTime? dt)
+        {
+            return dt == null ? "" : dt.Value.ToDateFormat();
+        }
+
+        public static string ToDateFormat(this DateTime dt)
+        {            
+           
+            return  string.Format("{0:yyyy}",dt);
+        }
+
+
+
 
         public static string ToWords(this int number1)
         {
@@ -133,18 +226,18 @@ namespace AccountBuddy.Common
                     var tensMap = new[] { "Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
 
                     if (number1 < 20)
-                        words +=  unitsMap[number1];
+                        words += unitsMap[number1];
                     else
                     {
-                        words +=  tensMap[number1 / 10];
+                        words += tensMap[number1 / 10];
                         if ((number1 % 10) > 0)
                             // words += "-" + unitsMap[number1 % 10];
                             words += " " + unitsMap[number1 % 10];
                     }
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -198,7 +291,7 @@ namespace AccountBuddy.Common
             return regex.IsMatch(s);
         }
 
-        
+
         #region Print
 
 
@@ -232,8 +325,8 @@ namespace AccountBuddy.Common
 
         public static void WriteLog(String str)
         {
-            
-            using (StreamWriter writer = new StreamWriter(Path.GetTempPath()+"FMCG_log.txt", true))
+
+            using (StreamWriter writer = new StreamWriter(Path.GetTempPath() + "FMCG_log.txt", true))
             {
                 writer.WriteLine(string.Format("{0:dd/MM/yyyy hh:mm:ss} => {1}", DateTime.Now, str));
             }

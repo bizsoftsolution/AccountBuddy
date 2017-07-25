@@ -256,7 +256,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptJobWorker.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.JobWorker.toList.Where(x => JobWorker_Filter(x)).Select(x => new { x.Ledger.LedgerName, AccountName = x.Role, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.TelephoneNo, x.Ledger.MobileNo, OPCr = x.Salary }).OrderBy(x => x.LedgerName).ToList());
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.JobWorker.toList.Where(x => JobWorker_Filter(x)).Select(x => new { x.Ledger.LedgerName, AccountName = x.Role, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.TelephoneNo, x.Ledger.MobileNo, OPCr = x.Salary, x.Ledger.EMailId, }).OrderBy(x => x.LedgerName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptJobWorker.LocalReport.DataSources.Add(data);
                 rptJobWorker.LocalReport.DataSources.Add(data1);
@@ -267,9 +267,9 @@ namespace AccountBuddy.PL.frm.Master
             }
             catch (Exception ex)
             {
-
+                
             }
-            
+         
 
         }
 

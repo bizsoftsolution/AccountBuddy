@@ -262,7 +262,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptStaff.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Staff.toList.Where(x => Staff_Filter(x)).Select(x => new { x.Ledger.LedgerName, AccountName=x.Designation, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.TelephoneNo, x.Ledger.MobileNo, OPCr=x.Salary }).OrderBy(x => x.LedgerName).ToList());
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.Staff.toList.Where(x => Staff_Filter(x)).Select(x => new { x.Ledger.LedgerName, AccountName=x.Designation, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.TelephoneNo, x.Ledger.MobileNo,x.Ledger.EMailId,  OPCr=x.Salary }).OrderBy(x => x.LedgerName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptStaff.LocalReport.DataSources.Add(data);
                 rptStaff.LocalReport.DataSources.Add(data1);
@@ -355,7 +355,13 @@ namespace AccountBuddy.PL.frm.Master
 
         private void txtMail_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text)) MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+            if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
+            {
+                MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+                txtMail.Focus();
+
+            }
+
         }
 
     }

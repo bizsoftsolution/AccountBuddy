@@ -74,7 +74,7 @@ namespace AccountBuddy.BLL
             {
                 return "Liabilities";
             }
-            
+
         }
 
         public static int Liabilities_Value
@@ -96,7 +96,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return toList.Where(x => x.DataKey ==Income_Key).FirstOrDefault().DataValue;
+                return toList.Where(x => x.DataKey == Income_Key).FirstOrDefault().DataValue;
             }
         }
 
@@ -577,7 +577,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return toList.Where(x => x.DataKey ==SalesAccount_Ledger_Key).FirstOrDefault().DataValue;
+                return toList.Where(x => x.DataKey == SalesAccount_Ledger_Key).FirstOrDefault().DataValue;
             }
         }
         #endregion
@@ -686,6 +686,21 @@ namespace AccountBuddy.BLL
                 return toList.Where(x => x.DataKey == IndirectExpense_Key).FirstOrDefault().DataValue;
             }
         }
+        public static string Salary_Key
+        {
+            get
+            {
+                return "Salary";
+            }
+
+        }
+        public static int Salary_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Salary_Key).FirstOrDefault().DataValue;
+            }
+        }
         public static string PurchaseAccount_Key
         {
             get
@@ -701,6 +716,9 @@ namespace AccountBuddy.BLL
                 return toList.Where(x => x.DataKey == PurchaseAccount_Key).FirstOrDefault().DataValue;
             }
         }
+
+
+
         #region Purchase_Ac_Ledger
         public static string PurchaseAccount_Ledger_Key
         {
@@ -718,7 +736,7 @@ namespace AccountBuddy.BLL
             }
         }
         #endregion
-      
+
         #region Purchase_Return A/C Ledger
         public static string Purchase_Return_Ledger_Key
         {
@@ -737,7 +755,75 @@ namespace AccountBuddy.BLL
         }
         #endregion
 
+        #region JobOrderIssued_Ledger
+        public static string JobOrderIssued_Ledger_Key
+        {
+            get
+            {
+                return "Job Order Issued";
+            }
 
+        }
+        public static int JobOrderIssued_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == JobOrderIssued_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+        #region JobOrderReceived_Ledger
+        public static string JobOrderReceived_Ledger_Key
+        {
+            get
+            {
+                return "Job Order Received";
+            }
+
+        }
+        public static int JobOrderReceived_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == JobOrderReceived_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+
+        #region StockInProcess_Ledger
+        public static string StockInProcess_Ledger_Key
+        {
+            get
+            {
+                return "Stock In Process";
+            }
+
+        }
+        public static int StockInProcess_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == StockInProcess_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+        #region StockSeperated_Ledger
+        public static string StockSeperated_Ledger_Key
+        {
+            get
+            {
+                return "Stock Seperated";
+            }
+
+        }
+        public static int StockSeperated_Ledger_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == StockSeperated_Ledger_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
         #endregion
 
         public static List<DataKeyValue> toList

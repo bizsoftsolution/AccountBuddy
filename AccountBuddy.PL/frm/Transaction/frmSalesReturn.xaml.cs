@@ -35,6 +35,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
             data.Clear();
             onClientEvents();
+
+            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencySymbolPrefix);
+            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencySymbolPrefix);
         }
         private void onClientEvents()
         {

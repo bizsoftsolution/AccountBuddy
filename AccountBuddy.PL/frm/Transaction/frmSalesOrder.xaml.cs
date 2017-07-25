@@ -32,6 +32,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
             data.Clear();
             onClientEvents();
+            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AccountBuddy.Common.AppLib.CurrencySymbolPrefix);
+
+            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencySymbolPrefix);
         }
         private void onClientEvents()
         {
@@ -163,7 +166,7 @@ namespace AccountBuddy.PL.frm.Transaction
             var rv = data.Find();
             if (data.Id != 0)
             {
-                btnMakesales.IsEnabled = data.Status == "Pending" ? true : false; if (data.Id != 0)
+                btnMakesales.IsEnabled = data.Status == "Pending" ? true : false;
                     btnPrint.IsEnabled = true;
 
             }
@@ -267,7 +270,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         }
 
-        private void txtdiscountAmount_TextChanged_1(object sender, TextChangedEventArgs e)
+        private void txtdiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
@@ -306,5 +309,6 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         #endregion
 
+       
     }
 }

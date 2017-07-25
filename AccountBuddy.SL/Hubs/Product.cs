@@ -30,6 +30,11 @@ namespace AccountBuddy.SL.Hubs
             ProductsTo.SRQty = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
             ProductsTo.SInQty = ProductsFrom.StockInDetails.Where(x => x.StockIn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
             ProductsTo.SOutQty = ProductsFrom.StockOutDetails.Where(x => x.StockOut.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.JOQty = ProductsFrom.JobOrderIssueDetails.Where(x => x.JobOrderIssue.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.JRQty = ProductsFrom.JobOrderReceivedDetails.Where(x => x.JobOrderReceived.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SSQty = ProductsFrom.StockSeperatedDetails.Where(x => x.StockSeparated.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+            ProductsTo.SPQty = ProductsFrom.StockInProcessDetails.Where(x => x.StockInProcess.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+
             return ProductsTo;
         }
 

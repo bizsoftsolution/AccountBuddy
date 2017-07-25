@@ -66,6 +66,9 @@
     <Compile Include="Customer.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomFormat.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataKeyValue.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
@@ -97,6 +100,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FMCG.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="JobOrderIssue.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobOrderIssueDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobOrderReceived.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobOrderReceivedDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="JobWorker.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
@@ -186,10 +201,22 @@
     <Compile Include="StockInDetail.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="StockInProcess.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockInProcessDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="StockOut.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="StockOutDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockSeparated.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockSeperatedDetail.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Supplier.cs">
@@ -223,8 +250,7 @@
     <None Include="DBFMCGModel.edmx.diagram">
       <DependentUpon>DBFMCGModel.edmx</DependentUpon>
     </None>
-    <None Include="DB\DBFMCG2806.bak" />
-    <None Include="DB\DBFMCG_1007.bak" />
+    <None Include="DB\DBFMCG_210717.bak" />
     <None Include="FMCG.xsc">
       <DependentUpon>FMCG.xsd</DependentUpon>
     </None>

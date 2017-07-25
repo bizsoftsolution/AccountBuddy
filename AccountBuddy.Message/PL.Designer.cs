@@ -259,6 +259,15 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Job has been Received!.
+        /// </summary>
+        public static string Transaction_Job_Received {
+            get {
+                return ResourceManager.GetString("Transaction_Job_Received", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Purchase Done!!.
         /// </summary>
         public static string Transaction_Make_Purchase {

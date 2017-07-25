@@ -177,6 +177,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmCustomSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmJobWorker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -214,6 +218,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Master\frmUserType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Print\frmJobOrderIssue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Print\frmJobOrderReceived.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -294,6 +306,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmJobOrderPendingReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmPayableReceivable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -354,11 +370,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\JOPendingPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmBankReconcilation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Transaction\frmBankReconciliationPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmJobOrderIssue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmJobOrderReceived.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -414,11 +442,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmStockInProcess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmStockOut.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Transaction\frmStockProcess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmStockSeparated.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -442,6 +478,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Conversion\CurrencyInWordConverter.cs" />
+    <Compile Include="Conversion\CurrencySymbolConverter.cs" />
+    <Compile Include="Conversion\DateFormatConverter.cs" />
+    <Compile Include="Conversion\NumberFormatConverter.cs" />
     <Compile Include="Conversion\SumValues.cs" />
     <Compile Include="Conversion\VisibilityConverter.cs" />
     <Compile Include="CTRL\DataGridNumericColumn.cs" />
@@ -468,6 +508,9 @@
     </Compile>
     <Compile Include="frm\Master\frmCustomer.xaml.cs">
       <DependentUpon>frmCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmCustomSetting.xaml.cs">
+      <DependentUpon>frmCustomSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmJobWorker.xaml.cs">
       <DependentUpon>frmJobWorker.xaml</DependentUpon>
@@ -498,6 +541,12 @@
     </Compile>
     <Compile Include="frm\Master\frmUserType.xaml.cs">
       <DependentUpon>frmUserType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Print\frmJobOrderIssue.xaml.cs">
+      <DependentUpon>frmJobOrderIssue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Print\frmJobOrderReceived.xaml.cs">
+      <DependentUpon>frmJobOrderReceived.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Print\frmQuickPayment.xaml.cs">
       <DependentUpon>frmQuickPayment.xaml</DependentUpon>
@@ -557,6 +606,9 @@
     <Compile Include="frm\Report\frmIncomeAndExpenditurePrint.xaml.cs">
       <DependentUpon>frmIncomeAndExpenditurePrint.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Report\frmJobOrderPendingReport.xaml.cs">
+      <DependentUpon>frmJobOrderPendingReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Report\frmPayableReceivable.xaml.cs">
       <DependentUpon>frmPayableReceivable.xaml</DependentUpon>
     </Compile>
@@ -602,11 +654,20 @@
     <Compile Include="frm\Report\frmTrialBalancePrint.xaml.cs">
       <DependentUpon>frmTrialBalancePrint.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Report\JOPendingPrint.xaml.cs">
+      <DependentUpon>JOPendingPrint.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmBankReconcilation.xaml.cs">
       <DependentUpon>frmBankReconcilation.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmBankReconciliationPrint.xaml.cs">
       <DependentUpon>frmBankReconciliationPrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmJobOrderIssue.xaml.cs">
+      <DependentUpon>frmJobOrderIssue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmJobOrderReceived.xaml.cs">
+      <DependentUpon>frmJobOrderReceived.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmJournal.xaml.cs">
       <DependentUpon>frmJournal.xaml</DependentUpon>
@@ -647,11 +708,17 @@
     <Compile Include="frm\Transaction\frmStockInOut.xaml.cs">
       <DependentUpon>frmStockInOut.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmStockInProcess.xaml.cs">
+      <DependentUpon>frmStockInProcess.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmStockOut.xaml.cs">
       <DependentUpon>frmStockOut.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmStockProcess.xaml.cs">
       <DependentUpon>frmStockProcess.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmStockSeparated.xaml.cs">
+      <DependentUpon>frmStockSeparated.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Vouchers\frmQuickJournalVoucher.xaml.cs">
       <DependentUpon>frmQuickJournalVoucher.xaml</DependentUpon>
