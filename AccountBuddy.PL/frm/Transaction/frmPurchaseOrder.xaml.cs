@@ -41,6 +41,9 @@ namespace AccountBuddy.PL.frm.Transaction
             dateInfo.ShortDatePattern = "MM/yyyy";
             cultureInfo.DateTimeFormat = dateInfo;
             onClientEvents();
+            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AccountBuddy.Common.AppLib.CurrencySymbolPrefix);
+
+            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencySymbolPrefix);
         }
 
         private void onClientEvents()                 

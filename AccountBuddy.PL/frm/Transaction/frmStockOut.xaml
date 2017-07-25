@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Transaction"
              mc:Ignorable="d" 
+           xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"        
             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
          
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
@@ -16,6 +17,10 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
+        <Conversion:NumberFormatConverter x:Key="NumberFormat"/>
+        <Conversion:CurrencySymbolConverter x:Key="CurrencySymbolFormat"/>
+        <Conversion:CurrencyInWordConverter x:Key="CurrencyInWordFormat"/>
+        <Conversion:DateFormatConverter x:Key="DateFormat"/>
     </UserControl.Resources>
 
     <Grid>
@@ -171,7 +176,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Orientation="Horizontal" Margin="10,250,0,0">
-                        <TextBox IsReadOnly="True" x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding AmountInwords}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"   TextAlignment="Left"  Width="730"/>
+                        <TextBox IsReadOnly="True" x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding ItemAmount, Mode=TwoWay,Converter={StaticResource CurrencyInWordFormat}}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"   TextAlignment="Left"  Width="730"/>
                     </StackPanel>
 
                 </Grid>
