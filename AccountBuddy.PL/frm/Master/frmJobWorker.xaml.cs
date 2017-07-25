@@ -269,7 +269,7 @@ namespace AccountBuddy.PL.frm.Master
             {
 
             }
-            +
+            
 
         }
 

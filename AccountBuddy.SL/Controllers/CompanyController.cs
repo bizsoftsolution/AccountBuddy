@@ -29,8 +29,7 @@ namespace AccountBuddy.SL.Controllers
                                           EMailId = x.EMailId,
                                           MobileNo = x.MobileNo,
                                           TelephoneNo = x.TelephoneNo,
-                                          GSTNo = x.GSTNo,
-                                          Logo = x.Logo,
+                                          GSTNo = x.GSTNo,                                          
                                           CompanyType = x.CompanyType,
                                           UnderCompanyId = x.UnderCompanyId.Value
 
@@ -38,7 +37,9 @@ namespace AccountBuddy.SL.Controllers
                                       })
                                       .ToList();
 
-            return Json(l1, JsonRequestBehavior.AllowGet);
+            var data =  Json(l1, JsonRequestBehavior.AllowGet);
+            data.MaxJsonLength = int.MaxValue;
+            return data;
         }
 
         public JsonResult Login(string CompanyName,String LoginId, String Password)
