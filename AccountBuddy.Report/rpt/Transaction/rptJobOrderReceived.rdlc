@@ -618,7 +618,7 @@
   <Width>6.10045in</Width>
   <Page>
     <PageHeader>
-      <Height>8.06665cm</Height>
+      <Height>7.96082cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1052,7 +1052,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>RECEIVED BY:</Value>
+                          <Value>ORDER BY:</Value>
                           <Style>
                             <FontWeight>Bold</FontWeight>
                           </Style>
@@ -1327,7 +1327,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>=First(Fields!RefNo.Value, "JobOrderReceived")</Value>
+                          <Value>=First(Fields!RefCode.Value, "JobOrderReceived")</Value>
                           <Style>
                             <FontSize>9pt</FontSize>
                           </Style>
@@ -1404,8 +1404,8 @@
             </Rectangle>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Top>1.29737in</Top>
-          <Left>0.17013in</Left>
+          <Top>1.24591in</Top>
+          <Left>0.1405in</Left>
           <Height>1.80556in</Height>
           <Width>5.81945in</Width>
           <ZIndex>7</ZIndex>

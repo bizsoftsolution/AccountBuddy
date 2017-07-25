@@ -796,21 +796,21 @@ namespace AccountBuddy.SL.Hubs
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
                     LedgerId = S.JobWorker.Ledger.Id,
-                    DrAmt = S.TotalAmount,
+                   CrAmt = S.TotalAmount,
                     Particulars = S.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
                     LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.JobOrderReceived_Ledger_Key, CId),
-                    CrAmt = S.ItemAmount - S.DiscountAmount + S.ExtraAmount,
+                   DrAmt = S.ItemAmount - S.DiscountAmount + S.ExtraAmount,
                     Particulars = S.Narration
                 });
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
                     LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Output_Tax_Ledger_Key, CId),
-                    CrAmt = S.GSTAmount,
+                    DrAmt = S.GSTAmount,
                     Particulars = S.Narration
                 });
 
@@ -824,11 +824,11 @@ namespace AccountBuddy.SL.Hubs
                     if (jd.DrAmt != 0)
                     {
                         jd.LedgerId = S.JobWorker.Ledger.Id;
-                        jd.DrAmt = S.TotalAmount;
+                        jd.CrAmt = S.TotalAmount;
                     }
                     else
                     {
-                        jd.CrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.JobOrderReceived_Ledger_Key, CId) ? S.ItemAmount - S.DiscountAmount + S.ExtraAmount : S.GSTAmount;
+                        jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.JobOrderReceived_Ledger_Key, CId) ? S.ItemAmount - S.DiscountAmount + S.ExtraAmount : S.GSTAmount;
                     }
                 }
             }

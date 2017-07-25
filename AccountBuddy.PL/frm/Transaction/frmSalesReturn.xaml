@@ -10,7 +10,7 @@
             
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
           
-           d:DesignHeight="600" d:DesignWidth="1100" Background="White">
+           d:DesignHeight="600" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>

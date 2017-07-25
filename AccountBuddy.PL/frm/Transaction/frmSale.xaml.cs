@@ -35,9 +35,9 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbPType.DisplayMemberPath = "Type";
             cmbPType.SelectedValuePath = "Id";
 
-            lblDiscountAmount.Text = string.Format("{0}({1})",  "Discount Amount", AccountBuddy.Common.AppLib.CurrencySymbolPrefix);
+            lblDiscountAmount.Text = string.Format("{0}({1})",  "Discount Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
 
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencySymbolPrefix);
+            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
 
             data.Clear();
             onClientEvents();
@@ -419,8 +419,13 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
+
         #endregion
 
-
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+        }
     }
 }

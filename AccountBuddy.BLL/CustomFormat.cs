@@ -498,6 +498,9 @@ namespace AccountBuddy.BLL
             CustomFormat V = new CustomFormat();
             V.Find(UserAccount.User.UserType.CompanyId);
 
+            Common.AppLib.CurrencyPositiveSymbolPrefix = V.CurrencyPositiveSymbolPrefix;
+            Common.AppLib.CurrencyPositiveSymbolSuffix = V.CurrencyPositiveSymbolSuffix;
+
             Common.AppLib.CurrencyToWordPrefix = V.CurrencyToWordPrefix;
             Common.AppLib.CurrencyToWordSuffix = V.CurrencyToWordSuffix;
             Common.AppLib.DecimalToWordPrefix = V.DecimalToWordPrefix;

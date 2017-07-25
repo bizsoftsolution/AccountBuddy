@@ -210,8 +210,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
-        }
+             }
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {

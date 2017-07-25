@@ -41,9 +41,9 @@ namespace AccountBuddy.PL.frm.Transaction
             dateInfo.ShortDatePattern = "MM/yyyy";
             cultureInfo.DateTimeFormat = dateInfo;
             onClientEvents();
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AccountBuddy.Common.AppLib.CurrencySymbolPrefix);
+            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
 
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencySymbolPrefix);
+            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
         }
 
         private void onClientEvents()                 
@@ -300,6 +300,12 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.Text = AppLib.NumericOnly(txtDiscount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
         }
     }
 }

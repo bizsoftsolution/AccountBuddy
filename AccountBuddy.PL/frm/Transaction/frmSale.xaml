@@ -7,7 +7,7 @@
              xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"        
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1100" Background="White" >
+             d:DesignHeight="800" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">

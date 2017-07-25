@@ -50,9 +50,9 @@ namespace AccountBuddy.Common
         public static string DecimalToWordSuffix;
         public static string DecimalToWordPrefix;
 
-        public static string CurrencySymbolPrefix="RM";
-        public static string CurrencySymbolSuffix = "RM";
-
+        public static string CurrencyPositiveSymbolPrefix;
+        public static string CurrencyPositiveSymbolSuffix;
+        public static string NumberFormat;
 
         public static bool IsDisplayWithOnlyOnSuffix;
 
@@ -124,12 +124,12 @@ namespace AccountBuddy.Common
                 //if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
                 if (IsDisplayWithOnlyOnSuffix != false)
                 {
-                    words = string.Format("{0} ONLY", words);
+                    words = string.Format("{0} ONLY", words.ToUpper());
 
                 }
                 else
                 {
-                    words = string.Format("{0}", words);
+                    words = string.Format("{0}", words.ToUpper());
 
                 }
                 return words;
@@ -156,7 +156,7 @@ namespace AccountBuddy.Common
         {
             try
             {
-                return string.Format("RM", Number);
+                return string.Format("{0}", CurrencyPositiveSymbolPrefix);
             }
             catch (Exception ex) { }
             return "";
@@ -170,7 +170,7 @@ namespace AccountBuddy.Common
 
         public static string ToNumberFormat(this decimal Number)
         {
-            return string.Format("RM {0:0.00}", Number);
+            return string.Format("{0} {1:0.00}",CurrencyPositiveSymbolPrefix, Number);
         }
 
         public static string ToDateFormat(this DateTime? dt)
