@@ -108,7 +108,7 @@
                         <TextBlock  TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center">Currency Name</TextBlock>
                     </Grid>
                     <Grid Grid.Row="2" Grid.Column="0">
-                        <TextBlock TextWrapping="Wrap"  TextAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center">Currecy Name After Decimal</TextBlock>
+                        <TextBlock TextWrapping="Wrap"  TextAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center">Currency Name After Decimal</TextBlock>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="1">
                         <StackPanel VerticalAlignment="Center">
