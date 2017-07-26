@@ -1852,7 +1852,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!ExtraAmount.Value, "JobOrderReceived")</Value>
+                      <Value>=First(Fields!Extras.Value, "JobOrderReceived")</Value>
                       <Style>
                         <Format>'RM' 0.00;('RM' 0.00)</Format>
                       </Style>
@@ -2035,6 +2035,13 @@
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
       <rd:DataSourceID>02a9005a-48a3-454b-a9c3-aee7a547bf13</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="AccountBuddyBLL4">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>1c57c28c-ebf2-4389-bcb8-863f23d19712</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -2244,9 +2251,70 @@
         <rd:ObjectDataSourceType>AccountBuddy.BLL.Ledger, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
+    <DataSet Name="JobOrderReceivedDetail">
+      <Query>
+        <DataSourceName>AccountBuddyBLL3</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Amount">
+          <DataField>Amount</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="DiscountAmount">
+          <DataField>DiscountAmount</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="GSTAmount">
+          <DataField>GSTAmount</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="Id">
+          <DataField>Id</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="ItemCode">
+          <DataField>ItemCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JRId">
+          <DataField>JRId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="ProductId">
+          <DataField>ProductId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="ProductName">
+          <DataField>ProductName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="UnitPrice">
+          <DataField>UnitPrice</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="UOMId">
+          <DataField>UOMId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="UOMName">
+          <DataField>UOMName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
+        <rd:TableName>JobOrderReceivedDetail</rd:TableName>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.JobOrderReceivedDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
     <DataSet Name="JobOrderReceived">
       <Query>
-        <DataSourceName>AccountBuddyBLL2</DataSourceName>
+        <DataSourceName>AccountBuddyBLL4</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -2262,8 +2330,8 @@
           <DataField>DiscountAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="ExtraAmount">
-          <DataField>ExtraAmount</DataField>
+        <Field Name="Extras">
+          <DataField>Extras</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="GSTAmount">
@@ -2327,67 +2395,6 @@
         <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
         <rd:TableName>JobOrderReceived</rd:TableName>
         <rd:ObjectDataSourceType>AccountBuddy.BLL.JobOrderReceived, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
-    <DataSet Name="JobOrderReceivedDetail">
-      <Query>
-        <DataSourceName>AccountBuddyBLL3</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="Amount">
-          <DataField>Amount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="DiscountAmount">
-          <DataField>DiscountAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="GSTAmount">
-          <DataField>GSTAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="Id">
-          <DataField>Id</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-        <Field Name="ItemCode">
-          <DataField>ItemCode</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="JRId">
-          <DataField>JRId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="ProductId">
-          <DataField>ProductId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="ProductName">
-          <DataField>ProductName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="UnitPrice">
-          <DataField>UnitPrice</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="UOMId">
-          <DataField>UOMId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="UOMName">
-          <DataField>UOMName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <rd:DataSetInfo>
-        <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
-        <rd:TableName>JobOrderReceivedDetail</rd:TableName>
-        <rd:ObjectDataSourceType>AccountBuddy.BLL.JobOrderReceivedDetail, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
