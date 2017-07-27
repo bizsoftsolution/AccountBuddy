@@ -61,22 +61,22 @@
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="1">
                         <StackPanel>
-                            <TextBox TextAlignment="Center" Text="{Binding CurrencyPositiveSymbolPrefix, Mode=TwoWay}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="42" Width="140" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center" Text="{Binding CurrencyPositiveSymbolPrefix, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="42" Width="140" Margin="5" BorderThickness="1"></TextBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="2" Grid.Column="1">
                         <StackPanel>
-                            <TextBox TextAlignment="Center" Text="{Binding CurrencyNegativeSymbolPrefix, Mode=TwoWay}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="42" Width="140" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center" Text="{Binding CurrencyNegativeSymbolPrefix, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="42" Width="140" Margin="5" BorderThickness="1"></TextBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="2">
                         <StackPanel>
-                            <TextBox TextAlignment="Center" Text="{Binding CurrencyPositiveSymbolSuffix, Mode=TwoWay}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="42" Width="140" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center" Text="{Binding CurrencyPositiveSymbolSuffix, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="42" Width="140" Margin="5" BorderThickness="1"></TextBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="2" Grid.Column="2">
                         <StackPanel>
-                            <TextBox TextAlignment="Center"  Text="{Binding CurrencyNegativeSymbolSuffix, Mode=TwoWay}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="42" Width="140" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center"  Text="{Binding CurrencyNegativeSymbolSuffix, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="42" Width="140" Margin="5" BorderThickness="1"></TextBox>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -112,22 +112,22 @@
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="1">
                         <StackPanel VerticalAlignment="Center">
-                            <TextBox TextAlignment="Center" Text="{Binding CurrencyToWordPrefix,Mode=TwoWay}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="140" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center" Text="{Binding CurrencyToWordPrefix,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="140" Margin="5" BorderThickness="1"></TextBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="2" Grid.Column="1">
                         <StackPanel VerticalAlignment="Center">
-                            <TextBox TextAlignment="Center" Text="{Binding DecimalToWordPrefix,Mode=TwoWay}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="140" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center" Text="{Binding DecimalToWordPrefix,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="140" Margin="5" BorderThickness="1"></TextBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="2">
                         <StackPanel VerticalAlignment="Center">
-                            <TextBox TextAlignment="Center" Text="{Binding CurrencyToWordSuffix,Mode=TwoWay}"  FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="140" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center" Text="{Binding CurrencyToWordSuffix,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="140" Margin="5" BorderThickness="1"></TextBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="2" Grid.Column="2">
                         <StackPanel VerticalAlignment="Center">
-                            <TextBox TextAlignment="Center" Text="{Binding DecimalToWordSuffix,Mode=TwoWay}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="140" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center" Text="{Binding DecimalToWordSuffix,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="140" Margin="5" BorderThickness="1"></TextBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="3" Grid.Column="0">
@@ -137,7 +137,7 @@
                     </Grid>
                     <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" >
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <ComboBox x:Name="cmbCase" Margin="30,0,0,0" Width="300" SelectedItem="{Binding CurrencyCaseSensitive,Mode=TwoWay}">
+                            <ComboBox x:Name="cmbCase" Margin="30,0,0,0" Width="300" SelectedIndex ="{Binding CurrencyCaseSensitive,Mode=TwoWay}">
                                 <ComboBoxItem>Lower case</ComboBoxItem>
                                 <ComboBoxItem>Upper case</ComboBoxItem>
                                 <ComboBoxItem>Capitalize Each Word</ComboBoxItem>
@@ -156,7 +156,7 @@
 
             </GroupBox>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0" Margin="10">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="10" Visibility="Collapsed">
             <GroupBox Header="Number Format" >
                 <Grid>
                     <Grid.RowDefinitions>
@@ -206,7 +206,7 @@
 
             </GroupBox>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="2" Margin="10">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="5">
             <GroupBox Header="Sample Number Format" >
                 <Grid>
                     <Grid.RowDefinitions>
@@ -248,16 +248,19 @@
 
             </GroupBox>
         </Grid>
-       <Grid Grid.Row="2" Grid.ColumnSpan="3"  Margin="5">
+       <Grid Grid.Row="1" Grid.Column="3"  Margin="5">
             <GroupBox Header="Sample Amount In Words" >
                 <Grid>
                     <StackPanel Orientation="Vertical">
                         <TextBlock x:Name="txtAmountInWords" Text="{Binding SampleCurrency,Mode=OneWay, Converter={StaticResource CurrencyInWordFormat}}" FontWeight="Bold" TextWrapping="Wrap" Width="850" Height="40" ></TextBlock>
-                        <Button Width="80" Height="35" x:Name="btnSave" Content="Save"  Margin="446,10" Click="btnSave_Click" />
 
                     </StackPanel>
                 </Grid>
             </GroupBox>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.ColumnSpan="3">
+            <Button Width="80" Height="35" x:Name="btnSave" Content="Save"  Margin="446,10" Click="btnSave_Click" />
         </Grid>
     </Grid>
 
