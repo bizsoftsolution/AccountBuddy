@@ -393,6 +393,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
+                if (_SampleCurrency == null) _SampleCurrency = (decimal) 1234567.89;
                 return _SampleCurrency;
             }
 
@@ -418,6 +419,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
+                if (_SampleCurrencyPositive == null) SampleCurrencyPositive = Math.Abs(SampleCurrency.Value);
                 return _SampleCurrencyPositive;
             }
 
