@@ -16,9 +16,16 @@ namespace AccountBuddy.PL
         public static frmHome frmHome;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-
-            Window frm = new frmLogin();
-            frm.Show();
+            try
+            {
+                Common.AppLib.WriteLog("Application Startup");
+                Window frm = new frmLogin();
+                frm.Show();
+            }
+           catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex.Message);
+            }
 
         }
 

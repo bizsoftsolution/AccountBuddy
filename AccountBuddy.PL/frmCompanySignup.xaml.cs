@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using AccountBuddy.Common;
+using System.IO;
 
 namespace AccountBuddy.PL
 {
@@ -127,6 +128,8 @@ namespace AccountBuddy.PL
                 OpenDialogBox.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
 
                 var browsefile = OpenDialogBox.ShowDialog();
+                var fileLength = new FileInfo(OpenDialogBox.FileName).Length;
+            
                 if (browsefile == true)
                 {
                     string sFileName = OpenDialogBox.FileName.ToString();

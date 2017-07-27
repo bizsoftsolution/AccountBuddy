@@ -68,11 +68,19 @@ namespace AccountBuddy.PL.frm.Master
             }
             else if (data.Designation == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Deignation"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Designation"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
            else if (data.Salary == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Salary"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.DOB == null)
+            {
+                MessageBox.Show(string.Format("Enter Date Of Birth.."), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.DOJ == null)
+            {
+                MessageBox.Show(string.Format("Enter Date Of Join.."), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {

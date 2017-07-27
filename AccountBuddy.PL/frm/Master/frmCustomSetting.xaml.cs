@@ -23,7 +23,7 @@ namespace AccountBuddy.PL.frm.Master
     {
         BLL.CustomFormat data = new BLL.CustomFormat();
         public string FormName = "CustomFormat";
-        int number1 = 123456789;
+        double n = 123456789.12;
         int number2 = 10;
         string words = "";
         public bool IsForcedClose = false;
@@ -51,14 +51,27 @@ namespace AccountBuddy.PL.frm.Master
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LoadWindow();
+            data.SampleCurrency= (decimal)n;
         }
 
         public void LoadWindow()
         {
             BLL.CustomFormat.Init();
             data.Find(BLL.UserAccount.User.UserType.CompanyId);
+            if (data.CurrencyCaseSensitive == 1)
+            {
+                cmbCase.SelectedIndex = 0;
+            }
+            else if(data.CurrencyCaseSensitive==2)
+            {
+                cmbCase.SelectedIndex =1;
+            }
+            else
+            {
+                cmbCase.SelectedIndex = 2;
+            }
+            data.SampleCurrency = (decimal)n;
 
-            
         }
         #region ButtonEvents
 
@@ -73,12 +86,27 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
+
             else
             {
+                if (cmbCase.Text == "Lower case")
+                {
+                    data.CurrencyCaseSensitive = 1;
+                }
+                else if (cmbCase.Text == "Upper case")
+                {
+                    data.CurrencyCaseSensitive = 2;
+                }
+                else if (cmbCase.Text == "Capitalize Each Word")
+                {
+                    data.CurrencyCaseSensitive = 3;
+                }
                 if (data.Save() == true)
                 {
+
                     MessageBox.Show(Message.PL.Saved_Alert);
-                    //   App.frmHome.ShowWelcome();
+                    IsForcedClose = true;
+                    Close();
                 }
             }
 
@@ -101,8 +129,6 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-
-
         //private void setSample()
         //{
         //    if (data.CurrencyPositiveSymbolPrefix !=null )
@@ -122,7 +148,6 @@ namespace AccountBuddy.PL.frm.Master
         //    txtSampleCurrencyName1.Text = words;
 
         //}
-
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
