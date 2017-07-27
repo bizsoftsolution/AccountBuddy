@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
@@ -107,10 +109,29 @@ namespace AccountBuddy.Common
                 int number2 = int.Parse(Nums[1]);                
 
                 words = string.Format("{0}{1}{2}",CurrencyToWordPrefix, number1.ToWords(), CurrencyToWordSuffix);
+
                 if (number2 > 0) words = string.Format("{0} AND {1}{2}{3}", words,DecimalToWordPrefix??"", number2.ToWords(), DecimalToWordSuffix??"");
+
+                if (IsDisplayWithOnlyOnSuffix)
+                {
+                    words = string.Format("{0} Only", words);
+                }
+
+
+                CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+                TextInfo textInfo = cultureInfo.TextInfo;
+                
                 if (CurrencyCaseSensitive == 0)
                 {
-                    return words.ToUpper();
+                    return textInfo.ToLower(words);
+                }
+                else if (CurrencyCaseSensitive == 1)
+                {
+                    return textInfo.ToUpper(words);
+                }
+                else if (CurrencyCaseSensitive == 2)
+                {
+                    return textInfo.ToTitleCase(words.ToLower());
                 }
                 else
                 {
