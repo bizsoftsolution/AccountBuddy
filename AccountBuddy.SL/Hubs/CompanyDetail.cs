@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AccountBuddy.BLL;
 
 namespace AccountBuddy.SL.Hubs
 {
@@ -93,6 +94,7 @@ namespace AccountBuddy.SL.Hubs
                     if (d.Id != 0)
                     {
                         CompanySetup(cm);
+                        CurrencySetup(cm);
                         if (d.UnderCompanyId != null)
                         {
                             var lstCompany = DB.CompanyDetails.Where(x => x.Id == d.UnderCompanyId || (x.Id != d.Id && x.UnderCompanyId == d.UnderCompanyId)).ToList();                            
@@ -163,6 +165,34 @@ namespace AccountBuddy.SL.Hubs
             return 0;
         }
 
+        private void CurrencySetup(CompanyDetail cm)
+        {
+            if(cm.UnderCompanyId==0||cm.UnderCompanyId==null)
+            {
+                DAL.CustomFormat cf = new DAL.CustomFormat();
+                cf.CompanyId = cm.Id;
+                cf.CurrencyPositiveSymbolPrefix = "RM";
+                cf.CurrencyPositiveSymbolSuffix = "RM";
+                cf.CurrencyNegativeSymbolPrefix = "RM";
+                cf.CurrencyNegativeSymbolSuffix = "RM";
+                cf.CurrencyToWordPrefix = "Ringgit";
+                cf.CurrencyToWordSuffix= "Ringgit";
+                cf.DecimalToWordPrefix = "Cent";
+                cf.DecimalToWordSuffix= "Cent";
+                cf.DigitGroupingBy = 2;
+                cf.CurrencyCaseSensitive = 2;
+                cf.DecimalSymbol = ".";
+                cf.DigitGroupingSymbol = ",";
+                cf.IsDisplayWithOnlyOnSuffix = true;
+                cf.NoOfDigitAfterDecimal = 2;
+
+                DB.CustomFormats.Add(cf);
+                DB.SaveChanges();
+
+            }
+           
+        }
+
         public void CompanyDetail_Delete(int pk)
         {
             try
@@ -224,6 +254,7 @@ namespace AccountBuddy.SL.Hubs
 
 
         }
+
         void insertDataKeyValue(int CompanyId, string DataKey, int DataValue)
         {
             DAL.DataKeyValue dk = new DAL.DataKeyValue();

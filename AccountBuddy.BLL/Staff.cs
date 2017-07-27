@@ -289,9 +289,7 @@ namespace AccountBuddy.BLL
             this.Ledger.Clear();
             this.Ledger.AccountGroupId = BLL.DataKeyValue.Salary_Value;
 
-            DOB = DateTime.Now;
-            DOJ = DateTime.Now;
-            NotifyAllPropertyChanged();
+             NotifyAllPropertyChanged();
         }
 
         public bool Find(int pk)

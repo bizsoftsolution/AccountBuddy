@@ -57,6 +57,7 @@ namespace AccountBuddy.Common
         public static string CurrencyNegativeSymbolSuffix;
         public static string DecimalSymbol;
         public static string DigitGroupingSymbol;
+
         public static bool IsDisplayWithOnlyOnSuffix;
         public static int NoOfDigitAfterDecimal;
         public static int DigitGroupingBy;
@@ -103,8 +104,8 @@ namespace AccountBuddy.Common
                 if (Number == 0) return "";
                 string[] Nums = string.Format("{0:0.00}", Number).Split('.');
 
-                int number1 = int.Parse(Nums[0]);
-                int number2 = int.Parse(Nums[1]);
+                long number1 = long.Parse(Nums[0]);
+                long number2 = long.Parse(Nums[1]);
 
 
                 if (CurrencyToWordPrefix != null)
@@ -147,6 +148,7 @@ namespace AccountBuddy.Common
             }
             return words;
         }
+
         public static string ToCurrencyInWords(this decimal? Number)
         {
             if (Number == null) return "";
@@ -189,11 +191,8 @@ namespace AccountBuddy.Common
            
             return  string.Format("{0:yyyy}",dt);
         }
-
-
-
-
-        public static string ToWords(this int number1)
+        
+        public static string ToWords(this long number1)
         {
             string words = "";
 
@@ -275,7 +274,6 @@ namespace AccountBuddy.Common
             return newText;
         }
 
-
         public static string NumericQtyOnly(string str)
         {
             String newText = String.Empty;
@@ -291,12 +289,12 @@ namespace AccountBuddy.Common
             }
             return newText;
         }
+
         public static bool IsValidEmailAddress(this string s)
         {
             Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
             return regex.IsMatch(s);
         }
-
 
         #region Print
 
@@ -313,6 +311,7 @@ namespace AccountBuddy.Common
             imageData = br.ReadBytes((int)imageFileLength);
             return imageData;
         }
+
         public static BitmapImage ViewImage(byte[] bytes)
         {
             BitmapImage img = new BitmapImage();
