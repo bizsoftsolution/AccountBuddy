@@ -223,7 +223,7 @@
                     </Grid>
                     <Grid Grid.Row="0" Grid.Column="1">
                         <StackPanel>
-                            <TextBox TextAlignment="Center" Text="{Binding SampleCurrency}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Height="42" Width="250" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center" Text="{Binding SampleCurrency,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Height="42" Width="250" Margin="5" BorderThickness="1"></TextBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="0">
@@ -252,7 +252,7 @@
             <GroupBox Header="Sample Amount In Words" >
                 <Grid>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock x:Name="txtAmountInWords" Text="{Binding SampleCurrency,Mode=OneWay, Converter={StaticResource CurrencySymbolFormat}}" FontWeight="Bold" TextWrapping="Wrap" Width="850" Height="40" ></TextBlock>
+                        <TextBlock x:Name="txtAmountInWords" Text="{Binding SampleCurrency,Mode=OneWay, Converter={StaticResource CurrencyInWordFormat}}" FontWeight="Bold" TextWrapping="Wrap" Width="850" Height="40" ></TextBlock>
                         <Button Width="80" Height="35" x:Name="btnSave" Content="Save"  Margin="446,10" Click="btnSave_Click" />
 
                     </StackPanel>

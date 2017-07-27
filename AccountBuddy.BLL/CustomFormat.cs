@@ -144,9 +144,9 @@ namespace AccountBuddy.BLL
                 if (_CurrencyPositiveSymbolPrefix != value)
                 {
                     _CurrencyPositiveSymbolPrefix = value;
-                    Common.AppLib.CurrencyPositiveSymbolPrefix = value;
+                    AppLib.CurrencyPositiveSymbolPrefix = value;
                     NotifyPropertyChanged(nameof(CurrencyPositiveSymbolPrefix));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
 
                 }
             }
@@ -165,7 +165,7 @@ namespace AccountBuddy.BLL
                     _CurrencyPositiveSymbolSuffix = value;
                     Common.AppLib.CurrencyPositiveSymbolSuffix = value;
                     NotifyPropertyChanged(nameof(CurrencyPositiveSymbolSuffix));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -183,7 +183,7 @@ namespace AccountBuddy.BLL
                     _CurrencyNegativeSymbolPrefix = value;
                     Common.AppLib.CurrencyNegativeSymbolPrefix = value;
                     NotifyPropertyChanged(nameof(CurrencyNegativeSymbolPrefix));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -199,9 +199,9 @@ namespace AccountBuddy.BLL
                 if (_CurrencyNegativeSymbolSuffix != value)
                 {
                     _CurrencyNegativeSymbolSuffix = value;
-                    Common.AppLib.CurrencyNegativeSymbolPrefix = value;
+                    Common.AppLib.CurrencyNegativeSymbolSuffix = value;
                     NotifyPropertyChanged(nameof(CurrencyNegativeSymbolSuffix));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace AccountBuddy.BLL
                     _CurrencyToWordPrefix = value;
                     Common.AppLib.CurrencyToWordPrefix = value;
                     NotifyPropertyChanged(nameof(CurrencyToWordPrefix));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -237,7 +237,7 @@ namespace AccountBuddy.BLL
                     _CurrencyToWordSuffix = value;
                     Common.AppLib.CurrencyToWordSuffix = value;
                     NotifyPropertyChanged(nameof(CurrencyToWordSuffix));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -255,7 +255,7 @@ namespace AccountBuddy.BLL
                     _DecimalToWordPrefix = value;
                     Common.AppLib.DecimalToWordPrefix = value;
                     NotifyPropertyChanged(nameof(DecimalToWordPrefix));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -274,7 +274,7 @@ namespace AccountBuddy.BLL
                     _DecimalToWordSuffix = value;
                     Common.AppLib.DecimalToWordSuffix = value;
                     NotifyPropertyChanged(nameof(DecimalToWordSuffix));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -292,7 +292,7 @@ namespace AccountBuddy.BLL
                     _DecimalSymbol = value;
                     Common.AppLib.DecimalSymbol = value;
                     NotifyPropertyChanged(nameof(DecimalSymbol));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -310,7 +310,7 @@ namespace AccountBuddy.BLL
                     _DigitGroupingBy = value;
                     Common.AppLib.DigitGroupingBy = value;
                     NotifyPropertyChanged(nameof(DigitGroupingBy));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -329,7 +329,7 @@ namespace AccountBuddy.BLL
                     _DigitGroupingSymbol = value;
                     Common.AppLib.DigitGroupingSymbol = value;
                     NotifyPropertyChanged(nameof(DigitGroupingSymbol));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -347,7 +347,7 @@ namespace AccountBuddy.BLL
                     _NoOfDigitAfterDecimal = value;
                     Common.AppLib.NoOfDigitAfterDecimal = value;
                     NotifyPropertyChanged(nameof(NoOfDigitAfterDecimal));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -365,7 +365,7 @@ namespace AccountBuddy.BLL
                     _CurrencyCaseSensitive = value;
                     Common.AppLib.CurrencyCaseSensitive = value;
                     NotifyPropertyChanged(nameof(CurrencyCaseSensitive));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -383,7 +383,7 @@ namespace AccountBuddy.BLL
                     _IsDisplayWithOnlyOnSuffix = value;
                     Common.AppLib.IsDisplayWithOnlyOnSuffix = value;
                     NotifyPropertyChanged(nameof(IsDisplayWithOnlyOnSuffix));
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }
@@ -409,7 +409,7 @@ namespace AccountBuddy.BLL
                     {
                         SampleCurrencyPositive = Math.Abs(value.Value);
                     }
-                    NotifyPropertyChanged(nameof(SampleCurrency));
+                    NotifyAllPropertyChanged();
                 }
             }
         }

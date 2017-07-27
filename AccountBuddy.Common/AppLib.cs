@@ -104,41 +104,19 @@ namespace AccountBuddy.Common
                 string[] Nums = string.Format("{0:0.00}", Number).Split('.');
 
                 int number1 = int.Parse(Nums[0]);
-                int number2 = int.Parse(Nums[1]);
+                int number2 = int.Parse(Nums[1]);                
 
-
-                if (CurrencyToWordPrefix != null)
+                words = string.Format("{0}{1}{2}",CurrencyToWordPrefix, number1.ToWords(), CurrencyToWordSuffix);
+                if (number2 > 0) words = string.Format("{0} AND {1}{2}{3}", words,DecimalToWordPrefix??"", number2.ToWords(), DecimalToWordSuffix??"");
+                if (CurrencyCaseSensitive == 0)
                 {
-                    words = string.Format("{0}{1} {2} ", CurrencyToWordPrefix.ToUpper(), number1 > 1 ? "" : "", number1.ToWords());
-
+                    return words.ToUpper();
                 }
                 else
                 {
-                    words = string.Format("{0} {1}{2} ", number1.ToWords(), CurrencyToWordSuffix.ToUpper(), number1 > 1 ? "" : "");
-
+                    return words;
                 }
-                if (DecimalToWordSuffix != null)
-                {
-                    if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), DecimalToWordSuffix.ToUpper(), number2 > 1 ? "s" : "");
-
-                }
-                else
-                {
-                    if (number2 > 0) words = string.Format("{0} AND {1}{2} {3}", words, DecimalToWordSuffix.ToUpper(), number2 > 1 ? "s" : "", number2.ToWords());
-
-                }
-                //if (number2 > 0) words = string.Format("{0} AND {1} {2}{3}", words, number2.ToWords(), CurrencyName2);
-                if (IsDisplayWithOnlyOnSuffix != false)
-                {
-                    words = string.Format("{0} ONLY", words.ToUpper());
-
-                }
-                else
-                {
-                    words = string.Format("{0}", words.ToUpper());
-
-                }
-                return words;
+                
             }
 
             catch (Exception ex)
@@ -162,7 +140,7 @@ namespace AccountBuddy.Common
         {
             try
             {
-                return string.Format("{0}", CurrencyPositiveSymbolPrefix);
+                return string.Format("{0}{1}{2}", Number>=0? CurrencyPositiveSymbolPrefix : CurrencyNegativeSymbolPrefix, Math.Abs(Number), Number>=0? CurrencyPositiveSymbolSuffix:CurrencyNegativeSymbolSuffix);
             }
             catch (Exception ex) { }
             return "";
