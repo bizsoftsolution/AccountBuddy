@@ -137,7 +137,7 @@
                     </Grid>
                     <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" >
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <ComboBox x:Name="cmbCase" Margin="30,0,0,0" Width="300" >
+                            <ComboBox x:Name="cmbCase" Margin="30,0,0,0" Width="300" SelectedItem="{Binding CurrencyCaseSensitive,Mode=TwoWay}">
                                 <ComboBoxItem>Lower case</ComboBoxItem>
                                 <ComboBoxItem>Upper case</ComboBoxItem>
                                 <ComboBoxItem>Capitalize Each Word</ComboBoxItem>
@@ -223,7 +223,7 @@
                     </Grid>
                     <Grid Grid.Row="0" Grid.Column="1">
                         <StackPanel>
-                            <TextBox TextAlignment="Center" x:Name="txtSampleNumberFormat" Text="{Binding SampleCurrency}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Height="42" Width="250" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center" Text="{Binding SampleCurrency,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Height="42" Width="250" Margin="5" BorderThickness="1"></TextBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="0">

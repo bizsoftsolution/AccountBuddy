@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
         {
             return SalesOrder_NewRefNoByCompanyId(Caller.CompanyId);
         }
-        public string SalesOrder_NewRefNoByCompanyId(int CompanyId)
+        public static string SalesOrder_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.SalesOrder, dt, dt.Month);
@@ -296,6 +296,5 @@ namespace AccountBuddy.SL.Hubs
         }
         #endregion
 
-        
     }
 }
