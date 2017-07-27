@@ -251,8 +251,8 @@
        <Grid Grid.Row="1" Grid.Column="3"  Margin="5">
             <GroupBox Header="Sample Amount In Words" >
                 <Grid>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock x:Name="txtAmountInWords" Text="{Binding SampleCurrency,Mode=OneWay, Converter={StaticResource CurrencyInWordFormat}}" FontWeight="Bold" TextWrapping="Wrap" Width="850" Height="40" ></TextBlock>
+                    <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <TextBlock x:Name="txtAmountInWords" Text="{Binding SampleCurrency,Mode=OneWay, Converter={StaticResource CurrencyInWordFormat}}" FontWeight="Bold" TextWrapping="Wrap" Margin="10" FontSize="18" ></TextBlock>
 
                     </StackPanel>
                 </Grid>
