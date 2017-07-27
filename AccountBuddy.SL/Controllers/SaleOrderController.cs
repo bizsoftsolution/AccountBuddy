@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,40 @@ namespace AccountBuddy.SL.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public JsonResult Save(int LedgerId, string SaleOrderDetails)
+        {
+            try
+            {
+                DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
+
+                dynamic l1 = JsonConvert.DeserializeObject(SaleOrderDetails);
+                DAL.SalesOrder sal = new DAL.SalesOrder();
+                foreach (dynamic d1 in l1)
+                {
+                    DAL.SalesOrderDetail sd = new DAL.SalesOrderDetail()
+                    {
+                        ProductId = d1.ProductId,
+                        Quantity = d1.Qty,
+                        UnitPrice = d1.Rate,
+                        Amount = d1.Amount,
+                        UOMId = d1.UOMId
+                    };
+                    sal.SalesOrderDetails.Add(sd);
+                }
+                sal.LedgerId = LedgerId;
+                sal.SODate = DateTime.Now;
+                sal.ItemAmount = sal.SalesOrderDetails.Sum(x => x.Amount);
+                sal.RefNo = Hubs.ABServerHub.SalesOrder_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+                
+                db.SalesOrders.Add(sal);
+                db.SaveChanges();
+                return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Id = 0, HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace AccountBuddy.SL.Hubs
         {
             return Sales_NewRefNoByCompanyId(Caller.CompanyId);
         }
-        public string Sales_NewRefNoByCompanyId(int CompanyId)
+        public static string Sales_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Sales, dt, dt.Month);
