@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AccountBuddy.PL.frm.Master"
         mc:Ignorable="d"
-          xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"              
       Title="Custom Setting" Height="700" Width="1000" Closing="MetroWindow_Closing" WindowStartupLocation="CenterScreen" >
@@ -253,7 +253,6 @@
                 <Grid>
                     <StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <TextBlock x:Name="txtAmountInWords" Text="{Binding SampleCurrency,Mode=OneWay, Converter={StaticResource CurrencyInWordFormat}}" FontWeight="Bold" TextWrapping="Wrap" Margin="10" FontSize="18" ></TextBlock>
-
                     </StackPanel>
                 </Grid>
             </GroupBox>

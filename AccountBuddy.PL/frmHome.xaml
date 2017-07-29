@@ -49,7 +49,6 @@
             <Thickness x:Key="mnuItemMargin">30,0,0,0</Thickness>
         </ResourceDictionary>
     </Window.Resources>
-
     <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
         <materialDesign:DrawerHost Name="dhContent" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" Margin="0,1,0,-1">
             <materialDesign:DrawerHost.LeftDrawerContent>
@@ -165,6 +164,11 @@
                                             <Transaction:frmPurchase/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
+                                    <Menu:NavMenuItem MenuName="Purchase Return" FormName="Purchase Return">
+                                        <Menu:NavMenuItem.Content>
+                                            <Transaction:frmPurchaseReturn/>
+                                        </Menu:NavMenuItem.Content>
+                                    </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Sales Order" FormName="Sales Order">
                                         <Menu:NavMenuItem.Content>
                                             <Transaction:frmSalesOrder/>
@@ -173,11 +177,6 @@
                                     <Menu:NavMenuItem MenuName="Sales" FormName="Sales">
                                         <Menu:NavMenuItem.Content>
                                             <Transaction:frmSale/>
-                                        </Menu:NavMenuItem.Content>
-                                    </Menu:NavMenuItem>
-                                    <Menu:NavMenuItem MenuName="Purchase Return" FormName="Purchase Return">
-                                        <Menu:NavMenuItem.Content>
-                                            <Transaction:frmPurchaseReturn/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
                                     <Menu:NavMenuItem MenuName="Sales Return" FormName="Sales Return">
@@ -345,5 +344,5 @@
      
         </materialDesign:DrawerHost>
     </materialDesign:DialogHost>
-
+    
 </Controls:MetroWindow>

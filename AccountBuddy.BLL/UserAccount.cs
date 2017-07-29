@@ -440,7 +440,13 @@ namespace AccountBuddy.BLL
             return RValue;
 
         }
+        public static Boolean Admin_Authentication( String CompanyName, String LId, String Pwd)
+        {
+            var ua = FMCGHubClient.FMCGHub.Invoke<Boolean>("Admin_Authentication",  CompanyName, LId, Pwd).Result;
 
+            return ua;
+            
+        }
 
         public static void Init()
         {

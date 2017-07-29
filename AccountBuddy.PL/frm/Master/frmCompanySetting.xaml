@@ -142,7 +142,9 @@
             <!--#endregion-->
             <Grid Grid.Column="3">
                 <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"  Margin="21,172,26,85" Click="btnImage_Click"  />
-                <Border Margin="6,40,14,133" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                <Label x:Name="lblSize" Content="Size 64 to 256" Margin="10,10,10,255">
+                      
+                </Label> <Border Margin="6,40,14,133" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="147" Height="99" Margin="-23,-3,-19,-1"  />
 
                 </Border>

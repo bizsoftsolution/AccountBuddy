@@ -124,6 +124,41 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
         }
 
+        public Boolean Admin_Authentication(string CompanyName, String LoginId, String Password)
+        {
+          
+            try
+            {
+                DAL.UserAccount ua = DB.UserAccounts
+                                  .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
+                                    && x.LoginId == LoginId
+                                    && x.Password == Password 
+                                    && x.UserType.TypeOfUser ==BLL.DataKeyValue.Administrator_Key
+                                    && x.UserType.CompanyDetail.IsActive != false)
+                                    .FirstOrDefault();
+                if (ua != null)
+                {
+                   
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                WriteErrorLog("Login", "UserAccount_Login", 0, Caller.CompanyId, ex.Message);
+                return true;
+            }
+
+
+        }
+
+
         #endregion
     }
 }

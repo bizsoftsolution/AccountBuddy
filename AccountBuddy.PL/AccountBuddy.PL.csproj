@@ -181,6 +181,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmDeleteConfirmation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmJobWorker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -511,6 +515,9 @@
     </Compile>
     <Compile Include="frm\Master\frmCustomSetting.xaml.cs">
       <DependentUpon>frmCustomSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmDeleteConfirmation.xaml.cs">
+      <DependentUpon>frmDeleteConfirmation.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmJobWorker.xaml.cs">
       <DependentUpon>frmJobWorker.xaml</DependentUpon>
