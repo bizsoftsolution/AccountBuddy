@@ -50,7 +50,7 @@ namespace AccountBuddy.BLL
             {
                 if (_UserPermission == null)
                 {
-                    _UserPermission = UserAccount.User.UserType==null?new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmCompanySetting.ToString()).FirstOrDefault();
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == AppLib.Forms.frmCompanySetting.ToString()).FirstOrDefault();
                 }
                 return _UserPermission;
             }
@@ -292,7 +292,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+
         public string PostalCode
         {
             get
@@ -407,7 +407,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-           #endregion
+        #endregion
 
         #region Property  Changed Event
 
@@ -460,10 +460,10 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-           new CompanyDetail().toCopy<CompanyDetail>(this);
-           IsReadOnly = !UserPermission.AllowInsert;
-           IsActive = true;
-           NotifyAllPropertyChanged();
+            new CompanyDetail().toCopy<CompanyDetail>(this);
+            IsReadOnly = !UserPermission.AllowInsert;
+            IsActive = true;
+            NotifyAllPropertyChanged();
         }
 
         public bool Find(int pk)
@@ -482,20 +482,25 @@ namespace AccountBuddy.BLL
         public bool isValid()
         {
             bool RValue = true;
+
             lstValidation.Clear();
-            var cm = toList.Where(x => x.CompanyName == CompanyName && x.CompanyType == CompanyType&& x.UnderCompanyId==UnderCompanyId).FirstOrDefault();
-            var user = BLL.UserAccount.toList.Where(x =>  x.UserType.Company.UnderCompanyId == UnderCompanyId && x.UserName ==UserId).FirstOrDefault();
+            var cm = toList.Where(x => x.CompanyName == CompanyName && x.CompanyType == CompanyType && x.UnderCompanyId == UnderCompanyId).FirstOrDefault();
+
+            var user = BLL.UserAccount.toList.Where(x => x.UserType.Company.UnderCompanyId == (UnderCompanyId == null ? null : UnderCompanyId) && x.UserName == UserId && x.UserType.Company.CompanyName==CompanyName).FirstOrDefault();
+
+
+
 
             if (string.IsNullOrWhiteSpace(CompanyName))
             {
                 lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Required_Data, nameof(CompanyName)) });
                 RValue = false;
             }
-            else if (cm!=null)
+            else if (cm != null)
             {
                 if (cm.IsActive == false)
                 {
-                    lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format("{0} is Deleted {1}. Please Contact DENARIUSOFT Administrator.",CompanyName,CompanyType) });
+                    lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format("{0} is Deleted {1}. Please Contact DENARIUSOFT Administrator.", CompanyName, CompanyType) });
                     RValue = false;
                 }
                 else if (cm.Id != Id)
@@ -503,18 +508,18 @@ namespace AccountBuddy.BLL
                     lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Existing_Data, CompanyName) });
                     RValue = false;
                 }
-               
-                
+
+
             }
-            else if(user!=null)
+            else if (user != null)
             {
-                 if (user.UserName == UserId)
+                if (user.UserName == UserId)
                 {
                     lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.PL.User_Id_Exist, CompanyName) });
                     RValue = false;
                 }
             }
-          
+
             else if (Id == 0)
             {
                 if (string.IsNullOrWhiteSpace(UserId))
@@ -528,7 +533,7 @@ namespace AccountBuddy.BLL
                     lstValidation.Add(new Validation() { Name = nameof(Password), Message = string.Format(Message.BLL.Required_Data, nameof(Password)) });
                     RValue = false;
                 }
-               
+
 
             }
 
