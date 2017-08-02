@@ -16,16 +16,24 @@ namespace AccountBuddy.SL.Hubs
         public string JobOrderReceived_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
+            string NewRefNo = "";
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.JobOrderReceived, dt, dt.Month);
             long No = 0;
+            try
+            {
+                 var d = DB.JobOrderReceiveds.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
+                                                        .OrderByDescending(x => x.RefNo)
+                                                        .FirstOrDefault();
+                if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length), 16);
+                NewRefNo = string.Format("{0}{1:X5}", Prefix, No + 1);
+               
+            }
+            catch (Exception ex)
+            {
+                WriteLog("Job Order Received New RefNo", BLL.UserAccount.User.Id, CompanyId, ex.ToString());
+            }
 
-            var d = DB.JobOrderReceiveds.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
-                                     .OrderByDescending(x => x.RefNo)
-                                     .FirstOrDefault();
-
-            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length), 16);
-
-            return string.Format("{0}{1:X5}", Prefix, No + 1);
+            return NewRefNo;
         }
         public bool JobOrderReceived_Save(BLL.JobOrderReceived SO)
         {

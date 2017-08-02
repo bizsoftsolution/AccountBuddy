@@ -193,8 +193,8 @@ namespace AccountBuddy.PL.frm.Master
             cm.toCopy<BLL.CompanyDetail>(f.data);
             f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
             f.data.CompanyType = "Warehouse";
-            f.iProductImage.Source = AppLib.ViewImage(cm.Logo);
-            f.iProductImage.Tag = cm.Logo;
+            f.iLogoImage.Source = AppLib.ViewImage(cm.Logo);
+            f.iLogoImage.Tag = cm.Logo;
 
             f.Title = "Edit Warehouse";
             f.gbxLogin.Visibility = Visibility.Collapsed;
@@ -252,8 +252,8 @@ namespace AccountBuddy.PL.frm.Master
             cm.toCopy<BLL.CompanyDetail>(f.data);
             f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
             f.data.CompanyType = "Dealer";
-            f.iProductImage.Source = AppLib.ViewImage(cm.Logo);
-            f.iProductImage.Tag = cm.Logo;
+            f.iLogoImage.Source = AppLib.ViewImage(cm.Logo);
+            f.iLogoImage.Tag = cm.Logo;
             f.Title = "Edit Dealer";
             f.gbxLogin.Visibility = Visibility.Collapsed;
             f.ShowDialog();

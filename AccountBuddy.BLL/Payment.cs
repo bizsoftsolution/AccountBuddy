@@ -195,7 +195,7 @@ namespace AccountBuddy.BLL
                 if (_LedgerId != value)
                 {
                     _LedgerId = value;
-                   
+
                     NotifyPropertyChanged(nameof(LedgerId));
                 }
             }
@@ -216,7 +216,7 @@ namespace AccountBuddy.BLL
                     IsShowOnlineDetail = value == "Online";
                     IsShowTTDetail = value == "TT";
 
-                 
+
 
 
 
@@ -621,7 +621,16 @@ namespace AccountBuddy.BLL
         {
             get
             {
-              return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts").ToList());
+                try
+                {
+                    return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts").ToList());
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+                return new ObservableCollection<Ledger>(Ledger.toList.ToList());
             }
 
 
@@ -632,7 +641,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName== "Bank Accounts").ToList());
+                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList());
             }
         }
 
@@ -641,7 +650,7 @@ namespace AccountBuddy.BLL
             get
             {
                 return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Back AC").ToList());
-            }       
+            }
         }
 
 

@@ -164,7 +164,7 @@
             <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="316,10,0,0">
                     <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"  Margin="30,155,37,171" Click="btnImage_Click"  />
                     <Border Margin="0,35,10,226" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-                    <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="150" Height="100"  />
+                    <Image x:Name="iLogoImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="150" Height="100"  />
 
                 </Border>
                 <Label x:Name="lblSize" Content="Dimension 64 to 256 " Margin="10,0,14,326"/>

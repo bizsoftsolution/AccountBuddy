@@ -54,13 +54,12 @@
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <DockPanel MinWidth="212">
-                        <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+            <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
                                     DockPanel.Dock="Top"
                                     HorizontalAlignment="Right" Margin="16"
-                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />-->
+                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
 
                         <StackPanel Orientation="Vertical">
-
                             <ListBox SelectedIndex="0" PreviewMouseLeftButtonUp="ListBox_PreviewMouseLeftButtonUp">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate DataType="Menu:NavMenuItem">
@@ -136,13 +135,13 @@
                                             <Master:frmStockGroup/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                   
+
                                     <Menu:NavMenuItem MenuName="Products" FormName="Products">
                                         <Menu:NavMenuItem.Content>
                                             <Master:frmProducts/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                   
+
                                 </ListBox>
                             </Expander>
 
@@ -263,7 +262,7 @@
                                             <Report:frmPaymentReceipt/>
                                         </Menu:NavMenuItem.Content>
                                     </Menu:NavMenuItem>
-                                    
+
                                     <Menu:NavMenuItem MenuName="Trial Balance" FormName="Trial Balance">
                                         <Menu:NavMenuItem.Content>
                                             <Report:frmTrialBalance/>
@@ -331,18 +330,12 @@
                         </StackPanel>
                     </DockPanel>
                 </ScrollViewer>
-               
             </materialDesign:DrawerHost.LeftDrawerContent>
-              
-                    <DockPanel>
-                        <Grid>
-                            <ContentControl Margin="16" Name="ccContent"/>
-                        </Grid>
-                    </DockPanel>
-              
-           
-     
+            <DockPanel>
+                <Grid>
+                    <ContentControl Margin="16" Name="ccContent"/>
+                </Grid>
+            </DockPanel>
         </materialDesign:DrawerHost>
     </materialDesign:DialogHost>
-    
 </Controls:MetroWindow>

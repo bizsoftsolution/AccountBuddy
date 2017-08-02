@@ -272,7 +272,7 @@ namespace AccountBuddy.PL.frm.Master
                 ReportParameter[] param = new ReportParameter[1];
                 param[0] = new ReportParameter("Title", "LEDGER LIST");
 
-
+                RptLedger.LocalReport.SetParameters(param);
                 RptLedger.RefreshReport();
 
             }

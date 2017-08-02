@@ -41,6 +41,7 @@ namespace AccountBuddy.PL
         {
             data.Clear();
             txtPassword.Password = "";
+            iLogoImage.Tag = "";
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -137,8 +138,8 @@ namespace AccountBuddy.PL
                     {
                         ImageSource imageSource = new BitmapImage(new Uri(sFileName));
 
-                        iProductImage.Source = imageSource;
-                        iProductImage.Tag = AppLib.ReadImageFile(sFileName);
+                        iLogoImage.Source = imageSource;
+                        iLogoImage.Tag = AppLib.ReadImageFile(sFileName);
                     }
 
                 }

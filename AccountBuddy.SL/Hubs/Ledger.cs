@@ -14,14 +14,24 @@ namespace AccountBuddy.SL.Hubs
 
         private BLL.Ledger LedgerDAL_BLL(DAL.Ledger ledgerFrom)
         {
-            BLL.Ledger ledgerTo = ledgerFrom.toCopy<BLL.Ledger>(new BLL.Ledger());
+            BLL.Ledger ledgerTo=new BLL.Ledger();
+            try
+            {
+                ledgerTo = ledgerFrom.toCopy<BLL.Ledger>(new BLL.Ledger());
 
-            ledgerTo.AccountGroup = AccountGroupDAL_BLL(ledgerFrom.AccountGroup);
+                ledgerTo.AccountGroup = AccountGroupDAL_BLL(ledgerFrom.AccountGroup);
 
-            ledgerTo.CreditLimitType = new BLL.CreditLimitType();
-            ledgerFrom.CreditLimitType.toCopy<BLL.CreditLimitType>(ledgerTo.CreditLimitType);
+                ledgerTo.CreditLimitType = new BLL.CreditLimitType();
+                ledgerFrom.CreditLimitType.toCopy<BLL.CreditLimitType>(ledgerTo.CreditLimitType);
 
+              
+            }
+            catch(Exception ex)
+            {
+               
+            }
             return ledgerTo;
+
         }
 
         public List<BLL.Ledger> Ledger_List()
