@@ -117,7 +117,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (data.Save() == true)
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
-                    //   App.frmHome.ShowWelcome();
+                   App.frmHome.ShowWelcome();
                 }
             }
 

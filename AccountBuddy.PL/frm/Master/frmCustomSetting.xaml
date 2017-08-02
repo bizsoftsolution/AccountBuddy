@@ -223,7 +223,7 @@
                     </Grid>
                     <Grid Grid.Row="0" Grid.Column="1">
                         <StackPanel>
-                            <TextBox TextAlignment="Center" Text="{Binding SampleCurrency,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Height="42" Width="250" Margin="5" BorderThickness="1"></TextBox>
+                            <TextBox TextAlignment="Center" Text="{Binding SampleCurrency,UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Height="42" Width="250" Margin="5" BorderThickness="1" IsReadOnly="True"></TextBox>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="0">

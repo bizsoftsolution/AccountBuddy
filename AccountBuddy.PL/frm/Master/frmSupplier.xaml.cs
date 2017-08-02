@@ -208,11 +208,11 @@ namespace AccountBuddy.PL.frm.Master
                 {
                     if (p.Name.ToLower().Contains("id") ||
                          p.GetValue(d) == null ||
-                            (p.Name != nameof(data.Ledger.LedgerName) &&
-                                p.Name != nameof(data.Ledger.PersonIncharge) &&
-                                p.Name != nameof(data.Ledger.AddressLine1) &&
-                                p.Name != nameof(data.Ledger.AddressLine2) &&
-                                p.Name != nameof(data.Ledger.OPCr) &&
+                            (p.Name != nameof(data.Ledger.LedgerName) ||
+                                p.Name != nameof(data.Ledger.PersonIncharge) ||
+                                p.Name != nameof(data.Ledger.AddressLine1) ||
+                                p.Name != nameof(data.Ledger.AddressLine2)||
+                                p.Name != nameof(data.Ledger.OPCr) ||
                                 p.Name != nameof(data.Ledger.OPDr)
 
                               )) continue;

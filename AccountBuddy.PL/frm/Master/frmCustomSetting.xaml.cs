@@ -58,18 +58,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             BLL.CustomFormat.Init();
             data.Find(BLL.UserAccount.User.UserType.CompanyId);
-            if (data.CurrencyCaseSensitive == 1)
-            {
-                cmbCase.SelectedIndex = 0;
-            }
-            else if(data.CurrencyCaseSensitive==2)
-            {
-                cmbCase.SelectedIndex =1;
-            }
-            else
-            {
-                cmbCase.SelectedIndex = 2;
-            }
+           
             data.SampleCurrency = (decimal)n;
 
         }
@@ -89,18 +78,7 @@ namespace AccountBuddy.PL.frm.Master
 
             else
             {
-                if (cmbCase.Text == "Lower case")
-                {
-                    data.CurrencyCaseSensitive = 1;
-                }
-                else if (cmbCase.Text == "Upper case")
-                {
-                    data.CurrencyCaseSensitive = 2;
-                }
-                else if (cmbCase.Text == "Capitalize Each Word")
-                {
-                    data.CurrencyCaseSensitive = 3;
-                }
+              
                 if (data.Save() == true)
                 {
 
