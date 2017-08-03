@@ -77,6 +77,11 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "BankAccountName"));
             }
+            else if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
+            {
+                MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+
+            }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));

@@ -54,10 +54,10 @@
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <DockPanel MinWidth="212">
-            <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+            <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
                                     DockPanel.Dock="Top"
                                     HorizontalAlignment="Right" Margin="16"
-                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />-->
 
                         <StackPanel Orientation="Vertical">
                             <ListBox SelectedIndex="0" PreviewMouseLeftButtonUp="ListBox_PreviewMouseLeftButtonUp">
@@ -67,11 +67,11 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
 
-                                <Menu:NavMenuItem MenuName="Home">
+                                <!--<Menu:NavMenuItem MenuName="Home">
                                     <Menu:NavMenuItem.Content>
                                         <local:frmWelcome/>
                                     </Menu:NavMenuItem.Content>
-                                </Menu:NavMenuItem>
+                                </Menu:NavMenuItem>-->
                             </ListBox>
 
 

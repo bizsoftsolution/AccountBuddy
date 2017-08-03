@@ -112,6 +112,11 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
+            else if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
+            {
+                MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+
+            }
             else
             {
                 if (data.Save() == true)
