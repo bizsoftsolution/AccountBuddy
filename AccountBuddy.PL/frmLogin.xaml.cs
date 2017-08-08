@@ -25,7 +25,6 @@ namespace AccountBuddy.PL
         public frmLogin()
         {
             InitializeComponent();
-
             onClientEvents();
 
         }
@@ -74,14 +73,26 @@ namespace AccountBuddy.PL
 
                 if (RValue == "")
                 {
-                  
-                    App.frmHome = new frmHome();
-                    App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
-                    this.Hide();
-                    App.frmHome.ShowDialog();
-                    ClearForm();
-                    this.Show();
-                  
+                    if (Common.AppLib.AppName == "AccountBuddy")
+                    {
+                        App.frmAccountBuddyHome = new frmAccountBuddyHome();
+                        App.frmAccountBuddyHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
+                        this.Hide();
+                        App.frmAccountBuddyHome.ShowDialog();
+                        ClearForm();
+                        this.Show();
+                    }
+                    else
+                    {
+                        App.frmHome = new frmHome();
+                        App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
+                        this.Hide();
+                        App.frmHome.ShowDialog();
+                        ClearForm();
+                        this.Show();
+                    }
+
+
                 }
                 else
                 {
@@ -98,7 +109,7 @@ namespace AccountBuddy.PL
 
             frmCompanySignup f = new frmCompanySignup();
             f.data.Clear();
-            f.data.CompanyType = "Company";            
+            f.data.CompanyType = "Company";
             f.ShowDialog();
             ClearForm();
         }
@@ -113,7 +124,6 @@ namespace AccountBuddy.PL
 
 
         #endregion
-
 
         #region Events
         private void txtPassword_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -158,7 +168,7 @@ namespace AccountBuddy.PL
                 trvCompany.Visibility = Visibility.Visible;
                 foreach (var cm in lstCompany)
                 {
-                    var lstWarehouse = BLL.CompanyDetail.toList.Where(x => x.IsActive==true && x.UnderCompanyId == cm.Id && x.CompanyType == "Warehouse").ToList();
+                    var lstWarehouse = BLL.CompanyDetail.toList.Where(x => x.IsActive == true && x.UnderCompanyId == cm.Id && x.CompanyType == "Warehouse").ToList();
                     var lstDealer = BLL.CompanyDetail.toList.Where(x => x.IsActive == true && x.UnderCompanyId == cm.Id && x.CompanyType == "Dealer").ToList();
 
                     TreeViewItem tvi = new TreeViewItem();
@@ -213,7 +223,6 @@ namespace AccountBuddy.PL
         {
             ClearForm();
         }
-
 
     }
 }

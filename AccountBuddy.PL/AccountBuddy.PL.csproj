@@ -149,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="frmAccountBuddyHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frmCompanySignup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -493,6 +497,9 @@
     <Compile Include="Conversion\SumValues.cs" />
     <Compile Include="Conversion\VisibilityConverter.cs" />
     <Compile Include="CTRL\DataGridNumericColumn.cs" />
+    <Compile Include="frmAccountBuddyHome.xaml.cs">
+      <DependentUpon>frmAccountBuddyHome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frmCompanySignup.xaml.cs">
       <DependentUpon>frmCompanySignup.xaml</DependentUpon>
     </Compile>
