@@ -27,6 +27,9 @@ namespace AccountBuddy.Common
 
         public static string CurrencyName1 = "RINGGIT";
         public static string CurrencyName2 = "SEN";
+
+        public static string ConString = @"Data Source=.\sqlexpress;Initial Catalog=DBAccountBuddy;integrated security=true";
+
         public static T toCopy<T>(this object objSource, T objDestination)
         {
             try

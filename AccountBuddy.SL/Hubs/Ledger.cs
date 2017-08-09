@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace AccountBuddy.SL.Hubs
 {
@@ -101,6 +103,34 @@ namespace AccountBuddy.SL.Hubs
             return rv;
         }
 
+        public void Existing_Ledger()
+        {
+            SqlConnection sqlConnection1 = new SqlConnection(AppLib.ConString);
+
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader reader;
+
+            cmd.CommandText = "select ViewLedgerReport.LedgerName from nubebfs.dbo.ViewLedgerReport where Fund='General Fund'";
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = sqlConnection1;
+            sqlConnection1.Close();
+            sqlConnection1.Open();
+            reader = cmd.ExecuteReader();
+            while (reader != null)
+            {
+                foreach (var i in reader)
+                {
+
+                    DAL.Ledger ast = new DAL.Ledger();
+                    ast.LedgerName = reader.GetString(0);
+                    ast.AccountGroupId = 1;
+                    DB.Ledgers.Add(ast);
+                    DB.SaveChanges();
+                }
+            }
+           
+        }
+       
         #endregion
     }
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace AccountBuddy.SL.Hubs
 {
@@ -146,8 +148,8 @@ namespace AccountBuddy.SL.Hubs
         private void CompanySetup(BLL.CompanyDetail sgp)
         {
             UserSetup(sgp);
-            AccountSetup(sgp); 
-                       
+            AccountSetup(sgp);
+
         }
 
         void UserSetup(BLL.CompanyDetail sgp)
@@ -161,7 +163,7 @@ namespace AccountBuddy.SL.Hubs
             ut.TypeOfUser = "Administrator";
             ut.CompanyId = sgp.Id;
             ut.UserAccounts.Add(ua);
-            
+
             foreach (var utfd in DB.UserTypeFormDetails)
             {
                 DAL.UserTypeDetail utd = new DAL.UserTypeDetail();
@@ -190,16 +192,10 @@ namespace AccountBuddy.SL.Hubs
             AccountSetup_Income(pr);
             AccountSetup_Expense(pr);
 
-            //DAL.Ledger PL = new DAL.Ledger();
-            //PL.LedgerName = "Profit & Loss A/C";
-            //PL.AccountGroupId = pr.Id;
-           
-            //DB.Ledgers.Add(PL);
-            //DB.SaveChanges();
         }
 
         void AccountSetup_Asset(DAL.AccountGroup pr)
-        {           
+        {
             DAL.AccountGroup ast = new DAL.AccountGroup();
             ast.GroupName = "Assets";
             ast.GroupCode = "100";
@@ -213,7 +209,7 @@ namespace AccountBuddy.SL.Hubs
             ca.GroupName = "Current Assets";
             ca.GroupCode = "110";
             ca.UnderGroupId = ast.Id;
-            ca.CompanyId = pr.CompanyId;            
+            ca.CompanyId = pr.CompanyId;
             DB.AccountGroups.Add(ca);
             DB.SaveChanges();
 
@@ -229,7 +225,7 @@ namespace AccountBuddy.SL.Hubs
             DAL.Ledger cL = new DAL.Ledger();
             cL.LedgerName = "Cash Ledger";
             cL.AccountGroupId = ch.Id;
-         
+
             DB.Ledgers.Add(cL);
             DB.SaveChanges();
 
@@ -273,7 +269,7 @@ namespace AccountBuddy.SL.Hubs
             DB.AccountGroups.Add(sd);
             DB.SaveChanges();
 
-           
+
 
             #endregion
 
@@ -437,8 +433,6 @@ namespace AccountBuddy.SL.Hubs
             Inc.UnderGroupId = pr.Id;
             DB.AccountGroups.Add(Inc);
             DB.SaveChanges();
-
-          
 
             #region Direct Income
 

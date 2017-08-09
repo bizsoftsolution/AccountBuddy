@@ -1,0 +1,58 @@
+﻿<Controls:MetroWindow x:Class="AccountBuddy.PL.frm.Master.frmDatConverstion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AccountBuddy.PL.frm.Master"
+        mc:Ignorable="d"
+       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"              
+        mc:Ignorable="d"
+                      WindowState="Maximized"
+                      ShowMaxRestoreButton="False"
+                      ShowMinButton="False"
+                      ResizeMode="NoResize"
+        Title="User Type" Height="600" Width="1100" Loaded="UserControl_Loaded">
+
+    <Window.Resources>
+        <Conversion:VisibilityConverter x:Key="VisibilityConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
+            <RowDefinition Height="{DynamicResource FormBodyHeight}"/>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
+
+        <!--#region Form Head -->
+        <!--<Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
+            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="User Type"/></TextBlock>
+        </Grid>-->
+        <!--#endregion-->
+
+        <!--#region Form Body-->
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="600"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--#region Form Left-->
+            <Grid Grid.Column="0" Margin="10,70,10,0">
+             
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button  Height="30" x:Name="btnLedger" Content="Ledger" Margin="5 5" Click="btnLedger_Click" />
+                    <Button  Height="30" x:Name="btnAccountGroups" Content="Account Groups"  Margin="5 5" Click="" />
+                        <Button Width="80" Height="30" x:Name="btnClear" Content="CLEAR"  Margin="5 5" Click="" />
+                    </StackPanel>
+                </Grid>
+                <!--#endregion-->
+
+        </Grid>
+
+        <!--#endregion-->
+
+    </Grid>
+
+</Controls:MetroWindow>
