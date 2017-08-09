@@ -50,7 +50,8 @@ namespace AccountBuddy.BLL
         {
             //string URLPath = "http://ubs3/fmcg/SignalR";
             string URLPath = "http://localhost:51068"; 
-                try
+           // string URLPath = "http://192.168.1.170/fmcg/SignalR"; 
+            try
             {
                 AccountBuddy.Common.AppLib.WriteLog(URLPath);
                 AccountBuddy.Common.AppLib.WriteLog("Service Starting...");
