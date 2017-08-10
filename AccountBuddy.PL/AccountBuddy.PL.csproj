@@ -169,6 +169,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\frmDataConversion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmAccountGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -511,6 +515,9 @@
     </Compile>
     <Compile Include="frmWelcome.xaml.cs">
       <DependentUpon>frmWelcome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\frmDataConversion.xaml.cs">
+      <DependentUpon>frmDataConversion.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmAccountGroup.xaml.cs">
       <DependentUpon>frmAccountGroup.xaml</DependentUpon>

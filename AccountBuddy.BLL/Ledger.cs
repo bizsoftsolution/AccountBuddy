@@ -664,6 +664,17 @@ namespace AccountBuddy.BLL
 
             }
         }
+        public void SetLedger()
+        {
+            try
+            {
+                FMCGHubClient.FMCGHub.Invoke<int>("Existing_Ledger");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
 
         #endregion

@@ -22,8 +22,7 @@ namespace AccountBuddy.PL
                 Common.AppLib.WriteLog("Application Startup");
                 Window frm = new frmLogin();
                 frm.Show();
-
-                
+  
             }
            catch (Exception ex)
             {

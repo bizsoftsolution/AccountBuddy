@@ -31,14 +31,16 @@ namespace AccountBuddy.SL.Controllers
                                          CreditLimit = x.Ledger.CreditLimit==null?(short)0:x.Ledger.CreditLimit.Value,
                                          CreditAmount = x.Ledger.CreditAmount==null?0:x.Ledger.CreditAmount.Value,
                                          EMailId = x.Ledger.EMailId,
-                                         PersonIncharge = x.Ledger.PersonIncharge
+                                         PersonIncharge = x.Ledger.PersonIncharge,
+                                         GSTNo =x.Ledger.GSTNo
+
                                       })
                                       .ToList();
 
             return Json(l1, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Save(int DealerId,String LedgerName,String PersonIncharge, String AddressLine1, String AddressLine2, String CityName, String MobileNo)
+        public JsonResult Save(int DealerId,String LedgerName,String PersonIncharge, String AddressLine1, String AddressLine2, String CityName, String MobileNo,String GSTNo)
         {
             try
             {
@@ -52,7 +54,8 @@ namespace AccountBuddy.SL.Controllers
                     AddressLine2 = AddressLine2,
                     CityName = CityName,
                     MobileNo = MobileNo,
-                    AccountGroupId = AGId
+                    AccountGroupId = AGId,
+                    GSTNo = GSTNo
                 };
                 DB.Ledgers.Add(led);
                 DB.SaveChanges();
