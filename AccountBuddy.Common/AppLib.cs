@@ -17,8 +17,7 @@ namespace AccountBuddy.Common
         public static decimal GSTPer = (decimal)0.06;
 
         public static string AppName = "";
-        public static string FundName = "General Fund";
-
+      
 
         public static string conString = @"Data source=.\sqlexpress;initial catalog=DBAccountBuddy;integrated security=True";
 
