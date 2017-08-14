@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:AccountBuddy.PL.frm.Report"
         mc:Ignorable="d"
          xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-      
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
              Title="INCOME AND EXPENDITURE" d:DesignHeight="400" d:DesignWidth="800" Background="White" Loaded="UserControl_Loaded"  WindowStartupLocation="CenterScreen">

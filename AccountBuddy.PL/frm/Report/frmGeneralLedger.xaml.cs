@@ -44,7 +44,6 @@ namespace AccountBuddy.PL.frm.Report
             LoadReport();
         }
 
-
         private void LoadReport()
         {
             try
@@ -81,7 +80,6 @@ namespace AccountBuddy.PL.frm.Report
             }
 
         }
-
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {

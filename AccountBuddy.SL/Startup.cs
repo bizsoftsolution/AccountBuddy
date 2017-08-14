@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Owin;
-using Owin;
 using Microsoft.Owin.Cors;
+using Owin;
+
 
 [assembly: OwinStartup(typeof(AccountBuddy.SL.Startup))]
 
