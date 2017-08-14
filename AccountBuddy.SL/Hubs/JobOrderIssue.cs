@@ -183,7 +183,7 @@ namespace AccountBuddy.SL.Hubs
                 P.ItemAmount = JO.ItemAmount.Value;
                 P.DiscountAmount = JO.DiscountAmount.Value;
                 P.GSTAmount = JO.GSTAmount.Value;
-                P.Extras= JO.Extras.Value;
+                P.ExtraAmount = JO.Extras.Value;
                 P.TotalAmount = JO.TotalAmount.Value;
                 P.Narration = JO.Narration;
 

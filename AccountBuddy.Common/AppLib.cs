@@ -5,12 +5,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-
 
 namespace AccountBuddy.Common
 {
@@ -18,6 +15,11 @@ namespace AccountBuddy.Common
     {
 
         public static decimal GSTPer = (decimal)0.06;
+
+        public static string AppName = "";
+      
+
+        public static string conString = @"Data source=.\sqlexpress;initial catalog=DBAccountBuddy;integrated security=True";
 
         public enum Forms
         {
@@ -45,7 +47,6 @@ namespace AccountBuddy.Common
 
         }
 
-
         public static string CurrencyToWordPrefix;
         public static string CurrencyToWordSuffix;
 
@@ -59,7 +60,9 @@ namespace AccountBuddy.Common
         public static string CurrencyNegativeSymbolSuffix;
         public static string DecimalSymbol;
         public static string DigitGroupingSymbol;
+
         public static bool IsDisplayWithOnlyOnSuffix;
+
         public static int NoOfDigitAfterDecimal;
         public static int DigitGroupingBy;
         public static int CurrencyCaseSensitive;
@@ -274,7 +277,6 @@ namespace AccountBuddy.Common
             return newText;
         }
 
-
         public static string NumericQtyOnly(string str)
         {
             String newText = String.Empty;
@@ -295,7 +297,6 @@ namespace AccountBuddy.Common
             Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
             return regex.IsMatch(s);
         }
-
 
         #region Print
 

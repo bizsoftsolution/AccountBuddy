@@ -98,7 +98,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             else if (data.StaffId == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Customer), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format("Enter Staff ...."), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbStaff.Focus();
             }
 

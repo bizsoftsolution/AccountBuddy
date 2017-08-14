@@ -74,7 +74,6 @@ namespace AccountBuddy.PL
                 Common.NavMenuItem mi = lb.SelectedItem as Common.NavMenuItem;
                 if (!BLL.UserAccount.AllowFormShow(mi.FormName))
                 {
-
                     MessageBox.Show(string.Format(Message.PL.DenyFormShow, mi.MenuName));
                 }
                 else

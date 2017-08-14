@@ -102,7 +102,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             else if (data.JobWorkerId == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Customer), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format("Enter Job Worker Name.."), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbJobWorker.Focus();
             }
 

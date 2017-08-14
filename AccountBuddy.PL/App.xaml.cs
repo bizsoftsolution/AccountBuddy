@@ -14,6 +14,7 @@ namespace AccountBuddy.PL
     public partial class App : Application
     {
         public static frmHome frmHome;
+        public static frmAccountBuddyHome frmAccountBuddyHome;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             try
@@ -21,8 +22,7 @@ namespace AccountBuddy.PL
                 Common.AppLib.WriteLog("Application Startup");
                 Window frm = new frmLogin();
                 frm.Show();
-
-                
+  
             }
            catch (Exception ex)
             {

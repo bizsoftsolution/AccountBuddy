@@ -89,6 +89,10 @@
       <HintPath>..\packages\MaterialDesignThemes.2.3.0.823\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MaterialMenu, Version=0.0.4.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialMenu.0.0.4.5\lib\net452\MaterialMenu.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
       <Private>True</Private>
@@ -145,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="frmAccountBuddyHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frmCompanySignup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frmWelcome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\frmDataConversion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -489,6 +501,9 @@
     <Compile Include="Conversion\SumValues.cs" />
     <Compile Include="Conversion\VisibilityConverter.cs" />
     <Compile Include="CTRL\DataGridNumericColumn.cs" />
+    <Compile Include="frmAccountBuddyHome.xaml.cs">
+      <DependentUpon>frmAccountBuddyHome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frmCompanySignup.xaml.cs">
       <DependentUpon>frmCompanySignup.xaml</DependentUpon>
     </Compile>
@@ -500,6 +515,9 @@
     </Compile>
     <Compile Include="frmWelcome.xaml.cs">
       <DependentUpon>frmWelcome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\frmDataConversion.xaml.cs">
+      <DependentUpon>frmDataConversion.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmAccountGroup.xaml.cs">
       <DependentUpon>frmAccountGroup.xaml</DependentUpon>

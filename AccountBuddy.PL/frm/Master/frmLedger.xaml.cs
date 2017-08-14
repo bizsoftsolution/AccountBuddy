@@ -79,6 +79,11 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "LedgerName"));
             }
+            else if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
+            {
+                MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+
+            }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
@@ -378,10 +383,15 @@ namespace AccountBuddy.PL.frm.Master
             if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
             {
                 MessageBox.Show("Please Enter the Valid Email or Leave Empty");
-                txtMail.Focus();
-
+               
             }
 
+        }
+
+        private void Ledger_Click(object sender, RoutedEventArgs e)
+        {
+            frmDataConversion c = new frmDataConversion();
+            c.ShowDialog();
         }
     }
 }

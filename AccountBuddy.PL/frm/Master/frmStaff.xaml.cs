@@ -82,6 +82,11 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format("Enter Date Of Join.."), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            else if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
+            {
+                MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+
+            }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
@@ -366,8 +371,7 @@ namespace AccountBuddy.PL.frm.Master
             if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
             {
                 MessageBox.Show("Please Enter the Valid Email or Leave Empty");
-                txtMail.Focus();
-
+              
             }
 
         }
