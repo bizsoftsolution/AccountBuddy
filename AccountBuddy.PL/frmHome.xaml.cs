@@ -29,8 +29,21 @@ namespace AccountBuddy.PL
             onClientEvents();
             IsForcedClose = false;
             BLL.CustomFormat.SetDataFormat();
-            
+            CollectionViewSource.GetDefaultView(lstMaster.Items).Filter = Menu_Filter;
+            CollectionViewSource.GetDefaultView(lstTransaction.Items).Filter = Menu_Filter;
+            CollectionViewSource.GetDefaultView(lstReport.Items).Filter = Menu_Filter;
 
+        }
+        private bool Menu_Filter(object obj)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearch.Text)) return true;
+            try
+            {
+                var mnu = obj as Common.NavMenuItem;
+                return mnu.MenuName.ToLower().Contains(txtSearch.Text.ToLower());
+            }
+            catch(Exception ex) { }
+            return false;           
         }
         public void ShowWelcome()
         {
@@ -67,6 +80,7 @@ namespace AccountBuddy.PL
                 else
                 {
                     ccContent.Content = mi.Content;
+                    txtSearch.Text = "";
                 }
             }
             catch (Exception ex) { }
@@ -85,6 +99,14 @@ namespace AccountBuddy.PL
 
         private void Menu_CleanUpVirtualizedItem(object sender, CleanUpVirtualizedItemEventArgs e)
         {
+
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(lstMaster.Items).Filter = Menu_Filter;
+            CollectionViewSource.GetDefaultView(lstTransaction.Items).Filter = Menu_Filter;
+            CollectionViewSource.GetDefaultView(lstReport.Items).Filter = Menu_Filter;
 
         }
     }
