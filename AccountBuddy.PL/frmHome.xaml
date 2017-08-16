@@ -246,12 +246,12 @@
                                                     <Transaction:frmJobOrderReceived/>
                                                 </Menu:NavMenuItem.Content>
                                             </Menu:NavMenuItem>
-                                            <Menu:NavMenuItem MenuName="Stock In Process" FormName="Stock In Process">
+                                            <Menu:NavMenuItem MenuName="Stock Process Issue" FormName="Stock Process Issue">
                                                 <Menu:NavMenuItem.Content>
                                                     <Transaction:frmStockInProcess/>
                                                 </Menu:NavMenuItem.Content>
                                             </Menu:NavMenuItem>
-                                            <Menu:NavMenuItem MenuName="Stock Separated" FormName="Stock Separated">
+                                            <Menu:NavMenuItem MenuName="Stock Process Received" FormName="Stock Process Received">
                                                 <Menu:NavMenuItem.Content>
                                                     <Transaction:frmStockSeparated/>
                                                 </Menu:NavMenuItem.Content>

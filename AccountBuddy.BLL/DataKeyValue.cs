@@ -795,7 +795,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return "Stock In Process";
+                return "Stock Process Issue";
             }
 
         }
@@ -812,7 +812,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return "Stock Seperated";
+                return "Stock Process Received";
             }
 
         }

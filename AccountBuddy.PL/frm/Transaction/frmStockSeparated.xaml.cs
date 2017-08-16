@@ -23,7 +23,7 @@ namespace AccountBuddy.PL.frm.Transaction
     public partial class frmStockSeparated : UserControl
     {
         public BLL.StockSeperated data = new BLL.StockSeperated();
-        public string FormName = "Stock Separated";
+        public string FormName = "Stock Process Received";
 
         public frmStockSeparated()
         {
