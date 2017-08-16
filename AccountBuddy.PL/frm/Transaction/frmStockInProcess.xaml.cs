@@ -23,7 +23,7 @@ namespace AccountBuddy.PL.frm.Transaction
     public partial class frmStockInProcess : UserControl
     {
         public BLL.StockInProcess data = new BLL.StockInProcess();
-        public string FormName = "Stock In Process";
+        public string FormName = "Stock Process Issue";
 
         public frmStockInProcess()
         {

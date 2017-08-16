@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Report"
              mc:Ignorable="d" 
-              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
               d:DesignHeight="600" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
     <UserControl.Resources>

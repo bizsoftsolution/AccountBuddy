@@ -30,7 +30,7 @@
         <!--#region Form Head -->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
 
-            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Text="Stock Separated" Width="1100" Margin="0,0,0,1"/>
+            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Text="Stock Process Received" Width="1100" Margin="0,0,0,1"/>
         </Grid>
         <Border BorderBrush="Black" Grid.RowSpan="2" BorderThickness="1"></Border>
         <!--#endregion-->

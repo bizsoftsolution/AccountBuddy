@@ -18,9 +18,7 @@ namespace AccountBuddy.Common
 
         public static string AppName = "";
         public static string FundName = "";
-      
 
-        public static string conString = @"Data source=.\sqlexpress;initial catalog=DBAccountBuddy;integrated security=True";
 
         public enum Forms
         {

@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Transaction"
-             mc:Ignorable="d"              xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
+             mc:Ignorable="d"          
+             xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="600" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">

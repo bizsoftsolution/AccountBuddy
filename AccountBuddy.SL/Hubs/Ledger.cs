@@ -123,29 +123,29 @@ namespace AccountBuddy.SL.Hubs
 
         public void Existing_Ledger()
         {
-            SqlConnection sqlConnection1 = new SqlConnection(AppLib.conString);
+            //SqlConnection sqlConnection1 = new SqlConnection(AppLib.conString);
 
-            SqlCommand cmd = new SqlCommand();
-            SqlDataReader reader;
+            //SqlCommand cmd = new SqlCommand();
+            //SqlDataReader reader;
 
-            cmd.CommandText = string.Format("select distinct ViewLedgerReport.LedgerName as LedgerName, Fund as Fund from nubebfs.dbo.ViewLedgerReport where Fund='{0}'",AppLib.FundName);
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = sqlConnection1;
-            sqlConnection1.Close();
-            sqlConnection1.Open();
-            reader = cmd.ExecuteReader();
-            while (reader != null)
-            {
-                foreach (var i in reader)
-                {
+            //cmd.CommandText = string.Format("select distinct ViewLedgerReport.LedgerName as LedgerName, Fund as Fund from nubebfs.dbo.ViewLedgerReport where Fund='{0}'",AppLib.FundName);
+            //cmd.CommandType = CommandType.Text;
+            //cmd.Connection = sqlConnection1;
+            //sqlConnection1.Close();
+            //sqlConnection1.Open();
+            //reader = cmd.ExecuteReader();
+            //while (reader != null)
+            //{
+            //    foreach (var i in reader)
+            //    {
 
-                    DAL.Ledger ast = new DAL.Ledger();
-                    ast.LedgerName = reader.GetString(0);
-                    ast.AccountGroupId = BLL.DataKeyValue.Primary_Value;
-                    DB.Ledgers.Add(ast);
-                    DB.SaveChanges();
-                }
-            }
+            //        DAL.Ledger ast = new DAL.Ledger();
+            //        ast.LedgerName = reader.GetString(0);
+            //        ast.AccountGroupId = BLL.DataKeyValue.Primary_Value;
+            //        DB.Ledgers.Add(ast);
+            //        DB.SaveChanges();
+            //    }
+            //}
 
         }
 
