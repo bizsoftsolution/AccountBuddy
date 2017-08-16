@@ -51,5 +51,36 @@ namespace AccountBuddy.SL.Controllers
 
         }
 
+        public JsonResult ProductReport(int DealerId,DateTime DateFrom,DateTime DateTo)
+        {
+            try
+            {
+                DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();                
+
+                var l1 = db.Products.Select(x => new { ProductName = x.ProductName, Amount = x.SalesDetails.Where(y => y.Sale.SalesDate >= DateFrom && y.Sale.SalesDate <= DateTo && y.Sale.Ledger.AccountGroup.CompanyId == DealerId).Sum(y => y.Amount) }).ToList();
+
+                return Json(new { HasError = false, Datas=l1}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult CustomerReport(int DealerId, DateTime DateFrom, DateTime DateTo)
+        {
+            try
+            {
+                DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
+
+                var l1 = db.Customers.Where(x=> x.Ledger.AccountGroup.CompanyId==DealerId).Select(x => new { CustomerName = x.Ledger.LedgerName, Amount = x.Ledger.Sales.Where(y => y.SalesDate >= DateFrom && y.SalesDate <= DateTo ).Sum(y => y.TotalAmount) }).ToList();
+
+                return Json(new { HasError = false, Datas = l1 }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
