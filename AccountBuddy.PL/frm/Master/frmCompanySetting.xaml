@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"                        
              xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
-             d:DesignHeight="700" d:DesignWidth="800" Background="white" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded" >
+             d:DesignHeight="700" d:DesignWidth="1100" Background="white" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
@@ -142,9 +142,9 @@
             <!--#endregion-->
             <Grid Grid.Column="3">
                 <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"  Margin="21,172,26,85" Click="btnImage_Click"  />
-                <TextBlock x:Name="lblSize" Text="Dimension 64 to 256" TextWrapping="Wrap" Margin="6,10,10,250">
-                      
-                </TextBlock> <Border Margin="6,40,14,133" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                <Label x:Name="lblSize1" Content="Dimension" Margin="0,0,14,0"/>
+                <Label x:Name="lblSize2" Content="64 x 64 to 256 x 256 " Margin="10,13,14,0"/>
+                <Border Margin="6,40,14,133" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="147" Height="99" Margin="-23,-3,-19,-1"  />
 
                 </Border>
