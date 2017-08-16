@@ -167,7 +167,8 @@
                     <Image x:Name="iLogoImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="150" Height="100"  />
 
                 </Border>
-                <Label x:Name="lblSize" Content="Dimension 64 to 256 " Margin="10,0,14,326"/>
+                <Label x:Name="lblSize1" Content="Dimension" Margin="0,0,14,326"/>
+                <Label x:Name="lblSize2" Content="64 x 64 to 256 x 256 " Margin="15,13,14,306"/>
 
 
             </Grid>
