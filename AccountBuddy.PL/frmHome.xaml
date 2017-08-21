@@ -75,7 +75,7 @@
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
                             
-                            <ListBox SelectedIndex="0" Grid.Row="1" PreviewMouseLeftButtonUp="ListBox_PreviewMouseLeftButtonUp">
+                            <ListBox SelectedIndex="0" Name="lstMain" Grid.Row="1" PreviewMouseLeftButtonUp="ListBox_PreviewMouseLeftButtonUp">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate DataType="Menu:NavMenuItem">
                                         <TextBlock Text="{Binding MenuName}" Margin="32 0 32 0" FontSize="16"  />
