@@ -11,7 +11,6 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
 
-
         #region CompanyDetail
 
         BLL.CompanyDetail CompanyDetailDAL_BLL(DAL.CompanyDetail d)
