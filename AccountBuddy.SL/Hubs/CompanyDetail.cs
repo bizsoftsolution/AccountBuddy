@@ -171,14 +171,14 @@ namespace AccountBuddy.SL.Hubs
             {
                 DAL.CustomFormat cf = new DAL.CustomFormat();
                 cf.CompanyId = cm.Id;
-                cf.CurrencyPositiveSymbolPrefix = "RM";
-                cf.CurrencyPositiveSymbolSuffix = "RM";
-                cf.CurrencyNegativeSymbolPrefix = "RM";
-                cf.CurrencyNegativeSymbolSuffix = "RM";
-                cf.CurrencyToWordPrefix = "Ringgit";
-                cf.CurrencyToWordSuffix= "Ringgit";
-                cf.DecimalToWordPrefix = "Cent";
-                cf.DecimalToWordSuffix= "Cent";
+                cf.CurrencyPositiveSymbolPrefix = "RM ";
+                cf.CurrencyPositiveSymbolSuffix = "";
+                cf.CurrencyNegativeSymbolPrefix = "RM[-";
+                cf.CurrencyNegativeSymbolSuffix = "";
+                cf.CurrencyToWordPrefix = "Ringgits ";
+                cf.CurrencyToWordSuffix= "";
+                cf.DecimalToWordPrefix = "Cents ";
+                cf.DecimalToWordSuffix= "";
                 cf.DigitGroupingBy = 2;
                 cf.CurrencyCaseSensitive = 2;
                 cf.DecimalSymbol = ".";
@@ -207,7 +207,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
                 var uac = DB.UserAccounts.Where(x => x.UserType.CompanyId == d.Id);
-               DB.UserAccounts.RemoveRange(uac);
+                DB.UserAccounts.RemoveRange(uac);
                 DB.SaveChanges();
 
                 Clients.Clients(OtherLoginClientsOnGroup).CompanyDetail_Delete(pk);
