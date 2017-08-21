@@ -188,7 +188,7 @@ namespace AccountBuddy.SL.Hubs
             return LedgerIdByKeyAndCompany(key, Caller.CompanyId);
         }
 
-        int LedgerIdByKeyAndCompany(string key, int CompanyId)
+        public static int LedgerIdByKeyAndCompany(string key, int CompanyId)
         {
             return DB.DataKeyValues.Where(x => x.CompanyId == CompanyId && x.DataKey == key).FirstOrDefault().DataValue;
         }
@@ -339,7 +339,7 @@ namespace AccountBuddy.SL.Hubs
 
         #region Sales
 
-        void Journal_SaveBySales(DAL.Sale S)
+        public static void Journal_SaveBySales(DAL.Sale S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
 
