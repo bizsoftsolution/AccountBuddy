@@ -25,7 +25,7 @@ namespace AccountBuddy.PL.frm.Print
         public FrmQuickSales()
         {
             InitializeComponent();
-          rptQuickSales.SetDisplayMode(DisplayMode.PrintLayout);
+            rptQuickSales.SetDisplayMode(DisplayMode.PrintLayout);
         }
         public void LoadReport(BLL.Sale data)
         {
@@ -54,7 +54,12 @@ namespace AccountBuddy.PL.frm.Print
                 rptQuickSales.LocalReport.DataSources.Add(data2);
                 rptQuickSales.LocalReport.DataSources.Add(data3);
                 rptQuickSales.LocalReport.DataSources.Add(data4);
+
                 rptQuickSales.LocalReport.ReportPath = @"rpt\Transaction\rptQuickSales.rdlc";
+
+                ReportParameter[] rp = new ReportParameter[1];
+                rp[0] = new ReportParameter("SalesType", data.TransactionType);
+                rptQuickSales.LocalReport.SetParameters(rp);
 
                 rptQuickSales.RefreshReport();
 
@@ -66,7 +71,7 @@ namespace AccountBuddy.PL.frm.Print
         }
         public DataTable GetDetails(BLL.Sale data)
         {
-            int NoRecPerPage = 12;
+            int NoRecPerPage = 10;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);

@@ -36,13 +36,9 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d == null)
                 {
-
                     d = new DAL.Purchase();
                     DB.Purchases.Add(d);
-
-
                     P.toCopy<DAL.Purchase>(d);
-
                     foreach (var b_pod in P.PDetails)
                     {
                         DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
@@ -51,9 +47,7 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
                     P.Id = d.Id;
-
-                    LogDetailStore(P, LogDetailType.INSERT);
-                }
+        }
                 else
                 {
 
@@ -75,11 +69,11 @@ namespace AccountBuddy.SL.Hubs
                         b_Pd.toCopy<DAL.PurchaseDetail>(d_Pd);
                     }
                     DB.SaveChanges();
-                    LogDetailStore(P, LogDetailType.UPDATE);
+                    //LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).Purchase_RefNoRefresh(Purchase_NewRefNo());
-                Journal_SaveByPurchase(d);
-                Sales_SaveByPurchase(d);
+               // Journal_SaveByPurchase(d);
+               // Sales_SaveByPurchase(d);
                 return true;
             }
 
@@ -256,6 +250,34 @@ namespace AccountBuddy.SL.Hubs
             }
             catch (Exception ex) { }
             return P;
+        }
+        public List<BLL.Purchase> Purchase_List(int? SID, DateTime dtFrom, DateTime dtTo, String InvoiceNo)
+        {
+            BLL.Purchase P = new BLL.Purchase();
+            List<BLL.Purchase> lstPurchase = new List<BLL.Purchase>();
+             try
+            {
+
+                var d = DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId &&
+                (SID == null || x.LedgerId == SID) && x.PurchaseDate >= dtFrom &&
+                x.PurchaseDate <= dtTo && 
+                (InvoiceNo == "" || x.RefNo == InvoiceNo)).ToList();
+              foreach(var l in d)
+                {
+                    P = new BLL.Purchase();
+                  
+                    P.Id = l.Id;
+                    P.LedgerName = l.Ledger.LedgerName;
+                    P.PurchaseDate = l.PurchaseDate;
+                    P.TotalAmount = l.TotalAmount;
+                    P.RefNo = l.RefNo;
+
+                    lstPurchase.Add(P);
+
+                }
+            }
+            catch (Exception ex) { }
+           return lstPurchase;
         }
 
         #endregion

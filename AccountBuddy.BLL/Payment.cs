@@ -623,7 +623,7 @@ namespace AccountBuddy.BLL
             {
                 try
                 {
-                    return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts").ToList());
+                    return new ObservableCollection<Ledger>(Ledger.toList.ToList());
 
                 }
                 catch (Exception ex)
@@ -637,21 +637,7 @@ namespace AccountBuddy.BLL
         }
 
 
-        public static ObservableCollection<Ledger> CashLedgerList
-        {
-            get
-            {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList());
-            }
-        }
-
-        public static ObservableCollection<Ledger> BLedgerList
-        {
-            get
-            {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Back AC").ToList());
-            }
-        }
+       
 
 
         #endregion

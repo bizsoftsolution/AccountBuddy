@@ -213,7 +213,7 @@ namespace AccountBuddy.BLL
         {
             new Customer().toCopy<Customer>(this);            
             Ledger.Clear();
-            Ledger.AccountGroupId = BLL.DataKeyValue.SundryDebtors;
+            Ledger.AccountGroupId = BLL.DataKeyValue.SundryDebtors_Value;
 
             NotifyAllPropertyChanged();
         }

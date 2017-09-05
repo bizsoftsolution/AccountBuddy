@@ -52,7 +52,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
 
                     P.Id = d.Id;
-                    LogDetailStore(P, LogDetailType.INSERT);
+                    //LogDetailStore(P, LogDetailType.INSERT);
                 }
                 else
                 {
@@ -73,12 +73,12 @@ namespace AccountBuddy.SL.Hubs
                         }
                         b_Sd.toCopy<DAL.SalesDetail>(d_Sd);
                     }
-                    LogDetailStore(P, LogDetailType.UPDATE);
+                   // LogDetailStore(P, LogDetailType.UPDATE);
                    
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).Sales_RefNoRefresh(Sales_NewRefNo());
-                Journal_SaveBySales(d);
-                Purchase_SaveBySales(d);
+                //Journal_SaveBySales(d);
+               // Purchase_SaveBySales(d);
          return true;
             }
             catch (Exception ex) { }
@@ -253,6 +253,36 @@ namespace AccountBuddy.SL.Hubs
             }
             return true;
         }
+
+        public List<BLL.Sale> Sale_List(int? SID, DateTime dtFrom, DateTime dtTo, String InvoiceNo)
+        {
+            BLL.Sale P = new BLL.Sale();
+            List<BLL.Sale> lstPurchase = new List<BLL.Sale>();
+            try
+            {
+
+                var d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId &&
+                (SID == null || x.LedgerId == SID) && x.SalesDate >= dtFrom &&
+                x.SalesDate <= dtTo &&
+                (InvoiceNo == "" || x.RefNo == InvoiceNo)).ToList();
+                foreach (var l in d)
+                {
+                    P = new BLL.Sale();
+
+                    P.Id = l.Id;
+                    P.LedgerName = l.Ledger.LedgerName;
+                    P.SalesDate = l.SalesDate;
+                    P.TotalAmount = l.TotalAmount;
+                    P.RefNo = l.RefNo;
+
+                    lstPurchase.Add(P);
+
+                }
+            }
+            catch (Exception ex) { }
+            return lstPurchase;
+        }
+
 
         #endregion
     }

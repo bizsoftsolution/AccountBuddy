@@ -31,25 +31,32 @@ namespace AccountBuddy.SL.Controllers
             ProductsTo.SOutQty = ProductsFrom.StockOutDetails.Where(x => x.StockOut.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
             return ProductsTo;
         }
-        public JsonResult toList(int CompanyId)
+        public JsonResult toList(int DealerId)
         {
-            var l1 = DB.Products.Where(x => x.StockGroup.CompanyId == CompanyId)
-                                .ToList()
-                                .ToList().Select(x => Product_DALtoBLL(x, CompanyId))
-                                .Select(x => new BLL.Product()
-                                {
-                                    Id = x.Id,
-                                    ProductName = x.ProductName,
-                                    ItemCode = x.ItemCode,
-                                    PurchaseRate = x.PurchaseRate,
-                                    SellingRate = x.SellingRate,
-                                    MRP = x.MRP,
-                                    StockGroupId = x.StockGroupId,
-                                    UOMId = x.UOMId,
-                                    OpeningStock = x.AvailableStock
-                                })
-                                .ToList();
-            return Json(l1, JsonRequestBehavior.AllowGet);
+            var c = DB.CompanyDetails.Where(x => x.Id == DealerId).FirstOrDefault();
+            if (c != null)
+            {
+                var companyId = c.UnderCompanyId;
+
+                var l1 = DB.Products.Where(x => x.StockGroup.CompanyId == companyId)
+                                    .ToList()
+                                    .ToList().Select(x => Product_DALtoBLL(x, DealerId))
+                                    .Select(x => new BLL.Product()
+                                    {
+                                        Id = x.Id,
+                                        ProductName = x.ProductName,
+                                        ItemCode = x.ItemCode,
+                                        PurchaseRate = x.PurchaseRate,
+                                        SellingRate = x.SellingRate,
+                                        MRP = x.MRP,
+                                        StockGroupId = x.StockGroupId,
+                                        UOMId = x.UOMId,
+                                        OpeningStock = x.AvailableStock
+                                    })
+                                    .ToList();
+                return Json(l1, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { HasError = true , ErrorMessage="Invalid Dealer Id"}, JsonRequestBehavior.AllowGet);
         }
     }
 }

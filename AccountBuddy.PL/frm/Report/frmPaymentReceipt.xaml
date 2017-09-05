@@ -66,7 +66,6 @@
                                 </DatePicker>
 
                             </StackPanel>
-
                         </Grid>
                         <Grid Grid.Row="1">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="260,10,305,0" Width="535">
@@ -96,9 +95,7 @@
 
                     </Grid>
                     <Grid Grid.Row="1">
-
                         <Grid Grid.Row="0"  >
-
                             <DataGrid x:Name="dgvReceiptAndPayment" MouseDoubleClick="dgvReceiptAndPayment_MouseDoubleClick" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" Margin="105,10,95,10">
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -119,9 +116,6 @@
 
 
                         </Grid>
-
-
-
                         <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
                             <rv:ReportViewer x:Name="rptViewer"/>
                         </WindowsFormsHost>
