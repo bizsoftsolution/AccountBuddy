@@ -15,7 +15,7 @@
         mc:Ignorable="d"
         Title="Account Buddy" Height="600" Width="1100"
                        
-        BorderThickness="0" GlowBrush="Black" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Lakshmi Silks icon.ico" Loaded="MetroWindow_Loaded">
+        BorderThickness="0" GlowBrush="Black" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Images/lakshmi silks logo 256.ico" Loaded="MetroWindow_Loaded">
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"

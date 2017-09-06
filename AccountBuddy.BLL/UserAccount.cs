@@ -411,11 +411,11 @@ namespace AccountBuddy.BLL
             //    RValue = false;
             //}
 
-            if (string.IsNullOrWhiteSpace(CompanyName))
-            {
-                ua.lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = "Please Select the Company" });
-                RValue = false;
-            }
+            //if (string.IsNullOrWhiteSpace(CompanyName))
+            //{
+            //    ua.lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = "Please Select the Company" });
+            //    RValue = false;
+            //}
 
             if (string.IsNullOrWhiteSpace(LId))
             {

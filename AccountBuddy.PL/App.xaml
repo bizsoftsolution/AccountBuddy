@@ -5,6 +5,7 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              Startup="Application_Startup"
              Exit="Application_Exit"
+               xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
              >
     <Application.Resources>
         <ResourceDictionary>
@@ -20,7 +21,7 @@
                 <!-- Material Design -->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Teal.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Brown.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
 
                 <!-- Material Design: MahApps Compatibility -->
@@ -56,6 +57,8 @@
             <System:Double x:Key="fnsFormHead">18</System:Double>
             <GridLength x:Key="FormHeadHeight">25</GridLength>
             <GridLength x:Key="FormBodyHeight">*</GridLength>
-        </ResourceDictionary>
+
+
+              </ResourceDictionary>
     </Application.Resources>
 </Application>

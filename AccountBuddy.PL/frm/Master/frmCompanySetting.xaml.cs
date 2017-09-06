@@ -63,8 +63,10 @@ namespace AccountBuddy.PL.frm.Master
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
             iProductImage.Source = AppLib.ViewImage(data.Logo);
             iProductImage.Tag = data.Logo;
-            txtUserName.Text = "";
-            txtPassword.Password = "";
+            var u = BLL.UserAccount.toList.Where(x => x.UserType.CompanyId == BLL.UserAccount.User.UserType.Company.Id).FirstOrDefault();
+            txtUserName.Text = u.LoginId;
+            txtPassword.Password = u.Password;
+            data.UserId = u.LoginId;
            
         }
     
@@ -92,6 +94,7 @@ namespace AccountBuddy.PL.frm.Master
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
                     App.frmHome.ShowWelcome();
+                   
                 }
             }
 

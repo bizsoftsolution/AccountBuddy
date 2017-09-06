@@ -119,7 +119,7 @@
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Width="151">
                                 <materialDesign:PackIcon  Kind="CreditCardPlus" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                <TextBlock Text="GST" />
+                                <TextBlock Text="GST No" />
                             </StackPanel>
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
@@ -149,74 +149,80 @@
                 <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
             <GroupBox Name="gbxGSTSetting" Header="GST Setting" Margin="10,25,10,63" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"></ColumnDefinition>
-                        <ColumnDefinition Width="50*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                
-                <StackPanel Orientation="Vertical" Grid.Column="0">
-                    <TextBox  Width="150"  x:Name="txtCGSTAmount" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtCGSTAmount_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding CGSTAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
-                        <materialDesign:HintAssist.Hint>
-                            <StackPanel Orientation="Horizontal" Width="150">
-                                <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                <TextBlock Text="CGST Amount" />
-                            </StackPanel>
-                        </materialDesign:HintAssist.Hint>
-                    </TextBox>
-                    <TextBox  Width="150"  x:Name="txtSGSTAmount" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtSGSTAmount_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding SGSTAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
-                        <materialDesign:HintAssist.Hint>
-                            <StackPanel Orientation="Horizontal" Width="150">
-                                <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                <TextBlock Text="SGST Amount" />
-                            </StackPanel>
-                        </materialDesign:HintAssist.Hint>
-                    </TextBox>
-                    <TextBox  Width="150"  x:Name="txtIGSTAmount" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtIGSTAmount_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding IGSTAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
-                        <materialDesign:HintAssist.Hint>
-                            <StackPanel Orientation="Horizontal" Width="150">
-                                <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                <TextBlock Text="IGST Amount" />
-                            </StackPanel>
-                        </materialDesign:HintAssist.Hint>
-                    </TextBox>
-                  
-                </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Vertical">
-                        <TextBox    x:Name="txtUserName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Left"  FontWeight="Bold" FontSize="14" Text="{Binding UserId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10" Height="47">
-                            <materialDesign:HintAssist.Hint>
-                                <StackPanel Orientation="Horizontal" Width="150">
-                                    <materialDesign:PackIcon  Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  />
-                                    <TextBlock Text="User Id" />
-                                </StackPanel>
-                            </materialDesign:HintAssist.Hint>
-                        </TextBox>
-                        <PasswordBox x:Name="txtPassword"  FontWeight="Bold" FontSize="14" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted"  PasswordChanged="txtPassword_PasswordChanged" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
-                            <materialDesign:HintAssist.Hint>
-                                <StackPanel Orientation="Horizontal" >
-                                    <materialDesign:PackIcon  Kind="Key" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                    <TextBlock Text="Password" />
-                                </StackPanel>
-                            </materialDesign:HintAssist.Hint>
-                        </PasswordBox>
-                    </StackPanel>
-                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50*"></ColumnDefinition>
+                            <ColumnDefinition Width="50*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Vertical" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <TextBox  Width="150"  x:Name="txtCGSTAmount" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtCGSTAmount_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding CGSTAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal" Width="150">
+                                        <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                        <TextBlock Text="CGST " />
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+                            <TextBox  Width="150"  x:Name="txtSGSTAmount" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtSGSTAmount_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding SGSTAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal" Width="150">
+                                        <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                        <TextBlock Text="SGST " />
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+                            <TextBox  Width="150"  x:Name="txtIGSTAmount" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtIGSTAmount_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding IGSTAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal" Width="150">
+                                        <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                        <TextBlock Text="IGST " />
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                            <TextBox    x:Name="txtUserName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Left"  FontWeight="Bold" FontSize="14" Text="{Binding UserId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10" Height="47">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal" Width="150">
+                                        <materialDesign:PackIcon  Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  />
+                                        <TextBlock Text="User Id" />
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+                            <PasswordBox x:Name="txtPassword"  FontWeight="Bold" FontSize="14" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted"  PasswordChanged="txtPassword_PasswordChanged" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <materialDesign:PackIcon  Kind="Key" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                        <TextBlock Text="Password" />
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </PasswordBox>
+                        </StackPanel>
+
+                    </Grid>
+
+                </ScrollViewer> 
             </GroupBox>
 
             <GroupBox Name="gbxLogo" Header="Logo" Grid.Column="1" Margin="10,25,10,63" >
-                <Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
 
-                    <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="161,0,216,10" Width="135">
-                        <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"   Click="btnImage_Click"  />
-                    </StackPanel>
-                    <Border Margin="141,22,186,63" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Width="185">
-                        <StackPanel>
-                            <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Top"  Width="150" Height="100" Margin="5"/>
+                        <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="161,0,216,10" Width="135">
+                            <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"   Click="btnImage_Click"  />
                         </StackPanel>
-                    </Border>
+                        <Border Margin="141,22,186,63" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Width="185">
+                            <StackPanel>
+                                <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Top"  Width="150" Height="100" Margin="5"/>
+                            </StackPanel>
+                        </Border>
 
-                </Grid>
+                    </Grid>
 
+                </ScrollViewer> 
+    
             </GroupBox>
         </Grid>
 
