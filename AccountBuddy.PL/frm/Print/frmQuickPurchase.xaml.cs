@@ -60,7 +60,10 @@ namespace AccountBuddy.PL.frm.Print
                 rptQuickPurchase.LocalReport.DataSources.Add(data5);
                 rptQuickPurchase.LocalReport.ReportPath = @"rpt\Transaction\rptPurchase.rdlc";
 
-             
+                ReportParameter[] rp = new ReportParameter[1];
+                rp[0] = new ReportParameter("PurchaseType", data.TransactionType);
+                rptQuickPurchase.LocalReport.SetParameters(rp);
+                
                 rptQuickPurchase.RefreshReport();
 
             }

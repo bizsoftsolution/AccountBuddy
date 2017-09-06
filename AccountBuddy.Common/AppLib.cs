@@ -72,6 +72,7 @@ namespace AccountBuddy.Common
         public static int DigitGroupingBy;
         public static int CurrencyCaseSensitive;
 
+       
         public static T toCopy<T>(this object objSource, T objDestination)
         {
             try

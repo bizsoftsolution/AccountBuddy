@@ -118,7 +118,6 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             else if (data.FindRefNo() == false)
             {
-
                 var rv = data.Save();
                 if (rv == true)
                 {
@@ -128,9 +127,7 @@ namespace AccountBuddy.PL.frm.Transaction
                         print();
                     }
                     data.Clear();
-
                     btnPrint.IsEnabled = false;
-
                 }
             }
             else
@@ -211,6 +208,7 @@ namespace AccountBuddy.PL.frm.Transaction
             data.Clear();
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
+            btnPrint.IsEnabled = false;
         }
         #endregion
 

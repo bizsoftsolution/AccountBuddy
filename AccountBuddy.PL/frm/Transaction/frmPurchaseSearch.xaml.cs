@@ -35,8 +35,8 @@ namespace AccountBuddy.PL.frm.Transaction
             rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
             int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
 
-            DateTime? dtFrom = new DateTime(yy, 4, 1);
-            DateTime? dtTo = new DateTime(yy + 1, 3, 31);
+            DateTime? dtFrom = DateTime.Now;
+            DateTime? dtTo = DateTime.Now;
 
             dtpDateFrom.SelectedDate = dtFrom;
             dtpDateTo.SelectedDate = dtTo;
@@ -228,6 +228,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 System.Windows.Forms.Application.DoEvents();
                 f.data.Find();
                 f.data.SetAmount();
+                f.btnPrint.IsEnabled = true;
                 this.Close();
 
             }

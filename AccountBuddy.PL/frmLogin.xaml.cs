@@ -48,16 +48,16 @@ namespace AccountBuddy.PL
         #region company 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            var tv = trvCompany.SelectedItem as TreeViewItem;
-            if (tv == null)
-            {
-                MessageBox.Show("Select Company!");
-            }
-            else if (tv.Tag.ToString() == "")
-            {
-                MessageBox.Show(Message.PL.Login_CompanyName_Validation);
-            }
-            else if (txtLoginId.Text == "")
+            //var tv = trvCompany.SelectedItem as TreeViewItem;
+            //if (tv == null)
+            //{
+            //    MessageBox.Show("Select Company!");
+            //}
+            //else if (tv.Tag.ToString() == "")
+            //{
+            //    MessageBox.Show(Message.PL.Login_CompanyName_Validation);
+            //}
+            if (txtLoginId.Text == "")
             {
                 MessageBox.Show(Message.PL.Login_UserName_validation);
                 txtLoginId.Focus();
@@ -69,28 +69,20 @@ namespace AccountBuddy.PL
             }
             else
             {
-                string RValue = BLL.UserAccount.Login("", tv.Header.ToString(), txtLoginId.Text, txtPassword.Password);
+
+                string cName = BLL.CompanyDetail.toList.Where(x => x.IsActive == true).Select(x => x.CompanyName).FirstOrDefault();
+                string RValue = BLL.UserAccount.Login("",cName , txtLoginId.Text, txtPassword.Password);
 
                 if (RValue == "")
                 {
-                    if (Common.AppLib.AppName == "AccountBuddy")
-                    {
-                        App.frmAccountBuddyHome = new frmAccountBuddyHome();
-                        App.frmAccountBuddyHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
-                        this.Hide();
-                        App.frmAccountBuddyHome.ShowDialog();
-                        ClearForm();
-                        this.Show();
-                    }
-                    else
-                    {
+                  
                         App.frmHome = new frmHome();
                         App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
                         this.Hide();
                         App.frmHome.ShowDialog();
                         ClearForm();
                         this.Show();
-                    }
+                    
 
 
                 }
@@ -158,14 +150,14 @@ namespace AccountBuddy.PL
             txtPassword.Password = "";
             var lstCompany = BLL.CompanyDetail.toList.Where(x => x.IsActive == true && x.CompanyType == "Company").ToList();
 
-            trvCompany.Items.Clear();
+            //trvCompany.Items.Clear();
             if (lstCompany.Count() == 0)
             {
-                trvCompany.Visibility = Visibility.Hidden;
+                //trvCompany.Visibility = Visibility.Hidden;
             }
             else
             {
-                trvCompany.Visibility = Visibility.Visible;
+                //trvCompany.Visibility = Visibility.Visible;
                 foreach (var cm in lstCompany)
                 {
                     var lstWarehouse = BLL.CompanyDetail.toList.Where(x => x.IsActive == true && x.UnderCompanyId == cm.Id && x.CompanyType == "Warehouse").ToList();
@@ -212,7 +204,7 @@ namespace AccountBuddy.PL
 
                         tvi.Items.Add(tviDL);
                     }
-                    trvCompany.Items.Add(tvi);
+                    //trvCompany.Items.Add(tvi);
                 }
             }
         }
