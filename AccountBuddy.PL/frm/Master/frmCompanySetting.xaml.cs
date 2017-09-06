@@ -63,8 +63,11 @@ namespace AccountBuddy.PL.frm.Master
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
             iProductImage.Source = AppLib.ViewImage(data.Logo);
             iProductImage.Tag = data.Logo;
-           
-           
+          
+            //var u = BLL.UserAccount.toList.Where(x => x.UserType.CompanyId == BLL.UserAccount.User.UserType.Company.Id).FirstOrDefault();
+            //txtUserName.Text = u.LoginId;
+            //txtPassword.Password = u.Password;
+            //data.UserId = u.LoginId;
         }
     
         #region ButtonEvents
@@ -152,8 +155,21 @@ namespace AccountBuddy.PL.frm.Master
         }
         #endregion
 
-      
+        private void txtPassword_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Cut ||
+                e.Command == ApplicationCommands.Copy ||
+                e.Command == ApplicationCommands.Paste)
+            {
+                e.Handled = true;
+            }
+        }
 
+        private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            data.Password = txtPassword.Password;
+        }
+      
         #region Numeric Only
         private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
         {

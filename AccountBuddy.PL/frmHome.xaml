@@ -15,7 +15,7 @@
         mc:Ignorable="d"
         Title="Account Buddy" Height="600" Width="1100"
                        
-        BorderThickness="0" GlowBrush="Black" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Lakshmi Silks icon.ico" Loaded="MetroWindow_Loaded">
+        BorderThickness="0" GlowBrush="Black" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Images/lakshmi silks logo 256.ico" Loaded="MetroWindow_Loaded">
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
@@ -49,6 +49,7 @@
             <Thickness x:Key="mnuItemMargin">30,0,0,0</Thickness>
         </ResourceDictionary>
     </Window.Resources>
+    
     <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
         <materialDesign:DrawerHost Name="dhContent" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" Margin="0,1,0,-1">
             <materialDesign:DrawerHost.LeftDrawerContent>

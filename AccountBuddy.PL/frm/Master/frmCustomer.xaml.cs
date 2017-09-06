@@ -55,9 +55,9 @@ namespace AccountBuddy.PL.frm.Master
 
             rptContain.IsChecked = true;
 
-            cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
-            cmbCreditLimitTypeId.SelectedValuePath = "Id";
-            cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
+            //cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
+            //cmbCreditLimitTypeId.SelectedValuePath = "Id";
+            //cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
 
             cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
 
@@ -315,11 +315,11 @@ namespace AccountBuddy.PL.frm.Master
 
         private void txtCreditAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtCreditAmount.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+        //    TextBox textBox = sender as TextBox;
+        //    Int32 selectionStart = textBox.SelectionStart;
+        //    Int32 selectionLength = textBox.SelectionLength;
+        //    textBox.Text = AppLib.NumericOnly(txtCreditAmount.Text);
+        //    textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
         }
 
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
