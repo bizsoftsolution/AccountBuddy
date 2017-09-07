@@ -272,19 +272,19 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(cmp.Id, cL.LedgerName, cL.Id);
 
-            DAL.Ledger pur = new DAL.Ledger();
-            pur.LedgerName = BLL.DataKeyValue.PurchaseAccount_Ledger_Key;
-            pur.AccountGroupId = pr.Id;
-            DB.Ledgers.Add(pur);
-            DB.SaveChanges();
-            insertDataKeyValue(cmp.Id, pur.LedgerName, pur.Id);
+            //DAL.Ledger pur = new DAL.Ledger();
+            //pur.LedgerName = BLL.DataKeyValue.PurchaseAccount_Ledger_Key;
+            //pur.AccountGroupId = pr.Id;
+            //DB.Ledgers.Add(pur);
+            //DB.SaveChanges();
+            //insertDataKeyValue(cmp.Id, pur.LedgerName, pur.Id);
 
-            DAL.Ledger sal = new DAL.Ledger();
-            sal.LedgerName = BLL.DataKeyValue.SalesAccount_Key;
-            sal.AccountGroupId = pr.Id;
-            DB.Ledgers.Add(sal);
-            DB.SaveChanges();
-            insertDataKeyValue(cmp.Id, sal.LedgerName, sal.Id);
+            //DAL.Ledger sal = new DAL.Ledger();
+            //sal.LedgerName = BLL.DataKeyValue.SalesAccount_Key;
+            //sal.AccountGroupId = pr.Id;
+            //DB.Ledgers.Add(sal);
+            //DB.SaveChanges();
+            //insertDataKeyValue(cmp.Id, sal.LedgerName, sal.Id);
 
             DAL.AccountGroup ba = new DAL.AccountGroup();
             ba.GroupName = BLL.DataKeyValue.Bank_Accounts_Key;

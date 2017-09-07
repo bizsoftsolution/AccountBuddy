@@ -6,22 +6,22 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.53992in</Width>
+              <Width>0.59548in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.33557in</Width>
+              <Width>3.53697in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.69785in</Width>
+              <Width>0.75341in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7309in</Width>
+              <Width>0.70442in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.71144in</Width>
+              <Width>0.65282in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.97383in</Width>
+              <Width>1.32791in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -39,6 +39,7 @@
                             <TextRun>
                               <Value>Sl .NO.</Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
@@ -73,8 +74,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Description Of Goods</Value>
+                              <Value>DESCRIPTION OF GOODS</Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
@@ -111,6 +113,7 @@
                             <TextRun>
                               <Value>HSN CODE</Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
@@ -147,6 +150,7 @@
                             <TextRun>
                               <Value>RATE</Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
@@ -183,6 +187,7 @@
                             <TextRun>
                               <Value>Qty/Nos.</Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
@@ -219,6 +224,7 @@
                             <TextRun>
                               <Value>AMOUNT</Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
@@ -481,15 +487,16 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>SalesDetail</DataSetName>
-        <Top>3.65153in</Top>
+        <Top>3.82454in</Top>
         <Left>0.10362in</Left>
         <Height>0.5in</Height>
-        <Width>6.98951in</Width>
+        <Width>7.571in</Width>
         <Style>
           <Border>
             <Color>DarkBlue</Color>
             <Style>Solid</Style>
           </Border>
+          <FontFamily>Cambria</FontFamily>
         </Style>
       </Tablix>
       <Textbox Name="Textbox1">
@@ -501,6 +508,7 @@
               <TextRun>
                 <Value>TAX INVOICE </Value>
                 <Style>
+                  <FontFamily>Cambria</FontFamily>
                   <FontWeight>Bold</FontWeight>
                   <TextDecoration>Underline</TextDecoration>
                   <Color>DarkBlue</Color>
@@ -513,8 +521,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.18216in</Top>
-        <Left>1.83161in</Left>
+        <Top>0.24059in</Top>
+        <Left>2.70633in</Left>
         <Height>0.25in</Height>
         <Width>2.39236in</Width>
         <ZIndex>1</ZIndex>
@@ -537,7 +545,8 @@
               <TextRun>
                 <Value>=First(Fields!CompanyName.Value, "CompanyDetail")</Value>
                 <Style>
-                  <FontSize>18pt</FontSize>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>22pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
                 </Style>
@@ -549,10 +558,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CompanyName</rd:DefaultName>
-        <Top>1.43284cm</Top>
-        <Left>2.77967cm</Left>
-        <Height>0.34028in</Height>
-        <Width>4.09265in</Width>
+        <Top>1.34938cm</Top>
+        <Left>3.0412cm</Left>
+        <Height>0.40626in</Height>
+        <Width>4.01596in</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -573,7 +582,9 @@
               <TextRun>
                 <Value>=First(Fields!AddressLine1.Value, "CompanyDetail")</Value>
                 <Style>
-                  <FontSize>8pt</FontSize>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
                 </Style>
               </TextRun>
@@ -584,10 +595,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>AddressLine1</rd:DefaultName>
-        <Top>0.93217in</Top>
-        <Left>1.09436in</Left>
-        <Height>0.18056in</Height>
-        <Width>4.04695in</Width>
+        <Top>0.93752in</Top>
+        <Left>1.19732in</Left>
+        <Height>0.23734in</Height>
+        <Width>3.91525in</Width>
         <ZIndex>3</ZIndex>
         <Visibility>
           <Hidden>=IIf(First(Fields!AddressLine1.Value, "CompanyDetail")="", true, false)</Hidden>
@@ -611,7 +622,9 @@
               <TextRun>
                 <Value>=First(Fields!AddressLine2.Value, "CompanyDetail")</Value>
                 <Style>
-                  <FontSize>8pt</FontSize>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
                 </Style>
               </TextRun>
@@ -622,10 +635,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>AddressLine2</rd:DefaultName>
-        <Top>1.12662in</Top>
-        <Left>1.08047in</Left>
-        <Height>0.18056in</Height>
-        <Width>4.06084in</Width>
+        <Top>1.17486in</Top>
+        <Left>1.17302in</Left>
+        <Height>0.28125in</Height>
+        <Width>3.9025in</Width>
         <ZIndex>4</ZIndex>
         <Visibility>
           <Hidden>=IIf(First(Fields!AddressLine2.Value, "CompanyDetail")="", true, false)</Hidden>
@@ -645,10 +658,10 @@
         <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
         <MIMEType>image/jpeg</MIMEType>
         <Sizing>FitProportional</Sizing>
-        <Top>0.63702in</Top>
-        <Left>0.10362in</Left>
-        <Height>0.92362in</Height>
-        <Width>0.9213in</Width>
+        <Top>0.55209in</Top>
+        <Left>0.23297in</Left>
+        <Height>1.14014in</Height>
+        <Width>0.91227in</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -665,6 +678,7 @@
               <TextRun>
                 <Value>GST IN:33DDWPS9506K1ZN</Value>
                 <Style>
+                  <FontFamily>Cambria</FontFamily>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
@@ -678,6 +692,7 @@
               <TextRun>
                 <Value>State:TamilNadu | Code 33</Value>
                 <Style>
+                  <FontFamily>Cambria</FontFamily>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
@@ -691,6 +706,7 @@
               <TextRun>
                 <Value />
                 <Style>
+                  <FontFamily>Cambria</FontFamily>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
@@ -701,8 +717,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox24</rd:DefaultName>
-        <Top>0.1648in</Top>
-        <Left>0.06944in</Left>
+        <Top>0.16667in</Top>
+        <Left>0.14963in</Left>
         <Height>0.38542in</Height>
         <Width>1.73439in</Width>
         <ZIndex>6</ZIndex>
@@ -725,6 +741,7 @@
               <TextRun>
                 <Value>Prop.K.Shakthi</Value>
                 <Style>
+                  <FontFamily>Cambria</FontFamily>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
@@ -740,6 +757,7 @@
               <TextRun>
                 <Value>98431 13333</Value>
                 <Style>
+                  <FontFamily>Cambria</FontFamily>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
@@ -755,6 +773,7 @@
               <TextRun>
                 <Value>98431 14435</Value>
                 <Style>
+                  <FontFamily>Cambria</FontFamily>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
@@ -767,10 +786,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox24</rd:DefaultName>
-        <Top>0.18216in</Top>
-        <Left>6.09669in</Left>
-        <Height>0.5in</Height>
-        <Width>1.01389in</Width>
+        <Top>0.125in</Top>
+        <Left>6.5023in</Left>
+        <Height>0.47089in</Height>
+        <Width>1.03472in</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -791,6 +810,7 @@
               <TextRun>
                 <Value>INVOICE NO:</Value>
                 <Style>
+                  <FontFamily>Cambria</FontFamily>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
@@ -803,10 +823,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox32</rd:DefaultName>
-        <Top>0.75978in</Top>
-        <Left>5.33391in</Left>
+        <Top>1.31475in</Top>
+        <Left>5.72613in</Left>
         <Height>0.25in</Height>
-        <Width>0.85307in</Width>
+        <Width>0.89385in</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -835,8 +855,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>RefNo</rd:DefaultName>
-        <Top>0.75978in</Top>
-        <Left>6.18698in</Left>
+        <Top>1.31475in</Top>
+        <Left>6.61998in</Left>
         <Height>0.25in</Height>
         <Width>0.91802in</Width>
         <ZIndex>9</ZIndex>
@@ -859,6 +879,7 @@
               <TextRun>
                 <Value>Date:</Value>
                 <Style>
+                  <FontFamily>Cambria</FontFamily>
                   <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
                 </Style>
@@ -870,10 +891,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox35</rd:DefaultName>
-        <Top>1.03756in</Top>
-        <Left>5.33391in</Left>
-        <Height>0.25in</Height>
-        <Width>0.8531in</Width>
+        <Top>1.56475in</Top>
+        <Left>5.78076in</Left>
+        <Height>0.19445in</Height>
+        <Width>0.83921in</Width>
         <ZIndex>10</ZIndex>
         <Style>
           <Border>
@@ -904,9 +925,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>SalesDate</rd:DefaultName>
-        <Top>1.03756in</Top>
-        <Left>6.2009in</Left>
-        <Height>0.25in</Height>
+        <Top>1.56475in</Top>
+        <Left>6.61998in</Left>
+        <Height>0.20834in</Height>
         <Width>0.89223in</Width>
         <ZIndex>11</ZIndex>
         <Style>
@@ -930,6 +951,7 @@
                   <TextRun>
                     <Value>Total Invoice Amount In Words:</Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
                     </Style>
@@ -961,6 +983,7 @@
                   <TextRun>
                     <Value>=First(Fields!AmountInwords.Value, "Sale")</Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>Underline</TextDecoration>
@@ -972,10 +995,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>AmountInwords</rd:DefaultName>
-            <Top>0.20833in</Top>
-            <Left>0.06772in</Left>
-            <Height>0.61806in</Height>
-            <Width>3.15625in</Width>
+            <Top>0.25in</Top>
+            <Left>0.10157in</Left>
+            <Height>0.57639in</Height>
+            <Width>3.05296in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -989,10 +1012,10 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>4.15153in</Top>
+        <Top>4.32454in</Top>
         <Left>0.10362in</Left>
         <Height>0.90972in</Height>
-        <Width>3.41029in</Width>
+        <Width>3.22397in</Width>
         <ZIndex>12</ZIndex>
         <Style>
           <Border>
@@ -1005,10 +1028,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.45981in</Width>
+              <Width>3.01912in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.11941in</Width>
+              <Width>1.32791in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1024,8 +1047,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Total Amount</Value>
+                              <Value>Total Amount </Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
                               </Style>
@@ -1097,8 +1122,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Less Amount</Value>
+                              <Value>Less Amount </Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
                               </Style>
@@ -1172,6 +1199,8 @@
                             <TextRun>
                               <Value>Total Value after discount </Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
                               </Style>
@@ -1243,8 +1272,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Add CGST-Rate Of          Tax</Value>
+                              <Value>Add CGST-Rate Of         Tax </Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
                               </Style>
@@ -1316,8 +1347,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Add SGST-Rate Of          Tax</Value>
+                              <Value>Add SGST-Rate Of          Tax </Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
                               </Style>
@@ -1389,8 +1422,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Add IGST-Rate Of          Tax</Value>
+                              <Value>Add IGST-Rate Of          Tax </Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
                               </Style>
@@ -1462,8 +1497,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>TOTAL AMOUNT GST</Value>
+                              <Value>TOTAL AMOUNT GST </Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
                               </Style>
@@ -1497,7 +1534,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!TotalGST.Value</Value>
+                              <Value>=Fields!GSTAmount.Value</Value>
                               <Style>
                                 <Format>0.00;(0.00)</Format>
                                 <Color>DarkBlue</Color>
@@ -1535,8 +1572,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>TOTAL AMOUNT AFTER TAX</Value>
+                              <Value>TOTAL AMOUNT AFTER TAX </Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
                               </Style>
@@ -1608,8 +1647,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>GST Payable On Reverse Charge</Value>
+                              <Value>GST Payable On Reverse Charge </Value>
                               <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>DarkBlue</Color>
                               </Style>
@@ -1697,10 +1738,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Sale</DataSetName>
-        <Top>4.15153in</Top>
-        <Left>3.51391in</Left>
+        <Top>4.32454in</Top>
+        <Left>3.32759in</Left>
         <Height>2.25in</Height>
-        <Width>3.57922in</Width>
+        <Width>4.34703in</Width>
         <ZIndex>13</ZIndex>
         <Style>
           <Border>
@@ -1721,7 +1762,8 @@
                   <TextRun>
                     <Value>E-Way bill No.&amp; Date:</Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
                     </Style>
@@ -1732,9 +1774,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox98</rd:DefaultName>
             <Top>0.02778in</Top>
-            <Left>0.02605in</Left>
+            <Left>0.10157in</Left>
             <Height>0.19444in</Height>
-            <Width>2.28821in</Width>
+            <Width>2.21269in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1754,8 +1796,10 @@
                   <TextRun>
                     <Value>Bank Details:</Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
+                      <TextDecoration>Underline</TextDecoration>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -1764,10 +1808,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>0.56443cm</Top>
-            <Left>0.01215in</Left>
-            <Height>0.19444in</Height>
-            <Width>2.28821in</Width>
+            <Top>0.56444cm</Top>
+            <Left>0.10158in</Left>
+            <Height>0.22222in</Height>
+            <Width>2.21268in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -1788,7 +1832,8 @@
                   <TextRun>
                     <Value>Name Of the Bank </Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>None</TextDecoration>
                       <Color>DarkBlue</Color>
@@ -1823,7 +1868,8 @@
                   <TextRun>
                     <Value>:HDFC Bank</Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>None</TextDecoration>
                       <Color>DarkBlue</Color>
@@ -1837,7 +1883,7 @@
             <Top>1.12888cm</Top>
             <Left>1.21963in</Left>
             <Height>0.19097in</Height>
-            <Width>1.09462in</Width>
+            <Width>1.71962in</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -1858,7 +1904,8 @@
                   <TextRun>
                     <Value>Account No  </Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>None</TextDecoration>
                       <Color>DarkBlue</Color>
@@ -1893,7 +1940,8 @@
                   <TextRun>
                     <Value>:50200023316088</Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>None</TextDecoration>
                       <Color>DarkBlue</Color>
@@ -1907,7 +1955,7 @@
             <Top>1.61395cm</Top>
             <Left>1.21963in</Left>
             <Height>0.19097in</Height>
-            <Width>1.08073in</Width>
+            <Width>1.70573in</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -1928,7 +1976,8 @@
                   <TextRun>
                     <Value>Branch </Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>None</TextDecoration>
                       <Color>DarkBlue</Color>
@@ -1963,7 +2012,8 @@
                   <TextRun>
                     <Value>:5ROADS,SALEM</Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>None</TextDecoration>
                       <Color>DarkBlue</Color>
@@ -1977,7 +2027,7 @@
             <Top>2.09902cm</Top>
             <Left>1.21963in</Left>
             <Height>0.19444in</Height>
-            <Width>1.09462in</Width>
+            <Width>1.71962in</Width>
             <ZIndex>7</ZIndex>
             <Style>
               <Border>
@@ -1998,7 +2048,8 @@
                   <TextRun>
                     <Value>IFSC</Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>None</TextDecoration>
                       <Color>DarkBlue</Color>
@@ -2033,7 +2084,8 @@
                   <TextRun>
                     <Value>:HDFC0000178</Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <TextDecoration>None</TextDecoration>
                       <Color>DarkBlue</Color>
@@ -2047,7 +2099,7 @@
             <Top>2.5929cm</Top>
             <Left>1.21963in</Left>
             <Height>0.19444in</Height>
-            <Width>1.09462in</Width>
+            <Width>1.71962in</Width>
             <ZIndex>9</ZIndex>
             <Style>
               <Border>
@@ -2061,10 +2113,10 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>5.06125in</Top>
+        <Top>5.23426in</Top>
         <Left>0.10362in</Left>
         <Height>1.34028in</Height>
-        <Width>3.41029in</Width>
+        <Width>3.22397in</Width>
         <ZIndex>14</ZIndex>
         <Style>
           <Border>
@@ -2082,7 +2134,9 @@
               <TextRun>
                 <Value>=First(Fields!CityName.Value, "CompanyDetail")</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
                   <Color>DarkBlue</Color>
                 </Style>
               </TextRun>
@@ -2091,10 +2145,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CityName</rd:DefaultName>
-        <Top>1.3466in</Top>
-        <Left>1.09436in</Left>
+        <Top>1.45611in</Top>
+        <Left>1.1869in</Left>
         <Height>0.23611in</Height>
-        <Width>4.04695in</Width>
+        <Width>4.32958in</Width>
         <ZIndex>15</ZIndex>
         <Style>
           <Border>
@@ -2109,9 +2163,9 @@
       <Rectangle Name="Rectangle5">
         <ReportItems>
           <Line Name="Line14">
-            <Top>0.25408in</Top>
+            <Top>0.32229in</Top>
             <Height>0in</Height>
-            <Width>6.9895in</Width>
+            <Width>7.571in</Width>
             <Style>
               <Border>
                 <Color>DarkBlue</Color>
@@ -2120,9 +2174,9 @@
             </Style>
           </Line>
           <Line Name="Line15">
-            <Top>0.47223in</Top>
+            <Top>0.54044in</Top>
             <Height>0in</Height>
-            <Width>6.9895in</Width>
+            <Width>7.571in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -2132,9 +2186,9 @@
             </Style>
           </Line>
           <Line Name="Line16">
-            <Top>0.71181in</Top>
+            <Top>0.7696in</Top>
             <Height>0in</Height>
-            <Width>6.97937in</Width>
+            <Width>7.571in</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -2144,9 +2198,9 @@
             </Style>
           </Line>
           <Line Name="Line17">
-            <Top>0.96181in</Top>
+            <Top>1.0196in</Top>
             <Height>0in</Height>
-            <Width>6.9675in</Width>
+            <Width>7.571in</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -2156,9 +2210,9 @@
             </Style>
           </Line>
           <Line Name="Line18">
-            <Top>1.22223in</Top>
+            <Top>1.24877in</Top>
             <Height>0in</Height>
-            <Width>6.97937in</Width>
+            <Width>7.571in</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -2168,9 +2222,9 @@
             </Style>
           </Line>
           <Line Name="Line19">
-            <Top>1.48264in</Top>
+            <Top>1.5196in</Top>
             <Height>0in</Height>
-            <Width>6.98951in</Width>
+            <Width>7.571in</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -2180,9 +2234,9 @@
             </Style>
           </Line>
           <Line Name="Line20">
-            <Top>1.73264in</Top>
+            <Top>1.7696in</Top>
             <Height>0in</Height>
-            <Width>6.98951in</Width>
+            <Width>7.571in</Width>
             <ZIndex>6</ZIndex>
             <Style>
               <Border>
@@ -2200,7 +2254,9 @@
                   <TextRun>
                     <Value>LR Number          </Value>
                     <Style>
-                      <FontSize>9pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2209,10 +2265,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox123</rd:DefaultName>
-            <Top>0.01859in</Top>
-            <Left>4.40971in</Left>
+            <Top>0.03472in</Top>
+            <Left>4.39582in</Left>
             <Height>0.20424in</Height>
-            <Width>1.13889in</Width>
+            <Width>1.15278in</Width>
             <ZIndex>7</ZIndex>
             <Style>
               <Border>
@@ -2226,7 +2282,7 @@
           </Textbox>
           <Line Name="Line21">
             <Left>4.22221in</Left>
-            <Height>0.70833in</Height>
+            <Height>0.7696in</Height>
             <Width>0in</Width>
             <ZIndex>8</ZIndex>
             <Style>
@@ -2245,7 +2301,9 @@
                   <TextRun>
                     <Value>Transaportation Mode        </Value>
                     <Style>
-                      <FontSize>9pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2254,10 +2312,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox122</rd:DefaultName>
-            <Top>0.25408in</Top>
-            <Left>0.046in</Left>
-            <Height>0.22222in</Height>
-            <Width>1.69588in</Width>
+            <Top>0.30433in</Top>
+            <Left>0.04601in</Left>
+            <Height>0.19444in</Height>
+            <Width>1.74795in</Width>
             <ZIndex>9</ZIndex>
             <Style>
               <Border>
@@ -2278,7 +2336,9 @@
                   <TextRun>
                     <Value>Date Of Supply</Value>
                     <Style>
-                      <FontSize>9pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2287,9 +2347,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox123</rd:DefaultName>
-            <Top>0.23672in</Top>
-            <Left>4.40971in</Left>
-            <Height>0.19037in</Height>
+            <Top>0.31475in</Top>
+            <Left>4.39582in</Left>
+            <Height>0.19791in</Height>
             <Width>1.16667in</Width>
             <ZIndex>10</ZIndex>
             <Style>
@@ -2311,7 +2371,9 @@
                   <TextRun>
                     <Value>Vehicle Number               </Value>
                     <Style>
-                      <FontSize>9pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2320,10 +2382,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox126</rd:DefaultName>
-            <Top>0.51389in</Top>
-            <Left>0.03645in</Left>
+            <Top>0.54043in</Top>
+            <Left>0.04601in</Left>
             <Height>0.19792in</Height>
-            <Width>1.70543in</Width>
+            <Width>1.74795in</Width>
             <ZIndex>11</ZIndex>
             <Style>
               <Border>
@@ -2344,7 +2406,9 @@
                   <TextRun>
                     <Value>Place Of Supply   </Value>
                     <Style>
-                      <FontSize>9pt</FontSize>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2353,10 +2417,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox123</rd:DefaultName>
-            <Top>0.48612in</Top>
-            <Left>4.40971in</Left>
-            <Height>0.22569in</Height>
-            <Width>1.18056in</Width>
+            <Top>0.53409in</Top>
+            <Left>4.39582in</Left>
+            <Height>0.20426in</Height>
+            <Width>1.15278in</Width>
             <ZIndex>12</ZIndex>
             <Style>
               <Border>
@@ -2377,6 +2441,7 @@
                   <TextRun>
                     <Value>Details Of Receiver/Name Of  Addres Billed To</Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
                     </Style>
@@ -2388,10 +2453,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox128</rd:DefaultName>
-            <Top>0.72223in</Top>
-            <Left>0.65393in</Left>
-            <Height>0.25in</Height>
-            <Width>5.79889in</Width>
+            <Top>0.78002in</Top>
+            <Left>0.71643in</Left>
+            <Height>0.21181in</Height>
+            <Width>5.74681in</Width>
             <ZIndex>13</ZIndex>
             <Style>
               <Border>
@@ -2412,6 +2477,7 @@
                   <TextRun>
                     <Value>M/s.</Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2420,10 +2486,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox135</rd:DefaultName>
-            <Top>0.94793in</Top>
-            <Left>0.06772in</Left>
-            <Height>0.23264in</Height>
-            <Width>4.82439in</Width>
+            <Top>1.03349in</Top>
+            <Left>0.04601in</Left>
+            <Height>0.20486in</Height>
+            <Width>4.8461in</Width>
             <ZIndex>14</ZIndex>
             <Style>
               <Border>
@@ -2444,6 +2510,8 @@
                   <TextRun>
                     <Value>GST IN:</Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>9pt</FontSize>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2452,9 +2520,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox136</rd:DefaultName>
-            <Top>1.46528in</Top>
-            <Left>0.02604in</Left>
-            <Height>0.27778in</Height>
+            <Top>1.50918in</Top>
+            <Left>0.03646in</Left>
+            <Height>0.21588in</Height>
             <Width>4.6684in</Width>
             <ZIndex>15</ZIndex>
             <Style>
@@ -2476,6 +2544,7 @@
                   <TextRun>
                     <Value>State :    </Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2484,10 +2553,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox137</rd:DefaultName>
-            <Top>1.77084in</Top>
-            <Left>0.03084cm</Left>
-            <Height>0.22917in</Height>
-            <Width>1.47974in</Width>
+            <Top>1.78697in</Top>
+            <Left>0.0573cm</Left>
+            <Height>0.19504in</Height>
+            <Width>1.57349in</Width>
             <ZIndex>16</ZIndex>
             <Style>
               <Border>
@@ -2508,6 +2577,7 @@
                   <TextRun>
                     <Value>State  Code:    </Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2516,10 +2586,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox137</rd:DefaultName>
-            <Top>1.7506in</Top>
+            <Top>1.76673in</Top>
             <Left>4.66982in</Left>
-            <Height>0.22917in</Height>
-            <Width>0.92045in</Width>
+            <Height>0.20139in</Height>
+            <Width>1.46906in</Width>
             <ZIndex>17</ZIndex>
             <Style>
               <Border>
@@ -2540,6 +2610,7 @@
                   <TextRun>
                     <Value>:    Yes/No</Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
@@ -2550,10 +2621,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox122</rd:DefaultName>
-            <Top>0.03248in</Top>
-            <Left>1.76966in</Left>
-            <Height>0.19382in</Height>
-            <Width>1.66114in</Width>
+            <Top>0.0486in</Top>
+            <Left>1.82174in</Left>
+            <Height>0.22508in</Height>
+            <Width>1.647in</Width>
             <ZIndex>18</ZIndex>
             <Style>
               <Border>
@@ -2574,6 +2645,7 @@
                   <TextRun>
                     <Value>:   </Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
@@ -2582,6 +2654,7 @@
                   <TextRun>
                     <Value>=Parameters!SalesType.Value</Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
@@ -2590,6 +2663,7 @@
                   <TextRun>
                     <Value xml:space="preserve">    </Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
@@ -2600,10 +2674,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox122</rd:DefaultName>
-            <Top>0.25408in</Top>
-            <Left>1.76966in</Left>
-            <Height>0.19037in</Height>
-            <Width>1.56367in</Width>
+            <Top>0.32229in</Top>
+            <Left>1.82174in</Left>
+            <Height>0.20426in</Height>
+            <Width>1.647in</Width>
             <ZIndex>19</ZIndex>
             <Style>
               <Border>
@@ -2634,9 +2708,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox122</rd:DefaultName>
-            <Top>0.47223in</Top>
-            <Left>1.76966in</Left>
-            <Height>0.22222in</Height>
+            <Top>0.56822in</Top>
+            <Left>1.82174in</Left>
+            <Height>0.1875in</Height>
             <Width>1.647in</Width>
             <ZIndex>20</ZIndex>
             <Style>
@@ -2667,10 +2741,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox122</rd:DefaultName>
-            <Top>0.4757in</Top>
-            <Left>5.57638in</Left>
-            <Height>0.22222in</Height>
-            <Width>0.87644in</Width>
+            <Top>0.5202in</Top>
+            <Left>5.56249in</Left>
+            <Height>0.20773in</Height>
+            <Width>0.92609in</Width>
             <ZIndex>21</ZIndex>
             <Style>
               <Border>
@@ -2700,9 +2774,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox122</rd:DefaultName>
-            <Top>0.02206in</Top>
-            <Left>5.57638in</Left>
-            <Height>0.22222in</Height>
+            <Top>0.03819in</Top>
+            <Left>5.56249in</Left>
+            <Height>0.20077in</Height>
             <Width>1.24975in</Width>
             <ZIndex>22</ZIndex>
             <Style>
@@ -2733,8 +2807,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox122</rd:DefaultName>
-            <Top>0.24019in</Top>
-            <Left>5.57638in</Left>
+            <Top>0.31822in</Top>
+            <Left>5.56249in</Left>
             <Height>0.22222in</Height>
             <Width>1.24975in</Width>
             <ZIndex>23</ZIndex>
@@ -2748,12 +2822,47 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Textbox Name="Textbox146">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Reverse Charge</Value>
+                    <Style>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DarkBlue</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox146</rd:DefaultName>
+            <Top>0.02023in</Top>
+            <Left>0.04601in</Left>
+            <Height>0.24244in</Height>
+            <Width>1.74795in</Width>
+            <ZIndex>24</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>1.63009in</Top>
+        <Top>1.78697in</Top>
         <Left>0.10362in</Left>
-        <Height>2.02144in</Height>
-        <Width>6.98951in</Width>
+        <Height>2.03756in</Height>
+        <Width>7.571in</Width>
         <ZIndex>16</ZIndex>
         <Style>
           <Border>
@@ -2762,44 +2871,11 @@
           </Border>
         </Style>
       </Rectangle>
-      <Textbox Name="Textbox146">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Reverse Charge</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox146</rd:DefaultName>
-        <Top>1.65215in</Top>
-        <Left>0.14963in</Left>
-        <Height>0.17646in</Height>
-        <Width>1.68199in</Width>
-        <ZIndex>17</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Rectangle Name="Rectangle6">
         <ReportItems>
           <Line Name="Line22">
-            <Left>3.41029in</Left>
-            <Height>1.71875in</Height>
+            <Left>3.22397in</Left>
+            <Height>1.45833in</Height>
             <Width>0in</Width>
             <Style>
               <Border>
@@ -2841,8 +2917,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox148</rd:DefaultName>
-            <Height>1.64931in</Height>
-            <Width>3.22397in</Width>
+            <Height>1.4375in</Height>
+            <Width>3.15453in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -2863,6 +2939,7 @@
                   <TextRun>
                     <Value>Certified  the particular given abouve are true and correct</Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2876,13 +2953,16 @@
                   <TextRun>
                     <Value> For Lakshmi Silks</Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
                   <TextRun>
                     <Value xml:space="preserve">
 </Value>
-                    <Style />
+                    <Style>
+                      <FontFamily>Cambria</FontFamily>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style>
@@ -2891,9 +2971,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox149</rd:DefaultName>
-            <Top>0.06944in</Top>
+            <Top>0.05556in</Top>
             <Left>3.63195in</Left>
-            <Height>0.66666in</Height>
+            <Height>0.55208in</Height>
             <Width>3.24454in</Width>
             <ZIndex>2</ZIndex>
             <Style>
@@ -2915,6 +2995,7 @@
                   <TextRun>
                     <Value>Authorised Signatory</Value>
                     <Style>
+                      <FontFamily>Cambria</FontFamily>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
@@ -2925,8 +3006,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox150</rd:DefaultName>
-            <Top>1.2118in</Top>
-            <Left>4.09901in</Left>
+            <Top>0.84723in</Top>
+            <Left>4.22221in</Left>
             <Height>0.28125in</Height>
             <Width>1.91667in</Width>
             <ZIndex>3</ZIndex>
@@ -2942,10 +3023,161 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>6.40153in</Top>
+        <Top>6.57454in</Top>
         <Left>0.10362in</Left>
-        <Height>1.71875in</Height>
-        <Width>6.98951in</Width>
+        <Height>1.45833in</Height>
+        <Width>7.571in</Width>
+        <ZIndex>17</ZIndex>
+        <Style>
+          <Border>
+            <Color>DarkBlue</Color>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Rectangle>
+      <Rectangle Name="Rectangle2">
+        <ReportItems>
+          <Line Name="Line2">
+            <Top>0.22631in</Top>
+            <Height>0in</Height>
+            <Width>1.84078in</Width>
+            <Style>
+              <Border>
+                <Color>DarkBlue</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Line Name="Line3">
+            <Top>0.47457in</Top>
+            <Left>0.01388in</Left>
+            <Height>0in</Height>
+            <Width>1.8269in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Color>DarkBlue</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Textbox Name="Textbox25">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Original for Buyer</Value>
+                    <Style>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <Color>DarkBlue</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox25</rd:DefaultName>
+            <Height>0.19854in</Height>
+            <Width>1.43681in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox26">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Duplicate for Transaporter</Value>
+                    <Style>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <Color>DarkBlue</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox25</rd:DefaultName>
+            <Top>0.61011cm</Top>
+            <Left>0.03527cm</Left>
+            <Height>0.19854in</Height>
+            <Width>1.43681in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox28">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Triplicate for Supplier</Value>
+                    <Style>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <Color>DarkBlue</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox25</rd:DefaultName>
+            <Top>1.2407cm</Top>
+            <Height>0.19854in</Height>
+            <Width>1.43681in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Line Name="Line5">
+            <Left>1.45069in</Left>
+            <Height>0.69915in</Height>
+            <Width>0in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Color>DarkBlue</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+        </ReportItems>
+        <KeepTogether>true</KeepTogether>
+        <Top>0.59589in</Top>
+        <Left>5.76688in</Left>
+        <Height>0.69915in</Height>
+        <Width>1.84078in</Width>
         <ZIndex>18</ZIndex>
         <Style>
           <Border>
@@ -2954,23 +3186,62 @@
           </Border>
         </Style>
       </Rectangle>
+      <Line Name="Line6">
+        <Top>1.80595in</Top>
+        <Left>0.10362in</Left>
+        <Height>-1.68095in</Height>
+        <Width>0in</Width>
+        <ZIndex>19</ZIndex>
+        <Style>
+          <Border>
+            <Color>DarkBlue</Color>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Line>
+      <Line Name="Line7">
+        <Top>0.125in</Top>
+        <Left>0.10362in</Left>
+        <Height>0in</Height>
+        <Width>7.571in</Width>
+        <ZIndex>20</ZIndex>
+        <Style>
+          <Border>
+            <Color>DarkBlue</Color>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Line>
+      <Line Name="Line8">
+        <Top>1.8382in</Top>
+        <Left>7.67462in</Left>
+        <Height>-1.71319in</Height>
+        <Width>0in</Width>
+        <ZIndex>21</ZIndex>
+        <Style>
+          <Border>
+            <Color>DarkBlue</Color>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Line>
     </ReportItems>
-    <Height>9.6058in</Height>
+    <Height>8.11214in</Height>
     <Style>
       <Border>
         <Color>DarkBlue</Color>
-        <Style>Solid</Style>
+        <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <Width>7.35711in</Width>
+  <Width>7.80503in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>
-    <LeftMargin>0.4in</LeftMargin>
-    <RightMargin>0.4in</RightMargin>
-    <TopMargin>0.4in</TopMargin>
-    <BottomMargin>0.4in</BottomMargin>
+    <LeftMargin>0.1in</LeftMargin>
+    <RightMargin>0.1in</RightMargin>
+    <TopMargin>0.1in</TopMargin>
+    <BottomMargin>0.1in</BottomMargin>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -3424,6 +3695,32 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <EmbeddedImages>
+    <EmbeddedImage Name="Mahalaxmi">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>d356056b-6030-4d41-8427-d6b77f0d4ec9</rd:ReportID>
 </Report>

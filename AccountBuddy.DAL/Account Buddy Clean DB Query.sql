@@ -50,25 +50,25 @@ delete from Sale
 delete from SalesReturnDetail
 delete from SalesReturn
 
-delete from CustomFormat
-delete from Ledger
+--delete from CustomFormat
+--delete from Ledger
 
-delete from AccountGroup
+--delete from AccountGroup
 
 delete from ProductDetail
 delete from Product
-delete from StockGroup
-delete from UOM
+--delete from StockGroup
+--delete from UOM
 
 
-delete from DataKeyValue
+--delete from DataKeyValue
 
-delete from UserTypeDetail
-delete from UserAccount
-delete from UserType
+--delete from UserTypeDetail
+--delete from UserAccount
+--delete from UserType
 
-delete from LogDetail
-delete from LogMaster
+--delete from LogDetail
+--delete from LogMaster
 
-delete from ErrorLog
-delete from CompanyDetail
+--delete from ErrorLog
+--delete from CompanyDetail

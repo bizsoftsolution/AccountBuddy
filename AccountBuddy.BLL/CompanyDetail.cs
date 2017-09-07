@@ -484,17 +484,29 @@ namespace AccountBuddy.BLL
             try
             {
                 CompanyDetail d = toList.Where(x => x.Id == Id).FirstOrDefault();
+                UserAccount a = BLL.UserAccount.toList.Where(x => x.UserType.CompanyId == Id).FirstOrDefault();
+               
                 int i = 0;
                 if (d == null)
                 {
                     d = new CompanyDetail();
                     toList.Add(d);
                 }
-
+                if(a!=null)
+                {
+                    a.LoginId = this.UserId;
+                    a.UserName = this.UserId;
+                    a.Password = this.Password;
+                }
                 this.toCopy<CompanyDetail>(d);
+                if (this.UserId != null && this.Password != null)
+                {
+                    var j = FMCGHubClient.FMCGHub.Invoke<int>("UserAccount_Save", a).Result;
+                }
                 if (isServerCall == false)
                 {
                     i = FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Save", this).Result;
+                   
                     d.Id = i;
                 }
                 setGST();
