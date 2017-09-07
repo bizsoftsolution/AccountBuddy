@@ -92,7 +92,7 @@
                                         </Grid>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
-                                                <Setter TargetName="Panel" Property="Background" Value="Teal" />
+                                                <Setter TargetName="Panel" Property="Background" Value="Gray" />
                                             </Trigger>
                                             <Trigger Property="IsSelected" Value="False">
                                                 <Setter TargetName="Panel" Property="Background" Value="white" />

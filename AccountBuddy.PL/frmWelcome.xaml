@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="Images/HomePage.png" Stretch="None"/>
+            <ImageBrush ImageSource="Images/lakshmi silks home screen .png" Stretch="Fill"/>
         </Grid.Background>
 
     </Grid>

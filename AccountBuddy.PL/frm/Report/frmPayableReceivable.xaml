@@ -14,95 +14,97 @@
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
     </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 
-    <Grid>
-        <Grid Margin="0,0,0,10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Payable And Receivable"/></TextBlock>
-            </Grid>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
+        <Grid>
+            <Grid Margin="0,0,0,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
+                    <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Payable And Receivable"/></TextBlock>
+                </Grid>
+                <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
 
-            <Grid Grid.Row="1" >
+                <Grid Grid.Row="1" >
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="500"/>
-                        <RowDefinition Height="20*"/>
-                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0" Margin="10,0,9,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="650"></ColumnDefinition>
-                            <ColumnDefinition Width="650"></ColumnDefinition>
+                        <Grid Grid.Row="0" Margin="10,0,9,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
 
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="0" Margin="10" Grid.Column="0" >
-                            <GroupBox Header="Payable">
-                                <DataGrid x:Name="dgvPayable"  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20">
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0" Margin="10" Grid.Column="0" >
+                                <GroupBox Header="Payable">
+                                    <DataGrid x:Name="dgvPayable"  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20">
 
-                                    <DataGrid.ColumnHeaderStyle>
-                                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                                            <Setter Property="FontWeight" Value="Bold" />
-                                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                        </Style>
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                            </Style>
 
-                                    </DataGrid.ColumnHeaderStyle>
+                                        </DataGrid.ColumnHeaderStyle>
 
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="400" Binding="{Binding  Ledger.AccountName,Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="400" Binding="{Binding  Ledger.AccountName,Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
 
-                            </GroupBox>
+                                </GroupBox>
+                            </Grid>
+                            <Grid Grid.Row="0" Margin="10" Grid.Column="1" >
+                                <GroupBox Header="Receivable">
+                                    <DataGrid x:Name="dgvReceivable" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20">
+
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                            </Style>
+
+                                        </DataGrid.ColumnHeaderStyle>
+
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="400" Binding="{Binding  Ledger.AccountName,Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                </GroupBox>
+                            </Grid>
+
+
+                            <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
+                                <rv:ReportViewer x:Name="rptViewer"/>
+                            </WindowsFormsHost>
                         </Grid>
-                        <Grid Grid.Row="0" Margin="10" Grid.Column="1" >
-                            <GroupBox Header="Receivable">
-                                <DataGrid x:Name="dgvReceivable" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20">
+                        <Grid Grid.Row="1" Margin="10,0,104,0">
+                            <StackPanel Orientation="Horizontal" Margin="235,0,300,10" VerticalAlignment="Center" Height="45" Visibility="Hidden">
 
-                                    <DataGrid.ColumnHeaderStyle>
-                                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                                            <Setter Property="FontWeight" Value="Bold" />
-                                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                        </Style>
+                                <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                    PDF
+                                </Button>
+                                <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                                    PRINT
+                                </Button>
+                                <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                    PRINT PREVIEW
+                                </Button>
+                            </StackPanel>
 
-                                    </DataGrid.ColumnHeaderStyle>
-
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="400" Binding="{Binding  Ledger.AccountName,Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-
-                            </GroupBox>
                         </Grid>
-
-
-                        <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
-                            <rv:ReportViewer x:Name="rptViewer"/>
-                        </WindowsFormsHost>
-                    </Grid>
-                    <Grid Grid.Row="1" Margin="10,0,104,0">
-                        <StackPanel Orientation="Horizontal" Margin="235,0,300,10" VerticalAlignment="Center" Height="45" Visibility="Hidden">
-
-                            <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
-                                PDF
-                            </Button>
-                            <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
-                                PRINT
-                            </Button>
-                            <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
-                                PRINT PREVIEW
-                            </Button>
-                        </StackPanel>
-
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
-    </Grid>
-</UserControl>
+    </ScrollViewer>
+    </UserControl>

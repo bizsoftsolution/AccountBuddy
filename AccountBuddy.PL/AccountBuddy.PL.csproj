@@ -743,7 +743,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\lakshmi silks home screen.jpg" />
-    <Resource Include="Images\lakshmi silks login screen.jpg" />
+    <Resource Include="Images\lakshmi silks login screen rev 2 %281%29.png" />
+    <Resource Include="Images\lakshmi silks logo 256.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\lakshmi silks home screen .png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
