@@ -209,9 +209,9 @@
                         </materialDesign:HintAssist.Hint>
                     </PasswordBox>
                     <StackPanel Orientation="Horizontal" Margin="136,10,147,0" HorizontalAlignment="Center" Height="48" Width="210">
-                        <Button Content="SIGN IN" Click="btnLogin_Click" Margin="10,0,0,0" FontSize="14" Width="82" Height="25" />
+                        <Button Content="SIGN IN" Click="btnLogin_Click" Margin="10,0,0,0" FontSize="16" Width="82" Height="25" />
                         <!--<Button Content="SIGN UP" Click="btnSignup_Click" Margin="10,0,0,0" FontSize="10" Width="72" Height="25"/>-->
-                        <Button Content="CLEAR" Click="btnClear_Click"  Margin="10,0,0,0" FontSize="14" Width="82" Height="25"/>
+                        <Button Content="CLEAR" Click="btnClear_Click"  Margin="10,0,0,0" FontSize="16" Width="82" Height="25"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
