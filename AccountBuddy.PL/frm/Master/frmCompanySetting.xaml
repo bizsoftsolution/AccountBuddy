@@ -203,14 +203,9 @@
                                 </PasswordBox>
                             </StackPanel>
 
-                        </Grid>
-
-                    </ScrollViewer>
-                </GroupBox>
-
-                <GroupBox Name="gbxLogo" Header="Logo" Grid.Column="1" Margin="10,25,10,63" >
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                        <Grid>
+            </GroupBox>
+            <GroupBox Name="gbxLogo" Header="Logo" Grid.Column="1" Margin="10,25,10,63" >
+                <Grid>
 
                             <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="161,0,216,10" Width="135">
                                 <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"   Click="btnImage_Click"  />

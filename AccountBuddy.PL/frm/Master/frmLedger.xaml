@@ -197,7 +197,6 @@
                         </StackPanel>
                     </Grid>
                     <!--#endregion-->
-
                 </Grid>
                 <!--#endregion-->
                 <!--#region Form Right-->
@@ -240,7 +239,6 @@
                                     <RowDefinition Height="120"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
-
                                 <Grid Grid.Row="0" >
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" >
                                         <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
@@ -260,7 +258,6 @@
                                     </StackPanel>
                                 </Grid>
                                 <Grid Grid.Row="1">
-
                                     <DataGrid x:Name="dgvLedger"  CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="20" Grid.ColumnSpan="2" SelectionChanged="dgvLedger_SelectionChanged" MouseDoubleClick="dgvLedger_MouseDoubleClick" Width="750">
                                         <DataGrid.ColumnHeaderStyle>
                                             <Style TargetType="{x:Type DataGridColumnHeader}">
