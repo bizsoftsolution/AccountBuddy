@@ -153,7 +153,7 @@
         <AssociationConnector Association="DBLakshmiSilksModel.FK_StockGroup_CompanyDetail" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_UOM_CompanyDetail" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_UserType_CompanyDetail" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

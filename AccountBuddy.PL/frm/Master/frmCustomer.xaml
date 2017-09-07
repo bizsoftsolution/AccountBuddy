@@ -127,7 +127,7 @@
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Width="151">
                                             <materialDesign:PackIcon  Kind="CreditCardPlus" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                            <TextBlock Text="GST" />
+                                            <TextBlock Text="GST Number" />
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
                                 </TextBox>
@@ -289,6 +289,7 @@
                                                 <DataGridTextColumn Header="Address Line 1" FontWeight="Bold" Width="200" Binding="{Binding Ledger.AddressLine1}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                                 <DataGridTextColumn Header="Address Line 2" FontWeight="Bold" Width="200" Binding="{Binding Ledger.AddressLine2}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                                 <DataGridTextColumn Header="City" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CityName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                                <DataGridTextColumn Header="Mobile" FontWeight="Bold" Width="200" Binding="{Binding Ledger.MobileNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                                 <DataGridTextColumn Header="Credit Limit" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CreditLimit}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                                 <DataGridTextColumn Header="Credit Type" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CreditLimitType.LimitType}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                                 <DataGridTextColumn Header="Credit Amount" FontWeight="Bold" Width="200" Binding="{Binding Ledger.CreditAmount}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>

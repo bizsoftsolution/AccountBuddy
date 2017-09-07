@@ -42,9 +42,9 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="UnderCompanyId" Type="int" />
           <Property Name="CompanyType" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CGSTAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SGSTAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="IGSTAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CGSTAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SGSTAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="IGSTAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -4640,7 +4640,7 @@
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
             <End Role="UserType" EntitySet="UserTypes" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="CompanyDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -4659,9 +4659,9 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="UnderCompanyId" Type="Int32" />
           <Property Name="CompanyType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CGSTAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SGSTAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="IGSTAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CGSTAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SGSTAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="IGSTAmount" Type="Decimal" Precision="18" Scale="3" />
           <NavigationProperty Name="AccountGroups" Relationship="DBLakshmiSilksModel.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
           <NavigationProperty Name="CompanyDetail1" Relationship="DBLakshmiSilksModel.FK_CompanyDetail_CompanyDetail" FromRole="CompanyDetail" ToRole="CompanyDetail1" />
           <NavigationProperty Name="CompanyDetail2" Relationship="DBLakshmiSilksModel.FK_CompanyDetail_CompanyDetail" FromRole="CompanyDetail1" ToRole="CompanyDetail" />
@@ -4755,7 +4755,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>

@@ -189,7 +189,7 @@
                                             </Menu:NavMenuItem>
 
 
-                                        <Menu:NavMenuItem MenuName="Payable And Receipt" FormName="Payable And Receipt">
+                                        <Menu:NavMenuItem MenuName="Payment And Receipt" FormName="Payable And Receipt">
                                             <Menu:NavMenuItem.Content>
                                                 <Report:frmPaymentReceipt/>
                                             </Menu:NavMenuItem.Content>

@@ -8,15 +8,16 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"                        
              xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"
              d:DesignHeight="700" d:DesignWidth="1100" Background="white" Loaded="UserControl_Loaded" >
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="3" />
-        <!--#region Form Head -->
-      
+            <!--#region Form Head -->
+
             <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}" Margin="0,0,0,295" Grid.RowSpan="2">
                 <TextBlock x:Name="lblHead" Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Company Detail"/></TextBlock>
 
@@ -129,7 +130,7 @@
                             </TextBox>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                                 <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="10" Click="btnSave_Click"  />
-                                <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"  Margin="10" Click="btnDelete_Click" />
+                                <!--<Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"  Margin="10" Click="btnDelete_Click" />-->
                                 <!--<Button x:Name="btnSetting" HorizontalAlignment="Right"  Background="Transparent" ToolTip="Setting" Height="30" Width="50" BorderThickness="0" BorderBrush="Transparent" Click="btnSetting_Click" Margin="0,0,5,0">
                             <materialDesign:PackIcon  Kind="Settings" Foreground="{DynamicResource PrimaryHueLightBrush}" >
                             </materialDesign:PackIcon>
@@ -202,10 +203,12 @@
                                     </materialDesign:HintAssist.Hint>
                                 </PasswordBox>
                             </StackPanel>
-
-            </GroupBox>
-            <GroupBox Name="gbxLogo" Header="Logo" Grid.Column="1" Margin="10,25,10,63" >
-                <Grid>
+                        </Grid>
+                    </ScrollViewer>
+                </GroupBox>
+                <GroupBox Name="gbxLogo" Header="Logo" Grid.Column="1" Margin="10,25,10,63" >
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <Grid>
 
                             <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="161,0,216,10" Width="135">
                                 <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"   Click="btnImage_Click"  />
@@ -215,13 +218,10 @@
                                     <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Top"  Width="150" Height="100" Margin="5"/>
                                 </StackPanel>
                             </Border>
-
                         </Grid>
-
                     </ScrollViewer>
-
                 </GroupBox>
             </Grid>
         </Grid>
-    
+    </ScrollViewer>
 </UserControl>

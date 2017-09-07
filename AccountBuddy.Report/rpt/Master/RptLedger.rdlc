@@ -6,16 +6,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>5.72409cm</Width>
+              <Width>4.54075cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>5.85786cm</Width>
+              <Width>4.42911cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.94147cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.94147cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.94147cm</Width>
+              <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.94147cm</Width>
@@ -140,6 +143,38 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox16</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Mobile </Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -312,6 +347,36 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="MobileNo">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!MobileNo.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>MobileNo</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="CityName">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -351,6 +416,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -366,10 +432,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Ledger</DataSetName>
-        <Top>0.17639cm</Top>
-        <Left>1.86607cm</Left>
+        <Top>0.14111cm</Top>
+        <Left>1.92212cm</Left>
         <Height>1.2cm</Height>
-        <Width>20.40636cm</Width>
+        <Width>20.29427cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -377,7 +443,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.63541in</Height>
+    <Height>0.58333in</Height>
     <Style />
   </Body>
   <Width>9.50335in</Width>
