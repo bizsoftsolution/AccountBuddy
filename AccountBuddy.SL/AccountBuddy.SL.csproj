@@ -152,6 +152,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\SaleOrderController.cs" />
+    <Compile Include="Controllers\SaleReturnController.cs" />
     <Compile Include="Controllers\StockGroupController.cs" />
     <Compile Include="Controllers\UOMController.cs" />
     <Compile Include="Global.asax.cs">
@@ -233,6 +234,7 @@
     <Folder Include="Views\Customer\" />
     <Folder Include="Views\Product\" />
     <Folder Include="Views\SaleOrder\" />
+    <Folder Include="Views\SaleReturn\" />
     <Folder Include="Views\Sale\" />
     <Folder Include="Views\StockGroup\" />
     <Folder Include="Views\UOM\" />

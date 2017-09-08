@@ -14,7 +14,8 @@ namespace AccountBuddy.SL.Controllers
         {
             return View();
         }
-        public JsonResult Save(int LedgerId, string SaleDetails)
+
+        public JsonResult Save(int LedgerId,string PayMode, string SaleDetails)
         {
             try
             {
@@ -41,7 +42,7 @@ namespace AccountBuddy.SL.Controllers
                 sal.TotalAmount = sal.ItemAmount + sal.GSTAmount;
                 sal.TransactionTypeId = 1;
                 sal.RefNo = Hubs.ABServerHub.Sales_NewRefNoByCompanyId( db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
-                
+                sal.Narration = PayMode;
                 db.Sales.Add(sal);
                 db.SaveChanges();
 

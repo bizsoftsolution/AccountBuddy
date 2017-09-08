@@ -756,5 +756,6 @@ namespace AccountBuddy.SL.Hubs
         }
 
         #endregion
+
     }
 }
