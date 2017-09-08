@@ -408,9 +408,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox122</rd:DefaultName>
             <Top>0.30433in</Top>
-            <Left>0.04601in</Left>
+            <Left>0.02256in</Left>
             <Height>0.19444in</Height>
-            <Width>1.74795in</Width>
+            <Width>1.7714in</Width>
             <ZIndex>9</ZIndex>
             <Style>
               <Border>
@@ -617,8 +617,8 @@
             <rd:DefaultName>Textbox136</rd:DefaultName>
             <Top>1.50918in</Top>
             <Left>0.03646in</Left>
-            <Height>0.21588in</Height>
-            <Width>0.46095in</Width>
+            <Height>0.23264in</Height>
+            <Width>0.47484in</Width>
             <ZIndex>15</ZIndex>
             <Style>
               <Border>
@@ -906,6 +906,14 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
+                    <Value>: </Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DarkBlue</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
                     <Value>=Parameters!PurchaseType.Value</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
@@ -921,7 +929,7 @@
             <Top>0.32924in</Top>
             <Left>1.82174in</Left>
             <Height>0.2112in</Height>
-            <Width>1.647in</Width>
+            <Width>1.84492in</Width>
             <ZIndex>24</ZIndex>
             <Style>
               <Border>
@@ -2522,8 +2530,8 @@
         <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
         <MIMEType>image/jpeg</MIMEType>
         <Sizing>FitProportional</Sizing>
-        <Top>0.53915in</Top>
-        <Left>0.40225in</Left>
+        <Top>0.68735in</Top>
+        <Left>0.38837in</Left>
         <Height>1.14014in</Height>
         <Width>0.91227in</Width>
         <ZIndex>10</ZIndex>
@@ -2934,10 +2942,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox24</rd:DefaultName>
-        <Top>0.33082in</Top>
+        <Top>0.30305in</Top>
         <Left>0.31891in</Left>
-        <Height>0.19443in</Height>
-        <Width>0.46614in</Width>
+        <Height>0.2222in</Height>
+        <Width>0.49392in</Width>
         <ZIndex>18</ZIndex>
         <Style>
           <Border>
@@ -3084,7 +3092,7 @@
         <rd:DefaultName>GSTNo</rd:DefaultName>
         <Top>0.11207in</Top>
         <Left>0.81283in</Left>
-        <Height>0.20487in</Height>
+        <Height>0.21875in</Height>
         <Width>1.82293in</Width>
         <ZIndex>22</ZIndex>
         <Style>
@@ -3119,9 +3127,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>StateName</rd:DefaultName>
-        <Top>0.33776in</Top>
-        <Left>0.79894in</Left>
-        <Height>0.1875in</Height>
+        <Top>0.30998in</Top>
+        <Left>0.81283in</Left>
+        <Height>0.19446in</Height>
         <Width>1.79691in</Width>
         <ZIndex>23</ZIndex>
         <Style>

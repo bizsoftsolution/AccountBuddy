@@ -144,9 +144,9 @@
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
-                <Grid Grid.Column="2">
+                <Grid Grid.Column="2" >
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                        <StackPanel>
+                        <StackPanel Margin="10,10,10,0">
                             <TextBox x:Name="txtTitle1" MaxLength="100" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Title1, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
@@ -219,8 +219,8 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50*"></ColumnDefinition>
-                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                                <ColumnDefinition Width="350"></ColumnDefinition>
+                                <ColumnDefinition Width="350"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <StackPanel Orientation="Vertical" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                 <TextBox  Width="150"  x:Name="txtCGSTAmount" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtCGSTAmount_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding CGSTAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
@@ -297,7 +297,7 @@
                                     </StackPanel>
                                 </Border>
                                 <StackPanel Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="10" Width="140">
-                                    <Button Width="80"  Height="Auto" x:Name="btnBanner" Content="Banner1"   Click="btnBanner_Click"  />
+                                    <Button  Height="Auto" x:Name="btnBanner" Content="Banner1"   Click="btnBanner_Click" Margin="30,0,0,0"  />
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Grid.Column="2">
@@ -308,7 +308,7 @@
                                     </StackPanel>
                                 </Border>
                                 <StackPanel Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="10" Width="140">
-                                    <Button Width="80"  Height="Auto" x:Name="btnBanner2" Content="Banner2"   Click="btnBanner2_Click"  />
+                                    <Button  Height="Auto" x:Name="btnBanner2" Content="Banner2"   Click="btnBanner2_Click" Margin="30,0,0,0"  />
                                 </StackPanel>
                             </StackPanel>
 
