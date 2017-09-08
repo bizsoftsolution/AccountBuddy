@@ -87,7 +87,7 @@ namespace AccountBuddy.BLL
                     _ReceiptModeList.Add("Cash");
                     _ReceiptModeList.Add("Cheque");
                     _ReceiptModeList.Add("Online");
-                    _ReceiptModeList.Add("TT");
+                   // _ReceiptModeList.Add("TT");
                 }
                 return _ReceiptModeList;
             }

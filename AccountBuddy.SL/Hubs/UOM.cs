@@ -8,7 +8,7 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Account Group
+        #region UOM
         BLL.UOM UOM_DALtoBLL(DAL.UOM d)
         {
             BLL.UOM b = d.toCopy<BLL.UOM>(new BLL.UOM());

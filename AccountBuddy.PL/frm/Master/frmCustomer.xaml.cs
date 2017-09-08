@@ -64,6 +64,9 @@ namespace AccountBuddy.PL.frm.Master
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
+            cmbState.ItemsSource = BLL.StateDetail.toList;
+            cmbState.DisplayMemberPath = "StateName";
+            cmbState.SelectedValuePath = "Id";
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -212,16 +215,18 @@ namespace AccountBuddy.PL.frm.Master
                 foreach (var p in d.GetType().GetProperties())
                 {
                     if (p.Name.ToLower().Contains("id") ||
-                         p.GetValue(d) == null ||
-                            (p.Name != nameof(d.Ledger.LedgerName) &&
-                                p.Name != nameof(d.Ledger.PersonIncharge) &&
-                                p.Name != nameof(d.Ledger.AddressLine1)&&
-                                p.Name!=nameof(d.Ledger.AddressLine2)&&
-                                p.Name!=nameof(d.Ledger.OPCr)&&
-                                p.Name!=nameof(d.Ledger.OPDr)
+                         p.GetValue(d) == null 
+                         //||
+                            //(p.Name != nameof(d.Ledger.LedgerName) &&
+                            //    p.Name != nameof(d.Ledger.PersonIncharge) &&
+                            //    p.Name != nameof(d.Ledger.AddressLine1) &&
+                            //    p.Name != nameof(d.Ledger.AddressLine2) &&
+                            //    p.Name != nameof(d.Ledger.OPCr) &&
+                            //    p.Name != nameof(d.Ledger.OPDr)
 
 
-                             )) continue;
+                            // 
+                            ) continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {

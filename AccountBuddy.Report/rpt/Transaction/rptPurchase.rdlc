@@ -2,446 +2,6 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox1">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>TAX INVOICE </Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.24059in</Top>
-        <Left>2.72771in</Left>
-        <Height>0.25in</Height>
-        <Width>2.39236in</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="CompanyName">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!CompanyName.Value, "CompanyDetail")</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>22pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>CompanyName</rd:DefaultName>
-        <Top>1.34938cm</Top>
-        <Left>3.09551cm</Left>
-        <Height>0.40626in</Height>
-        <Width>4.01596in</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="AddressLine1">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!AddressLine1.Value, "CompanyDetail")</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>AddressLine1</rd:DefaultName>
-        <Top>0.93752in</Top>
-        <Left>1.2187in</Left>
-        <Height>0.23734in</Height>
-        <Width>3.91525in</Width>
-        <ZIndex>2</ZIndex>
-        <Visibility>
-          <Hidden>=IIf(First(Fields!AddressLine1.Value, "CompanyDetail")="", true, false)</Hidden>
-        </Visibility>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="AddressLine2">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!AddressLine2.Value, "CompanyDetail")</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>AddressLine2</rd:DefaultName>
-        <Top>1.17486in</Top>
-        <Left>1.1944in</Left>
-        <Height>0.28125in</Height>
-        <Width>3.9025in</Width>
-        <ZIndex>3</ZIndex>
-        <Visibility>
-          <Hidden>=IIf(First(Fields!AddressLine2.Value, "CompanyDetail")="", true, false)</Hidden>
-        </Visibility>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Image Name="Image1">
-        <Source>Database</Source>
-        <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
-        <MIMEType>image/jpeg</MIMEType>
-        <Sizing>FitProportional</Sizing>
-        <Top>0.55209in</Top>
-        <Left>0.25435in</Left>
-        <Height>1.14014in</Height>
-        <Width>0.91227in</Width>
-        <ZIndex>4</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
-      <Textbox Name="Textbox24">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>GST IN:33DDWPS9506K1ZN</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>State:TamilNadu | Code 33</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox24</rd:DefaultName>
-        <Top>0.16667in</Top>
-        <Left>0.17101in</Left>
-        <Height>0.38542in</Height>
-        <Width>1.73439in</Width>
-        <ZIndex>5</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox27">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Prop.K.Shakthi</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>98431 13333</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>98431 14435</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox24</rd:DefaultName>
-        <Top>0.125in</Top>
-        <Left>6.52368in</Left>
-        <Height>0.47089in</Height>
-        <Width>1.03472in</Width>
-        <ZIndex>6</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox32">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>INVOICE NO:</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox32</rd:DefaultName>
-        <Top>1.31475in</Top>
-        <Left>5.74751in</Left>
-        <Height>0.25in</Height>
-        <Width>0.89385in</Width>
-        <ZIndex>7</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="RefNo">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!RefNo.Value, "Purchase")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>RefNo</rd:DefaultName>
-        <Top>1.31475in</Top>
-        <Left>6.64136in</Left>
-        <Height>0.25in</Height>
-        <Width>0.91802in</Width>
-        <ZIndex>8</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox35">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Date:</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox35</rd:DefaultName>
-        <Top>1.56475in</Top>
-        <Left>5.80214in</Left>
-        <Height>0.19445in</Height>
-        <Width>0.83921in</Width>
-        <ZIndex>9</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="SalesDate">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!PurchaseDate.Value, "Purchase")</Value>
-                <Style>
-                  <Format>dd-MM-yyyy</Format>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>SalesDate</rd:DefaultName>
-        <Top>1.56475in</Top>
-        <Left>6.64136in</Left>
-        <Height>0.20834in</Height>
-        <Width>0.89223in</Width>
-        <ZIndex>10</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Rectangle Name="Rectangle3">
         <ReportItems>
           <Textbox Name="Textbox73">
@@ -514,11 +74,10 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>4.32454in</Top>
-        <Left>0.125in</Left>
+        <Top>4.57454in</Top>
+        <Left>0.25in</Left>
         <Height>0.90972in</Height>
         <Width>3.22397in</Width>
-        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Color>DarkBlue</Color>
@@ -528,371 +87,167 @@
       </Rectangle>
       <Rectangle Name="Rectangle4">
         <ReportItems>
-          <Textbox Name="Textbox98">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>E-Way bill No.&amp; Date:</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>0.02778in</Top>
-            <Left>0.10157in</Left>
-            <Height>0.19444in</Height>
-            <Width>2.21269in</Width>
+          <Image Name="Image2">
+            <Source>Database</Source>
+            <Value>=First(Fields!Banner1.Value, "CompanyDetail")</Value>
+            <MIMEType>image/png</MIMEType>
+            <Sizing>FitProportional</Sizing>
+            <Left>0.06944in</Left>
+            <Height>1.23264in</Height>
+            <Width>3.08562in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
               </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
             </Style>
-          </Textbox>
-          <Textbox Name="Textbox99">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Bank Details:</Value>
+          </Image>
+          <Rectangle Name="Rectangle6">
+            <ReportItems>
+              <Textbox Name="Textbox149">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Certified  the particular given abouve are true and correct</Value>
+                        <Style>
+                          <FontFamily>Cambria</FontFamily>
+                          <Color>DarkBlue</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
                     <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>Underline</TextDecoration>
-                      <Color>DarkBlue</Color>
+                      <TextAlign>Center</TextAlign>
                     </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>0.56444cm</Top>
-            <Left>0.10158in</Left>
-            <Height>0.22222in</Height>
-            <Width>2.21268in</Width>
+                  </Paragraph>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value> For  </Value>
+                        <Style>
+                          <FontFamily>Cambria</FontFamily>
+                          <Color>DarkBlue</Color>
+                        </Style>
+                      </TextRun>
+                      <TextRun>
+                        <Value>=Parameters!CompanyName.Value</Value>
+                        <Style>
+                          <FontFamily>Cambria</FontFamily>
+                          <FontWeight>Bold</FontWeight>
+                          <Color>DarkBlue</Color>
+                        </Style>
+                      </TextRun>
+                      <TextRun>
+                        <Value xml:space="preserve">
+</Value>
+                        <Style>
+                          <FontFamily>Cambria</FontFamily>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>Textbox149</rd:DefaultName>
+                <Left>3.71701in</Left>
+                <Height>0.53471in</Height>
+                <Width>3.24454in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="Textbox150">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Authorised Signatory</Value>
+                        <Style>
+                          <FontFamily>Cambria</FontFamily>
+                          <Color>DarkBlue</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>Textbox150</rd:DefaultName>
+                <Top>0.79167in</Top>
+                <Left>4.30727in</Left>
+                <Height>0.30555in</Height>
+                <Width>1.91667in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Image Name="Image3">
+                <Source>Database</Source>
+                <Value>=First(Fields!Banner2.Value, "CompanyDetail")</Value>
+                <MIMEType>image/png</MIMEType>
+                <Sizing>FitProportional</Sizing>
+                <Top>0.10417in</Top>
+                <Left>0.08214in</Left>
+                <Height>0.99305in</Height>
+                <Width>3.07293in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Image>
+              <Line Name="Line13">
+                <Left>3.22451in</Left>
+                <Height>1.23264in</Height>
+                <Width>0in</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Color>DarkBlue</Color>
+                    <Style>Solid</Style>
+                  </Border>
+                </Style>
+              </Line>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+            <Top>1.34028in</Top>
+            <Height>1.23264in</Height>
+            <Width>7.57153in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
-                <Style>None</Style>
+                <Color>DarkBlue</Color>
+                <Style>Solid</Style>
               </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
             </Style>
-          </Textbox>
-          <Textbox Name="Textbox100">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Name Of the Bank </Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>1.12888cm</Top>
-            <Left>0.10157in</Left>
-            <Height>0.19097in</Height>
-            <Width>1.10418in</Width>
-            <ZIndex>2</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox101">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>:HDFC Bank</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>1.12888cm</Top>
-            <Left>1.21963in</Left>
-            <Height>0.19097in</Height>
-            <Width>1.51129in</Width>
-            <ZIndex>3</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox102">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Account No  </Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>1.61395cm</Top>
-            <Left>0.10157in</Left>
-            <Height>0.19097in</Height>
-            <Width>1.09636in</Width>
-            <ZIndex>4</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox103">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>:50200023316088</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>1.61395cm</Top>
-            <Left>1.21963in</Left>
-            <Height>0.19097in</Height>
-            <Width>1.4974in</Width>
-            <ZIndex>5</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox104">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Branch </Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>2.09902cm</Top>
-            <Left>0.10157in</Left>
-            <Height>0.19444in</Height>
-            <Width>1.08594in</Width>
-            <ZIndex>6</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox105">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>:5ROADS,SALEM</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>2.09902cm</Top>
-            <Left>1.21963in</Left>
-            <Height>0.19444in</Height>
-            <Width>1.51129in</Width>
-            <ZIndex>7</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox106">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>IFSC</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>2.5929cm</Top>
-            <Left>0.10157in</Left>
-            <Height>0.19444in</Height>
-            <Width>1.0764in</Width>
-            <ZIndex>8</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox107">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>:HDFC0000178</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox98</rd:DefaultName>
-            <Top>2.5929cm</Top>
-            <Left>1.21963in</Left>
-            <Height>0.19444in</Height>
-            <Width>1.51129in</Width>
-            <ZIndex>9</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
+          </Rectangle>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>5.23426in</Top>
-        <Left>0.125in</Left>
-        <Height>1.34028in</Height>
-        <Width>3.22397in</Width>
-        <ZIndex>12</ZIndex>
+        <Top>5.48426in</Top>
+        <Left>0.24947in</Left>
+        <Height>2.57292in</Height>
+        <Width>7.57153in</Width>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Color>DarkBlue</Color>
@@ -900,41 +255,6 @@
           </Border>
         </Style>
       </Rectangle>
-      <Textbox Name="CityName">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!CityName.Value, "CompanyDetail")</Value>
-                <Style>
-                  <FontFamily>Cambria</FontFamily>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Color>DarkBlue</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>CityName</rd:DefaultName>
-        <Top>1.45611in</Top>
-        <Left>1.20828in</Left>
-        <Height>0.23611in</Height>
-        <Width>4.32958in</Width>
-        <ZIndex>13</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Rectangle Name="Rectangle5">
         <ReportItems>
           <Line Name="Line14">
@@ -1041,9 +361,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox123</rd:DefaultName>
             <Top>0.03472in</Top>
-            <Left>4.44096in</Left>
+            <Left>4.39582in</Left>
             <Height>0.20424in</Height>
-            <Width>1.10764in</Width>
+            <Width>1.15278in</Width>
             <ZIndex>7</ZIndex>
             <Style>
               <Border>
@@ -1264,7 +584,7 @@
             <Top>1.03349in</Top>
             <Left>0.04601in</Left>
             <Height>0.20486in</Height>
-            <Width>4.8461in</Width>
+            <Width>0.4514in</Width>
             <ZIndex>14</ZIndex>
             <Style>
               <Border>
@@ -1298,7 +618,7 @@
             <Top>1.50918in</Top>
             <Left>0.03646in</Left>
             <Height>0.21588in</Height>
-            <Width>4.6684in</Width>
+            <Width>0.46095in</Width>
             <ZIndex>15</ZIndex>
             <Style>
               <Border>
@@ -1328,10 +648,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox137</rd:DefaultName>
-            <Top>1.78697in</Top>
+            <Top>1.79738in</Top>
             <Left>0.0573cm</Left>
             <Height>0.19504in</Height>
-            <Width>1.57349in</Width>
+            <Width>0.47485in</Width>
             <ZIndex>16</ZIndex>
             <Style>
               <Border>
@@ -1362,9 +682,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox137</rd:DefaultName>
             <Top>1.76673in</Top>
-            <Left>4.66982in</Left>
+            <Left>5.35737in</Left>
             <Height>0.20139in</Height>
-            <Width>1.46906in</Width>
+            <Width>0.87878in</Width>
             <ZIndex>17</ZIndex>
             <Style>
               <Border>
@@ -1613,57 +933,17 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
-        </ReportItems>
-        <KeepTogether>true</KeepTogether>
-        <Top>1.78697in</Top>
-        <Left>0.125in</Left>
-        <Height>2.03756in</Height>
-        <Width>7.571in</Width>
-        <ZIndex>14</ZIndex>
-        <Style>
-          <Border>
-            <Color>DarkBlue</Color>
-            <Style>Solid</Style>
-          </Border>
-        </Style>
-      </Rectangle>
-      <Rectangle Name="Rectangle6">
-        <ReportItems>
-          <Line Name="Line22">
-            <Left>3.22397in</Left>
-            <Height>1.45833in</Height>
-            <Width>0in</Width>
-            <Style>
-              <Border>
-                <Color>DarkBlue</Color>
-                <Style>Solid</Style>
-              </Border>
-            </Style>
-          </Line>
-          <Textbox Name="Textbox148">
+          <Textbox Name="LedgerName">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>1)The goods are despatched to your risk and costs.
-2)Ourresponsibility cases as soon as after devliver of the goods from our shop.
-3)Goods once sold willl not be taken back or exchanges.
-4)Interest will be charged at 24% from the date of the bill.
-5)Amount will not be credited to your account without our receipt
-</Value>
+                    <Value>=First(Fields!LedgerName.Value, "Ledger")</Value>
                     <Style>
                       <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value>SUBJECT TO SALEM JURIDICTION</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>9pt</FontSize>
+                      <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
                     </Style>
@@ -1672,10 +952,12 @@
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox148</rd:DefaultName>
-            <Height>1.4375in</Height>
-            <Width>3.15453in</Width>
-            <ZIndex>1</ZIndex>
+            <rd:DefaultName>LedgerName</rd:DefaultName>
+            <Top>1.04738in</Top>
+            <Left>0.52519in</Left>
+            <Height>0.20139in</Height>
+            <Width>5.26042in</Width>
+            <ZIndex>25</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1686,52 +968,31 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
-          <Textbox Name="Textbox149">
+          <Textbox Name="GSTNo">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Certified  the particular given abouve are true and correct</Value>
+                    <Value>=First(Fields!GSTNo.Value, "Ledger")</Value>
                     <Style>
                       <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value> For Lakshmi Silks</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value xml:space="preserve">
-</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
+                <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox149</rd:DefaultName>
-            <Top>0.05556in</Top>
-            <Left>3.63195in</Left>
-            <Height>0.55208in</Height>
-            <Width>3.24454in</Width>
-            <ZIndex>2</ZIndex>
+            <rd:DefaultName>GSTNo</rd:DefaultName>
+            <Top>1.54738in</Top>
+            <Left>0.5113in</Left>
+            <Height>0.19444in</Height>
+            <Width>3.49724in</Width>
+            <ZIndex>26</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1742,31 +1003,65 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
-          <Textbox Name="Textbox150">
+          <Textbox Name="StateName">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Authorised Signatory</Value>
+                    <Value>=First(Fields!StateName.Value, "Ledger")</Value>
                     <Style>
                       <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
                       <Color>DarkBlue</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
+                <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox150</rd:DefaultName>
-            <Top>0.84723in</Top>
-            <Left>4.22221in</Left>
-            <Height>0.28125in</Height>
-            <Width>1.91667in</Width>
-            <ZIndex>3</ZIndex>
+            <rd:DefaultName>StateName</rd:DefaultName>
+            <Top>1.78349in</Top>
+            <Left>0.49741in</Left>
+            <Height>0.22629in</Height>
+            <Width>3.4278in</Width>
+            <ZIndex>27</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="StateCode">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!StateCode.Value, "Ledger")</Value>
+                    <Style>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DarkBlue</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>StateCode</rd:DefaultName>
+            <Top>1.75978in</Top>
+            <Left>6.23615in</Left>
+            <Height>0.20833in</Height>
+            <Width>1.05208in</Width>
+            <ZIndex>28</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1779,11 +1074,11 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>6.57454in</Top>
-        <Left>0.125in</Left>
-        <Height>1.45833in</Height>
+        <Top>2.03697in</Top>
+        <Left>0.25in</Left>
+        <Height>2.03756in</Height>
         <Width>7.571in</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Color>DarkBlue</Color>
@@ -1791,189 +1086,12 @@
           </Border>
         </Style>
       </Rectangle>
-      <Rectangle Name="Rectangle2">
-        <ReportItems>
-          <Line Name="Line2">
-            <Top>0.22631in</Top>
-            <Height>0in</Height>
-            <Width>1.84078in</Width>
-            <Style>
-              <Border>
-                <Color>DarkBlue</Color>
-                <Style>Solid</Style>
-              </Border>
-            </Style>
-          </Line>
-          <Line Name="Line3">
-            <Top>0.47457in</Top>
-            <Left>0.01388in</Left>
-            <Height>0in</Height>
-            <Width>1.8269in</Width>
-            <ZIndex>1</ZIndex>
-            <Style>
-              <Border>
-                <Color>DarkBlue</Color>
-                <Style>Solid</Style>
-              </Border>
-            </Style>
-          </Line>
-          <Textbox Name="Textbox25">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Original for Buyer</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>8pt</FontSize>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox25</rd:DefaultName>
-            <Height>0.19854in</Height>
-            <Width>1.43681in</Width>
-            <ZIndex>2</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox26">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Duplicate for Transaporter</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>8pt</FontSize>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox25</rd:DefaultName>
-            <Top>0.61011cm</Top>
-            <Left>0.03527cm</Left>
-            <Height>0.19854in</Height>
-            <Width>1.43681in</Width>
-            <ZIndex>3</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox28">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Triplicate for Supplier</Value>
-                    <Style>
-                      <FontFamily>Cambria</FontFamily>
-                      <FontSize>8pt</FontSize>
-                      <Color>DarkBlue</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox25</rd:DefaultName>
-            <Top>1.2407cm</Top>
-            <Height>0.19854in</Height>
-            <Width>1.43681in</Width>
-            <ZIndex>4</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Line Name="Line5">
-            <Left>1.45069in</Left>
-            <Height>0.69915in</Height>
-            <Width>0in</Width>
-            <ZIndex>5</ZIndex>
-            <Style>
-              <Border>
-                <Color>DarkBlue</Color>
-                <Style>Solid</Style>
-              </Border>
-            </Style>
-          </Line>
-        </ReportItems>
-        <KeepTogether>true</KeepTogether>
-        <Top>0.59589in</Top>
-        <Left>5.78826in</Left>
-        <Height>0.69915in</Height>
-        <Width>1.84078in</Width>
-        <ZIndex>16</ZIndex>
-        <Style>
-          <Border>
-            <Color>DarkBlue</Color>
-            <Style>Solid</Style>
-          </Border>
-        </Style>
-      </Rectangle>
-      <Line Name="Line6">
-        <Top>1.8382in</Top>
-        <Left>0.125in</Left>
-        <Height>-1.7043in</Height>
-        <Width>0in</Width>
-        <ZIndex>17</ZIndex>
-        <Style>
-          <Border>
-            <Color>DarkBlue</Color>
-            <Style>Solid</Style>
-          </Border>
-        </Style>
-      </Line>
-      <Line Name="Line7">
-        <Top>0.125in</Top>
-        <Left>0.125in</Left>
-        <Height>0in</Height>
-        <Width>7.571in</Width>
-        <ZIndex>18</ZIndex>
-        <Style>
-          <Border>
-            <Color>DarkBlue</Color>
-            <Style>Solid</Style>
-          </Border>
-        </Style>
-      </Line>
       <Line Name="Line8">
-        <Top>1.8382in</Top>
-        <Left>7.696in</Left>
-        <Height>-1.71319in</Height>
+        <Top>2.20473in</Top>
+        <Left>7.821in</Left>
+        <Height>-2.126in</Height>
         <Width>0in</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Color>DarkBlue</Color>
@@ -2450,11 +1568,11 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>PurchaseDetail</DataSetName>
-        <Top>3.82453in</Top>
-        <Left>0.125in</Left>
-        <Height>0.50001in</Height>
+        <Top>4.07453in</Top>
+        <Left>0.25in</Left>
+        <Height>0.5in</Height>
         <Width>7.571in</Width>
-        <ZIndex>20</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Color>DarkBlue</Color>
@@ -2712,7 +1830,25 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Add CGST-Rate Of         Tax </Value>
+                              <Value>Add CGST-Rate Of  </Value>
+                              <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>DarkBlue</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Parameters!CGST.Value</Value>
+                              <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>DarkBlue</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value> %   Tax </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -2787,7 +1923,25 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Add SGST-Rate Of          Tax</Value>
+                              <Value>  Add SGST-Rate Of  </Value>
+                              <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>DarkBlue</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Parameters!SGST.Value</Value>
+                              <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>DarkBlue</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>    %    Tax</Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -2862,7 +2016,25 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Add IGST-Rate Of          Tax</Value>
+                              <Value>Add IGST-Rate Of    </Value>
+                              <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>DarkBlue</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Parameters!IGST.Value</Value>
+                              <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>DarkBlue</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>  %   Tax</Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -3178,11 +2350,11 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Purchase</DataSetName>
-        <Top>4.32454in</Top>
-        <Left>3.34897in</Left>
+        <Top>4.57454in</Top>
+        <Left>3.47397in</Left>
         <Height>2.25in</Height>
         <Width>4.34703in</Width>
-        <ZIndex>21</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Color>DarkBlue</Color>
@@ -3193,11 +2365,912 @@
           <Color>DarkBlue</Color>
         </Style>
       </Tablix>
+      <Textbox Name="Textbox1">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>TAX INVOICE </Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox1</rd:DefaultName>
+        <Top>0.33776in</Top>
+        <Left>2.87561in</Left>
+        <Height>0.19444in</Height>
+        <Width>2.40624in</Width>
+        <ZIndex>6</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="CompanyName">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!CompanyName.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>20pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>CompanyName</rd:DefaultName>
+        <Top>1.35179cm</Top>
+        <Left>3.44471cm</Left>
+        <Height>0.37256in</Height>
+        <Width>4.27638in</Width>
+        <ZIndex>7</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="AddressLine1">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!AddressLine1.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>AddressLine1</rd:DefaultName>
+        <Top>1.18601in</Top>
+        <Left>1.37008in</Left>
+        <Height>0.26858in</Height>
+        <Width>4.26249in</Width>
+        <ZIndex>8</ZIndex>
+        <Visibility>
+          <Hidden>=Microsoft.VisualBasic.Interaction.IIf(First(Fields!AddressLine1.Value, "CompanyDetail") = "", True, False)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="AddressLine2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!AddressLine2.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>AddressLine2</rd:DefaultName>
+        <Top>1.45459in</Top>
+        <Left>1.3423in</Left>
+        <Height>0.26799in</Height>
+        <Width>4.29027in</Width>
+        <ZIndex>9</ZIndex>
+        <Visibility>
+          <Hidden>=Microsoft.VisualBasic.Interaction.IIf(First(Fields!AddressLine2.Value, "CompanyDetail") = "", True, False)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Image Name="Image1">
+        <Source>Database</Source>
+        <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
+        <MIMEType>image/jpeg</MIMEType>
+        <Sizing>FitProportional</Sizing>
+        <Top>0.53915in</Top>
+        <Left>0.40225in</Left>
+        <Height>1.14014in</Height>
+        <Width>0.91227in</Width>
+        <ZIndex>10</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Image>
+      <Textbox Name="Textbox24">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>GST IN:</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox24</rd:DefaultName>
+        <Top>0.13984in</Top>
+        <Left>0.30936in</Left>
+        <Height>0.19098in</Height>
+        <Width>0.50347in</Width>
+        <ZIndex>11</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox32">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>INVOICE NO:</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox32</rd:DefaultName>
+        <Top>1.46605in</Top>
+        <Left>5.68812in</Left>
+        <Height>0.19045in</Height>
+        <Width>0.92608in</Width>
+        <ZIndex>12</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="RefNo">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!RefNo.Value, "Purchase")</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>RefNo</rd:DefaultName>
+        <Top>1.46605in</Top>
+        <Left>6.64197in</Left>
+        <Height>0.19045in</Height>
+        <Width>1.14638in</Width>
+        <ZIndex>13</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox35">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Date:</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox35</rd:DefaultName>
+        <Top>1.67039in</Top>
+        <Left>5.78888in</Left>
+        <Height>0.23612in</Height>
+        <Width>0.83921in</Width>
+        <ZIndex>14</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="SalesDate">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!PurchaseDate.Value, "Purchase")</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                  <Format>dd-MM-yyyy</Format>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>SalesDate</rd:DefaultName>
+        <Top>1.69817in</Top>
+        <Left>6.62809in</Left>
+        <Height>0.20834in</Height>
+        <Width>1.12107in</Width>
+        <ZIndex>15</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="CityName">
+        <CanGrow>true</CanGrow>
+        <CanShrink>true</CanShrink>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!CityName.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>CityName</rd:DefaultName>
+        <Top>1.73647in</Top>
+        <Left>1.3423in</Left>
+        <Height>0.20079in</Height>
+        <Width>0.51623in</Width>
+        <ZIndex>16</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Rectangle Name="Rectangle2">
+        <ReportItems>
+          <Line Name="Line2">
+            <Top>0.22631in</Top>
+            <Height>0in</Height>
+            <Width>1.84078in</Width>
+            <Style>
+              <Border>
+                <Color>DarkBlue</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Line Name="Line3">
+            <Top>0.47457in</Top>
+            <Left>0.01388in</Left>
+            <Height>0in</Height>
+            <Width>1.8269in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Color>DarkBlue</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Textbox Name="Textbox25">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Original for Buyer</Value>
+                    <Style>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <Color>DarkBlue</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox25</rd:DefaultName>
+            <Height>0.19854in</Height>
+            <Width>1.43681in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox26">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Duplicate for Transaporter</Value>
+                    <Style>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <Color>DarkBlue</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox25</rd:DefaultName>
+            <Top>0.61011cm</Top>
+            <Left>0.03527cm</Left>
+            <Height>0.19854in</Height>
+            <Width>1.43681in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox28">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Triplicate for Supplier</Value>
+                    <Style>
+                      <FontFamily>Cambria</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <Color>DarkBlue</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox25</rd:DefaultName>
+            <Top>1.2407cm</Top>
+            <Height>0.19854in</Height>
+            <Width>1.43681in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Line Name="Line5">
+            <Left>1.45069in</Left>
+            <Height>0.69915in</Height>
+            <Width>0in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Color>DarkBlue</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+        </ReportItems>
+        <KeepTogether>true</KeepTogether>
+        <Top>0.68735in</Top>
+        <Left>5.93616in</Left>
+        <Height>0.69915in</Height>
+        <Width>1.84078in</Width>
+        <ZIndex>17</ZIndex>
+        <Style>
+          <Border>
+            <Color>DarkBlue</Color>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Rectangle>
+      <Textbox Name="Textbox29">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>State:</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox24</rd:DefaultName>
+        <Top>0.33082in</Top>
+        <Left>0.31891in</Left>
+        <Height>0.19443in</Height>
+        <Width>0.46614in</Width>
+        <ZIndex>18</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="ContactPerson">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!ContactPerson.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>ContactPerson</rd:DefaultName>
+        <Top>0.11207in</Top>
+        <Left>6.04777in</Left>
+        <Height>0.17709in</Height>
+        <Width>1.72917in</Width>
+        <ZIndex>19</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="MobileNo">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!MobileNo.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>MobileNo</rd:DefaultName>
+        <Top>0.30305in</Top>
+        <Left>6.04777in</Left>
+        <Height>0.1746in</Height>
+        <Width>1.74057in</Width>
+        <ZIndex>20</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="TelephoneNo">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!TelephoneNo.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>TelephoneNo</rd:DefaultName>
+        <Top>0.49154in</Top>
+        <Left>6.04777in</Left>
+        <Height>0.19581in</Height>
+        <Width>1.72668in</Width>
+        <ZIndex>21</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="GSTNo2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!GSTNo.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>GSTNo</rd:DefaultName>
+        <Top>0.11207in</Top>
+        <Left>0.81283in</Left>
+        <Height>0.20487in</Height>
+        <Width>1.82293in</Width>
+        <ZIndex>22</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="StateName2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!StateName.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>StateName</rd:DefaultName>
+        <Top>0.33776in</Top>
+        <Left>0.79894in</Left>
+        <Height>0.1875in</Height>
+        <Width>1.79691in</Width>
+        <ZIndex>23</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="PostalCode">
+        <CanShrink>true</CanShrink>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!PostalCode.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>PostalCode</rd:DefaultName>
+        <Top>1.73647in</Top>
+        <Left>1.85853in</Left>
+        <Height>0.20079in</Height>
+        <Width>1.07959in</Width>
+        <ZIndex>24</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Title1">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!Title1.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontFamily>Cambria</FontFamily>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Title1</rd:DefaultName>
+        <Top>0.90476in</Top>
+        <Left>1.37008in</Left>
+        <Height>0.28125in</Height>
+        <Width>4.26249in</Width>
+        <ZIndex>25</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Title2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!Title2.Value, "CompanyDetail")</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>DarkBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Title2</rd:DefaultName>
+        <Top>0.13984in</Top>
+        <Left>3.15761in</Left>
+        <Height>0.19792in</Height>
+        <Width>2.00115in</Width>
+        <ZIndex>26</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Line Name="Line9">
+        <Top>2.20473in</Top>
+        <Left>0.24947in</Left>
+        <Height>-2.126in</Height>
+        <Width>0in</Width>
+        <ZIndex>27</ZIndex>
+        <Style>
+          <Border>
+            <Color>DarkBlue</Color>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Line>
+      <Line Name="Line10">
+        <Top>0.11207in</Top>
+        <Left>0.25in</Left>
+        <Height>0in</Height>
+        <Width>7.57153in</Width>
+        <ZIndex>28</ZIndex>
+        <Style>
+          <Border>
+            <Color>DarkBlue</Color>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Line>
     </ReportItems>
-    <Height>8.09537in</Height>
+    <Height>8.18913in</Height>
     <Style />
   </Body>
-  <Width>7.81125in</Width>
+  <Width>7.91475in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>
@@ -3260,6 +3333,18 @@
           <DataField>AddressLine2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Banner1">
+          <DataField>Banner1</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="Banner2">
+          <DataField>Banner2</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="CGSTAmount">
+          <DataField>CGSTAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="CityName">
           <DataField>CityName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -3270,6 +3355,10 @@
         </Field>
         <Field Name="CompanyType">
           <DataField>CompanyType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ContactPerson">
+          <DataField>ContactPerson</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="EMailId">
@@ -3283,6 +3372,10 @@
         <Field Name="Id">
           <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="IGSTAmount">
+          <DataField>IGSTAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="IsActive">
           <DataField>IsActive</DataField>
@@ -3316,17 +3409,49 @@
           <DataField>PostalCode</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="SGSTAmount">
+          <DataField>SGSTAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="State">
+          <DataField>State</DataField>
+          <rd:TypeName>AccountBuddy.BLL.StateDetail</rd:TypeName>
+        </Field>
+        <Field Name="StateCode">
+          <DataField>StateCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StateId">
+          <DataField>StateId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="StateName">
+          <DataField>StateName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="TelephoneNo">
           <DataField>TelephoneNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Title1">
+          <DataField>Title1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Title2">
+          <DataField>Title2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="UnderCompanyId">
           <DataField>UnderCompanyId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="UserId">
           <DataField>UserId</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VoucherWaterMark">
+          <DataField>VoucherWaterMark</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
@@ -3619,6 +3744,22 @@
           <DataField>PersonIncharge</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="State">
+          <DataField>State</DataField>
+          <rd:TypeName>AccountBuddy.BLL.StateDetail</rd:TypeName>
+        </Field>
+        <Field Name="StateCode">
+          <DataField>StateCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StateId">
+          <DataField>StateId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="StateName">
+          <DataField>StateName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="TelephoneNo">
           <DataField>TelephoneNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -3633,6 +3774,30 @@
   </DataSets>
   <ReportParameters>
     <ReportParameter Name="PurchaseType">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="IGST">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CGST">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="SGST">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CompanyName">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>

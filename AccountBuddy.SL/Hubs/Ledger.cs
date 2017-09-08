@@ -20,12 +20,10 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 ledgerTo = ledgerFrom.toCopy<BLL.Ledger>(new BLL.Ledger());
-
                 ledgerTo.AccountGroup = AccountGroupDAL_BLL(ledgerFrom.AccountGroup);
-
+                ledgerTo.State = StateDetail_DALtoBLL(ledgerFrom.StateDetail);
                 ledgerTo.CreditLimitType = new BLL.CreditLimitType();
                 ledgerFrom.CreditLimitType.toCopy<BLL.CreditLimitType>(ledgerTo.CreditLimitType);
-
               
             }
             catch(Exception ex)

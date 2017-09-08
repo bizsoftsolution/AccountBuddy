@@ -72,7 +72,7 @@ namespace AccountBuddy.SL.Hubs
                     //LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).Purchase_RefNoRefresh(Purchase_NewRefNo());
-               // Journal_SaveByPurchase(d);
+                //Journal_SaveByPurchase(d);
                // Sales_SaveByPurchase(d);
                 return true;
             }
@@ -210,7 +210,6 @@ namespace AccountBuddy.SL.Hubs
             return P;
         }
         public bool Find_PRef(string RefNo, BLL.Purchase PO)
-
         {
             DAL.Purchase d = DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
             if (d == null)

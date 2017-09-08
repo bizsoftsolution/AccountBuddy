@@ -173,6 +173,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmBank.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="frm\Master\frmCompanySetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -350,6 +354,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="frm\Transaction\frmPurchaseReturn.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Transaction\frmPurchaseReturnSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmPurchaseSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -362,7 +374,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="frm\Transaction\frmSalesReturn.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="frm\Transaction\frmSalesSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\SalesReturnSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -407,6 +427,9 @@
     </Compile>
     <Compile Include="frmWelcome.xaml.cs">
       <DependentUpon>frmWelcome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmBank.xaml.cs">
+      <DependentUpon>frmBank.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmCompanySetting.xaml.cs">
       <DependentUpon>frmCompanySetting.xaml</DependentUpon>
@@ -541,6 +564,12 @@
     <Compile Include="frm\Transaction\frmPurchase.xaml.cs">
       <DependentUpon>frmPurchase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmPurchaseReturn.xaml.cs">
+      <DependentUpon>frmPurchaseReturn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmPurchaseReturnSearch.xaml.cs">
+      <DependentUpon>frmPurchaseReturnSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmPurchaseSearch.xaml.cs">
       <DependentUpon>frmPurchaseSearch.xaml</DependentUpon>
     </Compile>
@@ -550,8 +579,14 @@
     <Compile Include="frm\Transaction\frmSale.xaml.cs">
       <DependentUpon>frmSale.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmSalesReturn.xaml.cs">
+      <DependentUpon>frmSalesReturn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmSalesSearch.xaml.cs">
       <DependentUpon>frmSalesSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\SalesReturnSearch.xaml.cs">
+      <DependentUpon>SalesReturnSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Vouchers\frmQuickJournalVoucher.xaml.cs">
       <DependentUpon>frmQuickJournalVoucher.xaml</DependentUpon>

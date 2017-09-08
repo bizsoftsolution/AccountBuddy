@@ -89,7 +89,7 @@ namespace AccountBuddy.BLL
                     _PayModeList.Add("Cash");
                     _PayModeList.Add("Cheque");
                     _PayModeList.Add("Online");
-                    _PayModeList.Add("TT");
+                   // _PayModeList.Add("TT");
                 }
                 return _PayModeList;
             }

@@ -54,13 +54,14 @@ namespace AccountBuddy.PL.frm.Master
             CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).Filter = Bank_Filter;
             CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.AccountName), System.ComponentModel.ListSortDirection.Ascending));
 
-            
-
             cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
 
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
+            cmbState.ItemsSource = BLL.StateDetail.toList;
+            cmbState.DisplayMemberPath = "StateName";
+            cmbState.SelectedValuePath = "Id";
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

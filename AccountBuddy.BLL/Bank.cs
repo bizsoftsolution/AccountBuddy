@@ -184,7 +184,7 @@ namespace AccountBuddy.BLL
         {
             new Bank().toCopy<Bank>(this);
             this.Ledger.Clear();
-            this.Ledger.AccountGroupId = DataKeyValue.BankAccounts_Value;
+            this.Ledger.AccountGroupId = DataKeyValue.Bank_Accounts_Value;
             NotifyAllPropertyChanged();
         }
 

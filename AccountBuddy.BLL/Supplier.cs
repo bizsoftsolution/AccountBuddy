@@ -218,6 +218,7 @@ namespace AccountBuddy.BLL
             this.Ledger.Clear();
             Ledger.AccountGroupId = BLL.DataKeyValue.SundryCreditors_Value;
             NotifyAllPropertyChanged();
+          
         }
 
         public bool Find(int pk)

@@ -212,6 +212,9 @@ namespace AccountBuddy.SL.Hubs
         #region Purchase
         void Journal_SaveByPurchase(DAL.Purchase P)
         {
+            try
+            {
+
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
             var CId = P.Ledger.AccountGroup.CompanyId;
 
@@ -263,6 +266,12 @@ namespace AccountBuddy.SL.Hubs
 
             j.JournalDate = P.PurchaseDate;
             DB.SaveChanges();
+
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
         void Journal_DeleteByPurchase(BLL.Purchase P)
         {

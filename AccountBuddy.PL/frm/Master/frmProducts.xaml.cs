@@ -64,10 +64,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "ProductName"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.ItemCode == null)
-            {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Item Code"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+          
           
          
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
@@ -346,7 +343,7 @@ namespace AccountBuddy.PL.frm.Master
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtMRP.Text);
+            //textBox.Text = AppLib.NumericOnly(txtMRP.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
@@ -357,6 +354,27 @@ namespace AccountBuddy.PL.frm.Master
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
             textBox.Text = AppLib.NumericOnly(txtPurchaseRate.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+        }
+
+        private void txtOpeningStock_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtOpeningStock.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
+
+        }
+
+        private void txtReorderLevel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtReorderLevel.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }

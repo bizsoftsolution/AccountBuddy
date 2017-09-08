@@ -76,8 +76,8 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).PurchaseReturn_RefNoRefresh(PurchaseReturn_NewRefNo());
-                Journal_SaveByPurchaseReturn(d);
-                SaleReturn_SaveByPurchaseReturn(d);
+                //Journal_SaveByPurchaseReturn(d);
+               // SaleReturn_SaveByPurchaseReturn(d);
                 return true;
             }
             catch (Exception ex) { }
@@ -126,7 +126,7 @@ namespace AccountBuddy.SL.Hubs
                         p.PurchaseReturnDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
-                    Journal_SaveByPurchaseReturn(p);
+                    //Journal_SaveByPurchaseReturn(p);
                 }
             }
         }
@@ -190,8 +190,8 @@ namespace AccountBuddy.SL.Hubs
                     DB.PurchaseReturns.Remove(d);
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
-                    Journal_DeleteByPurchaseReturn(P);
-                    SalesReturn_DeleteByPurchaseReturn(d);
+                    //Journal_DeleteByPurchaseReturn(P);
+                  //SalesReturn_DeleteByPurchaseReturn(d);
                 }
                 return true;
             }
@@ -208,7 +208,6 @@ namespace AccountBuddy.SL.Hubs
             return PR;
         }
         public bool Find_PRRef(string RefNo, BLL.PurchaseReturn PO)
-
         {
             DAL.PurchaseReturn d = DB.PurchaseReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
             if (d == null)
@@ -248,6 +247,34 @@ namespace AccountBuddy.SL.Hubs
             }
             catch (Exception ex) { }
             return P;
+        }
+        public List<BLL.PurchaseReturn> PurchaseReturn_List(int? SID, DateTime dtFrom, DateTime dtTo, String InvoiceNo)
+        {
+            BLL.PurchaseReturn P = new BLL.PurchaseReturn();
+            List<BLL.PurchaseReturn> lstPurchase = new List<BLL.PurchaseReturn>();
+            try
+            {
+
+                var d = DB.PurchaseReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId &&
+                (SID == null || x.LedgerId == SID) && x.PRDate >= dtFrom &&
+                x.PRDate <= dtTo &&
+                (InvoiceNo == "" || x.RefNo == InvoiceNo)).ToList();
+                foreach (var l in d)
+                {
+                    P = new BLL.PurchaseReturn();
+
+                    P.Id = l.Id;
+                    P.LedgerName = l.Ledger.LedgerName;
+                    P.PRDate = l.PRDate;
+                    P.TotalAmount = l.TotalAmount;
+                    P.RefNo = l.RefNo;
+
+                    lstPurchase.Add(P);
+
+                }
+            }
+            catch (Exception ex) { }
+            return lstPurchase;
         }
 
         #endregion

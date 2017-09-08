@@ -43,6 +43,16 @@ namespace AccountBuddy.BLL
         private decimal _CGSTAmount;
         private decimal _SGSTAmount;
         private decimal _IGSTAmount;
+        private byte[] _Banner1;
+        private byte[] _Banner2;
+        private string _Title1;
+        private string _Title2;
+        private string _ContactPerson;
+        private int? _StateId;
+        private bool _VoucherWaterMark;
+        private string _StateCode;
+        private string _StateName;
+        private StateDetail _State;
 
         #endregion
 
@@ -211,7 +221,54 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public string Title1
+        {
+            get
+            {
+                return _Title1;
+            }
 
+            set
+            {
+                if (_Title1 != value)
+                {
+                    _Title1 = value;
+                    NotifyPropertyChanged(nameof(Title1));
+                }
+            }
+        }
+        public string Title2
+        {
+            get
+            {
+                return _Title2;
+            }
+
+            set
+            {
+                if (_Title2 != value)
+                {
+                    _Title2 = value;
+                    NotifyPropertyChanged(nameof(Title2));
+                }
+            }
+        }
+        public string ContactPerson
+        {
+            get
+            {
+                return _ContactPerson;
+            }
+
+            set
+            {
+                if (_ContactPerson != value)
+                {
+                    _ContactPerson = value;
+                    NotifyPropertyChanged(nameof(ContactPerson));
+                }
+            }
+        }
         public bool IsActive
         {
             get
@@ -376,23 +433,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public byte[] Logo
-        {
-            get
-            {
-                return _logo;
-            }
-
-            set
-            {
-                if (_logo != value)
-                {
-                    _logo = value;
-                    NotifyPropertyChanged(nameof(Logo));
-                }
-            }
-        }
-        public string CityName
+       public string CityName
         {
             get
             {
@@ -408,6 +449,21 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public int? StateId
+        {
+            get
+            {
+                return _StateId;
+            }
+            set
+            {
+                if (_StateId != value)
+                {
+                    _StateId = value;
+                    NotifyPropertyChanged(nameof(StateId));
+                }
+            }
+        }
 
         public decimal CGSTAmount
         {
@@ -458,6 +514,125 @@ namespace AccountBuddy.BLL
             }
         }
 
+
+        public byte[] Logo
+        {
+            get
+            {
+                return _logo;
+            }
+
+            set
+            {
+                if (_logo != value)
+                {
+                    _logo = value;
+                    NotifyPropertyChanged(nameof(Logo));
+                }
+            }
+        }
+        public byte[] Banner1
+        {
+            get
+            {
+                return _Banner1;
+            }
+
+            set
+            {
+                if (_Banner1 != value)
+                {
+                    _Banner1 = value;
+                    NotifyPropertyChanged(nameof(Banner1));
+                }
+            }
+        }
+        public byte[] Banner2
+        {
+            get
+            {
+                return _Banner2;
+            }
+
+            set
+            {
+                if (_Banner2 != value)
+                {
+                    _Banner2 = value;
+                    NotifyPropertyChanged(nameof(Banner2));
+                }
+            }
+        }
+        public bool VoucherWaterMark
+        {
+            get
+            {
+                return _VoucherWaterMark;
+            }
+
+            set
+            {
+                if (_VoucherWaterMark != value)
+                {
+                    _VoucherWaterMark = value;
+                    NotifyPropertyChanged(nameof(VoucherWaterMark));
+                }
+            }
+        }
+        public string StateCode
+        {
+            get
+            {
+                return _StateCode;
+            }
+
+            set
+            {
+                if (_StateCode != value)
+                {
+                    _StateCode = value;
+                    NotifyPropertyChanged(nameof(StateCode));
+                }
+            }
+        }
+        public string StateName
+        {
+            get
+            {
+                return _StateName;
+            }
+            set
+            {
+                if (_StateName != value)
+                {
+                    _StateName = value;
+                    NotifyPropertyChanged(nameof(StateName));
+                   
+                }
+
+            }
+        }
+         public StateDetail State
+        {
+            get
+            {
+                return _State;
+            }
+            set
+            {
+                if (_State != value)
+                {
+                    _State = value;
+                    NotifyPropertyChanged(nameof(State));
+                  
+                }
+
+            }
+        }
+        public void SetState()
+        {
+      
+        }
         #endregion
 
         #region Property  Changed Event

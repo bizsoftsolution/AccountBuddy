@@ -52,6 +52,7 @@
     <Compile Include="ABClientHub.cs" />
     <Compile Include="AccountGroup.cs" />
     <Compile Include="BalanceSheet.cs" />
+    <Compile Include="Bank.cs" />
     <Compile Include="BankReconcilation.cs" />
     <Compile Include="CompanyDetail.cs" />
     <Compile Include="CreditLimitType.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="SalesReturn.cs" />
     <Compile Include="SalesReturnDetail.cs" />
     <Compile Include="SOPending.cs" />
+    <Compile Include="StateDetail.cs" />
     <Compile Include="StockGroup.cs" />
     <Compile Include="StockIn.cs" />
     <Compile Include="StockInDetail.cs" />

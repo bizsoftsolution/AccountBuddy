@@ -117,9 +117,9 @@
                                                     <Master:frmSupplier/>
                                                 </Menu:NavMenuItem.Content>
                                             </Menu:NavMenuItem>
-                                        <Menu:NavMenuItem MenuName="Ledger" FormName="Ledger">
+                                        <Menu:NavMenuItem MenuName="Bank" FormName="Bank">
                                             <Menu:NavMenuItem.Content>
-                                                <Master:frmLedger/>
+                                                <Master:frmBank/>
                                             </Menu:NavMenuItem.Content>
                                         </Menu:NavMenuItem>
 
@@ -145,13 +145,22 @@
                                                 <Transaction:frmPurchase/>
                                             </Menu:NavMenuItem.Content>
                                         </Menu:NavMenuItem>
+                                        <Menu:NavMenuItem MenuName="Purchase Return" FormName="Purchase Return">
+                                            <Menu:NavMenuItem.Content>
+                                                <Transaction:frmPurchaseReturn/>
+                                            </Menu:NavMenuItem.Content>
+                                        </Menu:NavMenuItem>
 
                                         <Menu:NavMenuItem MenuName="Sales" FormName="Sales">
                                             <Menu:NavMenuItem.Content>
                                                 <Transaction:frmSale/>
                                             </Menu:NavMenuItem.Content>
                                         </Menu:NavMenuItem>
-
+                                        <Menu:NavMenuItem MenuName="Sales Return" FormName="Sales Return">
+                                            <Menu:NavMenuItem.Content>
+                                                <Transaction:frmSalesReturn/>
+                                            </Menu:NavMenuItem.Content>
+                                        </Menu:NavMenuItem>
                                         <Menu:NavMenuItem MenuName="Payment" FormName="Payment">
                                             <Menu:NavMenuItem.Content>
                                                 <Transaction:frmPayment/>
@@ -164,6 +173,7 @@
                                             </Menu:NavMenuItem.Content>
                                         </Menu:NavMenuItem>
 
+                                      
 
                                     </ListBox>
                                 </Expander>
@@ -176,11 +186,11 @@
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
 
-                                            <Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
+                                            <!--<Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
                                                 <Menu:NavMenuItem.Content>
                                                     <Report:frmGeneralLedger/>
                                                 </Menu:NavMenuItem.Content>
-                                            </Menu:NavMenuItem>
+                                            </Menu:NavMenuItem>-->
                                                                                
                                             <Menu:NavMenuItem MenuName="Payable And Receivable" FormName="Payable And Receivable">
                                                 <Menu:NavMenuItem.Content>
@@ -192,6 +202,17 @@
                                         <Menu:NavMenuItem MenuName="Payment And Receipt" FormName="Payable And Receipt">
                                             <Menu:NavMenuItem.Content>
                                                 <Report:frmPaymentReceipt/>
+                                            </Menu:NavMenuItem.Content>
+                                        </Menu:NavMenuItem>
+
+                                        <Menu:NavMenuItem MenuName="Stock Report" FormName="Stock Report">
+                                            <Menu:NavMenuItem.Content>
+                                                <Report:frmStockReport/>
+                                            </Menu:NavMenuItem.Content>
+                                        </Menu:NavMenuItem>
+                                        <Menu:NavMenuItem MenuName="Sales Report" FormName="Sales Report">
+                                            <Menu:NavMenuItem.Content>
+                                                <Report:frmCustomerSalesReport/>
                                             </Menu:NavMenuItem.Content>
                                         </Menu:NavMenuItem>
                                     </ListBox>

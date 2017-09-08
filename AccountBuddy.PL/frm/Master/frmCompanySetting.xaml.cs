@@ -63,11 +63,19 @@ namespace AccountBuddy.PL.frm.Master
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
             iProductImage.Source = AppLib.ViewImage(data.Logo);
             iProductImage.Tag = data.Logo;
-          
+            iBanner1Image.Source = AppLib.ViewImage(data.Banner1);
+            iBanner1Image.Tag = data.Banner1;
+            iBanner2Image.Source = AppLib.ViewImage(data.Banner2);
+            iBanner2Image.Tag = data.Banner2;
+
             //var u = BLL.UserAccount.toList.Where(x => x.UserType.CompanyId == BLL.UserAccount.User.UserType.Company.Id).FirstOrDefault();
             //txtUserName.Text = u.LoginId;
             //txtPassword.Password = u.Password;
             //data.UserId = u.LoginId;
+
+            cmbState.ItemsSource = BLL.StateDetail.toList;
+            cmbState.DisplayMemberPath = "StateName";
+            cmbState.SelectedValuePath = "Id";
         }
     
         #region ButtonEvents
@@ -250,6 +258,56 @@ namespace AccountBuddy.PL.frm.Master
             textBox.Text = AppLib.NumericOnly(txtIGSTAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
+        }
+
+        private void btnBanner_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog OpenDialogBox = new OpenFileDialog();
+                OpenDialogBox.DefaultExt = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+                OpenDialogBox.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+
+                var browsefile = OpenDialogBox.ShowDialog();
+                if (browsefile == true)
+                {
+                    string sFileName = OpenDialogBox.FileName.ToString();
+                    if (!string.IsNullOrEmpty(sFileName))
+                    {
+                        ImageSource imageSource = new BitmapImage(new Uri(sFileName));
+                        iBanner1Image.Source = imageSource;
+                        iBanner1Image.Tag = AppLib.ReadImageFile(sFileName);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            { }
+        }
+
+        private void btnBanner2_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog OpenDialogBox = new OpenFileDialog();
+                OpenDialogBox.DefaultExt = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+                OpenDialogBox.Filter = "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+
+                var browsefile = OpenDialogBox.ShowDialog();
+                if (browsefile == true)
+                {
+                    string sFileName = OpenDialogBox.FileName.ToString();
+                    if (!string.IsNullOrEmpty(sFileName))
+                    {
+                        ImageSource imageSource = new BitmapImage(new Uri(sFileName));
+                        iBanner2Image.Source = imageSource;
+                        iBanner2Image.Tag = AppLib.ReadImageFile(sFileName);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            { }
         }
     }
 }

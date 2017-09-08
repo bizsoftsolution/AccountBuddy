@@ -30,14 +30,20 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Title1" Type="nvarchar" MaxLength="100" />
+          <Property Name="Title2" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContactPerson" Type="nvarchar" MaxLength="100" />
           <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
           <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
-          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="100" />
+          <Property Name="StateId" Type="int" />
           <Property Name="PostalCode" Type="nvarchar" MaxLength="10" />
           <Property Name="TelephoneNo" Type="nvarchar" MaxLength="50" />
           <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
           <Property Name="EMailId" Type="nvarchar" MaxLength="100" />
           <Property Name="GSTNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="Banner1" Type="image" />
+          <Property Name="Banner2" Type="image" />
           <Property Name="Logo" Type="image" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="UnderCompanyId" Type="int" />
@@ -45,6 +51,7 @@
           <Property Name="CGSTAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="SGSTAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="IGSTAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="VoucherWaterMark" Type="bit" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -213,6 +220,7 @@
           <Property Name="AddressLine1" Type="nvarchar" MaxLength="100" />
           <Property Name="AddressLine2" Type="nvarchar" MaxLength="100" />
           <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateId" Type="int" />
           <Property Name="TelephoneNo" Type="nvarchar" MaxLength="20" />
           <Property Name="MobileNo" Type="nvarchar" MaxLength="20" />
           <Property Name="EMailId" Type="nvarchar" MaxLength="100" />
@@ -544,6 +552,15 @@
           <Property Name="DOB" Type="datetime" />
           <Property Name="DOJ" Type="datetime" />
         </EntityType>
+        <EntityType Name="StateDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="50" />
+          <Property Name="TINNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateCode" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="StockGroup">
           <Key>
             <PropertyRef Name="Id" />
@@ -788,6 +805,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CompanyDetail_StateDetail">
+          <End Role="StateDetail" Type="Self.StateDetail" Multiplicity="0..1" />
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StateDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompanyDetail">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Customer_Ledger">
           <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
@@ -977,6 +1006,18 @@
             </Principal>
             <Dependent Role="Ledger">
               <PropertyRef Name="CreditLimitTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ledger_StateDetail">
+          <End Role="StateDetail" Type="Self.StateDetail" Multiplicity="0..1" />
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StateDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ledger">
+              <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1896,6 +1937,7 @@
           <EntitySet Name="SalesReturn" EntityType="Self.SalesReturn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalesReturnDetail" EntityType="Self.SalesReturnDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StateDetail" EntityType="Self.StateDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockGroup" EntityType="Self.StockGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockIn" EntityType="Self.StockIn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockInDetail" EntityType="Self.StockInDetail" Schema="dbo" store:Type="Tables" />
@@ -1927,6 +1969,10 @@
           <AssociationSet Name="FK_CompanyDetail_CompanyDetail" Association="Self.FK_CompanyDetail_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
             <End Role="CompanyDetail1" EntitySet="CompanyDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyDetail_StateDetail" Association="Self.FK_CompanyDetail_StateDetail">
+            <End Role="StateDetail" EntitySet="StateDetail" />
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Customer_Ledger" Association="Self.FK_Customer_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
@@ -1990,6 +2036,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Ledger_CreditLimitType" Association="Self.FK_Ledger_CreditLimitType">
             <End Role="CreditLimitType" EntitySet="CreditLimitType" />
+            <End Role="Ledger" EntitySet="Ledger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ledger_StateDetail" Association="Self.FK_Ledger_StateDetail">
+            <End Role="StateDetail" EntitySet="StateDetail" />
             <End Role="Ledger" EntitySet="Ledger" />
           </AssociationSet>
           <AssociationSet Name="FK_LogDetail_LogDetailType" Association="Self.FK_LogDetail_LogDetailType">
@@ -2300,8 +2350,8 @@
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AccountGroup1" Relationship="Self.FK_AccountGroup_AccountGroup" FromRole="AccountGroup" ToRole="AccountGroup1" />
           <NavigationProperty Name="AccountGroup2" Relationship="Self.FK_AccountGroup_AccountGroup" FromRole="AccountGroup1" ToRole="AccountGroup" />
-          <NavigationProperty Name="Ledgers" Relationship="Self.FK_Ledger_AccountGroup" FromRole="AccountGroup" ToRole="Ledger" />
           <NavigationProperty Name="CompanyDetail" Relationship="DBLakshmiSilksModel.FK_AccountGroup_CompanyDetail" FromRole="AccountGroup" ToRole="CompanyDetail" />
+          <NavigationProperty Name="Ledgers" Relationship="DBLakshmiSilksModel.FK_Ledger_AccountGroup" FromRole="AccountGroup" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="Bank">
           <Key>
@@ -2311,7 +2361,7 @@
           <Property Name="AccountNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BankAccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Bank_Ledger" FromRole="Bank" ToRole="Ledger" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_Bank_Ledger" FromRole="Bank" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -2319,7 +2369,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LimitType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledgers" Relationship="Self.FK_Ledger_CreditLimitType" FromRole="CreditLimitType" ToRole="Ledger" />
+          <NavigationProperty Name="Ledgers" Relationship="DBLakshmiSilksModel.FK_Ledger_CreditLimitType" FromRole="CreditLimitType" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -2327,7 +2377,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Customer_Ledger" FromRole="Customer" ToRole="Ledger" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_Customer_Ledger" FromRole="Customer" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="CustomFormat">
           <Key>
@@ -2462,7 +2512,7 @@
           <Property Name="Role" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="JobOrderIssues" Relationship="Self.FK_JobOrderIssue_JobWorker" FromRole="JobWorker" ToRole="JobOrderIssue" />
           <NavigationProperty Name="JobOrderReceiveds" Relationship="Self.FK_JobOrderReceived_JobWorker" FromRole="JobWorker" ToRole="JobOrderReceived" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_JobWorkers_Ledger" FromRole="JobWorker" ToRole="Ledger" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_JobWorkers_Ledger" FromRole="JobWorker" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="Journal">
           <Key>
@@ -2490,49 +2540,7 @@
           <Property Name="CrAmt" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Journal" Relationship="Self.FK_JournalDetail_Journal" FromRole="JournalDetail" ToRole="Journal" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_JournalDetail_Ledger" FromRole="JournalDetail" ToRole="Ledger" />
-        </EntityType>
-        <EntityType Name="Ledger">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LedgerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PersonIncharge" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TelephoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CreditLimit" Type="Int16" />
-          <Property Name="CreditLimitTypeId" Type="Int32" />
-          <Property Name="CreditAmount" Type="Double" />
-          <Property Name="OPDr" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="OPCr" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LedgerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="AccountGroupId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AccountGroup" Relationship="Self.FK_Ledger_AccountGroup" FromRole="Ledger" ToRole="AccountGroup" />
-          <NavigationProperty Name="Banks" Relationship="Self.FK_Bank_Ledger" FromRole="Ledger" ToRole="Bank" />
-          <NavigationProperty Name="CreditLimitType" Relationship="Self.FK_Ledger_CreditLimitType" FromRole="Ledger" ToRole="CreditLimitType" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_Ledger" FromRole="Ledger" ToRole="Customer" />
-          <NavigationProperty Name="JobWorkers" Relationship="Self.FK_JobWorkers_Ledger" FromRole="Ledger" ToRole="JobWorker" />
-          <NavigationProperty Name="JournalDetails" Relationship="Self.FK_JournalDetail_Ledger" FromRole="Ledger" ToRole="JournalDetail" />
-          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Ledger" FromRole="Ledger" ToRole="Payment" />
-          <NavigationProperty Name="PaymentDetails" Relationship="Self.FK_PaymentDetail_Ledger" FromRole="Ledger" ToRole="PaymentDetail" />
-          <NavigationProperty Name="Purchases" Relationship="Self.FK_Purchase_Ledger" FromRole="Ledger" ToRole="Purchase" />
-          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrder_Ledger" FromRole="Ledger" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="PurchaseReturns" Relationship="Self.FK_PurchaseReturn_Ledger" FromRole="Ledger" ToRole="PurchaseReturn" />
-          <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipt_Ledger" FromRole="Ledger" ToRole="Receipt" />
-          <NavigationProperty Name="ReceiptDetails" Relationship="Self.FK_ReceiptDetail_Ledger" FromRole="Ledger" ToRole="ReceiptDetail" />
-          <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Ledger" FromRole="Ledger" ToRole="Sale" />
-          <NavigationProperty Name="SalesOrders" Relationship="Self.FK_SalesOrder_Ledger" FromRole="Ledger" ToRole="SalesOrder" />
-          <NavigationProperty Name="SalesReturns" Relationship="Self.FK_SalesReturn_Ledger" FromRole="Ledger" ToRole="SalesReturn" />
-          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_Ledger" FromRole="Ledger" ToRole="Staff" />
-          <NavigationProperty Name="StockIns" Relationship="Self.FK_StockIn_Ledger" FromRole="Ledger" ToRole="StockIn" />
-          <NavigationProperty Name="StockOuts" Relationship="Self.FK_StockOut_Ledger" FromRole="Ledger" ToRole="StockOut" />
-          <NavigationProperty Name="Suppliers" Relationship="Self.FK_Supplier_Ledger" FromRole="Ledger" ToRole="Supplier" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_JournalDetail_Ledger" FromRole="JournalDetail" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="LogDetail">
           <Key>
@@ -2593,8 +2601,8 @@
           <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="PayTo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Payment_Ledger" FromRole="Payment" ToRole="Ledger" />
           <NavigationProperty Name="PaymentDetails" Relationship="Self.FK_PaymentDetail_Payment" FromRole="Payment" ToRole="PaymentDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_Payment_Ledger" FromRole="Payment" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="PaymentDetail">
           <Key>
@@ -2605,8 +2613,8 @@
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Particular" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_PaymentDetail_Ledger" FromRole="PaymentDetail" ToRole="Ledger" />
           <NavigationProperty Name="Payment" Relationship="Self.FK_PaymentDetail_Payment" FromRole="PaymentDetail" ToRole="Payment" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_PaymentDetail_Ledger" FromRole="PaymentDetail" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -2667,9 +2675,9 @@
           <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Purchase_Ledger" FromRole="Purchase" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="Self.FK_Purchase_TransactionType" FromRole="Purchase" ToRole="TransactionType" />
           <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK_PurchaseDetail_Purchase" FromRole="Purchase" ToRole="PurchaseDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_Purchase_Ledger" FromRole="Purchase" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="PurchaseDetail">
           <Key>
@@ -2706,8 +2714,8 @@
           <Property Name="Extras" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_PurchaseOrder_Ledger" FromRole="PurchaseOrder" ToRole="Ledger" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="Self.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_PurchaseOrder_Ledger" FromRole="PurchaseOrder" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="PurchaseOrderDetail">
           <Key>
@@ -2743,9 +2751,9 @@
           <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_PurchaseReturn_Ledger" FromRole="PurchaseReturn" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="Self.FK_PurchaseReturn_TransactionType" FromRole="PurchaseReturn" ToRole="TransactionType" />
           <NavigationProperty Name="PurchaseReturnDetails" Relationship="Self.FK_PurchaseReturnDetail_PurchaseReturn" FromRole="PurchaseReturn" ToRole="PurchaseReturnDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_PurchaseReturn_Ledger" FromRole="PurchaseReturn" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="PurchaseReturnDetail">
           <Key>
@@ -2786,8 +2794,8 @@
           <Property Name="CleareDate" Type="DateTime" Precision="0" />
           <Property Name="ReceivedFrom" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Receipt_Ledger" FromRole="Receipt" ToRole="Ledger" />
           <NavigationProperty Name="ReceiptDetails" Relationship="Self.FK_ReceiptDetail_Receipt" FromRole="Receipt" ToRole="ReceiptDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_Receipt_Ledger" FromRole="Receipt" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="ReceiptDetail">
           <Key>
@@ -2798,8 +2806,8 @@
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Particulars" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_ReceiptDetail_Ledger" FromRole="ReceiptDetail" ToRole="Ledger" />
           <NavigationProperty Name="Receipt" Relationship="Self.FK_ReceiptDetail_Receipt" FromRole="ReceiptDetail" ToRole="Receipt" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_ReceiptDetail_Ledger" FromRole="ReceiptDetail" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -2817,9 +2825,9 @@
           <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Sale_Ledger" FromRole="Sale" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="Self.FK_Sale_TransactionType" FromRole="Sale" ToRole="TransactionType" />
           <NavigationProperty Name="SalesDetails" Relationship="Self.FK_SalesDetail_Sale" FromRole="Sale" ToRole="SalesDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_Sale_Ledger" FromRole="Sale" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="SalesDetail">
           <Key>
@@ -2856,8 +2864,8 @@
           <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_SalesOrder_Ledger" FromRole="SalesOrder" ToRole="Ledger" />
           <NavigationProperty Name="SalesOrderDetails" Relationship="Self.FK_SalesOrderDetail_SalesOrder" FromRole="SalesOrder" ToRole="SalesOrderDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_SalesOrder_Ledger" FromRole="SalesOrder" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="SalesOrderDetail">
           <Key>
@@ -2893,9 +2901,9 @@
           <Property Name="ExtraAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_SalesReturn_Ledger" FromRole="SalesReturn" ToRole="Ledger" />
           <NavigationProperty Name="TransactionType" Relationship="Self.FK_SalesReturn_TransactionType" FromRole="SalesReturn" ToRole="TransactionType" />
           <NavigationProperty Name="SalesReturnDetails" Relationship="Self.FK_SalesReturnDetail_SalesReturn" FromRole="SalesReturn" ToRole="SalesReturnDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_SalesReturn_Ledger" FromRole="SalesReturn" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="SalesReturnDetail">
           <Key>
@@ -2926,9 +2934,9 @@
           <Property Name="Designation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="DOB" Type="DateTime" Precision="3" />
           <Property Name="DOJ" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Staff_Ledger" FromRole="Staff" ToRole="Ledger" />
           <NavigationProperty Name="StockInProcesses" Relationship="Self.FK_StockInProcess_Staff" FromRole="Staff" ToRole="StockInProcess" />
           <NavigationProperty Name="StockSeparateds" Relationship="Self.FK_StockSeparated_Staff" FromRole="Staff" ToRole="StockSeparated" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_Staff_Ledger" FromRole="Staff" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -2958,8 +2966,8 @@
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Narration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_StockIn_Ledger" FromRole="StockIn" ToRole="Ledger" />
           <NavigationProperty Name="StockInDetails" Relationship="Self.FK_StockInDetail_StockIn" FromRole="StockIn" ToRole="StockInDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_StockIn_Ledger" FromRole="StockIn" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="StockInDetail">
           <Key>
@@ -3026,8 +3034,8 @@
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ItemAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Narration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_StockOut_Ledger" FromRole="StockOut" ToRole="Ledger" />
           <NavigationProperty Name="StockOutDetails" Relationship="Self.FK_StockOutDetail_StockOut" FromRole="StockOut" ToRole="StockOutDetail" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_StockOut_Ledger" FromRole="StockOut" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="StockOutDetail">
           <Key>
@@ -3089,7 +3097,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Ledger" Relationship="Self.FK_Supplier_Ledger" FromRole="Supplier" ToRole="Ledger" />
+          <NavigationProperty Name="Ledger" Relationship="DBLakshmiSilksModel.FK_Supplier_Ledger" FromRole="Supplier" ToRole="Ledger" />
         </EntityType>
         <EntityType Name="TransactionType">
           <Key>
@@ -3189,54 +3197,6 @@
             </Principal>
             <Dependent Role="AccountGroup1">
               <PropertyRef Name="UnderGroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Ledger_AccountGroup">
-          <End Role="AccountGroup" Type="Self.AccountGroup" Multiplicity="1" />
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountGroup">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Ledger">
-              <PropertyRef Name="AccountGroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Bank_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="Bank" Type="Self.Bank" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Bank">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Ledger_CreditLimitType">
-          <End Role="CreditLimitType" Type="Self.CreditLimitType" Multiplicity="0..1" />
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CreditLimitType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Ledger">
-              <PropertyRef Name="CreditLimitTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Customer_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3360,18 +3320,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_JobWorkers_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
-          <End Role="JobWorker" Type="Self.JobWorker" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JobWorker">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_JournalDetail_Journal">
           <End Role="Journal" Type="Self.Journal" Multiplicity="1" />
           <End Role="JournalDetail" Type="Self.JournalDetail" Multiplicity="*" />
@@ -3381,186 +3329,6 @@
             </Principal>
             <Dependent Role="JournalDetail">
               <PropertyRef Name="JournalId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JournalDetail_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="JournalDetail" Type="Self.JournalDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JournalDetail">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Payment_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Payment">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PaymentDetail_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="PaymentDetail" Type="Self.PaymentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PaymentDetail">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Purchase_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Purchase">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrder_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrder">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseReturn_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="PurchaseReturn" Type="Self.PurchaseReturn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseReturn">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Receipt_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Receipt">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ReceiptDetail_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="ReceiptDetail" Type="Self.ReceiptDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ReceiptDetail">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sale_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sale">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SalesOrder_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SalesOrder">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SalesReturn_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="SalesReturn" Type="Self.SalesReturn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SalesReturn">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Staff_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
-          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Staff">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StockIn_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="StockIn" Type="Self.StockIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StockIn">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StockOut_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="StockOut" Type="Self.StockOut" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StockOut">
-              <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Supplier_Ledger">
-          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ledger">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Supplier">
-              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4228,7 +3996,6 @@
           <EntitySet Name="JobWorkers" EntityType="Self.JobWorker" />
           <EntitySet Name="Journals" EntityType="Self.Journal" />
           <EntitySet Name="JournalDetails" EntityType="Self.JournalDetail" />
-          <EntitySet Name="Ledgers" EntityType="Self.Ledger" />
           <EntitySet Name="LogDetails" EntityType="Self.LogDetail" />
           <EntitySet Name="LogDetailTypes" EntityType="Self.LogDetailType" />
           <EntitySet Name="LogMasters" EntityType="Self.LogMaster" />
@@ -4271,22 +4038,6 @@
             <End Role="AccountGroup" EntitySet="AccountGroups" />
             <End Role="AccountGroup1" EntitySet="AccountGroups" />
           </AssociationSet>
-          <AssociationSet Name="FK_Ledger_AccountGroup" Association="Self.FK_Ledger_AccountGroup">
-            <End Role="AccountGroup" EntitySet="AccountGroups" />
-            <End Role="Ledger" EntitySet="Ledgers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Bank_Ledger" Association="Self.FK_Bank_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Bank" EntitySet="Banks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ledger_CreditLimitType" Association="Self.FK_Ledger_CreditLimitType">
-            <End Role="CreditLimitType" EntitySet="CreditLimitTypes" />
-            <End Role="Ledger" EntitySet="Ledgers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customer_Ledger" Association="Self.FK_Customer_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Customer" EntitySet="Customers" />
-          </AssociationSet>
           <AssociationSet Name="FK_LogMaster_EntityType" Association="Self.FK_LogMaster_EntityType">
             <End Role="EntityType" EntitySet="EntityTypes" />
             <End Role="LogMaster" EntitySet="LogMasters" />
@@ -4327,73 +4078,9 @@
             <End Role="UOM" EntitySet="UOMs" />
             <End Role="JobOrderReceivedDetail" EntitySet="JobOrderReceivedDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_JobWorkers_Ledger" Association="Self.FK_JobWorkers_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="JobWorker" EntitySet="JobWorkers" />
-          </AssociationSet>
           <AssociationSet Name="FK_JournalDetail_Journal" Association="Self.FK_JournalDetail_Journal">
             <End Role="Journal" EntitySet="Journals" />
             <End Role="JournalDetail" EntitySet="JournalDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JournalDetail_Ledger" Association="Self.FK_JournalDetail_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="JournalDetail" EntitySet="JournalDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Payment_Ledger" Association="Self.FK_Payment_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Payment" EntitySet="Payments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PaymentDetail_Ledger" Association="Self.FK_PaymentDetail_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="PaymentDetail" EntitySet="PaymentDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Purchase_Ledger" Association="Self.FK_Purchase_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Purchase" EntitySet="Purchases" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrder_Ledger" Association="Self.FK_PurchaseOrder_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseReturn_Ledger" Association="Self.FK_PurchaseReturn_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="PurchaseReturn" EntitySet="PurchaseReturns" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Receipt_Ledger" Association="Self.FK_Receipt_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Receipt" EntitySet="Receipts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReceiptDetail_Ledger" Association="Self.FK_ReceiptDetail_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sale_Ledger" Association="Self.FK_Sale_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Sale" EntitySet="Sales" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SalesOrder_Ledger" Association="Self.FK_SalesOrder_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="SalesOrder" EntitySet="SalesOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SalesReturn_Ledger" Association="Self.FK_SalesReturn_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="SalesReturn" EntitySet="SalesReturns" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Staff_Ledger" Association="Self.FK_Staff_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Staff" EntitySet="Staffs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StockIn_Ledger" Association="Self.FK_StockIn_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="StockIn" EntitySet="StockIns" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StockOut_Ledger" Association="Self.FK_StockOut_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="StockOut" EntitySet="StockOuts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Supplier_Ledger" Association="Self.FK_Supplier_Ledger">
-            <End Role="Ledger" EntitySet="Ledgers" />
-            <End Role="Supplier" EntitySet="Suppliers" />
           </AssociationSet>
           <AssociationSet Name="FK_LogDetail_LogDetailType" Association="Self.FK_LogDetail_LogDetailType">
             <End Role="LogDetailType" EntitySet="LogDetailTypes" />
@@ -4611,6 +4298,7 @@
             <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
           </AssociationSet>
+          <EntitySet Name="StateDetails" EntityType="DBLakshmiSilksModel.StateDetail" />
           <EntitySet Name="CompanyDetails" EntityType="DBLakshmiSilksModel.CompanyDetail" />
           <AssociationSet Name="FK_AccountGroup_CompanyDetail" Association="DBLakshmiSilksModel.FK_AccountGroup_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
@@ -4619,6 +4307,10 @@
           <AssociationSet Name="FK_CompanyDetail_CompanyDetail" Association="DBLakshmiSilksModel.FK_CompanyDetail_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
             <End Role="CompanyDetail1" EntitySet="CompanyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyDetail_StateDetail" Association="DBLakshmiSilksModel.FK_CompanyDetail_StateDetail">
+            <End Role="StateDetail" EntitySet="StateDetails" />
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_CustomFormat_CompanyDetail" Association="DBLakshmiSilksModel.FK_CustomFormat_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
@@ -4640,21 +4332,123 @@
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
             <End Role="UserType" EntitySet="UserTypes" />
           </AssociationSet>
+          <EntitySet Name="Ledgers" EntityType="DBLakshmiSilksModel.Ledger" />
+          <AssociationSet Name="FK_Ledger_AccountGroup" Association="DBLakshmiSilksModel.FK_Ledger_AccountGroup">
+            <End Role="AccountGroup" EntitySet="AccountGroups" />
+            <End Role="Ledger" EntitySet="Ledgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bank_Ledger" Association="DBLakshmiSilksModel.FK_Bank_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Bank" EntitySet="Banks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ledger_CreditLimitType" Association="DBLakshmiSilksModel.FK_Ledger_CreditLimitType">
+            <End Role="CreditLimitType" EntitySet="CreditLimitTypes" />
+            <End Role="Ledger" EntitySet="Ledgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Ledger" Association="DBLakshmiSilksModel.FK_Customer_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobWorkers_Ledger" Association="DBLakshmiSilksModel.FK_JobWorkers_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="JobWorker" EntitySet="JobWorkers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalDetail_Ledger" Association="DBLakshmiSilksModel.FK_JournalDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="JournalDetail" EntitySet="JournalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ledger_StateDetail" Association="DBLakshmiSilksModel.FK_Ledger_StateDetail">
+            <End Role="StateDetail" EntitySet="StateDetails" />
+            <End Role="Ledger" EntitySet="Ledgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Ledger" Association="DBLakshmiSilksModel.FK_Payment_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentDetail_Ledger" Association="DBLakshmiSilksModel.FK_PaymentDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purchase_Ledger" Association="DBLakshmiSilksModel.FK_Purchase_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Purchase" EntitySet="Purchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_Ledger" Association="DBLakshmiSilksModel.FK_PurchaseOrder_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseReturn_Ledger" Association="DBLakshmiSilksModel.FK_PurchaseReturn_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="PurchaseReturn" EntitySet="PurchaseReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Ledger" Association="DBLakshmiSilksModel.FK_Receipt_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Receipt" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetail_Ledger" Association="DBLakshmiSilksModel.FK_ReceiptDetail_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_Ledger" Association="DBLakshmiSilksModel.FK_Sale_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrder_Ledger" Association="DBLakshmiSilksModel.FK_SalesOrder_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="SalesOrder" EntitySet="SalesOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesReturn_Ledger" Association="DBLakshmiSilksModel.FK_SalesReturn_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="SalesReturn" EntitySet="SalesReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Ledger" Association="DBLakshmiSilksModel.FK_Staff_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockIn_Ledger" Association="DBLakshmiSilksModel.FK_StockIn_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="StockIn" EntitySet="StockIns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOut_Ledger" Association="DBLakshmiSilksModel.FK_StockOut_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="StockOut" EntitySet="StockOuts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_Ledger" Association="DBLakshmiSilksModel.FK_Supplier_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="Supplier" EntitySet="Suppliers" />
+          </AssociationSet>
           </EntityContainer>
+        <EntityType Name="StateDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TINNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CompanyDetails" Relationship="DBLakshmiSilksModel.FK_CompanyDetail_StateDetail" FromRole="StateDetail" ToRole="CompanyDetail" />
+          <NavigationProperty Name="Ledgers" Relationship="DBLakshmiSilksModel.FK_Ledger_StateDetail" FromRole="StateDetail" ToRole="Ledger" />
+        </EntityType>
         <EntityType Name="CompanyDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPerson" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" />
           <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="TelephoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Banner1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Banner2" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="UnderCompanyId" Type="Int32" />
@@ -4662,9 +4456,11 @@
           <Property Name="CGSTAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="SGSTAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="IGSTAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="VoucherWaterMark" Type="Boolean" />
           <NavigationProperty Name="AccountGroups" Relationship="DBLakshmiSilksModel.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
           <NavigationProperty Name="CompanyDetail1" Relationship="DBLakshmiSilksModel.FK_CompanyDetail_CompanyDetail" FromRole="CompanyDetail" ToRole="CompanyDetail1" />
           <NavigationProperty Name="CompanyDetail2" Relationship="DBLakshmiSilksModel.FK_CompanyDetail_CompanyDetail" FromRole="CompanyDetail1" ToRole="CompanyDetail" />
+          <NavigationProperty Name="StateDetail" Relationship="DBLakshmiSilksModel.FK_CompanyDetail_StateDetail" FromRole="CompanyDetail" ToRole="StateDetail" />
           <NavigationProperty Name="CustomFormats" Relationship="DBLakshmiSilksModel.FK_CustomFormat_CompanyDetail" FromRole="CompanyDetail" ToRole="CustomFormat" />
           <NavigationProperty Name="ProductDetails" Relationship="DBLakshmiSilksModel.FK_ProductDetail_CompanyDetail" FromRole="CompanyDetail" ToRole="ProductDetail" />
           <NavigationProperty Name="StockGroups" Relationship="DBLakshmiSilksModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
@@ -4692,6 +4488,18 @@
             </Principal>
             <Dependent Role="CompanyDetail1">
               <PropertyRef Name="UnderCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyDetail_StateDetail">
+          <End Type="DBLakshmiSilksModel.StateDetail" Role="StateDetail" Multiplicity="0..1" />
+          <End Type="DBLakshmiSilksModel.CompanyDetail" Role="CompanyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StateDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompanyDetail">
+              <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4752,6 +4560,302 @@
             </Principal>
             <Dependent Role="UserType">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Ledger">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LedgerName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PersonIncharge" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreditLimit" Type="Int16" />
+          <Property Name="CreditLimitTypeId" Type="Int32" />
+          <Property Name="CreditAmount" Type="Double" />
+          <Property Name="OPDr" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OPCr" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LedgerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="AccountGroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AccountGroup" Relationship="DBLakshmiSilksModel.FK_Ledger_AccountGroup" FromRole="Ledger" ToRole="AccountGroup" />
+          <NavigationProperty Name="Banks" Relationship="DBLakshmiSilksModel.FK_Bank_Ledger" FromRole="Ledger" ToRole="Bank" />
+          <NavigationProperty Name="CreditLimitType" Relationship="DBLakshmiSilksModel.FK_Ledger_CreditLimitType" FromRole="Ledger" ToRole="CreditLimitType" />
+          <NavigationProperty Name="Customers" Relationship="DBLakshmiSilksModel.FK_Customer_Ledger" FromRole="Ledger" ToRole="Customer" />
+          <NavigationProperty Name="JobWorkers" Relationship="DBLakshmiSilksModel.FK_JobWorkers_Ledger" FromRole="Ledger" ToRole="JobWorker" />
+          <NavigationProperty Name="JournalDetails" Relationship="DBLakshmiSilksModel.FK_JournalDetail_Ledger" FromRole="Ledger" ToRole="JournalDetail" />
+          <NavigationProperty Name="StateDetail" Relationship="DBLakshmiSilksModel.FK_Ledger_StateDetail" FromRole="Ledger" ToRole="StateDetail" />
+          <NavigationProperty Name="Payments" Relationship="DBLakshmiSilksModel.FK_Payment_Ledger" FromRole="Ledger" ToRole="Payment" />
+          <NavigationProperty Name="PaymentDetails" Relationship="DBLakshmiSilksModel.FK_PaymentDetail_Ledger" FromRole="Ledger" ToRole="PaymentDetail" />
+          <NavigationProperty Name="Purchases" Relationship="DBLakshmiSilksModel.FK_Purchase_Ledger" FromRole="Ledger" ToRole="Purchase" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="DBLakshmiSilksModel.FK_PurchaseOrder_Ledger" FromRole="Ledger" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="PurchaseReturns" Relationship="DBLakshmiSilksModel.FK_PurchaseReturn_Ledger" FromRole="Ledger" ToRole="PurchaseReturn" />
+          <NavigationProperty Name="Receipts" Relationship="DBLakshmiSilksModel.FK_Receipt_Ledger" FromRole="Ledger" ToRole="Receipt" />
+          <NavigationProperty Name="ReceiptDetails" Relationship="DBLakshmiSilksModel.FK_ReceiptDetail_Ledger" FromRole="Ledger" ToRole="ReceiptDetail" />
+          <NavigationProperty Name="Sales" Relationship="DBLakshmiSilksModel.FK_Sale_Ledger" FromRole="Ledger" ToRole="Sale" />
+          <NavigationProperty Name="SalesOrders" Relationship="DBLakshmiSilksModel.FK_SalesOrder_Ledger" FromRole="Ledger" ToRole="SalesOrder" />
+          <NavigationProperty Name="SalesReturns" Relationship="DBLakshmiSilksModel.FK_SalesReturn_Ledger" FromRole="Ledger" ToRole="SalesReturn" />
+          <NavigationProperty Name="Staffs" Relationship="DBLakshmiSilksModel.FK_Staff_Ledger" FromRole="Ledger" ToRole="Staff" />
+          <NavigationProperty Name="StockIns" Relationship="DBLakshmiSilksModel.FK_StockIn_Ledger" FromRole="Ledger" ToRole="StockIn" />
+          <NavigationProperty Name="StockOuts" Relationship="DBLakshmiSilksModel.FK_StockOut_Ledger" FromRole="Ledger" ToRole="StockOut" />
+          <NavigationProperty Name="Suppliers" Relationship="DBLakshmiSilksModel.FK_Supplier_Ledger" FromRole="Ledger" ToRole="Supplier" />
+        </EntityType>
+        <Association Name="FK_Ledger_AccountGroup">
+          <End Type="DBLakshmiSilksModel.AccountGroup" Role="AccountGroup" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ledger">
+              <PropertyRef Name="AccountGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bank_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.Bank" Role="Bank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bank">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ledger_CreditLimitType">
+          <End Type="DBLakshmiSilksModel.CreditLimitType" Role="CreditLimitType" Multiplicity="0..1" />
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CreditLimitType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ledger">
+              <PropertyRef Name="CreditLimitTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobWorkers_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBLakshmiSilksModel.JobWorker" Role="JobWorker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobWorker">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalDetail_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.JournalDetail" Role="JournalDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JournalDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ledger_StateDetail">
+          <End Type="DBLakshmiSilksModel.StateDetail" Role="StateDetail" Multiplicity="0..1" />
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StateDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ledger">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentDetail_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purchase_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.Purchase" Role="Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseReturn_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.PurchaseReturn" Role="PurchaseReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseReturn">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.Receipt" Role="Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetail_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.ReceiptDetail" Role="ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesOrder_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.SalesOrder" Role="SalesOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SalesOrder">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesReturn_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.SalesReturn" Role="SalesReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SalesReturn">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="0..1" />
+          <End Type="DBLakshmiSilksModel.Staff" Role="Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockIn_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.StockIn" Role="StockIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockIn">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOut_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.StockOut" Role="StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supplier_Ledger">
+          <End Type="DBLakshmiSilksModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBLakshmiSilksModel.Supplier" Role="Supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Supplier">
+              <PropertyRef Name="LedgerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4949,29 +5053,6 @@
                 <ScalarProperty Name="DrAmt" ColumnName="DrAmt" />
                 <ScalarProperty Name="CrAmt" ColumnName="CrAmt" />
                 <ScalarProperty Name="Particulars" ColumnName="Particulars" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ledgers">
-            <EntityTypeMapping TypeName="DBLakshmiSilksModel.Ledger">
-              <MappingFragment StoreEntitySet="Ledger">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="LedgerName" ColumnName="LedgerName" />
-                <ScalarProperty Name="PersonIncharge" ColumnName="PersonIncharge" />
-                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
-                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
-                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
-                <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
-                <ScalarProperty Name="CreditLimitTypeId" ColumnName="CreditLimitTypeId" />
-                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
-                <ScalarProperty Name="OPDr" ColumnName="OPDr" />
-                <ScalarProperty Name="OPCr" ColumnName="OPCr" />
-                <ScalarProperty Name="LedgerCode" ColumnName="LedgerCode" />
-                <ScalarProperty Name="AccountGroupId" ColumnName="AccountGroupId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5528,9 +5609,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="StateDetails">
+            <EntityTypeMapping TypeName="DBLakshmiSilksModel.StateDetail">
+              <MappingFragment StoreEntitySet="StateDetail">
+                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+                <ScalarProperty Name="TINNo" ColumnName="TINNo" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CompanyDetails">
             <EntityTypeMapping TypeName="DBLakshmiSilksModel.CompanyDetail">
               <MappingFragment StoreEntitySet="CompanyDetail">
+                <ScalarProperty Name="VoucherWaterMark" ColumnName="VoucherWaterMark" />
                 <ScalarProperty Name="IGSTAmount" ColumnName="IGSTAmount" />
                 <ScalarProperty Name="SGSTAmount" ColumnName="SGSTAmount" />
                 <ScalarProperty Name="CGSTAmount" ColumnName="CGSTAmount" />
@@ -5538,15 +5630,45 @@
                 <ScalarProperty Name="UnderCompanyId" ColumnName="UnderCompanyId" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Banner2" ColumnName="Banner2" />
+                <ScalarProperty Name="Banner1" ColumnName="Banner1" />
                 <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
                 <ScalarProperty Name="EMailId" ColumnName="EMailId" />
                 <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
                 <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
                 <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
                 <ScalarProperty Name="CityName" ColumnName="CityName" />
                 <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
                 <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="Title2" ColumnName="Title2" />
+                <ScalarProperty Name="Title1" ColumnName="Title1" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ledgers">
+            <EntityTypeMapping TypeName="DBLakshmiSilksModel.Ledger">
+              <MappingFragment StoreEntitySet="Ledger">
+                <ScalarProperty Name="AccountGroupId" ColumnName="AccountGroupId" />
+                <ScalarProperty Name="LedgerCode" ColumnName="LedgerCode" />
+                <ScalarProperty Name="OPCr" ColumnName="OPCr" />
+                <ScalarProperty Name="OPDr" ColumnName="OPDr" />
+                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+                <ScalarProperty Name="CreditLimitTypeId" ColumnName="CreditLimitTypeId" />
+                <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
+                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
+                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="PersonIncharge" ColumnName="PersonIncharge" />
+                <ScalarProperty Name="LedgerName" ColumnName="LedgerName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

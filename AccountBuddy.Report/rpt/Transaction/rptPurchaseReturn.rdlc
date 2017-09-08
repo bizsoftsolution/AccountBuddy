@@ -9,16 +9,13 @@
               <Width>0.47744in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.30377in</Width>
+              <Width>2.45307in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.48438in</Width>
+              <Width>0.82814in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.66146in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.4705in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.39412in</Width>
@@ -97,25 +94,23 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox89">
+                    <Textbox Name="Textbox1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>UOM</Value>
+                              <Value>HSN CODE</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox89</rd:DefaultName>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -137,7 +132,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>PRICE</Value>
+                              <Value>RATE</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -149,39 +144,6 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox91</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox1">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>DISC.</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -236,7 +198,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>AMOUNT(RM)</Value>
+                              <Value>AMOUNT</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -357,23 +319,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="UOMName">
+                    <Textbox Name="Textbox2">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!UOMName.Value</Value>
+                              <Value />
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>UOMName</rd:DefaultName>
+                      <rd:DefaultName>Textbox2</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -422,52 +382,6 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>UnitPrice</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Style>None</Style>
-                        </BottomBorder>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                          <Width>1pt</Width>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                          <Width>1pt</Width>
-                        </RightBorder>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="DiscountAmount1">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!DiscountAmount.Value</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>DiscountAmount1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -601,7 +515,6 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
-            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -617,10 +530,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>PurchaseReturnDetail</DataSetName>
-        <Top>0.17639cm</Top>
-        <Left>0.15909in</Left>
+        <Top>0.14111cm</Top>
+        <Left>0.13653in</Left>
         <Height>0.5in</Height>
-        <Width>5.80556in</Width>
+        <Width>5.82812in</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -631,10 +544,10 @@
     <Height>0.62598in</Height>
     <Style />
   </Body>
-  <Width>6.03585in</Width>
+  <Width>6.08208in</Width>
   <Page>
     <PageHeader>
-      <Height>3.15154in</Height>
+      <Height>3.47446in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -946,22 +859,22 @@
                     <PaddingBottom>2pt</PaddingBottom>
                   </Style>
                 </Textbox>
-                <Textbox Name="PersonIncharge">
+                <Textbox Name="ContactPerson">
                   <CanGrow>true</CanGrow>
                   <KeepTogether>true</KeepTogether>
                   <Paragraphs>
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>=First(Fields!PersonIncharge.Value, "Ledger")</Value>
+                          <Value>=First(Fields!ContactPerson.Value, "CompanyDetail")</Value>
                           <Style />
                         </TextRun>
                       </TextRuns>
                       <Style />
                     </Paragraph>
                   </Paragraphs>
-                  <rd:DefaultName>PersonIncharge</rd:DefaultName>
-                  <Top>1.02431in</Top>
+                  <rd:DefaultName>ContactPerson</rd:DefaultName>
+                  <Top>1.05209in</Top>
                   <Left>0.02083in</Left>
                   <Height>0.25in</Height>
                   <Width>2.03473in</Width>
@@ -1053,7 +966,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>INV.NO:</Value>
+                          <Value>INVOICE NO:</Value>
                           <Style>
                             <FontSize>9pt</FontSize>
                             <FontWeight>Bold</FontWeight>
@@ -1061,7 +974,7 @@
                         </TextRun>
                       </TextRuns>
                       <Style>
-                        <TextAlign>Right</TextAlign>
+                        <TextAlign>Left</TextAlign>
                       </Style>
                     </Paragraph>
                   </Paragraphs>
@@ -1069,7 +982,7 @@
                   <Top>0.80209in</Top>
                   <Left>0.03528cm</Left>
                   <Height>0.25in</Height>
-                  <Width>0.5625in</Width>
+                  <Width>1.35763in</Width>
                   <ZIndex>3</ZIndex>
                   <Style>
                     <Border>
@@ -1209,7 +1122,7 @@
             </Rectangle>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Top>1.27902in</Top>
+          <Top>1.52902in</Top>
           <Left>0.15909in</Left>
           <Height>1.80556in</Height>
           <Width>5.80556in</Width>
@@ -1273,7 +1186,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>AddressLine1</rd:DefaultName>
-          <Top>0.36013in</Top>
+          <Top>0.61013in</Top>
           <Left>2.48879in</Left>
           <Height>0.18056in</Height>
           <Width>3.30082in</Width>
@@ -1310,7 +1223,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>CityName</rd:DefaultName>
-          <Top>0.72125in</Top>
+          <Top>0.97125in</Top>
           <Left>2.52351in</Left>
           <Height>0.19444in</Height>
           <Width>3.2661in</Width>
@@ -1347,7 +1260,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PostalCode</rd:DefaultName>
-          <Top>0.91569in</Top>
+          <Top>1.16569in</Top>
           <Left>2.50962in</Left>
           <Height>0.22445in</Height>
           <Width>3.27999in</Width>
@@ -1384,7 +1297,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>AddressLine2</rd:DefaultName>
-          <Top>0.54069in</Top>
+          <Top>0.79069in</Top>
           <Left>2.53046in</Left>
           <Height>0.18056in</Height>
           <Width>3.25915in</Width>
@@ -1403,7 +1316,7 @@
           </Style>
         </Textbox>
         <Line Name="Line11">
-          <Top>1.20958in</Top>
+          <Top>1.45958in</Top>
           <Left>0.21465in</Left>
           <Height>0in</Height>
           <Width>5.54513in</Width>
@@ -1420,8 +1333,8 @@
           <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
           <MIMEType>image/jpeg</MIMEType>
           <Sizing>FitProportional</Sizing>
-          <Top>0.10541in</Top>
-          <Left>0.15909in</Left>
+          <Top>0.24083in</Top>
+          <Left>0.21465in</Left>
           <Height>1.03473in</Height>
           <Width>1.32985in</Width>
           <ZIndex>7</ZIndex>
@@ -1431,6 +1344,40 @@
             </Border>
           </Style>
         </Image>
+        <Textbox Name="Title1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=First(Fields!Title1.Value, "CompanyDetail")</Value>
+                  <Style>
+                    <FontSize>9pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Title1</rd:DefaultName>
+          <Top>0.40179in</Top>
+          <Left>2.48879in</Left>
+          <Height>0.20834in</Height>
+          <Width>3.30082in</Width>
+          <ZIndex>8</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
       </ReportItems>
       <Style>
         <Border>
@@ -1439,7 +1386,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.61457in</Height>
+      <Height>3.0729in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1460,8 +1407,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox29</rd:DefaultName>
-          <Top>2.36457in</Top>
-          <Left>0.30668in</Left>
+          <Top>2.73957in</Top>
+          <Left>0.18168in</Left>
           <Height>0.25in</Height>
           <Width>1.88781in</Width>
           <Style>
@@ -1491,8 +1438,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox30</rd:DefaultName>
-          <Top>2.36457in</Top>
-          <Left>4.0994in</Left>
+          <Top>2.73957in</Top>
+          <Left>3.9744in</Left>
           <Height>0.25in</Height>
           <Width>1.88781in</Width>
           <ZIndex>1</ZIndex>
@@ -1507,8 +1454,8 @@
           </Style>
         </Textbox>
         <Line Name="Line9">
-          <Top>2.23957in</Top>
-          <Left>0.30668in</Left>
+          <Top>2.61457in</Top>
+          <Left>0.18168in</Left>
           <Height>0in</Height>
           <Width>1.88781in</Width>
           <ZIndex>2</ZIndex>
@@ -1519,8 +1466,8 @@
           </Style>
         </Line>
         <Line Name="Line10">
-          <Top>2.23957in</Top>
-          <Left>4.0994in</Left>
+          <Top>2.61457in</Top>
+          <Left>3.9744in</Left>
           <Height>0in</Height>
           <Width>1.88781in</Width>
           <ZIndex>3</ZIndex>
@@ -1541,6 +1488,7 @@
                     <TextRun>
                       <Value>Item Amount:</Value>
                       <Style>
+                        <FontSize>9pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -1551,8 +1499,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.02085in</Top>
-              <Left>0.06944in</Left>
+              <Top>0.00002in</Top>
+              <Left>0.0764in</Left>
               <Height>0.25in</Height>
               <Width>1.41667in</Width>
               <Style>
@@ -1574,6 +1522,7 @@
                     <TextRun>
                       <Value>Discount Amount:</Value>
                       <Style>
+                        <FontSize>9pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -1584,45 +1533,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.38195in</Top>
-              <Left>0.05556in</Left>
+              <Top>0.36112in</Top>
+              <Left>0.07639in</Left>
               <Height>0.25in</Height>
               <Width>1.41667in</Width>
               <ZIndex>1</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox15">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Extra Amount:</Value>
-                      <Style>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.70141in</Top>
-              <Left>0.06944in</Left>
-              <Height>0.25in</Height>
-              <Width>1.41667in</Width>
-              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1642,6 +1557,7 @@
                     <TextRun>
                       <Value>Bill Amount:</Value>
                       <Style>
+                        <FontSize>9pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -1652,11 +1568,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.36112in</Top>
-              <Left>0.05556in</Left>
+              <Top>1.89585in</Top>
               <Height>0.25in</Height>
               <Width>1.41667in</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1671,18 +1586,7 @@
               <Top>0.67362in</Top>
               <Height>0in</Height>
               <Width>2.63196in</Width>
-              <ZIndex>4</ZIndex>
-              <Style>
-                <Border>
-                  <Style>Solid</Style>
-                </Border>
-              </Style>
-            </Line>
-            <Line Name="Line3">
-              <Top>1.02085in</Top>
-              <Height>0in</Height>
-              <Width>2.63196in</Width>
-              <ZIndex>5</ZIndex>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>
@@ -1690,10 +1594,10 @@
               </Style>
             </Line>
             <Line Name="Line4">
-              <Top>1.33334in</Top>
+              <Top>1.00695in</Top>
               <Height>0in</Height>
               <Width>2.63196in</Width>
-              <ZIndex>6</ZIndex>
+              <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>
@@ -1707,8 +1611,9 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>GST Amount:</Value>
+                      <Value>Total GST Amount:</Value>
                       <Style>
+                        <FontSize>9pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -1719,11 +1624,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.03474in</Top>
+              <Top>1.62154in</Top>
               <Left>0.05556in</Left>
-              <Height>0.25in</Height>
-              <Width>1.41667in</Width>
-              <ZIndex>7</ZIndex>
+              <Height>0.21181in</Height>
+              <Width>1.40278in</Width>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1736,9 +1641,9 @@
             </Textbox>
             <Line Name="Line6">
               <Left>1.5139in</Left>
-              <Height>1.59723in</Height>
+              <Height>2.13196in</Height>
               <Width>0in</Width>
-              <ZIndex>8</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>
@@ -1749,7 +1654,7 @@
               <Top>0.34029in</Top>
               <Height>0in</Height>
               <Width>2.63196in</Width>
-              <ZIndex>9</ZIndex>
+              <ZIndex>7</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>
@@ -1765,7 +1670,8 @@
                     <TextRun>
                       <Value>=First(Fields!ItemAmount.Value, "PurchaseReturn")</Value>
                       <Style>
-                        <Format>'RM' 0.00;('RM' 0.00)</Format>
+                        <FontSize>9pt</FontSize>
+                        <Format>0.00;(0.00)</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1779,7 +1685,7 @@
               <Left>1.52779in</Left>
               <Height>0.25in</Height>
               <Width>1.03819in</Width>
-              <ZIndex>10</ZIndex>
+              <ZIndex>8</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1788,7 +1694,6 @@
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
-                <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
               </Style>
             </Textbox>
             <Textbox Name="DiscountAmount">
@@ -1800,7 +1705,8 @@
                     <TextRun>
                       <Value>=First(Fields!DiscountAmount.Value, "PurchaseReturn")</Value>
                       <Style>
-                        <Format>'RM' 0.00;('RM' 0.00)</Format>
+                        <FontSize>9pt</FontSize>
+                        <Format>0.00;(0.00)</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1814,7 +1720,7 @@
               <Left>1.54168in</Left>
               <Height>0.25in</Height>
               <Width>1.03819in</Width>
-              <ZIndex>11</ZIndex>
+              <ZIndex>9</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1823,7 +1729,6 @@
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
-                <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
               </Style>
             </Textbox>
             <Textbox Name="GSTAmount">
@@ -1835,7 +1740,8 @@
                     <TextRun>
                       <Value>=First(Fields!GSTAmount.Value, "PurchaseReturn")</Value>
                       <Style>
-                        <Format>'RM' 0.00;('RM' 0.00)</Format>
+                        <FontSize>9pt</FontSize>
+                        <Format>0.00;(0.00)</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1845,11 +1751,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>GSTAmount</rd:DefaultName>
-              <Top>1.03474in</Top>
-              <Left>1.52779in</Left>
+              <Top>1.63543in</Top>
+              <Left>1.54168in</Left>
               <Height>0.25in</Height>
-              <Width>1.03819in</Width>
-              <ZIndex>12</ZIndex>
+              <Width>1.01563in</Width>
+              <ZIndex>10</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1858,42 +1764,6 @@
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
-                <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
-              </Style>
-            </Textbox>
-            <Textbox Name="Extras">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=First(Fields!ExtraAmount.Value, "PurchaseReturn")</Value>
-                      <Style>
-                        <Format>'RM' 0.00;('RM' 0.00)</Format>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Extras</rd:DefaultName>
-              <Top>0.7014in</Top>
-              <Left>1.52779in</Left>
-              <Height>0.25in</Height>
-              <Width>1.03819in</Width>
-              <ZIndex>13</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-                <rd:FormatSymbolCulture>en-MY</rd:FormatSymbolCulture>
               </Style>
             </Textbox>
             <Textbox Name="TotalAmount">
@@ -1905,7 +1775,8 @@
                     <TextRun>
                       <Value>=First(Fields!TotalAmount.Value, "PurchaseReturn")</Value>
                       <Style>
-                        <Format>'RM' 0.00;('RM' 0.00)</Format>
+                        <FontSize>9pt</FontSize>
+                        <Format>0.00;(0.00)</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1915,10 +1786,67 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>TotalAmount</rd:DefaultName>
-              <Top>1.36112in</Top>
-              <Left>1.52779in</Left>
+              <Top>1.90974in</Top>
+              <Left>1.54168in</Left>
               <Height>0.22222in</Height>
               <Width>1.03819in</Width>
+              <ZIndex>11</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Line Name="Line13">
+              <Top>1.31251in</Top>
+              <Height>0in</Height>
+              <Width>2.63196in</Width>
+              <ZIndex>12</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
+            <Line Name="Line14">
+              <Top>1.59376in</Top>
+              <Height>0in</Height>
+              <Width>2.63196in</Width>
+              <ZIndex>13</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
+            <Textbox Name="Textbox22">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>CGST Amount:</Value>
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>0.68751in</Top>
+              <Left>0.05556in</Left>
+              <Height>0.25in</Height>
+              <Width>1.38889in</Width>
               <ZIndex>14</ZIndex>
               <Style>
                 <Border>
@@ -1928,14 +1856,192 @@
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
-                <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox23">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>SGST Amount:</Value>
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>1.0764in</Top>
+              <Left>0.05556in</Left>
+              <Height>0.21181in</Height>
+              <Width>1.40278in</Width>
+              <ZIndex>15</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Line Name="Line15">
+              <Top>1.86807in</Top>
+              <Height>0in</Height>
+              <Width>2.63196in</Width>
+              <ZIndex>16</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
+            <Textbox Name="Textbox26">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>IGST Amount:</Value>
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>1.35417in</Top>
+              <Left>0.05556in</Left>
+              <Height>0.21181in</Height>
+              <Width>1.40278in</Width>
+              <ZIndex>17</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="CGSTAmount">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Sum(Fields!CGSTAmount.Value, "PurchaseReturn")</Value>
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Format>0.00;(0.00)</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>CGSTAmount</rd:DefaultName>
+              <Top>0.7014in</Top>
+              <Left>1.52779in</Left>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
+              <ZIndex>18</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="SGSTAmount">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Sum(Fields!SGSTAmount.Value, "PurchaseReturn")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                        <Format>0.00;(0.00)</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>SGSTAmount</rd:DefaultName>
+              <Top>1.02084in</Top>
+              <Left>1.52778in</Left>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
+              <ZIndex>19</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="IGSTAmount">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Sum(Fields!IGSTAmount.Value, "PurchaseReturn")</Value>
+                      <Style>
+                        <Format>0.00;(0.00)</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>IGSTAmount</rd:DefaultName>
+              <Top>1.31251in</Top>
+              <Left>1.52778in</Left>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
+              <ZIndex>20</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
           <Top>0.12349cm</Top>
           <Left>3.31012in</Left>
-          <Height>1.6146in</Height>
+          <Height>2.14585in</Height>
           <Width>2.63196in</Width>
           <ZIndex>4</ZIndex>
           <Style>
@@ -2013,10 +2119,10 @@
         </Border>
       </Style>
     </PageFooter>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
+    <TopMargin>1cm</TopMargin>
+    <BottomMargin>1cm</BottomMargin>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -2065,6 +2171,18 @@
           <DataField>AddressLine2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Banner1">
+          <DataField>Banner1</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="Banner2">
+          <DataField>Banner2</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="CGSTAmount">
+          <DataField>CGSTAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="CityName">
           <DataField>CityName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -2075,6 +2193,10 @@
         </Field>
         <Field Name="CompanyType">
           <DataField>CompanyType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ContactPerson">
+          <DataField>ContactPerson</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="EMailId">
@@ -2088,6 +2210,10 @@
         <Field Name="Id">
           <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="IGSTAmount">
+          <DataField>IGSTAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="IsActive">
           <DataField>IsActive</DataField>
@@ -2121,17 +2247,49 @@
           <DataField>PostalCode</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="SGSTAmount">
+          <DataField>SGSTAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="State">
+          <DataField>State</DataField>
+          <rd:TypeName>AccountBuddy.BLL.StateDetail</rd:TypeName>
+        </Field>
+        <Field Name="StateCode">
+          <DataField>StateCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StateId">
+          <DataField>StateId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="StateName">
+          <DataField>StateName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="TelephoneNo">
           <DataField>TelephoneNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Title1">
+          <DataField>Title1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Title2">
+          <DataField>Title2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="UnderCompanyId">
           <DataField>UnderCompanyId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="UserId">
           <DataField>UserId</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VoucherWaterMark">
+          <DataField>VoucherWaterMark</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
@@ -2219,33 +2377,37 @@
           <DataField>BalanceAmount</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="CompanyId">
-          <DataField>CompanyId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        <Field Name="CGSTAmount">
+          <DataField>CGSTAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="DiscountAmount">
           <DataField>DiscountAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ExtraAmount">
           <DataField>ExtraAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="GSTAmount">
           <DataField>GSTAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Id">
           <DataField>Id</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
+        <Field Name="IGSTAmount">
+          <DataField>IGSTAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="ItemAmount">
           <DataField>ItemAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="LedgerId">
           <DataField>LedgerId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="LedgerName">
           <DataField>LedgerName</DataField>
@@ -2265,7 +2427,7 @@
         </Field>
         <Field Name="PRDate">
           <DataField>PRDate</DataField>
-          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="PRDetail">
           <DataField>PRDetail</DataField>
@@ -2275,6 +2437,10 @@
           <DataField>ReceiptLedgerId</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
+        <Field Name="RefCode">
+          <DataField>RefCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="RefNo">
           <DataField>RefNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -2283,9 +2449,17 @@
           <DataField>SearchText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="SGSTAmount">
+          <DataField>SGSTAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="TotalAmount">
           <DataField>TotalAmount</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TotalGST">
+          <DataField>TotalGST</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="TransactionType">
           <DataField>TransactionType</DataField>
@@ -2293,7 +2467,7 @@
         </Field>
         <Field Name="TransactionTypeId">
           <DataField>TransactionTypeId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>

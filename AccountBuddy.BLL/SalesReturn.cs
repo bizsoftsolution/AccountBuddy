@@ -37,6 +37,10 @@ namespace AccountBuddy.BLL
         private SalesReturnDetail _SRDetail;
         private ObservableCollection<SalesReturnDetail> _SRDetails;
         private string _RefCode;
+        private decimal _IGSTAmount;
+        private decimal _TotalGST;
+        private decimal _SGSTAmount;
+        private decimal _CGSTAmount;
 
         #endregion
 
@@ -160,6 +164,70 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal CGSTAmount
+        {
+            get
+            {
+                return _CGSTAmount;
+            }
+            set
+            {
+                if (_CGSTAmount != value)
+                {
+                    _CGSTAmount = value;
+                    NotifyPropertyChanged(nameof(CGSTAmount));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal SGSTAmount
+        {
+            get
+            {
+                return _SGSTAmount;
+            }
+            set
+            {
+                if (_SGSTAmount != value)
+                {
+                    _SGSTAmount = value;
+                    NotifyPropertyChanged(nameof(SGSTAmount));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal IGSTAmount
+        {
+            get
+            {
+                return _IGSTAmount;
+            }
+            set
+            {
+                if (_IGSTAmount != value)
+                {
+                    _IGSTAmount = value;
+                    NotifyPropertyChanged(nameof(IGSTAmount));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal TotalGST
+        {
+            get
+            {
+                return _TotalGST;
+            }
+            set
+            {
+                if (_TotalGST != value)
+                {
+                    _TotalGST = value;
+                    NotifyPropertyChanged(nameof(TotalGST));
                     if (value != 0) SetAmount();
                 }
             }
@@ -418,7 +486,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                SalesReturn po = FMCGHubClient.FMCGHub.Invoke<SalesReturn>("SalesReturn_Find", SearchText).Result;
+                SalesReturn po = FMCGHubClient.FMCGHub.Invoke<SalesReturn>("SalesReturn_Find", RefNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<SalesReturn>(this);
                 this.SRDetails = po.SRDetails;
@@ -504,9 +572,13 @@ namespace AccountBuddy.BLL
 
         #endregion
 
-        private void SetAmount()
+        public void SetAmount()
         {
-            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
+            CGSTAmount = Common.AppLib.CGSTPer / 100;
+            SGSTAmount = Common.AppLib.SGSTPer / 100;
+            IGSTAmount = Common.AppLib.IGSTPer / 100;
+            TotalGST = (CGSTAmount + SGSTAmount + IGSTAmount);
+            GSTAmount = (ItemAmount - DiscountAmount) * (TotalGST);
             TotalAmount = ItemAmount  - DiscountAmount + GSTAmount + ExtraAmount ;
         }
 
@@ -523,6 +595,12 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<BLL.SalesReturn> tolist(int? SID, DateTime dtFrom, DateTime dtTo, string InvoiceNo)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<BLL.SalesReturn>>("SalesReturn_List", SID, dtFrom, dtTo, InvoiceNo).Result;
+        }
+
         #endregion
     }
 }

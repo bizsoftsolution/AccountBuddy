@@ -52,7 +52,6 @@ namespace AccountBuddy.PL.frm.Transaction
             LoadReport();
         }
 
-
         private void LoadReport()
         {
             try
@@ -85,7 +84,6 @@ namespace AccountBuddy.PL.frm.Transaction
             }
 
         }
-
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {

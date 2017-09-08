@@ -12,28 +12,23 @@ namespace AccountBuddy.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class PurchaseOrder
+    public partial class StateDetail
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PurchaseOrder()
+        public StateDetail()
         {
-            this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
+            this.CompanyDetails = new HashSet<CompanyDetail>();
+            this.Ledgers = new HashSet<Ledger>();
         }
     
-        public long Id { get; set; }
-        public System.DateTime PODate { get; set; }
-        public string RefNo { get; set; }
-        public string RefCode { get; set; }
-        public int LedgerId { get; set; }
-        public decimal ItemAmount { get; set; }
-        public decimal DiscountAmount { get; set; }
-        public decimal GSTAmount { get; set; }
-        public decimal Extras { get; set; }
-        public decimal TotalAmount { get; set; }
-        public string Narration { get; set; }
+        public int Id { get; set; }
+        public string StateName { get; set; }
+        public string TINNo { get; set; }
+        public string StateCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
-        public virtual Ledger Ledger { get; set; }
+        public virtual ICollection<CompanyDetail> CompanyDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ledger> Ledgers { get; set; }
     }
 }

@@ -64,6 +64,9 @@ namespace AccountBuddy.PL.frm.Master
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
+            cmbState.ItemsSource = BLL.StateDetail.toList;
+            cmbState.DisplayMemberPath = "StateName";
+            cmbState.SelectedValuePath = "Id";
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {

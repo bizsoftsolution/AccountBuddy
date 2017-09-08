@@ -21,14 +21,14 @@ using Microsoft.Win32;
 namespace AccountBuddy.PL.frm.Transaction
 {
     /// <summary>
-    /// Interaction logic for frmSalesSearch.xaml
+    /// Interaction logic for frmPurchaseReturnSearch.xaml
     /// </summary>
-    public partial class frmSalesSearch : MetroWindow
+    public partial class frmPurchaseReturnSearch : MetroWindow
     {
         private int m_currentPageIndex;
         private IList<Stream> m_streams;
 
-        public frmSalesSearch()
+        public frmPurchaseReturnSearch()
         {
             InitializeComponent();
             rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
@@ -44,10 +44,10 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCustomerName.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList();
-            cmbCustomerName.DisplayMemberPath = "LedgerName";
-            cmbCustomerName.SelectedValuePath = "Id";
-            dgvReceiptAndPayment.ItemsSource = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
+            cmbSupplierName.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key).ToList();
+            cmbSupplierName.DisplayMemberPath = "LedgerName";
+            cmbSupplierName.SelectedValuePath = "Id";
+            dgvReceiptAndPayment.ItemsSource = BLL.PurchaseReturn.tolist((int?)cmbSupplierName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
             LoadReport();
         }
 
@@ -55,18 +55,17 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                List<BLL.Sale> list = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
-                list = list.Select(x => new BLL.Sale()
-                { LedgerName = x.LedgerName, TotalAmount = x.TotalAmount, SalesDate = x.SalesDate, RefNo = x.RefNo }).ToList();
-
+                List<BLL.PurchaseReturn> list = BLL.PurchaseReturn.tolist((int?)cmbSupplierName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
+                list = list.Select(x => new BLL.PurchaseReturn()
+                { LedgerName = x.LedgerName, TotalAmount = x.TotalAmount, PRDate = x.PRDate, RefNo = x.RefNo }).ToList();
                 try
                 {
                     rptViewer.Reset();
-                    ReportDataSource data = new ReportDataSource("Sales", list);
+                    ReportDataSource data = new ReportDataSource("PurchaseReturn", list);
                     ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                     rptViewer.LocalReport.DataSources.Add(data);
                     rptViewer.LocalReport.DataSources.Add(data1);
-                    rptViewer.LocalReport.ReportPath = @"rpt\Transaction\rptSalesReport.rdlc";
+                    rptViewer.LocalReport.ReportPath = @"rpt\Transaction\rptPurchaseReturnReport.rdlc";
 
 
                     rptViewer.RefreshReport();
@@ -86,7 +85,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            dgvReceiptAndPayment.ItemsSource = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
+            dgvReceiptAndPayment.ItemsSource = BLL.PurchaseReturn.tolist((int?)cmbSupplierName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
             LoadReport();
         }
 
@@ -213,15 +212,15 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void dgvReceiptAndPayment_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var rp = dgvReceiptAndPayment.SelectedItem as BLL.Sale;
+            var rp = dgvReceiptAndPayment.SelectedItem as BLL.PurchaseReturn;
             if (rp != null)
             {
 
-                Transaction.frmSale f = new Transaction.frmSale();
+                Transaction.frmPurchaseReturn f = new Transaction.frmPurchaseReturn();
                 App.frmHome.ShowForm(f);
                 System.Windows.Forms.Application.DoEvents();
                 f.data.RefNo = rp.RefNo;
-               
+
                 System.Windows.Forms.Application.DoEvents();
                 f.data.Find();
                 f.data.SetAmount();
@@ -230,7 +229,73 @@ namespace AccountBuddy.PL.frm.Transaction
 
             }
         }
-  
+
+        private void btnExcel_Click(object sender, RoutedEventArgs e)
+        {
+            //Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
+            //Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
+            //Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
+
+            //try
+            //{
+
+            //    worksheet = workbook.ActiveSheet;
+
+            //    worksheet.Name = "ExportedFromDatGrid";
+
+            //    int cellRowIndex = 1;
+            //    int cellColumnIndex = 1;
+            //    DataTable dt = new DataTable();
+            //    var r = dgvReceiptAndPayment.ItemsSource;
+            //    foreach(var d in r)
+            //    {
+            //        dt = new DataTable();
+            //        dt.Ite
+            //    }
+
+            //    //Loop through each row and read value from each column. 
+            //    for (int i = 0; i < dgvReceiptAndPayment.Items.Count - 1; i++)
+            //    {
+            //        for (int j = 0; j < dgvReceiptAndPayment.Columns.Count; j++)
+            //        {
+            //            // Excel index starts from 1,1. As first Row would have the Column headers, adding a condition check. 
+            //            if (cellRowIndex == 1)
+            //            {
+            //                worksheet.Cells[cellRowIndex, cellColumnIndex] = dgvReceiptAndPayment.Columns[j].Header;
+            //            }
+            //            else
+            //            {
+            //                worksheet.Cells[cellRowIndex, cellColumnIndex] = dgvReceiptAndPayment.Rows[i].Cells[j].Value.ToString();
+            //            }
+            //            cellColumnIndex++;
+            //        }
+            //        cellColumnIndex = 1;
+            //        cellRowIndex++;
+            //    }
+
+            //    //Getting the location and file name of the excel to save from user. 
+            //    SaveFileDialog saveDialog = new SaveFileDialog();
+            //    saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+            //    saveDialog.FilterIndex = 2;
+
+            //    if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //    {
+            //        workbook.SaveAs(saveDialog.FileName);
+            //        MessageBox.Show("Export Successful");
+            //    }
+            //}
+            //catch (System.Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+            //finally
+            //{
+            //    excel.Quit();
+            //    workbook = null;
+            //    excel = null;
+            //}
+        }
+
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadReport();
