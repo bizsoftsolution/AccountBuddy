@@ -49,8 +49,8 @@ namespace AccountBuddy.BLL
         public static void HubConnect()
         {
             //string URLPath = "http://ubs3/fmcg/SignalR";
-           // string URLPath = "http://localhost:51068/"; 
-            string URLPath = "http://localhost/LakshmiSilks";
+            string URLPath = "http://localhost:51068/"; 
+            //string URLPath = "http://localhost/LakshmiSilks";
             //string URLPath = "http://192.168.1.170/fmcg/SignalR"; 
             try
             {
