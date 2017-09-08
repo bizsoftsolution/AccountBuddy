@@ -235,11 +235,11 @@ namespace AccountBuddy.PL.frm.Transaction
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
-            cmbDebitAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts");
+            cmbDebitAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.Cash_in_Hand_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.Bank_Accounts_Key);
             cmbDebitAC.SelectedValuePath = "Id";
             cmbDebitAC.DisplayMemberPath = "AccountName";
 
-            cmbCreditAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts");
+            cmbCreditAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName != BLL.DataKeyValue.Primary_Key && x.AccountGroup.GroupName != BLL.DataKeyValue.Cash_in_Hand_Key && x.AccountGroup.GroupName != BLL.DataKeyValue.Bank_Accounts_Key);
             cmbCreditAC.SelectedValuePath = "Id";
             cmbCreditAC.DisplayMemberPath = "AccountName";
 

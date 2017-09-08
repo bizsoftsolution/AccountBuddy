@@ -94,43 +94,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         CompanySetup(cm);
                         CurrencySetup(cm);
-                        if (d.UnderCompanyId != null)
-                        {
-                            var lstCompany = DB.CompanyDetails.Where(x => x.Id == d.UnderCompanyId || (x.Id != d.Id && x.UnderCompanyId == d.UnderCompanyId)).ToList();                            
-                            int AGId = DB.DataKeyValues.Where(x => x.CompanyId == cm.Id && x.DataKey == BLL.DataKeyValue.BranchDivisions_Key).FirstOrDefault().DataValue;
-
-                            foreach (var c in lstCompany)
-                            {
-                                DAL.Ledger dl1 = new DAL.Ledger();
-                                dl1.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), cm.CompanyName);
-                                dl1.AccountGroupId = DB.DataKeyValues.Where(x => x.CompanyId == c.Id && x.DataKey == BLL.DataKeyValue.BranchDivisions_Key).FirstOrDefault().DataValue;
-                                dl1.AddressLine1 = cm.AddressLine1;
-                                dl1.AddressLine2 = cm.AddressLine2;
-                                dl1.CityName = cm.CityName;
-                                dl1.EMailId = cm.EMailId;
-                                dl1.GSTNo = cm.GSTNo;
-                                dl1.MobileNo = cm.MobileNo;
-                                dl1.TelephoneNo = cm.TelephoneNo;
-                                DB.Ledgers.Add(dl1);
-                                DB.SaveChanges();
-
-                                DAL.Ledger dl2 = new DAL.Ledger();
-                                dl2.LedgerName = string.Format("{0}-{1}", c.CompanyType == "Company" ? "CM" : (c.CompanyType == "Warehouse" ? "WH" : "DL"), c.CompanyName);
-                                dl2.AccountGroupId = AGId;
-                                dl2.AddressLine1 = c.AddressLine1;
-                                dl2.AddressLine2 = c.AddressLine2;
-                                dl2.CityName = c.CityName;
-                                dl2.EMailId = c.EMailId;
-                                dl2.GSTNo = c.GSTNo;
-                                dl2.MobileNo = c.MobileNo;
-                                dl2.TelephoneNo = c.TelephoneNo;
-                                DB.Ledgers.Add(dl2);
-                                DB.SaveChanges();
-
-
-                            }
-                        }
-                        
+                      
                     }
                 }
                 else
@@ -138,25 +102,11 @@ namespace AccountBuddy.SL.Hubs
                     var CName = d.CompanyName;
                     cm.toCopy<DAL.CompanyDetail>(d);
                     DB.SaveChanges();
-
-                    var LName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), CName);
-                    var lstLedger = DB.Ledgers.Where(x => x.LedgerName == LName).ToList();
-                    foreach (var dl in lstLedger)
-                    {
-                        dl.LedgerName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), cm.CompanyName);
-                        dl.AddressLine1 = cm.AddressLine1;
-                        dl.AddressLine2 = cm.AddressLine2;
-                        dl.CityName = cm.CityName;
-                        dl.EMailId = cm.EMailId;
-                        dl.GSTNo = cm.GSTNo;
-                        dl.MobileNo = cm.MobileNo;
-                        dl.TelephoneNo = cm.TelephoneNo;
-                    }
-                    DB.SaveChanges();
+                    
                 }
 
-                //  Clients.All.CompanyDetail_Save(cm);
-                Clients.Clients(OtherLoginClientsOnGroup).CompanyDetail_Save(cm); 
+                  Clients.All.CompanyDetail_Save(cm);
+               // Clients.Clients(OtherLoginClientsOnGroup).CompanyDetail_Save(cm); 
 
                 return cm.Id;
             }
@@ -170,13 +120,13 @@ namespace AccountBuddy.SL.Hubs
             {
                 DAL.CustomFormat cf = new DAL.CustomFormat();
                 cf.CompanyId = cm.Id;
-                cf.CurrencyPositiveSymbolPrefix = "RM ";
+                cf.CurrencyPositiveSymbolPrefix = "RS ";
                 cf.CurrencyPositiveSymbolSuffix = "";
-                cf.CurrencyNegativeSymbolPrefix = "RM[-";
+                cf.CurrencyNegativeSymbolPrefix = "RS[-";
                 cf.CurrencyNegativeSymbolSuffix = "]";
-                cf.CurrencyToWordPrefix = "Ringgits ";
+                cf.CurrencyToWordPrefix = "Rupees ";
                 cf.CurrencyToWordSuffix= "";
-                cf.DecimalToWordPrefix = "Cents ";
+                cf.DecimalToWordPrefix = "Paisas ";
                 cf.DecimalToWordSuffix= "";
                 cf.DigitGroupingBy = 2;
                 cf.CurrencyCaseSensitive = 2;
@@ -220,6 +170,25 @@ namespace AccountBuddy.SL.Hubs
             UserSetup(sgp);
             AccountSetup(sgp);
 
+            DAL.StockGroup pr = new DAL.StockGroup();
+            pr.StockGroupName = BLL.DataKeyValue.StockGroup_Primary_Key;
+            pr.GroupCode = "";
+            pr.CompanyId = sgp.Id;
+            pr.IsPurchase = true;
+            pr.IsSale = true;
+            DB.StockGroups.Add(pr);
+            DB.SaveChanges();
+            insertDataKeyValue(sgp.Id, pr.StockGroupName, pr.Id);
+
+            DAL.UOM u = new DAL.UOM();
+            u.FormalName = BLL.DataKeyValue.UOM_Key;
+            u.Symbol = "UOM";
+            u.CompanyId = sgp.Id;
+          
+            DB.UOMs.Add(u);
+            DB.SaveChanges();
+            insertDataKeyValue(sgp.Id, u.Symbol, u.Id);
+
         }
 
         void UserSetup(BLL.CompanyDetail cmp)
@@ -250,8 +219,6 @@ namespace AccountBuddy.SL.Hubs
 
             insertDataKeyValue(cmp.Id, ut.TypeOfUser, ut.Id);
 
-
-
         }
 
         void insertDataKeyValue(int CompanyId, string DataKey, int DataValue)
@@ -274,486 +241,67 @@ namespace AccountBuddy.SL.Hubs
             DB.SaveChanges();
             insertDataKeyValue(cmp.Id, pr.GroupName, pr.Id);
 
-
-            AccountSetup_Asset(pr);
-            AccountSetup_Liabilities(pr);
-            AccountSetup_Income(pr);
-            AccountSetup_Expense(pr);
-
-            DAL.Ledger PL = new DAL.Ledger();
-            PL.LedgerName = BLL.DataKeyValue.Profit_Loss_Ledger_Key;
-            PL.AccountGroupId = pr.Id;
-            DB.Ledgers.Add(PL);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, PL.LedgerName, PL.Id);
-
-
-
-        }
-
-        void AccountSetup_Asset(DAL.AccountGroup pr)
-        {
-            DAL.AccountGroup ast = new DAL.AccountGroup();
-            ast.GroupName = BLL.DataKeyValue.Assets_Key;
-            ast.GroupCode = "100";
-            ast.CompanyId = pr.CompanyId;
-            ast.UnderGroupId = pr.Id;
-            DB.AccountGroups.Add(ast);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, ast.GroupName, ast.Id);
-
-
-            #region Current Assets
-            DAL.AccountGroup ca = new DAL.AccountGroup();
-            ca.GroupName = BLL.DataKeyValue.CurrentAssets_Key;
-            ca.GroupCode = "110";
-            ca.UnderGroupId = ast.Id;
-            ca.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(ca);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, ca.GroupName, ca.Id);
-
-
-            DAL.AccountGroup ch = new DAL.AccountGroup();
-            ch.GroupName = BLL.DataKeyValue.CashInHand_Key;
-            ch.GroupCode = "111";
-            ch.UnderGroupId = ca.Id;
-            ch.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(ch);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, ch.GroupName, ch.Id);
-
-            DAL.Ledger cL = new DAL.Ledger();
-            cL.LedgerName = BLL.DataKeyValue.CashLedger_Key;
-            cL.AccountGroupId = ch.Id;
-            DB.Ledgers.Add(cL);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, cL.LedgerName, cL.Id);
-
-            DAL.AccountGroup dp = new DAL.AccountGroup();
-            dp.GroupName = BLL.DataKeyValue.Deposits_Key;
-            dp.GroupCode = "112";
-            dp.UnderGroupId = ca.Id;
-            dp.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(dp);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, dp.GroupName, dp.Id);
-
-
-            DAL.AccountGroup la = new DAL.AccountGroup();
-            la.GroupName = BLL.DataKeyValue.LoansandAdvances_Key;
-            la.GroupCode = "113";
-            la.UnderGroupId = ca.Id;
-            la.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(la);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, la.GroupName, la.Id);
-
-
-            DAL.AccountGroup ba = new DAL.AccountGroup();
-            ba.GroupName = BLL.DataKeyValue.BankAccounts_Key;
-            ba.GroupCode = "114";
-            ba.UnderGroupId = ca.Id;
-            ba.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(ba);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, ba.GroupName, ba.Id);
-
-
-            DAL.AccountGroup SIH = new DAL.AccountGroup();
-            SIH.GroupName = BLL.DataKeyValue.StockInHand_Key;
-            SIH.GroupCode = "115";
-            SIH.UnderGroupId = ca.Id;
-            SIH.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(SIH);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, SIH.GroupName, SIH.Id);
-
-            DAL.Ledger st = new DAL.Ledger();
-            st.LedgerName = BLL.DataKeyValue.Stock_In_Hand_Ledger_Key;
-            st.AccountGroupId = SIH.Id;
-            DB.Ledgers.Add(st);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, st.LedgerName, st.Id);
-
-            DAL.Ledger sti = new DAL.Ledger();
-            sti.LedgerName = BLL.DataKeyValue.Stock_Inward_Ledger_Key;
-            sti.AccountGroupId = SIH.Id;
-            DB.Ledgers.Add(sti);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, sti.LedgerName, sti.Id);
-
-            DAL.Ledger sto = new DAL.Ledger();
-            sto.LedgerName = BLL.DataKeyValue.Stock_Outward_Ledger_Key;
-            sto.AccountGroupId = SIH.Id;
-            DB.Ledgers.Add(sto);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, sto.LedgerName, sto.Id);
-
             DAL.AccountGroup sd = new DAL.AccountGroup();
             sd.GroupName = BLL.DataKeyValue.SundryDebtors_Key;
-            sd.GroupCode = "116";
-            sd.UnderGroupId = ca.Id;
-            sd.CompanyId = pr.CompanyId;
+            sd.GroupCode = "";
+            sd.CompanyId = cmp.Id;
             DB.AccountGroups.Add(sd);
             DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, sd.GroupName, sd.Id);
-
-
-            DAL.Ledger SP = new DAL.Ledger();
-            SP.LedgerName = BLL.DataKeyValue.StockInProcess_Ledger_Key;
-            SP.AccountGroupId = SIH.Id;
-            DB.Ledgers.Add(SP);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, SP.LedgerName, SP.Id);
-
-            DAL.Ledger SS = new DAL.Ledger();
-            SS.LedgerName = BLL.DataKeyValue.StockSeperated_Ledger_Key;
-            SS.AccountGroupId = SIH.Id;
-            DB.Ledgers.Add(SS);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, SS.LedgerName, SS.Id);
-
-
-
-            #endregion
-
-            #region Fixed Assets
-
-            DAL.AccountGroup fa = new DAL.AccountGroup();
-            fa.GroupName = BLL.DataKeyValue.FixedAssets_Key;
-            fa.GroupCode = "120";
-            fa.UnderGroupId = ast.Id;
-            fa.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(fa);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, fa.GroupName, fa.Id);
-
-            #endregion
-
-
-            #region Misc. Expenses
-
-            DAL.AccountGroup me = new DAL.AccountGroup();
-            me.GroupName = BLL.DataKeyValue.MiscExpenses_Key;
-            me.GroupCode = "130";
-            me.UnderGroupId = ast.Id;
-            me.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(me);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, me.GroupName, me.Id);
-
-            #endregion
-
-            DAL.AccountGroup Inv = new DAL.AccountGroup();
-            Inv.GroupName = BLL.DataKeyValue.Investments_Key;
-            Inv.GroupCode = "140";
-            Inv.UnderGroupId = ast.Id;
-            Inv.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(Inv);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, Inv.GroupName, Inv.Id);
-
-        }
-
-        void AccountSetup_Liabilities(DAL.AccountGroup pr)
-        {
-            DAL.AccountGroup liab = new DAL.AccountGroup();
-            liab.GroupName = BLL.DataKeyValue.Liabilities_Key;
-            liab.GroupCode = "200";
-            liab.CompanyId = pr.CompanyId;
-            liab.UnderGroupId = pr.Id;
-            DB.AccountGroups.Add(liab);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, liab.GroupName, liab.Id);
-
-            #region Current Liabilities
-            DAL.AccountGroup cl = new DAL.AccountGroup();
-            cl.GroupName = BLL.DataKeyValue.CurrentLiabilities_Key;
-            cl.GroupCode = "210";
-            cl.UnderGroupId = liab.Id;
-            cl.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(cl);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, cl.GroupName, cl.Id);
-
-            DAL.AccountGroup DT = new DAL.AccountGroup();
-            DT.GroupName = BLL.DataKeyValue.DutiesTaxes_Key;
-            DT.GroupCode = "211";
-            DT.UnderGroupId = cl.Id;
-            DT.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(DT);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, DT.GroupName, DT.Id);
-
-            DAL.Ledger IT = new DAL.Ledger();
-            IT.LedgerName = BLL.DataKeyValue.Input_Tax_Ledger_Key;
-            IT.AccountGroupId = DT.Id;
-            DB.Ledgers.Add(IT);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, IT.LedgerName, IT.Id);
-
-
-            DAL.Ledger OT = new DAL.Ledger();
-            OT.LedgerName = BLL.DataKeyValue.Output_Tax_Ledger_Key;
-            OT.AccountGroupId = DT.Id;
-            DB.Ledgers.Add(OT);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, OT.LedgerName, OT.Id);
-
-            DAL.AccountGroup prov = new DAL.AccountGroup();
-            prov.GroupName = BLL.DataKeyValue.Provisions_Key;
-            prov.GroupCode = "212";
-            prov.UnderGroupId = cl.Id;
-            prov.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(prov);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, prov.GroupName, prov.Id);
+            insertDataKeyValue(cmp.Id, sd.GroupName, sd.Id);
 
             DAL.AccountGroup sc = new DAL.AccountGroup();
             sc.GroupName = BLL.DataKeyValue.SundryCreditors_Key;
-            sc.GroupCode = "212";
-            sc.UnderGroupId = cl.Id;
-            sc.CompanyId = pr.CompanyId;
+            sc.GroupCode = "";
+            sc.CompanyId = cmp.Id;
             DB.AccountGroups.Add(sc);
             DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, sc.GroupName, sc.Id);
+            insertDataKeyValue(cmp.Id, sc.GroupName, sc.Id);
 
-
-            #region Loans
-            DAL.AccountGroup l = new DAL.AccountGroup();
-            l.GroupName = BLL.DataKeyValue.Loans_Key;
-            l.GroupCode = "220";
-            l.UnderGroupId = liab.Id;
-            l.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(l);
+            DAL.AccountGroup cla = new DAL.AccountGroup();
+            cla.GroupName = BLL.DataKeyValue.Cash_in_Hand_Key;
+            cla.GroupCode = "";
+            cla.CompanyId = cmp.Id;
+            DB.AccountGroups.Add(cla);
             DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, l.GroupName, l.Id);
+            insertDataKeyValue(cmp.Id, cla.GroupName, cla.Id);
 
-
-            DAL.AccountGroup BOAc = new DAL.AccountGroup();
-            BOAc.GroupName = BLL.DataKeyValue.BankODAc_Key;
-            BOAc.GroupCode = "221";
-            BOAc.UnderGroupId = l.Id;
-            BOAc.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(BOAc);
+            DAL.Ledger cL = new DAL.Ledger();
+            cL.LedgerName = BLL.DataKeyValue.CashLedger_Key;
+            cL.AccountGroupId = cla.Id;
+            DB.Ledgers.Add(cL);
             DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, BOAc.GroupName, BOAc.Id);
+            insertDataKeyValue(cmp.Id, cL.LedgerName, cL.Id);
 
-            DAL.AccountGroup SL = new DAL.AccountGroup();
-            SL.GroupName = BLL.DataKeyValue.SecuredLoans_Key;
-            SL.GroupCode = "221";
-            SL.UnderGroupId = l.Id;
-            SL.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(SL);
+            DAL.Ledger pur = new DAL.Ledger();
+            pur.LedgerName = BLL.DataKeyValue.PurchaseAccount_Ledger_Key;
+            pur.AccountGroupId = pr.Id;
+            DB.Ledgers.Add(pur);
             DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, SL.GroupName, SL.Id);
+            insertDataKeyValue(cmp.Id, pur.LedgerName, pur.Id);
 
-            DAL.AccountGroup USL = new DAL.AccountGroup();
-            USL.GroupName = BLL.DataKeyValue.UnSecuredLoans_Key;
-            USL.GroupCode = "222";
-            USL.UnderGroupId = l.Id;
-            USL.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(USL);
+            DAL.Ledger sal = new DAL.Ledger();
+            sal.LedgerName = BLL.DataKeyValue.SalesAccount_Key;
+            sal.AccountGroupId = pr.Id;
+            DB.Ledgers.Add(sal);
             DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, USL.GroupName, USL.Id);
+            insertDataKeyValue(cmp.Id, sal.LedgerName, sal.Id);
 
-            #endregion
-
-
-            DAL.AccountGroup BD = new DAL.AccountGroup();
-            BD.GroupName = BLL.DataKeyValue.BranchDivisions_Key;
-            BD.GroupCode = "230";
-            BD.UnderGroupId = liab.Id;
-            BD.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(BD);
+            DAL.AccountGroup ba = new DAL.AccountGroup();
+            ba.GroupName = BLL.DataKeyValue.Bank_Accounts_Key;
+            ba.GroupCode = "";
+            ba.CompanyId = cmp.Id;
+            DB.AccountGroups.Add(ba);
             DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, BD.GroupName, BD.Id);
+            insertDataKeyValue(cmp.Id, ba.GroupName, ba.Id);
 
-
-
-            DAL.AccountGroup Cap = new DAL.AccountGroup();
-            Cap.GroupName = BLL.DataKeyValue.CapitalAccount_Key;
-            Cap.GroupCode = "240";
-            Cap.UnderGroupId = liab.Id;
-            Cap.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(Cap);
+            DAL.Ledger bal = new DAL.Ledger();
+            bal.LedgerName = BLL.DataKeyValue.Bank_Accounts_Key;
+            bal.AccountGroupId = ba.Id;
+            DB.Ledgers.Add(bal);
             DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, Cap.GroupName, Cap.Id);
-
-            DAL.AccountGroup RS = new DAL.AccountGroup();
-            RS.GroupName = BLL.DataKeyValue.ReservesSurplus_Key;
-            RS.GroupCode = "250";
-            RS.UnderGroupId = liab.Id;
-            RS.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(RS);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, RS.GroupName, RS.Id);
-
-            DAL.AccountGroup SAC = new DAL.AccountGroup();
-            SAC.GroupName = BLL.DataKeyValue.SuspenseAc_Key;
-            SAC.GroupCode = "260";
-            SAC.UnderGroupId = liab.Id;
-            SAC.CompanyId = pr.CompanyId;
-            DB.AccountGroups.Add(SAC);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, SAC.GroupName, SAC.Id);
-
-            #endregion
+            insertDataKeyValue(cmp.Id, bal.LedgerName, bal.Id);
         }
 
-        void AccountSetup_Income(DAL.AccountGroup pr)
-        {
-            DAL.AccountGroup Inc = new DAL.AccountGroup();
-            Inc.GroupName = BLL.DataKeyValue.Income_Key;
-            Inc.GroupCode = "300";
-            Inc.CompanyId = pr.CompanyId;
-            Inc.UnderGroupId = pr.Id;
-            DB.AccountGroups.Add(Inc);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, Inc.GroupName, Inc.Id);
-
-
-
-            #region Direct Income
-
-            DAL.AccountGroup DInc = new DAL.AccountGroup();
-            DInc.GroupName = BLL.DataKeyValue.DirectIncome_Key;
-            DInc.GroupCode = "310";
-            DInc.CompanyId = pr.CompanyId;
-            DInc.UnderGroupId = Inc.Id;
-            DB.AccountGroups.Add(DInc);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, DInc.GroupName, DInc.Id);
-
-            #endregion
-
-            #region Indirect Income
-
-            DAL.AccountGroup IndInc = new DAL.AccountGroup();
-            IndInc.GroupName = BLL.DataKeyValue.IndirectIncome_Key;
-            IndInc.GroupCode = "320";
-            IndInc.CompanyId = pr.CompanyId;
-            IndInc.UnderGroupId = Inc.Id;
-            DB.AccountGroups.Add(IndInc);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, IndInc.GroupName, IndInc.Id);
-
-            #endregion
-
-            DAL.AccountGroup Sa = new DAL.AccountGroup();
-            Sa.GroupName = BLL.DataKeyValue.SalesAccount_Key;
-            Sa.GroupCode = "330";
-            Sa.CompanyId = pr.CompanyId;
-            Sa.UnderGroupId = Inc.Id;
-            DB.AccountGroups.Add(Sa);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, Sa.GroupName, Sa.Id);
-
-            DAL.Ledger salL = new DAL.Ledger();
-            salL.LedgerName = BLL.DataKeyValue.SalesAccount_Ledger_Key;
-            salL.AccountGroupId = Sa.Id;
-            DB.Ledgers.Add(salL);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, salL.LedgerName, salL.Id);
-
-            DAL.Ledger SRL = new DAL.Ledger();
-            SRL.LedgerName = BLL.DataKeyValue.Sales_Return_Ledger_Key;
-            SRL.AccountGroupId = Sa.Id;
-            DB.Ledgers.Add(SRL);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, SRL.LedgerName, SRL.Id);
-
-            DAL.Ledger JR = new DAL.Ledger();
-            JR.LedgerName = BLL.DataKeyValue.JobOrderReceived_Ledger_Key;
-            JR.AccountGroupId = Inc.Id;
-            DB.Ledgers.Add(JR);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, JR.LedgerName, JR.Id);
-
-
-        }
-
-        void AccountSetup_Expense(DAL.AccountGroup pr)
-        {
-            DAL.AccountGroup Exp = new DAL.AccountGroup();
-            Exp.GroupName = BLL.DataKeyValue.Expenses_Key;
-            Exp.GroupCode = "400";
-            Exp.CompanyId = pr.CompanyId;
-            Exp.UnderGroupId = pr.Id;
-            DB.AccountGroups.Add(Exp);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, Exp.GroupName, Exp.Id);
-
-            #region Direct Expense
-
-            DAL.AccountGroup DExp = new DAL.AccountGroup();
-            DExp.GroupName = BLL.DataKeyValue.DirectExpenses_Key;
-            DExp.GroupCode = "410";
-            DExp.CompanyId = pr.CompanyId;
-            DExp.UnderGroupId = Exp.Id;
-            DB.AccountGroups.Add(DExp);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, DExp.GroupName, DExp.Id);
-
-            #endregion
-
-            #region Indirect Expense
-
-            DAL.AccountGroup IndExp = new DAL.AccountGroup();
-            IndExp.GroupName = BLL.DataKeyValue.IndirectExpense_Key;
-            IndExp.GroupCode = "320";
-            IndExp.CompanyId = pr.CompanyId;
-            IndExp.UnderGroupId = Exp.Id;
-            DB.AccountGroups.Add(IndExp);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, IndExp.GroupName, IndExp.Id);
-            #endregion
-
-            DAL.AccountGroup Pur = new DAL.AccountGroup();
-            Pur.GroupName = BLL.DataKeyValue.PurchaseAccount_Key;
-            Pur.GroupCode = "330";
-            Pur.CompanyId = pr.CompanyId;
-            Pur.UnderGroupId = Exp.Id;
-            DB.AccountGroups.Add(Pur);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, Pur.GroupName, Pur.Id);
-
-         
-
-            DAL.Ledger PurL = new DAL.Ledger();
-            PurL.LedgerName = BLL.DataKeyValue.PurchaseAccount_Ledger_Key;
-            PurL.AccountGroupId = Pur.Id;
-            DB.Ledgers.Add(PurL);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, PurL.LedgerName, PurL.Id);
-
-            DAL.Ledger PRL = new DAL.Ledger();
-            PRL.LedgerName = BLL.DataKeyValue.Purchase_Return_Ledger_Key;
-            PRL.AccountGroupId = Pur.Id;
-            DB.Ledgers.Add(PRL);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, PRL.LedgerName, PRL.Id);
-
-            DAL.Ledger JO = new DAL.Ledger();
-            JO.LedgerName = BLL.DataKeyValue.JobOrderIssued_Ledger_Key;
-            JO.AccountGroupId = Exp.Id;
-            DB.Ledgers.Add(JO);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, JO.LedgerName, JO.Id);
-
-            DAL.AccountGroup salary = new DAL.AccountGroup();
-            salary.GroupName = BLL.DataKeyValue.Salary_Key;
-            salary.GroupCode = "340";
-            salary.CompanyId = pr.CompanyId;
-            salary.UnderGroupId = IndExp.Id;
-            DB.AccountGroups.Add(salary);
-            DB.SaveChanges();
-            insertDataKeyValue(pr.CompanyId, salary.GroupName, salary.Id);
-
-
-
-        }
 
         #endregion
 

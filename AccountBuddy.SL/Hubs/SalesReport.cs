@@ -891,6 +891,7 @@ namespace AccountBuddy.SL.Hubs
             return rv;
 
         }
+
         public List<BLL.SalesReport> SalesReport_ListProductWise(DateTime dt)
         {
             List<BLL.SalesReport> rv = new List<BLL.SalesReport>();

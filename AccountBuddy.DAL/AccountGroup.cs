@@ -30,8 +30,8 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountGroup> AccountGroup1 { get; set; }
         public virtual AccountGroup AccountGroup2 { get; set; }
-        public virtual CompanyDetail CompanyDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ledger> Ledgers { get; set; }
+        public virtual CompanyDetail CompanyDetail { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace AccountBuddy.SL.Controllers
         {
             return View();
         }
-        public JsonResult Save(int LedgerId, string SaleOrderDetails)
+        public JsonResult Save(int LedgerId, string SaleOrderDetails, bool IsGST)
         {
             try
             {
@@ -37,6 +37,16 @@ namespace AccountBuddy.SL.Controllers
                 sal.LedgerId = LedgerId;
                 sal.SODate = DateTime.Now;
                 sal.ItemAmount = sal.SalesOrderDetails.Sum(x => x.Amount);
+                if(IsGST==true)
+                {
+                    sal.GSTAmount = sal.ItemAmount * 6 / 100;
+                    sal.TotalAmount = sal.ItemAmount + sal.GSTAmount;
+                }
+                else
+                {
+                    sal.GSTAmount = 0;
+                        sal.TotalAmount = sal.ItemAmount;
+                }
                 sal.RefNo = Hubs.ABServerHub.SalesOrder_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
                 
                 db.SalesOrders.Add(sal);

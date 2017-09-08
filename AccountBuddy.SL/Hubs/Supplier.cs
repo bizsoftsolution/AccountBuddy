@@ -12,10 +12,7 @@ namespace AccountBuddy.SL.Hubs
         private BLL.Supplier Supplier_DALtoBLL(DAL.Supplier SupplierFrom)
         {
             BLL.Supplier SupplierTo = SupplierFrom.toCopy<BLL.Supplier>(new BLL.Supplier());
-
             SupplierTo.Ledger = LedgerDAL_BLL(SupplierFrom.Ledger);
-
-
             return SupplierTo;
         }
 

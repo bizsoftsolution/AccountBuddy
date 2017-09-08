@@ -35,9 +35,9 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbPType.DisplayMemberPath = "Type";
             cmbPType.SelectedValuePath = "Id";
 
-            lblDiscountAmount.Text = string.Format("{0}({1})",  "Discount Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
+            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
 
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
+            // lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
 
             data.Clear();
             onClientEvents();
@@ -68,15 +68,15 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbItem.Focus();
             }
-            else if (BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() < data.SDetail.Quantity)
+            //else if (BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() < data.SDetail.Quantity)
+            //{
+            //    var v = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
+            //    MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+            //    txtQty.Focus();
+            //}
+            else if (data.SDetail.Amount <= 0)
             {
-                var v = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
-                MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
-                txtQty.Focus();
-            }
-            else if (min > data.SDetail.UnitPrice || max < data.SDetail.UnitPrice)
-            {
-                MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Enter Valid Amount");
                 txtRate.Focus();
             }
             else
@@ -99,6 +99,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
+            btnPrint.IsEnabled = false;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -172,17 +173,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
+            frmSalesSearch frm = new frmSalesSearch();
+            frm.ShowDialog();
+            frm.Close();
         }
 
         #endregion
@@ -341,7 +334,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
+            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList();
             cmbCustomer.DisplayMemberPath = "LedgerName";
             cmbCustomer.SelectedValuePath = "Id";
 
@@ -355,15 +348,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         }
 
-        private void cmbUOM_Loaded(object sender, RoutedEventArgs e)
-        {
-            cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
-            cmbUOM.DisplayMemberPath = "Symbol";
-            cmbUOM.SelectedValuePath = "Id";
 
-
-
-        }
 
         #endregion
 
@@ -375,21 +360,9 @@ namespace AccountBuddy.PL.frm.Transaction
             Int32 selectionLength = textBox.SelectionLength;
             textBox.Text = AppLib.NumericOnly(txtDiscountAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-            
+
         }
-
-        private void txtExtraAmount_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-
-            textBox.Text = AppLib.NumericOnly(txtExtraAmount.Text);
-
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-          
-        }
-
+     
         private void txtRate_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -409,23 +382,12 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
-
-        private void txtDiscount_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtDiscount.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
-        }
-
+     
         #endregion
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
         }
     }
 }
