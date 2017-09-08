@@ -19,7 +19,7 @@ namespace AccountBuddy.SL.Hubs
             var pd = ProductsFrom.ProductDetails.Where(x => x.CompanyId == Caller.CompanyId).FirstOrDefault();
             if (pd == null) pd = new DAL.ProductDetail();
 
-            ProductsTo.UOM = ProductsFrom.UOM == null ? null : UOM_DALtoBLL(ProductsFrom.UOM);
+           ProductsTo.UOM = ProductsFrom.UOM == null ? null : UOM_DALtoBLL(ProductsFrom.UOM);
             ProductsTo.OpeningStock = pd.OpeningStock;
             ProductsTo.ReOrderLevel = pd.ReorderLevel;
             ProductsTo.POQty = ProductsFrom.PurchaseOrderDetails.Where(x => x.PurchaseOrder.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
@@ -58,7 +58,6 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-
                 DAL.Product d = DB.Products.Where(x => x.Id == pro.Id).FirstOrDefault();
                 if (d == null)
                 {
@@ -73,7 +72,7 @@ namespace AccountBuddy.SL.Hubs
                     pd.CompanyId = Caller.CompanyId;
                     pd.OpeningStock = pro.OpeningStock;
                     pd.ReorderLevel = pro.ReOrderLevel;
-
+                    
 
                     DB.SaveChanges();
                     pro.Id = d.Id;

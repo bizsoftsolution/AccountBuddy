@@ -49,22 +49,10 @@ namespace AccountBuddy.PL.frm.Master
         {
             BLL.Product.Init();
             dgvProduct.ItemsSource = BLL.Product.toList;
-
+            data.Clear();
             CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).Filter = Product_Filter;
             CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.ProductName), System.ComponentModel.ListSortDirection.Ascending));
-
-            var SUIds = BLL.StockGroup.toList.Select(x => x.UnderGroupId).ToList();
-            cmbStockGroupId.ItemsSource = BLL.StockGroup.toList.Where(x=> !SUIds.Contains(x.Id)).ToList();
-            cmbStockGroupId.DisplayMemberPath = "StockGroupName";
-            cmbStockGroupId.SelectedValuePath = "Id";
-
-
-
-            cmbUOM.ItemsSource = BLL.UOM.toList;
-            cmbUOM.SelectedValuePath = "Id";
-            cmbUOM.DisplayMemberPath = "Symbol";
-
-
+        
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
@@ -80,14 +68,8 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Item Code"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.StockGroupId == 0)
-            {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Stock Group"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-           else if (data.UOMId == 0)
-            {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "UOM"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+          
+         
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
@@ -315,14 +297,14 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-        private void txtPurchase_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtPurchaseRate.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-        }
+        //private void txtPurchase_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    TextBox textBox = sender as TextBox;
+        //    Int32 selectionStart = textBox.SelectionStart;
+        //    Int32 selectionLength = textBox.SelectionLength;
+        //    textBox.Text = AppLib.NumericOnly(txtPurchaseRate.Text);
+        //    textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+        //}
 
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -369,62 +351,12 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
-        //private void txtGST_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    TextBox textBox = sender as TextBox;
-        //    Int32 selectionStart = textBox.SelectionStart;
-        //    Int32 selectionLength = textBox.SelectionLength;
-        //    textBox.Text = AppLib.NumericOnly(txtGST.Text);
-        //    textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
-        //}
-
-        private void txtOpeningStock_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtPurchaseRate_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtOpeningStock.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
-        }
-
-        private void txtReOrderLevel_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtReOrderLevel.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
-        }
-
-        //private void txtDiscount_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    TextBox textBox = sender as TextBox;
-        //    Int32 selectionStart = textBox.SelectionStart;
-        //    Int32 selectionLength = textBox.SelectionLength;
-        //    textBox.Text = AppLib.NumericOnly(txtDiscount.Text);
-        //    textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
-        //}
-
-        private void txtMaxSellingRate_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtMaxSellingRate.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
-        }
-
-        private void txtMinSellingRate_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtMinSellingRate.Text);
+            textBox.Text = AppLib.NumericOnly(txtPurchaseRate.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }

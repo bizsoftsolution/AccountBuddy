@@ -29,10 +29,11 @@ namespace AccountBuddy.PL
             onClientEvents();
             IsForcedClose = false;
             BLL.CustomFormat.SetDataFormat();
+            BLL.CompanyDetail.setGST();
             CollectionViewSource.GetDefaultView(lstMaster.Items).Filter = Menu_Filter;
             CollectionViewSource.GetDefaultView(lstTransaction.Items).Filter = Menu_Filter;
             CollectionViewSource.GetDefaultView(lstReport.Items).Filter = Menu_Filter;
-
+            
         }
         private bool Menu_Filter(object obj)
         {
@@ -106,6 +107,13 @@ namespace AccountBuddy.PL
             CollectionViewSource.GetDefaultView(lstMaster.Items).Filter = Menu_Filter;
             CollectionViewSource.GetDefaultView(lstTransaction.Items).Filter = Menu_Filter;
             CollectionViewSource.GetDefaultView(lstReport.Items).Filter = Menu_Filter;
+
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            BLL.CustomFormat.SetDataFormat();
+            BLL.CompanyDetail.setGST();
 
         }
     }

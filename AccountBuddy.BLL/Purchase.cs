@@ -38,6 +38,10 @@ namespace AccountBuddy.BLL
         private PurchaseDetail _PDetail;
         private ObservableCollection<PurchaseDetail> _PDetails;
         private string _RefCode;
+        private decimal _CGSTAmount;
+        private decimal _SGSTAmount;
+        private decimal _IGSTAmount;
+        private decimal _TotalGST;
 
         #endregion
 
@@ -162,6 +166,70 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal CGSTAmount
+        {
+            get
+            {
+                return _CGSTAmount;
+            }
+            set
+            {
+                if (_CGSTAmount != value)
+                {
+                    _CGSTAmount = value;
+                    NotifyPropertyChanged(nameof(CGSTAmount));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal SGSTAmount
+        {
+            get
+            {
+                return _SGSTAmount;
+            }
+            set
+            {
+                if (_SGSTAmount != value)
+                {
+                    _SGSTAmount = value;
+                    NotifyPropertyChanged(nameof(SGSTAmount));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal IGSTAmount
+        {
+            get
+            {
+                return _IGSTAmount;
+            }
+            set
+            {
+                if (_IGSTAmount != value)
+                {
+                    _IGSTAmount = value;
+                    NotifyPropertyChanged(nameof(IGSTAmount));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal TotalGST
+        {
+            get
+            {
+                return _TotalGST;
+            }
+            set
+            {
+                if (_TotalGST != value)
+                {
+                    _TotalGST = value;
+                    NotifyPropertyChanged(nameof(TotalGST));
                     if (value != 0) SetAmount();
                 }
             }
@@ -425,7 +493,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Purchase po = FMCGHubClient.FMCGHub.Invoke<Purchase>("Purchase_Find", SearchText).Result;
+                Purchase po = FMCGHubClient.FMCGHub.Invoke<Purchase>("Purchase_Find", RefNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Purchase>(this);
                 this.PDetails = po.PDetails;
@@ -509,12 +577,16 @@ namespace AccountBuddy.BLL
 
         #endregion
 
-        private void SetAmount()
+        public void SetAmount()
         {
-            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
+            CGSTAmount = Common.AppLib.CGSTPer / 100;
+            SGSTAmount = Common.AppLib.SGSTPer / 100;
+            IGSTAmount = Common.AppLib.IGSTPer / 100;
+            TotalGST = (CGSTAmount + SGSTAmount + IGSTAmount);
+            GSTAmount = (ItemAmount - DiscountAmount) * (TotalGST);
             TotalAmount = ItemAmount - DiscountAmount  + GSTAmount + ExtraAmount;
         }
-
+        
         public bool FindRefNo()
         {
             var rv = false;
@@ -527,6 +599,10 @@ namespace AccountBuddy.BLL
                 rv = true;
             }
             return rv;
+        }
+        public static List<BLL.Purchase> tolist(int? SID, DateTime dtFrom, DateTime dtTo, string InvoiceNo)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<BLL.Purchase>>("Purchase_List", SID, dtFrom, dtTo, InvoiceNo).Result;
         }
         #endregion
 

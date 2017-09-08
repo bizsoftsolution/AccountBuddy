@@ -28,6 +28,7 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.Customer Customer_Save(BLL.Customer cus)
         {
+          
             try
             {
                 DAL.Customer d = DB.Customers.Where(x => x.Id == cus.Id).FirstOrDefault();

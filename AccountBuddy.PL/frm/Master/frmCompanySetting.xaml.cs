@@ -60,45 +60,13 @@ namespace AccountBuddy.PL.frm.Master
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             BLL.CompanyDetail.Init();
-
             data.Find(BLL.UserAccount.User.UserType.Company.Id);
             iProductImage.Source = AppLib.ViewImage(data.Logo);
             iProductImage.Tag = data.Logo;
-            if (data.CompanyType == "Company")
-            {
-                var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
-                dgvWarehouse.ItemsSource = lstCompany;
-
-
-                dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
-
-
-            }
-            else
-            {
-                gbxWareHouse.Visibility = Visibility.Collapsed;
-                gbxDealer.Visibility = Visibility.Collapsed;
-                btnUser.Visibility = Visibility.Collapsed;
-                btnDelete.Visibility = Visibility.Collapsed;
-            }
-
+           
+           
         }
-        private void Grid_Refresh()
-        {
-            try
-            {
-                CollectionViewSource.GetDefaultView(dgvWarehouse.ItemsSource).Refresh();
-                CollectionViewSource.GetDefaultView(dgvDealer.ItemsSource).Refresh();
-
-                dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
-                dgvWarehouse.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
-
-            }
-            catch (Exception ex) { };
-
-        }
-
-
+    
         #region ButtonEvents
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -122,7 +90,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (data.Save() == true)
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
-                   App.frmHome.ShowWelcome();
+                    App.frmHome.ShowWelcome();
                 }
             }
 
@@ -156,172 +124,7 @@ namespace AccountBuddy.PL.frm.Master
             }
 
         }
-
-
-        private void btnNewWareHouse_Click(object sender, RoutedEventArgs e)
-        {
-            frmCompanySignup f = new frmCompanySignup();
-            f.data.Clear();
-            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
-            f.data.CompanyType = "Warehouse";
-            f.Title = "New Warehouse";
-            f.ShowDialog();
-            List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
-
-            lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
-            dgvWarehouse.ItemsSource = lstCompany;
-
-        }
-
-        private void btnNewDealer_Click(object sender, RoutedEventArgs e)
-        {
-
-            frmCompanySignup f = new frmCompanySignup();
-            f.data.Clear();
-            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
-            f.data.CompanyType = "Dealer";
-            f.Title = "New Dealer";
-            f.ShowDialog();
-            List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
-
-            lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
-
-            dgvDealer.ItemsSource = lstCompany;
-
-        }
-
-        private void btnEditWarehouse_Click(object sender, RoutedEventArgs e)
-        {
-            var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
-
-            frmCompanySignup f = new frmCompanySignup();
-            cm.toCopy<BLL.CompanyDetail>(f.data);
-            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
-            f.data.CompanyType = "Warehouse";
-            f.iLogoImage.Source = AppLib.ViewImage(cm.Logo);
-            f.iLogoImage.Tag = cm.Logo;
-
-            f.Title = "Edit Warehouse";
-            f.gbxLogin.Visibility = Visibility.Collapsed;
-            f.ShowDialog();
-            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
-            dgvWarehouse.ItemsSource = lstCompany;
-        }
-
-        private void btnDeleteWarehouse_Click(object sender, RoutedEventArgs e)
-        {
-            var d = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
-            data = d;
-            if (d.Id != 0)
-            {
-                if (!BLL.UserAccount.AllowDelete(FormName))
-                {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
-                }
-                else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
-                {
-                    frmDeleteConfirmation frm = new frmDeleteConfirmation();
-                    frm.ShowDialog();
-                    if (frm.RValue == true)
-                    {
-
-                        if (data.DeleteWareHouse(d.Id))
-                        {
-                            MessageBox.Show(Message.PL.Delete_Alert);
-                            Grid_Refresh();
-                        }
-                        else
-                        {
-
-                            MessageBox.Show(Message.PL.Cant_Delete_Alert);
-                        }
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                MessageBox.Show("No Records to Delete");
-            }
-
-        }
-
-        private void btnEditDealer_Click(object sender, RoutedEventArgs e)
-        {
-            var cm = dgvDealer.SelectedItem as BLL.CompanyDetail;
-
-            frmCompanySignup f = new frmCompanySignup();
-            cm.toCopy<BLL.CompanyDetail>(f.data);
-            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
-            f.data.CompanyType = "Dealer";
-            f.iLogoImage.Source = AppLib.ViewImage(cm.Logo);
-            f.iLogoImage.Tag = cm.Logo;
-            f.Title = "Edit Dealer";
-            f.gbxLogin.Visibility = Visibility.Collapsed;
-            f.ShowDialog();
-            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
-            dgvDealer.ItemsSource = lstCompany;
-
-        }
-
-        private void btnDeleteDealer_Click(object sender, RoutedEventArgs e)
-        {
-            var d = dgvDealer.SelectedItem as BLL.CompanyDetail;
-            data = d;
-            if (d.Id != 0)
-            {
-                if (!BLL.UserAccount.AllowDelete(FormName))
-                {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
-                }
-
-                else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
-                {
-                    frmDeleteConfirmation frm = new frmDeleteConfirmation();
-                   frm.ShowDialog();
-                    if (frm.RValue == true)
-                    {
-
-                        if (data.DeleteWareHouse(d.Id))
-                        {
-                            MessageBox.Show(Message.PL.Delete_Alert);
-                            Grid_Refresh();
-                        }
-                        else
-                        {
-
-                            MessageBox.Show(Message.PL.Cant_Delete_Alert);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("No Records to Delete");
-            }
-        }
-
-        private void btnUserWarehouse_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
-                frmUserManager f = new frmUserManager();
-                f.LoadWindow(cm.Id);
-                f.CompanyId = cm.Id;
-                f.Title = string.Format("Login Users - {0}", cm.CompanyName);
-                f.ShowDialog();
-            }
-            catch (Exception ex) { }
-        }
-
-
-
-
-
+    
         private void btnImage_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -337,7 +140,6 @@ namespace AccountBuddy.PL.frm.Master
                     if (!string.IsNullOrEmpty(sFileName))
                     {
                         ImageSource imageSource = new BitmapImage(new Uri(sFileName));
-
                         iProductImage.Source = imageSource;
                         iProductImage.Tag = AppLib.ReadImageFile(sFileName);
                     }
@@ -350,19 +152,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         #endregion
 
-        #region Events
-
-        private void dgvWarehouse_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
-            List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
-            if (cm != null)
-            {
-
-            };
-        }
-
-        #endregion
+      
 
         #region Numeric Only
         private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
@@ -402,34 +192,7 @@ namespace AccountBuddy.PL.frm.Master
 
 
         #endregion
-
-        private void btnUserDealer_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var cm = dgvDealer.SelectedItem as BLL.CompanyDetail;
-                frmUserManager f = new frmUserManager();
-                f.LoadWindow(cm.Id);
-                f.CompanyId = cm.Id;
-                f.Title = string.Format("Login Users - {0}", cm.CompanyName);
-                f.ShowDialog();
-            }
-            catch (Exception ex) { }
-        }
-
-        private void btnUser_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                frmUserManager f = new frmUserManager();
-                f.LoadWindow(BLL.UserAccount.User.UserType.CompanyId);
-                f.CompanyId = BLL.UserAccount.User.UserType.CompanyId;
-                f.Title = string.Format("Login Users - {0}", BLL.UserAccount.User.UserType.Company.CompanyName);
-                f.ShowDialog();
-            }
-            catch (Exception ex) { }
-        }
-
+     
         private void btnSetting_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -441,16 +204,36 @@ namespace AccountBuddy.PL.frm.Master
             catch (Exception ex) { }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void txtCGSTAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
+
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtCGSTAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+
 
         }
 
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        private void txtSGSTAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtSGSTAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
 
+        private void txtIGSTAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtIGSTAmount.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
+        }
     }
 }

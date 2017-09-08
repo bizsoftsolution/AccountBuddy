@@ -234,6 +234,7 @@
     <Folder Include="Views\Customer\" />
     <Folder Include="Views\Product\" />
     <Folder Include="Views\SaleOrder\" />
+    <Folder Include="Views\SaleReturn\" />
     <Folder Include="Views\Sale\" />
     <Folder Include="Views\StockGroup\" />
     <Folder Include="Views\UOM\" />

@@ -243,7 +243,7 @@ namespace AccountBuddy.BLL
             BLL.AccountGroup.Init();
             BLL.StockGroup.Init();
 
-            BLL.Bank.Init();
+            //BLL.Bank.Init();
             BLL.Customer.Init();
             BLL.Supplier.Init();
             BLL.Ledger.Init();

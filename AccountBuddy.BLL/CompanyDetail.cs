@@ -40,6 +40,9 @@ namespace AccountBuddy.BLL
 
         private int? _UnderCompanyId;
         private string _CompanyType;
+        private decimal _CGSTAmount;
+        private decimal _SGSTAmount;
+        private decimal _IGSTAmount;
 
         #endregion
 
@@ -389,8 +392,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-
         public string CityName
         {
             get
@@ -403,6 +404,56 @@ namespace AccountBuddy.BLL
                 {
                     _CityName = value;
                     NotifyPropertyChanged(nameof(CityName));
+                }
+            }
+        }
+
+
+        public decimal CGSTAmount
+        {
+            get
+            {
+                return _CGSTAmount;
+            }
+            set
+            {
+                if (_CGSTAmount != value)
+                {
+                    _CGSTAmount = value;
+                    NotifyPropertyChanged(nameof(CGSTAmount));
+
+                }
+            }
+        }
+        public decimal SGSTAmount
+        {
+            get
+            {
+                return _SGSTAmount;
+            }
+            set
+            {
+                if (_SGSTAmount != value)
+                {
+                    _SGSTAmount = value;
+                    NotifyPropertyChanged(nameof(SGSTAmount));
+
+                }
+            }
+        }
+        public decimal IGSTAmount
+        {
+            get
+            {
+                return _IGSTAmount;
+            }
+            set
+            {
+                if (_IGSTAmount != value)
+                {
+                    _IGSTAmount = value;
+                    NotifyPropertyChanged(nameof(IGSTAmount));
+
                 }
             }
         }
@@ -446,7 +497,7 @@ namespace AccountBuddy.BLL
                     i = FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Save", this).Result;
                     d.Id = i;
                 }
-
+                setGST();
                 return i != 0;
             }
             catch (Exception ex)
@@ -455,6 +506,17 @@ namespace AccountBuddy.BLL
                 return false;
 
             }
+            
+
+        }
+
+        public static void setGST()
+        {
+            CompanyDetail v = new CompanyDetail();
+            v.Find(UserAccount.User.UserType.CompanyId);
+            Common.AppLib.CGSTPer = v.CGSTAmount;
+            AppLib.SGSTPer = v.SGSTAmount;
+            AppLib.IGSTPer = v.IGSTAmount;
 
         }
 
@@ -464,6 +526,7 @@ namespace AccountBuddy.BLL
             IsReadOnly = !UserPermission.AllowInsert;
             IsActive = true;
             NotifyAllPropertyChanged();
+          
         }
 
         public bool Find(int pk)
@@ -486,7 +549,7 @@ namespace AccountBuddy.BLL
             lstValidation.Clear();
             var cm = toList.Where(x => x.CompanyName == CompanyName && x.CompanyType == CompanyType && x.UnderCompanyId == UnderCompanyId).FirstOrDefault();
 
-            var user = BLL.UserAccount.toList.Where(x => x.UserType.Company.UnderCompanyId == (UnderCompanyId == null ? null : UnderCompanyId) && x.UserName == UserId && x.UserType.Company.CompanyName==CompanyName).FirstOrDefault();
+            var user = BLL.UserAccount.toList.Where(x => x.UserType.Company.UnderCompanyId == (UnderCompanyId == null ? null : UnderCompanyId) && x.UserName == UserId && x.UserType.Company.CompanyName == CompanyName).FirstOrDefault();
 
 
 
@@ -569,6 +632,8 @@ namespace AccountBuddy.BLL
         {
             _toList = null;
         }
+
+
         #endregion
     }
 }

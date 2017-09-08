@@ -52,7 +52,6 @@
     <Compile Include="ABClientHub.cs" />
     <Compile Include="AccountGroup.cs" />
     <Compile Include="BalanceSheet.cs" />
-    <Compile Include="Bank.cs" />
     <Compile Include="BankReconcilation.cs" />
     <Compile Include="CompanyDetail.cs" />
     <Compile Include="CreditLimitType.cs" />
@@ -67,8 +66,6 @@
     <Compile Include="JobOrderIssueDetail.cs" />
     <Compile Include="JobOrderReceived.cs" />
     <Compile Include="JobOrderReceivedDetail.cs" />
-    <Compile Include="JobWorker.cs" />
-    <Compile Include="JOPending.cs" />
     <Compile Include="Journal.cs" />
     <Compile Include="JournalDetail.cs" />
     <Compile Include="Ledger.cs" />
@@ -98,7 +95,6 @@
     <Compile Include="SalesReturn.cs" />
     <Compile Include="SalesReturnDetail.cs" />
     <Compile Include="SOPending.cs" />
-    <Compile Include="Staff.cs" />
     <Compile Include="StockGroup.cs" />
     <Compile Include="StockIn.cs" />
     <Compile Include="StockInDetail.cs" />

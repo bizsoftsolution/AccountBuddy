@@ -44,11 +44,9 @@ namespace AccountBuddy.PL.frm.Report
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbAccountName.ItemsSource = BLL.Ledger.toList.ToList();
+            cmbAccountName.ItemsSource = BLL.Ledger.toList.Where(x=>x.AccountGroup.GroupName==BLL.DataKeyValue.SundryCreditors_Key||x.AccountGroup.GroupName==BLL.DataKeyValue.SundryDebtors_Key).ToList();
             cmbAccountName.DisplayMemberPath = "AccountName";
             cmbAccountName.SelectedValuePath = "Id";
-
-
         }
 
 
@@ -265,16 +263,8 @@ namespace AccountBuddy.PL.frm.Report
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
-                else if (rp.EType == 'J')
-                {
-                    Transaction.frmJournal f = new Transaction.frmJournal();
-                    App.frmHome.ShowForm(f);
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = rp.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
-                }
+            }
             }
         }
     }
-}
+
