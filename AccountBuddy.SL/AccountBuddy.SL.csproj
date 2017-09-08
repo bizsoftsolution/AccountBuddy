@@ -16,7 +16,7 @@
     <RootNamespace>AccountBuddy.SL</RootNamespace>
     <AssemblyName>AccountBuddy.SL</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -152,6 +152,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\SaleOrderController.cs" />
+    <Compile Include="Controllers\SaleReturnController.cs" />
     <Compile Include="Controllers\StockGroupController.cs" />
     <Compile Include="Controllers\UOMController.cs" />
     <Compile Include="Global.asax.cs">
@@ -272,7 +273,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51068</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51068/</IISUrl>
+          <IISUrl>http://localhost/fmcg</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://192.168.0.105/fmcg</CustomServerUrl>
