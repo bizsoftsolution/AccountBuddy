@@ -173,7 +173,7 @@ namespace AccountBuddy.SL.Hubs
                 cf.CurrencyPositiveSymbolPrefix = "RM ";
                 cf.CurrencyPositiveSymbolSuffix = "";
                 cf.CurrencyNegativeSymbolPrefix = "RM[-";
-                cf.CurrencyNegativeSymbolSuffix = "";
+                cf.CurrencyNegativeSymbolSuffix = "]";
                 cf.CurrencyToWordPrefix = "Ringgits ";
                 cf.CurrencyToWordSuffix= "";
                 cf.DecimalToWordPrefix = "Cents ";

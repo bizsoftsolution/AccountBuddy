@@ -7,24 +7,25 @@ using System.Web.Mvc;
 
 namespace AccountBuddy.SL.Controllers
 {
-    public class SaleOrderController : Controller
+    public class SalesReturnController : Controller
     {
-        // GET: SaleOrder
+        // GET: SaleReturn
         public ActionResult Index()
         {
             return View();
         }
-        public JsonResult Save(int LedgerId, string SaleOrderDetails, bool IsGST)
+
+        public JsonResult Save(int LedgerId, string PayMode, string SaleReturnDetails, bool IsGST)
         {
             try
             {
                 DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
 
-                dynamic l1 = JsonConvert.DeserializeObject(SaleOrderDetails);
-                DAL.SalesOrder sal = new DAL.SalesOrder();
+                dynamic l1 = JsonConvert.DeserializeObject(SaleReturnDetails);
+                DAL.SalesReturn sal = new DAL.SalesReturn();
                 foreach (dynamic d1 in l1)
                 {
-                    DAL.SalesOrderDetail sd = new DAL.SalesOrderDetail()
+                    DAL.SalesReturnDetail sd = new DAL.SalesReturnDetail()
                     {
                         ProductId = d1.ProductId,
                         Quantity = d1.Qty,
@@ -32,11 +33,11 @@ namespace AccountBuddy.SL.Controllers
                         Amount = d1.Amount,
                         UOMId = d1.UOMId
                     };
-                    sal.SalesOrderDetails.Add(sd);
+                    sal.SalesReturnDetails.Add(sd);
                 }
                 sal.LedgerId = LedgerId;
-                sal.SODate = DateTime.Now;
-                sal.ItemAmount = sal.SalesOrderDetails.Sum(x => x.Amount);
+                sal.SRDate = DateTime.Now;
+                sal.ItemAmount = sal.SalesReturnDetails.Sum(x => x.Amount.Value);
                 if (IsGST == true)
                 {
                     sal.GSTAmount = sal.ItemAmount * 6 / 100;
@@ -47,16 +48,22 @@ namespace AccountBuddy.SL.Controllers
                     sal.GSTAmount = 0;
                     sal.TotalAmount = sal.ItemAmount;
                 }
-                sal.RefNo = Hubs.ABServerHub.SalesOrder_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
-                
-                db.SalesOrders.Add(sal);
+                sal.TransactionTypeId = 1;
+                sal.Narration = PayMode;
+                sal.RefNo = Hubs.ABServerHub.Sales_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+
+                db.SalesReturns.Add(sal);
                 db.SaveChanges();
+
+                Hubs.ABServerHub.Journal_SaveBySalesReturn(sal);
                 return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 return Json(new { Id = 0, HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
             }
+
         }
+
     }
 }

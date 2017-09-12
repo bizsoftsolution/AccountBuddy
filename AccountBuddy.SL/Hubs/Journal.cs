@@ -274,7 +274,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region sales return 
-        void Journal_SaveBySalesReturn(DAL.SalesReturn SR)
+        public static void Journal_SaveBySalesReturn(DAL.SalesReturn SR)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
 
