@@ -8,7 +8,7 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        void LedgerBalance(DAL.Ledger l, DateTime dtFrom, DateTime dtTo, ref decimal OPDr,ref decimal OPCr, ref decimal Dr, ref decimal Cr)
+       public static void LedgerBalance(DAL.Ledger l, DateTime dtFrom, DateTime dtTo, ref decimal OPDr,ref decimal OPCr, ref decimal Dr, ref decimal Cr)
         {
             decimal PDr, PCr, RDr, RCr, JDr, JCr;
 
@@ -68,7 +68,7 @@ namespace AccountBuddy.SL.Hubs
             return GetLedgerBalance(DB.Ledgers.Where(x=> x.Id==LedgerId).FirstOrDefault());            
         }
 
-        public decimal GetLedgerBalance(DAL.Ledger l)
+        public static decimal GetLedgerBalance(DAL.Ledger l)
         {
             decimal OPDr = 0, OPCr = 0, Dr = 0, Cr = 0;
             LedgerBalance(l, DateTime.Now, DateTime.Now, ref OPDr, ref OPCr, ref Dr, ref Cr);

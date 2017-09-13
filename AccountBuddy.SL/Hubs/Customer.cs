@@ -10,7 +10,7 @@ namespace AccountBuddy.SL.Hubs
     public partial class ABServerHub
     {
 
-        private BLL.Customer Customer_DALtoBLL(DAL.Customer customerFrom)
+        public  BLL.Customer Customer_DALtoBLL(DAL.Customer customerFrom)
         {
             BLL.Customer CustomerTo = customerFrom.toCopy<BLL.Customer>(new BLL.Customer());
 
@@ -20,7 +20,7 @@ namespace AccountBuddy.SL.Hubs
             return CustomerTo;
         }
 
-        public List<BLL.Customer> Customer_List()
+        public  List<BLL.Customer> Customer_List()
         {
             return DB.Customers.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => Customer_DALtoBLL(x)).ToList();

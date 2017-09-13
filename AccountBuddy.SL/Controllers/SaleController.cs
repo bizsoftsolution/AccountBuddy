@@ -47,8 +47,19 @@ namespace AccountBuddy.SL.Controllers
                     sal.GSTAmount = 0;
                     sal.TotalAmount = sal.ItemAmount;
                 }
-                sal.TransactionTypeId = 1;
-                sal.RefNo = Hubs.ABServerHub.Sales_NewRefNoByCompanyId( db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+                if (PayMode == "Cash")
+                {
+                    sal.TransactionTypeId = 1;
+                }
+                else if (PayMode == "Credit")
+                {
+                    sal.TransactionTypeId = 2;
+                }
+                else
+                {
+                    sal.TransactionTypeId = 3;
+                }
+                sal.RefNo = Hubs.ABServerHub.Sales_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
                 sal.Narration = PayMode;
                 db.Sales.Add(sal);
                 db.SaveChanges();
@@ -63,20 +74,20 @@ namespace AccountBuddy.SL.Controllers
 
         }
 
-        public JsonResult ProductReport(int DealerId,DateTime DateFrom,DateTime DateTo)
+        public JsonResult ProductReport(int DealerId, DateTime DateFrom, DateTime DateTo)
         {
             try
             {
-                DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();                
-               
+                DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
+
                 var lst1 = from s in db.Sales
-                          join sd in db.SalesDetails on s.Id equals sd.SalesId
-                          where s.Ledger.AccountGroup.CompanyId == DealerId && s.SalesDate>= DateFrom && s.SalesDate <= DateTo
-                          select new { sd.Product.ProductName, sd.Amount };
+                           join sd in db.SalesDetails on s.Id equals sd.SalesId
+                           where s.Ledger.AccountGroup.CompanyId == DealerId && s.SalesDate >= DateFrom && s.SalesDate <= DateTo
+                           select new { sd.Product.ProductName, sd.Amount };
                 var lst2 = lst1.GroupBy(x => x.ProductName).Select(x => new { ProductName = x.Key, Amount = x.Sum(y => y.Amount) }).ToList();
 
-                
-                return Json(new { HasError = false, Datas= lst2}, JsonRequestBehavior.AllowGet);
+
+                return Json(new { HasError = false, Datas = lst2 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -90,9 +101,9 @@ namespace AccountBuddy.SL.Controllers
             {
                 DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
 
-               var lst1 = from s in db.Sales                           
+                var lst1 = from s in db.Sales
                            where s.Ledger.AccountGroup.CompanyId == DealerId && s.SalesDate >= DateFrom && s.SalesDate <= DateTo
-                           select new { s.Ledger.LedgerName, s.TotalAmount};
+                           select new { s.Ledger.LedgerName, s.TotalAmount };
                 var lst2 = lst1.GroupBy(x => x.LedgerName).Select(x => new { LedgerName = x.Key, Amount = x.Sum(y => y.TotalAmount) }).ToList();
 
 
@@ -103,5 +114,44 @@ namespace AccountBuddy.SL.Controllers
                 return Json(new { HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public JsonResult Receipt_Save(int LedgerId, decimal Amount, string Details, string PayMode)
+        {
+            try
+            {
+                DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
+
+                dynamic l1 = JsonConvert.DeserializeObject(Details);
+                DAL.Journal sal = new DAL.Journal();
+                var CId = db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId;
+                DAL.JournalDetail jd = new DAL.JournalDetail()
+                {
+                    LedgerId = Hubs.ABServerHub.LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
+                    DrAmt = Amount,
+                    Particulars = "Mobile App Receipt"
+                };
+                sal.JournalDetails.Add(jd);
+                jd = new DAL.JournalDetail()
+                {
+                    LedgerId = LedgerId,
+                    CrAmt = Amount,
+                    Particulars = "Mobile App Receipt"
+
+                };
+                sal.JournalDetails.Add(jd);
+
+                sal.JournalDate = DateTime.Now;
+                sal.RefCode = Hubs.ABServerHub.Journal_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+
+                db.SaveChanges();
+                return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Id = 0, HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
 }

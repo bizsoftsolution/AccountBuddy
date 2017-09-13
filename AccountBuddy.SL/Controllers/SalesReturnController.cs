@@ -48,7 +48,18 @@ namespace AccountBuddy.SL.Controllers
                     sal.GSTAmount = 0;
                     sal.TotalAmount = sal.ItemAmount;
                 }
-                sal.TransactionTypeId = 1;
+                if (PayMode == "Cash")
+                {
+                    sal.TransactionTypeId = 1;
+                }
+                else if (PayMode == "Credit")
+                {
+                    sal.TransactionTypeId = 2;
+                }
+                else
+                {
+                    sal.TransactionTypeId = 3;
+                }
                 sal.Narration = PayMode;
                 sal.RefNo = Hubs.ABServerHub.Sales_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
 

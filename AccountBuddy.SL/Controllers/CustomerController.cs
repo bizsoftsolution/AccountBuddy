@@ -16,28 +16,50 @@ namespace AccountBuddy.SL.Controllers
         }
         public JsonResult toList(int CompanyId)
         {
-
+          
             var l1 = DB.Customers.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId)
-                                      .Select(x => new BLL.Ledger()
-                                      {
-                                         Id = x.LedgerId,
-                                         LedgerName  = x.Ledger.LedgerName,
-                                         AddressLine1 = x.Ledger.AddressLine1,
-                                         AddressLine2 = x.Ledger.AddressLine2,
-                                         CityName = x.Ledger.CityName,
-                                         MobileNo = x.Ledger.MobileNo,
-                                         TelephoneNo = x.Ledger.TelephoneNo,
-                                         CreditLimitTypeName = x.Ledger.CreditLimitType.LimitType,
-                                         CreditLimit = x.Ledger.CreditLimit==null?(short)0:x.Ledger.CreditLimit.Value,
-                                         CreditAmount = x.Ledger.CreditAmount==null?0:x.Ledger.CreditAmount.Value,
-                                         EMailId = x.Ledger.EMailId,
-                                         PersonIncharge = x.Ledger.PersonIncharge,
-                                         GSTNo =x.Ledger.GSTNo
+                                       .ToList();
+            //var l2 = l1.Select(x => new BLL.Ledger()
+            //{
+            //    Id = x.LedgerId,
+            //    LedgerName = x.Ledger.LedgerName,
+            //    AddressLine1 = x.Ledger.AddressLine1,
+            //    AddressLine2 = x.Ledger.AddressLine2,
+            //    CityName = x.Ledger.CityName,
+            //    MobileNo = x.Ledger.MobileNo,
+            //    TelephoneNo = x.Ledger.TelephoneNo,
+            //    CreditLimitTypeName = x.Ledger.CreditLimitType.LimitType,
+            //    CreditLimit = x.Ledger.CreditLimit == null ? (short)0 : x.Ledger.CreditLimit.Value,
+            //    CreditAmount = x.Ledger.CreditAmount == null ? 0 : x.Ledger.CreditAmount.Value,
+            //    EMailId = x.Ledger.EMailId,
+            //    PersonIncharge = x.Ledger.PersonIncharge,
+            //    GSTNo = x.Ledger.GSTNo,
+            //    OPBal=AccountBuddy.SL.Hubs.ABServerHub.GetLedgerBalance(x.Ledger)
+            //});
 
-                                      })
-                                      .ToList();
+            BLL.Ledger led = new BLL.Ledger();
+            List<BLL.Ledger> CustomerList = new List<BLL.Ledger>();
+            foreach(var x in l1)
+            {
+                led = new BLL.Ledger();
+                led.LedgerName = x.Ledger.LedgerName;
+               led.AddressLine1 = x.Ledger.AddressLine1;
+                led.AddressLine2 = x.Ledger.AddressLine2;
+                led.CityName = x.Ledger.CityName;
+                led.MobileNo = x.Ledger.MobileNo;
+                led.TelephoneNo = x.Ledger.TelephoneNo;
+                led.CreditLimitTypeName = x.Ledger.CreditLimitType==null?null:x.Ledger.CreditLimitType.LimitType;
+                led.CreditLimit = x.Ledger.CreditLimit == null ? (short)0 : x.Ledger.CreditLimit.Value;
+                led.CreditAmount = x.Ledger.CreditAmount == null ? 0 : x.Ledger.CreditAmount.Value;
+                led.EMailId = x.Ledger.EMailId;
+                led.PersonIncharge = x.Ledger.PersonIncharge;
+                led.GSTNo = x.Ledger.GSTNo;
+                led.OPBal = AccountBuddy.SL.Hubs.ABServerHub.GetLedgerBalance(x.Ledger);
+                CustomerList.Add(led);
+            }
 
-            return Json(l1, JsonRequestBehavior.AllowGet);
+            return Json(CustomerList, JsonRequestBehavior.AllowGet);
+
         }
 
         public JsonResult Save(int DealerId,String LedgerName,String PersonIncharge, String AddressLine1, String AddressLine2, String CityName, String MobileNo,String GSTNo)

@@ -14,7 +14,7 @@ namespace AccountBuddy.SL.Hubs
 
         #region Ledger
 
-        private BLL.Ledger LedgerDAL_BLL(DAL.Ledger ledgerFrom)
+        private  BLL.Ledger LedgerDAL_BLL(DAL.Ledger ledgerFrom)
         {
             BLL.Ledger ledgerTo=new BLL.Ledger();
             try
@@ -25,7 +25,7 @@ namespace AccountBuddy.SL.Hubs
 
                 ledgerTo.CreditLimitType = new BLL.CreditLimitType();
                 ledgerFrom.CreditLimitType.toCopy<BLL.CreditLimitType>(ledgerTo.CreditLimitType);
-
+                ledgerTo.OPBal = GetLedgerBalance(ledgerFrom);
               
             }
             catch(Exception ex)

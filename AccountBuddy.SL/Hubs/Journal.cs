@@ -16,7 +16,7 @@ namespace AccountBuddy.SL.Hubs
             return Journal_NewRefNoByCompanyId(Caller.CompanyId);
         }
 
-        public string Journal_NewRefNoByCompanyId(int CompanyId)
+        public static string Journal_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Journal, dt, dt.Month);
