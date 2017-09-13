@@ -27,7 +27,7 @@ namespace AccountBuddy.SL.Hubs
                 tb.Amount = l.OPDr != 0 || l.OPDr != null ? 0 : l.OPDr.Value;
                 if (l.Sales.Count() != 0)
                 {
-                    var l2 = l.Sales.Where(x => x.TransactionType.Type == "Credit" && x.SalesDate <= dt).GroupBy(x => x.Ledger.LedgerName);
+                    var l2 = l.Sales.Where(x =>x.SalesDate <= dt&& (x.TransactionType.Type == "Credit" || x.TransactionType.Type == "PNT(Payment Next Trip)")).GroupBy(x => x.Ledger.LedgerName);
                     foreach (var l1 in l2)
                     {
 
@@ -37,7 +37,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 if (l.PurchaseReturns.Count() != 0)
                 {
-                    var l2 = l.PurchaseReturns.Where(x => x.TransactionType.Type == "Credit" && x.PRDate <= dt).GroupBy(x => x.Ledger.LedgerName);
+                    var l2 = l.PurchaseReturns.Where(x =>  x.PRDate <= dt&& (x.TransactionType.Type == "Credit" || x.TransactionType.Type == "PNT(Payment Next Trip)")).GroupBy(x => x.Ledger.LedgerName);
                     foreach (var l1 in l2)
                     {
 

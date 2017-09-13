@@ -61,7 +61,7 @@ namespace AccountBuddy.SL.Controllers
                     sal.TransactionTypeId = 3;
                 }
                 sal.Narration = PayMode;
-                sal.RefNo = Hubs.ABServerHub.Sales_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+                sal.RefNo = Hubs.ABServerHub.SalesReturn_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
 
                 db.SalesReturns.Add(sal);
                 db.SaveChanges();

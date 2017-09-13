@@ -19,7 +19,6 @@ namespace AccountBuddy.SL.Controllers
             try
             {
                 DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
-
                 dynamic l1 = JsonConvert.DeserializeObject(SaleDetails);
                 DAL.Sale sal = new DAL.Sale();
                 foreach (dynamic d1 in l1)
@@ -124,30 +123,33 @@ namespace AccountBuddy.SL.Controllers
             try
             {
                 DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
-
-                DAL.Journal sal = new DAL.Journal();
-                var CId = db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId;
-                DAL.JournalDetail jd = new DAL.JournalDetail()
+                DAL.Journal Jn = new DAL.Journal();
+                if (Amount != 0)
                 {
-                    LedgerId = Hubs.ABServerHub.LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
-                    DrAmt = Amount,
-                    Particulars = "Mobile App Receipt"
-                };
-                sal.JournalDetails.Add(jd);
-                jd = new DAL.JournalDetail()
-                {
-                    LedgerId = LedgerId,
-                    CrAmt = Amount,
-                    Particulars = "Mobile App Receipt"
+                    var CId = db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId;
+                    DAL.JournalDetail jd = new DAL.JournalDetail()
+                    {
+                        LedgerId = Hubs.ABServerHub.LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
+                        DrAmt = Amount,
+                        Particulars = "Mobile App Receipt"
+                    };
+                    Jn.JournalDetails.Add(jd);
+                    jd = new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerId,
+                        CrAmt = Amount,
+                        Particulars = "Mobile App Receipt"
 
-                };
-                sal.JournalDetails.Add(jd);
+                    };
+                    Jn.JournalDetails.Add(jd);
 
-                sal.JournalDate = DateTime.Now;
-                sal.RefCode = Hubs.ABServerHub.Journal_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+                    Jn.JournalDate = DateTime.Now;
+                    Jn.EntryNo = Hubs.ABServerHub.Journal_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+                    db.Journals.Add(Jn);
 
-                db.SaveChanges();
-                return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);
+                    db.SaveChanges();
+                }
+                return Json(new { Id = Jn.Id, HasError = false }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -155,6 +157,45 @@ namespace AccountBuddy.SL.Controllers
             }
         }
 
+        public JsonResult Payment_Save(int LedgerId, decimal Amount, string PayMode)
+        {
+            try
+            {
+                DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
+                DAL.Journal Jn = new DAL.Journal();
+                if (Amount != 0)
+                {
+                    var CId = db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId;
+                    DAL.JournalDetail jd = new DAL.JournalDetail()
+                    {
+                        LedgerId = Hubs.ABServerHub.LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
+                        DrAmt = Amount,
+                        Particulars = "Mobile App Payment"
+                    };
+                    Jn.JournalDetails.Add(jd);
+                    jd = new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerId,
+                        CrAmt = Amount,
+                        Particulars = "Mobile App Payment"
 
+                    };
+                    Jn.JournalDetails.Add(jd);
+
+                    Jn.JournalDate = DateTime.Now;
+                    Jn.EntryNo = Hubs.ABServerHub.Journal_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+                    db.Journals.Add(Jn);
+
+                    db.SaveChanges();
+                }
+                return Json(new { Id = Jn.Id, HasError = false }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Id = 0, HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
+
+
 }
