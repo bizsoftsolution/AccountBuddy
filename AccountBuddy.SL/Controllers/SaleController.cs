@@ -55,9 +55,13 @@ namespace AccountBuddy.SL.Controllers
                 {
                     sal.TransactionTypeId = 2;
                 }
-                else
+                else if (PayMode == "Cheque")
                 {
                     sal.TransactionTypeId = 3;
+                }
+                else
+                {
+                    sal.TransactionTypeId = 4;
                 }
                 sal.RefNo = Hubs.ABServerHub.Sales_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
                 sal.Narration = PayMode;
@@ -115,13 +119,12 @@ namespace AccountBuddy.SL.Controllers
             }
         }
 
-        public JsonResult Receipt_Save(int LedgerId, decimal Amount, string Details, string PayMode)
+        public JsonResult Receipt_Save(int LedgerId, decimal Amount, string PayMode)
         {
             try
             {
                 DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
 
-                dynamic l1 = JsonConvert.DeserializeObject(Details);
                 DAL.Journal sal = new DAL.Journal();
                 var CId = db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId;
                 DAL.JournalDetail jd = new DAL.JournalDetail()

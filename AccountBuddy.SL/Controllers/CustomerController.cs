@@ -42,8 +42,9 @@ namespace AccountBuddy.SL.Controllers
             foreach(var x in l1)
             {
                 led = new BLL.Ledger();
+                led.Id = x.LedgerId;
                 led.LedgerName = x.Ledger.LedgerName;
-               led.AddressLine1 = x.Ledger.AddressLine1;
+                led.AddressLine1 = x.Ledger.AddressLine1;
                 led.AddressLine2 = x.Ledger.AddressLine2;
                 led.CityName = x.Ledger.CityName;
                 led.MobileNo = x.Ledger.MobileNo;
