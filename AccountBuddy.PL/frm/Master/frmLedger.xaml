@@ -193,7 +193,7 @@
                         <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="5 5" Click="btnSave_Click" />
                         <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" Click="btnDelete_Click" />
                         <Button Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" Click="btnClear_Click"/>
-                        <Button Width="80" Height="30" x:Name="Ledger" Content="Ledger" Margin="5 5" Click="Ledger_Click"/>
+                       
                     </StackPanel>
                 </Grid>
                 <!--#endregion-->

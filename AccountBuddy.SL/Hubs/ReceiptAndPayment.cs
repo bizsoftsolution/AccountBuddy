@@ -30,7 +30,7 @@ namespace AccountBuddy.SL.Hubs
                     rp.Ledger = new BLL.Ledger();
                     // pd.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
 
-                    rp.Ledger = LedgerDAL_BLL(pd.Ledger);
+                    rp.Ledger = LedgerDAL_BLL(pd.Payment.Ledger);
                     rp.EId = pd.Payment.Id;
                     rp.EType = 'P';
                     rp.EDate = pd.Payment.PaymentDate;
