@@ -202,8 +202,8 @@ namespace AccountBuddy.PL.frm.Master
         private bool Supplier_Filter(object obj)
         {
             bool RValue = false;
-            var d = obj as BLL.Supplier;
-
+            var d1 = obj as BLL.Supplier;
+            var d = d1.Ledger;
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
                 string strSearch = cbxCase.IsChecked == true ? txtSearch.Text : txtSearch.Text.ToLower();
@@ -212,7 +212,7 @@ namespace AccountBuddy.PL.frm.Master
                 foreach (var p in d.GetType().GetProperties())
                 {
                     if (p.Name.ToLower().Contains("id") ||
-                         p.GetValue(d) == null) continue;
+                         p.GetValue(d) == null||p.PropertyType.Namespace != "System") continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {
