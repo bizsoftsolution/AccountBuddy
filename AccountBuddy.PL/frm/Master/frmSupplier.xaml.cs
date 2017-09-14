@@ -55,9 +55,9 @@ namespace AccountBuddy.PL.frm.Master
 
             rptContain.IsChecked = true;
 
-            cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
-            cmbCreditLimitTypeId.SelectedValuePath = "Id";
-            cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
+            //cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
+            //cmbCreditLimitTypeId.SelectedValuePath = "Id";
+            //cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
 
             cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
 
@@ -260,7 +260,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptSupplier.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Supplier.toList.Where(x => Supplier_Filter(x)).Select(x => new { x.Ledger.LedgerName, x.Ledger.PersonIncharge, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.CreditAmount, x.Ledger.CreditLimit, CreditLimitTypeName = x.Ledger.CreditLimitType.LimitType, x.Ledger.OPCr, x.Ledger.OPDr }).OrderBy(x => x.LedgerName).ToList());
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.Supplier.toList.Where(x => Supplier_Filter(x)).Select(x => new { x.Ledger.LedgerName, x.Ledger.PersonIncharge, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName,x.Ledger.MobileNo, x.Ledger.CreditAmount, x.Ledger.CreditLimit, CreditLimitTypeName = x.Ledger.CreditLimitType.LimitType, x.Ledger.OPCr, x.Ledger.OPDr }).OrderBy(x => x.LedgerName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptSupplier.LocalReport.DataSources.Add(data);
                 rptSupplier.LocalReport.DataSources.Add(data1);
@@ -312,11 +312,12 @@ namespace AccountBuddy.PL.frm.Master
 
         private void txtCreditAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtCreditAmount.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+            //    TextBox textBox = sender as TextBox;
+            //    Int32 selectionStart = textBox.SelectionStart;
+            //    Int32 selectionLength = textBox.SelectionLength;
+            //    textBox.Text = AppLib.NumericOnly(txtCreditAmount.Text);
+            //    textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+            //}
         }
 
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
