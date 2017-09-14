@@ -207,26 +207,51 @@ namespace AccountBuddy.PL.frm.Master
         private bool Bank_Filter(object obj)
         {
             bool RValue = false;
-            var d = obj as BLL.Bank;
+            
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
                 string strSearch = cbxCase.IsChecked == true ? txtSearch.Text : txtSearch.Text.ToLower();
                 string strValue = "";
 
+                var d1 = obj as BLL.Bank;
+
+                foreach (var p in d1.GetType().GetProperties())
+                {
+                    if (p.Name.ToLower().Contains("id") ||
+                        p.GetValue(d1) == null ||
+                        p.PropertyType.Namespace != "System"                            
+                            ) continue;
+                    strValue = p.GetValue(d1).ToString();
+                    if (cbxCase.IsChecked == false)
+                    {
+                        strValue = strValue.ToLower();
+                    }
+                    if (rptStartWith.IsChecked == true && strValue.StartsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptContain.IsChecked == true && strValue.Contains(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptEndWith.IsChecked == true && strValue.EndsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                }
+
+                var d = d1.Ledger;
+
                 foreach (var p in d.GetType().GetProperties())
                 {
                     if (p.Name.ToLower().Contains("id") ||
                         p.GetValue(d) == null ||
-                           (p.Name != nameof(data.Ledger.LedgerName) &&
-                               p.Name != nameof(data.Ledger.PersonIncharge) &&
-                               p.Name != nameof(data.Ledger.AddressLine1) &&
-                               p.Name != nameof(data.Ledger.AddressLine2) &&
-                               p.Name != nameof(data.Ledger.OPCr) &&
-                               p.Name != nameof(data.Ledger.OPDr)
-
-
-                            )) continue;
+                        p.PropertyType.Namespace != "System"
+                            ) continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {

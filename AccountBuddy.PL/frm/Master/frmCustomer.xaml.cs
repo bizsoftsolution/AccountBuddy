@@ -212,11 +212,14 @@ namespace AccountBuddy.PL.frm.Master
                 string strSearch = cbxCase.IsChecked == true ? txtSearch.Text : txtSearch.Text.ToLower();
                 string strValue = "";
 
-                foreach (var p in d.GetType().GetProperties())
+                foreach (var p in d.Ledger.GetType().GetProperties())
                 {
-                    if (p.Name.ToLower().Contains("id") ||
-                         p.GetValue(d) == null 
-                         //||
+                    try
+                    {
+                        if (p.Name.ToLower().Contains("id") ||
+                         p.GetValue(d.Ledger) == null ||                          
+                         p.PropertyType.Namespace != "System"
+                            //||
                             //(p.Name != nameof(d.Ledger.LedgerName) &&
                             //    p.Name != nameof(d.Ledger.PersonIncharge) &&
                             //    p.Name != nameof(d.Ledger.AddressLine1) &&
@@ -227,26 +230,29 @@ namespace AccountBuddy.PL.frm.Master
 
                             // 
                             ) continue;
-                    strValue = p.GetValue(d).ToString();
-                    if (cbxCase.IsChecked == false)
-                    {
-                        strValue = strValue.ToLower();
+                        strValue = p.GetValue(d.Ledger).ToString();
+                        if (cbxCase.IsChecked == false)
+                        {
+                            strValue = strValue.ToLower();
+                        }
+                        if (rptStartWith.IsChecked == true && strValue.StartsWith(strSearch))
+                        {
+                            RValue = true;
+                            break;
+                        }
+                        else if (rptContain.IsChecked == true && strValue.Contains(strSearch))
+                        {
+                            RValue = true;
+                            break;
+                        }
+                        else if (rptEndWith.IsChecked == true && strValue.EndsWith(strSearch))
+                        {
+                            RValue = true;
+                            break;
+                        }
                     }
-                    if (rptStartWith.IsChecked == true && strValue.StartsWith(strSearch))
-                    {
-                        RValue = true;
-                        break;
-                    }
-                    else if (rptContain.IsChecked == true && strValue.Contains(strSearch))
-                    {
-                        RValue = true;
-                        break;
-                    }
-                    else if (rptEndWith.IsChecked == true && strValue.EndsWith(strSearch))
-                    {
-                        RValue = true;
-                        break;
-                    }
+                    catch(Exception ex) { }
+                    
                 }
             }
             else
