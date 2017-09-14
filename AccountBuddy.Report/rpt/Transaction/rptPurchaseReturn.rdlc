@@ -1570,7 +1570,7 @@
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>1.89585in</Top>
               <Height>0.25in</Height>
-              <Width>1.41667in</Width>
+              <Width>1.48959in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1626,8 +1626,8 @@
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>1.62154in</Top>
               <Left>0.05556in</Left>
-              <Height>0.21181in</Height>
-              <Width>1.40278in</Width>
+              <Height>0.26389in</Height>
+              <Width>1.44445in</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
@@ -1681,8 +1681,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ItemAmount</rd:DefaultName>
-              <Top>0.04862in</Top>
-              <Left>1.52779in</Left>
+              <Top>0.0382in</Top>
+              <Left>1.51737in</Left>
               <Height>0.25in</Height>
               <Width>1.03819in</Width>
               <ZIndex>8</ZIndex>
@@ -1716,8 +1716,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>DiscountAmount</rd:DefaultName>
-              <Top>0.38195in</Top>
-              <Left>1.54168in</Left>
+              <Top>0.37153in</Top>
+              <Left>1.53126in</Left>
               <Height>0.25in</Height>
               <Width>1.03819in</Width>
               <ZIndex>9</ZIndex>
@@ -1845,8 +1845,8 @@
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.68751in</Top>
               <Left>0.05556in</Left>
-              <Height>0.25in</Height>
-              <Width>1.38889in</Width>
+              <Height>0.27777in</Height>
+              <Width>1.43751in</Width>
               <ZIndex>14</ZIndex>
               <Style>
                 <Border>
@@ -1878,10 +1878,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.0764in</Top>
+              <Top>1.03473in</Top>
               <Left>0.05556in</Left>
-              <Height>0.21181in</Height>
-              <Width>1.40278in</Width>
+              <Height>0.25in</Height>
+              <Width>1.43403in</Width>
               <ZIndex>15</ZIndex>
               <Style>
                 <Border>
@@ -1926,8 +1926,8 @@
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>1.35417in</Top>
               <Left>0.05556in</Left>
-              <Height>0.21181in</Height>
-              <Width>1.40278in</Width>
+              <Height>0.23959in</Height>
+              <Width>1.44444in</Width>
               <ZIndex>17</ZIndex>
               <Style>
                 <Border>
@@ -1953,12 +1953,14 @@
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>CGSTAmount</rd:DefaultName>
-              <Top>0.7014in</Top>
-              <Left>1.52779in</Left>
+              <Top>0.69098in</Top>
+              <Left>1.51737in</Left>
               <Height>0.25in</Height>
               <Width>1in</Width>
               <ZIndex>18</ZIndex>
@@ -1981,17 +1983,19 @@
                     <TextRun>
                       <Value>=Sum(Fields!SGSTAmount.Value, "PurchaseReturn")</Value>
                       <Style>
-                        <FontSize>8pt</FontSize>
+                        <FontSize>9pt</FontSize>
                         <Format>0.00;(0.00)</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>SGSTAmount</rd:DefaultName>
-              <Top>1.02084in</Top>
-              <Left>1.52778in</Left>
+              <Top>1.01042in</Top>
+              <Left>1.51736in</Left>
               <Height>0.25in</Height>
               <Width>1in</Width>
               <ZIndex>19</ZIndex>
@@ -2014,11 +2018,14 @@
                     <TextRun>
                       <Value>=Sum(Fields!IGSTAmount.Value, "PurchaseReturn")</Value>
                       <Style>
+                        <FontSize>9pt</FontSize>
                         <Format>0.00;(0.00)</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>IGSTAmount</rd:DefaultName>
