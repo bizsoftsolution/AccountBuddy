@@ -48,6 +48,10 @@ namespace AccountBuddy.BLL
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
         private bool _IsEnabled;
+        private int? _StateId;
+        private StateDetail _State;
+        private string _StateCode;
+        private string _StateName;
 
         #endregion
 
@@ -342,6 +346,71 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public int? StateId
+        {
+            get
+            {
+                return _StateId;
+            }
+            set
+            {
+                if (_StateId != value)
+                {
+                    _StateId = value;
+                    NotifyPropertyChanged(nameof(StateId));
+                }
+            }
+        }
+        public StateDetail State
+        {
+            get
+            {
+                return _State;
+            }
+            set
+            {
+                if (_State != value)
+                {
+                    _State = value;
+                    NotifyPropertyChanged(nameof(State));
+
+                }
+
+            }
+        }
+        public string StateCode
+        {
+            get
+            {
+                return _StateCode;
+            }
+
+            set
+            {
+                if (_StateCode != value)
+                {
+                    _StateCode = value;
+                    NotifyPropertyChanged(nameof(StateCode));
+                }
+            }
+        }
+        public string StateName
+        {
+            get
+            {
+                return _StateName;
+            }
+            set
+            {
+                if (_StateName != value)
+                {
+                    _StateName = value;
+                    NotifyPropertyChanged(nameof(StateName));
+
+                }
+
+            }
+        }
         public string TelephoneNo
         {
             get
@@ -600,6 +669,7 @@ namespace AccountBuddy.BLL
         {
             new Ledger().toCopy<Ledger>(this);
             NotifyAllPropertyChanged();
+           
         }
 
         public bool Find(int pk)
@@ -664,17 +734,7 @@ namespace AccountBuddy.BLL
 
             }
         }
-        public void SetLedger()
-        {
-            try
-            {
-                FMCGHubClient.FMCGHub.Invoke<int>("Existing_Ledger");
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
+       
 
 
         #endregion
