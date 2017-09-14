@@ -64,6 +64,9 @@ namespace AccountBuddy.PL.frm.Master
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
+            cmbState.ItemsSource = BLL.StateDetail.toList;
+            cmbState.DisplayMemberPath = "StateName";
+            cmbState.SelectedValuePath = "Id";
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -212,16 +215,18 @@ namespace AccountBuddy.PL.frm.Master
                 foreach (var p in d.GetType().GetProperties())
                 {
                     if (p.Name.ToLower().Contains("id") ||
-                         p.GetValue(d) == null ||
-                            (p.Name != nameof(d.Ledger.LedgerName) &&
-                                p.Name != nameof(d.Ledger.PersonIncharge) &&
-                                p.Name != nameof(d.Ledger.AddressLine1)&&
-                                p.Name!=nameof(d.Ledger.AddressLine2)&&
-                                p.Name!=nameof(d.Ledger.OPCr)&&
-                                p.Name!=nameof(d.Ledger.OPDr)
+                         p.GetValue(d) == null 
+                         //||
+                            //(p.Name != nameof(d.Ledger.LedgerName) &&
+                            //    p.Name != nameof(d.Ledger.PersonIncharge) &&
+                            //    p.Name != nameof(d.Ledger.AddressLine1) &&
+                            //    p.Name != nameof(d.Ledger.AddressLine2) &&
+                            //    p.Name != nameof(d.Ledger.OPCr) &&
+                            //    p.Name != nameof(d.Ledger.OPDr)
 
 
-                             )) continue;
+                            // 
+                            ) continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {
@@ -266,7 +271,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptCustomer.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Customer.toList.Where(x => Customer_Filter(x)).Select(x => new { x.Ledger.LedgerName, x.Ledger.PersonIncharge, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.CreditAmount, x.Ledger.CreditLimit, CreditLimitTypeName = x.Ledger.CreditLimitType.LimitType, x.Ledger.OPCr, x.Ledger.OPDr }).OrderBy(x => x.LedgerName).ToList());
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.Customer.toList.Where(x => Customer_Filter(x)).Select(x => new { x.Ledger.LedgerName, x.Ledger.PersonIncharge, x.Ledger.AddressLine1, x.Ledger.AddressLine2,x.Ledger.MobileNo, x.Ledger.CityName, x.Ledger.CreditAmount, x.Ledger.CreditLimit, CreditLimitTypeName = x.Ledger.CreditLimitType.LimitType, x.Ledger.OPCr, x.Ledger.OPDr }).OrderBy(x => x.LedgerName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptCustomer.LocalReport.DataSources.Add(data);
                 rptCustomer.LocalReport.DataSources.Add(data1);
@@ -313,14 +318,14 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-        //private void txtCreditAmount_TextChanged(object sender, TextChangedEventArgs e)
-        //{
+        private void txtCreditAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
         //    TextBox textBox = sender as TextBox;
         //    Int32 selectionStart = textBox.SelectionStart;
         //    Int32 selectionLength = textBox.SelectionLength;
         //    textBox.Text = AppLib.NumericOnly(txtCreditAmount.Text);
         //    textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-        //}
+        }
 
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
         {

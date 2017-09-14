@@ -192,6 +192,9 @@
     <Compile Include="Staff.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="StateDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="StockGroup.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
@@ -250,7 +253,7 @@
     <None Include="DBFMCGModel.edmx.diagram">
       <DependentUpon>DBFMCGModel.edmx</DependentUpon>
     </None>
-    <None Include="DB\DBFMCG_210717.bak" />
+    <None Include="DB\DBLakshmiSilks_0809.bak" />
     <None Include="FMCG.xsc">
       <DependentUpon>FMCG.xsd</DependentUpon>
     </None>

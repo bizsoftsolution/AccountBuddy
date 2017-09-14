@@ -43,6 +43,7 @@ namespace AccountBuddy.DAL
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string CityName { get; set; }
+        public Nullable<int> StateId { get; set; }
         public string TelephoneNo { get; set; }
         public string MobileNo { get; set; }
         public string EMailId { get; set; }
@@ -65,6 +66,7 @@ namespace AccountBuddy.DAL
         public virtual ICollection<JobWorker> JobWorkers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JournalDetail> JournalDetails { get; set; }
+        public virtual StateDetail StateDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -21,7 +21,7 @@
     <Grid>
         <Grid >
 
-           
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
@@ -77,24 +77,16 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Item Name" FontWeight="Bold" Width="250" Binding="{Binding ProductName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                 <DataGridTextColumn Header="Available"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding AvailableStock, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Sales Order"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SOQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Purchase Order"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding POQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
 
                                 <DataGridTextColumn Header="Opening"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding OpeningStock, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 <DataGridTextColumn Header="Purchase"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding PQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 <DataGridTextColumn Header="Sale Return"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SRQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 <DataGridTextColumn Header="Sales"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 <DataGridTextColumn Header="Purchase Return"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding PRQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock Inward"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SInQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock Outward"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SOutQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Job Order Issued"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding JOQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Job Order Received"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding JRQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock In Process"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SPQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock Separated"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SSQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
-                           <Grid Grid.Row="2" Margin="0,0,10,110">
+                    <Grid Grid.Row="2" Margin="0,0,10,110">
                         <StackPanel Orientation="Horizontal" Margin="350,30,255,28" VerticalAlignment="Center">
 
                             <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">

@@ -8,195 +8,198 @@
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="1200" Background="White" Loaded="UserControl_Loaded">
-    <Grid Height="650" VerticalAlignment="Top">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
-            <RowDefinition Height="{DynamicResource FormBodyHeight}"/>
-        </Grid.RowDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
-        <!--#region Form Head -->
-        <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}" Height="25" VerticalAlignment="Bottom">
-            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Products"/></TextBlock>
-        </Grid>
-        <!--#endregion-->
-        <!--#region Form Body-->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <!--#region Form Left-->
-            <Grid Grid.Column="0" Margin="10,20,10,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="70"/>
-                </Grid.RowDefinitions>
-                <!--#endregion-->
-                <!--#region Form Design-->
-                <Grid Grid.Row="0" Margin="10,50,0,0"  >
-
-                    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,10,0,-10">
-                        <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Width="365" >
-                            <TextBox Margin="10,0,10,0" MaxLength="150" x:Name="txtProductName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding ProductName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="350">
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-
-                                        <TextBlock Text="Product Name" />
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </TextBox>
-                            <TextBox   x:Name="txtItemCode" MaxLength="50" Margin="10,0,10,0" Width="350" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Left"  FontWeight="Bold" FontSize="14" Text="{Binding ItemCode, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"   >
-                                <materialDesign:HintAssist.Hint>
-                                    <StackPanel Orientation="Horizontal" Width="151">
-                                        <materialDesign:PackIcon  Kind="Barcode" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                        <TextBlock Text="Item Code" />
-                                    </StackPanel>
-                                </materialDesign:HintAssist.Hint>
-                            </TextBox>
-                           
-                            <StackPanel Orientation="Horizontal" Margin="0,0,10,10">
-                                <TextBox  Width="150"  x:Name="txtSellingRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtSellingRate_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding SellingRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal" Width="150">
-                                            <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                            <TextBlock Text="Selling Rate" />
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,10,10">
-                                <TextBox  Width="150"  x:Name="txtPurchaseRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtPurchaseRate_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding PurchaseRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal" Width="150">
-                                            <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                            <TextBlock Text="Purchase Rate" />
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal"  Margin="0,0,10,10" Width="373">
-                                <TextBox  Width="150"  x:Name="txtMRP" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtMRP_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding MRP, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10,10,10,10">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel Orientation="Horizontal" Width="151">
-                                            <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                            <TextBlock Text="MRP" />
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </TextBox>
-                            </StackPanel>
-                        </StackPanel>
-                    </ScrollViewer>
-                </Grid>
-                <!--#endregion-->
-
-                <!--#region Buttons-->
-                <Grid Grid.Row="1">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="5 5" Click="btnSave_Click" />
-                        <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" Click="btnDelete_Click" />
-                        <Button Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" Click="btnClear_Click"/>
-                    </StackPanel>
-                </Grid>
-                <!--#endregion-->
-
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid Height="650" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{DynamicResource FormHeadHeight}"/>
+                <RowDefinition Height="{DynamicResource FormBodyHeight}"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
+            <!--#region Form Head -->
+            <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}" Height="25" VerticalAlignment="Bottom">
+                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Products"/></TextBlock>
             </Grid>
             <!--#endregion-->
-            <!--#region Form Right-->
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="110"/>
-                    <RowDefinition Height="565"/>
-                </Grid.RowDefinitions>
-                <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="625" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1">
-                    <TabControl.Resources>
-                        <Style TargetType="TabItem">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="TabItem">
-                                        <Grid Name="Panel">
-                                            <ContentPresenter x:Name="ContentSite"
+            <!--#region Form Body-->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--#region Form Left-->
+                <Grid Grid.Column="0" Margin="10,20,10,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="70"/>
+                    </Grid.RowDefinitions>
+                    <!--#endregion-->
+                    <!--#region Form Design-->
+                    <Grid Grid.Row="0" Margin="10,50,0,0"  >
+
+                        <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,10,0,-10">
+                            <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Width="365" >
+                                <TextBox Margin="10,0,10,0" MaxLength="150" x:Name="txtProductName" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding ProductName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="350">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+
+                                            <TextBlock Text="Product Name" />
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                               
+
+                                <StackPanel Orientation="Horizontal" Margin="0,0,10,10">
+                                    <TextBox  Width="150"  x:Name="txtSellingRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtSellingRate_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding SellingRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Width="150">
+                                                <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                                <TextBlock Text="Selling Rate" />
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,10,10">
+                                    <TextBox  Width="150"  x:Name="txtPurchaseRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtPurchaseRate_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding PurchaseRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Width="150">
+                                                <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                                <TextBlock Text="Purchase Rate" />
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox  Width="150"  x:Name="txtReorderLevel" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtReorderLevel_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding ReOrderLevel, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Width="150">
+                                                <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                                <TextBlock Text="Re-Order Level" />
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+                                    <TextBox  Width="150"  x:Name="txtOpeningStock" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtOpeningStock_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding OpeningStock, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Width="150">
+                                                <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                                <TextBlock Text="Opening Stock" />
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                    <!--#endregion-->
+
+                    <!--#region Buttons-->
+                    <Grid Grid.Row="1">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="5 5" Click="btnSave_Click" />
+                            <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" Click="btnDelete_Click" />
+                            <Button Width="80" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" Click="btnClear_Click"/>
+                        </StackPanel>
+                    </Grid>
+                    <!--#endregion-->
+
+                </Grid>
+                <!--#endregion-->
+                <!--#region Form Right-->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="565"/>
+                    </Grid.RowDefinitions>
+                    <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto"  RenderTransformOrigin="0.5,0.5" Height="625" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1">
+                        <TabControl.Resources>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TabItem">
+                                            <Grid Name="Panel">
+                                                <ContentPresenter x:Name="ContentSite"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
                                         ContentSource="Header"
                                         Margin="10,2"/>
-                                        </Grid>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter TargetName="Panel" Property="Background" Value="Brown" />
-                                            </Trigger>
-                                            <Trigger Property="IsSelected" Value="False">
-                                                <Setter TargetName="Panel" Property="Background" Value="white" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </TabControl.Resources>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Panel" Property="Background" Value="Gray" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="False">
+                                                    <Setter TargetName="Panel" Property="Background" Value="white" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TabControl.Resources>
 
-                    <TabItem Header="Details" FontSize="16" >
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="100"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" >
-                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10">
-                                    <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
-                                        <materialDesign:HintAssist.Hint>
-                                            <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                                <TextBlock Text="Search Text" FontWeight="Bold"/>
-                                            </StackPanel>
-                                        </materialDesign:HintAssist.Hint>
-                                    </TextBox>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                        <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5" />
-                                        <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  Margin="5"/>
-                                        <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" Margin="5" />
-                                        <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" Margin="5"/>
+                        <TabItem Header="Details" FontSize="16" >
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="100"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" >
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10">
+                                        <TextBox Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
+                                            <materialDesign:HintAssist.Hint>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                    <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </materialDesign:HintAssist.Hint>
+                                        </TextBox>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5" />
+                                            <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  Margin="5"/>
+                                            <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" Margin="5" />
+                                            <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" Margin="5"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <DataGrid x:Name="dgvProduct" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="25" SelectionChanged="dgvProduct_SelectionChanged" MouseDoubleClick="dgvProduct_MouseDoubleClick" >
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGrid.ColumnHeaderStyle>
+
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Product Name" FontWeight="Bold" Width="250" Binding="{Binding ProductName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Purchase Rate" FontWeight="Bold" Width="100" Binding="{Binding PurchaseRate,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Selling Rate" FontWeight="Bold" Width="100" Binding="{Binding SellingRate,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Opening Stock" FontWeight="Bold" Width="100" Binding="{Binding OpeningStock,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Re-Order Level" FontWeight="Bold" Width="100" Binding="{Binding ReOrderLevel,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                </Grid>
+
                             </Grid>
-                            <Grid Grid.Row="1">
-                                <DataGrid x:Name="dgvProduct" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="20" Grid.ColumnSpan="2" SelectionChanged="dgvProduct_SelectionChanged" MouseDoubleClick="dgvProduct_MouseDoubleClick" >
-                                    <DataGrid.ColumnHeaderStyle>
-                                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                                            <Setter Property="FontWeight" Value="Bold" />
-                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                        </Style>
-                                    </DataGrid.ColumnHeaderStyle>
 
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Product Name" FontWeight="Bold" Width="250" Binding="{Binding ProductName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Item Code" FontWeight="Bold" Width="250" Binding="{Binding ItemCode}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Purchase Rate" FontWeight="Bold" Width="100" Binding="{Binding PurchaseRate}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Selling Rate" FontWeight="Bold" Width="100" Binding="{Binding SellingRate}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="MRP" FontWeight="Bold" Width="100" Binding="{Binding MRP}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                        </TabItem>
+                        <TabItem Header="Report" FontSize="16">
+                            <Grid Grid.Row="0" Margin="0,0,4,-14">
+                                <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="550"  Margin="20">
+                                    <rv:ReportViewer x:Name="rptProduct"/>
+                                </WindowsFormsHost>
 
                             </Grid>
+                        </TabItem>
 
-                        </Grid>
+                    </TabControl>
+                </Grid>
+                <!--#endregion-->
 
-                    </TabItem>
-                    <TabItem Header="Report" FontSize="16">
-                        <Grid Grid.Row="0" Margin="0,0,4,-14">
-                            <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="550"  Margin="20">
-                                <rv:ReportViewer x:Name="rptProduct"/>
-                            </WindowsFormsHost>
-
-                        </Grid>
-                    </TabItem>
-                  
-                </TabControl>
             </Grid>
             <!--#endregion-->
 
         </Grid>
-        <!--#endregion-->
-
-    </Grid>
+    </ScrollViewer>
 </UserControl>

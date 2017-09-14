@@ -15,7 +15,10 @@ namespace AccountBuddy.SL.Hubs
 
         BLL.CompanyDetail CompanyDetailDAL_BLL(DAL.CompanyDetail d)
         {
-            return d.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+            BLL.CompanyDetail b = d.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+            b.State = d.StateDetail == null ? new BLL.StateDetail() : d.StateDetail.toCopy<BLL.StateDetail>(new BLL.StateDetail());
+            return b;
+           
         }
 
         public List<string> CompanyDetail_AcYearList()

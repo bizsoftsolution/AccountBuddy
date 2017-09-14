@@ -28,14 +28,20 @@ namespace AccountBuddy.DAL
     
         public int Id { get; set; }
         public string CompanyName { get; set; }
+        public string Title1 { get; set; }
+        public string Title2 { get; set; }
+        public string ContactPerson { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string CityName { get; set; }
+        public Nullable<int> StateId { get; set; }
         public string PostalCode { get; set; }
         public string TelephoneNo { get; set; }
         public string MobileNo { get; set; }
         public string EMailId { get; set; }
         public string GSTNo { get; set; }
+        public byte[] Banner1 { get; set; }
+        public byte[] Banner2 { get; set; }
         public byte[] Logo { get; set; }
         public bool IsActive { get; set; }
         public Nullable<int> UnderCompanyId { get; set; }
@@ -43,12 +49,14 @@ namespace AccountBuddy.DAL
         public Nullable<decimal> CGSTAmount { get; set; }
         public Nullable<decimal> SGSTAmount { get; set; }
         public Nullable<decimal> IGSTAmount { get; set; }
+        public Nullable<bool> VoucherWaterMark { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountGroup> AccountGroups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CompanyDetail> CompanyDetail1 { get; set; }
         public virtual CompanyDetail CompanyDetail2 { get; set; }
+        public virtual StateDetail StateDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomFormat> CustomFormats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

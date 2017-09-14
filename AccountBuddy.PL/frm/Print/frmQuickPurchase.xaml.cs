@@ -44,24 +44,28 @@ namespace AccountBuddy.PL.frm.Print
                 PODList.AddRange(data.PDetails);
                 DataTable dt = GetDetails(data);
                 CList.Add(BLL.UserAccount.User.UserType.Company);
-                
+                var b = BLL.CompanyDetail.toList.Select(x => new BLL.CompanyDetail() { CompanyName = x.CompanyName, Title1 = x.Title1, Title2 = x.Title2, ContactPerson = x.ContactPerson, AddressLine1 = x.AddressLine1, AddressLine2 = x.AddressLine2, CityName = x.CityName, StateName = x.State.StateName, GSTNo = x.GSTNo, Banner1 = x.Banner1, Banner2 = x.Banner2, Logo = x.Logo, MobileNo = x.MobileNo, TelephoneNo = x.TelephoneNo, PostalCode = x.PostalCode }).ToList();
+                var l = BLL.Ledger.toList.Where(x => x.Id == data.LedgerId).Select(x => new BLL.Ledger() { LedgerName = x.LedgerName, StateName = x.State == null ? null : x.State.StateName, StateCode = x.State == null ? null : x.State.TINNo, CityName = x.CityName, AccountGroup = x.AccountGroup }).ToList();
+
                 rptQuickPurchase.Reset();
                 ReportDataSource data1 = new ReportDataSource("Purchase", POList);
                 ReportDataSource data2 = new ReportDataSource("PurchaseDetail", dt);
-                ReportDataSource data3 = new ReportDataSource("CompanyDetail", CList);
-                ReportDataSource data4 = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x=>x.Id==data.LedgerId).ToList());
-                ReportDataSource data5 = new ReportDataSource("Sale", slist);
-
+                ReportDataSource data3 = new ReportDataSource("CompanyDetail", b);
+                ReportDataSource data4 = new ReportDataSource("Ledger", l);
+             
 
                 rptQuickPurchase.LocalReport.DataSources.Add(data1);
                 rptQuickPurchase.LocalReport.DataSources.Add(data2);
                 rptQuickPurchase.LocalReport.DataSources.Add(data3);
                 rptQuickPurchase.LocalReport.DataSources.Add(data4);
-                rptQuickPurchase.LocalReport.DataSources.Add(data5);
                 rptQuickPurchase.LocalReport.ReportPath = @"rpt\Transaction\rptPurchase.rdlc";
 
-                ReportParameter[] rp = new ReportParameter[1];
+                ReportParameter[] rp = new ReportParameter[5];
                 rp[0] = new ReportParameter("PurchaseType", data.TransactionType);
+                rp[1] = new ReportParameter("IGST", Common.AppLib.IGSTPer.ToString());
+                rp[2] = new ReportParameter("SGST", Common.AppLib.SGSTPer.ToString());
+                rp[3] = new ReportParameter("CGST", Common.AppLib.CGSTPer.ToString());
+                rp[4] = new ReportParameter("CompanyName", BLL.UserAccount.User.UserType.Company.CompanyName);
                 rptQuickPurchase.LocalReport.SetParameters(rp);
                 
                 rptQuickPurchase.RefreshReport();

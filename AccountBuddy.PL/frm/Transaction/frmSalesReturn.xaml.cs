@@ -37,7 +37,7 @@ namespace AccountBuddy.PL.frm.Transaction
             onClientEvents();
 
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            //lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
         }
         private void onClientEvents()
         {
@@ -61,11 +61,11 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            else if (min > data.SRDetail.UnitPrice || max < data.SRDetail.UnitPrice)
-            {
-                MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
-                txtRate.Focus();
-            }
+            //else if (min > data.SRDetail.UnitPrice || max < data.SRDetail.UnitPrice)
+            //{
+            //    MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+            //    txtRate.Focus();
+            //}
             else
             {
                 data.SaveDetail();
@@ -165,17 +165,20 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
+            //var rv = data.Find();
+            //if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            //if (data.Id != 0)
+            //{
+            //    btnPrint.IsEnabled = true;
+            //}
+            //if (data.RefCode != null)
+            //{
+            //    btnSave.IsEnabled = true;
+            //    btnDelete.IsEnabled = true;
+            //}
+            SalesReturnSearch frm = new SalesReturnSearch();
+            frm.ShowDialog();
+            frm.Close();
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -201,11 +204,11 @@ namespace AccountBuddy.PL.frm.Transaction
                     MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                     cmbItem.Focus();
                 }
-                else if (min > data.SRDetail.UnitPrice || max < data.SRDetail.UnitPrice)
-                {
-                    MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
-                    txtRate.Focus();
-                }
+                //else if (min > data.SRDetail.UnitPrice || max < data.SRDetail.UnitPrice)
+                //{
+                //    MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                //    txtRate.Focus();
+                //}
                 else
                 {
                     data.SaveDetail();
@@ -219,7 +222,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList(); ;
+            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key ).ToList(); ;
             cmbCustomer.DisplayMemberPath = "LedgerName";
             cmbCustomer.SelectedValuePath = "Id";
 
@@ -230,16 +233,13 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbItem.ItemsSource = BLL.Product.toList.Where(x => x.StockGroup.IsSale != false).ToList();
             cmbItem.DisplayMemberPath = "ProductName";
             cmbItem.SelectedValuePath = "Id";
-
-
         }
 
         private void cmbUOM_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbUOM.ItemsSource = BLL.UOM.toList;
-            cmbUOM.DisplayMemberPath = "Symbol";
-            cmbUOM.SelectedValuePath = "Id";
-
+            //cmbUOM.ItemsSource = BLL.UOM.toList;
+            //cmbUOM.DisplayMemberPath = "Symbol";
+            //cmbUOM.SelectedValuePath = "Id";
         }
 
         #endregion
@@ -252,7 +252,6 @@ namespace AccountBuddy.PL.frm.Transaction
             Int32 selectionLength = textBox.SelectionLength;
             textBox.Text = AppLib.NumericOnly(txtDiscountAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
         }
 
         private void txtExtraAmount_TextChanged(object sender, TextChangedEventArgs e)
@@ -260,9 +259,8 @@ namespace AccountBuddy.PL.frm.Transaction
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtExtraAmount.Text);
+           // textBox.Text = AppLib.NumericOnly(txtExtraAmount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
         }
 
         private void txtDiscount_TextChanged(object sender, TextChangedEventArgs e)
@@ -270,9 +268,8 @@ namespace AccountBuddy.PL.frm.Transaction
             TextBox textBox = sender as TextBox;
             Int32 selectionStart = textBox.SelectionStart;
             Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtDiscount.Text);
+          //  textBox.Text = AppLib.NumericOnly(txtDiscount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
         }
 
         private void txtQty_TextChanged(object sender, TextChangedEventArgs e)
@@ -282,7 +279,6 @@ namespace AccountBuddy.PL.frm.Transaction
             Int32 selectionLength = textBox.SelectionLength;
             textBox.Text = AppLib.NumericOnly(txtQty.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
         }
 
         private void txtRate_TextChanged(object sender, TextChangedEventArgs e)
@@ -292,7 +288,6 @@ namespace AccountBuddy.PL.frm.Transaction
             Int32 selectionLength = textBox.SelectionLength;
             textBox.Text = AppLib.NumericOnly(txtRate.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
-
         }
 
         #endregion
@@ -300,7 +295,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+           // lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
         }
     }
 }

@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="600">
+             d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="Images/lakshmi silks home screen .png" Stretch="None"/>
+            <ImageBrush ImageSource="Images/lakshmi silks home screen .png" Stretch="Fill"/>
         </Grid.Background>
 
     </Grid>

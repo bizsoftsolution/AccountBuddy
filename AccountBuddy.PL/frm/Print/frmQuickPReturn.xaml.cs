@@ -65,7 +65,7 @@ namespace AccountBuddy.PL.frm.Print
 
         public DataTable GetDetails(BLL.PurchaseReturn data)
         {
-            int NoRecPerPage = 12;
+            int NoRecPerPage = 10;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);

@@ -33,9 +33,9 @@ namespace AccountBuddy.DAL
         public decimal TotalAmount { get; set; }
         public string Narration { get; set; }
     
-        public virtual Ledger Ledger { get; set; }
         public virtual TransactionType TransactionType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
+        public virtual Ledger Ledger { get; set; }
     }
 }
