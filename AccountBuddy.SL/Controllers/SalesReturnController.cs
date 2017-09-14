@@ -56,9 +56,13 @@ namespace AccountBuddy.SL.Controllers
                 {
                     sal.TransactionTypeId = 2;
                 }
-                else
+                else if (PayMode == "Cheque")
                 {
                     sal.TransactionTypeId = 3;
+                }
+                else
+                {
+                    sal.TransactionTypeId = 2;
                 }
                 sal.Narration = PayMode;
                 sal.RefNo = Hubs.ABServerHub.SalesReturn_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
