@@ -71,20 +71,16 @@ namespace AccountBuddy.PL
             {
 
                 string cName = BLL.CompanyDetail.toList.Where(x => x.IsActive == true).Select(x => x.CompanyName).FirstOrDefault();
-                string RValue = BLL.UserAccount.Login("",cName , txtLoginId.Text, txtPassword.Password);
+                string RValue = BLL.UserAccount.Login("", cName, txtLoginId.Text, txtPassword.Password);
 
                 if (RValue == "")
                 {
-                  
-                        App.frmHome = new frmHome();
-                        App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
-                        this.Hide();
-                        App.frmHome.ShowDialog();
-                        ClearForm();
-                        this.Show();
-                    
-
-
+                    App.frmHome = new frmHome();
+                    App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
+                    this.Hide();
+                    App.frmHome.ShowDialog();
+                    ClearForm();
+                    this.Show();
                 }
                 else
                 {
@@ -138,6 +134,7 @@ namespace AccountBuddy.PL
             if (MessageBox.Show("Are you sure to Exit?", "Exit", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
             {
                 e.Cancel = true;
+                Environment.Exit(0);
             }
         }
 

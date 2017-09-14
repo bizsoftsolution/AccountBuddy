@@ -129,7 +129,7 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="300"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="dgvDetails" Grid.Column="0" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding PRDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,16,104" >
+                    <DataGrid x:Name="dgvDetails" Grid.Column="0" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding PRDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,25,63" >
 
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -164,7 +164,7 @@
 
 
                     <Grid  Grid.Column="1" Margin="0">
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,0,0,80" Width="205">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,0,0,40" Width="205">
                             <TextBox Text="{Binding ItemAmount,Mode=TwoWay,Converter={StaticResource NumberFormat}}" materialDesign:HintAssist.Hint="Item Amount" IsReadOnly="True" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0" TextAlignment="Right"  />
                             <TextBlock x:Name="lblDiscountAmount">Discount Amount</TextBlock>
                             <TextBox x:Name="txtDiscountAmount" TextChanged="txtDiscountAmount_TextChanged" Text="{Binding DiscountAmount,StringFormat={}{0:N2}}"   Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0" RenderTransformOrigin="0.5,0.375" TextAlignment="Right"/>
