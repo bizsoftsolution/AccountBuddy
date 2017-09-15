@@ -27,6 +27,7 @@ namespace AccountBuddy.DAL
     
         public virtual DbSet<AccountGroup> AccountGroups { get; set; }
         public virtual DbSet<Bank> Banks { get; set; }
+        public virtual DbSet<CompanyDetail> CompanyDetails { get; set; }
         public virtual DbSet<CreditLimitType> CreditLimitTypes { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomFormat> CustomFormats { get; set; }
@@ -40,6 +41,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<JobWorker> JobWorkers { get; set; }
         public virtual DbSet<Journal> Journals { get; set; }
         public virtual DbSet<JournalDetail> JournalDetails { get; set; }
+        public virtual DbSet<Ledger> Ledgers { get; set; }
         public virtual DbSet<LogDetail> LogDetails { get; set; }
         public virtual DbSet<LogDetailType> LogDetailTypes { get; set; }
         public virtual DbSet<LogMaster> LogMasters { get; set; }
@@ -62,6 +64,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<SalesReturn> SalesReturns { get; set; }
         public virtual DbSet<SalesReturnDetail> SalesReturnDetails { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
+        public virtual DbSet<StateDetail> StateDetails { get; set; }
         public virtual DbSet<StockGroup> StockGroups { get; set; }
         public virtual DbSet<StockIn> StockIns { get; set; }
         public virtual DbSet<StockInDetail> StockInDetails { get; set; }
@@ -78,8 +81,5 @@ namespace AccountBuddy.DAL
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<UserTypeFormDetail> UserTypeFormDetails { get; set; }
-        public virtual DbSet<StateDetail> StateDetails { get; set; }
-        public virtual DbSet<CompanyDetail> CompanyDetails { get; set; }
-        public virtual DbSet<Ledger> Ledgers { get; set; }
     }
 }

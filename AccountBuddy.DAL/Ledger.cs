@@ -44,6 +44,7 @@ namespace AccountBuddy.DAL
         public string AddressLine2 { get; set; }
         public string CityName { get; set; }
         public Nullable<int> StateId { get; set; }
+        public string PostalCode { get; set; }
         public string TelephoneNo { get; set; }
         public string MobileNo { get; set; }
         public string EMailId { get; set; }

@@ -20,7 +20,7 @@ namespace AccountBuddy.DAL
         public decimal Amount { get; set; }
         public string Particular { get; set; }
     
-        public virtual Payment Payment { get; set; }
         public virtual Ledger Ledger { get; set; }
+        public virtual Payment Payment { get; set; }
     }
 }

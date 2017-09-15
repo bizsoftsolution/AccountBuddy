@@ -29,8 +29,8 @@ namespace AccountBuddy.DAL
         public decimal ItemAmount { get; set; }
         public string Narration { get; set; }
     
+        public virtual Ledger Ledger { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockOutDetail> StockOutDetails { get; set; }
-        public virtual Ledger Ledger { get; set; }
     }
 }

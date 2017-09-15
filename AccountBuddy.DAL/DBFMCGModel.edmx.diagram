@@ -5,128 +5,66 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="533b29395efb415296e150e4ee24cb2c" Name="Diagram1">
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.AccountGroup" PointX="0.75" PointY="38.5" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Bank" PointX="5.25" PointY="19.875" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.CreditLimitType" PointX="0.75" PointY="44.125" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Customer" PointX="5.25" PointY="22.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.CustomFormat" PointX="3.75" PointY="31.75" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.DataKeyValue" PointX="5.75" PointY="5.75" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.EntityType" PointX="0.75" PointY="1.875" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.ErrorLog" PointX="8.75" PointY="8.75" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.JobOrderIssue" PointX="7.5" PointY="25" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.JobOrderIssueDetail" PointX="9.75" PointY="25" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.JobOrderReceived" PointX="7.5" PointY="29.25" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.JobOrderReceivedDetail" PointX="12" PointY="27" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.JobWorker" PointX="5.25" PointY="27.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Journal" PointX="6" PointY="8.5" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.JournalDetail" PointX="8.25" PointY="47.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.LogDetail" PointX="5.25" PointY="1.25" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.LogDetailType" PointX="3" PointY="5.875" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.LogMaster" PointX="3" PointY="1" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Payment" PointX="5.25" PointY="38.125" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.PaymentDetail" PointX="7.5" PointY="39.375" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Product" PointX="7.5" PointY="13.125" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.ProductDetail" PointX="9.75" PointY="21.75" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Purchase" PointX="5.25" PointY="49" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.PurchaseDetail" PointX="9.75" PointY="56.125" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.PurchaseOrder" PointX="5.25" PointY="63.75" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.PurchaseOrderDetail" PointX="7.5" PointY="63.75" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.PurchaseReturn" PointX="8.25" PointY="43" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.PurchaseReturnDetail" PointX="10.5" PointY="43.125" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Receipt" PointX="5.25" PointY="71.125" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.ReceiptDetail" PointX="7.5" PointY="57" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Sale" PointX="5.25" PointY="44" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.SalesDetail" PointX="9.75" PointY="61" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.SalesOrder" PointX="5.25" PointY="76.375" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.SalesOrderDetail" PointX="7.5" PointY="76.375" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.SalesReturn" PointX="10.25" PointY="38" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.SalesReturnDetail" PointX="12.5" PointY="38.125" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Staff" PointX="5.25" PointY="83.125" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockGroup" PointX="5.25" PointY="14.5" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockIn" PointX="5.25" PointY="89.125" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockInDetail" PointX="7.5" PointY="90" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockInProcess" PointX="7.5" PointY="80.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockInProcessDetail" PointX="9.75" PointY="80.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockOut" PointX="5.25" PointY="92.875" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockOutDetail" PointX="7.5" PointY="94.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockSeparated" PointX="7.5" PointY="84.875" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockSeperatedDetail" PointX="12" PointY="82.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Supplier" PointX="5.25" PointY="96.5" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.TransactionType" PointX="8" PointY="51.875" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.UOM" PointX="7.5" PointY="33.875" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.UserAccount" PointX="0.75" PointY="5.375" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.UserType" PointX="1.5" PointY="9.5" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.UserTypeDetail" PointX="10" PointY="5" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.UserTypeFormDetail" PointX="7.75" PointY="1" Width="1.5" IsExpanded="true" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_AccountGroup_AccountGroup" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_LogMaster_EntityType" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_JobOrderIssue_JobWorker" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_JobOrderIssueDetail_JobOrderIssue" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_JobOrderIssueDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_JobOrderIssueDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_JobOrderReceivedDetail_JobOrderIssueDetail" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_JobOrderReceived_JobWorker" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_JobOrderReceivedDetail_JobOrderReceived" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_JobOrderReceivedDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_JobOrderReceivedDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_JournalDetail_Journal" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_LogDetail_LogDetailType" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_LogDetail_LogMaster" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_LogDetail_UserAccount" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_LogMaster_UserAccount" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PaymentDetail_Payment" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_Product_StockGroup" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_Product_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_ProductDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseOrderDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseReturnDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesOrderDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesReturnDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockInDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockInProcessDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockOutDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockSeperatedDetail_Product" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_Purchase_TransactionType" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseDetail_Purchase" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseDetail_PurchaseOrderDetail" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseReturnDetail_PurchaseDetail" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseOrderDetail_PurchaseOrder" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseOrderDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseReturn_TransactionType" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseReturnDetail_PurchaseReturn" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_PurchaseReturnDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_ReceiptDetail_Receipt" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_Sale_TransactionType" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesDetail_Sale" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesDetail_SalesOrderDetail" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesReturnDetail_SalesDetail" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesOrderDetail_SalesOrder" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesOrderDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesReturn_TransactionType" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesReturnDetail_SalesReturn" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_SalesReturnDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockInProcess_Staff" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockSeparated_Staff" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockGroup_StockGroup" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockInDetail_StockIn" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockInDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockInProcessDetail_StockInProcess" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockInProcessDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockSeperatedDetail_StockInProcessDetail" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockOutDetail_StockOut" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockOutDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockSeperatedDetail_StockSeparated" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_StockSeperatedDetail_UOM" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_UserAccount_UserType" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_UserTypeDetail_UserType" />
-        <AssociationConnector ManuallyRouted="false" Association="DBLakshmiSilksModel.FK_UserTypeDetail_UserTypeFormDetail" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.StateDetail" Width="1.5" PointX="0.75" PointY="33.75" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.CompanyDetail" Width="1.5" PointX="3" PointY="23" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.AccountGroup" Width="1.5" PointX="5.25" PointY="49.375" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Bank" Width="1.5" PointX="12.75" PointY="38.5" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.CompanyDetail" Width="1.5" PointX="3" PointY="55.875" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.CreditLimitType" Width="1.5" PointX="8.25" PointY="50.25" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Customer" Width="1.5" PointX="12.75" PointY="79.25" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.CustomFormat" Width="1.5" PointX="5.25" PointY="68.5" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.DataKeyValue" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.EntityType" Width="1.5" PointX="10.5" PointY="64.875" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.ErrorLog" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.JobOrderIssue" Width="1.5" PointX="15" PointY="45.5" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.JobOrderIssueDetail" Width="1.5" PointX="17.25" PointY="55.75" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.JobOrderReceived" Width="1.5" PointX="15" PointY="41.25" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.JobOrderReceivedDetail" Width="1.5" PointX="22.5" PointY="54.5" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.JobWorker" Width="1.5" PointX="12.75" PointY="43.875" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Journal" Width="1.5" PointX="10.5" PointY="60.5" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.JournalDetail" Width="1.5" PointX="12.75" PointY="60.75" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Ledger" Width="1.5" PointX="10.5" PointY="50.625" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.LogDetail" Width="1.5" PointX="15" PointY="56.375" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.LogDetailType" Width="1.5" PointX="12.75" PointY="47.75" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.LogMaster" Width="1.5" PointX="12.75" PointY="56" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Payment" Width="1.5" PointX="12.75" PointY="99.875" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.PaymentDetail" Width="1.5" PointX="18" PointY="78.25" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Product" Width="1.5" PointX="7.5" PointY="63.5" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.ProductDetail" Width="1.5" PointX="8.25" PointY="60.375" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Purchase" Width="1.5" PointX="19.75" PointY="52.75" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.PurchaseDetail" Width="1.5" PointX="25" PointY="63.375" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.PurchaseOrder" Width="1.5" PointX="12.75" PointY="87.625" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.PurchaseOrderDetail" Width="1.5" PointX="15" PointY="74.5" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.PurchaseReturn" Width="1.5" PointX="19.75" PointY="58.75" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.PurchaseReturnDetail" Width="1.5" PointX="27.25" PointY="63.25" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Receipt" Width="1.5" PointX="12.75" PointY="74" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.ReceiptDetail" Width="1.5" PointX="15" PointY="63.375" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Sale" Width="1.5" PointX="19.75" PointY="46.75" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.SalesDetail" Width="1.5" PointX="22" PointY="62.875" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.SalesOrder" Width="1.5" PointX="12.75" PointY="95.625" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.SalesOrderDetail" Width="1.5" PointX="15" PointY="79.5" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.SalesReturn" Width="1.5" PointX="12.75" PointY="50.75" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.SalesReturnDetail" Width="1.5" PointX="25.25" PointY="58.25" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Staff" Width="1.5" PointX="12.75" PointY="32.5" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.StateDetail" Width="1.5" PointX="0.75" PointY="58.5" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockGroup" Width="1.5" PointX="5.25" PointY="64.625" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockIn" Width="1.5" PointX="12.75" PointY="91.875" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockInDetail" Width="1.5" PointX="18" PointY="73.375" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockInProcess" Width="1.5" PointX="15" PointY="30" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockInProcessDetail" Width="1.5" PointX="17.25" PointY="48" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockOut" Width="1.5" PointX="12.75" PointY="81.625" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockOutDetail" Width="1.5" PointX="15" PointY="70.25" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockSeparated" Width="1.5" PointX="15" PointY="34.25" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.StockSeperatedDetail" Width="1.5" PointX="22.5" PointY="50" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.Supplier" Width="1.5" PointX="12.75" PointY="85.25" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.TransactionType" Width="1.5" PointX="17.5" PointY="44.875" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.UOM" Width="1.5" PointX="5.25" PointY="59.375" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.UserAccount" Width="1.5" PointX="7.5" PointY="56.375" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.UserType" Width="1.5" PointX="5.25" PointY="53" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.UserTypeDetail" Width="1.5" PointX="7.5" PointY="52.875" />
+        <EntityTypeShape EntityType="DBLakshmiSilksModel.UserTypeFormDetail" Width="1.5" PointX="5.25" PointY="44.625" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_AccountGroup_AccountGroup" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_AccountGroup_CompanyDetail" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_Ledger_AccountGroup" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_Bank_Ledger" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_CompanyDetail_CompanyDetail" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_CompanyDetail_StateDetail" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_CustomFormat_CompanyDetail" />
@@ -134,12 +72,20 @@
         <AssociationConnector Association="DBLakshmiSilksModel.FK_StockGroup_CompanyDetail" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_UOM_CompanyDetail" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_UserType_CompanyDetail" />
-        <EntityTypeShape EntityType="DBLakshmiSilksModel.Ledger" Width="1.5" PointX="3" PointY="37.5" />
-        <AssociationConnector Association="DBLakshmiSilksModel.FK_Ledger_AccountGroup" />
-        <AssociationConnector Association="DBLakshmiSilksModel.FK_Bank_Ledger" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_Ledger_CreditLimitType" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_Customer_Ledger" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_LogMaster_EntityType" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_JobOrderIssue_JobWorker" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_JobOrderIssueDetail_JobOrderIssue" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_JobOrderIssueDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_JobOrderIssueDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_JobOrderReceivedDetail_JobOrderIssueDetail" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_JobOrderReceived_JobWorker" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_JobOrderReceivedDetail_JobOrderReceived" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_JobOrderReceivedDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_JobOrderReceivedDetail_UOM" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_JobWorkers_Ledger" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_JournalDetail_Journal" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_JournalDetail_Ledger" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_Ledger_StateDetail" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_Payment_Ledger" />
@@ -156,7 +102,61 @@
         <AssociationConnector Association="DBLakshmiSilksModel.FK_StockIn_Ledger" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_StockOut_Ledger" />
         <AssociationConnector Association="DBLakshmiSilksModel.FK_Supplier_Ledger" />
-        </Diagram>
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_LogDetail_LogDetailType" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_LogDetail_LogMaster" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_LogDetail_UserAccount" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_LogMaster_UserAccount" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PaymentDetail_Payment" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_Product_StockGroup" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_Product_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_ProductDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseOrderDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseReturnDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesOrderDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesReturnDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockInDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockInProcessDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockOutDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockSeperatedDetail_Product" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_Purchase_TransactionType" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseDetail_Purchase" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseDetail_PurchaseOrderDetail" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseReturnDetail_PurchaseDetail" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseOrderDetail_PurchaseOrder" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseOrderDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseReturn_TransactionType" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseReturnDetail_PurchaseReturn" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_PurchaseReturnDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_ReceiptDetail_Receipt" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_Sale_TransactionType" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesDetail_Sale" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesDetail_SalesOrderDetail" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesReturnDetail_SalesDetail" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesOrderDetail_SalesOrder" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesOrderDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesReturn_TransactionType" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesReturnDetail_SalesReturn" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_SalesReturnDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockInProcess_Staff" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockSeparated_Staff" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockGroup_StockGroup" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockInDetail_StockIn" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockInDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockInProcessDetail_StockInProcess" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockInProcessDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockSeperatedDetail_StockInProcessDetail" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockOutDetail_StockOut" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockOutDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockSeperatedDetail_StockSeparated" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_StockSeperatedDetail_UOM" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_UserAccount_UserType" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_UserTypeDetail_UserType" />
+        <AssociationConnector Association="DBLakshmiSilksModel.FK_UserTypeDetail_UserTypeFormDetail" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

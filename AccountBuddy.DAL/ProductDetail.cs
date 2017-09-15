@@ -20,7 +20,7 @@ namespace AccountBuddy.DAL
         public double OpeningStock { get; set; }
         public double ReorderLevel { get; set; }
     
-        public virtual Product Product { get; set; }
         public virtual CompanyDetail CompanyDetail { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

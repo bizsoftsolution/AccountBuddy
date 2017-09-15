@@ -28,14 +28,17 @@ namespace AccountBuddy.DAL
         public int TransactionTypeId { get; set; }
         public decimal ItemAmount { get; set; }
         public decimal DiscountAmount { get; set; }
+        public Nullable<decimal> SGSTAmount { get; set; }
+        public Nullable<decimal> CGSTAmount { get; set; }
+        public Nullable<decimal> IGSTAmount { get; set; }
         public decimal GSTAmount { get; set; }
         public decimal ExtraAmount { get; set; }
         public decimal TotalAmount { get; set; }
         public string Narration { get; set; }
     
+        public virtual Ledger Ledger { get; set; }
         public virtual TransactionType TransactionType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseReturnDetail> PurchaseReturnDetails { get; set; }
-        public virtual Ledger Ledger { get; set; }
     }
 }

@@ -37,8 +37,8 @@ namespace AccountBuddy.DAL
         public string PayTo { get; set; }
         public string VoucherNo { get; set; }
     
+        public virtual Ledger Ledger { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
-        public virtual Ledger Ledger { get; set; }
     }
 }

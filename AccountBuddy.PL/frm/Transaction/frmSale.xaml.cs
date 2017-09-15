@@ -59,7 +59,9 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             BLL.Product.Init();
-
+            data.CGSTPer = Common.AppLib.CGSTPer;
+            data.SGSTPer = Common.AppLib.SGSTPer;
+            data.IGSTPer = Common.AppLib.IGSTPer;
             var max = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
             var min = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
 

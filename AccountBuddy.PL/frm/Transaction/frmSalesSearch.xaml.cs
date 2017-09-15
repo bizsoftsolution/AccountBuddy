@@ -224,6 +224,7 @@ namespace AccountBuddy.PL.frm.Transaction
                
                 System.Windows.Forms.Application.DoEvents();
                 f.data.Find();
+               
                 f.data.SetAmount();
                 f.btnPrint.IsEnabled = true;
                 this.Close();

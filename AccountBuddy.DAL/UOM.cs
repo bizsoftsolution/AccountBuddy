@@ -37,6 +37,7 @@ namespace AccountBuddy.DAL
         public string Symbol { get; set; }
         public int CompanyId { get; set; }
     
+        public virtual CompanyDetail CompanyDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JobOrderIssueDetail> JobOrderIssueDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -63,6 +64,5 @@ namespace AccountBuddy.DAL
         public virtual ICollection<StockOutDetail> StockOutDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockSeperatedDetail> StockSeperatedDetails { get; set; }
-        public virtual CompanyDetail CompanyDetail { get; set; }
     }
 }
