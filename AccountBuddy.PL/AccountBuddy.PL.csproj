@@ -70,7 +70,7 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Lakshmi Silks icon.ico</ApplicationIcon>
+    <ApplicationIcon>Images\lakshmi silks logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
@@ -200,6 +200,10 @@
     <Page Include="frm\Master\frmProducts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Master\frmStaff.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="frm\Master\frmSupplier.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -448,6 +452,9 @@
     </Compile>
     <Compile Include="frm\Master\frmProducts.xaml.cs">
       <DependentUpon>frmProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmStaff.xaml.cs">
+      <DependentUpon>frmStaff.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmSupplier.xaml.cs">
       <DependentUpon>frmSupplier.xaml</DependentUpon>
@@ -778,20 +785,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\lakshmi silks home screen.jpg" />
-    <Resource Include="Images\lakshmi silks login screen rev 2 %281%29.png" />
-    <Resource Include="Images\lakshmi silks logo 256.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\lakshmi silks home screen .png" />
+    <Resource Include="Images\lakshmi silks login screen .png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\lakshmi silks login screen rev 2 %281%29.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\lakshmi silks home screen .png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\lakshmi silks logo 256.ico" />
+    <Resource Include="Images\lakshmi silks logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

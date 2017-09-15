@@ -97,6 +97,9 @@ namespace AccountBuddy.SL.Hubs
                     d.toCopy<BLL.SalesReturn>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    P.CGSTPer = (decimal)(d.CGSTAmount * 100);
+                    P.SGSTPer = (decimal)(d.SGSTAmount * 100);
+                    P.IGSTPer = (decimal)(d.IGSTAmount * 100);
                     foreach (var d_pod in d.SalesReturnDetails)
                     {
                         BLL.SalesReturnDetail b_pod = new BLL.SalesReturnDetail();

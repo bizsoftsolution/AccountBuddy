@@ -287,7 +287,7 @@ namespace AccountBuddy.BLL
         {
             new Staff().toCopy<Staff>(this);
             this.Ledger.Clear();
-            this.Ledger.AccountGroupId = BLL.DataKeyValue.Salary_Value;
+            this.Ledger.AccountGroupId = BLL.DataKeyValue.Salary_Account_Value;
             DOB = DateTime.Now;
             DOJ = DateTime.Now;
              NotifyAllPropertyChanged();

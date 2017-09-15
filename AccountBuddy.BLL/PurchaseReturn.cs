@@ -40,6 +40,9 @@ namespace AccountBuddy.BLL
         private decimal _IGSTAmount;
         private decimal _SGSTAmount;
         private decimal _CGSTAmount;
+        private decimal _IGSTPer;
+        private decimal _SGSTPer;
+        private decimal _CGSTPer;
 
         #endregion
 
@@ -212,6 +215,54 @@ namespace AccountBuddy.BLL
                 {
                     _IGSTAmount = value;
                     NotifyPropertyChanged(nameof(IGSTAmount));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal CGSTPer
+        {
+            get
+            {
+                return _CGSTPer;
+            }
+            set
+            {
+                if (_CGSTPer != value)
+                {
+                    _CGSTPer = value;
+                    NotifyPropertyChanged(nameof(CGSTPer));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal SGSTPer
+        {
+            get
+            {
+                return _SGSTPer;
+            }
+            set
+            {
+                if (_SGSTPer != value)
+                {
+                    _SGSTPer = value;
+                    NotifyPropertyChanged(nameof(SGSTPer));
+                    if (value != 0) SetAmount();
+                }
+            }
+        }
+        public decimal IGSTPer
+        {
+            get
+            {
+                return _IGSTPer;
+            }
+            set
+            {
+                if (_IGSTPer != value)
+                {
+                    _IGSTPer = value;
+                    NotifyPropertyChanged(nameof(IGSTPer));
                     if (value != 0) SetAmount();
                 }
             }
@@ -568,9 +619,9 @@ namespace AccountBuddy.BLL
 
         public void SetAmount()
         {
-            CGSTAmount = Common.AppLib.CGSTPer / 100;
-            SGSTAmount = Common.AppLib.SGSTPer / 100;
-            IGSTAmount = Common.AppLib.IGSTPer / 100;
+            CGSTAmount = CGSTPer / 100;
+            SGSTAmount =SGSTPer / 100;
+            IGSTAmount = IGSTPer / 100;
             TotalGST = (CGSTAmount + SGSTAmount + IGSTAmount);
             GSTAmount = (ItemAmount - DiscountAmount) * (TotalGST);
             TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;

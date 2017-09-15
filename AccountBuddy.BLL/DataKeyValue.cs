@@ -251,6 +251,20 @@ namespace AccountBuddy.BLL
                 return toList.Where(x => x.DataKey == Bank_Accounts_Key).FirstOrDefault().DataValue;
             }
         }
+        public static string Salary_Account_Key
+        {
+            get
+            {
+                return "Salary Account";
+            }
+        }
+        public static int Salary_Account_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Salary_Account_Key).FirstOrDefault().DataValue;
+            }
+        }
         #endregion
 
         public static List<DataKeyValue> toList

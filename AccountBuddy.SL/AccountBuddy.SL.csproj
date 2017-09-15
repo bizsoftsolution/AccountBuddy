@@ -177,6 +177,7 @@
     <Compile Include="Hubs\SalesReport.cs" />
     <Compile Include="Hubs\SalesReturn.cs" />
     <Compile Include="Hubs\SLUser.cs" />
+    <Compile Include="Hubs\Staff.cs" />
     <Compile Include="Hubs\StateDetail.cs" />
     <Compile Include="Hubs\StockGroup.cs" />
     <Compile Include="Hubs\Supplier.cs" />

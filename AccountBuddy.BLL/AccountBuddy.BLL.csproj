@@ -96,6 +96,7 @@
     <Compile Include="SalesReturn.cs" />
     <Compile Include="SalesReturnDetail.cs" />
     <Compile Include="SOPending.cs" />
+    <Compile Include="Staff.cs" />
     <Compile Include="StateDetail.cs" />
     <Compile Include="StockGroup.cs" />
     <Compile Include="StockIn.cs" />

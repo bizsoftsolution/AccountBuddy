@@ -137,7 +137,7 @@
         <rd:DefaultName>AddressLine2</rd:DefaultName>
         <Top>1.46753in</Top>
         <Left>1.17302in</Left>
-        <Height>0.26799in</Height>
+        <Height>0.20191in</Height>
         <Width>4.29027in</Width>
         <ZIndex>3</ZIndex>
         <Visibility>
@@ -158,10 +158,10 @@
         <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
         <MIMEType>image/jpeg</MIMEType>
         <Sizing>FitProportional</Sizing>
-        <Top>0.55209in</Top>
-        <Left>0.23297in</Left>
-        <Height>1.14014in</Height>
-        <Width>0.91227in</Width>
+        <Top>0.74358in</Top>
+        <Left>0.21908in</Left>
+        <Height>0.99194in</Height>
+        <Width>0.91228in</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -207,7 +207,7 @@
         <rd:DefaultName>Textbox24</rd:DefaultName>
         <Top>0.15278in</Top>
         <Left>0.14008in</Left>
-        <Height>0.19098in</Height>
+        <Height>0.16665in</Height>
         <Width>0.50347in</Width>
         <ZIndex>5</ZIndex>
         <Style>
@@ -277,7 +277,7 @@
         </Paragraphs>
         <rd:DefaultName>RefNo</rd:DefaultName>
         <Top>1.47899in</Top>
-        <Left>6.47269in</Left>
+        <Left>6.45881in</Left>
         <Height>0.19045in</Height>
         <Width>1.14638in</Width>
         <ZIndex>7</ZIndex>
@@ -314,7 +314,7 @@
         <rd:DefaultName>Textbox35</rd:DefaultName>
         <Top>1.66944in</Top>
         <Left>5.60571in</Left>
-        <Height>0.19445in</Height>
+        <Height>0.2252in</Height>
         <Width>0.83921in</Width>
         <ZIndex>8</ZIndex>
         <Style>
@@ -347,9 +347,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>SalesDate</rd:DefaultName>
-        <Top>1.66944in</Top>
+        <Top>1.69722in</Top>
         <Left>6.48659in</Left>
-        <Height>0.20834in</Height>
+        <Height>0.18056in</Height>
         <Width>1.12107in</Width>
         <ZIndex>9</ZIndex>
         <Style>
@@ -469,7 +469,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Total Amount </Value>
+                              <Value>Total Amount   </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -544,7 +544,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Less Amount </Value>
+                              <Value>Less Amount   </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -619,7 +619,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Total Value after discount </Value>
+                              <Value>Total Value after discount   </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -712,7 +712,7 @@
                               </Style>
                             </TextRun>
                             <TextRun>
-                              <Value>  %  Tax </Value>
+                              <Value> % Tax   </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -787,7 +787,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Add SGST-Rate Of   </Value>
+                              <Value>Add SGST-Rate Of  </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -805,7 +805,7 @@
                               </Style>
                             </TextRun>
                             <TextRun>
-                              <Value>   %  Tax </Value>
+                              <Value> % Tax   </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -880,7 +880,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Add IGST-Rate Of    </Value>
+                              <Value>Add IGST-Rate Of  </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -898,7 +898,7 @@
                               </Style>
                             </TextRun>
                             <TextRun>
-                              <Value>  % Tax </Value>
+                              <Value>  % Tax   </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -973,7 +973,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>TOTAL AMOUNT GST </Value>
+                              <Value>TOTAL AMOUNT GST   </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -1048,7 +1048,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>TOTAL AMOUNT AFTER TAX </Value>
+                              <Value>TOTAL AMOUNT AFTER TAX   </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -1123,7 +1123,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>GST Payable On Reverse Charge </Value>
+                              <Value>GST Payable On Reverse Charge   </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -1278,10 +1278,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CityName</rd:DefaultName>
-        <Top>1.7633in</Top>
-        <Left>1.17302in</Left>
+        <Top>1.69784in</Top>
+        <Left>1.2008in</Left>
         <Height>0.17994in</Height>
-        <Width>0.51623in</Width>
+        <Width>0.87387in</Width>
         <ZIndex>13</ZIndex>
         <Style>
           <Border>
@@ -1776,7 +1776,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>:   </Value>
+                    <Value>:    </Value>
                     <Style>
                       <FontFamily>Cambria</FontFamily>
                       <FontSize>8pt</FontSize>
@@ -2010,10 +2010,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>LedgerName</rd:DefaultName>
-            <Top>1.0196in</Top>
-            <Left>0.48239in</Left>
+            <Top>1.03349in</Top>
+            <Left>0.42683in</Left>
             <Height>0.21528in</Height>
-            <Width>6.03397in</Width>
+            <Width>6.08953in</Width>
             <ZIndex>25</ZIndex>
             <Style>
               <Border>
@@ -2500,9 +2500,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox24</rd:DefaultName>
         <Top>0.34376in</Top>
-        <Left>0.14963in</Left>
-        <Height>0.19443in</Height>
-        <Width>0.46614in</Width>
+        <Left>0.14008in</Left>
+        <Height>0.16665in</Height>
+        <Width>0.50347in</Width>
         <ZIndex>20</ZIndex>
         <Style>
           <Border>
@@ -2647,10 +2647,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>GSTNo</rd:DefaultName>
-        <Top>0.12501in</Top>
+        <Top>0.15278in</Top>
         <Left>0.64355in</Left>
-        <Height>0.20487in</Height>
-        <Width>1.82293in</Width>
+        <Height>0.16665in</Height>
+        <Width>1.79691in</Width>
         <ZIndex>24</ZIndex>
         <Style>
           <Border>
@@ -2684,9 +2684,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>StateName</rd:DefaultName>
-        <Top>0.32988in</Top>
+        <Top>0.34376in</Top>
         <Left>0.64355in</Left>
-        <Height>0.1875in</Height>
+        <Height>0.16665in</Height>
         <Width>1.79691in</Width>
         <ZIndex>25</ZIndex>
         <Style>
@@ -2720,10 +2720,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>PostalCode</rd:DefaultName>
-        <Top>1.74245in</Top>
-        <Left>1.71702in</Left>
+        <Top>1.69784in</Top>
+        <Left>2.11633in</Left>
         <Height>0.20079in</Height>
-        <Width>1.07959in</Width>
+        <Width>1.45603in</Width>
         <ZIndex>26</ZIndex>
         <Style>
           <Border>
@@ -2998,7 +2998,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -3210,7 +3210,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -3310,14 +3310,9 @@
         <Color>DarkBlue</Color>
         <Style>None</Style>
       </Border>
-      <BackgroundImage>
-        <Source>Embedded</Source>
-        <Value>pagebck</Value>
-        <BackgroundRepeat>Clip</BackgroundRepeat>
-      </BackgroundImage>
     </Style>
   </Body>
-  <Width>7.89843in</Width>
+  <Width>7.76301in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>

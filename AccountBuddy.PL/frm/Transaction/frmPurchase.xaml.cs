@@ -59,6 +59,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            data.CGSTPer = Common.AppLib.CGSTPer;
+            data.SGSTPer = Common.AppLib.SGSTPer;
+            data.IGSTPer = Common.AppLib.IGSTPer;
             if (data.PDetail.ProductId == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);

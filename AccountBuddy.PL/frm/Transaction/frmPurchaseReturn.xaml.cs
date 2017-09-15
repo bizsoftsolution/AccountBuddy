@@ -53,6 +53,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            data.CGSTPer = Common.AppLib.CGSTPer;
+            data.SGSTPer = Common.AppLib.SGSTPer;
+            data.IGSTPer = Common.AppLib.IGSTPer;
             BLL.Product.Init();
             if (data.PRDetail.ProductId == 0)
             {

@@ -11,9 +11,9 @@
         Title="Login" Height="650" Width="1000"
         BorderThickness="0" GlowBrush="Black" ResizeMode="NoResize" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen"             
                        
-                       Closing="MetroWindow_Closing" Icon="Images/lakshmi silks logo 256.ico" Loaded="MetroWindow_Loaded" >
+                       Closing="MetroWindow_Closing" Icon="Images/lakshmi silks logo.ico" Loaded="MetroWindow_Loaded" >
     <Window.Background>
-        <ImageBrush ImageSource="Images/lakshmi silks login screen rev 2 (1).png"/>
+        <ImageBrush ImageSource="Images/lakshmi silks login screen .png"/>
     </Window.Background>
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="CommandBinding_Executed" />

@@ -62,9 +62,9 @@ namespace AccountBuddy.PL.frm.Print
 
                 ReportParameter[] rp = new ReportParameter[5];
                 rp[0] = new ReportParameter("PurchaseType", data.TransactionType);
-                rp[1] = new ReportParameter("IGST", Common.AppLib.IGSTPer.ToString());
-                rp[2] = new ReportParameter("SGST", Common.AppLib.SGSTPer.ToString());
-                rp[3] = new ReportParameter("CGST", Common.AppLib.CGSTPer.ToString());
+                rp[1] = new ReportParameter("IGST", data.IGSTPer.ToString());
+                rp[2] = new ReportParameter("SGST", data.SGSTPer.ToString());
+                rp[3] = new ReportParameter("CGST", data.CGSTPer.ToString());
                 rp[4] = new ReportParameter("CompanyName", BLL.UserAccount.User.UserType.Company.CompanyName);
                 rptQuickPurchase.LocalReport.SetParameters(rp);
                 
