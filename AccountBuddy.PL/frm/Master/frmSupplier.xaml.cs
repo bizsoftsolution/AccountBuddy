@@ -212,7 +212,7 @@ namespace AccountBuddy.PL.frm.Master
                 foreach (var p in d.GetType().GetProperties())
                 {
                     if (p.Name.ToLower().Contains("id") ||
-                         p.GetValue(d) == null||p.PropertyType.Namespace != "System") continue;
+                         p.GetValue(d) == null||p.PropertyType.Namespace!="System") continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {
