@@ -212,8 +212,6 @@
                             </Setter>
                         </Style>
                     </TabControl.Resources>
-
-
                     <TabItem Header="Details" FontSize="16">
                         <Grid>
                             <Grid.RowDefinitions>

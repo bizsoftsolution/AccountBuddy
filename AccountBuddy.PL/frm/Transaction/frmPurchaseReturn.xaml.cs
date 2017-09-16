@@ -61,12 +61,12 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            //else if (BLL.Product.toList.Where(x => x.Id == data.PRDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() < data.PRDetail.Quantity)
-            //{
-            //    var v = BLL.Product.toList.Where(x => x.Id == data.PRDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
-            //    MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
-            //    txtQty.Focus();
-            //}
+            else if (BLL.Product.toList.Where(x => x.Id == data.PRDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() < data.PRDetail.Quantity)
+            {
+                var v = BLL.Product.toList.Where(x => x.Id == data.PRDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
+                MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                txtQty.Focus();
+            }
             else
             {
                 data.SaveDetail();

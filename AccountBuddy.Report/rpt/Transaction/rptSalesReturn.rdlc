@@ -6,22 +6,22 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.44402in</Width>
+              <Width>0.43891in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.54354in</Width>
+              <Width>3.53843in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.77551in</Width>
+              <Width>0.7704in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75957in</Width>
+              <Width>0.75446in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.50104in</Width>
+              <Width>0.49593in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.05556in</Width>
+              <Width>1.05045in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -524,9 +524,9 @@
         </TablixRowHierarchy>
         <DataSetName>SalesReturnDetail</DataSetName>
         <Top>0.02778in</Top>
-        <Left>0.3102in</Left>
+        <Left>0.34083in</Left>
         <Height>0.5in</Height>
-        <Width>7.07924in</Width>
+        <Width>7.04861in</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1146,8 +1146,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>CompanyName</rd:DefaultName>
-          <Top>0.11217cm</Top>
-          <Left>9.72153cm</Left>
+          <Left>9.45694cm</Left>
           <Height>0.30208in</Height>
           <Width>3.6793in</Width>
           <ZIndex>1</ZIndex>
@@ -1180,8 +1179,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>AddressLine1</rd:DefaultName>
-          <Top>0.59624in</Top>
-          <Left>4.19891in</Left>
+          <Top>0.55208in</Top>
+          <Left>4.09474in</Left>
           <Height>0.18056in</Height>
           <Width>3.30082in</Width>
           <ZIndex>2</ZIndex>
@@ -1217,8 +1216,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>CityName</rd:DefaultName>
-          <Top>0.95736in</Top>
-          <Left>4.24057in</Left>
+          <Top>0.9132in</Top>
+          <Left>4.1364in</Left>
           <Height>0.19444in</Height>
           <Width>3.2661in</Width>
           <ZIndex>3</ZIndex>
@@ -1254,8 +1253,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PostalCode</rd:DefaultName>
-          <Top>1.1518in</Top>
-          <Left>4.23363in</Left>
+          <Top>1.10764in</Top>
+          <Left>4.12946in</Left>
           <Height>0.22445in</Height>
           <Width>3.27999in</Width>
           <ZIndex>4</ZIndex>
@@ -1291,8 +1290,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>AddressLine2</rd:DefaultName>
-          <Top>0.7768in</Top>
-          <Left>4.23363in</Left>
+          <Top>0.73264in</Top>
+          <Left>4.12946in</Left>
           <Height>0.18056in</Height>
           <Width>3.25915in</Width>
           <ZIndex>5</ZIndex>
@@ -1357,8 +1356,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Title1</rd:DefaultName>
-          <Top>0.36013in</Top>
-          <Left>4.19891in</Left>
+          <Top>0.31597in</Top>
+          <Left>4.09474in</Left>
           <Height>0.20834in</Height>
           <Width>3.29387in</Width>
           <ZIndex>8</ZIndex>

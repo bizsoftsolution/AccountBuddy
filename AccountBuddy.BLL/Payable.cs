@@ -92,7 +92,12 @@ namespace AccountBuddy.BLL
             
             return FMCGHubClient.FMCGHub.Invoke<List<Payable>>("Payable_List", dt).Result;
         }
+        
+         public static List<Payable> BankAccount_List(DateTime dt)
+        {
 
+            return FMCGHubClient.FMCGHub.Invoke<List<Payable>>("BankAccount_List", dt).Result;
+        }
         #endregion
 
     }

@@ -86,6 +86,10 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnPrint.IsEnabled = true;
             }
+            else
+            {
+                btnPrint.IsEnabled = false;
+            }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

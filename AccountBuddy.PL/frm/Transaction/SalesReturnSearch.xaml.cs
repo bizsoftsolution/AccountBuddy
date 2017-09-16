@@ -88,7 +88,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            dgvReceiptAndPayment.ItemsSource = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
+            dgvReceiptAndPayment.ItemsSource = BLL.SalesReturn.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
             LoadReport();
         }
 

@@ -201,7 +201,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="230">
                             <Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" IsEnabled="False"/>
-                            <CheckBox x:Name="ckbAutoprint" Margin="10" FontWeight="Bold" Width="100">Autoprint</CheckBox>
+                            <CheckBox x:Name="ckbAutoprint" Margin="10" FontWeight="Bold" Width="100" IsChecked="True">Autoprint</CheckBox>
 
                         </StackPanel>
                     </Grid>

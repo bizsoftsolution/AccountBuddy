@@ -31,57 +31,22 @@ namespace AccountBuddy.PL.frm.Report
         public frmPayableReceivable()
         {
             InitializeComponent();
-            rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
-
-          
-           
+            rptViewer.SetDisplayMode(DisplayMode.PrintLayout);                    
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             dgvPayable.ItemsSource = BLL.Payable.ToList(DateTime.Now);
             dgvReceivable.ItemsSource = BLL.Receivable.ToList(DateTime.Now);
-           // LoadReport();
+            dgvBankAccounts.ItemsSource = BLL.Payable.BankAccount_List(DateTime.Now);
+          
         }
-
-
-        //private void LoadReport()
-        //{
-        //    List<BLL.TrialBalance> list = BLL.TrialBalance.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-        //    list = list.Select(x => new BLL.TrialBalance()
-        //    { AccountName = x.Ledger.AccountName, CrAmt = x.CrAmt, DrAmt = x.DrAmt, CrAmtOP = x.CrAmtOP, DrAmtOP = x.DrAmtOP }).ToList();
-
-        //    try
-        //    {
-        //        rptViewer.Reset();
-        //        ReportDataSource data = new ReportDataSource("TrialBalance", list);
-        //        ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
-        //        rptViewer.LocalReport.DataSources.Add(data);
-        //        rptViewer.LocalReport.DataSources.Add(data1);
-        //        rptViewer.LocalReport.ReportPath = @"rpt\Report\rptTrialBalance.rdlc";
-
-        //        ReportParameter[] par = new ReportParameter[2];
-        //        par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
-        //        par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
-        //        rptViewer.LocalReport.SetParameters(par);
-
-        //        rptViewer.RefreshReport();
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //    }
-
-
-        //}
-
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
              dgvPayable.ItemsSource = BLL.Payable.ToList(DateTime.Now.Date);
             dgvReceivable.ItemsSource = BLL.Receivable.ToList(DateTime.Now.Date);
-            //LoadReport();
+           
         }
 
    

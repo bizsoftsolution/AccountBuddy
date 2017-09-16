@@ -182,6 +182,7 @@
     <Compile Include="Hubs\StockGroup.cs" />
     <Compile Include="Hubs\Supplier.cs" />
     <Compile Include="Hubs\TransactionType.cs" />
+    <Compile Include="Hubs\TrialBalance.cs" />
     <Compile Include="Hubs\UOM.cs" />
     <Compile Include="Hubs\UserAccount.cs" />
     <Compile Include="Hubs\UserType.cs" />

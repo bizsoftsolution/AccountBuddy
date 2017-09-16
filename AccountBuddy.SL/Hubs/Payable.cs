@@ -45,7 +45,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 if (l.StockIns.Count() != 0)
                 {
-                    var l2 = l.StockIns.Where(x =>  x.Date <= dt).GroupBy(x => x.Ledger.LedgerName);
+                    var l2 = l.StockIns.Where(x => x.Date <= dt).GroupBy(x => x.Ledger.LedgerName);
                     foreach (var l1 in l2)
                     {
 
@@ -68,6 +68,35 @@ namespace AccountBuddy.SL.Hubs
 
                     }
                 }
+
+                if (tb.Amount != 0)
+                {
+                    lstPayable.Add(tb);
+                    TotAmt += tb.Amount;
+                }
+            }
+
+            tb = new BLL.Payable();
+            tb.Ledger = new BLL.Ledger();
+            tb.Ledger.AccountName = "Total";
+            tb.Amount = TotAmt;
+            lstPayable.Add(tb);
+
+            return lstPayable;
+        }
+        public List<BLL.Payable> BankAccount_List(DateTime dt)
+        {
+            List<BLL.Payable> lstPayable = new List<BLL.Payable>();
+            BLL.Payable tb = new BLL.Payable();
+
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == BLL.DataKeyValue.Bank_Accounts_Key);
+            decimal TotAmt = 0;
+
+            foreach (var l in lstLedger)
+            {
+                tb = new BLL.Payable();
+                tb.Ledger = LedgerDAL_BLL(l);
+                tb.Amount = GetLedgerBalance(l);
 
                 if (tb.Amount != 0)
                 {
