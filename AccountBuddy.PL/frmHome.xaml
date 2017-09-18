@@ -190,11 +190,11 @@
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
 
-                                            <!--<Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
+                                            <Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
                                                 <Menu:NavMenuItem.Content>
                                                     <Report:frmGeneralLedger/>
                                                 </Menu:NavMenuItem.Content>
-                                            </Menu:NavMenuItem>-->
+                                            </Menu:NavMenuItem>
                                                                                
                                             <Menu:NavMenuItem MenuName="Payable And Receivable" FormName="Payable And Receivable">
                                                 <Menu:NavMenuItem.Content>

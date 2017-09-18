@@ -76,7 +76,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).PurchaseReturn_RefNoRefresh(PurchaseReturn_NewRefNo());
-                //Journal_SaveByPurchaseReturn(d);
+                Journal_SaveByPurchaseReturn(d);
                // SaleReturn_SaveByPurchaseReturn(d);
                 return true;
             }
@@ -163,9 +163,9 @@ namespace AccountBuddy.SL.Hubs
                     d.toCopy<BLL.PurchaseReturn>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
-                    P.CGSTPer = (decimal)(d.CGSTAmount * 100);
-                    P.SGSTPer = (decimal)(d.SGSTAmount * 100);
-                    P.IGSTPer = (decimal)(d.IGSTAmount * 100);
+                    P.CGSTPer = (decimal)(d.CGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
+                    P.SGSTPer = (decimal)(d.SGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
+                    P.IGSTPer = (decimal)(d.IGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
                     foreach (var d_pod in d.PurchaseReturnDetails)
                     {
                         BLL.PurchaseReturnDetail b_pod = new BLL.PurchaseReturnDetail();

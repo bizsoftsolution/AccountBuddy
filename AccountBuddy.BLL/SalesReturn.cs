@@ -618,6 +618,7 @@ namespace AccountBuddy.BLL
             {
                 SRDetails.Remove(pod);
                 ItemAmount = SRDetails.Sum(x => x.Amount);
+                ClearDetail();
             }
         }
 
@@ -625,12 +626,13 @@ namespace AccountBuddy.BLL
 
         public void SetAmount()
         {
-            CGSTAmount = CGSTPer / 100;
-            SGSTAmount = SGSTPer / 100;
-            IGSTAmount = IGSTPer / 100;
+            CGSTAmount = (CGSTPer / 100) * (ItemAmount - DiscountAmount);
+            SGSTAmount = (SGSTPer / 100) * (ItemAmount - DiscountAmount);
+            IGSTAmount = (IGSTPer / 100) * (ItemAmount - DiscountAmount);
             TotalGST = (CGSTAmount + SGSTAmount + IGSTAmount);
-            GSTAmount = (ItemAmount - DiscountAmount) * (TotalGST);
-            TotalAmount = ItemAmount  - DiscountAmount + GSTAmount + ExtraAmount ;
+            GSTAmount = TotalGST;
+            // GSTAmount = (ItemAmount - DiscountAmount ) + TotalGST;
+            TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;
         }
 
         public bool FindRefNo()

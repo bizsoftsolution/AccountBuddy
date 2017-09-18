@@ -215,60 +215,72 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
-            var CId = P.Ledger.AccountGroup.CompanyId;
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
+                var CId = P.Ledger.AccountGroup.CompanyId;
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
-            if (j == null)
-            {
-                j = new DAL.Journal();
-                j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
-                j.RefCode = RefCode;
-                j.JournalDetails.Add(new DAL.JournalDetail()
+                DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (j == null)
                 {
-                    LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId,
-                    CrAmt = P.TotalAmount,
-                    Particulars = P.Narration
-                });
-
-                j.JournalDetails.Add(new DAL.JournalDetail()
-                {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key, CId),
-                    DrAmt = P.ItemAmount - P.DiscountAmount + P.ExtraAmount,
-                    Particulars = P.Narration
-                });
-
-                j.JournalDetails.Add(new DAL.JournalDetail()
-                {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Output_Tax_Ledger_Key, CId),
-                    DrAmt = P.GSTAmount,
-                    Particulars = P.Narration
-                });
-
-                DB.Journals.Add(j);
-            }
-            else
-            {
-                foreach (var jd in j.JournalDetails)
-                {
-                    jd.Particulars = P.Narration;
-                    if (jd.CrAmt != 0)
+                    j = new DAL.Journal();
+                    j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
+                    j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        jd.LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId;
-                        jd.CrAmt = P.TotalAmount;
-                    }
-                    else
+                        LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId,
+                        CrAmt = P.TotalAmount,
+                        Particulars = P.Narration
+                    });
+
+                    j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key, CId) ? P.ItemAmount - P.DiscountAmount + P.ExtraAmount : P.GSTAmount;
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key, CId),
+                        DrAmt = P.ItemAmount - P.DiscountAmount + P.ExtraAmount,
+                        Particulars = P.Narration
+                    });
+
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_Out_Key, CId),
+                        DrAmt = (decimal)P.IGSTAmount,
+                        Particulars = P.Narration
+                    });
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_Out_Key, CId),
+                        DrAmt = (decimal)P.SGSTAmount,
+                        Particulars = P.Narration
+                    });
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_Out_Key, CId),
+                        DrAmt = (decimal)P.CGSTAmount,
+                        Particulars = P.Narration
+                    });
+
+                    DB.Journals.Add(j);
+                }
+                else
+                {
+                    foreach (var jd in j.JournalDetails)
+                    {
+                        jd.Particulars = P.Narration;
+                        if (jd.CrAmt != 0)
+                        {
+                            jd.LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId;
+                            jd.CrAmt = P.TotalAmount;
+                        }
+                        else
+                        {
+                            jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key, CId) ? P.ItemAmount - P.DiscountAmount + P.ExtraAmount : P.GSTAmount;
+                        }
                     }
                 }
-            }
 
-            j.JournalDate = P.PurchaseDate;
-            DB.SaveChanges();
+                j.JournalDate = P.PurchaseDate;
+                DB.SaveChanges();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -282,7 +294,6 @@ namespace AccountBuddy.SL.Hubs
 
         #endregion
 
-     
         #region Sales
 
         public static void Journal_SaveBySales(DAL.Sale S)
@@ -313,11 +324,22 @@ namespace AccountBuddy.SL.Hubs
 
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Input_Tax_Ledger_Key, CId),
-                    CrAmt = S.GSTAmount,
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_In_Key, CId),
+                    CrAmt = (decimal)S.IGSTAmount,
                     Particulars = S.Narration
                 });
-
+                j.JournalDetails.Add(new DAL.JournalDetail()
+                {
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_In_Key, CId),
+                    CrAmt = (decimal)S.SGSTAmount,
+                    Particulars = S.Narration
+                });
+                j.JournalDetails.Add(new DAL.JournalDetail()
+                {
+                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_In_Key, CId),
+                    CrAmt = (decimal)S.CGSTAmount,
+                    Particulars = S.Narration
+                });
                 DB.Journals.Add(j);
             }
             else
@@ -348,7 +370,179 @@ namespace AccountBuddy.SL.Hubs
         }
         #endregion
 
-     
+        #region  Purchase Return 
+
+        void Journal_SaveByPurchaseReturn(DAL.PurchaseReturn P)
+        {
+            try
+            {
+
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, P.Id);
+                var CId = P.Ledger.AccountGroup.CompanyId;
+
+                DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (j == null)
+                {
+                    j = new DAL.Journal();
+                    j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId,
+                        DrAmt = P.TotalAmount,
+                        Particulars = P.Narration
+                    });
+
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Purchase_Return_AC_Key, CId),
+                        CrAmt = P.ItemAmount - P.DiscountAmount + P.ExtraAmount,
+                        Particulars = P.Narration
+                    });
+
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_In_Key, CId),
+                        CrAmt = (decimal)P.IGSTAmount,
+                        Particulars = P.Narration
+                    });
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_In_Key, CId),
+                        CrAmt = (decimal)P.SGSTAmount,
+                        Particulars = P.Narration
+                    });
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_In_Key, CId),
+                        CrAmt = (decimal)P.CGSTAmount,
+                        Particulars = P.Narration
+                    });
+
+                    DB.Journals.Add(j);
+                }
+                else
+                {
+                    foreach (var jd in j.JournalDetails)
+                    {
+                        jd.Particulars = P.Narration;
+                        if (jd.CrAmt != 0)
+                        {
+                            jd.LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId;
+                            jd.CrAmt = P.TotalAmount;
+                        }
+                        else
+                        {
+                            jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.PurchaseAccount_Ledger_Key, CId) ? P.ItemAmount - P.DiscountAmount + P.ExtraAmount : P.GSTAmount;
+                        }
+                    }
+                }
+
+                j.JournalDate = P.PRDate;
+                DB.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        void Journal_DeleteByPurchaseReturn(BLL.PurchaseReturn P)
+        {
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, P.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            if (j != null) Journal_Delete(j.Id);
+        }
+
+
+        #endregion
+
+        #region SAles Return
+        void Journal_SaveBySalesReturn(DAL.SalesReturn P)
+        {
+            try
+            {
+
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, P.Id);
+                var CId = P.Ledger.AccountGroup.CompanyId;
+
+                DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (j == null)
+                {
+                    j = new DAL.Journal();
+                    j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId,
+                        CrAmt = P.TotalAmount,
+                        Particulars = P.Narration
+                    });
+
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Sales_Return_AC_Key, CId),
+                        DrAmt = P.ItemAmount - P.DiscountAmount + P.ExtraAmount,
+                        Particulars = P.Narration
+                    });
+
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_Out_Key, CId),
+                        DrAmt = (decimal)P.IGSTAmount,
+                        Particulars = P.Narration
+                    });
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_Out_Key, CId),
+                        DrAmt = (decimal)P.SGSTAmount,
+                        Particulars = P.Narration
+                    });
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_Out_Key, CId),
+                        DrAmt = (decimal)P.CGSTAmount,
+                        Particulars = P.Narration
+                    });
+
+                    DB.Journals.Add(j);
+                }
+                else
+                {
+                    foreach (var jd in j.JournalDetails)
+                    {
+                        jd.Particulars = P.Narration;
+                        if (jd.CrAmt != 0)
+                        {
+                            jd.LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId;
+                            jd.CrAmt = P.TotalAmount;
+                        }
+                        else
+                        {
+                            jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.Sales_Return_AC_Key, CId) ? P.ItemAmount - P.DiscountAmount + P.ExtraAmount : P.GSTAmount;
+                        }
+                    }
+                }
+
+                j.JournalDate = P.SRDate;
+                DB.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        void Journal_DeleteBySalesReturn(BLL.Purchase P)
+        {
+            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            if (j != null) Journal_Delete(j.Id);
+        }
+
+        #endregion
+
+
         #region Payment
         void Journal_SaveByPayment(BLL.Payment P)
         {
@@ -477,8 +671,8 @@ namespace AccountBuddy.SL.Hubs
         }
         #endregion
 
-    
-   
-       #endregion
+
+
+        #endregion
     }
 }

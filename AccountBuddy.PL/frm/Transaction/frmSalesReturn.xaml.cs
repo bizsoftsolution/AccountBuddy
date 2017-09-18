@@ -151,6 +151,13 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 Button btn = (Button)sender;
                 data.DeleteDetail(btn.Tag.ToString());
+                if (data.SRDetails.Count == 0)
+                {
+                    data.CGSTPer = 0;
+                    data.IGSTPer = 0;
+                    data.SGSTPer = 0;
+                    data.SetAmount();
+                }
             }
             catch (Exception ex) { }
 

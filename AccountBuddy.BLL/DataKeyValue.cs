@@ -69,22 +69,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public static string SalesAccount_Key
-        {
-            get
-            {
-                return "Sales Account";
-            }
-
-        }
-        public static int SalesAccount_Value
-        {
-            get
-            {
-                return toList.Where(x => x.DataKey == SalesAccount_Key).FirstOrDefault().DataValue;
-            }
-        }
-
+       
         #region Sales A/C Ledger
         public static string SalesAccount_Ledger_Key
         {
@@ -265,6 +250,207 @@ namespace AccountBuddy.BLL
                 return toList.Where(x => x.DataKey == Salary_Account_Key).FirstOrDefault().DataValue;
             }
         }
+
+        #region Tax
+        #region Account Group
+        public static string Tax_And_Duties_Key
+        {
+            get
+            {
+                return "Tax And Duties";
+            }
+
+        }
+        public static int Tax_And_Duties_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Tax_And_Duties_Key).FirstOrDefault().DataValue;
+            }
+        }
+        public static string IGST_Key
+        {
+            get
+            {
+                return "IGST";
+            }
+
+        }
+        public static int IGST_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == IGST_Key).FirstOrDefault().DataValue;
+            }
+        }
+        public static string SGST_Key
+        {
+            get
+            {
+                return "SGST";
+            }
+
+        }
+        public static int SGST_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == SGST_Key).FirstOrDefault().DataValue;
+            }
+        }
+        public static string CGST_Key
+        {
+            get
+            {
+                return "CGST";
+            }
+
+        }
+        public static int CGST_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey ==CGST_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+        #region Ledger
+        #region Input
+        public static string IGST_In_Key
+        {
+            get
+            {
+                return "IGST_In";
+            }
+
+        }
+        public static int IGST_In_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == IGST_In_Key).FirstOrDefault().DataValue;
+            }
+        }
+        public static string SGST_In_Key
+        {
+            get
+            {
+                return "SGST_In";
+            }
+
+        }
+        public static int SGST_In_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == SGST_In_Key).FirstOrDefault().DataValue;
+            }
+        }
+        public static string CGST_In_Key
+        {
+            get
+            {
+                return "CGST_In";
+            }
+
+        }
+        public static int CGST_In_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == CGST_In_Key).FirstOrDefault().DataValue;
+            }
+        }
+        #endregion
+
+        #region Output
+        public static string IGST_Out_Key
+        {
+            get
+            {
+                return "IGST_Out";
+            }
+
+        }
+        public static int IGST_Out_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == IGST_Out_Key).FirstOrDefault().DataValue;
+            }
+        }
+        public static string SGST_Out_Key
+        {
+            get
+            {
+                return "SGST_Out";
+            }
+
+        }
+        public static int SGST_Out_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == SGST_Out_Key).FirstOrDefault().DataValue;
+            }
+        }
+        public static string CGST_Out_Key
+        {
+            get
+            {
+                return "CGST_Out";
+            }
+
+        }
+        public static int CGST_Out_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == CGST_Out_Key).FirstOrDefault().DataValue;
+            }
+        }
+
+        #endregion
+        #endregion
+
+        #endregion
+
+        #region Sales Return
+        public static string Sales_Return_AC_Key
+        {
+            get
+            {
+                return "Sales Return A/c";
+            }
+        }
+        public static int Sales_Return_AC_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Sales_Return_AC_Key).FirstOrDefault().DataValue;
+            }
+        }
+
+        #endregion
+
+        #region Purchase Return 
+        public static string Purchase_Return_AC_Key
+        {
+            get
+            {
+                return "Purchase Return A/c";
+            }
+        }
+        public static int Purchase_Return_AC_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == Purchase_Return_AC_Key).FirstOrDefault().DataValue;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         public static List<DataKeyValue> toList

@@ -610,11 +610,11 @@ namespace AccountBuddy.BLL
         public void DeleteDetail(string PName)
         {
             SalesDetail sod = SDetails.Where(x => x.ProductName == PName).FirstOrDefault();
-
             if (sod != null)
             {
                 SDetails.Remove(sod);
                 ItemAmount = SDetails.Sum(x => x.Amount);
+                 ClearDetail();
             }
         }
 
@@ -622,11 +622,12 @@ namespace AccountBuddy.BLL
 
         public void SetAmount()
         {
-            CGSTAmount = CGSTPer / 100;
-            SGSTAmount = SGSTPer / 100;
-            IGSTAmount = IGSTPer / 100;
+            CGSTAmount = (CGSTPer / 100)* (ItemAmount - DiscountAmount);
+            SGSTAmount = (SGSTPer / 100) * (ItemAmount - DiscountAmount);
+            IGSTAmount = (IGSTPer / 100) * (ItemAmount - DiscountAmount);
             TotalGST = (CGSTAmount + SGSTAmount + IGSTAmount);
-            GSTAmount = (ItemAmount - DiscountAmount ) * TotalGST;
+            GSTAmount = TotalGST;
+            // GSTAmount = (ItemAmount - DiscountAmount ) + TotalGST;
             TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;
         }
         //public void SetGST()
