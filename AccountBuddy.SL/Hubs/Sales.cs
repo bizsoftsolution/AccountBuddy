@@ -270,7 +270,7 @@ namespace AccountBuddy.SL.Hubs
                 var d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId &&
                 (SID == null || x.LedgerId == SID) && x.SalesDate >= dtFrom &&
                 x.SalesDate <= dtTo &&
-                (InvoiceNo == "" || x.RefNo == InvoiceNo)).ToList();
+                (InvoiceNo == "" || x.RefNo .Contains(InvoiceNo))).ToList();
                 foreach (var l in d)
                 {
                     P = new BLL.Sale();

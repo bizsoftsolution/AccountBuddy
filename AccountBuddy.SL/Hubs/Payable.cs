@@ -26,7 +26,7 @@ namespace AccountBuddy.SL.Hubs
                 tb.Amount = l.OPDr != 0 || l.OPDr != null ? 0 : l.OPDr.Value;
                 if (l.Purchases.Count() != 0)
                 {
-                    var l2 = l.Purchases.Where(x => x.TransactionType.Type == "Credit" && x.PurchaseDate <= dt).GroupBy(x => x.Ledger.LedgerName);
+                    var l2 = l.Purchases.Where(x => x.TransactionType.Type == "Credit" && x.PurchaseDate <= dt).GroupBy(x => x.Ledger.LedgerName).ToList();
                     foreach (var l1 in l2)
                     {
 
@@ -36,7 +36,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 if (l.SalesReturns.Count() != 0)
                 {
-                    var l2 = l.SalesReturns.Where(x => x.TransactionType.Type == "Credit" && x.SRDate <= dt).GroupBy(x => x.Ledger.LedgerName);
+                    var l2 = l.SalesReturns.Where(x => x.TransactionType.Type == "Credit" && x.SRDate <= dt).GroupBy(x => x.Ledger.LedgerName).ToList();
                     foreach (var l1 in l2)
                     {
 
@@ -45,7 +45,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 if (l.StockIns.Count() != 0)
                 {
-                    var l2 = l.StockIns.Where(x => x.Date <= dt).GroupBy(x => x.Ledger.LedgerName);
+                    var l2 = l.StockIns.Where(x => x.Date <= dt).GroupBy(x => x.Ledger.LedgerName).ToList(); ;
                     foreach (var l1 in l2)
                     {
 
@@ -54,7 +54,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 if (l.PaymentDetails.Count() != 0)
                 {
-                    var l2 = l.PaymentDetails.Where(x => x.Payment.PaymentDate <= dt).GroupBy(x => x.Ledger.LedgerName);
+                    var l2 = l.PaymentDetails.Where(x => x.Payment.PaymentDate <= dt).GroupBy(x => x.Ledger.LedgerName).ToList() ;
                     foreach (var l1 in l2)
                     {
                         if (tb.Amount > l1.Sum(x => x.Amount))
@@ -89,7 +89,7 @@ namespace AccountBuddy.SL.Hubs
             List<BLL.Payable> lstPayable = new List<BLL.Payable>();
             BLL.Payable tb = new BLL.Payable();
 
-            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == BLL.DataKeyValue.Bank_Accounts_Key);
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId && x.AccountGroup.GroupName == BLL.DataKeyValue.Bank_Accounts_Key).ToList(); 
             decimal TotAmt = 0;
 
             foreach (var l in lstLedger)
