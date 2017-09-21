@@ -108,6 +108,7 @@
     <Compile Include="StockSeperated.cs" />
     <Compile Include="StockSeperatedDetail.cs" />
     <Compile Include="Supplier.cs" />
+    <Compile Include="TaxReport.cs" />
     <Compile Include="TransactionType.cs" />
     <Compile Include="TrialBalance.cs" />
     <Compile Include="UOM.cs" />

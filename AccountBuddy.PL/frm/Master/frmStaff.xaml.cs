@@ -59,6 +59,9 @@ namespace AccountBuddy.PL.frm.Master
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
+            cmbState.ItemsSource = BLL.StateDetail.toList;
+            cmbState.DisplayMemberPath = "StateName";
+            cmbState.SelectedValuePath = "Id";
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -70,7 +73,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Designation"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-           else if (data.Salary == 0)
+            else if (data.Salary == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Salary"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -223,14 +226,7 @@ namespace AccountBuddy.PL.frm.Master
                 foreach (var p in d.GetType().GetProperties())
                 {
                     if (p.Name.ToLower().Contains("id") ||
-                         p.GetValue(d) == null ||
-                            (p.Name != nameof(data.Ledger.LedgerName) &&
-                                p.Name != nameof(data.Designation) &&
-                                p.Name != nameof(data.Salary) &&
-                                p.Name != nameof(data.Ledger.AddressLine2) &&
-                                p.Name != nameof(data.Ledger.AddressLine2)
-
-                              )) continue;
+                         p.GetValue(d) == null || p.PropertyType.Namespace != "System") continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
                     {
@@ -252,6 +248,36 @@ namespace AccountBuddy.PL.frm.Master
                         break;
                     }
                 }
+
+                var d1 = d.Ledger;
+                foreach (var p in d1.GetType().GetProperties())
+                {
+                    if (p.Name.ToLower().Contains("id") ||
+                        p.GetValue(d1) == null ||
+                        p.PropertyType.Namespace != "System"
+                            ) continue;
+                    strValue = p.GetValue(d1).ToString();
+                    if (cbxCase.IsChecked == false)
+                    {
+                        strValue = strValue.ToLower();
+                    }
+                    if (rptStartWith.IsChecked == true && strValue.StartsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptContain.IsChecked == true && strValue.Contains(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptEndWith.IsChecked == true && strValue.EndsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                }
+
             }
             else
             {
@@ -275,7 +301,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptStaff.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Staff.toList.Where(x => Staff_Filter(x)).Select(x => new { x.Ledger.LedgerName, AccountName=x.Designation, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.TelephoneNo, x.Ledger.MobileNo,x.Ledger.EMailId,  OPCr=x.Salary }).OrderBy(x => x.LedgerName).ToList());
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.Staff.toList.Where(x => Staff_Filter(x)).Select(x => new { x.Ledger.LedgerName, AccountName = x.Designation, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.TelephoneNo, x.Ledger.MobileNo, x.Ledger.EMailId, OPCr = x.Salary }).OrderBy(x => x.LedgerName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptStaff.LocalReport.DataSources.Add(data);
                 rptStaff.LocalReport.DataSources.Add(data1);
@@ -318,8 +344,6 @@ namespace AccountBuddy.PL.frm.Master
 
         #endregion
 
-     
-
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
         {
             Grid_Refresh();
@@ -335,7 +359,7 @@ namespace AccountBuddy.PL.frm.Master
             Grid_Refresh();
         }
 
-       
+
 
         private void dgvStaff_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -371,7 +395,7 @@ namespace AccountBuddy.PL.frm.Master
             if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
             {
                 MessageBox.Show("Please Enter the Valid Email or Leave Empty");
-              
+
             }
 
         }

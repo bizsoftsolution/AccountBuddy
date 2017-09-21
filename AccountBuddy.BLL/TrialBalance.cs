@@ -140,6 +140,7 @@ namespace AccountBuddy.BLL
         {
             return FMCGHubClient.FMCGHub.Invoke<List<TrialBalance>>("TrialBalance_List",dtFrom,dtTo).Result;        
         }
+        
 
         #endregion
 

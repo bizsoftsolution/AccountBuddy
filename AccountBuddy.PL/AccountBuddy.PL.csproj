@@ -342,6 +342,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmTaxReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmTrialBalance.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -558,6 +562,9 @@
     </Compile>
     <Compile Include="frm\Report\frmStockReportPrint.xaml.cs">
       <DependentUpon>frmStockReportPrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmTaxReport.xaml.cs">
+      <DependentUpon>frmTaxReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmTrialBalance.xaml.cs">
       <DependentUpon>frmTrialBalance.xaml</DependentUpon>

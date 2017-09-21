@@ -725,8 +725,10 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new Product().toCopy<Product>(this);
-            this.StockGroupId = BLL.DataKeyValue.StockGroup_Primary_Value;
-            this.UOMId = BLL.DataKeyValue.UOM_Value;
+            StockGroup.Clear();
+            StockGroupId = BLL.DataKeyValue.StockGroup_Primary_Value;
+            UOMId = BLL.DataKeyValue.UOM_Value;
+            
             NotifyAllPropertyChanged();
         }
 

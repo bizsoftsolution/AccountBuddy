@@ -192,6 +192,9 @@ namespace AccountBuddy.SL.Hubs
                     d.toCopy<BLL.Sale>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    P.CGSTPer = (decimal)(d.CGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
+                    P.SGSTPer = (decimal)(d.SGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
+                    P.IGSTPer = (decimal)(d.IGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
                     foreach (var d_pod in d.SalesDetails)
                     {
                         BLL.SalesDetail b_pod = new BLL.SalesDetail();

@@ -222,8 +222,8 @@ namespace AccountBuddy.SL.Hubs
                 if (j == null)
                 {
                     j = new DAL.Journal();
-                    j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
-                    j.RefCode = RefCode;
+                    j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = P.RefNo;
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId,
@@ -237,26 +237,33 @@ namespace AccountBuddy.SL.Hubs
                         DrAmt = P.ItemAmount - P.DiscountAmount + P.ExtraAmount,
                         Particulars = P.Narration
                     });
-
-                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    if (P.IGSTAmount != 0)
                     {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_Out_Key, CId),
-                        DrAmt = (decimal)P.IGSTAmount,
-                        Particulars = P.Narration
-                    });
-                    j.JournalDetails.Add(new DAL.JournalDetail()
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_Out_Key, CId),
+                            DrAmt = (decimal)P.IGSTAmount,
+                            Particulars = P.Narration
+                        });
+                    }
+                    if (P.SGSTAmount != 0)
                     {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_Out_Key, CId),
-                        DrAmt = (decimal)P.SGSTAmount,
-                        Particulars = P.Narration
-                    });
-                    j.JournalDetails.Add(new DAL.JournalDetail()
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_Out_Key, CId),
+                            DrAmt = (decimal)P.SGSTAmount,
+                            Particulars = P.Narration
+                        });
+                    }
+                    if (P.CGSTAmount != 0)
                     {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_Out_Key, CId),
-                        DrAmt = (decimal)P.CGSTAmount,
-                        Particulars = P.Narration
-                    });
-
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_Out_Key, CId),
+                            DrAmt = (decimal)P.CGSTAmount,
+                            Particulars = P.Narration
+                        });
+                    }
                     DB.Journals.Add(j);
                 }
                 else
@@ -287,8 +294,7 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteByPurchase(BLL.Purchase P)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == P.RefNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
 
@@ -296,7 +302,7 @@ namespace AccountBuddy.SL.Hubs
 
         #region Sales
 
-        public static void Journal_SaveBySales(DAL.Sale S)
+        public void Journal_SaveBySales(DAL.Sale S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
 
@@ -306,8 +312,8 @@ namespace AccountBuddy.SL.Hubs
             if (j == null)
             {
                 j = new DAL.Journal();
-                j.EntryNo = S.RefNo;// Journal_NewRefNoByCompanyId(CId);
-                j.RefCode = RefCode;
+                j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                j.RefCode = S.RefNo;
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
                     LedgerId = S.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : S.LedgerId,
@@ -321,25 +327,34 @@ namespace AccountBuddy.SL.Hubs
                     CrAmt = S.ItemAmount - S.DiscountAmount + S.ExtraAmount,
                     Particulars = S.Narration
                 });
+                if (S.IGSTAmount != 0)
+                {
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_In_Key, CId),
+                        CrAmt = (decimal)S.IGSTAmount,
+                        Particulars = S.Narration
+                    });
+                }
+                if (S.SGSTAmount != 0)
+                {
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_In_Key, CId),
+                        CrAmt = (decimal)S.SGSTAmount,
+                        Particulars = S.Narration
+                    });
+                }
+                if (S.CGSTAmount != 0)
+                {
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_In_Key, CId),
+                        CrAmt = (decimal)S.CGSTAmount,
+                        Particulars = S.Narration
+                    });
+                }
 
-                j.JournalDetails.Add(new DAL.JournalDetail()
-                {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_In_Key, CId),
-                    CrAmt = (decimal)S.IGSTAmount,
-                    Particulars = S.Narration
-                });
-                j.JournalDetails.Add(new DAL.JournalDetail()
-                {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_In_Key, CId),
-                    CrAmt = (decimal)S.SGSTAmount,
-                    Particulars = S.Narration
-                });
-                j.JournalDetails.Add(new DAL.JournalDetail()
-                {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_In_Key, CId),
-                    CrAmt = (decimal)S.CGSTAmount,
-                    Particulars = S.Narration
-                });
                 DB.Journals.Add(j);
             }
             else
@@ -363,9 +378,9 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteBySales(BLL.Sale S)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
+        
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == S.RefNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
@@ -384,8 +399,8 @@ namespace AccountBuddy.SL.Hubs
                 if (j == null)
                 {
                     j = new DAL.Journal();
-                    j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
-                    j.RefCode = RefCode;
+                    j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = P.RefNo;
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId,
@@ -399,25 +414,34 @@ namespace AccountBuddy.SL.Hubs
                         CrAmt = P.ItemAmount - P.DiscountAmount + P.ExtraAmount,
                         Particulars = P.Narration
                     });
+                    if (P.IGSTAmount != 0)
+                    {
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_In_Key, CId),
+                            CrAmt = (decimal)P.IGSTAmount,
+                            Particulars = P.Narration
+                        });
+                    }
+                    if (P.SGSTAmount != 0)
+                    {
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_In_Key, CId),
+                            CrAmt = (decimal)P.SGSTAmount,
+                            Particulars = P.Narration
+                        });
+                    }
+                    if (P.CGSTAmount != 0)
+                    {
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_In_Key, CId),
+                            CrAmt = (decimal)P.CGSTAmount,
+                            Particulars = P.Narration
+                        });
+                    }
 
-                    j.JournalDetails.Add(new DAL.JournalDetail()
-                    {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_In_Key, CId),
-                        CrAmt = (decimal)P.IGSTAmount,
-                        Particulars = P.Narration
-                    });
-                    j.JournalDetails.Add(new DAL.JournalDetail()
-                    {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_In_Key, CId),
-                        CrAmt = (decimal)P.SGSTAmount,
-                        Particulars = P.Narration
-                    });
-                    j.JournalDetails.Add(new DAL.JournalDetail()
-                    {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_In_Key, CId),
-                        CrAmt = (decimal)P.CGSTAmount,
-                        Particulars = P.Narration
-                    });
 
                     DB.Journals.Add(j);
                 }
@@ -449,8 +473,7 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteByPurchaseReturn(BLL.PurchaseReturn P)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+           DAL.Journal j = DB.Journals.Where(x => x.RefCode == P.RefNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
 
@@ -470,8 +493,8 @@ namespace AccountBuddy.SL.Hubs
                 if (j == null)
                 {
                     j = new DAL.Journal();
-                    j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
-                    j.RefCode = RefCode;
+                    j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = P.RefNo;
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = P.TransactionTypeId == 1 ? LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId) : P.LedgerId,
@@ -485,26 +508,33 @@ namespace AccountBuddy.SL.Hubs
                         DrAmt = P.ItemAmount - P.DiscountAmount + P.ExtraAmount,
                         Particulars = P.Narration
                     });
-
-                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    if (P.IGSTAmount != 0)
                     {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_Out_Key, CId),
-                        DrAmt = (decimal)P.IGSTAmount,
-                        Particulars = P.Narration
-                    });
-                    j.JournalDetails.Add(new DAL.JournalDetail()
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.IGST_Out_Key, CId),
+                            DrAmt = (decimal)P.IGSTAmount,
+                            Particulars = P.Narration
+                        });
+                    }
+                    if (P.SGSTAmount != 0)
                     {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_Out_Key, CId),
-                        DrAmt = (decimal)P.SGSTAmount,
-                        Particulars = P.Narration
-                    });
-                    j.JournalDetails.Add(new DAL.JournalDetail()
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SGST_Out_Key, CId),
+                            DrAmt = (decimal)P.SGSTAmount,
+                            Particulars = P.Narration
+                        });
+                    }
+                    if (P.CGSTAmount != 0)
                     {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_Out_Key, CId),
-                        DrAmt = (decimal)P.CGSTAmount,
-                        Particulars = P.Narration
-                    });
-
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CGST_Out_Key, CId),
+                            DrAmt = (decimal)P.CGSTAmount,
+                            Particulars = P.Narration
+                        });
+                    }
                     DB.Journals.Add(j);
                 }
                 else
@@ -533,22 +563,20 @@ namespace AccountBuddy.SL.Hubs
 
             }
         }
-        void Journal_DeleteBySalesReturn(BLL.Purchase P)
+        void Journal_DeleteBySalesReturn(BLL.SalesReturn P)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == P.RefNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
 
         #endregion
-
 
         #region Payment
         void Journal_SaveByPayment(BLL.Payment P)
         {
             var EntryNo = string.Format("PMT-{0}", P.Id);
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == P.EntryNo).FirstOrDefault();
             if (j == null)
             {
                 var pd = P.PDetails.FirstOrDefault();
@@ -557,7 +585,8 @@ namespace AccountBuddy.SL.Hubs
                 if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
                 {
                     j = new DAL.Journal();
-                    j.EntryNo = P.EntryNo;
+                    j.EntryNo = Journal_NewRefNo();
+                    j.RefCode = P.EntryNo;
                     j.JournalDate = P.PaymentDate;
 
                     var CId = CompanyIdByLedgerName(ld.LedgerName);
@@ -601,7 +630,7 @@ namespace AccountBuddy.SL.Hubs
         void Journal_DeleteByPayment(BLL.Payment P)
         {
             var EntryNo = string.Format("PMT-{0}", P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == P.EntryNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
 
@@ -612,7 +641,7 @@ namespace AccountBuddy.SL.Hubs
         {
             var EntryNo = string.Format("RPT-{0}", R.Id);
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == R.EntryNo).FirstOrDefault();
             if (j == null)
             {
                 var pd = R.RDetails.FirstOrDefault();
@@ -621,7 +650,8 @@ namespace AccountBuddy.SL.Hubs
                 if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
                 {
                     j = new DAL.Journal();
-                    j.EntryNo = R.EntryNo;
+                    j.EntryNo = Journal_NewRefNo();
+                    j.RefCode = R.EntryNo;
                     j.JournalDate = R.ReceiptDate;
 
                     var CId = CompanyIdByLedgerName(ld.LedgerName);
@@ -666,7 +696,7 @@ namespace AccountBuddy.SL.Hubs
         void Journal_DeleteByReceipt(BLL.Receipt P)
         {
             var EntryNo = string.Format("RPT-{0}", P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == P.EntryNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion

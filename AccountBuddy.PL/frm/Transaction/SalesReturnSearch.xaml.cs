@@ -237,5 +237,31 @@ namespace AccountBuddy.PL.frm.Transaction
             LoadReport();
         }
 
+        private void btnExcel_Click(object sender, RoutedEventArgs e)
+        {
+            ExportToExcel();
+        }
+        public void ExportToExcel()
+        {
+            if (dgvReceiptAndPayment.Items.Count != 0)
+            {
+                dgvReceiptAndPayment.SelectAllCells();
+                dgvReceiptAndPayment.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+                ApplicationCommands.Copy.Execute(null, dgvReceiptAndPayment);
+                String resultat = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+                String result = (string)Clipboard.GetData(DataFormats.Text);
+                dgvReceiptAndPayment.UnselectAllCells();
+                SaveFileDialog SaveFileDialog1 = new SaveFileDialog();
+                SaveFileDialog1.ShowDialog();
+                string file =  SaveFileDialog1.FileName;
+                System.IO.StreamWriter file1 = new System.IO.StreamWriter(string.Format(@"{0}.xls",file));
+                 file1.WriteLine(result.Replace(',', ' '));
+                file1.Close();
+
+                MessageBox.Show(" Exporting DataGrid data to Excel file created.xls");
+            }
+
+
+        }
     }
 }

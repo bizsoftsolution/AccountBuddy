@@ -142,6 +142,8 @@ namespace AccountBuddy.PL.frm.Report
                         f.data.SearchText = gl.RefEntryNo;
                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                     
+                        f.data.SetAmount();
                         f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
                         {
@@ -157,6 +159,7 @@ namespace AccountBuddy.PL.frm.Report
                         f.data.SearchText = gl.RefEntryNo;
                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.data.SetAmount();
                         f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
                         {
@@ -164,7 +167,38 @@ namespace AccountBuddy.PL.frm.Report
                             f.btnDelete.IsEnabled = false;
                         }
                     }
-                 
+                    else if (gl.EType.StartsWith(BLL.FormPrefix.PurchaseReturn))
+                    {
+                        Transaction.frmPurchaseReturn f = new Transaction.frmPurchaseReturn();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.RefEntryNo;
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.data.SetAmount();
+                        f.btnPrint.IsEnabled = true;
+                        if (f.data.RefCode != null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
+                    else if (gl.EType.StartsWith(BLL.FormPrefix.SalesReturn))
+                    {
+                        Transaction.frmSalesReturn f = new Transaction.frmSalesReturn();
+                        App.frmHome.ShowForm(f);
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.RefEntryNo;
+                        System.Windows.Forms.Application.DoEvents();
+                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.data.SetAmount();
+                        f.btnPrint.IsEnabled = true;
+                        if (f.data.RefCode != null)
+                        {
+                            f.btnSave.IsEnabled = false;
+                            f.btnDelete.IsEnabled = false;
+                        }
+                    }
                 }
                 
             }

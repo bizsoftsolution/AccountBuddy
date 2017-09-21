@@ -51,7 +51,6 @@ namespace AccountBuddy.PL.frm.Report
             LoadReport();
         }
 
-
         private void LoadReport()
         {
             List<BLL.BalanceSheet> list = BLL.BalanceSheet.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
@@ -83,15 +82,11 @@ namespace AccountBuddy.PL.frm.Report
 
         }
 
-
-
-
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             dgvBalanceSheet.ItemsSource = BLL.BalanceSheet.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             LoadReport();
         }
-
 
         #region Button Events
         private Stream CreateStream(string name,
