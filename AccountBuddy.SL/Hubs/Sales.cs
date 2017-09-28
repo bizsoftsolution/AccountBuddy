@@ -31,26 +31,20 @@ namespace AccountBuddy.SL.Hubs
         public bool Sales_Save(BLL.Sale P)
         {
             try
-            {
-                
+            {                 
                 DAL.Sale d = DB.Sales.Where(x => x.Id == P.Id).FirstOrDefault();
-
                 if (d == null)
                 {
-
                     d = new DAL.Sale();
                     DB.Sales.Add(d);
-
                     P.toCopy<DAL.Sale>(d);
-
                     foreach (var b_pod in P.SDetails)
                     {
                         DAL.SalesDetail d_pod = new DAL.SalesDetail();
                         b_pod.toCopy<DAL.SalesDetail>(d_pod);
-                       d.SalesDetails.Add(d_pod);
+                        d.SalesDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
-
                     P.Id = d.Id;
                     LogDetailStore(P, LogDetailType.INSERT);
                 }
@@ -61,7 +55,6 @@ namespace AccountBuddy.SL.Hubs
                         BLL.SalesDetail b_Sd = P.SDetails.Where(x => x.Id == d_Sd.Id).FirstOrDefault();
                         if (b_Sd == null) d.SalesDetails.Remove(d_Sd);
                     }
-
                     P.toCopy<DAL.Sale>(d);
                     foreach (var b_Sd in P.SDetails)
                     {
@@ -73,13 +66,12 @@ namespace AccountBuddy.SL.Hubs
                         }
                         b_Sd.toCopy<DAL.SalesDetail>(d_Sd);
                     }
-                    LogDetailStore(P, LogDetailType.UPDATE);
-                   
+                    LogDetailStore(P, LogDetailType.UPDATE);                   
                 }
                 Clients.Clients(OtherLoginClientsOnGroup).Sales_RefNoRefresh(Sales_NewRefNo());
                 Journal_SaveBySales(d);
                 Purchase_SaveBySales(d);
-         return true;
+                return true;
             }
             catch (Exception ex) { }
             return false;

@@ -92,7 +92,30 @@ namespace AccountBuddy.SL.Hubs
                     gl.DrAmt = 0;
                     gl.CrAmt = rd.Amount;
                     lstBankReconcilation.Add(gl);
-                }               
+                }
+                foreach (var rd in l.JournalDetails.Where(x => x.Status == "Process" && x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).ToList())
+                {
+                    gl = new BLL.BankReconcilation();
+                    gl.Ledger = new BLL.Ledger();
+                    gl.Ledger = LedgerDAL_BLL(rd.Ledger);
+                    gl.Particular = rd.Particulars;
+                    gl.EId = rd.Journal.Id;
+                    gl.EType = 'J';
+                    gl.EDate = rd.Journal.JournalDate;
+                    if( rd.TransactionMode == "Cheque")
+                    {
+                        gl.RefNo = rd.ChequeNo;
+                    }
+                    else
+                    {
+                        gl.RefNo = rd.RefNo;
+                    }
+                   
+                    gl.EntryNo = rd.Journal.EntryNo;
+                    gl.DrAmt = rd.DrAmt;
+                    gl.CrAmt = rd.CrAmt;
+                    lstBankReconcilation.Add(gl);
+                }
             }
             #endregion
 

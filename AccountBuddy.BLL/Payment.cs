@@ -16,16 +16,13 @@ namespace AccountBuddy.BLL
         private string _EntryNo;
         private DateTime _PaymentDate;
         private int _LedgerId;
-        private string _PaymentMode;
         private decimal _Amount;
+
+        private string _PaymentMode;
+
         private string _RefNo;
         private string _Status;
-
-        private bool _IsShowReturn;
-        private bool _IsShowComplete;
-        private bool _IsLedgerEditable = true;
-
-
+     
         private decimal? _ExtraCharge;
         private string _ChequeNo;
         private DateTime? _ChequeDate;
@@ -36,6 +33,9 @@ namespace AccountBuddy.BLL
         private string _LedgerName;
         private string _AmountInwords;
 
+        private bool _IsShowReturn;
+        private bool _IsShowComplete;
+        private bool _IsLedgerEditable = true;
 
         private Ledger _PLedger;
 
@@ -200,6 +200,22 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public decimal Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                if (_Amount != value)
+                {
+                    _Amount = value;
+                    AmountInwords = value.ToCurrencyInWords();
+                    NotifyPropertyChanged(nameof(Amount));
+                }
+            }
+        }
         public string PaymentMode
         {
             get
@@ -215,28 +231,7 @@ namespace AccountBuddy.BLL
                     IsShowChequeDetail = value == "Cheque";
                     IsShowOnlineDetail = value == "Online";
                     IsShowTTDetail = value == "TT";
-
-
-
-
-
                     NotifyPropertyChanged(nameof(PaymentMode));
-                }
-            }
-        }
-        public decimal Amount
-        {
-            get
-            {
-                return _Amount;
-            }
-            set
-            {
-                if (_Amount != value)
-                {
-                    _Amount = value;
-                    AmountInwords = value.ToCurrencyInWords();
-                    NotifyPropertyChanged(nameof(Amount));
                 }
             }
         }

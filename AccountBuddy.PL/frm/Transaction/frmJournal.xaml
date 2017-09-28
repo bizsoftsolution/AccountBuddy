@@ -68,16 +68,32 @@
 
         <!--#region FormDesign-->
         <Grid Grid.Row="1">
-            <StackPanel Orientation="Vertical" Margin="0,25,0,0">
-                <StackPanel Orientation="Horizontal">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"></RowDefinition>
+                <RowDefinition Height="55*"></RowDefinition>
+               
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Margin="0,25,0,0" Grid.ColumnSpan="2" Grid.Row="0">
+                <StackPanel Orientation="Horizontal" >
                     <DatePicker x:Name="dtpJournalDate" materialDesign:HintAssist.Hint="Date"  SelectedDate="{Binding JournalDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,0,0" Width="100" FontWeight="Bold"  />
                     <TextBox  x:Name="txtEntryNo" MaxLength="50" IsReadOnly="True"  Text="{Binding EntryNo, Mode=TwoWay}" Width="120" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                     <ComboBox x:Name="cmbDebitAC"  IsEditable="True" Text="{Binding JDetail.LedgerName}" SelectedValue="{Binding JDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" >
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Account Name"/>
+                            </StackPanel>
+                        </materialDesign:HintAssist.Hint>
+                    </ComboBox>
+                    <ComboBox x:Name="cmbMode"  IsReadOnly="{Binding IsReadOnly}" SelectedItem="{Binding JDetail.TransactionMode, Mode=TwoWay}"   ItemsSource="{Binding JDetail.TransactionModeList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="125" Height="43" Margin="10,0,0,0" >
+                        <materialDesign:HintAssist.Hint>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Mode" />
                             </StackPanel>
                         </materialDesign:HintAssist.Hint>
                     </ComboBox>
@@ -86,72 +102,131 @@
                     <Button   Width="65" Height="30" x:Name="btnAdd" Content="ADD" Margin="10,0,0,0" Click="btnAdd_Click" />
                     <Button   Width="75" Height="30" x:Name="btnDClear" Content="CLEAR" Margin="10,0,0,0" Click="btnDClear_Click" />
                 </StackPanel>
-                <GroupBox Header="Details Particulars" Margin="10,10,10,0">
-                    <TextBox Text="{Binding JDetail.Particulars, Mode=TwoWay}" IsReadOnly="{Binding IsReadOnly}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
-                </GroupBox>
-                <GroupBox Height="204" Margin="10,25,10,0" Header="Journal Details">
-                    <DataGrid x:Name="dgvDetails" ItemsSource="{Binding JDetails}" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10"   BorderThickness="1">
-                        <DataGrid.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform AngleX="-0.283"/>
-                                <RotateTransform/>
-                                <TranslateTransform X="0.745"/>
-                            </TransformGroup>
-                        </DataGrid.RenderTransform>
-                        <DataGrid.ColumnHeaderStyle>
-                            <Style TargetType="{x:Type DataGridColumnHeader}">
-                                <Setter Property="FontWeight" Value="Bold" />
-                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                            </Style>
-
-                        </DataGrid.ColumnHeaderStyle>
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Edit" TextBlock.TextAlignment="Center"  Width="75">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button   x:Name="btnEditDetail" Tag="{Binding LedgerId}" Click="btnEditDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
-                                            <materialDesign:PackIcon Kind="Pencil" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
-                                        </Button>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Delete"  TextBlock.TextAlignment="Center"  Width="75">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button x:Name="btnDeleteDetail" Tag="{Binding LedgerId}" Click="btnDeleteDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
-                                            <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
-                                        </Button>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-                            <DataGridTextColumn Header="Account" FontWeight="Bold" Width="500" Binding="{Binding LedgerName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                            <DataGridTextColumn Header="Amount Dr" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="100" Binding="{Binding DrAmt, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="False"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                            <DataGridTextColumn Header="Amount Cr" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="100" Binding="{Binding CrAmt, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="False"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </GroupBox>
-                <StackPanel>
-                    <TextBlock Grid.Column="0" Name="lblMsg" FontWeight="Bold" FontSize="18" Foreground="Blue" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
-
-                </StackPanel>
-
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0" >
-                    <Button Click="btnSave_Click" Width="85" Height="30" x:Name="btnSave" Content="SAVE"   Margin="5 5" />
-                    <Button Click="btnDelete_Click" Width="85" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
-                    <Button Click="btnClear_Click"  Width="85" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />
-                    <Button Click="btnPrint_Click"  Width="85" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" />
-                    <CheckBox Name="ckxAutoPrint">Auto Print</CheckBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,85,0">
-                    <TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
-                    <Button Click="btnsearch_Click" Width="85"  Height="30" x:Name="btnsearch" Content="SEARCH" Margin="5 5" />
-
-                </StackPanel>
-
             </StackPanel>
+            <Grid Grid.Row="1"  Grid.Column="0">
+                <StackPanel Orientation="Vertical"  >
+                    <GroupBox Header="Details Particulars" Margin="10,10,10,0">
+                        <TextBox Text="{Binding JDetail.Particulars, Mode=TwoWay}" IsReadOnly="{Binding IsReadOnly}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
+                    </GroupBox>
+                    <GroupBox Margin="10,10,10,0" Header="Cheque Detail" Visibility="{Binding JDetail.IsShowChequeDetail,Converter={StaticResource VisibilityConverter}}">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox  x:Name="txtChequeNo"  MaxLength="50" TextChanged="txtChequeNo_TextChanged" Text="{Binding JDetail.ChequeNo, Mode=TwoWay}" Width="100" materialDesign:HintAssist.Hint="Cheque No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
+                                <DatePicker x:Name="dtpChequeDate" materialDesign:HintAssist.Hint="Cheque Date"  SelectedDate="{Binding JDetail.ChequeDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,15,10,0" Width="100" FontWeight="Bold"  />
+                                <ComboBox x:Name="cmbCqStatus" SelectedValue="{Binding JDetail.Status, Mode=TwoWay}" ItemsSource="{Binding JDetail.StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="80" Margin="0,0,0,0">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Status"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <DatePicker x:Name="dtpChequeReturnDate" materialDesign:HintAssist.Hint="Return Date"  SelectedDate="{Binding JDetail.ClearDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="10,15,0,0" Width="100" FontWeight="Bold" Visibility="{Binding JDetail.IsShowReturn,Converter={StaticResource VisibilityConverter}}"  />
+                                <TextBox Text="{Binding JDetail.ExtraCharge, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="80" materialDesign:HintAssist.Hint="Extra Charge" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold" Visibility="{Binding JDetail.IsShowReturn,Converter={StaticResource VisibilityConverter}}" />
+                                <DatePicker x:Name="dtpChequeCollectionDate" materialDesign:HintAssist.Hint="Collection Date"  SelectedDate="{Binding JDetail.ClearDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="10,15,0,0" Width="120" FontWeight="Bold" Visibility="{Binding JDetail.IsShowComplete,Converter={StaticResource VisibilityConverter}}"  />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Margin="10,10,10,0" Header="Online" Visibility="{Binding JDetail.IsShowOnlineDetail,Converter={StaticResource VisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="txtOnlineRefno" Text="{Binding JDetail.RefNo, Mode=TwoWay}" MaxLength="50" Width="100" materialDesign:HintAssist.Hint="Ref. No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
+                            <DatePicker x:Name="dtpOnlineTDate" materialDesign:HintAssist.Hint="Transaction Date"  SelectedDate="{Binding JDetail.ClearDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,15,10,0" Width="120" FontWeight="Bold"  />
+                            <ComboBox x:Name="cmbOnStatus"  SelectedValue="{Binding JDetail.Status, Mode=TwoWay}" ItemsSource="{Binding JDetail.StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="100" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Status"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </ComboBox>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Margin="10,10,10,0" Header="Telegraphic Transfer" Visibility="{Binding JDetail.IsShowTTDetail,Converter={StaticResource VisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="txtTTRefNo" Text="{Binding JDetail.RefNo, Mode=TwoWay}" MaxLength="50" Width="100" materialDesign:HintAssist.Hint="Ref. No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0,0,10,0" FontWeight="Bold"/>
+                            <DatePicker x:Name="dtpTTDate" materialDesign:HintAssist.Hint="Transaction Date"  SelectedDate="{Binding JDetail.ClearDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"  Margin="0,15,10,0" Width="120" FontWeight="Bold"  />
+                            <ComboBox x:Name="cmbTTStatus"  SelectedValue="{Binding JDetail.Status, Mode=TwoWay}" ItemsSource="{Binding JDetail.StatusList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="100" Margin="0,0,0,0">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Status"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </ComboBox>
+                        </StackPanel>
+                    </GroupBox>
+
+                </StackPanel>
+
+            </Grid>  
+           
+            <Grid Grid.Column="1" Grid.RowSpan="3" Grid.Row="1">
+                <StackPanel Orientation="Vertical"  Grid.Row="1" >
+                    <GroupBox Height="300" Margin="10,10,10,0" Header="Journal Details">
+                        <DataGrid x:Name="dgvDetails" ItemsSource="{Binding JDetails}" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10"   BorderThickness="1">
+                            <DataGrid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleX="-0.283"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="0.745"/>
+                                </TransformGroup>
+                            </DataGrid.RenderTransform>
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                </Style>
+
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Edit" TextBlock.TextAlignment="Center"  Width="75">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button   x:Name="btnEditDetail" Tag="{Binding LedgerId}" Click="btnEditDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                                <materialDesign:PackIcon Kind="Pencil" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Delete"  TextBlock.TextAlignment="Center"  Width="75">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="btnDeleteDetail" Tag="{Binding LedgerId}" Click="btnDeleteDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                                <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Header="Account" FontWeight="Bold" Width="150" Binding="{Binding LedgerName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="Amount Dr" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="100" Binding="{Binding DrAmt, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="False"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                <DataGridTextColumn Header="Amount Cr" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="100" Binding="{Binding CrAmt, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="False"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                    <StackPanel>
+                        <TextBlock Grid.Column="0" Name="lblMsg" FontWeight="Bold" FontSize="18" Foreground="Blue" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
+
+                    </StackPanel>
+
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0" >
+                        <Button Click="btnSave_Click" Width="85" Height="30" x:Name="btnSave" Content="SAVE"   Margin="5 5" />
+                        <Button Click="btnDelete_Click" Width="85" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
+                        <Button Click="btnClear_Click"  Width="85" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />
+                        <Button Click="btnPrint_Click"  Width="85" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" />
+                        <CheckBox Name="ckxAutoPrint">Auto Print</CheckBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,85,0">
+                        <TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                        <Button Click="btnsearch_Click" Width="85"  Height="30" x:Name="btnsearch" Content="SEARCH" Margin="5 5" />
+
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+            
+      
 
         </Grid>
         <!--#endregion-->

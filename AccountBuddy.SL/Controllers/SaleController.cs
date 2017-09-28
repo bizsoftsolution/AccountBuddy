@@ -14,7 +14,7 @@ namespace AccountBuddy.SL.Controllers
         {
             return View();
         }
-        public JsonResult Save(int LedgerId, string PayMode, string SaleDetails, bool IsGST)
+        public JsonResult Save(int LedgerId, string PayMode, string SaleDetails, bool IsGST, string ChqNo, DateTime? ChqDate, string ChqBankName)
         {
             try
             {
@@ -36,6 +36,7 @@ namespace AccountBuddy.SL.Controllers
                 sal.LedgerId = LedgerId;
                 sal.SalesDate = DateTime.Now;
                 sal.ItemAmount = sal.SalesDetails.Sum(x => x.Amount);
+               
                 if (IsGST == true)
                 {
                     sal.GSTAmount = sal.ItemAmount * 6 / 100;
@@ -57,6 +58,9 @@ namespace AccountBuddy.SL.Controllers
                 else if (PayMode == "Cheque")
                 {
                     sal.TransactionTypeId = 3;
+                    sal.BankName = ChqBankName;
+                    sal.ChequeDate = ChqDate;
+                    sal.ChequeNo = ChqNo;
                 }
                 else
                 {
@@ -118,7 +122,7 @@ namespace AccountBuddy.SL.Controllers
             }
         }
 
-        public JsonResult Receipt_Save(int LedgerId, decimal Amount, string PayMode)
+        public JsonResult Receipt_Save(int LedgerId, decimal Amount, string PayMode, string ChqNo, DateTime? ChqDate, string ChqBankName)
         {
             try
             {
@@ -126,14 +130,28 @@ namespace AccountBuddy.SL.Controllers
                 DAL.Journal Jn = new DAL.Journal();
                 if (Amount != 0)
                 {
+                    DAL.JournalDetail jd = new DAL.JournalDetail();
                     var CId = db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId;
-                    DAL.JournalDetail jd = new DAL.JournalDetail()
+                    if(PayMode=="Cheque")
                     {
-                        LedgerId = Hubs.ABServerHub.LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
-                        DrAmt = Amount,
-                        Particulars = "Mobile App Receipt"
-                    };
-                    Jn.JournalDetails.Add(jd);
+                        jd = new DAL.JournalDetail()
+                        {
+                            LedgerId = db.Banks.FirstOrDefault().LedgerId,
+                            DrAmt = Amount,
+                            Particulars = "Mobile App Receipt"
+                        };
+                        Jn.JournalDetails.Add(jd);
+                    }
+                    else
+                    {
+                        jd = new DAL.JournalDetail()
+                        {
+                            LedgerId = Hubs.ABServerHub.LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
+                            DrAmt = Amount,
+                            Particulars = "Mobile App Receipt"
+                        };
+                        Jn.JournalDetails.Add(jd);
+                    }                    
                     jd = new DAL.JournalDetail()
                     {
                         LedgerId = LedgerId,
@@ -142,7 +160,6 @@ namespace AccountBuddy.SL.Controllers
 
                     };
                     Jn.JournalDetails.Add(jd);
-
                     Jn.JournalDate = DateTime.Now;
                     Jn.EntryNo = Hubs.ABServerHub.Journal_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
                     db.Journals.Add(Jn);
@@ -163,16 +180,30 @@ namespace AccountBuddy.SL.Controllers
             {
                 DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
                 DAL.Journal Jn = new DAL.Journal();
+                DAL.JournalDetail jd = new DAL.JournalDetail();
                 if (Amount != 0)
                 {
                     var CId = db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId;
-                    DAL.JournalDetail jd = new DAL.JournalDetail()
+                    if (PayMode == "Cheque")
                     {
-                        LedgerId = Hubs.ABServerHub.LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
-                        DrAmt = Amount,
-                        Particulars = "Mobile App Payment"
-                    };
-                    Jn.JournalDetails.Add(jd);
+                        jd = new DAL.JournalDetail()
+                        {
+                            LedgerId = db.Banks.FirstOrDefault().LedgerId,
+                            DrAmt = Amount,
+                            Particulars = "Mobile App Receipt"
+                        };
+                        Jn.JournalDetails.Add(jd);
+                    }
+                    else
+                    {
+                        jd = new DAL.JournalDetail()
+                        {
+                            LedgerId = Hubs.ABServerHub.LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
+                            DrAmt = Amount,
+                            Particulars = "Mobile App Receipt"
+                        };
+                        Jn.JournalDetails.Add(jd);
+                    }
                     jd = new DAL.JournalDetail()
                     {
                         LedgerId = LedgerId,

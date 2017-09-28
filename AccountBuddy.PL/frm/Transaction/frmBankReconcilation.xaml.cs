@@ -228,7 +228,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             var l1 = dgvBankReconciliation.ItemsSource;
-            if(l1!=null)
+            if (l1 != null)
             {
                 foreach (var d in l1)
                 {
@@ -240,7 +240,7 @@ namespace AccountBuddy.PL.frm.Transaction
                             BLL.Payment p = new BLL.Payment();
                             p.SearchText = b.EntryNo;
                             p.Find();
-                            p.Status = b.IsCompleted ? "Completed" : "Proccess";
+                            p.Status = b.IsCompleted ? "Completed" : "Process";
                             p.Save();
                         }
                         else if (b.EType == 'R')
@@ -248,7 +248,16 @@ namespace AccountBuddy.PL.frm.Transaction
                             BLL.Receipt R = new BLL.Receipt();
                             R.SearchText = b.EntryNo;
                             R.Find();
-                            R.Status = b.IsCompleted ? "Completed" : "Proccess";
+                            R.Status = b.IsCompleted ? "Completed" : "Process";
+                            R.Save();
+                        }
+                        else if (b.EType == 'J')
+                        {
+                            BLL.Journal R = new BLL.Journal();
+                            R.SearchText = b.EntryNo;
+                            R.Find();
+                            var s = b.IsCompleted ? "Completed" : "Process";
+                            R.JDetails.Where(x => x.JournalId == R.Id).ToList().ForEach(x => x.Status = s);
                             R.Save();
                         }
                     }
@@ -256,7 +265,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(Message.PL.Saved_Alert);
                 App.frmHome.ShowWelcome();
             }
-            
+
         }
 
         private void ckbStatus_Checked(object sender, RoutedEventArgs e)
@@ -264,7 +273,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 var d = ((CheckBox)sender).Tag as BLL.BankReconcilation;
-                if (d != null) d.IsCompleted = true;                
+                if (d != null) d.IsCompleted = true;
             }
             catch (Exception ex) { }
         }

@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Media.Imaging;
 
+
 namespace AccountBuddy.Common
 {
     public static class AppLib
@@ -17,8 +18,9 @@ namespace AccountBuddy.Common
         public static decimal GSTPer = (decimal)0.06;
 
         public static string AppName = "";
-        public static string FundName = "";
 
+        public static int BankId;
+        public static string BankName;
 
         public enum Forms
         {

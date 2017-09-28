@@ -48,10 +48,42 @@ namespace AccountBuddy.PL.frm.Transaction
             if (data.JDetail.LedgerId == 0)
             {
                 MessageBox.Show("Enter LedgerName");
+                cmbDebitAC.Focus();
             }
             else if (data.JDetail.DrAmt == 0 && data.JDetail.CrAmt == 0)
             {
                 MessageBox.Show("Enter Amount Dr or Amount Cr");
+                txtAmountCr.Focus();
+            }
+            else if(data.JDetail.TransactionMode==null)
+            {
+                MessageBox.Show("Enter Mode of Transaction");
+                cmbMode.Focus();
+            }
+            else if (data.JDetail.TransactionMode == "Cheque" && (data.JDetail.ChequeDate==null||data.JDetail.ChequeNo==""||cmbCqStatus.Text==""))
+            {
+                MessageBox.Show("Enter Cheque Details");
+                txtChequeNo.Focus();
+            }
+            else if (data.JDetail.TransactionMode == "Cheque" && data.JDetail.Status == "Completed" && data.JDetail.ClearDate==null)
+            {
+                MessageBox.Show("Enter Cheque Collection Date");
+             dtpChequeCollectionDate.Focus();
+            }
+            else if (data.JDetail.TransactionMode == "Cheque" && data.JDetail.Status == "Returned" && (data.JDetail.ClearDate == null|| data.JDetail.ExtraCharge==null))
+            {
+                MessageBox.Show("Enter Cheque Returned Date And Extra charge");
+                dtpChequeReturnDate.Focus();
+            }
+            else if (data.JDetail.TransactionMode == "Online" && (txtOnlineRefno.Text == "" || dtpOnlineTDate.SelectedDate == null ||cmbOnStatus.Text==""))
+            {
+                MessageBox.Show("Enter Online Details");
+                txtOnlineRefno.Focus();
+            }
+            else if (data.JDetail.TransactionMode == "TT" && (txtTTRefNo.Text==""||dtpTTDate.SelectedDate==null||cmbTTStatus.Text==""))
+            {
+                MessageBox.Show("Enter TT Details");
+                txtTTRefNo.Focus();
             }
             else
             {
@@ -246,6 +278,16 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnPrint.IsEnabled = false;
             }
+
+        }
+
+        private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            Int32 selectionStart = textBox.SelectionStart;
+            Int32 selectionLength = textBox.SelectionLength;
+            textBox.Text = AppLib.NumericOnly(txtChequeNo.Text);
+            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
 

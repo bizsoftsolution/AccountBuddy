@@ -36,6 +36,10 @@ namespace AccountBuddy.BLL
         private SalesDetail _SDetail;
         private ObservableCollection<SalesDetail> _SDetails;
         private string _RefCode;
+        private string _ChequeNo;
+        private DateTime? _ChequeDate;
+        private string _BankName;
+        private bool _IsShowChequeDetail;
 
         #endregion
 
@@ -161,7 +165,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                    if (value != 0) SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -300,6 +304,52 @@ namespace AccountBuddy.BLL
                 {
                     _TransactionType = value;
                     NotifyPropertyChanged(nameof(TransactionType));
+                    IsShowChequeDetail = value == "Cheque";
+                }
+            }
+        }
+        public string ChequeNo
+        {
+            get
+            {
+                return _ChequeNo;
+            }
+            set
+            {
+                if (_ChequeNo != value)
+                {
+                    _ChequeNo = value;
+                    NotifyPropertyChanged(nameof(ChequeNo));
+                }
+            }
+        }
+        public Nullable<System.DateTime> ChequeDate
+        {
+            get
+            {
+                return _ChequeDate;
+            }
+            set
+            {
+                if (_ChequeDate != value)
+                {
+                    _ChequeDate = value;
+                    NotifyPropertyChanged(nameof(ChequeDate));
+                }
+            }
+        }
+        public string BankName
+        {
+            get
+            {
+                return _BankName;
+            }
+            set
+            {
+                if (_BankName != value)
+                {
+                    _BankName = value;
+                    NotifyPropertyChanged(nameof(BankName));
                 }
             }
         }
@@ -370,7 +420,21 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-      
+        public bool IsShowChequeDetail
+        {
+            get
+            {
+                return _IsShowChequeDetail;
+            }
+            set
+            {
+                if (_IsShowChequeDetail != value)
+                {
+                    _IsShowChequeDetail = value;
+                    NotifyPropertyChanged(nameof(IsShowChequeDetail));
+                }
+            }
+        }
         #endregion
 
         #region Property Changed

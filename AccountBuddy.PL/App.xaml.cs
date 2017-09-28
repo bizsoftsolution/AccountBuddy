@@ -14,7 +14,7 @@ namespace AccountBuddy.PL
     public partial class App : Application
     {
         public static frmHome frmHome;
-        public static frmAccountBuddyHome frmAccountBuddyHome;
+       public static frmAccountBuddyHome frmAccountBuddyHome;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             try

@@ -15,7 +15,7 @@ namespace AccountBuddy.SL.Controllers
             return View();
         }
 
-        public JsonResult Save(int LedgerId, string PayMode, string SaleReturnDetails, bool IsGST)
+        public JsonResult Save(int LedgerId, string PayMode, string SaleReturnDetails, bool IsGST,string ChqNo, DateTime? ChqDate, string ChqBankName)
         {
             try
             {
@@ -38,6 +38,7 @@ namespace AccountBuddy.SL.Controllers
                 sal.LedgerId = LedgerId;
                 sal.SRDate = DateTime.Now;
                 sal.ItemAmount = sal.SalesReturnDetails.Sum(x => x.Amount.Value);
+                
                 if (IsGST == true)
                 {
                     sal.GSTAmount = sal.ItemAmount * 6 / 100;
@@ -59,6 +60,9 @@ namespace AccountBuddy.SL.Controllers
                 else if (PayMode == "Cheque")
                 {
                     sal.TransactionTypeId = 3;
+                    sal.BankName = ChqBankName;
+                    sal.ChequeDate = ChqDate;
+                    sal.ChequeNo = ChqNo;
                 }
                 else
                 {

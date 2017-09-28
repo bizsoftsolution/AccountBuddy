@@ -123,6 +123,14 @@
                             </StackPanel>
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
+                    <ComboBox   x:Name="cmbBank"  IsReadOnly="{Binding IsReadOnly,Mode=OneWay}"  SelectionChanged="cmbBank_SelectionChanged"  FontWeight="Bold" FontSize="14" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
+                        <materialDesign:HintAssist.Hint>
+                            <StackPanel Orientation="Horizontal" Width="151">
+                                <materialDesign:PackIcon  Kind="Bank" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                <TextBlock Text="Bank" />
+                            </StackPanel>
+                        </materialDesign:HintAssist.Hint>
+                    </ComboBox>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <Button Width="80" Height="30" x:Name="btnUser" Content="USERS"  Margin="10" Click="btnUser_Click"  />
                         <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="10" Click="btnSave_Click"  />
@@ -141,9 +149,9 @@
             </Grid>
             <!--#endregion-->
             <Grid Grid.Column="3">
-                <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"  Margin="21,172,26,85" Click="btnImage_Click"  />
-                <Label x:Name="lblSize1" Content="Dimension" Margin="0,0,14,0"/>
-                <Label x:Name="lblSize2" Content="64 x 64 to 256 x 256 " Margin="10,13,14,0"/>
+                <Button Width="80"  Height="Auto" x:Name="btnImage" Content="Logo"  Margin="42,195,55,62" Click="btnImage_Click"  />
+                <Label x:Name="lblSize1" Content="Dimension" Margin="0,0,14,255"/>
+                <Label x:Name="lblSize2" Content="64 x 64 to 256 x 256 " Margin="10,13,14,250"/>
                 <Border Margin="6,40,14,133" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <Image x:Name="iProductImage" Tag="{Binding Logo, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="147" Height="99" Margin="-23,-3,-19,-1"  />
 

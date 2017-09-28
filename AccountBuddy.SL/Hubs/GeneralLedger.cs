@@ -155,61 +155,73 @@ namespace AccountBuddy.SL.Hubs
                         if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Sales))
                         {
                             gl.EType = BLL.FormPrefix.Sales;
+                          
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Purchase))
                         {
                             gl.EType = BLL.FormPrefix.Purchase;
+                          
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.SalesReturn))
                         {
                             gl.EType = BLL.FormPrefix.SalesReturn;
+                           
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.PurchaseReturn))
                         {
                             gl.EType = BLL.FormPrefix.PurchaseReturn;
+                           
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockIn))
                         {
                             gl.EType = BLL.FormPrefix.StockIn;
+                            
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockOut))
                         {
                             gl.EType = BLL.FormPrefix.StockOut;
+                          
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.JobOrderIssue))
                         {
                             gl.EType = BLL.FormPrefix.JobOrderIssue;
+                          
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.JobOrderReceived))
                         {
                             gl.EType = BLL.FormPrefix.JobOrderReceived;
+                          
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockInProcess))
                         {
                             gl.EType = BLL.FormPrefix.StockInProcess;
+                        
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockSeparated))
                         {
                             gl.EType = BLL.FormPrefix.StockSeparated;
+                            
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Payment))
                         {
                             gl.EType = BLL.FormPrefix.Payment;
+                          
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                         else if(jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Receipt))
                         {
                             gl.EType = BLL.FormPrefix.Receipt;
+                            
                             gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
                         }
                       
@@ -221,7 +233,18 @@ namespace AccountBuddy.SL.Hubs
                     }
 
                     gl.EDate = jd.Journal.JournalDate;
-                    gl.RefNo = "";
+                    if(jd.TransactionMode == "Cheque")
+                    {
+                        gl.RefNo = jd.ChequeNo;
+                    }
+                    else if(jd.TransactionMode == "Online"|| jd.TransactionMode == "TT")
+                    {
+                        gl.RefNo = jd.RefNo;
+                    }
+                    else
+                    {
+                        gl.RefNo = "";
+                    }
                     gl.EntryNo = jd.Journal.EntryNo;
                     gl.DrAmt = jd.DrAmt;
                     gl.CrAmt = jd.CrAmt;

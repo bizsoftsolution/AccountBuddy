@@ -68,11 +68,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
                 dgvWarehouse.ItemsSource = lstCompany;
-
-
                 dgvDealer.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
-
-
             }
             else
             {
@@ -81,6 +77,13 @@ namespace AccountBuddy.PL.frm.Master
                 btnUser.Visibility = Visibility.Collapsed;
                 btnDelete.Visibility = Visibility.Collapsed;
             }
+
+            var l = BLL.Ledger.toList.Where(x=>x.AccountGroup.GroupName==BLL.DataKeyValue.BankAccounts_Key).ToList();
+            cmbBank.ItemsSource = l;
+            cmbBank.DisplayMemberPath = "LedgerName";
+            cmbBank.SelectedValuePath = "Id";
+            cmbBank.SelectedItem = l.FirstOrDefault();
+           
 
         }
         private void Grid_Refresh()
@@ -451,6 +454,15 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
-
+        private void cmbBank_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(BLL.Bank.toList.Count!=0)
+            {
+                var b = cmbBank.SelectedItem as BLL.Ledger;
+                AppLib.BankId = b.Id;
+                AppLib.BankName = b.LedgerName;
+            }
+            
+        }
     }
 }

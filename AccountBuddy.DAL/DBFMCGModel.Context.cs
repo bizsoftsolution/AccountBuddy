@@ -30,6 +30,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<CompanyDetail> CompanyDetails { get; set; }
         public virtual DbSet<CreditLimitType> CreditLimitTypes { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<CustomFormat> CustomFormats { get; set; }
         public virtual DbSet<DataKeyValue> DataKeyValues { get; set; }
         public virtual DbSet<EntityType> EntityTypes { get; set; }
         public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
@@ -79,6 +80,5 @@ namespace AccountBuddy.DAL
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<UserTypeFormDetail> UserTypeFormDetails { get; set; }
-        public virtual DbSet<CustomFormat> CustomFormats { get; set; }
     }
 }
