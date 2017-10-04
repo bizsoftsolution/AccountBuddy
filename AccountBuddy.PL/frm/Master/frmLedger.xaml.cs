@@ -388,10 +388,6 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
-        private void Ledger_Click(object sender, RoutedEventArgs e)
-        {
-            frmDataConversion c = new frmDataConversion();
-            c.ShowDialog();
-        }
+      
     }
 }

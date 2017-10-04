@@ -174,22 +174,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public string Status
-        {
-            get
-            {
-                return _Status;
-            }
-            set
-            {
-                if (_Status != value)
-                {
-                    _Status = value;
-                    NotifyPropertyChanged(nameof(Status));
-                }
-            }
-        }
-
+     
         public JournalDetail JDetail
         {
             get

@@ -49,7 +49,10 @@ namespace AccountBuddy.PL
         {
             ccContent.Content = new frmWelcome();
         }
-
+        public void ShowBank()
+        {
+            ccContent.Content = new frm.Master.frmBank();
+        }
         public void ShowForm(object o)
         {
             ccContent.Content = o;

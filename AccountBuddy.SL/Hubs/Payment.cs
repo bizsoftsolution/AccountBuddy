@@ -48,11 +48,12 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-
-                    foreach (var d_pod in d.PaymentDetails)
+                    
+                    foreach (var d_pod in d.PaymentDetails.ToList())
                     {
                         BLL.PaymentDetail b_pod = PO.PDetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
-                        if (b_pod == null) d.PaymentDetails.Remove(d_pod);
+                       if (b_pod == null) d.PaymentDetails.Remove(d_pod);
+                        
                     }
                     PO.toCopy<DAL.Payment>(d);
 
