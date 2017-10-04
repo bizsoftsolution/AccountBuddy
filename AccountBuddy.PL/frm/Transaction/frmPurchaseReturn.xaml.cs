@@ -24,6 +24,7 @@ namespace AccountBuddy.PL.frm.Transaction
     {
         public BLL.PurchaseReturn data = new BLL.PurchaseReturn();
         public string FormName = "Purchase Return";
+        
         public frmPurchaseReturn()
         {
             InitializeComponent();
@@ -38,6 +39,8 @@ namespace AccountBuddy.PL.frm.Transaction
             onClientEvents();
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+
+           
         }
         private void onClientEvents()
         {
@@ -64,9 +67,16 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtQty.Focus();
             }
+            
+            else if(data.PRDetail.Particulars==null)
+            {
+                MessageBox.Show("Enter reason for return", FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                txtParticulars.Focus();
+            }
             else
             {
                 data.SaveDetail();
+                ckbIsReSale.IsChecked = false;
             }
         }
 
@@ -85,6 +95,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
+            ckbIsReSale.IsChecked = false;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -133,7 +144,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     data.Clear();
 
                     btnPrint.IsEnabled =false;
-
+                    ckbIsReSale.IsChecked = false;
                 }
             }
             else
@@ -295,6 +306,16 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+        }
+
+        private void ckbIsReSale_Checked(object sender, RoutedEventArgs e)
+        {
+            data.PRDetail.IsResale = true;
+        }
+
+        private void ckbIsReSale_Unchecked(object sender, RoutedEventArgs e)
+        {
+            data.PRDetail.IsResale = false;
         }
     }
 }

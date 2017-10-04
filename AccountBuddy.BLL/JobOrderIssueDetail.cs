@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.BLL
 {
@@ -28,7 +29,6 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Property
-
         public long Id
         {
             get

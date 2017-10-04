@@ -38,6 +38,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.SRDetail.IsResale = false;
         }
         private void onClientEvents()
         {
@@ -66,9 +67,15 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtRate.Focus();
             }
+            else if (data.SRDetail.Particulars == null)
+            {
+                MessageBox.Show("Enter reason for return", FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                txtParticulars.Focus();
+            }
             else
             {
                 data.SaveDetail();
+                ckbIsReSale.IsChecked = false;
             }
         }
 
@@ -84,6 +91,7 @@ namespace AccountBuddy.PL.frm.Transaction
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
+            ckbIsReSale.IsChecked = false;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -132,7 +140,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     data.Clear();
 
                     btnPrint.IsEnabled = false;
-
+                    ckbIsReSale.IsChecked = false;
                 }
             }
             else
@@ -301,6 +309,16 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+        }
+
+        private void ckbIsReSale_Checked(object sender, RoutedEventArgs e)
+        {
+            data.SRDetail.IsResale = true;
+        }
+
+        private void ckbIsReSale_Unchecked(object sender, RoutedEventArgs e)
+        {
+            data.SRDetail.IsResale = false;
         }
     }
 }

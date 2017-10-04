@@ -29,6 +29,11 @@ namespace AccountBuddy.SL.Controllers
             ProductsTo.SRQty = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
             ProductsTo.SInQty = ProductsFrom.StockInDetails.Where(x => x.StockIn.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
             ProductsTo.SOutQty = ProductsFrom.StockOutDetails.Where(x => x.StockOut.Ledger.AccountGroup.CompanyId == CompanyId).Sum(x => x.Quantity);
+
+            ProductsTo.SRQtyForSales = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == CompanyId && x.IsResale == true).Sum(x => x.Quantity);
+            ProductsTo.SRQtyNotForSales = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == CompanyId && x.IsResale == false).Sum(x => x.Quantity);
+
+
             return ProductsTo;
         }
         public JsonResult toList(int DealerId)
@@ -50,7 +55,10 @@ namespace AccountBuddy.SL.Controllers
                                         MRP = x.MRP,
                                         StockGroupId = x.StockGroupId,
                                         UOMId = x.UOMId,
-                                        OpeningStock = x.AvailableStock
+                                        OpeningStock = x.AvailableStock, 
+
+                                        SRQtyForSales=x.SRQtyForSales, 
+                                        SRQtyNotForSales=x.SRQtyNotForSales,
                                     })
                                     .ToList();
                 return Json(l1, JsonRequestBehavior.AllowGet);

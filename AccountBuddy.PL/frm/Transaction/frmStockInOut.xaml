@@ -146,8 +146,15 @@
                 <!--#endregion-->
                 <!--#region Grid-->
                 <Grid Margin="10,2,10,10" Grid.Row="2" x:Name="gvPurchaseDetails">
-
-                    <DataGrid x:Name="dgvDetails" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding STInDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,215,104" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="300"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="70"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="dgvDetails" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding STInDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="10" >
                         <DataGrid.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -163,8 +170,6 @@
                             </Style>
 
                         </DataGrid.ColumnHeaderStyle>
-
-
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Item Name" FontWeight="Bold" Width="350" Binding="{Binding ProductName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                             <DataGridTextColumn Header="UOM" FontWeight="Bold" Width="100" Binding="{Binding UOMName, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
@@ -184,10 +189,17 @@
 
                         </DataGrid.Columns>
                     </DataGrid>
-                    <StackPanel Orientation="Horizontal" Margin="10,250,0,0">
-                        <TextBox IsReadOnly="True" x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding ItemAmount, Mode=TwoWay,Converter={StaticResource CurrencyInWordFormat}}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"   TextAlignment="Left"  Width="730"/>
+                   
+                    <StackPanel Orientation="Horizontal" Grid.Row="1"  Grid.Column="0" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox IsReadOnly="True" x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding ItemAmount, Mode=TwoWay,Converter={StaticResource CurrencyInWordFormat}}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"   TextAlignment="Left"  Width="400"/>
+                            <TextBox Grid.Column="1" x:Name="txtNarration" materialDesign:HintAssist.Hint="Particulars" Text="{Binding Narration,Mode=TwoWay}" TextWrapping="Wrap" Width="350" Margin="20,0,60,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="14" FontWeight="Bold"/>
+                        </Grid>
                     </StackPanel>
-
                 </Grid>
                 <!--#endregion-->
                 <!--#region Buttons-->

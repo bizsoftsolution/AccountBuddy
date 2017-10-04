@@ -33,10 +33,30 @@ namespace AccountBuddy.BLL
         private StockInDetail _STInDetail;
         private ObservableCollection<StockInDetail> _STInDetails;
         private string _RefCode;
+        private static UserTypeDetail _UserPermission;
 
         #endregion
 
         #region Property
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmStockInOut.ToString()).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
+
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
 
         public long Id
         {

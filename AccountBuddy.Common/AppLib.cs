@@ -20,31 +20,6 @@ namespace AccountBuddy.Common
         public static string FundName = "";
 
 
-        public enum Forms
-        {
-            frmCompanySetting,
-            frmUser,
-            frmUserType,
-            frmAccountGroup,
-            frmLedger,
-            frmSupplier,
-            frmCustomer,
-            frmStaff,
-            frmUOM,
-            frmStockGroup,
-            frmProducts,
-            frmCustomFormat,
-            frmPayment,
-            frmReceipt,
-            frmJournal,
-            frmPurchase,
-            frmSales,
-            frmJobOrderIssue,
-            frmJobOrderReceived,
-            frmStockInProcess,
-            frmStockSeparated
-
-        }
 
         public static string CurrencyToWordPrefix;
         public static string CurrencyToWordSuffix;

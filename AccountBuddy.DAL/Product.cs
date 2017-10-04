@@ -22,14 +22,14 @@ namespace AccountBuddy.DAL
             this.ProductDetails = new HashSet<ProductDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
-            this.PurchaseReturnDetails = new HashSet<PurchaseReturnDetail>();
             this.SalesDetails = new HashSet<SalesDetail>();
             this.SalesOrderDetails = new HashSet<SalesOrderDetail>();
-            this.SalesReturnDetails = new HashSet<SalesReturnDetail>();
             this.StockInDetails = new HashSet<StockInDetail>();
             this.StockInProcessDetails = new HashSet<StockInProcessDetail>();
             this.StockOutDetails = new HashSet<StockOutDetail>();
             this.StockSeperatedDetails = new HashSet<StockSeperatedDetail>();
+            this.PurchaseReturnDetails = new HashSet<PurchaseReturnDetail>();
+            this.SalesReturnDetails = new HashSet<SalesReturnDetail>();
         }
     
         public int Id { get; set; }
@@ -57,13 +57,9 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseReturnDetail> PurchaseReturnDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalesDetail> SalesDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalesOrderDetail> SalesOrderDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SalesReturnDetail> SalesReturnDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockInDetail> StockInDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -72,5 +68,9 @@ namespace AccountBuddy.DAL
         public virtual ICollection<StockOutDetail> StockOutDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockSeperatedDetail> StockSeperatedDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseReturnDetail> PurchaseReturnDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalesReturnDetail> SalesReturnDetails { get; set; }
     }
 }
