@@ -100,7 +100,7 @@
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
 
-                                            <Menu:NavMenuItem MenuName="Company Setting" FormName="Company Setting">
+                                            <!--<Menu:NavMenuItem MenuName="Company Setting" FormName="Company Setting">
                                                 <Menu:NavMenuItem.Content>
                                                     <Master:frmCompanySetting/>
                                                 </Menu:NavMenuItem.Content>
@@ -116,13 +116,12 @@
                                                     <Master:frmSupplier/>
                                                 </Menu:NavMenuItem.Content>
                                             </Menu:NavMenuItem>
-                                            <Menu:NavMenuItem MenuName="Bank" FormName="Bank">
-                                                <Menu:NavMenuItem.Content>
-                                                    <Master:frmBank/>
-                                                </Menu:NavMenuItem.Content>
-                                            </Menu:NavMenuItem>
-
-                                            <Menu:NavMenuItem MenuName="Account Group" FormName ="Account Group">
+                                        <Menu:NavMenuItem MenuName="Bank" FormName="Bank">
+                                            <Menu:NavMenuItem.Content>
+                                                <Master:frmBank/>
+                                            </Menu:NavMenuItem.Content>
+                                        </Menu:NavMenuItem>
+                                        <Menu:NavMenuItem MenuName="Account Group" FormName ="Account Group">
                                                 <Menu:NavMenuItem.Content>
                                                     <Master:frmAccountGroup/>
                                                 </Menu:NavMenuItem.Content>
@@ -157,7 +156,7 @@
                                                 <Menu:NavMenuItem.Content>
                                                     <Master:frmProducts/>
                                                 </Menu:NavMenuItem.Content>
-                                            </Menu:NavMenuItem>
+                                            </Menu:NavMenuItem>-->
 
                                         </ListBox>
                                     </Expander>
@@ -165,12 +164,13 @@
                                     <Expander Header="Transaction" FontWeight="Bold" FontSize="16" IsExpanded="True">
 
                                         <ListBox SelectedIndex="0" Name="lstTransaction" PreviewMouseLeftButtonUp="ListBox_PreviewMouseLeftButtonUp">
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate DataType="BizMenu:BizMenuItem">
-                                                    <TextBlock Text="{Binding MenuName}" Margin="32 0 32 0" FontSize="16"  />
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                            <Menu:NavMenuItem MenuName="Purchase Order" FormName="Purchase Order">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate DataType="BizMenu:BizMenuItem">
+                                                <TextBlock Text="{Binding MenuName}" Margin="32 0 32 0" FontSize="16"  />
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+
+                                        <!--<Menu:NavMenuItem MenuName="Purchase Order" FormName="Purchase Order">
                                                 <Menu:NavMenuItem.Content>
                                                     <Transaction:frmPurchaseOrder/>
                                                 </Menu:NavMenuItem.Content>
@@ -255,7 +255,7 @@
                                                 <Menu:NavMenuItem.Content>
                                                     <Transaction:frmStockSeparated/>
                                                 </Menu:NavMenuItem.Content>
-                                            </Menu:NavMenuItem>
+                                            </Menu:NavMenuItem>-->
                                         </ListBox>
 
                                     </Expander>
@@ -268,7 +268,7 @@
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
 
-                                            <Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
+                                            <!--<Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
                                                 <Menu:NavMenuItem.Content>
                                                     <Report:frmGeneralLedger/>
                                                 </Menu:NavMenuItem.Content>
@@ -313,7 +313,7 @@
                                             </Menu:NavMenuItem>
                                             <Menu:NavMenuItem MenuName="Payable And Receivable" FormName="Payable And Receivable">
                                                 <Menu:NavMenuItem.Content>
-                                                    <Report:frmPayableReceivable/>
+                                                <Report:frmPayableReceivable/>
                                                 </Menu:NavMenuItem.Content>
                                             </Menu:NavMenuItem>
                                             <Menu:NavMenuItem MenuName="Purchase Order Report" FormName="Purchase Order Report">
@@ -340,7 +340,7 @@
                                                 <Menu:NavMenuItem.Content>
                                                     <Report:frmCustomerSalesReport/>
                                                 </Menu:NavMenuItem.Content>
-                                            </Menu:NavMenuItem>
+                                            </Menu:NavMenuItem>-->
                                         </ListBox>
                                     </Expander>
                                 </StackPanel>

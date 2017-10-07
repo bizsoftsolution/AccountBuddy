@@ -28,11 +28,41 @@ namespace AccountBuddy.PL
             ShowWelcome();
             onClientEvents();
             IsForcedClose = false;
-            BLL.CustomFormat.SetDataFormat();
-            CollectionViewSource.GetDefaultView(lstMaster.Items).Filter = Menu_Filter;
-            CollectionViewSource.GetDefaultView(lstTransaction.Items).Filter = Menu_Filter;
-            CollectionViewSource.GetDefaultView(lstReport.Items).Filter = Menu_Filter;
+            var l1 = BLL.UserAccount.User.UserType.UserTypeDetails.Where(x => x.IsViewForm &&
+                                                                              x.UserTypeFormDetail.IsMenu &&
+                                                                              x.UserTypeFormDetail.IsActive &&
+                                                                              x.UserTypeFormDetail.FormType == "Master")
+                                                                  .Select(x => new Common.NavMenuItem()
+                                                                  {
+                                                                      MenuName = x.UserTypeFormDetail.Description,
+                                                                      FormName = x.UserTypeFormDetail.FormName
+                                                                  })
+                                                                  .ToList();
+            lstMaster.ItemsSource = l1;
 
+            var l2 = BLL.UserAccount.User.UserType.UserTypeDetails.Where(x => x.IsViewForm &&
+                                                                              x.UserTypeFormDetail.IsMenu &&
+                                                                              x.UserTypeFormDetail.IsActive &&
+                                                                              x.UserTypeFormDetail.FormType == "Transaction")
+                                                                  .Select(x => new Common.NavMenuItem()
+                                                                  {
+                                                                      MenuName = x.UserTypeFormDetail.Description,
+                                                                      FormName = x.UserTypeFormDetail.FormName
+                                                                  })
+                                                                  .ToList();
+            lstTransaction.ItemsSource = l2;
+
+            var l3 = BLL.UserAccount.User.UserType.UserTypeDetails.Where(x => x.IsViewForm &&
+                                                                              x.UserTypeFormDetail.IsMenu &&
+                                                                              x.UserTypeFormDetail.IsActive &&
+                                                                              x.UserTypeFormDetail.FormType == "Report")
+                                                                  .Select(x => new Common.NavMenuItem()
+                                                                  {
+                                                                      MenuName = x.UserTypeFormDetail.Description,
+                                                                      FormName = x.UserTypeFormDetail.FormName
+                                                                  })
+                                                                  .ToList();
+            lstReport.ItemsSource = l3;
         }
         private bool Menu_Filter(object obj)
         {
@@ -42,8 +72,8 @@ namespace AccountBuddy.PL
                 var mnu = obj as Common.NavMenuItem;
                 return mnu.MenuName.ToLower().Contains(txtSearch.Text.ToLower());
             }
-            catch(Exception ex) { }
-            return false;           
+            catch (Exception ex) { }
+            return false;
         }
         public void ShowWelcome()
         {
@@ -73,12 +103,17 @@ namespace AccountBuddy.PL
                     if (dependencyObject is ScrollBar) return;
                     dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
                 }
+
+
                 ListBox lb = sender as ListBox;
                 Common.NavMenuItem mi = lb.SelectedItem as Common.NavMenuItem;
-                if (!BLL.UserAccount.AllowFormShow(mi.FormName))
+                if (mi.Content == null)
                 {
-                    MessageBox.Show(string.Format(Message.PL.DenyFormShow, mi.MenuName));
+                    object obj = Activator.CreateInstance(Type.GetType(mi.FormName));
+                    mi.Content = obj;
                 }
+                if (mi.Content != null) ccContent.Content = mi.Content;
+                
                 else
                 {
                     ccContent.Content = mi.Content;

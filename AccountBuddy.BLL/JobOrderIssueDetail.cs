@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.BLL
 {
@@ -25,9 +26,11 @@ namespace AccountBuddy.BLL
         private string _ItemCode;
         private string _ProductName;
         private string _UOMName;
+        private static UserTypeDetail _UserPermission;
         #endregion
 
         #region Property
+       
 
         public long Id
         {

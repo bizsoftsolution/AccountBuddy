@@ -31,7 +31,8 @@ namespace AccountBuddy.SL.Controllers
                         Quantity = d1.Qty,
                         UnitPrice = d1.Rate,
                         Amount = d1.Amount,
-                        UOMId = d1.UOMId
+                        UOMId = d1.UOMId,
+                       
                     };
                     sal.SalesReturnDetails.Add(sd);
                 }

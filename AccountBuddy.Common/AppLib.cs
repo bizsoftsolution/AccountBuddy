@@ -22,31 +22,7 @@ namespace AccountBuddy.Common
         public static int BankId;
         public static string BankName;
 
-        public enum Forms
-        {
-            frmCompanySetting,
-            frmUser,
-            frmUserType,
-            frmAccountGroup,
-            frmLedger,
-            frmSupplier,
-            frmCustomer,
-            frmStaff,
-            frmUOM,
-            frmStockGroup,
-            frmProducts,
-            frmCustomFormat,
-            frmPayment,
-            frmReceipt,
-            frmJournal,
-            frmPurchase,
-            frmSales,
-            frmJobOrderIssue,
-            frmJobOrderReceived,
-            frmStockInProcess,
-            frmStockSeparated
-
-        }
+  
 
         public static string CurrencyToWordPrefix;
         public static string CurrencyToWordSuffix;

@@ -40,10 +40,30 @@ namespace AccountBuddy.BLL
         private DateTime? _ChequeDate;
         private string _BankName;
         private bool _IsShowChequeDetail;
+        private static UserTypeDetail _UserPermission;
 
         #endregion
 
         #region Property
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmSales.ToString()).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
+
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
         public long ReceiptLedgerId { get; set; }
         public long Id
         {
