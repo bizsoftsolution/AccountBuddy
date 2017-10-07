@@ -29,6 +29,7 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Property
+      
         public static UserTypeDetail UserPermission
         {
             get

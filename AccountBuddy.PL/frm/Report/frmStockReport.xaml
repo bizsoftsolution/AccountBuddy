@@ -96,7 +96,7 @@
                                 <DataGridTextColumn Header="Job Order Received"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding JRQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 <DataGridTextColumn Header="Stock In Process"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SPQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 <DataGridTextColumn Header="Stock Separated"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SSQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                            </DataGrid.Columns>
+                              </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
                            <Grid Grid.Row="2" Margin="0,0,10,110">

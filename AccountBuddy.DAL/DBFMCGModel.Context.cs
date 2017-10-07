@@ -30,7 +30,6 @@ namespace AccountBuddy.DAL
         public virtual DbSet<CompanyDetail> CompanyDetails { get; set; }
         public virtual DbSet<CreditLimitType> CreditLimitTypes { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<CustomFormat> CustomFormats { get; set; }
         public virtual DbSet<DataKeyValue> DataKeyValues { get; set; }
         public virtual DbSet<EntityType> EntityTypes { get; set; }
         public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
@@ -54,7 +53,6 @@ namespace AccountBuddy.DAL
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
         public virtual DbSet<PurchaseReturn> PurchaseReturns { get; set; }
-        public virtual DbSet<PurchaseReturnDetail> PurchaseReturnDetails { get; set; }
         public virtual DbSet<Receipt> Receipts { get; set; }
         public virtual DbSet<ReceiptDetail> ReceiptDetails { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
@@ -62,7 +60,6 @@ namespace AccountBuddy.DAL
         public virtual DbSet<SalesOrder> SalesOrders { get; set; }
         public virtual DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
         public virtual DbSet<SalesReturn> SalesReturns { get; set; }
-        public virtual DbSet<SalesReturnDetail> SalesReturnDetails { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<StockGroup> StockGroups { get; set; }
         public virtual DbSet<StockIn> StockIns { get; set; }
@@ -80,5 +77,8 @@ namespace AccountBuddy.DAL
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<UserTypeFormDetail> UserTypeFormDetails { get; set; }
+        public virtual DbSet<CustomFormat> CustomFormats { get; set; }
+        public virtual DbSet<PurchaseReturnDetail> PurchaseReturnDetails { get; set; }
+        public virtual DbSet<SalesReturnDetail> SalesReturnDetails { get; set; }
     }
 }
