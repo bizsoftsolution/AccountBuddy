@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
         {
             return PurchaseReturn_NewRefNoByCompanyId(Caller.CompanyId);
         }
-        public string PurchaseReturn_NewRefNoByCompanyId(int CompanyId)
+        public static string PurchaseReturn_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.PurchaseReturn, dt, dt.Month);

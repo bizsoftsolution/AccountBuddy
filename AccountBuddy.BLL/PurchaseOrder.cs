@@ -486,6 +486,7 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
+           
             GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
             TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (Extras ?? 0);
         }

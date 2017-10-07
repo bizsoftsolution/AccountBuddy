@@ -632,7 +632,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region Purchase Return
-        void Journal_SaveByPurchaseReturn(DAL.PurchaseReturn PR)
+        public static void Journal_SaveByPurchaseReturn(DAL.PurchaseReturn PR)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, PR.Id);
             string Mode, status = null;

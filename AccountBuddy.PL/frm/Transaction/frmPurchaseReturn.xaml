@@ -42,6 +42,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="400"/>
                     <RowDefinition Height="115"/>
 
@@ -136,19 +137,24 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
+                        
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <CheckBox x:Name="ckbIsReSale" IsChecked="{Binding PRDetail.IsResale,Mode=TwoWay}" Checked="ckbIsReSale_Checked" Unchecked="ckbIsReSale_Unchecked" FontSize="14" >Is Resale</CheckBox>
+                        <TextBox x:Name="txtParticulars" materialDesign:HintAssist.Hint="Particulars" Text="{Binding PRDetail.Particulars,Mode=TwoWay}" TextWrapping="Wrap" Width="450" Margin="20,0,60,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontSize="14" FontWeight="Bold"/>
                         <Button Margin="0,0,10,0" x:Name="btnAdd" Background="Transparent" BorderThickness="1" ToolTip="Add Item"  Width="57" Height="36" Click="btnAdd_Click"  >
                             <materialDesign:PackIcon Kind="Plus" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />
                         </Button>
                         <Button x:Name="btnRefresh" BorderThickness="1" ToolTip="Refresh" Background="Transparent"  Width="60" Height="36" Click="btnRefresh_Click" >
                             <materialDesign:PackIcon Kind="Refresh" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />
                         </Button>
-
                     </StackPanel>
                 </Grid>
-
                 <!--#endregion-->
                 <!--#region Grid-->
-                <Grid Margin="0,2,10,35" Grid.Row="2" x:Name="gvPurchaseDetails">
+                <Grid Margin="5" Grid.Row="3" x:Name="gvPurchaseDetails">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -175,6 +181,14 @@
                             <DataGridTextColumn Header="Qty"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="70" Binding="{Binding Quantity, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTextColumn Header="Discount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="70" Binding="{Binding DiscountAmount, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTemplateColumn Header="Is Resale" TextBlock.TextAlignment="Center"  Width="75">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox x:Name="ckbsales" IsChecked="{Binding IsResale,Mode=TwoWay}" Tag="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" >Is Resale</CheckBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Particulars" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="120" Binding="{Binding Particulars, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTemplateColumn Header="Delete" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -184,6 +198,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+
 
                         </DataGrid.Columns>
                     </DataGrid>
@@ -223,7 +238,7 @@
 
                 <!--#endregion-->
                 <!--#region Buttons-->
-                <Grid Grid.Row="3" >
+                <Grid Grid.Row="4" >
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                         <Button Click="btnSave_Click" Width="100" Height="30" x:Name="btnSave" Content="SAVE"   Margin="5 5" />
                         <Button Click="btnDelete_Click" Width="100" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />

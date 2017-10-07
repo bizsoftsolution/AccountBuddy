@@ -32,7 +32,9 @@ namespace AccountBuddy.SL.Controllers
                         UnitPrice = d1.Rate,
                         Amount = d1.Amount,
                         UOMId = d1.UOMId,
-                       
+                        DiscountAmount=d1.DiscountAmount, 
+                        IsResale=d1.IsResale, 
+                        Particulars=d1.Particulars
                     };
                     sal.SalesReturnDetails.Add(sd);
                 }

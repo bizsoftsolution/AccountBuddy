@@ -24,6 +24,8 @@ namespace AccountBuddy.BLL
         private string _ItemCode;
         private string _ProductName;
         private string _UOMName;
+        private object _Particulars;
+        private bool _IsResale;
         #endregion
 
         #region Property
@@ -248,6 +250,36 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public object Particulars
+        {
+            get
+            {
+                return _Particulars;
+            }
+            set
+            {
+                if (_Particulars != value)
+                {
+                    _Particulars = value;
+                    NotifyPropertyChanged(nameof(Particulars));
+                }
+            }
+        }
+        public bool IsResale
+        {
+            get
+            {
+                return _IsResale;
+            }
+            set
+            {
+                if (_IsResale != value)
+                {
+                    _IsResale = value;
+                    NotifyPropertyChanged(nameof(IsResale));
+                }
+            }
+        }
         #endregion
 
         #region Property Changed

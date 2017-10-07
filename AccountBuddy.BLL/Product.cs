@@ -133,15 +133,28 @@ namespace AccountBuddy.BLL
 
             }
         }
-       
+
         public double AvailableStock
         {
             get
             {
-                return (OpeningStock  + (PQty?? 0) + (SRQty??0 )+ (SInQty??0)+ (JRQty??0)+(SSQty??0)) - ((SQty??0)  + (PRQty??0)+(SOutQty??0) +(JOQty??0)+(SPQty??0));
+                return (OpeningStock + (PQty ?? 0) + (SRQty ?? 0) + (SInQty ?? 0) + (JRQty ?? 0) + (SSQty ?? 0)) - ((SQty ?? 0) + (PRQty ?? 0) + (SOutQty ?? 0) + (JOQty ?? 0) + (SPQty ?? 0));
             }
         }
-
+        public double StockLeftForSales
+        {
+            get
+            {
+                return (OpeningStock + (PQty ?? 0) + (SRQtyForSales ?? 0) + (SInQty ?? 0) + (JRQty ?? 0) + (SSQty ?? 0)) - ((SQty ?? 0) + (PRQty ?? 0) + (SOutQty ?? 0) + (JOQty ?? 0) + (SPQty ?? 0));
+            }
+        }
+        public double StockLeftNotForSales
+        {
+            get
+            {
+                return (double)(SRQtyNotForSales ?? 0);
+            }
+        }
         public bool IsReOrderLevel
         {
             get
@@ -256,15 +269,47 @@ namespace AccountBuddy.BLL
 
             }
         }
+        public double? SRQtyForSales
+        {
+            get
+            {
+                return _SRQtyForSales;
+            }
+            set
+            {
+                if (_SRQtyForSales != value)
+                {
+                    _SRQtyForSales = value;
+                    NotifyPropertyChanged(nameof(SRQtyForSales));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
 
+            }
+        }
+        public double? SRQtyNotForSales
+        {
+            get
+            {
+                return _SRQtyNotForSales;
+            }
+            set
+            {
+                if (_SRQtyNotForSales != value)
+                {
+                    _SRQtyNotForSales = value;
+                    NotifyPropertyChanged(nameof(SRQtyNotForSales));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
 
+            }
+        }
         #endregion
 
 
         #region Fileds
 
         private static ObservableCollection<Product> _toList;
-       
+
         private int _Id;
         private string _ProductName;
         private StockGroup _StockGroup;
@@ -277,7 +322,7 @@ namespace AccountBuddy.BLL
         private decimal _MaxSellingRate;
         private decimal _MinSellingRate;
         private decimal _MRP;
-        private decimal _Discount;      
+        private decimal _Discount;
         private double _OpeningStock;
         private double _ReOrderLevel;
 
@@ -304,6 +349,9 @@ namespace AccountBuddy.BLL
 
 
         private decimal _DiscountAmount;
+        private double? _SRQtySales;
+        private double? _SRQtyForSales;
+        private double? _SRQtyNotForSales;
 
         #endregion
 
@@ -406,10 +454,10 @@ namespace AccountBuddy.BLL
                 {
                     _ProductName = value;
                     NotifyPropertyChanged(nameof(ProductName));
-                   
+
                 }
             }
-        }      
+        }
         public int StockGroupId
         {
             get
@@ -663,7 +711,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+
         #endregion
 
         #region Property  Changed Event
@@ -701,7 +749,7 @@ namespace AccountBuddy.BLL
                         }
                         else
                         {
-                            var d1 = toList.Where(x => x.Id == d.Id).FirstOrDefault();                            
+                            var d1 = toList.Where(x => x.Id == d.Id).FirstOrDefault();
                             d.toCopy<Product>(d1);
                         }
                         return true;
@@ -788,7 +836,7 @@ namespace AccountBuddy.BLL
         {
             _toList = null;
         }
-        
+
         #endregion
 
 

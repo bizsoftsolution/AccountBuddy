@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 namespace AccountBuddy.BLL
 {
-    public class PurchaseReturnDetail:INotifyPropertyChanged
+    public class PurchaseReturnDetail : INotifyPropertyChanged
     {
         #region Field
         private long _Id;
@@ -23,6 +23,8 @@ namespace AccountBuddy.BLL
         private string _ItemCode;
         private string _ProductName;
         private string _UOMName;
+        private bool _IsResale;
+        private string _Particulars;
         #endregion
 
         #region Property
@@ -205,7 +207,30 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
+        public bool IsResale
+        {
+            get
+            {
+                return _IsResale;
+            }
+            set
+            {
+                _IsResale = value;
+                NotifyPropertyChanged(nameof(IsResale));
+            }
+        }
+        public string Particulars
+        {
+            get
+            {
+                return _Particulars;
+            }
+            set
+            {
+                _Particulars = value;
+                NotifyPropertyChanged(nameof(Particulars));
+            }
+        }
         private void SetProductbyItemCode(Product p)
         {
             UOMId = p.UOMId;

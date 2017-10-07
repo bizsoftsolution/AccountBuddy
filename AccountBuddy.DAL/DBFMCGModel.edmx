@@ -417,6 +417,8 @@
           <Property Name="DiscountAmount" Type="money" Nullable="false" />
           <Property Name="GSTAmount" Type="money" Nullable="false" />
           <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsResale" Type="bit" />
+          <Property Name="Particulars" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Receipt">
           <Key>
@@ -548,6 +550,8 @@
           <Property Name="DiscountAmount" Type="money" Nullable="false" />
           <Property Name="GSTAmount" Type="money" Nullable="false" />
           <Property Name="Amount" Type="money" />
+          <Property Name="IsResale" Type="bit" />
+          <Property Name="Particulars" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Staff">
           <Key>
@@ -3246,6 +3250,8 @@
           <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="IsResale" Type="Boolean" />
+          <Property Name="Particulars" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_PurchaseReturnDetail_Product" FromRole="PurchaseReturnDetail" ToRole="Product" />
           <NavigationProperty Name="PurchaseDetail" Relationship="DBFMCGModel.FK_PurchaseReturnDetail_PurchaseDetail" FromRole="PurchaseReturnDetail" ToRole="PurchaseDetail" />
           <NavigationProperty Name="PurchaseReturn" Relationship="DBFMCGModel.FK_PurchaseReturnDetail_PurchaseReturn" FromRole="PurchaseReturnDetail" ToRole="PurchaseReturn" />
@@ -3402,6 +3408,8 @@
           <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsResale" Type="Boolean" />
+          <Property Name="Particulars" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_SalesReturnDetail_Product" FromRole="SalesReturnDetail" ToRole="Product" />
           <NavigationProperty Name="SalesDetail" Relationship="DBFMCGModel.FK_SalesReturnDetail_SalesDetail" FromRole="SalesReturnDetail" ToRole="SalesDetail" />
           <NavigationProperty Name="SalesReturn" Relationship="DBFMCGModel.FK_SalesReturnDetail_SalesReturn" FromRole="SalesReturnDetail" ToRole="SalesReturn" />
@@ -5223,6 +5231,8 @@
           <EntitySetMapping Name="PurchaseReturnDetails">
             <EntityTypeMapping TypeName="DBFMCGModel.PurchaseReturnDetail">
               <MappingFragment StoreEntitySet="PurchaseReturnDetail">
+                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="IsResale" ColumnName="IsResale" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
                 <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
@@ -5362,6 +5372,8 @@
           <EntitySetMapping Name="SalesReturnDetails">
             <EntityTypeMapping TypeName="DBFMCGModel.SalesReturnDetail">
               <MappingFragment StoreEntitySet="SalesReturnDetail">
+                <ScalarProperty Name="Particulars" ColumnName="Particulars" />
+                <ScalarProperty Name="IsResale" ColumnName="IsResale" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
                 <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />

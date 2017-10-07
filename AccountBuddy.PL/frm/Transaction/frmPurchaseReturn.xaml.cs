@@ -64,9 +64,15 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtQty.Focus();
             }
+            else if (data.PRDetail.Particulars == null)
+            {
+                MessageBox.Show("Enter reason for return", FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                txtParticulars.Focus();
+            }
             else
             {
                 data.SaveDetail();
+                ckbIsReSale.IsChecked = false;
             }
         }
 
@@ -310,6 +316,15 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.Text = AppLib.NumericOnly(txtChequeNo.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
+        }
+        private void ckbIsReSale_Checked(object sender, RoutedEventArgs e)
+        {
+            data.PRDetail.IsResale = true;
+        }
+
+        private void ckbIsReSale_Unchecked(object sender, RoutedEventArgs e)
+        {
+            data.PRDetail.IsResale = false;
         }
     }
 }

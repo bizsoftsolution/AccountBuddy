@@ -31,7 +31,7 @@ namespace AccountBuddy.Common
                                            frmPurchase = "AccountBuddy.PL.frm.Transaction.frmPurchase",
                                            frmPurchaseReturn = "AccountBuddy.PL.frm.Transaction.frmPurchaseReturn",
                                            frmSalesOrder = "AccountBuddy.PL.frm.Transaction.frmSalesOrder",
-                                           frmSales = "AccountBuddy.PL.frm.Transaction.frmSales",
+                                           frmSales = "AccountBuddy.PL.frm.Transaction.frmSale",
                                            frmSalesReturn = "AccountBuddy.PL.frm.Transaction.frmSalesReturn",
                                            frmStockInOut = "AccountBuddy.PL.frm.Transaction.frmStockInOut",
                                            frmStockOut = "AccountBuddy.PL.frm.Transaction.frmStockOut",
