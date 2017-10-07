@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AccountBuddy.Common;
 
+
 namespace AccountBuddy.BLL
 {
     public class Payment : INotifyPropertyChanged

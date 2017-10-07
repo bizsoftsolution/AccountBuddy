@@ -38,6 +38,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.SRDetail.IsResale = false;
         }
         private void onClientEvents()
         {
@@ -66,9 +67,15 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtRate.Focus();
             }
+            else if (data.SRDetail.Particulars == null)
+            {
+                MessageBox.Show("Enter reason for return", FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                txtParticulars.Focus();
+            }
             else
             {
                 data.SaveDetail();
+                ckbIsReSale.IsChecked = false;
             }
         }
 
@@ -84,6 +91,7 @@ namespace AccountBuddy.PL.frm.Transaction
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
+            ckbIsReSale.IsChecked = false;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -102,12 +110,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbPType.Text == "Cheque" && BLL.Bank.toList.Count == 0)
-            {
-                MessageBox.Show("Enter Bank Details for check Transaction", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                App.frmHome.ShowBank();
-            }
-            else if (data.RefNo == null)
+            if (data.RefNo == null)
             {
                 MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "SR Code"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtRefNo.Focus();
@@ -123,21 +126,6 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Transaction_ItemDetails_Validation), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbItem.Focus();
             }
-            else if (cmbPType.Text == "Cheque" && txtChequeNo.Text == "")
-            {
-                MessageBox.Show("Enter cheque No", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                txtChequeNo.Focus();
-            }
-            else if (cmbPType.Text == "Cheque" && dtpChequeDate.Text == "")
-            {
-                MessageBox.Show("Enter cheque Date", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                dtpChequeDate.Focus();
-            }
-            else if (cmbPType.Text == "Cheque" && txtBankName.Text == "")
-            {
-                MessageBox.Show("Enter Bank Name", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                txtBankName.Focus();
-            }
             else if (data.FindRefNo() == false)
             {
                 var rv = data.Save();
@@ -152,7 +140,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     data.Clear();
 
                     btnPrint.IsEnabled = false;
-
+                    ckbIsReSale.IsChecked = false;
                 }
             }
             else
@@ -323,14 +311,14 @@ namespace AccountBuddy.PL.frm.Transaction
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
         }
 
-        private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)
+        private void ckbIsReSale_Checked(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtChequeNo.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+            data.SRDetail.IsResale = true;
+        }
 
+        private void ckbIsReSale_Unchecked(object sender, RoutedEventArgs e)
+        {
+            data.SRDetail.IsResale = false;
         }
     }
 }

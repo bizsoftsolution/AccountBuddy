@@ -141,7 +141,20 @@ namespace AccountBuddy.BLL
                 return (OpeningStock  + (PQty?? 0) + (SRQty??0 )+ (SInQty??0)+ (JRQty??0)+(SSQty??0)) - ((SQty??0)  + (PRQty??0)+(SOutQty??0) +(JOQty??0)+(SPQty??0));
             }
         }
-
+        public double StockLeftForSales
+        {
+            get
+            {
+                return (OpeningStock + (PQty ?? 0) + (SRQtyForSales ?? 0) + (SInQty ?? 0) + (JRQty ?? 0) + (SSQty ?? 0)) - ((SQty ?? 0) + (PRQty ?? 0) + (SOutQty ?? 0) + (JOQty ?? 0) + (SPQty ?? 0));
+            }
+        }
+        public double StockLeftNotForSales
+        {
+            get
+            {
+                return (double)(SRQtyNotForSales??0);
+            }
+        }
         public bool IsReOrderLevel
         {
             get
@@ -256,8 +269,40 @@ namespace AccountBuddy.BLL
 
             }
         }
+        public double? SRQtyForSales
+        {
+            get
+            {
+                return _SRQtyForSales;
+            }
+            set
+            {
+                if (_SRQtyForSales!= value)
+                {
+                    _SRQtyForSales = value;
+                    NotifyPropertyChanged(nameof(SRQtyForSales));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
 
+            }
+        }
+        public double? SRQtyNotForSales
+        {
+            get
+            {
+                return _SRQtyNotForSales;
+            }
+            set
+            {
+                if (_SRQtyNotForSales != value)
+                {
+                    _SRQtyNotForSales = value;
+                    NotifyPropertyChanged(nameof(SRQtyNotForSales));
+                    NotifyPropertyChanged(nameof(AvailableStock));
+                }
 
+            }
+        }
         #endregion
 
 
@@ -304,6 +349,9 @@ namespace AccountBuddy.BLL
 
 
         private decimal _DiscountAmount;
+        private double? _SRQtySales;
+        private double? _SRQtyForSales;
+        private double? _SRQtyNotForSales;
 
         #endregion
 
