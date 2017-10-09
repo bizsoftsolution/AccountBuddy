@@ -142,7 +142,7 @@
                 </Grid>
                 <Grid Grid.Row="2">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                        <CheckBox x:Name="ckbIsReSale" IsChecked="{Binding PRDetail.IsResale,Mode=TwoWay}" Checked="ckbIsReSale_Checked" Unchecked="ckbIsReSale_Unchecked" FontSize="14" >Is Resale</CheckBox>
+                        <CheckBox x:Name="ckbIsReSale" IsChecked="{Binding PRDetail.IsResale,Mode=TwoWay}" Checked="ckbIsReSale_Checked" Unchecked="ckbIsReSale_Unchecked" FontSize="14" >Resale</CheckBox>
                         <TextBox x:Name="txtParticulars" materialDesign:HintAssist.Hint="Particulars" Text="{Binding PRDetail.Particulars,Mode=TwoWay}" TextWrapping="Wrap" Width="450" Margin="20,0,60,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontSize="14" FontWeight="Bold"/>
                         <Button Margin="0,0,10,0" x:Name="btnAdd" Background="Transparent" BorderThickness="1" ToolTip="Add Item"  Width="57" Height="36" Click="btnAdd_Click"  >
                             <materialDesign:PackIcon Kind="Plus" Height="26" Width="28" Foreground="{DynamicResource PrimaryHueLightBrush}" Margin="0" RenderTransformOrigin="0.125,0.692"  />
