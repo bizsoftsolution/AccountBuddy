@@ -252,7 +252,7 @@ namespace AccountBuddy.BLL
             new JobWorker().toCopy<JobWorker>(this);
             this.Ledger.Clear();
             this.Ledger.AccountGroupId = BLL.DataKeyValue.SundryCreditors;
-
+            IsReadOnly = !UserPermission.AllowInsert;
             NotifyAllPropertyChanged();
         }
 

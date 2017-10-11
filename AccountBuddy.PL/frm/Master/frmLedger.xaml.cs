@@ -56,7 +56,7 @@ namespace AccountBuddy.PL.frm.Master
 
             var AUGIds = BLL.AccountGroup.toList.Select(x => x.UnderGroupId).ToList();
 
-            cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.Where(x=> !AUGIds.Contains(x.Id)).ToList();
+            cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.Where(x => !AUGIds.Contains(x.Id)).ToList();
             cmbAccountGroupId.DisplayMemberPath = "GroupName";
             cmbAccountGroupId.SelectedValuePath = "Id";
 
@@ -84,11 +84,11 @@ namespace AccountBuddy.PL.frm.Master
                 MessageBox.Show("Please Enter the Valid Email or Leave Empty");
 
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
+            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmLedger))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmLedger))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -148,10 +148,22 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvLedger_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvLedger.SelectedItem as BLL.Ledger;
-            if (d != null)
+            EditItem();
+        }
+
+        private void EditItem()
+        {
+            try
             {
-                data.Find(d.Id);
+                var d = dgvLedger.SelectedItem as BLL.Ledger;
+                if (d != null)
+                {
+                    data.Find(d.Id);
+                }
+            }
+            catch(Exception ex)
+            {
+
             }
         }
 
@@ -351,11 +363,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvLedger_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvLedger.SelectedItem as BLL.Ledger;
-            if (d != null)
-            {
-                data.Find(d.Id);
-            }
+            EditItem();
         }
 
         private void txtMail_TextChanged(object sender, TextChangedEventArgs e)
@@ -383,11 +391,11 @@ namespace AccountBuddy.PL.frm.Master
             if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
             {
                 MessageBox.Show("Please Enter the Valid Email or Leave Empty");
-               
+
             }
 
         }
 
-      
+
     }
 }

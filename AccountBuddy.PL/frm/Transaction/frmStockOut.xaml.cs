@@ -105,17 +105,22 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.RefNo == null)
+            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmStockOut))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmStockOut))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.RefNo == null)
             {
                 MessageBox.Show("Enter Reference No");
-
             }
             else if (data.LedgerName == null)
             {
                 MessageBox.Show("Enter Supplier");
-
             }
-
             else if (data.STOutDetails.Count == 0)
             {
                 MessageBox.Show("Enter Product Details");
@@ -222,8 +227,6 @@ namespace AccountBuddy.PL.frm.Transaction
 
         #endregion
 
-
-
         private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
         {
             cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
@@ -233,6 +236,8 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
 
             cmbItem.ItemsSource = BLL.Product.toList.ToList();

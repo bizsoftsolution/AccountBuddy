@@ -217,7 +217,7 @@ namespace AccountBuddy.BLL
             new Supplier().toCopy<Supplier>(this);
             this.Ledger.Clear();
             Ledger.AccountGroupId = BLL.DataKeyValue.SundryCreditors;
-            NotifyAllPropertyChanged();
+            IsReadOnly = !UserPermission.AllowInsert; NotifyAllPropertyChanged();
         }
 
         public bool Find(int pk)

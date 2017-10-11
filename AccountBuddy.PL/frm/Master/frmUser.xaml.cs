@@ -25,9 +25,7 @@ namespace AccountBuddy.PL.frm.Master
         public frmUser()
         {
             InitializeComponent();
-
-            this.DataContext = data;            
-           
+            this.DataContext = data;
         }
         public void LoadWindow(int CompanyId)
         {
@@ -43,13 +41,20 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            data.Clear();            
+            data.Clear();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-           
-            if (data.Save() == true)
+            if (data.Id == 0 && BLL.UserAccount.UserPermission.AllowInsert == false)
+            {
+                MessageBox.Show("No Permission to Insert", "New User", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (data.Id != 0 && BLL.UserAccount.UserPermission.AllowUpdate == false)
+            {
+                MessageBox.Show("No Permission to Update", "New User", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (data.Save() == true)
             {
                 MessageBox.Show(Message.PL.Saved_Alert);
                 if (BLL.UserAccount.User.Id == data.Id)
@@ -68,10 +73,27 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnUserTypeSetting_Click(object sender, RoutedEventArgs e)
         {
-            frmUserType frm = new frmUserType();
-            frm.UnderCompanyId = UnderCompanyId;
-            frm.LoadWindow(UnderCompanyId);
-            frm.ShowDialog();
+           
+                frmUserType frm = new frmUserType();
+                frm.UnderCompanyId = UnderCompanyId;
+                frm.LoadWindow(UnderCompanyId);
+                frm.ShowDialog();
+           
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+
+            //if (BLL.UserAccount.AllowInsert(Common.Forms.frmUserType)|| BLL.UserAccount.AllowUpdate(Common.Forms.frmUserType))
+            //{
+            //    btnUserTypeSetting.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{
+            //    btnUserTypeSetting.Visibility = Visibility.Collapsed;
+            //}
+
         }
     }
 }

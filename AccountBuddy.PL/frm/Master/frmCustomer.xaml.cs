@@ -71,11 +71,11 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Customer Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
+            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmCustomer))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmCustomer))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -142,11 +142,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvCustomer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvCustomer.SelectedItem as BLL.Customer;
-            if (d != null)
-            {
-                data.Find(d.Id);
-            }
+            EditItem();
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -301,7 +297,21 @@ namespace AccountBuddy.PL.frm.Master
 
             }));
         }
-
+        private void EditItem()
+        {
+            try
+            {
+                var d = dgvCustomer.SelectedItem as BLL.Customer;
+                if (d != null)
+                {
+                    data.Find(d.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }           
+        }
         #endregion
 
         private void txtCreditAmount_TextChanged(object sender, TextChangedEventArgs e)
@@ -340,11 +350,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvCustomer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvCustomer.SelectedItem as BLL.Customer;
-            if (d != null)
-            {
-                data.Find(d.Id);
-            }
+            EditItem();
         }
 
         private void txtMail_TextChanged(object sender, TextChangedEventArgs e)

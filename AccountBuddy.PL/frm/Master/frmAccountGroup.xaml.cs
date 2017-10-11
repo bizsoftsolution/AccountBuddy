@@ -37,9 +37,9 @@ namespace AccountBuddy.PL.frm.Master
             this.DataContext = data;
             data.Clear();
             RptAccount.SetDisplayMode(DisplayMode.PrintLayout);
-         
+
             onClientEvents();
-           
+
         }
 
         #endregion
@@ -50,14 +50,9 @@ namespace AccountBuddy.PL.frm.Master
         {
             BLL.AccountGroup.Init();
             dgvAccount.ItemsSource = BLL.AccountGroup.toList;
-            
 
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Filter = AccountGroup_Filter;
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
-
-            
-
-            
 
             rptContain.IsChecked = true;
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
@@ -72,11 +67,11 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(String.Format(Message.BLL.Required_Data, "Group Name"));
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
+            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Common.Forms.frmAccountGroup))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Common.Forms.frmAccountGroup))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -106,7 +101,7 @@ namespace AccountBuddy.PL.frm.Master
                 }
                 else
                 {
-                    if (MessageBox.Show(Message.PL.Delete_confirmation, "",MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
                     {
                         if (data.Delete() == true)
                         {
@@ -138,10 +133,17 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvAccount_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvAccount.SelectedItem as BLL.AccountGroup;
-            if (d != null)
+            if (BLL.AccountGroup.UserPermission.AllowUpdate)
             {
-                data.Find(d.Id);
+                var d = dgvAccount.SelectedItem as BLL.AccountGroup;
+                if (d != null)
+                {
+                    data.Find(d.Id);
+                }
+            }
+            else
+            {
+                MessageBox.Show(string.Format("No Permission to edit this item"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -193,7 +195,7 @@ namespace AccountBuddy.PL.frm.Master
         private bool AccountGroup_Filter(object obj)
         {
             bool RValue = false;
-           var d = obj as BLL.AccountGroup;
+            var d = obj as BLL.AccountGroup;
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
@@ -202,12 +204,12 @@ namespace AccountBuddy.PL.frm.Master
 
                 foreach (var p in d.GetType().GetProperties())
                 {
-                    if (    p.Name.ToLower().Contains("id") || 
-                            p.GetValue(d) == null || 
-                            (   p.Name != nameof(d.GroupName) && 
-                                p.Name !=nameof(d.UnderAccountGroup.GroupName) &&
-                                p.Name !=nameof(d.GroupCode)
-                             
+                    if (p.Name.ToLower().Contains("id") ||
+                            p.GetValue(d) == null ||
+                            (p.Name != nameof(d.GroupName) &&
+                                p.Name != nameof(d.UnderAccountGroup.GroupName) &&
+                                p.Name != nameof(d.GroupCode)
+
 
                              )
                         ) continue;
@@ -255,7 +257,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 RptAccount.Reset();
-                ReportDataSource data = new ReportDataSource("AccountGroup", BLL.AccountGroup.toList.Where(x => AccountGroup_Filter(x)).Select(x=>new {x.GroupCode, x.GroupName, underGroupName=x.UnderAccountGroup.GroupName }).OrderBy(x => x.GroupCode).ToList());
+                ReportDataSource data = new ReportDataSource("AccountGroup", BLL.AccountGroup.toList.Where(x => AccountGroup_Filter(x)).Select(x => new { x.GroupCode, x.GroupName, underGroupName = x.UnderAccountGroup.GroupName }).OrderBy(x => x.GroupCode).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptAccount.LocalReport.DataSources.Add(data);
                 RptAccount.LocalReport.DataSources.Add(data1);
@@ -300,28 +302,29 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvAccount_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvAccount.SelectedItem as BLL.AccountGroup;
-            if (d != null)
+            if (BLL.AccountGroup.UserPermission.AllowUpdate)
             {
-                data.Find(d.Id);
-            }
-        }
-
-        private void trvAccount_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                var d = trvAccount.SelectedItem as BLL.AccountGroup;
+                var d = dgvAccount.SelectedItem as BLL.AccountGroup;
                 if (d != null)
                 {
                     data.Find(d.Id);
                 }
             }
-            catch(Exception ex) { }
-            
-
+            else
+            {
+                MessageBox.Show(string.Format("No Permission to edit this item"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
-       void clear()
+
+        private void trvAccount_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var d = trvAccount.SelectedItem as BLL.AccountGroup;
+            if (d != null)
+            {
+                data.Find(d.Id);
+            }
+        }
+        void clear()
         {
             data.Clear();
             trvAccount.ItemsSource = BLL.AccountGroup.toGroup(BLL.DataKeyValue.Primary_Value);

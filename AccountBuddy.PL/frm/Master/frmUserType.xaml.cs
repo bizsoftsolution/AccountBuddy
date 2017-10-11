@@ -56,11 +56,11 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
+            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Common.Forms.frmUserType))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Common.Forms.frmUserType))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }

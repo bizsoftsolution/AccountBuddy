@@ -22,17 +22,17 @@ namespace AccountBuddy.PL.frm.Master
     /// </summary>
     public partial class frmUserManager : MetroWindow
     {
-        public  int CompanyId;
+        public int CompanyId;
 
         public frmUserManager()
         {
             InitializeComponent();
             onClientEvents();
-            
-    }
+
+        }
 
 
-    private void onClientEvents()
+        private void onClientEvents()
         {
 
 
@@ -50,32 +50,49 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void btnNewUser_Click(object sender, RoutedEventArgs e)
         {
-            frmUser f = new frmUser();
-            f.UnderCompanyId = CompanyId;
-            f.LoadWindow(CompanyId);
-            f.ShowDialog();
-            LoadWindow(CompanyId);
-            //f.data.UserType.CompanyId = userId;
+           
+                frmUser f = new frmUser();
+                f.UnderCompanyId = CompanyId;
+                f.LoadWindow(CompanyId);
+                f.ShowDialog();
+                LoadWindow(CompanyId);
+                //f.data.UserType.CompanyId = userId;
+            
+
 
         }
 
         private void btnEditUser_Click(object sender, RoutedEventArgs e)
         {
-            var u = dgvUsers.SelectedItem as BLL.UserAccount;
+            if (BLL.UserAccount.AllowUpdate(Forms.frmUser))
+            {
+                var u = dgvUsers.SelectedItem as BLL.UserAccount;
 
-            frmUser f = new frmUser();
-            f.UnderCompanyId = CompanyId;
-            f.LoadWindow(CompanyId);
-            u.toCopy<BLL.UserAccount>(f.data);            
-            f.ShowDialog();
-            LoadWindow(CompanyId);
+                frmUser f = new frmUser();
+                f.UnderCompanyId = CompanyId;
+                f.LoadWindow(CompanyId);
+                u.toCopy<BLL.UserAccount>(f.data);
+                f.ShowDialog();
+                LoadWindow(CompanyId);
+            }
+            else
+            {
+                MessageBox.Show("No Permission to Update", "Users", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+
 
         }
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
         {
             var u = dgvUsers.SelectedItem as BLL.UserAccount;
-            if (u != null)
+            if (!BLL.UserAccount.AllowDelete(Forms.frmUserType))
+            {
+                MessageBox.Show("No Permission to Delete", "Users", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            else if (u != null)
             {
                 if (BLL.UserAccount.toList.Count() == 1)
                 {
@@ -95,11 +112,11 @@ namespace AccountBuddy.PL.frm.Master
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-         
+
         }
 
         public void LoadWindow(int CompanyId)
-        {                       
+        {
             dgvUsers.ItemsSource = BLL.UserAccount.toList.Where(x => x.UserType.CompanyId == CompanyId).ToList();
         }
 

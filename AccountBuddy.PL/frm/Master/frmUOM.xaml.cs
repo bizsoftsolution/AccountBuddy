@@ -72,11 +72,11 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(String.Format(Message.BLL.Required_Data, "Formal Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
+            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Common.Forms.frmUOM))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Common.Forms.frmUOM))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }

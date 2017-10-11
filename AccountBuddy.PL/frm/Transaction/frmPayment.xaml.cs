@@ -61,11 +61,11 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
+            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmPayment))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmPayment))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -192,7 +192,6 @@ namespace AccountBuddy.PL.frm.Transaction
             catch (Exception ex) { }
 
         }
-
         private void btnDeleteDetail_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -206,14 +205,11 @@ namespace AccountBuddy.PL.frm.Transaction
             catch (Exception ex) { }
 
         }
-
         private void btnDClear_Click(object sender, RoutedEventArgs e)
         {
             data.ClearDetail();
         }
-
-       
-
+      
         private void txtAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -233,12 +229,9 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
-
-      
-
+     
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
             cmbCreditAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts");
             cmbCreditAC.SelectedValuePath = "Id";
             cmbCreditAC.DisplayMemberPath = "AccountName";

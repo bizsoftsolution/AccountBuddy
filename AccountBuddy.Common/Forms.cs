@@ -20,7 +20,7 @@ namespace AccountBuddy.Common
                                            frmStaff = "AccountBuddy.PL.frm.Master.frmStaff",
                                            frmStockGroup = "AccountBuddy.PL.frm.Master.frmStockGroup",
                                            frmUOM = "AccountBuddy.PL.frm.Master.frmUOM",
-                                           frmProducts = " AccountBuddy.PL.frm.Master.frmProducts",
+                                           frmProducts = "AccountBuddy.PL.frm.Master.frmProducts",
            frmJobWorker= "AccountBuddy.PL.frm.Master.frmJobWorker",
 
                                            frmPayment = "AccountBuddy.PL.frm.Transaction.frmPayment",

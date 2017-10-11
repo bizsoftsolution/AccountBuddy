@@ -94,7 +94,15 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.RefNo == null)
+            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmStockInProcess))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmStockInProcess))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.RefNo == null)
             {
                 MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "SP Code"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtRefNo.Focus();
@@ -296,6 +304,8 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

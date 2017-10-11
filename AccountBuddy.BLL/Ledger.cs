@@ -599,6 +599,7 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new Ledger().toCopy<Ledger>(this);
+            IsReadOnly = !UserPermission.AllowInsert;
             NotifyAllPropertyChanged();
         }
 

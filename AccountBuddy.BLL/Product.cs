@@ -349,7 +349,7 @@ namespace AccountBuddy.BLL
 
 
         private decimal _DiscountAmount;
-        private double? _SRQtySales;
+       
         private double? _SRQtyForSales;
         private double? _SRQtyNotForSales;
 
@@ -774,6 +774,7 @@ namespace AccountBuddy.BLL
         {
             new Product().toCopy<Product>(this);
             NotifyAllPropertyChanged();
+            IsReadOnly = !UserPermission.AllowInsert;
         }
 
         public bool Find(int pk)

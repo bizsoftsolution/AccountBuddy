@@ -11,7 +11,7 @@
                    ShowMaxRestoreButton="False"
                    ShowMinButton="False"
                    ResizeMode="NoResize"
-                Title="User Login" Height="400" Width="350" WindowStartupLocation="CenterScreen" >
+                Title="User Login" Height="400" Width="350" WindowStartupLocation="CenterScreen" Loaded="MetroWindow_Loaded" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{DynamicResource FormHeadHeight}"/>

@@ -78,12 +78,14 @@ namespace AccountBuddy.PL.frm.Master
                 btnDelete.Visibility = Visibility.Collapsed;
             }
 
-            var l = BLL.Ledger.toList.Where(x=>x.AccountGroup.GroupName==BLL.DataKeyValue.BankAccounts_Key).ToList();
+            var l = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.BankAccounts_Key).ToList();
             cmbBank.ItemsSource = l;
             cmbBank.DisplayMemberPath = "LedgerName";
             cmbBank.SelectedValuePath = "Id";
             cmbBank.SelectedItem = l.FirstOrDefault();
-           
+            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+
 
         }
         private void Grid_Refresh()
@@ -107,11 +109,11 @@ namespace AccountBuddy.PL.frm.Master
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
 
-            if (!BLL.UserAccount.AllowInsert(FormName))
+            if (data.Id==0&&!BLL.UserAccount.AllowInsert(Forms.frmCompanySetting))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (!BLL.UserAccount.AllowUpdate(FormName))
+            else if (data.Id!=0&&!BLL.UserAccount.AllowUpdate(Forms.frmCompanySetting))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -125,7 +127,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (data.Save() == true)
                 {
                     MessageBox.Show(Message.PL.Saved_Alert);
-                   App.frmHome.ShowWelcome();
+                    App.frmHome.ShowWelcome();
                 }
             }
 
@@ -163,59 +165,83 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnNewWareHouse_Click(object sender, RoutedEventArgs e)
         {
-            frmCompanySignup f = new frmCompanySignup();
-            f.data.Clear();
-            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
-            f.data.CompanyType = "Warehouse";
-            f.Title = "New Warehouse";
-            f.ShowDialog();
-            List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
+            if (!BLL.UserAccount.AllowInsert(Forms.frmCompanySetting))
+            {
+                MessageBox.Show("No Permission to insert new warehouse", "New Warehouse", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                frmCompanySignup f = new frmCompanySignup();
+                f.data.Clear();
+                f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
+                f.data.CompanyType = "Warehouse";
+                f.Title = "New Warehouse";
+                f.ShowDialog();
+                List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
 
-            lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
-            dgvWarehouse.ItemsSource = lstCompany;
+                lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
+                dgvWarehouse.ItemsSource = lstCompany;
+            }
 
         }
 
         private void btnNewDealer_Click(object sender, RoutedEventArgs e)
         {
 
-            frmCompanySignup f = new frmCompanySignup();
-            f.data.Clear();
-            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
-            f.data.CompanyType = "Dealer";
-            f.Title = "New Dealer";
-            f.ShowDialog();
-            List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
+            if (!BLL.UserAccount.AllowInsert(Forms.frmCompanySetting))
+            {
+                MessageBox.Show("No Permission to insert new dealer", "New Dealer", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                frmCompanySignup f = new frmCompanySignup();
+                f.data.Clear();
+                f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
+                f.data.CompanyType = "Dealer";
+                f.Title = "New Dealer";
+                f.ShowDialog();
+                List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
 
-            lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
+                lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
 
-            dgvDealer.ItemsSource = lstCompany;
-
+                dgvDealer.ItemsSource = lstCompany;
+            }
         }
 
         private void btnEditWarehouse_Click(object sender, RoutedEventArgs e)
         {
-            var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
 
-            frmCompanySignup f = new frmCompanySignup();
-            cm.toCopy<BLL.CompanyDetail>(f.data);
-            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
-            f.data.CompanyType = "Warehouse";
-            f.iLogoImage.Source = AppLib.ViewImage(cm.Logo);
-            f.iLogoImage.Tag = cm.Logo;
+            if (!BLL.UserAccount.AllowUpdate(Forms.frmCompanySetting))
+            {
+                MessageBox.Show("No Permission to Update", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
+                frmCompanySignup f = new frmCompanySignup();
+                cm.toCopy<BLL.CompanyDetail>(f.data);
+                f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
+                f.data.CompanyType = "Warehouse";
+                f.iLogoImage.Source = AppLib.ViewImage(cm.Logo);
+                f.iLogoImage.Tag = cm.Logo;
+                f.Title = "Edit Warehouse";
+                f.gbxLogin.Visibility = Visibility.Collapsed;
+                f.ShowDialog();
+                var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
+                dgvWarehouse.ItemsSource = lstCompany;
+            }
 
-            f.Title = "Edit Warehouse";
-            f.gbxLogin.Visibility = Visibility.Collapsed;
-            f.ShowDialog();
-            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
-            dgvWarehouse.ItemsSource = lstCompany;
         }
 
         private void btnDeleteWarehouse_Click(object sender, RoutedEventArgs e)
         {
             var d = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
             data = d;
-            if (d.Id != 0)
+            if (!BLL.UserAccount.AllowDelete(Forms.frmCompanySetting))
+            {
+                MessageBox.Show("No Permission to Delete", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (d.Id != 0)
             {
                 if (!BLL.UserAccount.AllowDelete(FormName))
                 {
@@ -254,56 +280,70 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnEditDealer_Click(object sender, RoutedEventArgs e)
         {
-            var cm = dgvDealer.SelectedItem as BLL.CompanyDetail;
+            if (!BLL.UserAccount.AllowUpdate(Forms.frmCompanySetting))
+            {
+                MessageBox.Show("No Permission to Update", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                var cm = dgvDealer.SelectedItem as BLL.CompanyDetail;
 
-            frmCompanySignup f = new frmCompanySignup();
-            cm.toCopy<BLL.CompanyDetail>(f.data);
-            f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
-            f.data.CompanyType = "Dealer";
-            f.iLogoImage.Source = AppLib.ViewImage(cm.Logo);
-            f.iLogoImage.Tag = cm.Logo;
-            f.Title = "Edit Dealer";
-            f.gbxLogin.Visibility = Visibility.Collapsed;
-            f.ShowDialog();
-            var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
-            dgvDealer.ItemsSource = lstCompany;
+                frmCompanySignup f = new frmCompanySignup();
+                cm.toCopy<BLL.CompanyDetail>(f.data);
+                f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
+                f.data.CompanyType = "Dealer";
+                f.iLogoImage.Source = AppLib.ViewImage(cm.Logo);
+                f.iLogoImage.Tag = cm.Logo;
+                f.Title = "Edit Dealer";
+                f.gbxLogin.Visibility = Visibility.Collapsed;
+                f.ShowDialog();
+                var lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
+                dgvDealer.ItemsSource = lstCompany;
 
+            }
         }
 
         private void btnDeleteDealer_Click(object sender, RoutedEventArgs e)
         {
             var d = dgvDealer.SelectedItem as BLL.CompanyDetail;
             data = d;
-            if (d.Id != 0)
+            if (!BLL.UserAccount.AllowDelete(Forms.frmCompanySetting))
             {
-                if (!BLL.UserAccount.AllowDelete(FormName))
+                MessageBox.Show("No Permission to Delete", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (d.Id != 0)
+            {
+                if (d.Id != 0)
                 {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
-                }
-
-                else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
-                {
-                    frmDeleteConfirmation frm = new frmDeleteConfirmation();
-                   frm.ShowDialog();
-                    if (frm.RValue == true)
+                    if (!BLL.UserAccount.AllowDelete(FormName))
                     {
+                        MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                    }
 
-                        if (data.DeleteWareHouse(d.Id))
-                        {
-                            MessageBox.Show(Message.PL.Delete_Alert);
-                            Grid_Refresh();
-                        }
-                        else
+                    else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    {
+                        frmDeleteConfirmation frm = new frmDeleteConfirmation();
+                        frm.ShowDialog();
+                        if (frm.RValue == true)
                         {
 
-                            MessageBox.Show(Message.PL.Cant_Delete_Alert);
+                            if (data.DeleteWareHouse(d.Id))
+                            {
+                                MessageBox.Show(Message.PL.Delete_Alert);
+                                Grid_Refresh();
+                            }
+                            else
+                            {
+
+                                MessageBox.Show(Message.PL.Cant_Delete_Alert);
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("No Records to Delete");
+                else
+                {
+                    MessageBox.Show("No Records to Delete");
+                }
             }
         }
 
@@ -456,13 +496,13 @@ namespace AccountBuddy.PL.frm.Master
 
         private void cmbBank_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(BLL.Bank.toList.Count!=0)
+            if (BLL.Bank.toList.Count != 0)
             {
                 var b = cmbBank.SelectedItem as BLL.Ledger;
                 AppLib.BankId = b.Id;
                 AppLib.BankName = b.LedgerName;
             }
-            
+
         }
     }
 }

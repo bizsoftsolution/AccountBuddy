@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
+      
+
         #region Account Group
         BLL.AccountGroup AccountGroupDAL_BLL(DAL.AccountGroup d)
         {
@@ -22,12 +25,14 @@ namespace AccountBuddy.SL.Hubs
             return DB.AccountGroups.Where(x => x.CompanyId == Caller.CompanyId && x.GroupName != "Primary").ToList()
                                .Select(x => AccountGroupDAL_BLL(x)).ToList();
         }
-
+        protected DbContext DbContext { get; set; }
+     
         public int AccountGroup_Save(BLL.AccountGroup agp)
         {
             try
             {
-                agp.CompanyId = Caller.CompanyId;
+            
+        agp.CompanyId = Caller.CompanyId;
                 DAL.AccountGroup d = DB.AccountGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)

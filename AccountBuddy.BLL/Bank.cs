@@ -19,6 +19,8 @@ namespace AccountBuddy.BLL
         private int _LedgerId;
         private static ObservableCollection<Bank> _toList;
         private static UserTypeDetail _UserPermission;
+        private bool _IsReadOnly;
+        private bool _IsEnabled;
         #endregion
 
         #region Property
@@ -135,6 +137,40 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public bool IsReadOnly
+        {
+            get
+            {
+                return _IsReadOnly;
+            }
+
+            set
+            {
+                if (_IsReadOnly != value)
+                {
+                    _IsReadOnly = value;
+                    NotifyPropertyChanged(nameof(IsReadOnly));
+                }
+                IsEnabled = !value;
+            }
+        }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+
+            set
+            {
+                if (_IsEnabled != value)
+                {
+                    _IsEnabled = value;
+                    NotifyPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
         #endregion
 
         #region Property  Changed Event
@@ -205,6 +241,7 @@ namespace AccountBuddy.BLL
             new Bank().toCopy<Bank>(this);
             this.Ledger.Clear();
             this.Ledger.AccountGroupId = DataKeyValue.BankAccounts_Value;
+            IsReadOnly = !UserPermission.AllowInsert;
             NotifyAllPropertyChanged();
         }
 

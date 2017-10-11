@@ -9,7 +9,7 @@
           mc:Ignorable="d" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
           
-           d:DesignHeight="600" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
+           d:DesignHeight="750" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -43,7 +43,7 @@
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="40"/>
-                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="350"/>
                     <RowDefinition Height="115"/>
 
                 </Grid.RowDefinitions>

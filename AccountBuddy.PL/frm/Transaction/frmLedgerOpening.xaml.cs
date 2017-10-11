@@ -203,17 +203,24 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var l1 in BLL.Ledger.toList)
+            if(BLL.Ledger.UserPermission.AllowUpdate)
             {
-                var l2 = lstLedgerOld.Where(x => x.Id == l1.Id).FirstOrDefault();
-                if (l1.OPDr != l2.OPDr || l1.OPCr != l2.OPCr)
+                foreach (var l1 in BLL.Ledger.toList)
                 {
-                    l1.Save();
+                    var l2 = lstLedgerOld.Where(x => x.Id == l1.Id).FirstOrDefault();
+                    if (l1.OPDr != l2.OPDr || l1.OPCr != l2.OPCr)
+                    {
+                        l1.Save();
+                    }
                 }
+                MessageBox.Show(Message.PL.Saved_Alert);
+                App.frmHome.ShowWelcome();
+                BLL.Ledger.Init();
             }
-            MessageBox.Show(Message.PL.Saved_Alert);
-            App.frmHome.ShowWelcome();
-            BLL.Ledger.Init();
+           else
+            {
+                MessageBox.Show(string.Format("No Permmission to update"), "Ledger Opening", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void dgvLedger_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)

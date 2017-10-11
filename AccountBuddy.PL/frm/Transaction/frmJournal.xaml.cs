@@ -105,11 +105,11 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             DiffAmt = Math.Abs(drAmt - crAmt);
-            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
+            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmJournal))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmJournal))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -278,6 +278,8 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnPrint.IsEnabled = false;
             }
+            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
         }
 

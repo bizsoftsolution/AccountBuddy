@@ -53,9 +53,7 @@ namespace AccountBuddy.PL.frm.Master
 
             CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).Filter = Bank_Filter;
             CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.AccountName), System.ComponentModel.ListSortDirection.Ascending));
-
             
-
             cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
 
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
@@ -82,11 +80,11 @@ namespace AccountBuddy.PL.frm.Master
                 MessageBox.Show("Please Enter the Valid Email or Leave Empty");
 
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(FormName))
+            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmBank))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(FormName))
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmBank))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -146,12 +144,10 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvBank_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var d = dgvBank.SelectedItem as BLL.Bank;
-            if (d != null)
-            {
-                data.Find(d.Id);
-            }
+            EditItem();
         }
+
+     
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -332,9 +328,22 @@ namespace AccountBuddy.PL.frm.Master
             }));
         }
 
+        private void EditItem()
+        {
+            try
+            {
+                var d = dgvBank.SelectedItem as BLL.Bank;
+                if (d != null)
+                {
+                    data.Find(d.Id);
+                }
+            }
+             catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }         
+        }
         #endregion
-
-       
 
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -363,11 +372,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void dgvBank_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var d = dgvBank.SelectedItem as BLL.Bank;
-            if (d != null)
-            {
-                data.Find(d.Id);
-            }
+            EditItem();
         }
 
         private void txtMail_TextChanged(object sender, TextChangedEventArgs e)

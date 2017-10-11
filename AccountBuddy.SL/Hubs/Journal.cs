@@ -43,9 +43,9 @@ namespace AccountBuddy.SL.Hubs
 
                     d = new DAL.Journal();
                     DB.Journals.Add(d);
-
+                    
                     PO.toCopy<DAL.Journal>(d);
-
+                  
                     foreach (var b_pod in PO.JDetails)
                     {
                         DAL.JournalDetail d_pod = new DAL.JournalDetail();
@@ -59,7 +59,7 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
 
-                    foreach (var d_SOd in d.JournalDetails)
+                    foreach (var d_SOd in d.JournalDetails.ToList())
                     {
                         BLL.JournalDetail b_SOd = PO.JDetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
                         if (b_SOd == null) d.JournalDetails.Remove(d_SOd);
@@ -1059,7 +1059,7 @@ namespace AccountBuddy.SL.Hubs
             }
             else
             {
-                foreach (var jd in j.JournalDetails)
+                foreach (var jd in j.JournalDetails.ToList())
                 {
                     jd.Particulars = P.Narration;
                     if (jd.CrAmt != 0)

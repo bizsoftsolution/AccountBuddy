@@ -108,7 +108,15 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbPType.Text == "Cheque" && BLL.Bank.toList.Count == 0)
+            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmPurchaseReturn))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmPurchaseReturn))
+            {
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (cmbPType.Text == "Cheque" && BLL.Bank.toList.Count == 0)
             {
                 MessageBox.Show("Enter Bank Details for check Transaction", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 App.frmHome.ShowBank();
@@ -306,6 +314,8 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)
