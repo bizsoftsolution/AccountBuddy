@@ -18,7 +18,7 @@ namespace AccountBuddy.SL.Hubs
 
             if (d!=null)
             {
-                b.UserTypeDetails = new ObservableCollection<BLL.UserTypeDetail>(d.UserTypeDetails.Select(x => UserTypeDetailDAL_BLL(x)).ToList());
+                b.UserTypeDetails = new ObservableCollection<BLL.UserTypeDetail>(d.UserTypeDetails.Where(x=> x.UserTypeFormDetail.IsActive).Select(x => UserTypeDetailDAL_BLL(x)).ToList());
                 b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
                
             }
@@ -27,7 +27,7 @@ namespace AccountBuddy.SL.Hubs
      
         public List<BLL.UserType> UserType_List()
         {
-            return DB.UserTypes.Where(x => x.CompanyId == Caller.CompanyId || x.CompanyDetail.UnderCompanyId==Caller.CompanyId).ToList()
+            return DB.UserTypes.Where(x =>  x.CompanyId == Caller.CompanyId || x.CompanyDetail.UnderCompanyId==Caller.CompanyId).ToList()
                                .Select(x=> UserTypeDAL_BLL(x)).ToList();
         }
 

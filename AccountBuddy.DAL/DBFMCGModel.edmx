@@ -780,6 +780,7 @@
           <Property Name="TypeOfUser" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="HierarchicalOrderNo" Type="float" />
         </EntityType>
         <EntityType Name="UserTypeDetail">
           <Key>
@@ -3851,6 +3852,7 @@
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="UserType" ToRole="CompanyDetail" />
           <NavigationProperty Name="UserAccounts" Relationship="DBFMCGModel.FK_UserAccount_UserType" FromRole="UserType" ToRole="UserAccount" />
           <NavigationProperty Name="UserTypeDetails" Relationship="DBFMCGModel.FK_UserTypeDetail_UserType" FromRole="UserType" ToRole="UserTypeDetail" />
+          <Property Name="HierarchicalOrderNo" Type="Double" />
         </EntityType>
         <EntityType Name="UserTypeDetail">
           <Key>
@@ -5917,6 +5919,7 @@
           <EntitySetMapping Name="UserTypes">
             <EntityTypeMapping TypeName="DBFMCGModel.UserType">
               <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="HierarchicalOrderNo" ColumnName="HierarchicalOrderNo" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="TypeOfUser" ColumnName="TypeOfUser" />

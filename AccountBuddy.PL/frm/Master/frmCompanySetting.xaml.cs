@@ -75,7 +75,7 @@ namespace AccountBuddy.PL.frm.Master
                 gbxWareHouse.Visibility = Visibility.Collapsed;
                 gbxDealer.Visibility = Visibility.Collapsed;
                 btnUser.Visibility = Visibility.Collapsed;
-                btnDelete.Visibility = Visibility.Collapsed;
+                //btnDelete.Visibility = Visibility.Collapsed;
             }
 
             var l = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.BankAccounts_Key).ToList();
@@ -84,7 +84,7 @@ namespace AccountBuddy.PL.frm.Master
             cmbBank.SelectedValuePath = "Id";
             cmbBank.SelectedItem = l.FirstOrDefault();
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            //btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
 
         }

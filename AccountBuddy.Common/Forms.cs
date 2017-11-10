@@ -8,7 +8,7 @@ namespace AccountBuddy.Common
 {
     public static class Forms
     {
-        public static readonly string frmCompanySetting = "AccountBuddy.PL.frm.Master.frmLedger",
+        public static readonly string frmCompanySetting = "AccountBuddy.PL.frm.Master.frmCompanySetting",
                                            frmCustomFormat = "AccountBuddy.PL.frm.Master.frmCustomSetting",
                                            frmUser = "AccountBuddy.PL.frm.Master.frmUser",
                                            frmUserType = "AccountBuddy.PL.frm.Master.frmUserType",

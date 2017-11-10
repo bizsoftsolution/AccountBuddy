@@ -11,14 +11,14 @@
         Title="Login" Height="700" Width="1000"
         BorderThickness="0" GlowBrush="Black" ResizeMode="NoResize" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen"             
                        
-                       Closing="MetroWindow_Closing" Icon="Images/Aboorvas/aboorvas logo 256.ico" Loaded="MetroWindow_Loaded" >
+                       Closing="MetroWindow_Closing" Icon="Images/AB1.ico" Loaded="MetroWindow_Loaded" >
     <Window.Background>
-        <ImageBrush ImageSource="Images/Aboorvas/ABOORVASS_LOGIN.png"/>
+        <ImageBrush ImageSource="Images/ABLoginBG1.jpg"/>
     </Window.Background>
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="CommandBinding_Executed" />
     </Window.CommandBindings>
-    
+
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="Close" />
     </Window.InputBindings>
@@ -138,7 +138,7 @@
             </Setter>
         </Style>
 
-        
+
         <Style x:Key="VerticalSeparatorStyle" 
        TargetType="{x:Type Separator}"
        BasedOn="{StaticResource {x:Type Separator}}">
@@ -169,21 +169,26 @@
             <RowDefinition Height="129*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="1" Grid.Row="0">
-            <!--<Image x:Name="image" HorizontalAlignment="Center" Height="150" VerticalAlignment="Center" Width="150" Source="Image/logo Only.png" />-->
-        </Grid>
         <Grid Grid.Column="1" Grid.Row="1"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="15"/>
                 <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
+            <Rectangle Stroke="Black" VerticalAlignment="Top" Height="170" StrokeThickness="0" Grid.ColumnSpan="3" Grid.Row="3" UseLayoutRounding="True" RadiusX="10" RadiusY="10">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#E5EEE7E7" Offset="1"/>
+                        <GradientStop Color="#E5FFFFFF"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Vertical" Margin="10,10,10,10">
-                    <TreeView x:Name="trvCompany" Width="230" Height="145" HorizontalAlignment="Left" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" />
-                    
+                    <TreeView x:Name="trvCompany" Width="230" Height="145" HorizontalAlignment="Left" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontWeight="Bold" />
+
                 </StackPanel>
-                
+
             </Grid>
 
             <Grid Grid.Column="1">
@@ -191,7 +196,7 @@
             </Grid>
             <Grid Grid.Column="2">
                 <StackPanel Orientation="Vertical">
-                    <TextBox x:Name="txtLoginId" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Ledger.PersonIncharge,Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14">
+                    <TextBox x:Name="txtLoginId" IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" Text="{Binding Ledger.PersonIncharge, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" Margin="0,0,20,0" FontSize="14">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -200,7 +205,7 @@
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
 
-                    <PasswordBox x:Name="txtPassword" Margin="0,10,0,0"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontWeight="Bold" FontSize="14" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted">
+                    <PasswordBox x:Name="txtPassword" Margin="0,10,20,0"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontWeight="Bold" FontSize="14" ContextMenu="{x:Null}" CommandManager.PreviewExecuted="txtPassword_PreviewExecuted">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Key" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -210,7 +215,6 @@
                     </PasswordBox>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <Button Content="SIGN IN" Click="btnLogin_Click" Margin="10,0,0,0" FontSize="10" Width="72" Height="25" />
-                        <Button Content="SIGN UP" Click="btnSignup_Click" Margin="10,0,0,0" FontSize="10" Width="72" Height="25"/>
                         <Button Content="CLEAR" Click="btnClear_Click"  Margin="10,0,0,0" FontSize="10" Width="72" Height="25"/>
                     </StackPanel>
                 </StackPanel>

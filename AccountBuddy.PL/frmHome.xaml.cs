@@ -32,6 +32,7 @@ namespace AccountBuddy.PL
                                                                               x.UserTypeFormDetail.IsMenu &&
                                                                               x.UserTypeFormDetail.IsActive &&
                                                                               x.UserTypeFormDetail.FormType == "Master")
+                                                                  .OrderBy(x=> x.UserTypeFormDetail.OrderNo)
                                                                   .Select(x => new Common.NavMenuItem()
                                                                   {
                                                                       MenuName = x.UserTypeFormDetail.Description,
@@ -44,6 +45,7 @@ namespace AccountBuddy.PL
                                                                               x.UserTypeFormDetail.IsMenu &&
                                                                               x.UserTypeFormDetail.IsActive &&
                                                                               x.UserTypeFormDetail.FormType == "Transaction")
+                                                                  .OrderBy(x => x.UserTypeFormDetail.OrderNo)
                                                                   .Select(x => new Common.NavMenuItem()
                                                                   {
                                                                       MenuName = x.UserTypeFormDetail.Description,
@@ -56,6 +58,7 @@ namespace AccountBuddy.PL
                                                                               x.UserTypeFormDetail.IsMenu &&
                                                                               x.UserTypeFormDetail.IsActive &&
                                                                               x.UserTypeFormDetail.FormType == "Report")
+                                                                  .OrderBy(x => x.UserTypeFormDetail.OrderNo)
                                                                   .Select(x => new Common.NavMenuItem()
                                                                   {
                                                                       MenuName = x.UserTypeFormDetail.Description,

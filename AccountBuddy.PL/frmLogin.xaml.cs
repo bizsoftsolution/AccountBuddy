@@ -162,6 +162,11 @@ namespace AccountBuddy.PL
             if (lstCompany.Count() == 0)
             {
                 trvCompany.Visibility = Visibility.Hidden;
+                frmCompanySignup f = new frmCompanySignup();
+                f.data.Clear();
+                f.data.CompanyType = "Company";
+                f.ShowDialog();
+                ClearForm();
             }
             else
             {
@@ -213,7 +218,7 @@ namespace AccountBuddy.PL
                         tvi.Items.Add(tviDL);
                     }
                     trvCompany.Items.Add(tvi);
-                }
+                }                
             }
         }
 

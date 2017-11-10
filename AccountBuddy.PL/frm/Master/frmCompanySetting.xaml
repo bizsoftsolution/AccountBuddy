@@ -123,7 +123,7 @@
                             </StackPanel>
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
-                    <ComboBox   x:Name="cmbBank"  IsReadOnly="{Binding IsReadOnly,Mode=OneWay}"  SelectionChanged="cmbBank_SelectionChanged"  FontWeight="Bold" FontSize="14" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
+                    <ComboBox Visibility="Collapsed"  x:Name="cmbBank"  IsReadOnly="{Binding IsReadOnly,Mode=OneWay}"  SelectionChanged="cmbBank_SelectionChanged"  FontWeight="Bold" FontSize="14" Style="{StaticResource MaterialDesignFloatingHintComboBox}"  materialDesign:TransitionAssist.DisableTransitions="True">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Width="151">
                                 <materialDesign:PackIcon  Kind="Bank" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -132,10 +132,11 @@
                         </materialDesign:HintAssist.Hint>
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button Width="80" Height="30" x:Name="btnUser" Content="USERS"  Margin="10" Click="btnUser_Click"  />
                         <Button Width="80" Height="30" x:Name="btnSave" Content="SAVE"  Margin="10" Click="btnSave_Click"  />
-                        <Button Width="80" Height="30" x:Name="btnDelete" Content="DELETE"  Margin="10" Click="btnDelete_Click" />
-                        <Button Width="88" Height="30" x:Name="btnSetting" Content="SETTING"  Margin="10" Click="btnSetting_Click" />
+                        <Button Width="80" Height="30" x:Name="btnUser" Content="USERS"  Margin="10" Click="btnUser_Click"  />
+                        
+                        <!--<Button Visibility="Collapsed" Width="80" Height="30" x:Name="btnDelete" Content="DELETE"  Margin="10" Click="btnDelete_Click" />
+                        <Button Visibility="Collapsed" Width="88" Height="30" x:Name="btnSetting" Content="SETTING"  Margin="10" Click="btnSetting_Click" />-->
                         <!--<Button x:Name="btnSetting" HorizontalAlignment="Right"  Background="Transparent" ToolTip="Setting" Height="30" Width="50" BorderThickness="0" BorderBrush="Transparent" Click="btnSetting_Click" Margin="0,0,5,0">
                             <materialDesign:PackIcon  Kind="Settings" Foreground="{DynamicResource PrimaryHueLightBrush}" >
                             </materialDesign:PackIcon>
@@ -165,7 +166,7 @@
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Name="gbxWareHouse" Header="Warehouse" Margin="10,25,10,63" >
+            <GroupBox Visibility="Collapsed" Name="gbxWareHouse" Header="Warehouse" Margin="10,25,10,63" >
                 <StackPanel Orientation="Vertical">
                     <Button Content="New Warehouse" Name="btnNewWareHouse" Click="btnNewWareHouse_Click" Width="150" HorizontalAlignment="Right" Margin="0" />
                     <DataGrid x:Name="dgvWarehouse" CanUserAddRows="False"  SelectionChanged="dgvWarehouse_SelectionChanged" CanUserSortColumns="True"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="150" Margin="10">
@@ -222,7 +223,7 @@
                 </StackPanel>
 
             </GroupBox>
-            <GroupBox Name="gbxDealer" Header="Dealer" Grid.Column="1" Margin="10,25,10,63" >
+            <GroupBox Visibility="Collapsed" Name="gbxDealer" Header="Dealer" Grid.Column="1" Margin="10,25,10,63" >
                 <StackPanel Orientation="Vertical">
                     <Button Content="New Dealer" Name="btnNewDealer" Click="btnNewDealer_Click" Width="150" HorizontalAlignment="Right" Margin="0" />
                     <DataGrid x:Name="dgvDealer" CanUserAddRows="False" CanUserSortColumns="True"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="10" Height="150">

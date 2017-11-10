@@ -231,6 +231,8 @@ namespace AccountBuddy.SL.Hubs
 
             DAL.UserType ut = new DAL.UserType();
             ut.TypeOfUser = BLL.DataKeyValue.Administrator_Key;
+            ut.HierarchicalOrderNo = 1;
+            ut.Description = "Administrator";
             ut.CompanyId = cmp.Id;
             ut.UserAccounts.Add(ua);
 

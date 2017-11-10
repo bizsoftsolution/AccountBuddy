@@ -24,6 +24,7 @@ namespace AccountBuddy.BLL
         private string _typeOfUser;
         private string _description;
         private int _CompanyId;
+        private float _HierarchicalOrderNo;
         private CompanyDetail _Company;
         private ObservableCollection<UserTypeDetail> _UserTypeDetails;
 
@@ -36,7 +37,7 @@ namespace AccountBuddy.BLL
             {
                 if (_UserPermission == null)
                 {
-                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail(): UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmUser.ToString()).FirstOrDefault();
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail(): UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmUserType.ToString()).FirstOrDefault();
                 }
                 return _UserPermission;
             }
@@ -141,6 +142,22 @@ namespace AccountBuddy.BLL
                 {
                     _description = value;
                     NotifyPropertyChanged(nameof(Description));
+                }
+            }
+        }
+
+        public float HierarchicalOrderNo
+        {
+            get
+            {
+                return _HierarchicalOrderNo;
+            }
+            set
+            {
+                if (_HierarchicalOrderNo != value)
+                {
+                    _HierarchicalOrderNo = value;
+                    NotifyPropertyChanged(nameof(HierarchicalOrderNo));
                 }
             }
         }

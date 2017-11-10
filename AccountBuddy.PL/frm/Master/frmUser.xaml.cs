@@ -29,7 +29,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         public void LoadWindow(int CompanyId)
         {
-            btnUserTypeSetting.Visibility = BLL.UserType.UserPermission.IsViewForm ? Visibility.Visible : Visibility.Collapsed;
+            //btnUserTypeSetting.Visibility = BLL.UserType.UserPermission.IsViewForm ? Visibility.Visible : Visibility.Collapsed;
             cmbUserType.ItemsSource = BLL.UserType.toList.Where(x => x.CompanyId == UnderCompanyId).ToList();
             cmbUserType.DisplayMemberPath = "TypeOfUser";
             cmbUserType.SelectedValuePath = "Id";

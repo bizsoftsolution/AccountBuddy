@@ -65,6 +65,14 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
+                            <TextBox x:Name="HierarchicalOrderNo" AcceptsReturn="True" Text="{Binding HierarchicalOrderNo}" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                        <TextBlock Text="Hierarchical Order No"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
 
                             <DataGrid x:Name="dgvUserTypeDetail" IsReadOnly="{Binding IsReadOnly}" ItemsSource="{Binding UserTypeDetails}" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="0,50,0,0"  Height="360" >
                                 <DataGrid.ColumnHeaderStyle>
@@ -146,7 +154,7 @@
             <!--#endregion-->            
             <!--#region Form Right-->
             <Grid Grid.Column="1">
-                <DataGrid x:Name="dgvDetail" MouseDoubleClick="dgvDetail_MouseDoubleClick" VerticalAlignment="Top" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="25,100,25,0" SelectionChanged="dgvDetail_SelectionChanged" Height="220" >
+                <DataGrid x:Name="dgvDetail" MouseDoubleClick="dgvDetail_MouseDoubleClick" VerticalAlignment="Top" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black"  Margin="25,100,25,0" SelectionChanged="dgvDetail_SelectionChanged" Height="250" >
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="FontWeight" Value="Bold" />
@@ -157,6 +165,13 @@
                         <DropShadowEffect/>
                     </DataGrid.Effect>
                     <DataGrid.Columns>
+                        <DataGridTextColumn FontWeight="Bold" Width="250" Binding="{Binding TypeOfUser}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
+                            <DataGridTextColumn.Header>
+                                <Grid>
+                                    <TextBlock Margin="-110,0,0,0">User Type</TextBlock>
+                                </Grid>
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
                         <DataGridTextColumn FontWeight="Bold" Width="250" Binding="{Binding TypeOfUser}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                             <DataGridTextColumn.Header>
                                 <Grid>
