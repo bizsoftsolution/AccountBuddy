@@ -26,6 +26,7 @@ namespace AccountBuddy.DAL
             this.UserTypes = new HashSet<UserType>();
             this.DataKeyValues = new HashSet<DataKeyValue>();
             this.TaxMasters = new HashSet<TaxMaster>();
+            this.Departments = new HashSet<Department>();
         }
     
         public int Id { get; set; }
@@ -62,5 +63,7 @@ namespace AccountBuddy.DAL
         public virtual ICollection<DataKeyValue> DataKeyValues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaxMaster> TaxMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }

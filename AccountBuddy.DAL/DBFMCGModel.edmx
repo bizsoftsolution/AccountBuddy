@@ -94,6 +94,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="CompanyId" Type="int" />
         </EntityType>
         <EntityType Name="EntityType">
           <Key>
@@ -887,6 +888,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="DataKeyValue">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Department">
               <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2083,6 +2096,10 @@
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
             <End Role="DataKeyValue" EntitySet="DataKeyValue" />
           </AssociationSet>
+          <AssociationSet Name="FK_Department_CompanyDetail" Association="Self.FK_Department_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
           <AssociationSet Name="FK_JobOrderIssue_JobWorker" Association="Self.FK_JobOrderIssue_JobWorker">
             <End Role="JobWorker" EntitySet="JobWorker" />
             <End Role="JobOrderIssue" EntitySet="JobOrderIssue" />
@@ -2912,6 +2929,10 @@
             <End Role="UOM" EntitySet="UOMs" />
             <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_Department_CompanyDetail" Association="DBFMCGModel.FK_Department_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -2965,6 +2986,7 @@
           <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
           <NavigationProperty Name="DataKeyValues" Relationship="DBFMCGModel.FK_DataKeyValue_CompanyDetail" FromRole="CompanyDetail" ToRole="DataKeyValue" />
           <NavigationProperty Name="TaxMasters" Relationship="DBFMCGModel.FK_TaxMaster_CompanyDetail" FromRole="CompanyDetail" ToRole="TaxMaster" />
+          <NavigationProperty Name="Departments" Relationship="DBFMCGModel.FK_Department_CompanyDetail" FromRole="CompanyDetail" ToRole="Department" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -4983,6 +5005,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_Department_CompanyDetail" FromRole="Department" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="PurchaseRequest">
           <Key>
@@ -5098,6 +5122,18 @@
             </Principal>
             <Dependent Role="PurchaseRequestDetail">
               <PropertyRef Name="UOMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Department" Role="Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5920,6 +5956,7 @@
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="DBFMCGModel.Department">
               <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

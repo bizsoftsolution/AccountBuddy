@@ -163,6 +163,7 @@
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_Product" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequestDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_Department_CompanyDetail" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

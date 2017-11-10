@@ -17,5 +17,8 @@ namespace AccountBuddy.DAL
         public int Id { get; set; }
         public string DepartmentName { get; set; }
         public string Description { get; set; }
+        public Nullable<int> CompanyId { get; set; }
+    
+        public virtual CompanyDetail CompanyDetail { get; set; }
     }
 }
