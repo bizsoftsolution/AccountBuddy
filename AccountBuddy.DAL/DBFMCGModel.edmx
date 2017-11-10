@@ -87,6 +87,14 @@
           <Property Name="DataValue" Type="int" Nullable="false" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="EntityType">
           <Key>
             <PropertyRef Name="Id" />
@@ -375,6 +383,36 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="POId" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PRDate" Type="date" Nullable="false" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="ItemAmount" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Extras" Type="money" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="Narration" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PRId" Type="bigint" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="UOMId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="float" Nullable="false" />
@@ -698,6 +736,15 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TaxMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaxName" Type="nvarchar" MaxLength="500" />
+          <Property Name="TaxPercentage" Type="float" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TransactionType">
           <Key>
             <PropertyRef Name="Id" />
@@ -828,6 +875,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CustomFormat">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataKeyValue_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
+          <End Role="DataKeyValue" Type="Self.DataKeyValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataKeyValue">
               <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1260,6 +1319,54 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="UOMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_PurchaseRequestDetail">
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="1" />
+          <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="PRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_UOM">
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
+          <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UOM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
               <PropertyRef Name="UOMId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1816,6 +1923,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TaxMaster_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
+          <End Role="TaxMaster" Type="Self.TaxMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaxMaster">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UOM_CompanyDetail">
           <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
           <End Role="UOM" Type="Self.UOM" Multiplicity="*" />
@@ -1884,6 +2003,7 @@
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomFormat" EntityType="Self.CustomFormat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataKeyValue" EntityType="Self.DataKeyValue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityType" EntityType="Self.EntityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobOrderIssue" EntityType="Self.JobOrderIssue" Schema="dbo" store:Type="Tables" />
@@ -1905,6 +2025,8 @@
           <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrderDetail" EntityType="Self.PurchaseOrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseRequest" EntityType="Self.PurchaseRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseRequestDetail" EntityType="Self.PurchaseRequestDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseReturn" EntityType="Self.PurchaseReturn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseReturnDetail" EntityType="Self.PurchaseReturnDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
@@ -1926,6 +2048,7 @@
           <EntitySet Name="StockSeparated" EntityType="Self.StockSeparated" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockSeperatedDetail" EntityType="Self.StockSeperatedDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaxMaster" EntityType="Self.TaxMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionType" EntityType="Self.TransactionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UOM" EntityType="Self.UOM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
@@ -1955,6 +2078,10 @@
           <AssociationSet Name="FK_CustomFormat_CompanyDetail" Association="Self.FK_CustomFormat_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
             <End Role="CustomFormat" EntitySet="CustomFormat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataKeyValue_CompanyDetail" Association="Self.FK_DataKeyValue_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="DataKeyValue" EntitySet="DataKeyValue" />
           </AssociationSet>
           <AssociationSet Name="FK_JobOrderIssue_JobWorker" Association="Self.FK_JobOrderIssue_JobWorker">
             <End Role="JobWorker" EntitySet="JobWorker" />
@@ -2099,6 +2226,22 @@
           <AssociationSet Name="FK_PurchaseOrderDetail_UOM" Association="Self.FK_PurchaseOrderDetail_UOM">
             <End Role="UOM" EntitySet="UOM" />
             <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_Ledger" Association="Self.FK_PurchaseRequest_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_Product" Association="Self.FK_PurchaseRequestDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_PurchaseRequestDetail" Association="Self.FK_PurchaseRequestDetail_PurchaseRequestDetail">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_UOM" Association="Self.FK_PurchaseRequestDetail_UOM">
+            <End Role="UOM" EntitySet="UOM" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseReturn_Ledger" Association="Self.FK_PurchaseReturn_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
@@ -2283,6 +2426,10 @@
           <AssociationSet Name="FK_Supplier_Ledger" Association="Self.FK_Supplier_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
             <End Role="Supplier" EntitySet="Supplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaxMaster_CompanyDetail" Association="Self.FK_TaxMaster_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="TaxMaster" EntitySet="TaxMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_UOM_CompanyDetail" Association="Self.FK_UOM_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
@@ -2737,6 +2884,34 @@
             <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
           </AssociationSet>
+          <EntitySet Name="Departments" EntityType="DBFMCGModel.Department" />
+          <EntitySet Name="PurchaseRequests" EntityType="DBFMCGModel.PurchaseRequest" />
+          <EntitySet Name="PurchaseRequestDetails" EntityType="DBFMCGModel.PurchaseRequestDetail" />
+          <EntitySet Name="TaxMasters" EntityType="DBFMCGModel.TaxMaster" />
+          <AssociationSet Name="FK_DataKeyValue_CompanyDetail" Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="DataKeyValue" EntitySet="DataKeyValues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaxMaster_CompanyDetail" Association="DBFMCGModel.FK_TaxMaster_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="TaxMaster" EntitySet="TaxMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_Ledger" Association="DBFMCGModel.FK_PurchaseRequest_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_Product" Association="DBFMCGModel.FK_PurchaseRequestDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_PurchaseRequestDetail" Association="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequestDetail">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_UOM" Association="DBFMCGModel.FK_PurchaseRequestDetail_UOM">
+            <End Role="UOM" EntitySet="UOMs" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -2788,6 +2963,8 @@
           <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
           <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
           <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
+          <NavigationProperty Name="DataKeyValues" Relationship="DBFMCGModel.FK_DataKeyValue_CompanyDetail" FromRole="CompanyDetail" ToRole="DataKeyValue" />
+          <NavigationProperty Name="TaxMasters" Relationship="DBFMCGModel.FK_TaxMaster_CompanyDetail" FromRole="CompanyDetail" ToRole="TaxMaster" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -2835,6 +3012,7 @@
           <Property Name="DataKey" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="DataValue" Type="Int32" Nullable="false" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_DataKeyValue_CompanyDetail" FromRole="DataKeyValue" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="EntityType">
           <Key>
@@ -3016,6 +3194,7 @@
           <NavigationProperty Name="StockIns" Relationship="DBFMCGModel.FK_StockIn_Ledger" FromRole="Ledger" ToRole="StockIn" />
           <NavigationProperty Name="StockOuts" Relationship="DBFMCGModel.FK_StockOut_Ledger" FromRole="Ledger" ToRole="StockOut" />
           <NavigationProperty Name="Suppliers" Relationship="DBFMCGModel.FK_Supplier_Ledger" FromRole="Ledger" ToRole="Supplier" />
+          <NavigationProperty Name="PurchaseRequests" Relationship="DBFMCGModel.FK_PurchaseRequest_Ledger" FromRole="Ledger" ToRole="PurchaseRequest" />
         </EntityType>
         <EntityType Name="LogDetail">
           <Key>
@@ -3121,6 +3300,7 @@
           <NavigationProperty Name="StockInProcessDetails" Relationship="DBFMCGModel.FK_StockInProcessDetail_Product" FromRole="Product" ToRole="StockInProcessDetail" />
           <NavigationProperty Name="StockOutDetails" Relationship="DBFMCGModel.FK_StockOutDetail_Product" FromRole="Product" ToRole="StockOutDetail" />
           <NavigationProperty Name="StockSeperatedDetails" Relationship="DBFMCGModel.FK_StockSeperatedDetail_Product" FromRole="Product" ToRole="StockSeperatedDetail" />
+          <NavigationProperty Name="PurchaseRequestDetails" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_Product" FromRole="Product" ToRole="PurchaseRequestDetail" />
         </EntityType>
         <EntityType Name="ProductDetail">
           <Key>
@@ -3623,6 +3803,7 @@
           <NavigationProperty Name="StockInProcessDetails" Relationship="DBFMCGModel.FK_StockInProcessDetail_UOM" FromRole="UOM" ToRole="StockInProcessDetail" />
           <NavigationProperty Name="StockOutDetails" Relationship="DBFMCGModel.FK_StockOutDetail_UOM" FromRole="UOM" ToRole="StockOutDetail" />
           <NavigationProperty Name="StockSeperatedDetails" Relationship="DBFMCGModel.FK_StockSeperatedDetail_UOM" FromRole="UOM" ToRole="StockSeperatedDetail" />
+          <NavigationProperty Name="PurchaseRequestDetails" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_UOM" FromRole="UOM" ToRole="PurchaseRequestDetail" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -4795,6 +4976,131 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PurchaseRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PRDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Extras" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_PurchaseRequest_Ledger" FromRole="PurchaseRequest" ToRole="Ledger" />
+          <NavigationProperty Name="PurchaseRequestDetails" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequestDetail" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PRId" Type="Int64" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_Product" FromRole="PurchaseRequestDetail" ToRole="Product" />
+          <NavigationProperty Name="PurchaseRequest" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequestDetail" FromRole="PurchaseRequestDetail" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_UOM" FromRole="PurchaseRequestDetail" ToRole="UOM" />
+        </EntityType>
+        <EntityType Name="TaxMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaxName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TaxPercentage" Type="Double" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_TaxMaster_CompanyDetail" FromRole="TaxMaster" ToRole="CompanyDetail" />
+        </EntityType>
+        <Association Name="FK_DataKeyValue_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.DataKeyValue" Role="DataKeyValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataKeyValue">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaxMaster_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.TaxMaster" Role="TaxMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaxMaster">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBFMCGModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_Product">
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DBFMCGModel.PurchaseRequestDetail" Role="PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_PurchaseRequestDetail">
+          <End Type="DBFMCGModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="1" />
+          <End Type="DBFMCGModel.PurchaseRequestDetail" Role="PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="PRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_UOM">
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
+          <End Type="DBFMCGModel.PurchaseRequestDetail" Role="PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UOM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="UOMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5607,6 +5913,57 @@
                 <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
                 <ScalarProperty Name="FormType" ColumnName="FormType" />
                 <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="DBFMCGModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequests">
+            <EntityTypeMapping TypeName="DBFMCGModel.PurchaseRequest">
+              <MappingFragment StoreEntitySet="PurchaseRequest">
+                <ScalarProperty Name="Narration" ColumnName="Narration" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="Extras" ColumnName="Extras" />
+                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="PRDate" ColumnName="PRDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequestDetails">
+            <EntityTypeMapping TypeName="DBFMCGModel.PurchaseRequestDetail">
+              <MappingFragment StoreEntitySet="PurchaseRequestDetail">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UOMId" ColumnName="UOMId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="PRId" ColumnName="PRId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxMasters">
+            <EntityTypeMapping TypeName="DBFMCGModel.TaxMaster">
+              <MappingFragment StoreEntitySet="TaxMaster">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="TaxPercentage" ColumnName="TaxPercentage" />
+                <ScalarProperty Name="TaxName" ColumnName="TaxName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

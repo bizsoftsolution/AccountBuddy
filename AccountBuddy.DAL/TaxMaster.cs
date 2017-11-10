@@ -12,11 +12,11 @@ namespace AccountBuddy.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class DataKeyValue
+    public partial class TaxMaster
     {
         public int Id { get; set; }
-        public string DataKey { get; set; }
-        public int DataValue { get; set; }
+        public string TaxName { get; set; }
+        public Nullable<double> TaxPercentage { get; set; }
         public int CompanyId { get; set; }
     
         public virtual CompanyDetail CompanyDetail { get; set; }

@@ -153,6 +153,16 @@
         <AssociationConnector Association="DBFMCGModel.FK_UserAccount_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" />
+        <EntityTypeShape EntityType="DBFMCGModel.Department" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequest" Width="1.5" PointX="5.625" PointY="56.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestDetail" Width="1.5" PointX="13.125" PointY="37.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.TaxMaster" Width="1.5" PointX="4.125" PointY="23.375" />
+        <AssociationConnector Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_TaxMaster_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequest_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequestDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_UOM" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

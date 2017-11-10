@@ -24,6 +24,8 @@ namespace AccountBuddy.DAL
             this.StockGroups = new HashSet<StockGroup>();
             this.UOMs = new HashSet<UOM>();
             this.UserTypes = new HashSet<UserType>();
+            this.DataKeyValues = new HashSet<DataKeyValue>();
+            this.TaxMasters = new HashSet<TaxMaster>();
         }
     
         public int Id { get; set; }
@@ -56,5 +58,9 @@ namespace AccountBuddy.DAL
         public virtual ICollection<UOM> UOMs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserType> UserTypes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DataKeyValue> DataKeyValues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaxMaster> TaxMasters { get; set; }
     }
 }

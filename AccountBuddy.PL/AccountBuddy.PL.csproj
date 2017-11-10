@@ -346,6 +346,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmPurchaseRequestReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmReOrderLevel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -423,6 +427,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="frm\Transaction\frmPurchaseOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmPurchaseRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -645,6 +653,9 @@
     <Compile Include="frm\Report\frmProductWiseSalesReport.xaml.cs">
       <DependentUpon>frmProductWiseSalesReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Report\frmPurchaseRequestReport.xaml.cs">
+      <DependentUpon>frmPurchaseRequestReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Report\frmReOrderLevel.xaml.cs">
       <DependentUpon>frmReOrderLevel.xaml</DependentUpon>
     </Compile>
@@ -704,6 +715,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmPurchaseOrder.xaml.cs">
       <DependentUpon>frmPurchaseOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmPurchaseRequest.xaml.cs">
+      <DependentUpon>frmPurchaseRequest.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmPurchaseReturn.xaml.cs">
       <DependentUpon>frmPurchaseReturn.xaml</DependentUpon>
