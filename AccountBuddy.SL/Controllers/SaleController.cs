@@ -9,12 +9,12 @@ namespace AccountBuddy.SL.Controllers
 {
     public class SaleController : Controller
     {
-        // GET: Sale
+        string SalRefCode = "", SalPrefix = "";
         public ActionResult Index()
         {
             return View();
         }
-        public JsonResult Save(int LedgerId, string PayMode, string SaleDetails, bool IsGST, string ChqNo, DateTime? ChqDate, string ChqBankName, decimal DiscountAmount)
+        public JsonResult Save(int LedgerId, string PayMode,string RefCode, string SaleDetails, bool IsGST, string ChqNo, DateTime? ChqDate, string ChqBankName, decimal DiscountAmount)
         {
             try
             {
@@ -38,6 +38,7 @@ namespace AccountBuddy.SL.Controllers
                 sal.SalesDate = DateTime.Now;
                 sal.ItemAmount = sal.SalesDetails.Sum(x => x.Amount);
                 sal.DiscountAmount = DiscountAmount;
+                sal.RefCode = RefCode;
                 if (IsGST == true)
                 {
                     sal.GSTAmount = sal.ItemAmount * 6 / 100;
@@ -71,6 +72,8 @@ namespace AccountBuddy.SL.Controllers
                 sal.Narration = PayMode;
                 db.Sales.Add(sal);
                 db.SaveChanges();
+                DAL.Ledger l = db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault();
+                SalRefCode = db.Sales.Where(x => x.SalesDate.Month == DateTime.Now.Month && x.Ledger.AccountGroup.CompanyId ==l.AccountGroup.CompanyDetail.Id).Max(x => x.RefNo.Substring(x.RefNo.Length - 5, x.RefNo.Length));
 
                 Hubs.ABServerHub.Journal_SaveBySales(sal);
                 return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);

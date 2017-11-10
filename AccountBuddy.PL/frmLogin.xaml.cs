@@ -48,6 +48,8 @@ namespace AccountBuddy.PL
         #region company 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+
+          
             var tv = trvCompany.SelectedItem as TreeViewItem;
             if (tv == null)
             {

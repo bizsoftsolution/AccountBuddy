@@ -22,7 +22,7 @@ namespace AccountBuddy.Common
         public static int BankId;
         public static string BankName;
 
-  
+       
 
         public static string CurrencyToWordPrefix;
         public static string CurrencyToWordSuffix;
