@@ -261,6 +261,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="frm\Print\frmQuickPurchaseRq.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Print\FrmQuickSales.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -592,6 +596,9 @@
     </Compile>
     <Compile Include="frm\Print\frmQuickPurchase.xaml.cs">
       <DependentUpon>frmQuickPurchase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Print\frmQuickPurchaseRq.xaml.cs">
+      <DependentUpon>frmQuickPurchaseRq.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Print\FrmQuickSales.xaml.cs">
       <DependentUpon>FrmQuickSales.xaml</DependentUpon>

@@ -261,7 +261,7 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 d.toCopy<Department>(this);
-                IsReadOnly = !UserPermission.AllowUpdate;
+               // IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }
 
