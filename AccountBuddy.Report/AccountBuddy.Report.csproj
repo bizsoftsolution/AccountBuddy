@@ -53,6 +53,9 @@
     <EmbeddedResource Include="rpt\Master\rptBank.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Master\rptDepartment.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Master\rptJobWorker.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -105,6 +108,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptJobOrderReceived.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptQuickPurchaseRq.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptStockIn.rdlc">
@@ -168,6 +174,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.BankReconcilation.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.CompanyDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.CreditLimitType.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Department.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralLedger.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralStock.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.JobOrderIssue.datasource" />
@@ -189,6 +196,8 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseOrder.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseOrderDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseRequest.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseRequestDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseReturn.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.PurchaseReturnDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Receipt.datasource" />

@@ -772,22 +772,28 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Product().toCopy<Product>(this);
-            NotifyAllPropertyChanged();
-            IsReadOnly = !UserPermission.AllowInsert;
-        }
+            try {
+                new Product().toCopy<Product>(this);
+                NotifyAllPropertyChanged();
+                IsReadOnly = !UserPermission.AllowInsert;
+            }
+            catch(Exception ex) { }
+            }
 
         public bool Find(int pk)
         {
-            var d = toList.Where(x => x.Id == pk).FirstOrDefault();
-            if (d != null)
+            try
             {
-                d.toCopy<Product>(this);
-                IsReadOnly = !UserPermission.AllowUpdate;
+                var d = toList.Where(x => x.Id == pk).FirstOrDefault();
+                if (d != null)
+                {
+                    d.toCopy<Product>(this);
+                    IsReadOnly = !UserPermission.AllowUpdate;
 
-                return true;
+                    return true;
+                }
             }
-
+            catch(Exception ex) { return false; }
             return false;
         }
 

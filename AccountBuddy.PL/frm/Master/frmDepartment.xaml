@@ -140,7 +140,7 @@
                             </Grid>
                             <Grid Grid.Row="1">
                                 <StackPanel>
-                                    <DataGrid x:Name="dgvUOM" Height="350" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" SelectionChanged="dgvUOM_SelectionChanged" MouseDoubleClick="dgvUOM_MouseDoubleClick" Margin="10">
+                                    <DataGrid x:Name="dgvDetail" Height="350" CanUserAddRows="False" CanUserSortColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" SelectionChanged="dgvDetail_SelectionChanged" MouseDoubleClick="dgvDetail_MouseDoubleClick" Margin="10">
                                         <DataGrid.ColumnHeaderStyle>
                                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                                 <Setter Property="FontWeight" Value="Bold" />
@@ -149,8 +149,8 @@
                                         </DataGrid.ColumnHeaderStyle>
 
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Symbol" FontWeight="Bold" Width="200" Binding="{Binding Symbol}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                            <DataGridTextColumn Header="Formal Name" FontWeight="Bold" Width="250" Binding="{Binding FormalName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Department" FontWeight="Bold" Width="200" Binding="{Binding DepartmentName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Description" FontWeight="Bold" Width="250" Binding="{Binding Description}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                         </DataGrid.Columns>
                                     </DataGrid>
 
