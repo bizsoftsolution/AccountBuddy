@@ -170,6 +170,7 @@
     <Compile Include="Hubs\CustomerWiseReport.cs" />
     <Compile Include="Hubs\CustomFormat.cs" />
     <Compile Include="Hubs\DataKeyValue.cs" />
+    <Compile Include="Hubs\Department.cs" />
     <Compile Include="Hubs\FmcgWriteLogSL.cs" />
     <Compile Include="Hubs\GeneralLedger.cs" />
     <Compile Include="Hubs\GeneralStock.cs" />

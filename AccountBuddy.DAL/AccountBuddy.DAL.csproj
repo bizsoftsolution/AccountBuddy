@@ -274,6 +274,7 @@
     <None Include="FMCG.xss">
       <DependentUpon>FMCG.xsd</DependentUpon>
     </None>
+    <None Include="MTBM_20171110_01" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

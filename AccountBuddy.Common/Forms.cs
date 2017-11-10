@@ -21,7 +21,8 @@ namespace AccountBuddy.Common
                                            frmStockGroup = "AccountBuddy.PL.frm.Master.frmStockGroup",
                                            frmUOM = "AccountBuddy.PL.frm.Master.frmUOM",
                                            frmProducts = "AccountBuddy.PL.frm.Master.frmProducts",
-           frmJobWorker= "AccountBuddy.PL.frm.Master.frmJobWorker",
+            frmDepartment = "AccountBuddy.PL.frm.Master.frmDepartment",
+           frmJobWorker = "AccountBuddy.PL.frm.Master.frmJobWorker",
 
                                            frmPayment = "AccountBuddy.PL.frm.Transaction.frmPayment",
                                            frmReceipt = "AccountBuddy.PL.frm.Transaction.frmReceipt",
