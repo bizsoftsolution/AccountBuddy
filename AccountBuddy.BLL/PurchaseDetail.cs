@@ -12,7 +12,7 @@ namespace AccountBuddy.BLL
         #region Field
         private long _Id;
         private long _PurchaseId;
-        private long? _PODId;
+        private long? _PRDId;
         private int _ProductId;
         private int _UOMId;
         private double _Quantity;
@@ -60,18 +60,18 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public long? PODId
+        public long? PRDId
         {
             get
             {
-                return _PODId;
+                return _PRDId;
             }
             set
             {
-                if (_PODId != value)
+                if (_PRDId != value)
                 {
-                    _PODId = value;
-                    NotifyPropertyChanged(nameof(PODId));
+                    _PRDId = value;
+                    NotifyPropertyChanged(nameof(PRDId));
                 }
             }
         }

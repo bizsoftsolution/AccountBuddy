@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="DBFMCGModel.CreditLimitType" Width="1.5" PointX="0.75" PointY="42.25" />
         <EntityTypeShape EntityType="DBFMCGModel.Customer" Width="1.5" PointX="5.25" PointY="18" />
         <EntityTypeShape EntityType="DBFMCGModel.CustomFormat" Width="1.5" PointX="3.75" PointY="12.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.DataKeyValue" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.DataKeyValue" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="DBFMCGModel.EntityType" Width="1.5" PointX="11" PointY="23.25" />
         <EntityTypeShape EntityType="DBFMCGModel.ErrorLog" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="DBFMCGModel.JobOrderIssue" Width="1.5" PointX="7.5" PointY="42.5" />
@@ -157,13 +157,16 @@
         <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequest" Width="1.5" PointX="5.625" PointY="56.375" />
         <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestDetail" Width="1.5" PointX="13.125" PointY="37.875" />
         <EntityTypeShape EntityType="DBFMCGModel.TaxMaster" Width="1.5" PointX="4.125" PointY="23.375" />
-        <AssociationConnector Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail" ManuallyRouted="false" >
+        </AssociationConnector>
         <AssociationConnector Association="DBFMCGModel.FK_TaxMaster_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequest_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_Product" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequestDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_UOM" />
         <AssociationConnector Association="DBFMCGModel.FK_Department_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_Staff_Department" />
+        <AssociationConnector Association="DBFMCGModel.FK_Staff_UserAccount" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

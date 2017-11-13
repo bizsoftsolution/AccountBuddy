@@ -19,6 +19,7 @@ namespace AccountBuddy.DAL
         {
             this.LogDetails = new HashSet<LogDetail>();
             this.LogMasters = new HashSet<LogMaster>();
+            this.Staffs = new HashSet<Staff>();
         }
     
         public int Id { get; set; }
@@ -32,5 +33,7 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LogMaster> LogMasters { get; set; }
         public virtual UserType UserType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Staff> Staffs { get; set; }
     }
 }

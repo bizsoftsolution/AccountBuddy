@@ -110,6 +110,28 @@ namespace AccountBuddy.PL
 
                 ListBox lb = sender as ListBox;
                 Common.NavMenuItem mi = lb.SelectedItem as Common.NavMenuItem;
+
+                if (mi.FormName == Common.Forms.frmSupplier)
+                {
+                    BLL.Ledger.UserPermission = BLL.Supplier.UserPermission;
+                }
+                else if (mi.FormName == Common.Forms.frmCustomer)
+                {
+                    BLL.Ledger.UserPermission = BLL.Customer.UserPermission;
+                }
+                else if (mi.FormName == Common.Forms.frmBank)
+                {
+                    BLL.Ledger.UserPermission = BLL.Bank.UserPermission;
+                }
+                else if (mi.FormName == Common.Forms.frmStaff)
+                {
+                    BLL.Ledger.UserPermission = BLL.Staff.UserPermission;
+                }
+                else if (mi.FormName == Common.Forms.frmLedger)
+                {
+                    BLL.Ledger.UserPermission = null;
+                }
+
                 if (mi.Content == null)
                 {
                     object obj = Activator.CreateInstance(Type.GetType(mi.FormName));
@@ -122,6 +144,7 @@ namespace AccountBuddy.PL
                     ccContent.Content = mi.Content;
                     txtSearch.Text = "";
                 }
+                
             }
             catch (Exception ex) { }
             MenuToggleButton.IsChecked = false;

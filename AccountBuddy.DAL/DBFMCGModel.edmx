@@ -95,6 +95,7 @@
           <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="CompanyId" Type="int" />
+          <Property Name="Budget" Type="float" />
         </EntityType>
         <EntityType Name="EntityType">
           <Key>
@@ -602,6 +603,8 @@
           <Property Name="Designation" Type="nvarchar" MaxLength="150" />
           <Property Name="DOB" Type="datetime" />
           <Property Name="DOJ" Type="datetime" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="LoginId" Type="int" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -1685,6 +1688,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Staff_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Staff_Ledger">
           <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
           <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
@@ -1694,6 +1709,18 @@
             </Principal>
             <Dependent Role="Staff">
               <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_UserAccount">
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="LoginId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2361,8 +2388,16 @@
             <End Role="UOM" EntitySet="UOM" />
             <End Role="SalesReturnDetail" EntitySet="SalesReturnDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_Staff_Department" Association="Self.FK_Staff_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
           <AssociationSet Name="FK_Staff_Ledger" Association="Self.FK_Staff_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_UserAccount" Association="Self.FK_Staff_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccount" />
             <End Role="Staff" EntitySet="Staff" />
           </AssociationSet>
           <AssociationSet Name="FK_StockGroup_CompanyDetail" Association="Self.FK_StockGroup_CompanyDetail">
@@ -2933,6 +2968,14 @@
           <AssociationSet Name="FK_Department_CompanyDetail" Association="DBFMCGModel.FK_Department_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
             <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Department" Association="DBFMCGModel.FK_Staff_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_UserAccount" Association="DBFMCGModel.FK_Staff_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="Staff" EntitySet="Staffs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
@@ -3631,6 +3674,10 @@
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Staff" ToRole="Ledger" />
           <NavigationProperty Name="StockInProcesses" Relationship="DBFMCGModel.FK_StockInProcess_Staff" FromRole="Staff" ToRole="StockInProcess" />
           <NavigationProperty Name="StockSeparateds" Relationship="DBFMCGModel.FK_StockSeparated_Staff" FromRole="Staff" ToRole="StockSeparated" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="LoginId" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="DBFMCGModel.FK_Staff_Department" FromRole="Staff" ToRole="Department" />
+          <NavigationProperty Name="UserAccount" Relationship="DBFMCGModel.FK_Staff_UserAccount" FromRole="Staff" ToRole="UserAccount" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -3840,6 +3887,7 @@
           <NavigationProperty Name="LogDetails" Relationship="DBFMCGModel.FK_LogDetail_UserAccount" FromRole="UserAccount" ToRole="LogDetail" />
           <NavigationProperty Name="LogMasters" Relationship="DBFMCGModel.FK_LogMaster_UserAccount" FromRole="UserAccount" ToRole="LogMaster" />
           <NavigationProperty Name="UserType" Relationship="DBFMCGModel.FK_UserAccount_UserType" FromRole="UserAccount" ToRole="UserType" />
+          <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_UserAccount" FromRole="UserAccount" ToRole="Staff" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -5009,6 +5057,8 @@
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CompanyId" Type="Int32" />
           <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_Department_CompanyDetail" FromRole="Department" ToRole="CompanyDetail" />
+          <Property Name="Budget" Type="Double" />
+          <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_Department" FromRole="Department" ToRole="Staff" />
         </EntityType>
         <EntityType Name="PurchaseRequest">
           <Key>
@@ -5136,6 +5186,30 @@
             </Principal>
             <Dependent Role="Department">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Department">
+          <End Type="DBFMCGModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_UserAccount">
+          <End Type="DBFMCGModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="LoginId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5734,6 +5808,8 @@
           <EntitySetMapping Name="Staffs">
             <EntityTypeMapping TypeName="DBFMCGModel.Staff">
               <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="DOJ" ColumnName="DOJ" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Designation" ColumnName="Designation" />
@@ -5959,6 +6035,7 @@
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="DBFMCGModel.Department">
               <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />

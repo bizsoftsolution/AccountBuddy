@@ -40,7 +40,7 @@ namespace AccountBuddy.PL.frm.Print
             ObservableCollection<BLL.Ledger> LedgerDetail = new ObservableCollection<BLL.Ledger>();
 
             POList.Add(data);
-            PODList.AddRange(data.PODetails);
+            PODList.AddRange(data.PRDetails);
             DataTable dt = GetDetails(data);
             CList.Add(BLL.UserAccount.User.UserType.Company);
             LedgerDetail.Add(BLL.Ledger.toList.Where(x => x.LedgerName == data.LedgerName).FirstOrDefault());
@@ -92,12 +92,12 @@ namespace AccountBuddy.PL.frm.Print
 
 
         int n = 0;
-        foreach (var element in data.PODetails)
+        foreach (var element in data.PRDetails)
         {
             newRow = dt.NewRow();
             n = n + 1;
             newRow["ProductName"] = element.ProductName;
-            newRow["Quantity"] = element.Quantity == 0 ? "" : element.Quantity.ToString();
+            newRow["Quantity"] = element.RequestTo == 0 ? "" : element.RequestTo.ToString();
             newRow["UnitPrice"] = element.UnitPrice == 0 ? "" : String.Format("{0:0.00}", element.UnitPrice);
             newRow["UOMName"] = element.UOMName;
             newRow["Amount"] = String.Format("{0:0.00}", element.Amount);
@@ -106,7 +106,7 @@ namespace AccountBuddy.PL.frm.Print
 
             dt.Rows.Add(newRow);
         }
-        for (int i = 0; i < NoRecPerPage - data.PODetails.Count(); i++)
+        for (int i = 0; i < NoRecPerPage - data.PRDetails.Count(); i++)
         {
             newRow = dt.NewRow();
 

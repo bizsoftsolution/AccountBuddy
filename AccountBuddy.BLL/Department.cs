@@ -19,6 +19,7 @@ namespace AccountBuddy.BLL
         private string _Description;
         private int _CompanyId;
         private CompanyDetail _Company;
+        private double? _Budget;
 
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
@@ -153,7 +154,21 @@ namespace AccountBuddy.BLL
             }
         }
 
-
+        public double? Budget
+        {
+            get
+            {
+                return _Budget;
+            }
+            set
+            {
+                if (_Budget != value)
+                {
+                    _Budget = value;
+                    NotifyPropertyChanged(nameof(Budget));
+                }
+            }
+        }
         public bool IsReadOnly
         {
             get

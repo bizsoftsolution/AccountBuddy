@@ -27,11 +27,15 @@ namespace AccountBuddy.DAL
         public string Designation { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<System.DateTime> DOJ { get; set; }
+        public Nullable<int> DepartmentId { get; set; }
+        public Nullable<int> LoginId { get; set; }
     
         public virtual Ledger Ledger { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockInProcess> StockInProcesses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockSeparated> StockSeparateds { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual UserAccount UserAccount { get; set; }
     }
 }

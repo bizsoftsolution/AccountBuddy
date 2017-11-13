@@ -58,7 +58,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (data.PODetail.ProductId == 0)
+            if (data.PRDetail.RequestBy == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
 
@@ -128,7 +128,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Supplier), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbSupplier.Focus();
             }
-            else if (data.PODetails.Count == 0)
+            else if (data.PRDetails.Count == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Transaction_ItemDetails_Validation), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbItem.Focus();
@@ -206,7 +206,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.PurchaseRequestDetail pod = dgvDetails.SelectedItem as BLL.PurchaseRequestDetail;
-                pod.toCopy<BLL.PurchaseRequestDetail>(data.PODetail);
+                pod.toCopy<BLL.PurchaseRequestDetail>(data.PRDetail);
             }
             catch (Exception ex) { }
 
@@ -215,9 +215,9 @@ namespace AccountBuddy.PL.frm.Transaction
         private void txtBarCode_KeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.Key == Key.Return && data.PODetail.ProductId != 0)
+            if (e.Key == Key.Return && data.PRDetail.RequestBy != 0)
             {
-                if (data.PODetail.ProductId == 0)
+                if (data.PRDetail.RequestBy == 0)
                 {
                     MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                     cmbItem.Focus();

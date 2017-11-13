@@ -87,6 +87,7 @@
     <Compile Include="PurchaseOrderDetail.cs" />
     <Compile Include="PurchaseRequest.cs" />
     <Compile Include="PurchaseRequestDetail.cs" />
+    <Compile Include="PurchaseRequestStatusDetail.cs" />
     <Compile Include="PurchaseReturn.cs" />
     <Compile Include="PurchaseReturnDetail.cs" />
     <Compile Include="Receipt.cs" />

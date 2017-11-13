@@ -72,7 +72,7 @@
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
                                 </TextBox>
-                                <TextBox  Width="150"  x:Name="txtSellingRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtSellingRate_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding SellingRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
+                                <TextBox  Width="150"  Visibility="Collapsed" x:Name="txtSellingRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtSellingRate_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding SellingRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="10">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Width="150">
                                             <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -83,7 +83,7 @@
                                
 
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal"  Margin="0,10,10,10">
+                            <StackPanel Visibility="Collapsed" Orientation="Horizontal"  Margin="0,10,10,10">
                                 <TextBox  Width="180"  x:Name="txtMinSellingRate" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtMinSellingRate_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding MinSellingRate, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"   Margin="0,10,10,10">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Width="150">
@@ -104,7 +104,7 @@
 
                             </StackPanel>
                             <StackPanel Orientation="Horizontal"  Margin="0,10,10,10" Width="373">
-                                <TextBox  Width="179"  x:Name="txtMRP" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtMRP_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding MRP, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="0,10,10,10">
+                                <TextBox  Width="179" Visibility="Collapsed"  x:Name="txtMRP" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtMRP_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding MRP, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True"  Margin="0,10,10,10">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Width="151">
                                             <materialDesign:PackIcon  Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -123,7 +123,7 @@
                                 </ComboBox>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal"   Margin="0,10,10,10" Width="360">
+                            <StackPanel Visibility="Collapsed" Orientation="Horizontal"   Margin="0,10,10,10" Width="360">
                                 <TextBox  Width="173"   Margin="0,10,10,10"  x:Name="txtOpeningStock" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" TextAlignment="Right" TextChanged="txtOpeningStock_TextChanged" FontWeight="Bold" FontSize="14" Text="{Binding OpeningStock, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:TransitionAssist.DisableTransitions="True" >
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Width="151">
@@ -234,12 +234,12 @@
                                         <DataGridTextColumn Header="Stock Group" FontWeight="Bold" Width="200" Binding="{Binding StockGroup.StockGroupName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="UOM" FontWeight="Bold" Width="200" Binding="{Binding UOM.Symbol}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="Pur.Rate" FontWeight="Bold" Width="100" Binding="{Binding PurchaseRate}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Sel.Rate" FontWeight="Bold" Width="100" Binding="{Binding SellingRate}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <!--<DataGridTextColumn Header="Sel.Rate" FontWeight="Bold" Width="100" Binding="{Binding SellingRate}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="Min.Rate" FontWeight="Bold" Width="100" Binding="{Binding MinSellingRate}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="Max.Rate" FontWeight="Bold" Width="100" Binding="{Binding MaxSellingRate}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="MRP" FontWeight="Bold" Width="100" Binding="{Binding MRP}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                         <DataGridTextColumn Header="OP.Stock" FontWeight="Bold" Width="100" Binding="{Binding OpeningStock}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                        <DataGridTextColumn Header="Reorder Level" FontWeight="Bold" Width="100" Binding="{Binding ReOrderLevel}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        <DataGridTextColumn Header="Reorder Level" FontWeight="Bold" Width="100" Binding="{Binding ReOrderLevel}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>-->
                                     </DataGrid.Columns>
                                 </DataGrid>
 

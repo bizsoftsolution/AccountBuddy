@@ -12,7 +12,7 @@ namespace AccountBuddy.BLL
     public class PurchaseRequest : INotifyPropertyChanged
     {
         #region Field
-        private static ObservableCollection<PurchaseRequest> _POPendingList;
+        private static ObservableCollection<PurchaseRequest> _PRPendingList;
 
         private long _Id;
         private DateTime? _PRDate;
@@ -31,8 +31,8 @@ namespace AccountBuddy.BLL
 
         private string _SearchText;
 
-        private PurchaseRequestDetail _PODetail;
-        private ObservableCollection<PurchaseRequestDetail> _PODetails;
+        private PurchaseRequestDetail _PRDetail;
+        private ObservableCollection<PurchaseRequestDetail> _PRDetails;
         private string _RefCode;
         private static UserTypeDetail _UserPermission;
 
@@ -59,21 +59,21 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public static ObservableCollection<PurchaseRequest> POPendingList
+        public static ObservableCollection<PurchaseRequest> PRPendingList
         {
             get
             {
-                if (_POPendingList == null)
+                if (_PRPendingList == null)
                 {
-                    _POPendingList = new ObservableCollection<PurchaseRequest>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseRequest>>("PurchaseRequest_POPendingList").Result;
-                    _POPendingList = new ObservableCollection<PurchaseRequest>(l1);
+                    _PRPendingList = new ObservableCollection<PurchaseRequest>();
+                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseRequest>>("PurchaseRequest_PRPendingList").Result;
+                    _PRPendingList = new ObservableCollection<PurchaseRequest>(l1);
                 }
-                return _POPendingList;
+                return _PRPendingList;
             }
             set
             {
-                _POPendingList = value;
+                _PRPendingList = value;
             }
         }
 
@@ -320,36 +320,36 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public PurchaseRequestDetail PODetail
+        public PurchaseRequestDetail PRDetail
         {
             get
             {
-                if (_PODetail == null) _PODetail = new PurchaseRequestDetail();
-                return _PODetail;
+                if (_PRDetail == null) _PRDetail = new PurchaseRequestDetail();
+                return _PRDetail;
             }
             set
             {
-                if (_PODetail != value)
+                if (_PRDetail != value)
                 {
-                    _PODetail = value;
-                    NotifyPropertyChanged(nameof(PODetail));
+                    _PRDetail = value;
+                    NotifyPropertyChanged(nameof(PRDetail));
                 }
             }
         }
 
-        public ObservableCollection<PurchaseRequestDetail> PODetails
+        public ObservableCollection<PurchaseRequestDetail> PRDetails
         {
             get
             {
-                if (_PODetails == null) _PODetails = new ObservableCollection<PurchaseRequestDetail>();
-                return _PODetails;
+                if (_PRDetails == null) _PRDetails = new ObservableCollection<PurchaseRequestDetail>();
+                return _PRDetails;
             }
             set
             {
-                if (_PODetails != value)
+                if (_PRDetails != value)
                 {
-                    _PODetails = value;
-                    NotifyPropertyChanged(nameof(PODetails));
+                    _PRDetails = value;
+                    NotifyPropertyChanged(nameof(PRDetails));
                 }
             }
         }
@@ -399,8 +399,8 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new PurchaseRequest().toCopy<PurchaseRequest>(this);
-            _PODetail = new PurchaseRequestDetail();
-            _PODetails = new ObservableCollection<PurchaseRequestDetail>();
+            _PRDetail = new PurchaseRequestDetail();
+            _PRDetails = new ObservableCollection<PurchaseRequestDetail>();
 
             PRDate = DateTime.Now;
             RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseRequest_NewRefNo").Result;
@@ -419,7 +419,7 @@ namespace AccountBuddy.BLL
                 PurchaseRequest po = FMCGHubClient.FMCGHub.Invoke<PurchaseRequest>("PurchaseRequest_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<PurchaseRequest>(this);
-                this.PODetails = po.PODetails;
+                this.PRDetails = po.PRDetails;
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -447,20 +447,20 @@ namespace AccountBuddy.BLL
         public void SaveDetail()
         {
 
-            PurchaseRequestDetail pod = PODetails.Where(x => x.ProductId == PODetail.ProductId).FirstOrDefault();
+            PurchaseRequestDetail pod = PRDetails.Where(x => x.ProductId == PRDetail.ProductId).FirstOrDefault();
 
             if (pod == null)
             {
                 pod = new PurchaseRequestDetail();
-                PODetails.Add(pod);
+                PRDetails.Add(pod);
             }
             else
             {
-                PODetail.Quantity += pod.Quantity;
+                PRDetail.Quantity += pod.Quantity;
             }
-            PODetail.toCopy<PurchaseRequestDetail>(pod);
+            PRDetail.toCopy<PurchaseRequestDetail>(pod);
             ClearDetail();
-            ItemAmount = PODetails.Sum(x => x.Amount);
+            ItemAmount = PRDetails.Sum(x => x.Amount);
 
 
         }
@@ -468,17 +468,17 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             PurchaseRequestDetail pod = new PurchaseRequestDetail();
-            pod.toCopy<PurchaseRequestDetail>(PODetail);
+            pod.toCopy<PurchaseRequestDetail>(PRDetail);
         }
 
         public void DeleteDetail(string PName)
         {
-            PurchaseRequestDetail pod = PODetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            PurchaseRequestDetail pod = PRDetails.Where(x => x.ProductName == PName).FirstOrDefault();
 
             if (pod != null)
             {
-                PODetails.Remove(pod);
-                ItemAmount = PODetails.Sum(x => x.Amount);
+                PRDetails.Remove(pod);
+                ItemAmount = PRDetails.Sum(x => x.Amount);
             }
         }
         #endregion

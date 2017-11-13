@@ -53,6 +53,14 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
+                            <TextBox x:Name="txtBudget" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding Budget, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Width="350" MaxLength="150">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Sort" Height="25" Width="25" />
+                                        <TextBlock Text="Budget" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
 
                         </StackPanel>
                     </ScrollViewer>
@@ -151,6 +159,7 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Department" FontWeight="Bold" Width="200" Binding="{Binding DepartmentName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                             <DataGridTextColumn Header="Description" FontWeight="Bold" Width="250" Binding="{Binding Description}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Budget" FontWeight="Bold" Width="250" Binding="{Binding Budget}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                         </DataGrid.Columns>
                                     </DataGrid>
 

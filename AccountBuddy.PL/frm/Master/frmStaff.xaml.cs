@@ -39,6 +39,8 @@ namespace AccountBuddy.PL.frm.Master
             data.Clear();
             rptStaff.SetDisplayMode(DisplayMode.PrintLayout);
             onClientEvents();
+            
+
         }
 
         #endregion
@@ -47,8 +49,12 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            BLL.Supplier.Init();
+            BLL.Staff.Init();
+
             dgvStaff.ItemsSource = BLL.Staff.toList;
+            cmbDepartment.ItemsSource = BLL.Department.toList;
+            cmbDesignation.ItemsSource = BLL.Staff.toList.Select(x=> x.Designation).Distinct().ToList();
+            cmbLoginId.ItemsSource = BLL.UserAccount.toList;
 
             CollectionViewSource.GetDefaultView(dgvStaff.ItemsSource).Filter = Staff_Filter;
             CollectionViewSource.GetDefaultView(dgvStaff.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.LedgerName), System.ComponentModel.ListSortDirection.Ascending));
@@ -102,6 +108,7 @@ namespace AccountBuddy.PL.frm.Master
                     MessageBox.Show(Message.PL.Saved_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                     Grid_Refresh();
+                    cmbDesignation.ItemsSource = BLL.Staff.toList.Select(x => x.Designation).Distinct().ToList();
                 }
 
                 else
@@ -128,6 +135,7 @@ namespace AccountBuddy.PL.frm.Master
                             MessageBox.Show(Message.PL.Delete_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                             data.Clear();
                             Grid_Refresh();
+                            cmbDesignation.ItemsSource = BLL.Staff.toList.Select(x => x.Designation).Distinct().ToList();
                         }
                         else
                         {

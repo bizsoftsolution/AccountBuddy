@@ -108,7 +108,7 @@ namespace AccountBuddy.SL.Hubs
                 foreach (var pod in PO.PODetails)
                 {
                     BLL.PurchaseDetail PD = new BLL.PurchaseDetail() {
-                        PODId = pod.Id,
+                        PRDId = pod.Id,
                         ProductId =pod.ProductId,
                         UOMId = pod.UOMId,
                         UOMName = pod.UOMName,

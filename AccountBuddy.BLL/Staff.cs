@@ -22,6 +22,8 @@ namespace AccountBuddy.BLL
         private string _Designation;
         private DateTime _DOB;
         private DateTime _DOJ;
+        private int _DepartmentId;
+        private int _LoginId;
 
 
         private static UserTypeDetail _UserPermission;
@@ -215,6 +217,40 @@ namespace AccountBuddy.BLL
                     _DOJ = value;
                     NotifyPropertyChanged(nameof(DOJ));
 
+                }
+            }
+        }
+
+        public int DepartmentId
+        {
+            get
+            {
+                return _DepartmentId;
+            }
+
+            set
+            {
+                if (_DepartmentId != value)
+                {
+                    _DepartmentId = value;
+                    NotifyPropertyChanged(nameof(DepartmentId));        
+                }
+            }
+        }
+
+        public int LoginId
+        {
+            get
+            {
+                return _LoginId;
+            }
+
+            set
+            {
+                if (_LoginId != value)
+                {
+                    _LoginId = value;
+                    NotifyPropertyChanged(nameof(LoginId));
                 }
             }
         }
