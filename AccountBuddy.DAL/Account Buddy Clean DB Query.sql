@@ -60,7 +60,7 @@ delete from Product
 delete from StockGroup
 delete from UOM
 
-
+delete from Department
 delete from DataKeyValue
 delete from LogDetail
 delete from LogMaster
