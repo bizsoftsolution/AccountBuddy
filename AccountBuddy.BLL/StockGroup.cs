@@ -407,7 +407,8 @@ namespace AccountBuddy.BLL
             {
                 new StockGroup().toCopy<StockGroup>(this);
                 IsReadOnly = !UserPermission.AllowInsert;
-
+                IsPurchase = true;
+                IsSale = true;
                 NotifyAllPropertyChanged();
             }
             catch (Exception ex)

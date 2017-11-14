@@ -37,6 +37,11 @@ namespace AccountBuddy.SL.Hubs
                     Caller.UserId = ua.Id;
                     Caller.AccYear = AccYear;
                     Caller.HierarchicalOrderNo = ua.UserType.HierarchicalOrderNo;
+                    var stf = ua.Staffs.FirstOrDefault();
+                    if (stf != null)
+                    {
+                        Caller.StaffId = stf.Id;
+                    }
                     rv = UserAccountDAL_BLL(ua);
                     int yy = DateTime.Now.Month < 4 ? DateTime.Now.Year - 1 : DateTime.Now.Year;
                     if (AccYear.Length > 4) int.TryParse(AccYear.Substring(0, 4), out yy);

@@ -32,6 +32,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomFormat> CustomFormats { get; set; }
         public virtual DbSet<DataKeyValue> DataKeyValues { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<EntityType> EntityTypes { get; set; }
         public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
         public virtual DbSet<JobOrderIssue> JobOrderIssues { get; set; }
@@ -53,6 +54,9 @@ namespace AccountBuddy.DAL
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+        public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
+        public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
+        public virtual DbSet<PurchaseRequestStatusDetail> PurchaseRequestStatusDetails { get; set; }
         public virtual DbSet<PurchaseReturn> PurchaseReturns { get; set; }
         public virtual DbSet<PurchaseReturnDetail> PurchaseReturnDetails { get; set; }
         public virtual DbSet<Receipt> Receipts { get; set; }
@@ -74,16 +78,12 @@ namespace AccountBuddy.DAL
         public virtual DbSet<StockSeparated> StockSeparateds { get; set; }
         public virtual DbSet<StockSeperatedDetail> StockSeperatedDetails { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<TaxMaster> TaxMasters { get; set; }
         public virtual DbSet<TransactionType> TransactionTypes { get; set; }
         public virtual DbSet<UOM> UOMs { get; set; }
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<UserTypeFormDetail> UserTypeFormDetails { get; set; }
-        public virtual DbSet<Department> Departments { get; set; }
-        public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
-        public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
-        public virtual DbSet<TaxMaster> TaxMasters { get; set; }
-        public virtual DbSet<PurchaseRequestStatusDetail> PurchaseRequestStatusDetails { get; set; }
     }
 }

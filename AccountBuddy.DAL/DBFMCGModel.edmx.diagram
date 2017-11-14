@@ -4,74 +4,83 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f954c757d34644738c6bc410d7c95d79" Name="Diagram1">
-        <EntityTypeShape EntityType="DBFMCGModel.AccountGroup" Width="1.5" PointX="0.75" PointY="36.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.Bank" Width="1.5" PointX="5.25" PointY="20.375" />
-        <EntityTypeShape EntityType="DBFMCGModel.CompanyDetail" Width="1.5" PointX="1.5" PointY="30.5" />
-        <EntityTypeShape EntityType="DBFMCGModel.CreditLimitType" Width="1.5" PointX="0.75" PointY="42.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.Customer" Width="1.5" PointX="5.25" PointY="18" />
-        <EntityTypeShape EntityType="DBFMCGModel.CustomFormat" Width="1.5" PointX="3.75" PointY="12.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.DataKeyValue" Width="1.5" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="DBFMCGModel.EntityType" Width="1.5" PointX="11" PointY="23.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.ErrorLog" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.JobOrderIssue" Width="1.5" PointX="7.5" PointY="42.5" />
-        <EntityTypeShape EntityType="DBFMCGModel.JobOrderIssueDetail" Width="1.5" PointX="12.75" PointY="42.5" />
-        <EntityTypeShape EntityType="DBFMCGModel.JobOrderReceived" Width="1.5" PointX="7.5" PointY="38.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.JobOrderReceivedDetail" Width="1.5" PointX="15" PointY="40.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.JobWorker" Width="1.5" PointX="5.25" PointY="40.875" />
-        <EntityTypeShape EntityType="DBFMCGModel.Journal" Width="1.5" PointX="3" PointY="26.625" />
-        <EntityTypeShape EntityType="DBFMCGModel.JournalDetail" Width="1.5" PointX="5.25" PointY="36.125" />
-        <EntityTypeShape EntityType="DBFMCGModel.Ledger" Width="1.5" PointX="3" PointY="39" />
-        <EntityTypeShape EntityType="DBFMCGModel.LogDetail" Width="1.5" PointX="13.25" PointY="30.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.LogDetailType" Width="1.5" PointX="11" PointY="20.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.LogMaster" Width="1.5" PointX="13.25" PointY="26.375" />
-        <EntityTypeShape EntityType="DBFMCGModel.Payment" Width="1.5" PointX="5.25" PointY="89.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.PaymentDetail" Width="1.5" PointX="10.5" PointY="69.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.Product" Width="1.5" PointX="10.5" PointY="26.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.ProductDetail" Width="1.5" PointX="15.75" PointY="29.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.Purchase" Width="1.5" PointX="5.25" PointY="44.875" />
-        <EntityTypeShape EntityType="DBFMCGModel.PurchaseDetail" Width="1.5" PointX="12.75" PointY="64.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.PurchaseOrder" Width="1.5" PointX="5.25" PointY="85" />
-        <EntityTypeShape EntityType="DBFMCGModel.PurchaseOrderDetail" Width="1.5" PointX="7.5" PointY="85" />
-        <EntityTypeShape EntityType="DBFMCGModel.PurchaseReturn" Width="1.5" PointX="10.25" PointY="34.875" />
-        <EntityTypeShape EntityType="DBFMCGModel.PurchaseReturnDetail" Width="1.5" PointX="17" PointY="49.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.Receipt" Width="1.5" PointX="5.25" PointY="79.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.ReceiptDetail" Width="1.5" PointX="7.5" PointY="57.5" />
-        <EntityTypeShape EntityType="DBFMCGModel.Sale" Width="1.5" PointX="10.25" PointY="40.875" />
-        <EntityTypeShape EntityType="DBFMCGModel.SalesDetail" Width="1.5" PointX="12.5" PointY="46.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.SalesOrder" Width="1.5" PointX="5.25" PointY="52" />
-        <EntityTypeShape EntityType="DBFMCGModel.SalesOrderDetail" Width="1.5" PointX="7.5" PointY="53" />
-        <EntityTypeShape EntityType="DBFMCGModel.SalesReturn" Width="1.5" PointX="8.25" PointY="46.875" />
-        <EntityTypeShape EntityType="DBFMCGModel.SalesReturnDetail" Width="1.5" PointX="14.75" PointY="47" />
-        <EntityTypeShape EntityType="DBFMCGModel.Staff" Width="1.5" PointX="5.25" PointY="71.375" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockGroup" Width="1.5" PointX="8.25" PointY="30.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockIn" Width="1.5" PointX="5.25" PointY="61.5" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockInDetail" Width="1.5" PointX="7.5" PointY="61.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockInProcess" Width="1.5" PointX="7.5" PointY="73.125" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockInProcessDetail" Width="1.5" PointX="9.75" PointY="73.125" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockOut" Width="1.5" PointX="5.25" PointY="65.125" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockOutDetail" Width="1.5" PointX="10.5" PointY="65" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockSeparated" Width="1.5" PointX="7.5" PointY="68.875" />
-        <EntityTypeShape EntityType="DBFMCGModel.StockSeperatedDetail" Width="1.5" PointX="13" PointY="70.875" />
-        <EntityTypeShape EntityType="DBFMCGModel.Supplier" Width="1.5" PointX="5.25" PointY="77.375" />
-        <EntityTypeShape EntityType="DBFMCGModel.TransactionType" Width="1.5" PointX="8" PointY="35" />
-        <EntityTypeShape EntityType="DBFMCGModel.UOM" Width="1.5" PointX="8.25" PointY="25.125" />
-        <EntityTypeShape EntityType="DBFMCGModel.UserAccount" Width="1.5" PointX="6" PointY="30.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.UserType" Width="1.5" PointX="3.75" PointY="31.375" />
-        <EntityTypeShape EntityType="DBFMCGModel.UserTypeDetail" Width="1.5" PointX="6" PointY="27.25" />
-        <EntityTypeShape EntityType="DBFMCGModel.UserTypeFormDetail" Width="1.5" PointX="3.75" PointY="8" />
+      <Diagram DiagramId="f954c757d34644738c6bc410d7c95d79" Name="Diagram1" ZoomLevel="116">
+        <EntityTypeShape EntityType="DBFMCGModel.AccountGroup" Width="1.5" PointX="0.75" PointY="41.125" />
+        <EntityTypeShape EntityType="DBFMCGModel.Bank" Width="1.5" PointX="5.25" PointY="85.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.CompanyDetail" Width="1.5" PointX="1.5" PointY="33.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.CreditLimitType" Width="1.5" PointX="0.75" PointY="46.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.Customer" Width="1.5" PointX="5.25" PointY="83.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.CustomFormat" Width="1.5" PointX="3.75" PointY="9" />
+        <EntityTypeShape EntityType="DBFMCGModel.DataKeyValue" Width="1.5" PointX="3.75" PointY="57.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.Department" Width="1.5" PointX="6" PointY="57" />
+        <EntityTypeShape EntityType="DBFMCGModel.EntityType" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.ErrorLog" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.JobOrderIssue" Width="1.5" PointX="7.5" PointY="66.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.JobOrderIssueDetail" Width="1.5" PointX="9.75" PointY="66.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.JobOrderReceived" Width="1.5" PointX="7.5" PointY="71" />
+        <EntityTypeShape EntityType="DBFMCGModel.JobOrderReceivedDetail" Width="1.5" PointX="16" PointY="68.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.JobWorker" Width="1.5" PointX="5.25" PointY="69.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.Journal" Width="1.5" PointX="3" PointY="29" />
+        <EntityTypeShape EntityType="DBFMCGModel.JournalDetail" Width="1.5" PointX="5.25" PointY="40.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.Ledger" Width="1.5" PointX="3" PointY="43.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.LogDetail" Width="1.5" PointX="10.5" PointY="28.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.LogDetailType" Width="1.5" PointX="8.25" PointY="29.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.LogMaster" Width="1.5" PointX="8.25" PointY="18.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.Payment" Width="1.5" PointX="5.25" PointY="88.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.PaymentDetail" Width="1.5" PointX="10.5" PointY="62.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.Product" Width="1.5" PointX="5.25" PointY="16.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.ProductDetail" Width="1.5" PointX="10.5" PointY="21.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.Purchase" Width="1.5" PointX="8.25" PointY="40.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseDetail" Width="1.5" PointX="13.5" PointY="69.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseOrder" Width="1.5" PointX="5.25" PointY="98.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseOrderDetail" Width="1.5" PointX="7.5" PointY="98.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequest" Width="1.5" PointX="5.25" PointY="24.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestDetail" Width="1.5" PointX="7.5" PointY="24.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestStatusDetail" Width="1.5" PointX="10.5" PointY="24.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseReturn" Width="1.5" PointX="5.25" PointY="45.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseReturnDetail" Width="1.5" PointX="15.75" PointY="57.125" />
+        <EntityTypeShape EntityType="DBFMCGModel.Receipt" Width="1.5" PointX="5.25" PointY="93.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.ReceiptDetail" Width="1.5" PointX="10.5" PointY="71.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.Sale" Width="1.5" PointX="5.25" PointY="51.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.SalesDetail" Width="1.5" PointX="12.75" PointY="63" />
+        <EntityTypeShape EntityType="DBFMCGModel.SalesOrder" Width="1.5" PointX="5.25" PointY="75.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.SalesOrderDetail" Width="1.5" PointX="7.5" PointY="75.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.SalesReturn" Width="1.5" PointX="8.25" PointY="50.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.SalesReturnDetail" Width="1.5" PointX="18" PointY="56.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.Staff" Width="1.5" PointX="8.25" PointY="45.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockGroup" Width="1.5" PointX="3" PointY="20.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockIn" Width="1.5" PointX="5.25" PointY="63" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockInDetail" Width="1.5" PointX="7.5" PointY="61.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockInProcess" Width="1.5" PointX="10.5" PointY="47.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockInProcessDetail" Width="1.5" PointX="12.75" PointY="47.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockOut" Width="1.5" PointX="5.25" PointY="79.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockOutDetail" Width="1.5" PointX="7.5" PointY="80.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockSeparated" Width="1.5" PointX="10.5" PointY="43.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.StockSeperatedDetail" Width="1.5" PointX="15" PointY="45.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.Supplier" Width="1.5" PointX="5.25" PointY="103" />
+        <EntityTypeShape EntityType="DBFMCGModel.TaxMaster" Width="1.5" PointX="3.75" PointY="33.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.TransactionType" Width="1.5" PointX="6" PointY="33.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.UOM" Width="1.5" PointX="3" PointY="15" />
+        <EntityTypeShape EntityType="DBFMCGModel.UserAccount" Width="1.5" PointX="6" PointY="36.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.UserType" Width="1.5" PointX="3.75" PointY="36.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.UserTypeDetail" Width="1.5" PointX="8" PointY="14.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.UserTypeFormDetail" Width="1.5" PointX="2.75" PointY="1" />
         <AssociationConnector Association="DBFMCGModel.FK_AccountGroup_AccountGroup" />
         <AssociationConnector Association="DBFMCGModel.FK_AccountGroup_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_Ledger_AccountGroup" />
         <AssociationConnector Association="DBFMCGModel.FK_Bank_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_CompanyDetail_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_CustomFormat_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_Department_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_ProductDetail_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_StockGroup_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_TaxMaster_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_UOM_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_UserType_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_Ledger_CreditLimitType" />
         <AssociationConnector Association="DBFMCGModel.FK_Customer_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_Staff_Department" />
         <AssociationConnector Association="DBFMCGModel.FK_LogMaster_EntityType" />
         <AssociationConnector Association="DBFMCGModel.FK_JobOrderIssue_JobWorker" />
         <AssociationConnector Association="DBFMCGModel.FK_JobOrderIssueDetail_JobOrderIssue" />
@@ -89,6 +98,7 @@
         <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_Purchase_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrder_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequest_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturn_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_Receipt_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Ledger" />
@@ -109,6 +119,7 @@
         <AssociationConnector Association="DBFMCGModel.FK_ProductDetail_Product" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseDetail_Product" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrderDetail_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_Product" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturnDetail_Product" />
         <AssociationConnector Association="DBFMCGModel.FK_SalesDetail_Product" />
         <AssociationConnector Association="DBFMCGModel.FK_SalesOrderDetail_Product" />
@@ -124,6 +135,11 @@
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturnDetail_PurchaseDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrderDetail_PurchaseOrder" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrderDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequestDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_PurchaseRequest" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff1" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturn_TransactionType" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturnDetail_PurchaseReturn" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturnDetail_UOM" />
@@ -138,6 +154,7 @@
         <AssociationConnector Association="DBFMCGModel.FK_SalesReturn_TransactionType" />
         <AssociationConnector Association="DBFMCGModel.FK_SalesReturnDetail_SalesReturn" />
         <AssociationConnector Association="DBFMCGModel.FK_SalesReturnDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_Staff_UserAccount" />
         <AssociationConnector Association="DBFMCGModel.FK_StockInProcess_Staff" />
         <AssociationConnector Association="DBFMCGModel.FK_StockSeparated_Staff" />
         <AssociationConnector Association="DBFMCGModel.FK_StockGroup_StockGroup" />
@@ -153,24 +170,6 @@
         <AssociationConnector Association="DBFMCGModel.FK_UserAccount_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" />
-        <EntityTypeShape EntityType="DBFMCGModel.Department" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequest" Width="1.5" PointX="5.625" PointY="56.375" />
-        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestDetail" Width="1.5" PointX="13.125" PointY="37.875" />
-        <EntityTypeShape EntityType="DBFMCGModel.TaxMaster" Width="1.5" PointX="4.125" PointY="23.375" />
-        <AssociationConnector Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail" ManuallyRouted="false" >
-        </AssociationConnector>
-        <AssociationConnector Association="DBFMCGModel.FK_TaxMaster_CompanyDetail" />
-        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequest_Ledger" />
-        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_Product" />
-        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequestDetail" />
-        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_UOM" />
-        <AssociationConnector Association="DBFMCGModel.FK_Department_CompanyDetail" />
-        <AssociationConnector Association="DBFMCGModel.FK_Staff_Department" />
-        <AssociationConnector Association="DBFMCGModel.FK_Staff_UserAccount" />
-        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestStatusDetail" Width="1.5" PointX="9.875" PointY="60.25" />
-        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_PurchaseRequest" />
-        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff" />
-        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

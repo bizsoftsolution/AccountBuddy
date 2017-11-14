@@ -32,8 +32,8 @@ namespace AccountBuddy.DAL
         public virtual ICollection<LogDetail> LogDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LogMaster> LogMasters { get; set; }
-        public virtual UserType UserType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Staff> Staffs { get; set; }
+        public virtual UserType UserType { get; set; }
     }
 }
