@@ -316,17 +316,18 @@ namespace AccountBuddy.BLL
             try
             {
                 AccountGroup d = toList.Where(x => x.Id == Id).FirstOrDefault();
-
                 if (d == null)
                 {
-                    d = new AccountGroup();
+                    d = new AccountGroup() { GroupName = this.GroupName, UnderGroupId = this.UnderGroupId, GroupCode = this.GroupCode };
                     toList.Add(d);
                 }
+
+               
 
                 this.toCopy<AccountGroup>(d);
                 if (isServerCall == false)
                 {
-                    AccountGroup ag = new AccountGroup() {GroupName=this.GroupName,UnderGroupId=this.UnderGroupId, GroupCode = this.GroupCode };
+                   AccountGroup ag = new AccountGroup() {GroupName=this.GroupName,UnderGroupId=this.UnderGroupId, GroupCode = this.GroupCode };
                     var i = FMCGHubClient.FMCGHub.Invoke<int>("AccountGroup_Save",ag).Result;
                     d.Id = i;
                 }

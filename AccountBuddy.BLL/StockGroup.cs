@@ -382,7 +382,7 @@ namespace AccountBuddy.BLL
                     d = new StockGroup();
                     toList.Add(d);
                 }
-
+               
                 this.toCopy<StockGroup>(d);
                 if (isServerCall == false)
                 {

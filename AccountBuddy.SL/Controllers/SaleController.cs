@@ -76,6 +76,7 @@ namespace AccountBuddy.SL.Controllers
                 SalRefCode = db.Sales.Where(x => x.SalesDate.Month == DateTime.Now.Month && x.Ledger.AccountGroup.CompanyId ==l.AccountGroup.CompanyDetail.Id).Max(x => x.RefNo.Substring(x.RefNo.Length - 5, x.RefNo.Length));
 
                 Hubs.ABServerHub.Journal_SaveBySales(sal);
+                
                 return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
