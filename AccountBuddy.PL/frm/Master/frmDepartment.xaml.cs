@@ -254,6 +254,8 @@ namespace AccountBuddy.PL.frm.Master
                 rptUOM.LocalReport.DataSources.Add(data1);
                 rptUOM.LocalReport.ReportPath = @"rpt\master\rptDepartment.rdlc";
 
+                rptUOM.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
                 rptUOM.RefreshReport();
 
             }
@@ -263,6 +265,11 @@ namespace AccountBuddy.PL.frm.Master
             }
 
 
+        }
+
+        private void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {            
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
 
         private void onClientEvents()

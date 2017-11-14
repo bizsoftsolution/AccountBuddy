@@ -72,43 +72,47 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.ProductName == null)
+            try
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "ProductName"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else if (data.ItemCode == null)
-            {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Item Code"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else if (data.StockGroupId == 0)
-            {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Stock Group"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-           else if (data.UOMId == 0)
-            {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "UOM"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else if (data.Id == 0 && !BLL.Product.UserPermission.AllowInsert)
-            {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else if (data.Id != 0 && !BLL.Product.UserPermission.AllowUpdate)
-            {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                if (data.Save() == true)
+                if (data.ProductName == null)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
-                    data.Clear();
-                    Grid_Refresh();
+                    MessageBox.Show(string.Format(Message.PL.Empty_Record, "ProductName"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (data.ItemCode == null)
+                {
+                    MessageBox.Show(string.Format(Message.PL.Empty_Record, "Item Code"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (data.StockGroupId == 0)
+                {
+                    MessageBox.Show(string.Format(Message.PL.Empty_Record, "Stock Group"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (data.UOMId == 0)
+                {
+                    MessageBox.Show(string.Format(Message.PL.Empty_Record, "UOM"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (data.Id == 0 && !BLL.Product.UserPermission.AllowInsert)
+                {
+                    MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (data.Id != 0 && !BLL.Product.UserPermission.AllowUpdate)
+                {
+                    MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.ProductName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                    if (data.Save() == true)
+                    {
+                        MessageBox.Show(Message.PL.Saved_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
+                        data.Clear();
+                        Grid_Refresh();
+                    }
+                    else
+                    {
+                        MessageBox.Show(string.Format(Message.PL.Existing_Data, data.ProductName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
+            catch(Exception ex) { }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -280,6 +284,9 @@ namespace AccountBuddy.PL.frm.Master
                 rptProduct.LocalReport.DataSources.Add(data1);
                 rptProduct.LocalReport.ReportPath = @"rpt\master\rptProducts.rdlc";
 
+                rptProduct.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
+
                 rptProduct.RefreshReport();
 
             }
@@ -290,7 +297,11 @@ namespace AccountBuddy.PL.frm.Master
 
 
         }
+        private void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
 
+        }
         private void onClientEvents()
         {
             BLL.FMCGHubClient.FMCGHub.On<BLL.Product>("Product_Save", (led) => {

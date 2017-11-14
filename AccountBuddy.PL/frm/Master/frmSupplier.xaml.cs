@@ -264,6 +264,7 @@ namespace AccountBuddy.PL.frm.Master
                 param[0] = new ReportParameter("Title", "SUPPLIER LIST");
                 rptSupplier.LocalReport.SetParameters(param);
 
+                rptSupplier.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
 
                 rptSupplier.RefreshReport();
@@ -276,7 +277,11 @@ namespace AccountBuddy.PL.frm.Master
 
 
         }
+        private void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
 
+        }
         private void onClientEvents()
         {
             BLL.FMCGHubClient.FMCGHub.On<BLL.Supplier>("Supplier_Save", (Cus) =>
