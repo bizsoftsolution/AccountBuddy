@@ -15,7 +15,7 @@ namespace AccountBuddy.SL.Controllers
             return View();
         }
 
-        public JsonResult Save(int LedgerId, string PayMode, string SaleReturnDetails, bool IsGST,string ChqNo, DateTime? ChqDate, string ChqBankName, decimal DiscountAmount)
+        public JsonResult Save(int LedgerId, string PayMode,string RefCode, string SaleReturnDetails, bool IsGST,string ChqNo, DateTime? ChqDate, string ChqBankName, decimal DiscountAmount)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace AccountBuddy.SL.Controllers
                 }
                 sal.Narration = PayMode;
                 sal.RefNo = Hubs.ABServerHub.SalesReturn_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
-
+                sal.RefCode = RefCode;
                 db.SalesReturns.Add(sal);
                 db.SaveChanges();
 

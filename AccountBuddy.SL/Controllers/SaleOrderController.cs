@@ -14,7 +14,7 @@ namespace AccountBuddy.SL.Controllers
         {
             return View();
         }
-        public JsonResult Save(int LedgerId, string SaleOrderDetails, bool IsGST, decimal DiscountAmount)
+        public JsonResult Save(int LedgerId,string RefCode, string SaleOrderDetails, bool IsGST, decimal DiscountAmount)
         {
             try
             {
@@ -39,6 +39,7 @@ namespace AccountBuddy.SL.Controllers
                 sal.SODate = DateTime.Now;
                 sal.ItemAmount = sal.SalesOrderDetails.Sum(x => x.Amount);
                 sal.DiscountAmount = DiscountAmount;
+                sal.RefCode = RefCode;
                 if (IsGST == true)
                 {
                     sal.GSTAmount = sal.ItemAmount * 6 / 100;
