@@ -49,6 +49,11 @@ namespace AccountBuddy.SL.Hubs
                         b_prd.toCopy<DAL.PurchaseRequestDetail>(d_prd);
                         d.PurchaseRequestDetails.Add(d_prd);
                     }
+                    d.PurchaseRequestStatusDetails.Add(new DAL.PurchaseRequestStatusDetail() {
+                        RequestBy=Caller.StaffId,
+                        RequestAt = DateTime.Now,
+                        RequestTo = PR.RequestTo                        
+                    });
                     DB.SaveChanges();
                     PR.Id = d.Id;
                     LogDetailStore(PR, LogDetailType.INSERT);
@@ -222,7 +227,6 @@ namespace AccountBuddy.SL.Hubs
             return PR;
         }
         public bool Find_PRQRef(string RefNo, BLL.PurchaseRequest PR)
-
         {
             DAL.PurchaseRequest d = DB.PurchaseRequests.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PR.Id).FirstOrDefault();
             if (d == null)

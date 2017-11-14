@@ -62,7 +62,7 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Visibility="Collapsed" Orientation="Horizontal">
                                 <CheckBox x:Name="ckbPurchase" IsChecked="{Binding IsPurchase, Mode=TwoWay}" FontSize="14" FontWeight="Bold" Content="Purchase" Margin="10"></CheckBox>
                                 <CheckBox x:Name="ckbSale" IsChecked="{Binding IsSale, Mode=TwoWay}" FontSize="14" FontWeight="Bold"   Content="Sale"></CheckBox>
 

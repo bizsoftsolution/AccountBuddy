@@ -25,6 +25,7 @@ namespace AccountBuddy.DAL
             this.PaymentDetails = new HashSet<PaymentDetail>();
             this.Purchases = new HashSet<Purchase>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.PurchaseRequests = new HashSet<PurchaseRequest>();
             this.PurchaseReturns = new HashSet<PurchaseReturn>();
             this.Receipts = new HashSet<Receipt>();
             this.ReceiptDetails = new HashSet<ReceiptDetail>();
@@ -35,7 +36,6 @@ namespace AccountBuddy.DAL
             this.StockIns = new HashSet<StockIn>();
             this.StockOuts = new HashSet<StockOut>();
             this.Suppliers = new HashSet<Supplier>();
-            this.PurchaseRequests = new HashSet<PurchaseRequest>();
         }
     
         public int Id { get; set; }
@@ -75,6 +75,8 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseRequest> PurchaseRequests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseReturn> PurchaseReturns { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receipt> Receipts { get; set; }
@@ -94,7 +96,5 @@ namespace AccountBuddy.DAL
         public virtual ICollection<StockOut> StockOuts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supplier> Suppliers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseRequest> PurchaseRequests { get; set; }
     }
 }

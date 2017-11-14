@@ -10,6 +10,7 @@ namespace AccountBuddy.SL.Hubs
     {
         public string ConnectionId { get; set; }
         public int UserId { get; set; }
+        public int StaffId { get; set; }
         public double HierarchicalOrderNo { get; set; }
         public int CompanyId { get; set; }
         public int? UnderCompanyId { get; set; }

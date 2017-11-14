@@ -29,8 +29,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         public frmPurchaseRequest()
         {
-            InitializeComponent();
-            InitializeComponent();
+            InitializeComponent();            
             this.DataContext = data;
             CultureInfo cultureInfo = new CultureInfo("en-US");
 
@@ -126,6 +125,11 @@ namespace AccountBuddy.PL.frm.Transaction
             else if (data.LedgerId == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Supplier), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbSupplier.Focus();
+            }
+            else if (data.RequestTo == 0)
+            {
+                MessageBox.Show(string.Format(Message.PL.Empty_Record,"Request To"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbSupplier.Focus();
             }
             else if (data.PRDetails.Count == 0)
