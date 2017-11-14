@@ -56,11 +56,11 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Common.Forms.frmUserType))
+            if (data.Id == 0 && !BLL.UserType.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Common.Forms.frmUserType))
+            else if (data.Id != 0 && !BLL.UserType.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -80,7 +80,7 @@ namespace AccountBuddy.PL.frm.Master
             if (data.Id == 0) MessageBox.Show("No Records to Delete");
             else
             {
-                if (!BLL.UserAccount.AllowDelete(FormName)) MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                if (!BLL.UserType.UserPermission.AllowDelete) MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
                 else if (MessageBox.Show("Do you want to Delete this record?", "DELETE", MessageBoxButton.YesNo) != MessageBoxResult.No)
                 {
                     if (data.Delete() == true)

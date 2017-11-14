@@ -14,6 +14,7 @@ namespace AccountBuddy.BLL
         #region Fileds
 
         private static ObservableCollection<Staff> _toList;
+        private static List<Staff> _requestToList;
 
         private int _Id;
         private int _LedgerId;
@@ -97,6 +98,18 @@ namespace AccountBuddy.BLL
             set
             {
                 _toList = value;
+            }
+        }
+        public static List<Staff> RequestToList
+        {
+            get
+            {
+                if (_requestToList == null) _requestToList = FMCGHubClient.FMCGHub.Invoke<List<Staff>>("Staff_RequestToList").Result;
+                return _requestToList;
+            }
+            set
+            {
+                _requestToList = value;
             }
         }
 
@@ -327,6 +340,7 @@ namespace AccountBuddy.BLL
             DOB = DateTime.Now;
             DOJ = DateTime.Now;
             IsReadOnly = !UserPermission.AllowInsert;
+            RequestToList = null;
             NotifyAllPropertyChanged();
         }
 
@@ -389,6 +403,7 @@ namespace AccountBuddy.BLL
         public static void Init()
         {
             _toList = null;
+            _requestToList = null;
         }
 
         private void SetAccountName()

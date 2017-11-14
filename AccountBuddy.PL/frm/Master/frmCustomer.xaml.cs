@@ -71,11 +71,11 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Customer Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmCustomer))
+            else if (data.Id == 0 && !BLL.Customer.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmCustomer))
+            else if (data.Id != 0 && !BLL.Customer.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -104,7 +104,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Id != 0)
             {
-                if (!BLL.UserAccount.AllowDelete(FormName))
+                if (!BLL.Customer.UserPermission.AllowDelete)
                 {
                     MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }

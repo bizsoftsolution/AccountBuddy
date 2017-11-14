@@ -94,11 +94,11 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmStockInProcess))
+            if (data.Id == 0 && !BLL.StockInProcess.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmStockInProcess))
+            else if (data.Id != 0 && !BLL.StockInProcess.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }

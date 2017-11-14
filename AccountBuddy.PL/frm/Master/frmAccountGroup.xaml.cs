@@ -67,11 +67,11 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(String.Format(Message.BLL.Required_Data, "Group Name"));
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Common.Forms.frmAccountGroup))
+            else if (data.Id == 0 && !BLL.AccountGroup.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Common.Forms.frmAccountGroup))
+            else if (data.Id != 0 && !BLL.AccountGroup.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -95,7 +95,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Id != 0)
             {
-                if (!BLL.UserAccount.AllowDelete(FormName))
+                if (!BLL.AccountGroup.UserPermission.AllowDelete)
                 {
                     MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
                 }

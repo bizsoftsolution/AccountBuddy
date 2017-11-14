@@ -38,7 +38,7 @@ namespace AccountBuddy.BLL
             {
                 if (_UserPermission == null)
                 {
-                    _UserPermission = UserAccount.User.UserType==null?new UserTypeDetail(): UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmUser.ToString()).FirstOrDefault();
+                    _UserPermission = UserAccount.User.UserType==null?new UserTypeDetail(): UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmUser).FirstOrDefault();
                 }
                 return _UserPermission;
             }
@@ -252,41 +252,10 @@ namespace AccountBuddy.BLL
 
             BLL.UOM.Init();
             BLL.Product.Init();
+            BLL.Staff.Init();            
             
-            
         }
 
-        public static bool AllowFormShow(string FormName)
-        {
-            bool rv = true;
-            var t =  User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == FormName).FirstOrDefault();
-            if (t != null) rv = t.IsViewForm;
-            return rv;
-        }
-
-        public static bool AllowInsert(string FormName)
-        {
-            bool rv = true;
-            var t = User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == FormName).FirstOrDefault();
-            if (t != null) rv = t.AllowInsert;
-            return rv;
-        }
-
-        public static bool AllowUpdate(string FormName)
-        {
-            bool rv = true;
-            var t = User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == FormName).FirstOrDefault();
-            if (t != null) rv = t.AllowUpdate;
-            return rv;
-        }
-
-        public static bool AllowDelete(string FormName)
-        {
-            bool rv = true;
-            var t = User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == FormName).FirstOrDefault();
-            if (t != null) rv = t.AllowDelete;
-            return rv;
-        }
         
         public bool Save(bool isServerCall = false)
         {
@@ -306,8 +275,8 @@ namespace AccountBuddy.BLL
                 if (isServerCall == false)
                 {
 
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("UserAccount_Save", this).Result;
-                    d.Id = i;
+                    Id = FMCGHubClient.FMCGHub.Invoke<int>("UserAccount_Save", this).Result;
+                    d.Id = Id;
                 }
 
                 return true;

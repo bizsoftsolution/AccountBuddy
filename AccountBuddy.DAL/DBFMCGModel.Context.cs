@@ -84,5 +84,6 @@ namespace AccountBuddy.DAL
         public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
         public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
         public virtual DbSet<TaxMaster> TaxMasters { get; set; }
+        public virtual DbSet<PurchaseRequestStatusDetail> PurchaseRequestStatusDetails { get; set; }
     }
 }

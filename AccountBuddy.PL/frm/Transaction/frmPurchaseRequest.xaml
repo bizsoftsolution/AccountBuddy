@@ -49,7 +49,7 @@
                 <Grid Grid.Row="0">
                     <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" VerticalAlignment="Top"  Height="79" >
                         <DatePicker x:Name="dtpDate"  SelectedDate="{Binding PRDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="5,27,10,24" Width="100" FontWeight="Bold"  />
-                        <ComboBox Loaded="cmbSupplier_Loaded" x:Name="cmbSupplier" Text="{Binding LedgerName}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="330" Height="43" Margin="0,12,0,24">
+                        <ComboBox IsEditable="True" Loaded="cmbSupplier_Loaded" x:Name="cmbSupplier" Text="{Binding LedgerName}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="330" Height="43" Margin="0,12,0,24">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -58,7 +58,14 @@
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
                         <TextBox x:Name="txtRefNo"  MaxLength="10" Text="{Binding RefNo, Mode=TwoWay}" Width="120"  IsReadOnly="True" materialDesign:HintAssist.Hint="Request Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
-
+                        <ComboBox IsEditable="True" Loaded="cmbRequestTo_Loaded" x:Name="cmbRequestTo" SelectedValue="{Binding RequestTo, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="330" Height="43" Margin="0,12,0,24">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
+                                    <TextBlock Text="Request To"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </ComboBox>
                     </StackPanel>
                 </Grid>
                 <!--#endregion-->
@@ -74,7 +81,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <ComboBox x:Name="cmbItem" Loaded="cmbItem_Loaded" Margin="0,0,10,0" Text="{Binding PODetail.ProductName}" SelectedValue="{Binding PODetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
+                        <ComboBox IsEditable="True" x:Name="cmbItem" Loaded="cmbItem_Loaded" Margin="0,0,10,0" Text="{Binding PODetail.ProductName}" SelectedValue="{Binding PODetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -194,7 +201,7 @@
                         <CheckBox x:Name="ckbAutoprint" Margin="10" FontWeight="Bold" Width="100">Autoprint</CheckBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <Button Visibility="Hidden"  Width="200" Height="30" x:Name="btnMakepurchase" Content="MAKE PURCHASE" Click="btnMakepurchase_Click"  Margin="5 5" IsEnabled="False"/>
+                        <!--<Button Visibility="Hidden"  Width="200" Height="30" x:Name="btnMakepurchase" Content="MAKE PURCHASE" Click="btnMakepurchase_Click"  Margin="5 5" IsEnabled="False"/>-->
                         <TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="PO Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold" Height="41"/>
                         <Button Margin="10" Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" />
 

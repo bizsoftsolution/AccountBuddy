@@ -68,11 +68,11 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(String.Format(Message.BLL.Required_Data, "Group Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Common.Forms.frmStockGroup))
+            else if (data.Id == 0 && !BLL.StockGroup.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Common.Forms.frmStockGroup))
+            else if (data.Id != 0 && !BLL.StockGroup.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -96,7 +96,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Id != 0)
             {
-                if (!BLL.UserAccount.AllowDelete(FormName))
+                if (!BLL.StockGroup.UserPermission.AllowDelete)
                 {
                     MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }

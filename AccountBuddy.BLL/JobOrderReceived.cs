@@ -13,7 +13,7 @@ namespace AccountBuddy.BLL
     {
         #region Field
         private static ObservableCollection<JobOrderReceived> _JRPendingList;
-
+        private static UserTypeDetail _UserPermission;
         private long _Id;
         private DateTime? _JRDate;
         private string _RefNo;
@@ -40,7 +40,25 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Property
+        public static UserTypeDetail UserPermission
+        {
+            get
+            {
+                if (_UserPermission == null)
+                {
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmJobOrderReceived).FirstOrDefault();
+                }
+                return _UserPermission;
+            }
 
+            set
+            {
+                if (_UserPermission != value)
+                {
+                    _UserPermission = value;
+                }
+            }
+        }
         public static ObservableCollection<JobOrderReceived> JRPendingList
         {
             get

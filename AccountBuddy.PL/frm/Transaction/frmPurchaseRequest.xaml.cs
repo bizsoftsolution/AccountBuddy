@@ -58,7 +58,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (data.PRDetail.RequestBy == 0)
+            if (data.PRDetail.ProductId == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
 
@@ -86,7 +86,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
 
-            btnMakepurchase.IsEnabled = false;
+            //btnMakepurchase.IsEnabled = false;
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
@@ -110,11 +110,11 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
 
-            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmPurchaseOrder))
+            if (data.Id == 0 && !BLL.PurchaseRequest.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmPurchaseOrder))
+            else if (data.Id != 0 && !BLL.PurchaseRequest.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -177,7 +177,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
             if (data.Id != 0)
             {
-                btnMakepurchase.IsEnabled = data.Status == "Pending" ? true : false;
+                //btnMakepurchase.IsEnabled = data.Status == "Pending" ? true : false;
                 btnPrint.IsEnabled = true;
             }
             if (data.RefCode != null)
@@ -186,20 +186,12 @@ namespace AccountBuddy.PL.frm.Transaction
                 btnDelete.IsEnabled = true;
             }
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            btnMakepurchase.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnMakepurchase.IsEnabled = false;
+            //btnMakepurchase.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            //btnMakepurchase.IsEnabled = false;
 
         }
 
-        private void btnMakepurchase_Click(object sender, RoutedEventArgs e)
-        {
-            if (data.MakePurchase())
-            {
-                MessageBox.Show(string.Format(Message.PL.Transaction_Make_Purchase), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                data.Clear();
-                btnMakepurchase.IsEnabled = false;
-            }
-        }
+        
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -215,9 +207,9 @@ namespace AccountBuddy.PL.frm.Transaction
         private void txtBarCode_KeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.Key == Key.Return && data.PRDetail.RequestBy != 0)
+            if (e.Key == Key.Return && data.PRDetail.ProductId != 0)
             {
-                if (data.PRDetail.RequestBy == 0)
+                if (data.PRDetail.ProductId== 0)
                 {
                     MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                     cmbItem.Focus();
@@ -318,6 +310,13 @@ namespace AccountBuddy.PL.frm.Transaction
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void cmbRequestTo_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbRequestTo.ItemsSource = BLL.Staff.RequestToList;
+            cmbRequestTo.DisplayMemberPath = "Ledger.LedgerName";
+            cmbRequestTo.SelectedValuePath = "Id";
         }
     }
 }

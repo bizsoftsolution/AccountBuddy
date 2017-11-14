@@ -25,6 +25,7 @@ namespace AccountBuddy.BLL
         private decimal? _TotalAmount;
         private string _Narration;
         private string _Status;
+        private int _RequestTo;
 
         private string _LedgerName;
         private string _AmountInwords;
@@ -270,6 +271,22 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public int RequestTo
+        {
+            get
+            {
+                return _RequestTo;
+            }
+            set
+            {
+                if (_RequestTo != value)
+                {
+                    _RequestTo = value;
+                    NotifyPropertyChanged(nameof(RequestTo));
+                }
+            }
+        }
         public string LedgerName
         {
             get
@@ -383,19 +400,7 @@ namespace AccountBuddy.BLL
                 return false;
             }
         }
-
-        public bool MakePurchase()
-        {
-            try
-            {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseRequest_MakePurchase", this).Result;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
+        
         public void Clear()
         {
             new PurchaseRequest().toCopy<PurchaseRequest>(this);

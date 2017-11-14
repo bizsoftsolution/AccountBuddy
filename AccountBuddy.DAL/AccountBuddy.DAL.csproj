@@ -168,6 +168,9 @@
     <Compile Include="PurchaseRequestDetail.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PurchaseRequestStatusDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PurchaseReturn.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
@@ -262,7 +265,7 @@
     <None Include="DBFMCGModel.edmx.diagram">
       <DependentUpon>DBFMCGModel.edmx</DependentUpon>
     </None>
-    <None Include="DB\DBFMCG_0910.bak" />
+    <None Include="DB\MTBM01_20171114" />
     <None Include="FMCG.xsc">
       <DependentUpon>FMCG.xsd</DependentUpon>
     </None>

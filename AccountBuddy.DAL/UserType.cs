@@ -25,7 +25,7 @@ namespace AccountBuddy.DAL
         public string TypeOfUser { get; set; }
         public string Description { get; set; }
         public int CompanyId { get; set; }
-        public Nullable<double> HierarchicalOrderNo { get; set; }
+        public double HierarchicalOrderNo { get; set; }
     
         public virtual CompanyDetail CompanyDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -97,7 +97,7 @@ namespace AccountBuddy.PL.frm.Print
             newRow = dt.NewRow();
             n = n + 1;
             newRow["ProductName"] = element.ProductName;
-            newRow["Quantity"] = element.RequestTo == 0 ? "" : element.RequestTo.ToString();
+            newRow["Quantity"] = element.Quantity == 0 ? "" : element.Quantity.ToString();
             newRow["UnitPrice"] = element.UnitPrice == 0 ? "" : String.Format("{0:0.00}", element.UnitPrice);
             newRow["UOMName"] = element.UOMName;
             newRow["Amount"] = String.Format("{0:0.00}", element.Amount);

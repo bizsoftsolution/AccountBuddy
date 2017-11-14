@@ -22,6 +22,7 @@ namespace AccountBuddy.PL.frm.Master
     {
         public BLL.UserAccount data = new BLL.UserAccount();
         public int UnderCompanyId;
+        public int LastCreateUserId;
         public frmUser()
         {
             InitializeComponent();
@@ -30,7 +31,8 @@ namespace AccountBuddy.PL.frm.Master
         public void LoadWindow(int CompanyId)
         {
             //btnUserTypeSetting.Visibility = BLL.UserType.UserPermission.IsViewForm ? Visibility.Visible : Visibility.Collapsed;
-            cmbUserType.ItemsSource = BLL.UserType.toList.Where(x => x.CompanyId == UnderCompanyId).ToList();
+            cmbUserType.ItemsSource = BLL.UserType.toList.Where(x => x.CompanyId == CompanyId).ToList();
+            UnderCompanyId = CompanyId;
             cmbUserType.DisplayMemberPath = "TypeOfUser";
             cmbUserType.SelectedValuePath = "Id";
         }
@@ -46,6 +48,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            LastCreateUserId = 0;
             if (data.Id == 0 && BLL.UserAccount.UserPermission.AllowInsert == false)
             {
                 MessageBox.Show("No Permission to Insert", "New User", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -62,6 +65,7 @@ namespace AccountBuddy.PL.frm.Master
                     BLL.UserAccount.User.UserName = data.UserName;
                     App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
                 }
+                LastCreateUserId = data.Id;
                 this.Close();
             }
             else

@@ -105,11 +105,11 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             DiffAmt = Math.Abs(drAmt - crAmt);
-            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmJournal))
+            if (data.Id == 0 && !BLL.Journal.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmJournal))
+            else if (data.Id != 0 && !BLL.Journal.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -147,7 +147,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
 
-            if (!BLL.UserAccount.AllowDelete(FormName))
+            if (!BLL.Journal.UserPermission.AllowDelete)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
             }

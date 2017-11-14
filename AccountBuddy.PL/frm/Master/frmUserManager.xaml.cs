@@ -64,7 +64,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnEditUser_Click(object sender, RoutedEventArgs e)
         {
-            if (BLL.UserAccount.AllowUpdate(Forms.frmUser))
+            if (BLL.UserAccount.UserPermission.AllowUpdate)
             {
                 var u = dgvUsers.SelectedItem as BLL.UserAccount;
 
@@ -87,7 +87,7 @@ namespace AccountBuddy.PL.frm.Master
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
         {
             var u = dgvUsers.SelectedItem as BLL.UserAccount;
-            if (!BLL.UserAccount.AllowDelete(Forms.frmUserType))
+            if (!BLL.UserAccount.UserPermission.AllowDelete)
             {
                 MessageBox.Show("No Permission to Delete", "Users", MessageBoxButton.OK, MessageBoxImage.Warning);
             }

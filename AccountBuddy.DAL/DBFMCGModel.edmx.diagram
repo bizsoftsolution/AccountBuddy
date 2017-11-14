@@ -167,6 +167,10 @@
         <AssociationConnector Association="DBFMCGModel.FK_Department_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_Staff_Department" />
         <AssociationConnector Association="DBFMCGModel.FK_Staff_UserAccount" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestStatusDetail" Width="1.5" PointX="9.875" PointY="60.25" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_PurchaseRequest" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

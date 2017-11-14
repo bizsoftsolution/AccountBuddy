@@ -109,11 +109,11 @@ namespace AccountBuddy.PL.frm.Master
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
 
-            if (data.Id==0&&!BLL.UserAccount.AllowInsert(Forms.frmCompanySetting))
+            if (data.Id==0&&!BLL.CompanyDetail.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id!=0&&!BLL.UserAccount.AllowUpdate(Forms.frmCompanySetting))
+            else if (data.Id!=0&&!BLL.CompanyDetail.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -165,7 +165,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnNewWareHouse_Click(object sender, RoutedEventArgs e)
         {
-            if (!BLL.UserAccount.AllowInsert(Forms.frmCompanySetting))
+            if (!BLL.CompanyDetail.UserPermission.AllowInsert)
             {
                 MessageBox.Show("No Permission to insert new warehouse", "New Warehouse", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -188,7 +188,7 @@ namespace AccountBuddy.PL.frm.Master
         private void btnNewDealer_Click(object sender, RoutedEventArgs e)
         {
 
-            if (!BLL.UserAccount.AllowInsert(Forms.frmCompanySetting))
+            if (!BLL.CompanyDetail.UserPermission.AllowInsert)
             {
                 MessageBox.Show("No Permission to insert new dealer", "New Dealer", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -211,7 +211,7 @@ namespace AccountBuddy.PL.frm.Master
         private void btnEditWarehouse_Click(object sender, RoutedEventArgs e)
         {
 
-            if (!BLL.UserAccount.AllowUpdate(Forms.frmCompanySetting))
+            if (!BLL.CompanyDetail.UserPermission.AllowUpdate)
             {
                 MessageBox.Show("No Permission to Update", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -237,17 +237,13 @@ namespace AccountBuddy.PL.frm.Master
         {
             var d = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
             data = d;
-            if (!BLL.UserAccount.AllowDelete(Forms.frmCompanySetting))
+            if (!BLL.CompanyDetail.UserPermission.AllowDelete)
             {
-                MessageBox.Show("No Permission to Delete", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
             }
             else if (d.Id != 0)
             {
-                if (!BLL.UserAccount.AllowDelete(FormName))
-                {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
-                }
-                else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
                 {
                     frmDeleteConfirmation frm = new frmDeleteConfirmation();
                     frm.ShowDialog();
@@ -280,7 +276,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnEditDealer_Click(object sender, RoutedEventArgs e)
         {
-            if (!BLL.UserAccount.AllowUpdate(Forms.frmCompanySetting))
+            if (!BLL.CompanyDetail.UserPermission.AllowUpdate)
             {
                 MessageBox.Show("No Permission to Update", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -307,7 +303,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             var d = dgvDealer.SelectedItem as BLL.CompanyDetail;
             data = d;
-            if (!BLL.UserAccount.AllowDelete(Forms.frmCompanySetting))
+            if (!BLL.CompanyDetail.UserPermission.AllowDelete)
             {
                 MessageBox.Show("No Permission to Delete", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -315,7 +311,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (d.Id != 0)
                 {
-                    if (!BLL.UserAccount.AllowDelete(FormName))
+                    if (!BLL.CompanyDetail.UserPermission.AllowDelete)
                     {
                         MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
                     }

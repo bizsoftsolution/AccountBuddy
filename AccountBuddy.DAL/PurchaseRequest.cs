@@ -18,6 +18,7 @@ namespace AccountBuddy.DAL
         public PurchaseRequest()
         {
             this.PurchaseRequestDetails = new HashSet<PurchaseRequestDetail>();
+            this.PurchaseRequestStatusDetails = new HashSet<PurchaseRequestStatusDetail>();
         }
     
         public long Id { get; set; }
@@ -35,5 +36,7 @@ namespace AccountBuddy.DAL
         public virtual Ledger Ledger { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseRequestStatusDetail> PurchaseRequestStatusDetails { get; set; }
     }
 }

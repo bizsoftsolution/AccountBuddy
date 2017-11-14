@@ -62,9 +62,10 @@ namespace AccountBuddy.PL.frm.Master
             rptContain.IsChecked = true;
 
 
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            btnSave.Visibility = (BLL.Staff.UserPermission.AllowInsert || BLL.Staff.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.Staff.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
+            btnAddUser.Visibility = BLL.UserAccount.UserPermission.AllowInsert  ? Visibility.Visible : Visibility.Collapsed;
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -72,13 +73,21 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Staff Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Designation == null)
+            else if ( string.IsNullOrWhiteSpace( data.Designation) )
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Designation"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-           else if (data.Salary == 0)
+            else if (data.Salary == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Salary"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.DepartmentId == 0)
+            {
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Department"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.LoginId == 0)
+            {
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Login Id"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (data.DOB == null)
             {
@@ -93,11 +102,11 @@ namespace AccountBuddy.PL.frm.Master
                 MessageBox.Show("Please Enter the Valid Email or Leave Empty");
 
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Common.Forms.frmStaff))
+            else if (data.Id == 0 && !BLL.Staff.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Common.Forms.frmStaff))
+            else if (data.Id != 0 && !BLL.Staff.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -122,7 +131,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Id != 0)
             {
-                if (!BLL.UserAccount.AllowDelete(FormName))
+                if (!BLL.Staff.UserPermission.AllowDelete)
                 {
                     MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
@@ -375,5 +384,16 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
+        private void btnAddUser_Click(object sender, RoutedEventArgs e)
+        {
+            frmUser frm = new frmUser();
+            frm.LoadWindow( BLL.UserAccount.User.UserType.CompanyId);
+            frm.ShowDialog();
+            if (frm.LastCreateUserId != 0)
+            {
+                data.LoginId = frm.LastCreateUserId;
+                cmbLoginId.SelectedValue = frm.LastCreateUserId;
+            }
+        }
     }
 }

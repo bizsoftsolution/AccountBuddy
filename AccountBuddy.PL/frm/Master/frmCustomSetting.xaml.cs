@@ -67,11 +67,11 @@ namespace AccountBuddy.PL.frm.Master
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
 
-            if (!BLL.UserAccount.AllowInsert(FormName))
+            if (!BLL.CustomFormat.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (!BLL.UserAccount.AllowUpdate(FormName))
+            else if (!BLL.CustomFormat.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }

@@ -61,11 +61,11 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmPayment))
+            if (data.Id == 0 && !BLL.Payment.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmPayment))
+            else if (data.Id != 0 && !BLL.Payment.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
             }
@@ -105,7 +105,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (!BLL.UserAccount.AllowDelete(FormName))
+            if (!BLL.Payment.UserPermission.AllowDelete)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
             }

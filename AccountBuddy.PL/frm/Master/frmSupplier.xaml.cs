@@ -76,11 +76,11 @@ namespace AccountBuddy.PL.frm.Master
                 MessageBox.Show("Please Enter the Valid Email or Leave Empty");
 
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmSupplier))
+            else if (data.Id == 0 && !BLL.Supplier.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmSupplier))
+            else if (data.Id != 0 && !BLL.Supplier.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -104,7 +104,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Id != 0)
             {
-                if (!BLL.UserAccount.AllowDelete(FormName))
+                if (!BLL.Supplier.UserPermission.AllowDelete)
                 {
                     MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }

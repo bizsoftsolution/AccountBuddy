@@ -24,7 +24,7 @@ namespace AccountBuddy.BLL
         private string _typeOfUser;
         private string _description;
         private int _CompanyId;
-        private float _HierarchicalOrderNo;
+        private double _HierarchicalOrderNo;
         private CompanyDetail _Company;
         private ObservableCollection<UserTypeDetail> _UserTypeDetails;
 
@@ -146,7 +146,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public float HierarchicalOrderNo
+        public double HierarchicalOrderNo
         {
             get
             {

@@ -19,6 +19,8 @@ namespace AccountBuddy.DAL
         {
             this.StockInProcesses = new HashSet<StockInProcess>();
             this.StockSeparateds = new HashSet<StockSeparated>();
+            this.PurchaseRequestStatusDetails = new HashSet<PurchaseRequestStatusDetail>();
+            this.PurchaseRequestStatusDetails1 = new HashSet<PurchaseRequestStatusDetail>();
         }
     
         public int Id { get; set; }
@@ -37,5 +39,9 @@ namespace AccountBuddy.DAL
         public virtual ICollection<StockSeparated> StockSeparateds { get; set; }
         public virtual Department Department { get; set; }
         public virtual UserAccount UserAccount { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseRequestStatusDetail> PurchaseRequestStatusDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseRequestStatusDetail> PurchaseRequestStatusDetails1 { get; set; }
     }
 }
