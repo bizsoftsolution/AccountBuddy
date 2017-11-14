@@ -260,6 +260,8 @@ namespace AccountBuddy.PL.frm.Master
                 rptStockGroup.LocalReport.DataSources.Add(data1);
                 rptStockGroup.LocalReport.ReportPath = @"rpt\master\rptStockGroup.rdlc";
 
+                rptStockGroup.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
                 rptStockGroup.RefreshReport();
 
             }
@@ -270,7 +272,10 @@ namespace AccountBuddy.PL.frm.Master
 
 
         }
-
+        private void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
         private void onClientEvents()
         {
             BLL.FMCGHubClient.FMCGHub.On<BLL.StockGroup>("StockGroup_Save", (sgp) =>

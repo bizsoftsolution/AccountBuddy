@@ -291,6 +291,9 @@ namespace AccountBuddy.PL.frm.Master
                 rptStaff.LocalReport.DataSources.Add(data1);
 
                 rptStaff.LocalReport.ReportPath = @"rpt\master\rptStaff.rdlc";
+
+                rptStaff.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
                 rptStaff.RefreshReport();
 
             }
@@ -300,6 +303,12 @@ namespace AccountBuddy.PL.frm.Master
             }
 
 
+        }
+
+        private void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+     
         }
 
         private void onClientEvents()
@@ -342,9 +351,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             Grid_Refresh();
         }
-
-       
-
+      
         private void dgvStaff_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var d = dgvStaff.SelectedItem as BLL.Supplier;

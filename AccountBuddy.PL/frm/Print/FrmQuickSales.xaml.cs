@@ -56,6 +56,8 @@ namespace AccountBuddy.PL.frm.Print
                 rptQuickSales.LocalReport.DataSources.Add(data4);
                 rptQuickSales.LocalReport.ReportPath = @"rpt\Transaction\rptQuickSales.rdlc";
 
+                rptQuickSales.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(GetSubReportData);
+
                 rptQuickSales.RefreshReport();
 
             }
@@ -63,6 +65,13 @@ namespace AccountBuddy.PL.frm.Print
             {
 
             }
+        }
+        private void GetSubReportData(object sender, SubreportProcessingEventArgs e)
+        {
+            List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
+            CList.Add(BLL.UserAccount.User.UserType.Company);
+
+            e.DataSources.Add(new ReportDataSource("CompanyDetails", CList));
         }
         public DataTable GetDetails(BLL.Sale data)
         {

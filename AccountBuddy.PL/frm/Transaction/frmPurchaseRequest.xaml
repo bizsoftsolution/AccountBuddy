@@ -72,7 +72,7 @@
                 <!--#region  Details-->
                 <Grid Grid.Row="1" Margin="0,0,0,15">
                     <StackPanel  x:Name="stkPurchaseDetails" Orientation="Horizontal" VerticalAlignment="Top">
-                        <TextBox KeyDown="txtBarCode_KeyDown" x:Name="txtBarCode" Margin="5,0,10,0" Text="{Binding PODetail.ItemCode,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="100">
+                        <TextBox KeyDown="txtBarCode_KeyDown" x:Name="txtBarCode" Margin="5,0,10,0" Text="{Binding PRDetail.ItemCode,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="100">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CardsOutline" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -81,7 +81,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <ComboBox IsEditable="True" x:Name="cmbItem" Loaded="cmbItem_Loaded" Margin="0,0,10,0" Text="{Binding PODetail.ProductName}" SelectedValue="{Binding PODetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
+                        <ComboBox IsEditable="True" x:Name="cmbItem" Loaded="cmbItem_Loaded" Margin="0,0,10,0" Text="{Binding PRDetail.ProductName}" SelectedValue="{Binding PRDetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -89,7 +89,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <ComboBox x:Name="cmbUOM" Loaded="cmbUOM_Loaded" Margin="0,0,10,0" Text="{Binding PODetail.UOMName}" SelectedValue="{Binding PODetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
+                        <ComboBox x:Name="cmbUOM" Loaded="cmbUOM_Loaded" Margin="0,0,10,0" Text="{Binding PRDetail.UOMName}" SelectedValue="{Binding PRDetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Weight" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -97,7 +97,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </ComboBox>
-                        <TextBox x:Name="txtRate"  Margin="0,0,10,0" Text="{Binding PODetail.UnitPrice}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="70"  TextAlignment="Right" TextChanged="txtRate_TextChanged">
+                        <TextBox x:Name="txtRate"  Margin="0,0,10,0" Text="{Binding PRDetail.UnitPrice}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="70"  TextAlignment="Right" TextChanged="txtRate_TextChanged">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Cash" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -105,7 +105,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox x:Name="txtQty" Margin="0,0,10,0" Text="{Binding PODetail.Quantity}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right" TextChanged="txtQty_TextChanged">
+                        <TextBox x:Name="txtQty" Margin="0,0,10,0" Text="{Binding PRDetail.Quantity}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right" TextChanged="txtQty_TextChanged">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CardsOutline" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -114,7 +114,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox x:Name="txtDiscount" Margin="0,0,10,0" Text="{Binding PODetail.DiscountAmount}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right" TextChanged="txtDiscount_TextChanged">
+                        <TextBox x:Name="txtDiscount" Margin="0,0,10,0" Text="{Binding PRDetail.DiscountAmount}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="60" TextAlignment="Right" TextChanged="txtDiscount_TextChanged">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Sale" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -123,7 +123,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <TextBox x:Name="txtAmount" IsReadOnly="True" Margin="0,0,10,0" Text="{Binding PODetail.Amount}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="90" TextAlignment="Right">
+                        <TextBox x:Name="txtAmount" IsReadOnly="True" Margin="0,0,10,0" Text="{Binding PRDetail.Amount}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="90" TextAlignment="Right">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CashMultiple" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -146,7 +146,7 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="300"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <DataGrid Grid.Column="0" x:Name="dgvDetails" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding PODetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,25,10,75"   BorderThickness="1" >
+                    <DataGrid Grid.Column="0" x:Name="dgvDetails" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding PRDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,25,10,75"   BorderThickness="1" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="FontWeight" Value="Bold" />

@@ -62,7 +62,7 @@ namespace AccountBuddy.PL.frm.Print
             par[0] = new ReportParameter("AmtInWords", data.AmountInwords);
             rptQuickPO.LocalReport.SetParameters(par);
 
-
+                rptQuickPO.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(GetSubReportData);
 
             rptQuickPO.RefreshReport();
 
@@ -73,7 +73,15 @@ namespace AccountBuddy.PL.frm.Print
         }
     }
 
-    public DataTable GetDetails(BLL.PurchaseRequest data)
+        private void GetSubReportData(object sender, SubreportProcessingEventArgs e)
+        {
+            List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
+            CList.Add(BLL.UserAccount.User.UserType.Company);
+
+            e.DataSources.Add(new ReportDataSource ("CompanyDetails",CList));
+        }
+
+        public DataTable GetDetails(BLL.PurchaseRequest data)
     {
         int NoRecPerPage = 12;
         var dataSet = new DataSet();
