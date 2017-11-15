@@ -69,7 +69,7 @@ namespace AccountBuddy.PL.frm.Print
             List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
             CList.Add(BLL.UserAccount.User.UserType.Company);
 
-            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.UserAccount.User.UserType.Company));
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", CList));
         }
     }
 }
