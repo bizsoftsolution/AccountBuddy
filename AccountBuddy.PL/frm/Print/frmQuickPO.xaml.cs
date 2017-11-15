@@ -63,6 +63,7 @@ namespace AccountBuddy.PL.frm.Print
                 rptQuickPO.LocalReport.SetParameters(par);
 
 
+                rptQuickPO.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(GetSubReportData);
 
                 rptQuickPO.RefreshReport();
 
@@ -72,10 +73,16 @@ namespace AccountBuddy.PL.frm.Print
 
             }
         }
+        private void GetSubReportData(object sender, SubreportProcessingEventArgs e)
+        {
+            List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
+            CList.Add(BLL.UserAccount.User.UserType.Company);
 
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", CList));
+        }
         public DataTable GetDetails(BLL.PurchaseOrder data)
         {
-            int NoRecPerPage = 12;
+            int NoRecPerPage =22;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);
