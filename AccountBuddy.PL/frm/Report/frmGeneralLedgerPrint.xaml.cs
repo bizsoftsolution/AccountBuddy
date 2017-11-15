@@ -55,6 +55,8 @@ namespace AccountBuddy.PL.frm.Report
                     par[1] = new ReportParameter("DateTo", dtTo.ToString());
                     RptViewer.LocalReport.SetParameters(par);
 
+                    RptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(GetSubReportData);
+
                     RptViewer.RefreshReport();
 
                 }
@@ -69,7 +71,10 @@ namespace AccountBuddy.PL.frm.Report
             }
 
         }
-
+        private void GetSubReportData(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList()));
+        }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 

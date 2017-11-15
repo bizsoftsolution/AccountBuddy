@@ -9,25 +9,25 @@
               <Width>2.4555cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.74536cm</Width>
+              <Width>2.17932cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.00011cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>5.69801cm</Width>
+              <Width>5.5128cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>5.81766cm</Width>
+              <Width>5.71183cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.18597cm</Width>
+              <Width>2.81934cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.3684cm</Width>
+              <Width>2.87111cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.45866cm</Width>
+              <Width>3.14658cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -231,7 +231,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Dr Amt</Value>
+                              <Value>Debit  [RM]</Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -266,7 +266,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Cr Amt</Value>
+                              <Value>Credit [RM]</Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -301,7 +301,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Balance Amt</Value>
+                              <Value>Balance [RM]</Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -508,7 +508,7 @@
                               <Value>=Fields!DrAmt.Value</Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
-                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                                <Format>0.00;(0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -526,7 +526,6 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
-                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -543,7 +542,7 @@
                               <Value>=Fields!CrAmt.Value</Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
-                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                                <Format>0.00;(0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -561,7 +560,6 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
-                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -578,7 +576,7 @@
                               <Value>=Fields!BalAmt.Value</Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
-                                <Format>'RM' 0.00;('RM' 0.00)</Format>
+                                <Format>0.00;(0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -596,7 +594,6 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
-                        <rd:FormatSymbolCulture>ms-MY</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -631,9 +628,9 @@
         </TablixRowHierarchy>
         <DataSetName>GeneralLedger</DataSetName>
         <Top>3.105cm</Top>
-        <Left>1.40498cm</Left>
+        <Left>1.03235cm</Left>
         <Height>1.2cm</Height>
-        <Width>24.72967cm</Width>
+        <Width>26.69658cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -677,9 +674,9 @@
       </Textbox>
       <Line Name="Line11">
         <Top>0.55208in</Top>
-        <Left>1.27335in</Left>
+        <Left>0.40644in</Left>
         <Height>0in</Height>
-        <Width>9.01588in</Width>
+        <Width>10.51047in</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -690,10 +687,10 @@
       </Line>
       <Subreport Name="rptCompanyNameRp">
         <ReportName>rptCompanyNameRp</ReportName>
-        <Top>0.04935cm</Top>
-        <Left>0.29104cm</Left>
+        <Top>0.15518cm</Top>
+        <Left>1.03235cm</Left>
         <Height>1.21183cm</Height>
-        <Width>28.24883cm</Width>
+        <Width>26.69658cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -711,30 +708,35 @@
                 <Value>{</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <Format>dd-MM-yyyy</Format>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value>=Parameters!DateFrom.Value</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <Format>dd-MM-yyyy</Format>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value> To </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <Format>dd-MM-yyyy</Format>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value>=Parameters!DateTo.Value</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <Format>dd-MM-yyyy</Format>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value> }</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <Format>dd-MM-yyyy</Format>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -763,7 +765,7 @@
     <Height>1.77213in</Height>
     <Style />
   </Body>
-  <Width>11.40284in</Width>
+  <Width>11.35076in</Width>
   <Page>
     <PageFooter>
       <Height>1.02016cm</Height>
@@ -844,7 +846,7 @@
     </PageFooter>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
-    <LeftMargin>1cm</LeftMargin>
+    <LeftMargin>0cm</LeftMargin>
     <RightMargin>0cm</RightMargin>
     <TopMargin>0cm</TopMargin>
     <BottomMargin>0cm</BottomMargin>

@@ -101,6 +101,7 @@
     <EmbeddedResource Include="rpt\Report\rptPOPendingReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptPurchaseRequest.rdlc" />
     <EmbeddedResource Include="rpt\Report\rptReorderLevelReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

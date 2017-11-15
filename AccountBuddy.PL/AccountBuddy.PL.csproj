@@ -357,6 +357,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmPRReportPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmPurchaseRequestReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -669,6 +673,9 @@
     </Compile>
     <Compile Include="frm\Report\frmProductWiseSalesReport.xaml.cs">
       <DependentUpon>frmProductWiseSalesReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmPRReportPrint.xaml.cs">
+      <DependentUpon>frmPRReportPrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmPurchaseRequestReport.xaml.cs">
       <DependentUpon>frmPurchaseRequestReport.xaml</DependentUpon>
