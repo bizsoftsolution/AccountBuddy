@@ -67,8 +67,8 @@ namespace AccountBuddy.BLL
                 if (_PRPendingList == null)
                 {
                     _PRPendingList = new ObservableCollection<PurchaseRequest>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseRequest>>("PurchaseRequest_PRPendingList").Result;
-                    _PRPendingList = new ObservableCollection<PurchaseRequest>(l1);
+                    //var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseRequest>>("PurchaseRequest_PRPendingList").Result;
+                    //_PRPendingList = new ObservableCollection<PurchaseRequest>(l1);
                 }
                 return _PRPendingList;
             }
