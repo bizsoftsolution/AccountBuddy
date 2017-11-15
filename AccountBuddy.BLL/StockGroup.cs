@@ -379,15 +379,21 @@ namespace AccountBuddy.BLL
 
                 if (d == null)
                 {
-                    d = new StockGroup();
+                    d = new StockGroup() { StockGroupName = this.StockGroupName, UnderGroupId = this.UnderGroupId, GroupCode = this.GroupCode };
                     toList.Add(d);
                 }
 
+                else
+                {
+                    d.StockGroupName = this.StockGroupName;
+                    d.UnderGroupId = this.UnderGroupId;
+                    d.GroupCode = this.GroupCode;
+                }
                 this.toCopy<StockGroup>(d);
                 if (isServerCall == false)
                 {
-                    StockGroup sg = new StockGroup() { StockGroupName = this.StockGroupName, UnderGroupId = this.UnderGroupId, GroupCode = this.GroupCode, IsPurchase=this.IsPurchase, IsSale=this.IsSale };
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("StockGroup_Save", sg).Result;
+                  //  StockGroup sg = new StockGroup() { StockGroupName = this.StockGroupName, UnderGroupId = this.UnderGroupId, GroupCode = this.GroupCode, IsPurchase=this.IsPurchase, IsSale=this.IsSale };
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("StockGroup_Save", d).Result;
                     d.Id = i;
                 }
 

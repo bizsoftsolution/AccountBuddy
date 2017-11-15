@@ -52,6 +52,7 @@ namespace AccountBuddy.PL.frm.Print
                 par[2] = new ReportParameter("AmtInwords", AmtInWords.ToUpper());
                rptQuickPayment.LocalReport.SetParameters(par);
 
+                rptQuickPayment.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(GetSubReportData);
 
 
                 rptQuickPayment.RefreshReport();
@@ -61,6 +62,14 @@ namespace AccountBuddy.PL.frm.Print
             {
 
             }
+        }
+
+        private void GetSubReportData(object sender, SubreportProcessingEventArgs e)
+        {
+            List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
+            CList.Add(BLL.UserAccount.User.UserType.Company);
+
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.UserAccount.User.UserType.Company));
         }
     }
 }
