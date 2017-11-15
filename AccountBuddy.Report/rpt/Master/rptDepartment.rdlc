@@ -9,10 +9,10 @@
               <Width>2.28833cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>7.73874cm</Width>
+              <Width>7.1302cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>8.4678cm</Width>
+              <Width>7.35655cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -230,10 +230,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Department</DataSetName>
-        <Top>2.60117cm</Top>
-        <Left>0.34396cm</Left>
+        <Top>2.49534cm</Top>
+        <Left>1.30339cm</Left>
         <Height>1.2cm</Height>
-        <Width>18.49487cm</Width>
+        <Width>16.77508cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -306,7 +306,7 @@
     <Height>1.55208in</Height>
     <Style />
   </Body>
-  <Width>8.07304in</Width>
+  <Width>7.94804in</Width>
   <Page>
     <PageFooter>
       <Height>0.89958cm</Height>
@@ -383,7 +383,7 @@
     </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>1cm</LeftMargin>
+    <LeftMargin>0cm</LeftMargin>
     <RightMargin>0cm</RightMargin>
     <TopMargin>0cm</TopMargin>
     <BottomMargin>0cm</BottomMargin>
