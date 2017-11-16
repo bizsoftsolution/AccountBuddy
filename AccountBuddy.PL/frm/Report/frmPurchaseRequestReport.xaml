@@ -75,18 +75,25 @@
                                 </DataGrid.ColumnHeaderStyle>
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Date" FontWeight="Bold" Width="100" Binding="{Binding  PODate,StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Entry No"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="120" Binding="{Binding EntryNo, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Supplier Name"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="400" Binding="{Binding Ledger.LedgerName, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTemplateColumn TextBlock.TextAlignment="Center"  Width="75">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="btnDetail" Tag="{Binding}"  Click="btnDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                                    <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Department"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Department, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Request At" FontWeight="Bold" Width="150" Binding="{Binding RequestAt,StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Request By"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding RequestBy, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Request To"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding RequestTo, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Status"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Status, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Particulars"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="450" Binding="{Binding Particulars, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Status"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="350" Binding="{Binding Status, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-
-
                         </Grid>
-
-
 
                         <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
                             <rv:ReportViewer x:Name="rptViewer"/>

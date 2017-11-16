@@ -46,7 +46,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvDetails.ItemsSource = BLL.POPending.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            dgvDetails.ItemsSource = BLL.PurchaseRequestReport.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             LoadReport();
         }
 
@@ -55,10 +55,8 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                List<BLL.POPending> list = BLL.POPending.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-                list = list.Select(x => new BLL.POPending()
-                { AccountName = x.Ledger.AccountName, Amount = x.Amount, EntryNo = x.EntryNo, Ledger = x.Ledger, PODate = x.PODate, Status = x.Status }).ToList();
-
+                List<BLL.PurchaseRequestReport> list = BLL.PurchaseRequestReport.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                
                 try
                 {
                     rptViewer.Reset();
@@ -92,7 +90,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            dgvDetails.ItemsSource = BLL.POPending.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value).ToList();
+            dgvDetails.ItemsSource = BLL.PurchaseRequestReport.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value).ToList();
             LoadReport();
         }
 
@@ -252,5 +250,17 @@ namespace AccountBuddy.PL.frm.Report
 
         #endregion
 
+        private void btnDetail_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var btn = sender as Button;
+                var d = btn.Tag as BLL.PurchaseRequestReport;
+                Transaction.frmPurchaseRequest frm = new Transaction.frmPurchaseRequest();
+                frm.data.SearchText = d.PurchaseRequestRefNo;
+                App.frmHome.ShowForm(frm);
+                frm.ViewForm();                           
+            }catch(Exception ex) { }
+        }
     }
 }

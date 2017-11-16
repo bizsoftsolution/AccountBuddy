@@ -180,6 +180,11 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
+
+            ViewForm();
+        }
+        public void ViewForm()
+        {
             var rv = data.Find();
 
             if (data.Id != 0)
@@ -195,10 +200,8 @@ namespace AccountBuddy.PL.frm.Transaction
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             //btnMakepurchase.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             //btnMakepurchase.IsEnabled = false;
-
         }
 
-        
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
