@@ -75,11 +75,11 @@ namespace AccountBuddy.PL.frm.Print
             List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
             CList.Add(BLL.UserAccount.User.UserType.Company);
 
-            e.DataSources.Add(new ReportDataSource("CompanyDetails", CList));
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", CList));
         }
         public DataTable GetDetails(BLL.Purchase data)
         {
-            int NoRecPerPage = 12;
+            int NoRecPerPage = 23;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);

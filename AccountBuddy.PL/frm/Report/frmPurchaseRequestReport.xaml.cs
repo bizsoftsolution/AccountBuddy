@@ -64,12 +64,14 @@ namespace AccountBuddy.PL.frm.Report
                     ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                     rptViewer.LocalReport.DataSources.Add(data);
                     rptViewer.LocalReport.DataSources.Add(data1);
-                    rptViewer.LocalReport.ReportPath = @"rpt\Report\rptPOPendingReport.rdlc";
+                    rptViewer.LocalReport.ReportPath = @"rpt\Report\rptPurchaseRequest.rdlc";
 
                     ReportParameter[] par = new ReportParameter[2];
                     par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
                     par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
                     rptViewer.LocalReport.SetParameters(par);
+
+                    rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(GetSubReportData);
 
                     rptViewer.RefreshReport();
 
@@ -87,7 +89,13 @@ namespace AccountBuddy.PL.frm.Report
 
         }
 
+        private void GetSubReportData(object sender, SubreportProcessingEventArgs e)
+        {
+            List<BLL.CompanyDetail> CList = new List<BLL.CompanyDetail>();
+            CList.Add(BLL.UserAccount.User.UserType.Company);
 
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", CList));
+        }
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             dgvDetails.ItemsSource = BLL.PurchaseRequestReport.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value).ToList();
@@ -243,7 +251,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
-            frmPOPendingPrint f = new frmPOPendingPrint();
+            frmPRReportPrint f = new frmPRReportPrint();
             f.LoadReport(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             f.ShowDialog();
         }

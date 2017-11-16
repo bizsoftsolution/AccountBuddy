@@ -624,7 +624,7 @@
         <Top>2.63866in</Top>
         <Left>0.15625in</Left>
         <Height>0.5in</Height>
-        <Width>6.99092in</Width>
+        <Width>6.99094in</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -835,7 +835,7 @@
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>0.06597in</Top>
+            <Top>0.05208in</Top>
             <Left>0.05557in</Left>
             <Height>1.68403in</Height>
             <Width>2.4827in</Width>

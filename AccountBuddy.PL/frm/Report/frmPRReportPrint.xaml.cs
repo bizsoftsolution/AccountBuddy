@@ -17,17 +17,13 @@ using Microsoft.Reporting.WinForms;
 namespace AccountBuddy.PL.frm.Report
 {
     /// <summary>
-    /// Interaction logic for frmPOPendingPrint.xaml
+    /// Interaction logic for frmPRReportPrint.xaml
     /// </summary>
-    public partial class frmPOPendingPrint : MetroWindow
+    public partial class frmPRReportPrint : MetroWindow
     {
-        public static int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
-
-        DateTime? dtFrom = new DateTime(yy, 4, 1);
-        DateTime? dtTo = new DateTime(yy + 1, 3, 31);
-
-        public frmPOPendingPrint()
+        public frmPRReportPrint()
         {
+            InitializeComponent();
             InitializeComponent();
             RptViewer.SetDisplayMode(DisplayMode.PrintLayout);
         }
@@ -52,7 +48,7 @@ namespace AccountBuddy.PL.frm.Report
                     ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                     RptViewer.LocalReport.DataSources.Add(data);
                     RptViewer.LocalReport.DataSources.Add(data1);
-                    RptViewer.LocalReport.ReportPath = @"rpt\Report\rptPOPendingReport.rdlc";
+                    RptViewer.LocalReport.ReportPath = @"rpt\Report\rptPurchaseRequest.rdlc";
 
                     ReportParameter[] par = new ReportParameter[2];
                     par[0] = new ReportParameter("DateFrom", dtFrom.ToString());
@@ -79,5 +75,6 @@ namespace AccountBuddy.PL.frm.Report
         {
             e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList()));
         }
+
     }
 }
