@@ -165,28 +165,9 @@
                         <DropShadowEffect/>
                     </DataGrid.Effect>
                     <DataGrid.Columns>
-                        <DataGridTextColumn FontWeight="Bold" Width="250" Binding="{Binding TypeOfUser}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                            <DataGridTextColumn.Header>
-                                <Grid>
-                                    <TextBlock Margin="-110,0,0,0">User Type</TextBlock>
-                                </Grid>
-                            </DataGridTextColumn.Header>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn FontWeight="Bold" Width="250" Binding="{Binding TypeOfUser}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
-                            <DataGridTextColumn.Header>
-                                <Grid>
-                                    <TextBlock Margin="-110,0,0,0">User Type</TextBlock>
-                                </Grid>
-                            </DataGridTextColumn.Header>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn FontWeight="Bold" Width="450" Binding="{Binding Description}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
-                            <DataGridTextColumn.Header>
-                                <Grid>
-                                    <TextBlock Margin="-210,0,0,0">Description</TextBlock>
-                                </Grid>
-                            </DataGridTextColumn.Header>
-                        </DataGridTextColumn>
-
+                        <DataGridTextColumn Header="User Type" FontWeight="Bold" Width="200" Binding="{Binding TypeOfUser}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                        <DataGridTextColumn Header="Description" FontWeight="Bold" Width="200" Binding="{Binding Description}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                        <DataGridTextColumn Header="Hierarchical Order No" FontWeight="Bold" Width="150" Binding="{Binding HierarchicalOrderNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                     </DataGrid.Columns>
                 </DataGrid>
                 
