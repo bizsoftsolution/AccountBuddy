@@ -37,7 +37,7 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                List<BLL.POPending> list = BLL.POPending.ToList(dtFrom, dtTo);
+                List<BLL.POPending> list = BLL.POPending.ToList_PR(dtFrom, dtTo);
                 list = list.Select(x => new BLL.POPending()
                 { AccountName = x.Ledger.AccountName, Amount = x.Amount, EntryNo = x.EntryNo, Ledger = x.Ledger, PODate = x.PODate, Status = x.Status }).ToList();
 

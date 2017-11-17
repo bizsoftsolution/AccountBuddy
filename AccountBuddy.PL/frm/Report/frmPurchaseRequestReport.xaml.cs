@@ -46,7 +46,7 @@ namespace AccountBuddy.PL.frm.Report
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvDetails.ItemsSource = BLL.POPending.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            dgvDetails.ItemsSource = BLL.POPending.ToList_PR(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             LoadReport();
         }
 
@@ -55,7 +55,7 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                List<BLL.POPending> list = BLL.POPending.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                List<BLL.POPending> list = BLL.POPending.ToList_PR(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
                 list = list.Select(x => new BLL.POPending()
                 { AccountName = x.Ledger.AccountName, Amount = x.Amount, EntryNo = x.EntryNo, Ledger = x.Ledger, PODate = x.PODate, Status = x.Status }).ToList();
 
@@ -100,7 +100,7 @@ namespace AccountBuddy.PL.frm.Report
         }
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            dgvDetails.ItemsSource = BLL.POPending.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value).ToList();
+            dgvDetails.ItemsSource = BLL.POPending.ToList_PR(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value).ToList();
             LoadReport();
         }
 

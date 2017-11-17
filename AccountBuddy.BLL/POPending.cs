@@ -166,7 +166,10 @@ namespace AccountBuddy.BLL
         {
             return FMCGHubClient.FMCGHub.Invoke<List<POPending>>("POPending_List", dtFrom, dtTo).Result;
         }
-
+        public static List<POPending> ToList_PR(DateTime dtFrom, DateTime dtTo)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<POPending>>("PRPending_List", dtFrom, dtTo).Result;
+        }
         #endregion
 
     }
