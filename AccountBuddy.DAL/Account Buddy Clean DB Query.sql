@@ -10,9 +10,9 @@ delete from StockInProcess
 delete from StockSeperatedDetail
 delete from StockSeparated
 
-delete from StockInDetail
 delete from StockIn
-
+Detail
+delete from StockIn
 delete from StockOutDetail
 delete from StockOut
 
@@ -60,7 +60,7 @@ delete from Product
 delete from StockGroup
 delete from UOM
 
-
+delete from TaxMaster
 delete from DataKeyValue
 
 delete from UserTypeDetail
