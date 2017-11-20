@@ -29,7 +29,7 @@
         </Grid.RowDefinitions>
         <!--#region Form Head -->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Width="1000" ><Run Text="Purchase Order"/></TextBlock>
+            <TextBlock x:Name="lblHeading" Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Width="1000" ><Run Text="Purchase Order"/></TextBlock>
         </Grid>
         <Border BorderBrush="Black" Grid.RowSpan="2" BorderThickness="1"></Border>
         <!--#endregion-->

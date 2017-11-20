@@ -66,7 +66,7 @@
 
         <!--#region Heading-->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  TextAlignment="Center" FontSize="18" Width="512" Height="30" Margin="238,1,330,-1" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5" Text="Payment "/>
+            <TextBlock x:Name="lblHeading" HorizontalAlignment="Center" VerticalAlignment="Center"  TextAlignment="Center" FontSize="18" Width="512" Height="30" Margin="238,1,330,-1" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5" Text="Payment "/>
         </Grid>
         <!--#endregion-->
 

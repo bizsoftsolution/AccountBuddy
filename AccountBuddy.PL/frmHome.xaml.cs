@@ -134,8 +134,10 @@ namespace AccountBuddy.PL
 
                 if (mi.Content == null)
                 {
-                    object obj = Activator.CreateInstance(Type.GetType(mi.FormName));
+                    dynamic obj = Activator.CreateInstance(Type.GetType(mi.FormName));
                     mi.Content = obj;
+                    obj.lblHeading.Text = mi.MenuName;
+              
                 }
                 if (mi.Content != null) ccContent.Content = mi.Content;
                 

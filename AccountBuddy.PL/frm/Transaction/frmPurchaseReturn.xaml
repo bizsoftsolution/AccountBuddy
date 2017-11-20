@@ -31,7 +31,7 @@
         <!--#region Form Head -->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
 
-            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Width="1099" Margin="0,0,0,1"><Run Text="Purchase Return"/></TextBlock>
+            <TextBlock x:Name="lblHeading" Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" TextAlignment="Center" Width="1099" Margin="0,0,0,1"><Run Text="Purchase Return"/></TextBlock>
         </Grid>
         <!--#endregion-->
         <!--#region Form Body-->
