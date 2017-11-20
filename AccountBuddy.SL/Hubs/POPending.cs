@@ -34,5 +34,33 @@ namespace AccountBuddy.SL.Hubs
             return lstPOPending;
         }
 
+
+        public List<BLL.POPending> PRPending_List(DateTime dtFrom, DateTime dtTo)
+        {
+            List<BLL.POPending> lstPOPending = new List<BLL.POPending>();
+            BLL.POPending tb = new BLL.POPending();
+
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key && x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+
+            foreach (var l in lstLedger)
+            {
+                foreach (var pd in l.PurchaseRequests.Where(x => x.PRDate >= dtFrom && x.PRDate <= dtTo && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    var po = l.PurchaseOrders.FirstOrDefault();
+                    tb = new BLL.POPending();
+                    tb.Ledger = LedgerDAL_BLL(l);
+
+                    tb.EntryNo = pd.RefNo;
+                    tb.Amount = pd.TotalAmount;
+                    tb.PODate = pd.PRDate;
+                    tb.Status ="Pending";
+                    lstPOPending.Add(tb);
+                }
+
+            }
+
+            return lstPOPending;
+        }
+
     }
 }

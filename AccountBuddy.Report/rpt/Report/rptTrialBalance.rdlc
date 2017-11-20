@@ -6,19 +6,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>6.37695cm</Width>
+              <Width>7.65851cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.0259cm</Width>
+              <Width>2.33344cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.29312cm</Width>
+              <Width>2.34443cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.5282cm</Width>
+              <Width>2.5757cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.65195cm</Width>
+              <Width>2.56716cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -131,7 +131,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Prev.Yr.Debit  [RM]</Value>
+                              <Value>Previous Yr. Debit  [RM]</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -164,7 +164,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Prev.Yr. Credit  [RM]</Value>
+                              <Value>Previous Yr. Credit  [RM]</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -232,7 +232,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!DrAmt.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>0.00;(0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -263,7 +265,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!CrAmt.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>0.00;(0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -294,7 +298,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!DrAmtOP.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>0.00;(0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -325,7 +331,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!CrAmtOP.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>0.00;(0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -344,6 +352,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -372,10 +381,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>TrialBalance</DataSetName>
-        <Top>3.43525cm</Top>
-        <Left>0.54688cm</Left>
+        <Top>3.75275cm</Top>
+        <Left>1.18188cm</Left>
         <Height>1.2cm</Height>
-        <Width>17.87612cm</Width>
+        <Width>17.47924cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -385,7 +394,7 @@
       <Subreport Name="rptCompanyNameRp">
         <ReportName>rptCompanyNameRp</ReportName>
         <Top>0.26974cm</Top>
-        <Left>0.28139cm</Left>
+        <Left>0.91639cm</Left>
         <Height>1.56862cm</Height>
         <Width>18.14161cm</Width>
         <ZIndex>1</ZIndex>
@@ -415,7 +424,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>1.90892cm</Top>
+        <Top>2.22642cm</Top>
         <Left>2.91636cm</Left>
         <Height>0.67938cm</Height>
         <Width>12.87167cm</Width>
@@ -478,7 +487,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox4</rd:DefaultName>
-        <Top>2.69414cm</Top>
+        <Top>3.01164cm</Top>
         <Left>2.91636cm</Left>
         <Height>0.6cm</Height>
         <Width>12.87167cm</Width>
@@ -493,11 +502,24 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Line Name="Line11">
+        <Top>0.77932in</Top>
+        <Left>0.36078in</Left>
+        <Height>0in</Height>
+        <Width>7.12216in</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+            <Width>2pt</Width>
+          </Border>
+        </Style>
+      </Line>
     </ReportItems>
-    <Height>1.90288in</Height>
+    <Height>2.00705in</Height>
     <Style />
   </Body>
-  <Width>7.36393in</Width>
+  <Width>7.5931in</Width>
   <Page>
     <PageFooter>
       <Height>0.89958cm</Height>
