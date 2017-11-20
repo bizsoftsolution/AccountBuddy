@@ -260,5 +260,9 @@ namespace AccountBuddy.PL.frm.Report
 
         #endregion
 
+        private void btnDetail_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
