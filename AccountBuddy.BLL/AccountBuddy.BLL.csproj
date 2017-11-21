@@ -54,6 +54,7 @@
     <Compile Include="BalanceSheet.cs" />
     <Compile Include="Bank.cs" />
     <Compile Include="BankReconcilation.cs" />
+    <Compile Include="Budget.cs" />
     <Compile Include="CompanyDetail.cs" />
     <Compile Include="CreditLimitType.cs" />
     <Compile Include="Customer.cs" />
@@ -86,7 +87,6 @@
     <Compile Include="PurchaseOrder.cs" />
     <Compile Include="PurchaseOrderDetail.cs" />
     <Compile Include="PurchaseRequest.cs" />
-    <Compile Include="PurchaseRequestBudgetReport.cs" />
     <Compile Include="PurchaseRequestDetail.cs" />
     <Compile Include="PurchaseRequestReport.cs" />
     <Compile Include="PurchaseRequestStatusDetail.cs" />
@@ -96,6 +96,7 @@
     <Compile Include="ReceiptAndPayment.cs" />
     <Compile Include="ReceiptDetail.cs" />
     <Compile Include="Receivable.cs" />
+    <Compile Include="RequestReport.cs" />
     <Compile Include="Sale.cs" />
     <Compile Include="SalesDetail.cs" />
     <Compile Include="SalesOrder.cs" />
