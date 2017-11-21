@@ -302,8 +302,12 @@ namespace AccountBuddy.PL.frm.Report
                 dgvDetailsOnHold.ItemsSource = list.Where(x=> x.IsReject==false && x.IsApproval==false).ToList();
                 dgvDetailsOnReject.ItemsSource = list.Where(x => x.IsReject == true).ToList();
                 dgvDetailsOnApproved.ItemsSource = list.Where(x => x.IsApproval== true).ToList();
+                dgvDetailsOnBudget.ItemsSource = BLL.PurchaseRequestBudgetReport.ToList();
 
                 CollectionViewSource.GetDefaultView(dgvDetailsOnHold.ItemsSource).Filter = RequestOnHold_Filter;
+                CollectionViewSource.GetDefaultView(dgvDetailsOnHold.ItemsSource).Filter = RequestOnReject_Filter;
+                CollectionViewSource.GetDefaultView(dgvDetailsOnHold.ItemsSource).Filter = RequestOnApproval_Filter;
+                CollectionViewSource.GetDefaultView(dgvDetailsOnHold.ItemsSource).Filter = Budget_Filter;
                 Grid_Refresh();
                 try
                 {
@@ -487,8 +491,7 @@ namespace AccountBuddy.PL.frm.Report
                 if (BLL.PurchaseRequest.Reject(d.PurchaseRequestStatusDetailsId))
                 {
                     MessageBox.Show("Requestion Reject Successfull!");
-                    d.IsReject = true;
-                    Grid_Refresh();
+                    LoadReport();
                 }
             }            
         }
@@ -502,8 +505,7 @@ namespace AccountBuddy.PL.frm.Report
                 if (BLL.PurchaseRequest.Approval(d.PurchaseRequestStatusDetailsId))
                 {
                     MessageBox.Show("Requestion Approval Successfull!");
-                    d.IsApproval = true;
-                    Grid_Refresh();
+                    LoadReport();
                 }
             }
         }
