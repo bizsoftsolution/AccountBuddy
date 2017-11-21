@@ -217,7 +217,7 @@ namespace AccountBuddy.PL.frm.Report
                     RptViewer.Reset();
                     ReportDataSource data = new ReportDataSource("Budget", l);
                     RptViewer.LocalReport.DataSources.Add(data);
-                    RptViewer.LocalReport.ReportPath = @"rpt\Report\rptBudgetReport..rdlc";
+                    RptViewer.LocalReport.ReportPath = @"rpt\Report\rptBudgetReport.rdlc";
 
                     ReportParameter[] par = new ReportParameter[3];
                     par[0] = new ReportParameter("DateFrom", dtFrom.ToString());
