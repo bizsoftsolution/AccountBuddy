@@ -27,10 +27,12 @@ namespace AccountBuddy.SL.Hubs
                 }
                 lstPurchaseRequestReport.Add(new BLL.PurchaseRequestReport() {
                     PurchaseRequestRefNo = dFirst.PurchaseRequest.RefNo,
+                    PurchaseRequestId = dLast.PRId.Value,
                     PurchaseRequestStatusDetailsId = dLast.Id,
                     RequestBy = dFirst.Staff.Ledger.LedgerName,
-                    RequestTo = dFirst.Staff1.Ledger.LedgerName,
-                    RequestAt = dFirst.RequestAt,
+                    RequestTo = dLast.Staff1.Ledger.LedgerName,
+                    RequestAt = dFirst.RequestAt,                    
+                    ResponseAt = dLast.ResponseAt,
                     SupplierName = dFirst.PurchaseRequest.Ledger.LedgerName,
                     Department = dFirst.Staff.Department.DepartmentName,
                     Amount = dFirst.PurchaseRequest.TotalAmount,

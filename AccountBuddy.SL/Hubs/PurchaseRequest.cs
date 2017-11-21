@@ -27,6 +27,39 @@ namespace AccountBuddy.SL.Hubs
 
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
+        public bool PurchaseRequest_Reject(long PurchaseRequestStatusDetailId)
+        {
+            try
+            {
+                var d = DB.PurchaseRequestStatusDetails.Where(x => x.Id == PurchaseRequestStatusDetailId).FirstOrDefault();
+                if (d != null)
+                {
+                    d.ResponseAt = DateTime.Now;
+                    d.Status = "Reject";
+                    DB.SaveChanges();
+                    return true;                    
+                }
+            }
+            catch (Exception) { }
+            return false;
+        }
+
+        public bool PurchaseRequest_Approval(long PurchaseRequestStatusDetailId)
+        {
+            try
+            {
+                var d = DB.PurchaseRequestStatusDetails.Where(x => x.Id == PurchaseRequestStatusDetailId).FirstOrDefault();
+                if (d != null)
+                {
+                    d.ResponseAt = DateTime.Now;
+                    d.Status = "Approval";
+                    DB.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception) { }
+            return false;
+        }
 
         public bool PurchaseRequest_Save(BLL.PurchaseRequest PR)
         {

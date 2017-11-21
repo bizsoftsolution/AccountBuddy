@@ -12,11 +12,13 @@ namespace AccountBuddy.BLL
     {
 
         #region Fields
+        private long _PurchaseRequestId;
         private string _PurchaseRequestRefNo;
         private long _PurchaseRequestStatusDetailsId;
         private string _RequestBy;
         private string _RequestTo;
         private DateTime? _RequestAt;
+        private DateTime? _ResponseAt;
         private string _SupplierName;
         private string _Particulars;
         private decimal _Amount;
@@ -34,6 +36,7 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Property
+
         public static UserTypeDetail UserPermission
         {
             get
@@ -50,6 +53,21 @@ namespace AccountBuddy.BLL
                 if (_UserPermission != value)
                 {
                     _UserPermission = value;
+                }
+            }
+        }
+        public long PurchaseRequestId
+        {
+            get
+            {
+                return _PurchaseRequestId;
+            }
+            set
+            {
+                if (_PurchaseRequestId != value)
+                {
+                    _PurchaseRequestId = value;
+                    NotifyPropertyChanged(nameof(PurchaseRequestId));
                 }
             }
         }
@@ -96,6 +114,22 @@ namespace AccountBuddy.BLL
                 {
                     _RequestAt = value;
                     NotifyPropertyChanged(nameof(RequestAt));
+
+                }
+            }
+        }
+        public DateTime? ResponseAt
+        {
+            get
+            {
+                return _ResponseAt;
+            }
+            set
+            {
+                if (_ResponseAt != value)
+                {
+                    _ResponseAt = value;
+                    NotifyPropertyChanged(nameof(ResponseAt));
 
                 }
             }
@@ -266,7 +300,6 @@ namespace AccountBuddy.BLL
             }
         }
 
-
         public bool IsReject
         {
             get
@@ -358,7 +391,7 @@ namespace AccountBuddy.BLL
         public static List<PurchaseRequestReport> ToList(DateTime dtFrom, DateTime dtTo)
         {
             return FMCGHubClient.FMCGHub.Invoke<List<PurchaseRequestReport>>("PurchaseRequestReport_List", dtFrom, dtTo).Result;
-        }
+        }        
 
         #endregion
 

@@ -487,7 +487,15 @@ namespace AccountBuddy.BLL
             }
         }
         #endregion
+        public static bool Reject(long PurchaseRequestStatusDetailId)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseRequest_Reject", PurchaseRequestStatusDetailId).Result;
+        }
 
+        public static bool Approval(long PurchaseRequestStatusDetailId)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseRequest_Approval", PurchaseRequestStatusDetailId).Result;
+        }
 
         private void SetAmount()
         {

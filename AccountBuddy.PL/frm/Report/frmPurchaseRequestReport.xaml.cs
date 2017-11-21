@@ -45,20 +45,266 @@ namespace AccountBuddy.PL.frm.Report
 
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            dgvDetails.ItemsSource = BLL.POPending.ToList_PR(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+        {            
             LoadReport();
         }
 
+        private bool RequestOnHold_Filter(object obj)
+        {
+            bool RValue = false;
 
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+            {
+                string strSearch = cbxCase.IsChecked == true ? txtSearch.Text : txtSearch.Text.ToLower();
+                string strValue = "";
+
+                var d1 = obj as BLL.PurchaseRequestReport;
+
+                if (d1.IsReject || d1.IsApproval) return false;
+
+                foreach (var p in d1.GetType().GetProperties())
+                {
+                    if (p.Name.ToLower().Contains("id") ||
+                        p.GetValue(d1) == null ||
+                        p.PropertyType.Namespace != "System"
+                            ) continue;
+                    strValue = p.GetValue(d1).ToString();
+                    if (cbxCase.IsChecked == false)
+                    {
+                        strValue = strValue.ToLower();
+                    }
+                    if (rptStartWith.IsChecked == true && strValue.StartsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptContain.IsChecked == true && strValue.Contains(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptEndWith.IsChecked == true && strValue.EndsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                }                
+            }
+            else
+            {
+                RValue = true;
+            }
+            return RValue;
+        }
+        private bool RequestOnReject_Filter(object obj)
+        {
+            bool RValue = false;
+
+            if (!string.IsNullOrEmpty(txtSearchReject.Text))
+            {
+                string strSearch = cbxCaseReject.IsChecked == true ? txtSearchReject.Text : txtSearchReject.Text.ToLower();
+                string strValue = "";
+
+                var d1 = obj as BLL.PurchaseRequestReport;
+
+                if (!d1.IsReject) return false;
+
+                foreach (var p in d1.GetType().GetProperties())
+                {
+                    if (p.Name.ToLower().Contains("id") ||
+                        p.GetValue(d1) == null ||
+                        p.PropertyType.Namespace != "System"
+                            ) continue;
+                    strValue = p.GetValue(d1).ToString();
+                    if (cbxCaseReject.IsChecked == false)
+                    {
+                        strValue = strValue.ToLower();
+                    }
+                    if (rptStartWithReject.IsChecked == true && strValue.StartsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptContainReject.IsChecked == true && strValue.Contains(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptEndWithReject.IsChecked == true && strValue.EndsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                RValue = true;
+            }
+            return RValue;
+        }  
+        private bool RequestOnApproval_Filter(object obj)
+        {
+            bool RValue = false;
+
+            if (!string.IsNullOrEmpty(txtSearchApproved.Text))
+            {
+                string strSearch = cbxCaseApproved.IsChecked == true ? txtSearchApproved.Text : txtSearchApproved.Text.ToLower();
+                string strValue = "";
+
+                var d1 = obj as BLL.PurchaseRequestReport;
+
+                if (!d1.IsApproval) return false;
+
+                foreach (var p in d1.GetType().GetProperties())
+                {
+                    if (p.Name.ToLower().Contains("id") ||
+                        p.GetValue(d1) == null ||
+                        p.PropertyType.Namespace != "System"
+                            ) continue;
+                    strValue = p.GetValue(d1).ToString();
+                    if (cbxCaseApproved.IsChecked == false)
+                    {
+                        strValue = strValue.ToLower();
+                    }
+                    if (rptStartWithApproved.IsChecked == true && strValue.StartsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptContainApproved.IsChecked == true && strValue.Contains(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptEndWithApproved.IsChecked == true && strValue.EndsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                RValue = true;
+            }
+            return RValue;
+        }
+        private bool Budget_Filter(object obj)
+        {
+            bool RValue = false;
+
+            if (!string.IsNullOrEmpty(txtSearchBudget.Text))
+            {
+                string strSearch = cbxCaseBudget.IsChecked == true ? txtSearchBudget.Text : txtSearchBudget.Text.ToLower();
+                string strValue = "";
+
+                var d1 = obj as BLL.PurchaseRequestReport;
+
+                foreach (var p in d1.GetType().GetProperties())
+                {
+                    if (p.Name.ToLower().Contains("id") ||
+                        p.GetValue(d1) == null ||
+                        p.PropertyType.Namespace != "System"
+                            ) continue;
+                    strValue = p.GetValue(d1).ToString();
+                    if (cbxCaseBudget.IsChecked == false)
+                    {
+                        strValue = strValue.ToLower();
+                    }
+                    if (rptStartWithBudget.IsChecked == true && strValue.StartsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptContainBudget.IsChecked == true && strValue.Contains(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                    else if (rptEndWithBudget.IsChecked == true && strValue.EndsWith(strSearch))
+                    {
+                        RValue = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                RValue = true;
+            }
+            return RValue;
+        }
+
+        private void Grid_Refresh()
+        {
+            try
+            {
+                CollectionViewSource.GetDefaultView(dgvDetailsOnHold.ItemsSource).Refresh();
+                CollectionViewSource.GetDefaultView(dgvDetailsOnReject.ItemsSource).Refresh();
+                CollectionViewSource.GetDefaultView(dgvDetailsOnApproved.ItemsSource).Refresh();
+                CollectionViewSource.GetDefaultView(dgvDetailsOnBudget.ItemsSource).Refresh();
+            }
+            catch (Exception ex) { };
+
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void cbxCase_Checked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+        private void cbxCase_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void rptStartWith_Checked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+
+        private void rptContain_Checked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void rptEndWith_Checked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void rptContain_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
+
+        private void rptEndWith_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Grid_Refresh();
+        }
         private void LoadReport()
         {
             try
             {
-                List<BLL.POPending> list = BLL.POPending.ToList_PR(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-                list = list.Select(x => new BLL.POPending()
-                { AccountName = x.Ledger.AccountName, Amount = x.Amount, EntryNo = x.EntryNo, Ledger = x.Ledger, PODate = x.PODate, Status = x.Status }).ToList();
+                List<BLL.PurchaseRequestReport> list = BLL.PurchaseRequestReport.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
 
+                dgvDetailsOnHold.ItemsSource = list.Where(x=> x.IsReject==false && x.IsApproval==false).ToList();
+                dgvDetailsOnReject.ItemsSource = list.Where(x => x.IsReject == true).ToList();
+                dgvDetailsOnApproved.ItemsSource = list.Where(x => x.IsApproval== true).ToList();
+
+                CollectionViewSource.GetDefaultView(dgvDetailsOnHold.ItemsSource).Filter = RequestOnHold_Filter;
+                Grid_Refresh();
                 try
                 {
                     rptViewer.Reset();
@@ -99,38 +345,10 @@ namespace AccountBuddy.PL.frm.Report
             e.DataSources.Add(new ReportDataSource("CompanyDetail", CList));
         }
         private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            dgvDetails.ItemsSource = BLL.POPending.ToList_PR(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value).ToList();
+        {            
             LoadReport();
         }
-
-        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                var po = dgvDetails.SelectedItem as BLL.POPending;
-                Transaction.frmPurchaseOrder f = new Transaction.frmPurchaseOrder();
-                App.frmHome.ShowForm(f);
-                System.Windows.Forms.Application.DoEvents();
-                f.data.SearchText = po.EntryNo;
-                System.Windows.Forms.Application.DoEvents();
-                f.data.Find();
-                f.btnMakepurchase.IsEnabled = f.data.Status == "Pending" ? true : false; if (f.data.Id != 0)
-                    if (f.data.RefCode != null)
-                    {
-                        f.btnMakepurchase.IsEnabled = false;
-                        f.btnSave.IsEnabled = false;
-                        f.btnDelete.IsEnabled = true;
-
-                    }
-                if (f.data.RefCode != null)
-                {
-                    f.btnSave.IsEnabled = false;
-                    f.btnDelete.IsEnabled = false;
-                }
-            }
-            catch (Exception ex) { }
-        }
+        
         #region Button Events
         private Stream CreateStream(string name,
   string fileNameExtension, Encoding encoding,
@@ -262,15 +480,48 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnReject_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MessageBox.Show("Are you Reject this Request?","Purchase Request", MessageBoxButton.YesNo, MessageBoxImage.Question)==MessageBoxResult.Yes)
+            {
+                var btn = sender as Button;
+                var d = btn.Tag as BLL.PurchaseRequestReport;
+                if (BLL.PurchaseRequest.Reject(d.PurchaseRequestStatusDetailsId))
+                {
+                    MessageBox.Show("Requestion Reject Successfull!");
+                    d.IsReject = true;
+                    Grid_Refresh();
+                }
+            }            
         }
 
         private void btnApproval_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MessageBox.Show("Are you Approval this Request?", "Purchase Request", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                var btn = sender as Button;
+                var d = btn.Tag as BLL.PurchaseRequestReport;
+                if (BLL.PurchaseRequest.Approval(d.PurchaseRequestStatusDetailsId))
+                {
+                    MessageBox.Show("Requestion Approval Successfull!");
+                    d.IsApproval = true;
+                    Grid_Refresh();
+                }
+            }
         }
 
         private void btnDetail_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var d = btn.Tag as BLL.PurchaseRequestReport;
+            Transaction.frmPurchaseRequest frm = new Transaction.frmPurchaseRequest();            
+            App.frmHome.ShowForm(frm);
+            System.Windows.Forms.Application.DoEvents();
+            frm.data.SearchText = d.PurchaseRequestRefNo;
+            System.Windows.Forms.Application.DoEvents();
+            frm.data.Find();
+            System.Windows.Forms.Application.DoEvents();
+        }
+
+        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

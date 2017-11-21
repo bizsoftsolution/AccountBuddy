@@ -20,6 +20,7 @@
         </Style>
         <Conversion:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
+    
     <Grid>
         <Grid Margin="0,0,0,10">
             <Grid.RowDefinitions>
@@ -35,9 +36,8 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="70"/>
                         <RowDefinition Height="100*"/>
-                        <RowDefinition Height="20*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Width="489"  >
@@ -59,82 +59,308 @@
                             </DatePicker>
                             <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
                         </StackPanel>
-
-
                     </Grid>
                     <Grid Grid.Row="1" Margin="10,0,10,0">
+                        <TabControl x:Name="tabControl" SelectionChanged="tabControl_SelectionChanged"  BorderBrush="Black" BorderThickness="1">
+                            <TabControl.Resources>
+                                <Style TargetType="TabItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="TabItem">
+                                                <Grid Name="Panel">
+                                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Panel" Property="Background" Value="Teal" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Panel" Property="Background" Value="white" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabControl.Resources>
+                            <TabItem Header="Pending Request" FontSize="16">
+                                <Grid ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="100"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10" >
+                                            <TextBox Name="txtSearch" Width="450"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
+                                                <materialDesign:HintAssist.Hint>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                        <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                                    </StackPanel>
+                                                </materialDesign:HintAssist.Hint>
+                                            </TextBox>
+                                            <StackPanel Orientation="Horizontal" Width="450" VerticalAlignment="Center">
+                                                <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5" />
+                                                <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  Margin="5"/>
+                                                <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" Margin="5" />
+                                                <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" Margin="5"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="100,0,0,0" VerticalAlignment="Center">
 
-                        <Grid Grid.Row="0" Margin="10"  >
-                            <DataGrid x:Name="dgvDetails" MouseDoubleClick="dgvDetails_MouseDoubleClick"  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20">
+                                            <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                                PDF
+                                            </Button>
+                                            <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                                                PRINT
+                                            </Button>
+                                            <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                                PRINT PREVIEW
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <DataGrid Grid.Row="0" x:Name="dgvDetailsOnHold" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20"  >
 
-                                <DataGrid.ColumnHeaderStyle>
-                                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                                        <Setter Property="FontWeight" Value="Bold" />
-                                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                    </Style>
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                            </Style>
 
-                                </DataGrid.ColumnHeaderStyle>
+                                        </DataGrid.ColumnHeaderStyle>
 
-                                <DataGrid.Columns>
-                                    <DataGridTemplateColumn TextBlock.TextAlignment="Center"  Width="100">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Vertical">
-                                                    <Button x:Name="btnDetail" Tag="{Binding}"  Click="btnDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                                            <TextBlock>View</TextBlock>
+                                        <DataGrid.Columns>
+                                            
+                                            <DataGridTextColumn Header="Department"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Department, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Request At" FontWeight="Bold" Width="150" Binding="{Binding RequestAt,StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Request By"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding RequestBy, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Request To"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding RequestTo, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Particulars"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="450" Binding="{Binding Particulars, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Status"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="350" Binding="{Binding Status, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTemplateColumn TextBlock.TextAlignment="Center"  Width="180" Header="Action">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Vertical">
+                                                            <Button x:Name="btnDetail" Tag="{Binding}"  Click="btnDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                                    <TextBlock>View</TextBlock>
+                                                                </StackPanel>
+                                                            </Button>
+                                                            <Button x:Name="btnReject" Tag="{Binding}" Margin="0,10,0,0" Visibility="{Binding IsRequestTo,Converter={StaticResource VisibilityConverter}}"  Click="btnReject_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                                    <TextBlock>Reject</TextBlock>
+                                                                </StackPanel>
+                                                            </Button>
+                                                            <Button x:Name="btnApproval" Tag="{Binding}" Margin="0,10,0,0"  Click="btnApproval_Click" Visibility="{Binding IsAdmin,Converter={StaticResource VisibilityConverter}}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" >
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                                    <TextBlock>Approval</TextBlock>
+                                                                </StackPanel>
+                                                            </Button>
                                                         </StackPanel>
-                                                    </Button>
-                                                    <Button x:Name="btnReject" Tag="{Binding}" Visibility="{Binding IsRequestTo,Converter={StaticResource VisibilityConverter}}"  Click="btnReject_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                                            <TextBlock>Reject</TextBlock>
-                                                        </StackPanel>
-                                                    </Button>
-                                                    <Button x:Name="btnApproval" Tag="{Binding}"  Click="btnApproval_Click" Visibility="{Binding IsAdmin,Converter={StaticResource VisibilityConverter}}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                                            <TextBlock>Approval</TextBlock>
-                                                        </StackPanel>
-                                                    </Button>
-                                                </StackPanel>
-                                                
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Department"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Department, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Request At" FontWeight="Bold" Width="150" Binding="{Binding RequestAt,StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Request By"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding RequestBy, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Request To"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding RequestTo, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Particulars"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="450" Binding="{Binding Particulars, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    <DataGridTextColumn Header="Status"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="350" Binding="{Binding Status, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
 
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Rejected Request" FontSize="16">
+                                <Grid ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="100"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10" >
+                                            <TextBox Name="txtSearchReject" Width="450"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
+                                                <materialDesign:HintAssist.Hint>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                        <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                                    </StackPanel>
+                                                </materialDesign:HintAssist.Hint>
+                                            </TextBox>
+                                            <StackPanel Orientation="Horizontal" Width="450" VerticalAlignment="Center">
+                                                <CheckBox Name="cbxCaseReject" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5" />
+                                                <RadioButton x:Name="rptStartWithReject" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  Margin="5"/>
+                                                <RadioButton x:Name="rptContainReject" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" Margin="5" />
+                                                <RadioButton x:Name="rptEndWithReject" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" Margin="5"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="100,0,0,0" VerticalAlignment="Center">
+
+                                            <Button  Grid.Column="1" Name="btnExportReject" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                                PDF
+                                            </Button>
+                                            <Button  Grid.Column="1" Name="btnPrintReject" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                                                PRINT
+                                            </Button>
+                                            <Button  Grid.Column="1" Name="btnPrintPreviewReject" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                                PRINT PREVIEW
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <DataGrid Grid.Row="0" x:Name="dgvDetailsOnReject" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20"  >
+
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                            </Style>
+
+                                        </DataGrid.ColumnHeaderStyle>
+
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Department"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Department, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Request At" FontWeight="Bold" Width="150" Binding="{Binding RequestAt,StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Request By"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding RequestBy, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Reject At" FontWeight="Bold" Width="150" Binding="{Binding ResponseAt,StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Reject By"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding RequestTo, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Particulars"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="450" Binding="{Binding Particulars, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Status"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="350" Binding="{Binding Status, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </TabItem>
+
+                            <TabItem Header="Approved Request" FontSize="16">
+                                <Grid ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="100"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10" >
+                                            <TextBox Name="txtSearchApproved" Width="450"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
+                                                <materialDesign:HintAssist.Hint>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                        <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                                    </StackPanel>
+                                                </materialDesign:HintAssist.Hint>
+                                            </TextBox>
+                                            <StackPanel Orientation="Horizontal" Width="450" VerticalAlignment="Center">
+                                                <CheckBox Name="cbxCaseApproved" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5" />
+                                                <RadioButton x:Name="rptStartWithApproved" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  Margin="5"/>
+                                                <RadioButton x:Name="rptContainApproved" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" Margin="5" />
+                                                <RadioButton x:Name="rptEndWithApproved" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" Margin="5"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="100,0,0,0" VerticalAlignment="Center">
+
+                                            <Button  Grid.Column="1" Name="btnExportApproved" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                                PDF
+                                            </Button>
+                                            <Button  Grid.Column="1" Name="btnPrintApproved" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                                                PRINT
+                                            </Button>
+                                            <Button  Grid.Column="1" Name="btnPrintPreviewApproved" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                                PRINT PREVIEW
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <DataGrid Grid.Row="0" x:Name="dgvDetailsOnApproved" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20"  >
+
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                            </Style>
+
+                                        </DataGrid.ColumnHeaderStyle>
+
+                                        <DataGrid.Columns>
+
+                                            <DataGridTextColumn Header="Department"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Department, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Request At" FontWeight="Bold" Width="150" Binding="{Binding RequestAt,StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Request By"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding RequestBy, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Approved At" FontWeight="Bold" Width="150" Binding="{Binding ResponseAt,StringFormat={}{0:dd/MM/yyyy hh:mm:ss tt}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                            <DataGridTextColumn Header="Approved By"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding RequestTo, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Particulars"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="450" Binding="{Binding Particulars, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Status"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="350" Binding="{Binding Status, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </TabItem>
+
+                            <TabItem Header="Budget" FontSize="16">
+                                <Grid ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="100"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10" >
+                                            <TextBox Name="txtSearchBudget" Width="450"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  >
+                                                <materialDesign:HintAssist.Hint>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                        <TextBlock Text="Search Text" FontWeight="Bold"/>
+                                                    </StackPanel>
+                                                </materialDesign:HintAssist.Hint>
+                                            </TextBox>
+                                            <StackPanel Orientation="Horizontal" Width="450" VerticalAlignment="Center">
+                                                <CheckBox Name="cbxCaseBudget" Content="Case sensitive" Checked="cbxCase_Checked" Unchecked="cbxCase_Unchecked" Margin="5" />
+                                                <RadioButton x:Name="rptStartWithBudget" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked" Unchecked="rptStartWith_Unchecked"  Margin="5"/>
+                                                <RadioButton x:Name="rptContainBudget" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" Unchecked="rptContain_Unchecked" Margin="5" />
+                                                <RadioButton x:Name="rptEndWithBudget" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" Unchecked="rptEndWith_Unchecked" Margin="5"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="100,0,0,0" VerticalAlignment="Center">
+
+                                            <Button  Grid.Column="1" Name="btnExportBudget" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                                PDF
+                                            </Button>
+                                            <Button  Grid.Column="1" Name="btnPrintBudget" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                                                PRINT
+                                            </Button>
+                                            <Button  Grid.Column="1" Name="btnPrintPreviewBudget" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                                PRINT PREVIEW
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <DataGrid Grid.Row="0" x:Name="dgvDetailsOnBudget" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" BorderThickness="1" Margin="20"  >
+
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                            </Style>
+
+                                        </DataGrid.ColumnHeaderStyle>
+
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Department"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Department, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Budger [RM]"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Approved [RM]"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Balance [RM]"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Request [RM]"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                            <DataGridTextColumn Header="Remaing [RM]"  ElementStyle="{StaticResource LeftCell}" FontWeight="Bold" Width="150" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
                         <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
                             <rv:ReportViewer x:Name="rptViewer"/>
                         </WindowsFormsHost>
                     </Grid>
-                    <Grid Grid.Row="2">
-                        <StackPanel Orientation="Horizontal" Margin="350,24,300,23" VerticalAlignment="Center">
 
-                            <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
-                                PDF
-                            </Button>
-                            <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
-                                PRINT
-                            </Button>
-                            <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
-                                PRINT PREVIEW
-                            </Button>
-                        </StackPanel>
-
-                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
     </Grid>
+    
 </UserControl>
