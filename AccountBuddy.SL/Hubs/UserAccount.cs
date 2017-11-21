@@ -37,6 +37,7 @@ namespace AccountBuddy.SL.Hubs
                     Caller.UserId = ua.Id;
                     Caller.AccYear = AccYear;
                     Caller.HierarchicalOrderNo = ua.UserType.HierarchicalOrderNo;
+                    Caller.IsAdmin = ua.UserType.HierarchicalOrderNo == 1;
                     var stf = ua.Staffs.FirstOrDefault();
                     if (stf != null)
                     {

@@ -18,6 +18,7 @@ namespace AccountBuddy.SL.Hubs
                 bool IsHold = dFirst.Id != dLast.Id && dLast.Status == "";
                 bool IsReject = dLast.Status == "Reject";
                 bool IsApproval = dLast.Status == "Approval";
+                bool IsRequestTo = dLast.RequestTo == Caller.StaffId;
 
                 string Status = "";
                 foreach(var s in d)
@@ -39,7 +40,9 @@ namespace AccountBuddy.SL.Hubs
                     IsApproval= IsApproval,
                     IsReject = IsReject,
                     Remarks = dLast.Remarks,
-                    Status = Status                                                        
+                    Status = Status,
+                    IsRequestTo = IsRequestTo,
+                    IsAdmin = Caller.IsAdmin
                 });
             }
             return lstPurchaseRequestReport;

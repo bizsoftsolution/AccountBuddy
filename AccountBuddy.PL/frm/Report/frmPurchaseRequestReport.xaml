@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AccountBuddy.PL.frm.Report"
              mc:Ignorable="d" 
+             xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"              
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
               d:DesignHeight="600" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
@@ -17,8 +18,8 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="TextAlignment" Value="Left"/>
         </Style>
+        <Conversion:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
-
     <Grid>
         <Grid Margin="0,0,0,10">
             <Grid.RowDefinitions>
@@ -75,12 +76,30 @@
                                 </DataGrid.ColumnHeaderStyle>
 
                                 <DataGrid.Columns>
-                                    <DataGridTemplateColumn TextBlock.TextAlignment="Center"  Width="75">
+                                    <DataGridTemplateColumn TextBlock.TextAlignment="Center"  Width="100">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="btnDetail" Tag="{Binding}"  Click="btnDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
-                                                    <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                                </Button>
+                                                <StackPanel Orientation="Vertical">
+                                                    <Button x:Name="btnDetail" Tag="{Binding}"  Click="btnDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                            <TextBlock>View</TextBlock>
+                                                        </StackPanel>
+                                                    </Button>
+                                                    <Button x:Name="btnReject" Tag="{Binding}" Visibility="{Binding IsRequestTo,Converter={StaticResource VisibilityConverter}}"  Click="btnReject_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                            <TextBlock>Reject</TextBlock>
+                                                        </StackPanel>
+                                                    </Button>
+                                                    <Button x:Name="btnApproval" Tag="{Binding}"  Click="btnApproval_Click" Visibility="{Binding IsAdmin,Converter={StaticResource VisibilityConverter}}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                                            <TextBlock>Approval</TextBlock>
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
+                                                
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>

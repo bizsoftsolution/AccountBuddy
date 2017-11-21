@@ -27,6 +27,8 @@ namespace AccountBuddy.BLL
         private bool _IsHold;
         private bool _IsReject;
         private bool _IsApproval;
+        private bool _IsRequestTo;
+        private bool _IsAdmin;
 
         private static UserTypeDetail _UserPermission;
         #endregion
@@ -294,6 +296,40 @@ namespace AccountBuddy.BLL
                 {
                     _IsApproval = value;
                     NotifyPropertyChanged(nameof(IsApproval));
+
+                }
+            }
+        }
+
+        public bool IsRequestTo
+        {
+            get
+            {
+                return _IsRequestTo;
+            }
+            set
+            {
+                if (_IsRequestTo != value)
+                {
+                    _IsRequestTo = value;
+                    NotifyPropertyChanged(nameof(IsRequestTo));
+
+                }
+            }
+        }
+
+        public bool IsAdmin
+        {
+            get
+            {
+                return _IsAdmin;
+            }
+            set
+            {
+                if (_IsAdmin != value)
+                {
+                    _IsAdmin = value;
+                    NotifyPropertyChanged(nameof(IsAdmin));
 
                 }
             }

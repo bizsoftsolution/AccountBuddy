@@ -260,5 +260,14 @@ namespace AccountBuddy.PL.frm.Report
 
         #endregion
 
+        private void btnReject_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnApproval_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

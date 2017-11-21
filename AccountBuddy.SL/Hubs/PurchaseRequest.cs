@@ -60,6 +60,21 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    if (PR.RequestTo != 0)
+                    {
+                        var dLast = d.PurchaseRequestStatusDetails.LastOrDefault();
+                        if (dLast.RequestTo == Caller.StaffId)
+                        {
+                            d.PurchaseRequestStatusDetails.Add(new DAL.PurchaseRequestStatusDetail()
+                            {
+                                RequestBy = Caller.StaffId,
+                                RequestAt = DateTime.Now,
+                                RequestTo = PR.RequestTo
+                            });
+                        }
+                    }
+                    
+
 
                     foreach (var d_prd in d.PurchaseRequestDetails)
                     {
