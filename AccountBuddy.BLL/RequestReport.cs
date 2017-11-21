@@ -16,6 +16,7 @@ namespace AccountBuddy.BLL
         private string _RequestBy;
         private string _RequestTo;
         private decimal _Amount;
+        private string _Department;
         private string _Particulars;
         private string _Status;
     
@@ -112,13 +113,13 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return Particulars;
+                return _Department;
             }
             set
             {
-                if (Particulars != value)
+                if (_Department != value)
                 {
-                    Particulars = value;
+                    _Department = value;
                     NotifyPropertyChanged(nameof(Department));
 
                 }
