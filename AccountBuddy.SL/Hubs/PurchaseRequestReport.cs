@@ -10,18 +10,21 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.PurchaseRequestReport> PurchaseRequestReport_List(DateTime dtFrom, DateTime dtTo)
         {
             List<BLL.PurchaseRequestReport> lstPurchaseRequestReport = new List<BLL.PurchaseRequestReport>();
-            foreach(var d in DB.PurchaseRequestStatusDetails.Where(x=> x.RequestBy == Caller.StaffId || x.RequestTo == Caller.StaffId).ToList().GroupBy(x=> x.PRId).ToList())
+            foreach(var d in DB.PurchaseRequests.Where(x=> x.PRDate>=dtFrom && x.PRDate<=dtTo).ToList())
             {
-                var dFirst = d.FirstOrDefault();
-                var dLast = d.LastOrDefault();
+                var prsd = d.PurchaseRequestStatusDetails.Where(x => x.RequestBy == Caller.StaffId || x.RequestTo == Caller.StaffId).FirstOrDefault();
+                if (prsd == null) continue;
+
+                var dFirst = d.PurchaseRequestStatusDetails.FirstOrDefault();
+                var dLast = d.PurchaseRequestStatusDetails.LastOrDefault();
                 bool IsNew = dFirst.Id == dLast.Id;
-                bool IsHold = dFirst.Id != dLast.Id && dLast.Status == "";
+                bool IsHold = dFirst.Id != dLast.Id && string.IsNullOrWhiteSpace( dLast.Status );
                 bool IsReject = dLast.Status == "Reject";
                 bool IsApproval = dLast.Status == "Approval";
                 bool IsRequestTo = dLast.RequestTo == Caller.StaffId;
 
                 string Status = "";
-                foreach(var s in d)
+                foreach(var s in d.PurchaseRequestStatusDetails)
                 {
                     Status += string.Format("{1} By {2} on {0:dd/MM/yyyy hh:mm:ss tt}\n", (IsNew || IsHold)?s.RequestAt:s.ResponseAt, (IsNew || IsHold) ? "Hold":(IsApproval?"Approval":"Reject"),s.Staff1.Ledger.LedgerName );
                 }

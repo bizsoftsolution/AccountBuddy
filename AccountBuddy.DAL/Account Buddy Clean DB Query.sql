@@ -72,3 +72,4 @@ delete from UserType
 delete from TaxMaster
 delete from ErrorLog
 delete from CompanyDetail
+
