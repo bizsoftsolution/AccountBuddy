@@ -163,9 +163,9 @@ namespace AccountBuddy.BLL
 
         #region Methods
 
-        public static List<PurchaseRequestReport> ToList(DateTime dtFrom, DateTime dtTo)
+        public static List<PurchaseRequestBudgetReport> ToList()
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<PurchaseRequestReport>>("PurchaseRequestReport_List", dtFrom, dtTo).Result;
+            return FMCGHubClient.FMCGHub.Invoke<List<PurchaseRequestBudgetReport>>("PurchaseRequestBudgetReport_List").Result;
         }
 
         #endregion
