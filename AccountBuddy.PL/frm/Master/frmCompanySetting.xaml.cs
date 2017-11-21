@@ -29,7 +29,6 @@ namespace AccountBuddy.PL.frm.Master
         {
             InitializeComponent();
             this.DataContext = data;
-
             onClientEvents();
         }
 
@@ -136,7 +135,7 @@ namespace AccountBuddy.PL.frm.Master
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (!BLL.CompanyDetail.UserPermission.AllowDelete)
-                MessageBox.Show(string.Format(Message.PL.DenyDelete, lblHead.Text));
+                MessageBox.Show(string.Format(Message.PL.DenyDelete, lblHeading.Text));
             //    else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
             else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
             {

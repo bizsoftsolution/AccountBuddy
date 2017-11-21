@@ -16,7 +16,7 @@
         <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
         <!--#region Form Head -->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}" Height="25" VerticalAlignment="Bottom">
-            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Products"/></TextBlock>
+            <TextBlock  x:Name="lblHeading" Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Products"/></TextBlock>
         </Grid>
         <!--#endregion-->
         <!--#region Form Body-->
