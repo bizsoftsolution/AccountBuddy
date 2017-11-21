@@ -4,8 +4,8 @@
     <ReportItems>
       <Subreport Name="rptCompanyNameRp">
         <ReportName>rptCompanyNameRp</ReportName>
-        <Top>0.15641cm</Top>
-        <Left>0.38359cm</Left>
+        <Top>0.1564cm</Top>
+        <Left>0.55556cm</Left>
         <Height>1.21183cm</Height>
         <Width>18.28283cm</Width>
         <Style>
@@ -16,7 +16,7 @@
       </Subreport>
       <Line Name="Line11">
         <Top>0.60812in</Top>
-        <Left>0.15102in</Left>
+        <Left>0.21873in</Left>
         <Height>0in</Height>
         <Width>7.19796in</Width>
         <ZIndex>1</ZIndex>
@@ -75,11 +75,46 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox4</rd:DefaultName>
-        <Top>2.47095cm</Top>
-        <Left>6.49834cm</Left>
+        <Top>2.47094cm</Top>
+        <Left>0.84661cm</Left>
         <Height>0.6cm</Height>
-        <Width>6.05331cm</Width>
+        <Width>17.64206cm</Width>
         <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Title">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!Title.Value</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Title</rd:DefaultName>
+        <Top>1.721cm</Top>
+        <Left>0.84661cm</Left>
+        <Height>0.6441cm</Height>
+        <Width>17.64206cm</Width>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -94,19 +129,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.05021cm</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>2.10312cm</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>2.1825cm</Width>
+              <Width>5.14206cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>6.59728cm</Width>
+              <Width>2.5cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.5cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.5cm</Width>
@@ -125,9 +160,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Request At</Value>
+                              <Value>Department</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -157,14 +191,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Request By</Value>
+                              <Value>Budgets [RM]</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox6</rd:DefaultName>
@@ -189,14 +224,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Request To</Value>
+                              <Value>Approved [RM]</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox8</rd:DefaultName>
@@ -221,14 +257,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Amount</Value>
+                              <Value>Balance [RM]</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox10</rd:DefaultName>
@@ -253,14 +290,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Particulars</Value>
+                              <Value>Request [RM]</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox12</rd:DefaultName>
@@ -285,14 +323,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Status</Value>
+                              <Value>Remaining [RM]</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox14</rd:DefaultName>
@@ -315,24 +354,21 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="RequestAt">
+                    <Textbox Name="Department">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!RequestAt.Value</Value>
-                              <Style>
-                                <FontFamily>Calibri</FontFamily>
-                                <FontSize>9pt</FontSize>
-                              </Style>
+                              <Value>=Fields!Department.Value</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>RequestAt</rd:DefaultName>
+                      <rd:DefaultName>Department</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -347,24 +383,23 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="RequestBy">
+                    <Textbox Name="Budgets">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!RequestBy.Value</Value>
-                              <Style>
-                                <FontFamily>Calibri</FontFamily>
-                                <FontSize>9pt</FontSize>
-                              </Style>
+                              <Value>=Fields!Budgets.Value</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>RequestBy</rd:DefaultName>
+                      <rd:DefaultName>Budgets</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -379,24 +414,23 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="RequestTo">
+                    <Textbox Name="Approved">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!RequestTo.Value</Value>
-                              <Style>
-                                <FontFamily>Calibri</FontFamily>
-                                <FontSize>9pt</FontSize>
-                              </Style>
+                              <Value>=Fields!Approved.Value</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>RequestTo</rd:DefaultName>
+                      <rd:DefaultName>Approved</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -411,25 +445,23 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Amount">
+                    <Textbox Name="Balance">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Amount.Value</Value>
-                              <Style>
-                                <FontFamily>Calibri</FontFamily>
-                                <FontSize>9pt</FontSize>
-                                <Format>0.00;(0.00)</Format>
-                              </Style>
+                              <Value>=Fields!Balance.Value</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Amount</rd:DefaultName>
+                      <rd:DefaultName>Balance</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -444,24 +476,23 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Particulars">
+                    <Textbox Name="Request">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Particulars.Value</Value>
-                              <Style>
-                                <FontFamily>Calibri</FontFamily>
-                                <FontSize>9pt</FontSize>
-                              </Style>
+                              <Value>=Fields!Request.Value</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Particulars</rd:DefaultName>
+                      <rd:DefaultName>Request</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -476,24 +507,23 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Status">
+                    <Textbox Name="Remaining">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Status.Value</Value>
-                              <Style>
-                                <FontFamily>Calibri</FontFamily>
-                                <FontSize>9pt</FontSize>
-                              </Style>
+                              <Value>=Fields!Remaining.Value</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Status</rd:DefaultName>
+                      <rd:DefaultName>Remaining</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -530,58 +560,23 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>RequestReport</DataSetName>
-        <Top>3.24734cm</Top>
-        <Left>0.38359cm</Left>
+        <DataSetName>Budget</DataSetName>
+        <Top>3.38349cm</Top>
+        <Left>0.84661cm</Left>
         <Height>1.2cm</Height>
-        <Width>17.93311cm</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Tablix>
-      <Textbox Name="Title">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Parameters!Title.Value</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Title</rd:DefaultName>
-        <Top>1.72101cm</Top>
-        <Left>0.67464cm</Left>
-        <Height>0.6441cm</Height>
         <Width>17.64206cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
         </Style>
-      </Textbox>
+      </Tablix>
     </ReportItems>
-    <Height>1.86458in</Height>
+    <Height>1.90869in</Height>
     <Style />
   </Body>
-  <Width>7.5in</Width>
+  <Width>7.63542in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -599,49 +594,45 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>3d44c5e8-4797-4ea1-915a-b6e4b6c228b8</rd:DataSourceID>
+      <rd:DataSourceID>3b374cda-6bb5-46e6-b4a1-909d33d0bca9</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="RequestReport">
+    <DataSet Name="Budget">
       <Query>
         <DataSourceName>AccountBuddyBLL</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="Amount">
-          <DataField>Amount</DataField>
+        <Field Name="Approved">
+          <DataField>Approved</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Balance">
+          <DataField>Balance</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Budgets">
+          <DataField>Budgets</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Department">
           <DataField>Department</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Particulars">
-          <DataField>Particulars</DataField>
+        <Field Name="Remaining">
+          <DataField>Remaining</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="RequestAt">
-          <DataField>RequestAt</DataField>
-          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="RequestBy">
-          <DataField>RequestBy</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="RequestTo">
-          <DataField>RequestTo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Status">
-          <DataField>Status</DataField>
+        <Field Name="Request">
+          <DataField>Request</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>AccountBuddy.BLL</rd:DataSetName>
-        <rd:TableName>RequestReport</rd:TableName>
-        <rd:ObjectDataSourceType>AccountBuddy.BLL.RequestReport, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>Budget</rd:TableName>
+        <rd:ObjectDataSourceType>AccountBuddy.BLL.Budget, AccountBuddy.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -664,5 +655,5 @@
     </ReportParameter>
   </ReportParameters>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>346ed7a8-1b38-41ed-a08b-c77dfcd90e86</rd:ReportID>
+  <rd:ReportID>2fe1c169-9320-4cbb-a0c8-c1792dfac0d1</rd:ReportID>
 </Report>

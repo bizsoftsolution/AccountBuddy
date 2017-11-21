@@ -14,11 +14,11 @@ namespace AccountBuddy.BLL
 
 
         private string _Department;
-        private string _Budgets;
-        private string _Approved;
+        private decimal _Budgets;
+        private decimal _ApprovedAmount;
         private decimal _Balance;
-        private string _Request;
-        private string _Remaining;
+        private decimal _Request;
+        private decimal _Remaining;
 
 
         private static UserTypeDetail _UserPermission;
@@ -44,7 +44,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public string Budgets
+        public decimal Budgets
         {
             get
             {
@@ -61,18 +61,18 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public string Approved
+        public decimal ApprovedAmount
         {
             get
             {
-                return _Approved;
+                return _ApprovedAmount;
             }
             set
             {
-                if (_Approved != value)
+                if (_ApprovedAmount != value)
                 {
-                    _Approved = value;
-                    NotifyPropertyChanged(nameof(Approved));
+                    _ApprovedAmount = value;
+                    NotifyPropertyChanged(nameof(ApprovedAmount));
 
                 }
             }
@@ -96,7 +96,7 @@ namespace AccountBuddy.BLL
         }
 
 
-        public string Request
+        public decimal Request
         {
             get
             {
@@ -113,7 +113,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public string Remaining
+        public decimal Remaining
         {
             get
             {
