@@ -26,7 +26,7 @@ namespace AccountBuddy.SL.Hubs
                 string Status = "";
                 foreach(var s in d.PurchaseRequestStatusDetails)
                 {
-                    Status += string.Format("{1} By {2} on {0:dd/MM/yyyy hh:mm:ss tt}\n", (IsNew || IsHold)?s.RequestAt:s.ResponseAt, (IsNew || IsHold) ? "Hold":(IsApproval?"Approval":"Reject"),s.Staff1.Ledger.LedgerName );
+                    Status += string.Format("{1} By {2} on {0:dd/MM/yyyy hh:mm:ss tt}\n", (IsNew || IsHold)?s.RequestAt:s.ResponseAt, string.IsNullOrWhiteSpace(s.Status) ? "Hold":s.Status,s.Staff1.Ledger.LedgerName );
                 }
                 lstPurchaseRequestReport.Add(new BLL.PurchaseRequestReport() {
                     PurchaseRequestRefNo = dFirst.PurchaseRequest.RefNo,
