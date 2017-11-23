@@ -149,8 +149,9 @@ namespace AccountBuddy.SL.Hubs
                         gl.Ledger = LedgerDAL_BLL(jd.Journal.JournalDetails.Where(x => (jd.DrAmt != 0 && x.CrAmt != 0) || (jd.CrAmt != 0 && x.DrAmt != 0)).FirstOrDefault().Ledger);
                         gl.Particular = jd.Particulars;
                         gl.EId = jd.Journal.Id;
-                        if (jd.Journal.RefCode != null)
-                        {
+                        gl.RefCode = jd.Journal.EntryNo;
+                        //if (jd.Journal.RefCode != null)
+                        //{
                             //gl.RefCode = jd.Journal.RefCode;
                             gl.RefCode = jd.Journal.EntryNo;
                             if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.Sales))
@@ -226,7 +227,7 @@ namespace AccountBuddy.SL.Hubs
                                 gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
                             }
 
-                        }
+                        //}
                         else
                         {
                             gl.EType = BLL.FormPrefix.Journal;
