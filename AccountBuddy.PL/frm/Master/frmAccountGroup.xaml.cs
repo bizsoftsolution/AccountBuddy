@@ -51,6 +51,7 @@ namespace AccountBuddy.PL.frm.Master
             BLL.AccountGroup.Init();
             dgvAccount.ItemsSource = BLL.AccountGroup.toList;
 
+           
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Filter = AccountGroup_Filter;
             CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
 
@@ -247,6 +248,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Refresh();
+                CollectionViewSource.GetDefaultView(trvAccount.ItemsSource).Refresh();
             }
             catch (Exception ex) { };
 
@@ -327,7 +329,8 @@ namespace AccountBuddy.PL.frm.Master
         void clear()
         {
             data.Clear();
-            trvAccount.ItemsSource = BLL.AccountGroup.toGroup(BLL.DataKeyValue.Primary_Value);
+            trvAccount.ItemsSource = BLL.AccountGroup.toGroup(null);
+            //  trvAccount.ItemsSource = BLL.AccountGroup.toGroup(BLL.DataKeyValue.Primary_Value);
         }
         private void cmbUnder_GotFocus(object sender, RoutedEventArgs e)
         {
