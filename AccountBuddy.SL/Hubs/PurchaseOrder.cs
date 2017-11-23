@@ -55,22 +55,24 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    
-                    foreach(var d_pod in d.PurchaseOrderDetails)
-                    {
-                        BLL.PurchaseOrderDetail b_pod = PO.PODetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
-                        if (b_pod == null)d.PurchaseOrderDetails.Remove(d_pod);                        
-                    }
+
+                    //foreach(var d_pod in d.PurchaseOrderDetails)
+                    //{
+                    //    BLL.PurchaseOrderDetail b_pod = PO.PODetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
+                    //    if (b_pod == null)d.PurchaseOrderDetails.Remove(d_pod);                        
+                    //}
+                    decimal rd = PO.PODetails.Select(X => X.POId).FirstOrDefault();
+                    DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails.Where(x => x.POId == rd).ToList());
 
                     PO.toCopy<DAL.PurchaseOrder>(d);
                     foreach (var b_pod in PO.PODetails)
                     {
-                        DAL.PurchaseOrderDetail d_pod = d.PurchaseOrderDetails.Where(x => x.Id == b_pod.Id).FirstOrDefault();
-                        if (d_pod == null)
-                        {
-                            d_pod = new DAL.PurchaseOrderDetail();
+                        //  DAL.PurchaseOrderDetail d_pod = d.PurchaseOrderDetails.Where(x => x.Id == b_pod.Id).FirstOrDefault();
+                        // if (d_pod == null)
+                        // {
+                        DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
                             d.PurchaseOrderDetails.Add(d_pod);
-                        }
+                       // }
                         b_pod.toCopy<DAL.PurchaseOrderDetail>(d_pod);                        
                     }
                     DB.SaveChanges();

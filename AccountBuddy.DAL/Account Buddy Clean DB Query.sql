@@ -10,8 +10,7 @@ delete from StockInProcess
 delete from StockSeperatedDetail
 delete from StockSeparated
 
-delete from StockIn
-Detail
+delete from StockInDetail
 delete from StockIn
 delete from StockOutDetail
 delete from StockOut
@@ -25,6 +24,7 @@ delete from Receipt
 delete from JournalDetail
 delete from Journal
 
+delete from Department
 delete from JobWorker
 delete from Staff
 delete from Supplier
@@ -59,6 +59,7 @@ delete from ProductDetail
 delete from Product
 delete from StockGroup
 delete from UOM
+
 
 delete from TaxMaster
 delete from DataKeyValue

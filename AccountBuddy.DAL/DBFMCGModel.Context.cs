@@ -80,5 +80,9 @@ namespace AccountBuddy.DAL
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<UserTypeFormDetail> UserTypeFormDetails { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
+        public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
+        public virtual DbSet<PurchaseRequestStatusDetail> PurchaseRequestStatusDetails { get; set; }
     }
 }

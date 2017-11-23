@@ -185,10 +185,11 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnSave.IsEnabled = true;
                 btnDelete.IsEnabled = true;
+                btnMakepurchase.IsEnabled = false;
             }
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            btnMakepurchase.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnMakepurchase.IsEnabled = false;
+            btnMakepurchase.Visibility = (BLL.Purchase.UserPermission.AllowInsert || BLL.Purchase.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+          
 
         }
 
@@ -317,8 +318,8 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            btnSave.Visibility = (BLL.PurchaseOrder.UserPermission.AllowInsert || BLL.PurchaseOrder.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.PurchaseOrder.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

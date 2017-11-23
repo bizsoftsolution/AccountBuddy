@@ -80,7 +80,7 @@ namespace AccountBuddy.PL.frm.Master
             if (data.Id == 0) MessageBox.Show("No Records to Delete");
             else
             {
-                if (!BLL.UserAccount.AllowDelete(FormName)) MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                if (!BLL.UserAccount.AllowDelete(Common.Forms.frmUserType)) MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
                 else if (MessageBox.Show("Do you want to Delete this record?", "DELETE", MessageBoxButton.YesNo) != MessageBoxResult.No)
                 {
                     if (data.Delete() == true)

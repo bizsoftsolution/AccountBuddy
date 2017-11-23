@@ -301,8 +301,8 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            btnSave.Visibility = (BLL.StockSeperated.UserPermission.AllowInsert || BLL.StockSeperated.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.StockSeperated.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

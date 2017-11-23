@@ -217,8 +217,8 @@ namespace AccountBuddy.PL.frm.Transaction
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            btnSave.Visibility = (BLL.StockOut.UserPermission.AllowInsert || BLL.StockOut.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.StockOut.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
         }
 

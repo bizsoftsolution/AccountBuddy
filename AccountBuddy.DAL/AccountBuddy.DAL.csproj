@@ -87,6 +87,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBFMCGModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Department.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityType.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
@@ -157,6 +160,15 @@
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PurchaseOrderDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseRequest.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseRequestDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseRequestStatusDetail.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PurchaseReturn.cs">

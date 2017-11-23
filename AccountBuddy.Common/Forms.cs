@@ -21,7 +21,8 @@ namespace AccountBuddy.Common
                                            frmStockGroup = "AccountBuddy.PL.frm.Master.frmStockGroup",
                                            frmUOM = "AccountBuddy.PL.frm.Master.frmUOM",
                                            frmProducts = "AccountBuddy.PL.frm.Master.frmProducts",
-           frmJobWorker= "AccountBuddy.PL.frm.Master.frmJobWorker",
+           frmJobWorker = "AccountBuddy.PL.frm.Master.frmJobWorker",
+             frmDepartment = "AccountBuddy.PL.frm.Master.frmDepartment",
 
                                            frmPayment = "AccountBuddy.PL.frm.Transaction.frmPayment",
                                            frmReceipt = "AccountBuddy.PL.frm.Transaction.frmReceipt",
@@ -40,6 +41,7 @@ namespace AccountBuddy.Common
                                            frmJobOrderReceived = "AccountBuddy.PL.frm.Transaction.frmJobOrderReceived",
                                            frmStockInProcess = "AccountBuddy.PL.frm.Transaction.frmStockInProcess",
                                            frmStockSeparated = "AccountBuddy.PL.frm.Transaction.frmStockSeparated",
+              frmPurchaseRequest = "AccountBuddy.PL.frm.Transaction.frmPurchaseRequest",
 
 
                                            frmTrialBalance = "AccountBuddy.PL.frm.Reports.frmTrialBalance",
@@ -55,7 +57,7 @@ namespace AccountBuddy.Common
                                             frmJobOrderPendingReport = "AccountBuddy.PL.frm.Reports.frmJobOrderPendingReport",
                                            frmSalesReport = "AccountBuddy.PL.frm.Reports.frmSalesReport",
                                            frmCustomerSalesReport = "AccountBuddy.PL.frm.Reports.frmCustomerSalesReport",
-                                           frmPayableReceivable = "AccountBuddy.PL.frm.Reports.frmPayableReceivable" ;
-                                          
+                                           frmPayableReceivable = "AccountBuddy.PL.frm.Reports.frmPayableReceivable",
+        frmPurchaseRequestReport = "AccountBuddy.PL.frm.Report.frmPurchaseRequestReport";
     }
 }

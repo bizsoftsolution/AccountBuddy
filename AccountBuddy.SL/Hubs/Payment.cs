@@ -48,23 +48,26 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    
-                    foreach (var d_pod in d.PaymentDetails.ToList())
-                    {
-                        BLL.PaymentDetail b_pod = PO.PDetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
-                       if (b_pod == null) d.PaymentDetails.Remove(d_pod);
-                        
-                    }
+
+                    //foreach (var d_pod in d.PaymentDetails.ToList())
+                    //{
+                    //    BLL.PaymentDetail b_pod = PO.PDetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
+                    //   if (b_pod == null) d.PaymentDetails.Remove(d_pod);
+
+                    //}
+                    decimal pd = PO.PDetails.Select(X => X.PaymentId).FirstOrDefault();
+                    DB.PaymentDetails.RemoveRange(d.PaymentDetails.Where(x => x.PaymentId == pd).ToList());
+
                     PO.toCopy<DAL.Payment>(d);
 
                     foreach (var b_pod in PO.PDetails)
                     {
-                        DAL.PaymentDetail d_pod = d.PaymentDetails.Where(x=> x.Id==b_pod.Id).FirstOrDefault();
-                        if (d_pod == null)
-                        {
-                            d_pod = new DAL.PaymentDetail();
+                        //DAL.PaymentDetail d_pod = d.PaymentDetails.Where(x=> x.Id==b_pod.Id).FirstOrDefault();
+                        //if (d_pod == null)
+                        // {
+                        DAL.PaymentDetail d_pod = new DAL.PaymentDetail();
                             d.PaymentDetails.Add(d_pod);
-                        }
+                       // }
                         b_pod.toCopy<DAL.PaymentDetail>(d_pod);                        
                     }
                     DB.SaveChanges();

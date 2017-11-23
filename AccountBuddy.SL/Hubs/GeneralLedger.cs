@@ -142,116 +142,120 @@ namespace AccountBuddy.SL.Hubs
 
                 foreach (var jd in l.JournalDetails.Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).ToList())
                 {
-                    gl = new BLL.GeneralLedger();
-                    gl.Ledger = new BLL.Ledger();
+                    try {
+                        gl = new BLL.GeneralLedger();
+                        gl.Ledger = new BLL.Ledger();
 
-                    gl.Ledger = LedgerDAL_BLL(jd.Journal.JournalDetails.Where(x => (jd.DrAmt != 0 && x.CrAmt != 0) || (jd.CrAmt != 0 && x.DrAmt != 0)).FirstOrDefault().Ledger);
-                    gl.Particular = jd.Particulars;
-                    gl.EId = jd.Journal.Id;
-                    if (jd.Journal.RefCode != null)
-                    {
-                        gl.RefCode = jd.Journal.RefCode;
+                        gl.Ledger = LedgerDAL_BLL(jd.Journal.JournalDetails.Where(x => (jd.DrAmt != 0 && x.CrAmt != 0) || (jd.CrAmt != 0 && x.DrAmt != 0)).FirstOrDefault().Ledger);
+                        gl.Particular = jd.Particulars;
+                        gl.EId = jd.Journal.Id;
+                        if (jd.Journal.RefCode != null)
+                        {
+                            //gl.RefCode = jd.Journal.RefCode;
+                            gl.RefCode = jd.Journal.EntryNo;
+                            if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.Sales))
+                            {
+                                gl.EType = BLL.FormPrefix.Sales;
 
-                        if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Sales))
-                        {
-                            gl.EType = BLL.FormPrefix.Sales;
-                          
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Purchase))
-                        {
-                            gl.EType = BLL.FormPrefix.Purchase;
-                          
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.SalesReturn))
-                        {
-                            gl.EType = BLL.FormPrefix.SalesReturn;
-                           
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.PurchaseReturn))
-                        {
-                            gl.EType = BLL.FormPrefix.PurchaseReturn;
-                           
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockIn))
-                        {
-                            gl.EType = BLL.FormPrefix.StockIn;
-                            
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockOut))
-                        {
-                            gl.EType = BLL.FormPrefix.StockOut;
-                          
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.JobOrderIssue))
-                        {
-                            gl.EType = BLL.FormPrefix.JobOrderIssue;
-                          
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.JobOrderReceived))
-                        {
-                            gl.EType = BLL.FormPrefix.JobOrderReceived;
-                          
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockInProcess))
-                        {
-                            gl.EType = BLL.FormPrefix.StockInProcess;
-                        
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.StockSeparated))
-                        {
-                            gl.EType = BLL.FormPrefix.StockSeparated;
-                            
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if (jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Payment))
-                        {
-                            gl.EType = BLL.FormPrefix.Payment;
-                          
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                        else if(jd.Journal.RefCode.StartsWith(BLL.FormPrefix.Receipt))
-                        {
-                            gl.EType = BLL.FormPrefix.Receipt;
-                            
-                            gl.RefEntryNo = string.Format("{0}", jd.Journal.RefCode.Remove(0, 2));
-                        }
-                      
-                    }
-                    else
-                    {
-                        gl.EType = BLL.FormPrefix.Journal;
-                        gl.RefEntryNo = gl.EntryNo;
-                    }
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.Purchase))
+                            {
+                                gl.EType = BLL.FormPrefix.Purchase;
 
-                    gl.EDate = jd.Journal.JournalDate;
-                    if(jd.TransactionMode == "Cheque")
-                    {
-                        gl.RefNo = jd.ChequeNo;
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.SalesReturn))
+                            {
+                                gl.EType = BLL.FormPrefix.SalesReturn;
+
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.PurchaseReturn))
+                            {
+                                gl.EType = BLL.FormPrefix.PurchaseReturn;
+
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.StockIn))
+                            {
+                                gl.EType = BLL.FormPrefix.StockIn;
+
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.StockOut))
+                            {
+                                gl.EType = BLL.FormPrefix.StockOut;
+
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.JobOrderIssue))
+                            {
+                                gl.EType = BLL.FormPrefix.JobOrderIssue;
+
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.JobOrderReceived))
+                            {
+                                gl.EType = BLL.FormPrefix.JobOrderReceived;
+
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.StockInProcess))
+                            {
+                                gl.EType = BLL.FormPrefix.StockInProcess;
+
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.StockSeparated))
+                            {
+                                gl.EType = BLL.FormPrefix.StockSeparated;
+
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.Payment))
+                            {
+                                gl.EType = BLL.FormPrefix.Payment;
+
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+                            else if (jd.Journal.EntryNo.StartsWith(BLL.FormPrefix.Receipt))
+                            {
+                                gl.EType = BLL.FormPrefix.Receipt;
+
+                                gl.RefEntryNo = string.Format("{0}", jd.Journal.EntryNo.Remove(0, 2));
+                            }
+
+                        }
+                        else
+                        {
+                            gl.EType = BLL.FormPrefix.Journal;
+                            gl.RefEntryNo = gl.EntryNo;
+                        }
+
+                        gl.EDate = jd.Journal.JournalDate;
+                        if (jd.TransactionMode == "Cheque")
+                        {
+                            gl.RefNo = jd.ChequeNo;
+                        }
+                        else if (jd.TransactionMode == "Online" || jd.TransactionMode == "TT")
+                        {
+                            gl.RefNo = jd.RefNo;
+                        }
+                        else
+                        {
+                            gl.RefNo = "";
+                        }
+                        gl.EntryNo = jd.Journal.EntryNo;
+                        gl.DrAmt = jd.DrAmt;
+                        gl.CrAmt = jd.CrAmt;
+                        BalAmt += (gl.DrAmt - gl.CrAmt);
+                        gl.BalAmt = Math.Abs(BalAmt);
+                        lstGeneralLedger.Add(gl);
                     }
-                    else if(jd.TransactionMode == "Online"|| jd.TransactionMode == "TT")
-                    {
-                        gl.RefNo = jd.RefNo;
-                    }
-                    else
-                    {
-                        gl.RefNo = "";
-                    }
-                    gl.EntryNo = jd.Journal.EntryNo;
-                    gl.DrAmt = jd.DrAmt;
-                    gl.CrAmt = jd.CrAmt;
-                    BalAmt += (gl.DrAmt - gl.CrAmt);
-                    gl.BalAmt = Math.Abs(BalAmt);
-                    lstGeneralLedger.Add(gl);
-                }
+                    catch(Exception ex)
+                    { }
+                  }
                 gl = new BLL.GeneralLedger();
                 gl.Ledger = new BLL.Ledger();
                 gl.Particular = "Total";

@@ -168,7 +168,7 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                    if (value != null) SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -185,7 +185,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                    if (value != null) SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -218,7 +218,7 @@ namespace AccountBuddy.BLL
                 {
                     _ExtraAmount = value;
                     NotifyPropertyChanged(nameof(ExtraAmount));
-                    if (value != null) SetAmount();
+                   SetAmount();
                 }
             }
         }
@@ -491,7 +491,7 @@ namespace AccountBuddy.BLL
                 STPDetail.toCopy<StockInProcessDetail>(pod);
                 ClearDetail();
                 ItemAmount = STPDetails.Sum(x => x.Amount);
-
+                SetAmount();
             }
 
         }
@@ -510,6 +510,7 @@ namespace AccountBuddy.BLL
             {
                 STPDetails.Remove(pod);
                 ItemAmount = STPDetails.Sum(x => x.Amount);
+                SetAmount();
             }
         }
         #endregion

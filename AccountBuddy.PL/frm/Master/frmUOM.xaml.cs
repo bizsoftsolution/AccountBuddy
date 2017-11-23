@@ -55,8 +55,8 @@ namespace AccountBuddy.PL.frm.Master
             CollectionViewSource.GetDefaultView(dgvUOM.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Symbol), System.ComponentModel.ListSortDirection.Ascending));
            
 
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            btnSave.Visibility = (BLL.UOM.UserPermission.AllowInsert || BLL.UOM.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.UOM.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
             data.Clear();
 

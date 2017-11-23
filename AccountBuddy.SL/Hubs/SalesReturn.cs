@@ -55,21 +55,25 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    foreach (var d_SRd in d.SalesReturnDetails)
-                    {
-                        BLL.SalesReturnDetail b_SRd = P.SRDetails.Where(x => x.Id == d_SRd.Id).FirstOrDefault();
-                        if (b_SRd == null) d.SalesReturnDetails.Remove(d_SRd);
-                    }
+                    //    foreach (var d_SRd in d.SalesReturnDetails.ToList())
+                    //    {
+                    //        BLL.SalesReturnDetail b_SRd = P.SRDetails.Where(x => x.Id == d_SRd.Id).FirstOrDefault();
+                    //        if (b_SRd == null) d.SalesReturnDetails.Remove(d_SRd);
+                    //    }
+
+                    decimal rd = P.SRDetails.Select(X => X.SRId).FirstOrDefault();
+                    DB.SalesReturnDetails.RemoveRange(d.SalesReturnDetails.Where(x => x.SRId == rd).ToList());
+
 
                     P.toCopy<DAL.SalesReturn>(d);
                     foreach (var b_SRd in P.SRDetails)
                     {
-                        DAL.SalesReturnDetail d_SRd = d.SalesReturnDetails.Where(x => x.Id == b_SRd.Id).FirstOrDefault();
-                        if (d_SRd == null)
-                        {
-                            d_SRd = new DAL.SalesReturnDetail();
+                        //DAL.SalesReturnDetail d_SRd = d.SalesReturnDetails.Where(x => x.Id == b_SRd.Id).FirstOrDefault();
+                        // if (d_SRd == null)
+                        // {
+                        DAL.SalesReturnDetail d_SRd = new DAL.SalesReturnDetail();
                             d.SalesReturnDetails.Add(d_SRd);
-                        }
+                        //}
                         b_SRd.toCopy<DAL.SalesReturnDetail>(d_SRd);
                     }
                     LogDetailStore(P, LogDetailType.UPDATE);

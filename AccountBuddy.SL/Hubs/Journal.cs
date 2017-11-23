@@ -59,22 +59,26 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
 
-                    foreach (var d_SOd in d.JournalDetails.ToList())
-                    {
-                        BLL.JournalDetail b_SOd = PO.JDetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
-                        if (b_SOd == null) d.JournalDetails.Remove(d_SOd);
-                    }
+                    //foreach (var d_SOd in d.JournalDetails.ToList())
+                    //{
+                    //    BLL.JournalDetail b_SOd = PO.JDetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
+                    //    if (b_SOd == null) d.JournalDetails.Remove(d_SOd);
+                    //}
+
+                    decimal pd = PO.JDetails.Select(X => X.JournalId).FirstOrDefault();
+                    DB.JournalDetails.RemoveRange(d.JournalDetails.Where(x => x.JournalId == pd).ToList());
+
 
                     PO.toCopy<DAL.Journal>(d);
 
                     foreach (var b_pod in PO.JDetails)
                     {
-                        DAL.JournalDetail d_pod = d.JournalDetails.Where(x => x.Id == b_pod.Id).FirstOrDefault();
-                        if (d_pod == null)
-                        {
-                            d_pod = new DAL.JournalDetail();
+                        //DAL.JournalDetail d_pod = d.JournalDetails.Where(x => x.Id == b_pod.Id).FirstOrDefault();
+                        //if (d_pod == null)
+                        //{
+                        DAL.JournalDetail d_pod = new DAL.JournalDetail();
                             d.JournalDetails.Add(d_pod);
-                        }
+                        //}
                         b_pod.toCopy<DAL.JournalDetail>(d_pod);
                     }
                     DB.SaveChanges();

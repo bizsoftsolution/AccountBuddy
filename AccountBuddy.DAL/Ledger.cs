@@ -35,6 +35,7 @@ namespace AccountBuddy.DAL
             this.StockIns = new HashSet<StockIn>();
             this.StockOuts = new HashSet<StockOut>();
             this.Suppliers = new HashSet<Supplier>();
+            this.PurchaseRequests = new HashSet<PurchaseRequest>();
         }
     
         public int Id { get; set; }
@@ -93,5 +94,7 @@ namespace AccountBuddy.DAL
         public virtual ICollection<StockOut> StockOuts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supplier> Suppliers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseRequest> PurchaseRequests { get; set; }
     }
 }

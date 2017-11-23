@@ -14,6 +14,7 @@ namespace AccountBuddy.BLL
         #region Fileds
 
         private static ObservableCollection<Staff> _toList;
+        private static List<Staff> _requestToList;
 
         private int _Id;
         private int _LedgerId;
@@ -22,6 +23,8 @@ namespace AccountBuddy.BLL
         private string _Designation;
         private DateTime _DOB;
         private DateTime _DOJ;
+        private int _DepartmentId;
+        private int _LoginId;
 
 
         private static UserTypeDetail _UserPermission;
@@ -95,6 +98,18 @@ namespace AccountBuddy.BLL
             set
             {
                 _toList = value;
+            }
+        }
+        public static List<Staff> RequestToList
+        {
+            get
+            {
+                if (_requestToList == null) _requestToList = FMCGHubClient.FMCGHub.Invoke<List<Staff>>("Staff_RequestToList").Result;
+                return _requestToList;
+            }
+            set
+            {
+                _requestToList = value;
             }
         }
 
@@ -218,6 +233,40 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public int DepartmentId
+        {
+            get
+            {
+                return _DepartmentId;
+            }
+
+            set
+            {
+                if (_DepartmentId != value)
+                {
+                    _DepartmentId = value;
+                    NotifyPropertyChanged(nameof(DepartmentId));        
+                }
+            }
+        }
+
+        public int LoginId
+        {
+            get
+            {
+                return _LoginId;
+            }
+
+            set
+            {
+                if (_LoginId != value)
+                {
+                    _LoginId = value;
+                    NotifyPropertyChanged(nameof(LoginId));
+                }
+            }
+        }
         #endregion
 
         #region Property  Changed Event
@@ -291,6 +340,7 @@ namespace AccountBuddy.BLL
             DOB = DateTime.Now;
             DOJ = DateTime.Now;
             IsReadOnly = !UserPermission.AllowInsert;
+            RequestToList = null;
             NotifyAllPropertyChanged();
         }
 
@@ -353,6 +403,7 @@ namespace AccountBuddy.BLL
         public static void Init()
         {
             _toList = null;
+            _requestToList = null;
         }
 
         private void SetAccountName()

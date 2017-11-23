@@ -83,7 +83,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnSave.Visibility = (BLL.UserAccount.UserPermission.AllowInsert || BLL.UserAccount.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
 
             //if (BLL.UserAccount.AllowInsert(Common.Forms.frmUserType)|| BLL.UserAccount.AllowUpdate(Common.Forms.frmUserType))
             //{

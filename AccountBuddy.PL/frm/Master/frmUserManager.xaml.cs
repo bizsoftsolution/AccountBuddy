@@ -34,11 +34,8 @@ namespace AccountBuddy.PL.frm.Master
 
         private void onClientEvents()
         {
-
-
             BLL.FMCGHubClient.FMCGHub.On<BLL.UserAccount>("UserAccount_Save", (ua) =>
             {
-
                 this.Dispatcher.Invoke(() =>
                 {
                     BLL.UserAccount u = new BLL.UserAccount();

@@ -170,6 +170,7 @@
     <Compile Include="Hubs\CustomerWiseReport.cs" />
     <Compile Include="Hubs\CustomFormat.cs" />
     <Compile Include="Hubs\DataKeyValue.cs" />
+    <Compile Include="Hubs\Department.cs" />
     <Compile Include="Hubs\FmcgWriteLogSL.cs" />
     <Compile Include="Hubs\GeneralLedger.cs" />
     <Compile Include="Hubs\GeneralStock.cs" />
@@ -185,6 +186,8 @@
     <Compile Include="Hubs\ProfitLoss.cs" />
     <Compile Include="Hubs\Purchase.cs" />
     <Compile Include="Hubs\PurchaseOrder.cs" />
+    <Compile Include="Hubs\PurchaseRequest.cs" />
+    <Compile Include="Hubs\PurchaseRequestReport.cs" />
     <Compile Include="Hubs\PurchaseReturn.cs" />
     <Compile Include="Hubs\Receipt.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

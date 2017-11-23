@@ -60,7 +60,8 @@ namespace AccountBuddy.PL.frm.Transaction
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).Filter = Ledger_Filter;
             CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.AccountName), System.ComponentModel.ListSortDirection.Ascending));
             FindDiff();
-
+            btnSave.Visibility = (BLL.Ledger.UserPermission.AllowInsert || BLL.Ledger.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+          
             LoadReport();
         }
         private bool Ledger_Filter(object obj)

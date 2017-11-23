@@ -193,6 +193,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmDepartment.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="frm\Master\frmJobWorker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -254,6 +258,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="frm\Print\frmQuickPurchase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Print\frmQuickPurchaseRq.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -426,6 +434,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmPurchaseRequest.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="frm\Transaction\frmPurchaseReturn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -530,6 +542,9 @@
     <Compile Include="frm\Master\frmDeleteConfirmation.xaml.cs">
       <DependentUpon>frmDeleteConfirmation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Master\frmDepartment.xaml.cs">
+      <DependentUpon>frmDepartment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Master\frmJobWorker.xaml.cs">
       <DependentUpon>frmJobWorker.xaml</DependentUpon>
     </Compile>
@@ -577,6 +592,9 @@
     </Compile>
     <Compile Include="frm\Print\frmQuickPurchase.xaml.cs">
       <DependentUpon>frmQuickPurchase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Print\frmQuickPurchaseRq.xaml.cs">
+      <DependentUpon>frmQuickPurchaseRq.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Print\FrmQuickSales.xaml.cs">
       <DependentUpon>FrmQuickSales.xaml</DependentUpon>
@@ -704,6 +722,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmPurchaseOrder.xaml.cs">
       <DependentUpon>frmPurchaseOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmPurchaseRequest.xaml.cs">
+      <DependentUpon>frmPurchaseRequest.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmPurchaseReturn.xaml.cs">
       <DependentUpon>frmPurchaseReturn.xaml</DependentUpon>

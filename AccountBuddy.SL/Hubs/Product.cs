@@ -14,30 +14,35 @@ namespace AccountBuddy.SL.Hubs
         public BLL.Product Product_DALtoBLL(DAL.Product ProductsFrom)
         {
             BLL.Product ProductsTo = ProductsFrom.toCopy<BLL.Product>(new BLL.Product());
+            try
+            {            
+                ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
+                var pd = ProductsFrom.ProductDetails.Where(x => x.CompanyId == Caller.CompanyId).FirstOrDefault();
+                if (pd == null) pd = new DAL.ProductDetail();
 
-            ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
-            var pd = ProductsFrom.ProductDetails.Where(x => x.CompanyId == Caller.CompanyId).FirstOrDefault();
-            if (pd == null) pd = new DAL.ProductDetail();
+                ProductsTo.UOM = ProductsFrom.UOM == null ? null : UOM_DALtoBLL(ProductsFrom.UOM);
+                ProductsTo.OpeningStock = pd.OpeningStock;
+                ProductsTo.ReOrderLevel = pd.ReorderLevel;
+                ProductsTo.POQty = ProductsFrom.PurchaseOrderDetails.Where(x => x.PurchaseOrder.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.PQty = ProductsFrom.PurchaseDetails.Where(x => x.Purchase.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.PRQty = ProductsFrom.PurchaseReturnDetails.Where(x => x.PurchaseReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.SOQty = ProductsFrom.SalesOrderDetails.Where(x => x.SalesOrder.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.SQty = ProductsFrom.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.SRQty = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.SInQty = ProductsFrom.StockInDetails.Where(x => x.StockIn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.SOutQty = ProductsFrom.StockOutDetails.Where(x => x.StockOut.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.JOQty = ProductsFrom.JobOrderIssueDetails.Where(x => x.JobOrderIssue.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.JRQty = ProductsFrom.JobOrderReceivedDetails.Where(x => x.JobOrderReceived.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.SSQty = ProductsFrom.StockSeperatedDetails.Where(x => x.StockSeparated.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.SPQty = ProductsFrom.StockInProcessDetails.Where(x => x.StockInProcess.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
 
-            ProductsTo.UOM = ProductsFrom.UOM == null ? null : UOM_DALtoBLL(ProductsFrom.UOM);
-            ProductsTo.OpeningStock = pd.OpeningStock;
-            ProductsTo.ReOrderLevel = pd.ReorderLevel;
-            ProductsTo.POQty = ProductsFrom.PurchaseOrderDetails.Where(x => x.PurchaseOrder.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.PQty = ProductsFrom.PurchaseDetails.Where(x => x.Purchase.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.PRQty = ProductsFrom.PurchaseReturnDetails.Where(x => x.PurchaseReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.SOQty = ProductsFrom.SalesOrderDetails.Where(x => x.SalesOrder.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.SQty = ProductsFrom.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.SRQty = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.SInQty = ProductsFrom.StockInDetails.Where(x => x.StockIn.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.SOutQty = ProductsFrom.StockOutDetails.Where(x => x.StockOut.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.JOQty = ProductsFrom.JobOrderIssueDetails.Where(x => x.JobOrderIssue.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.JRQty = ProductsFrom.JobOrderReceivedDetails.Where(x => x.JobOrderReceived.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.SSQty = ProductsFrom.StockSeperatedDetails.Where(x => x.StockSeparated.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
-            ProductsTo.SPQty = ProductsFrom.StockInProcessDetails.Where(x => x.StockInProcess.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);
+                ProductsTo.SRQtyForSales = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.IsResale == true).Sum(x => x.Quantity);
+                ProductsTo.SRQtyNotForSales = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.IsResale == false).Sum(x => x.Quantity);
 
-            ProductsTo.SRQtyForSales = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.IsResale == true).Sum(x => x.Quantity);
-            ProductsTo.SRQtyNotForSales = ProductsFrom.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.IsResale == false).Sum(x => x.Quantity);
-
+                return ProductsTo;
+            }
+            catch(Exception ex)
+            { }
             return ProductsTo;
         }
 

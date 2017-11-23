@@ -87,6 +87,16 @@
           <Property Name="DataValue" Type="int" Nullable="false" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="Budget" Type="float" />
+        </EntityType>
         <EntityType Name="EntityType">
           <Key>
             <PropertyRef Name="Id" />
@@ -383,6 +393,49 @@
           <Property Name="GSTAmount" Type="money" Nullable="false" />
           <Property Name="Amount" Type="money" Nullable="false" />
         </EntityType>
+        <EntityType Name="PurchaseRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PRDate" Type="date" Nullable="false" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RefCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="ItemAmount" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Extras" Type="money" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="Narration" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PRId" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="UOMId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="DiscountAmount" Type="money" Nullable="false" />
+          <Property Name="GSTAmount" Type="money" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestStatusDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PRId" Type="bigint" />
+          <Property Name="RequestBy" Type="int" />
+          <Property Name="RequestAt" Type="datetime" />
+          <Property Name="RequestTo" Type="int" />
+          <Property Name="ResponseAt" Type="datetime" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="PurchaseReturn">
           <Key>
             <PropertyRef Name="Id" />
@@ -563,6 +616,8 @@
           <Property Name="Designation" Type="nvarchar" MaxLength="150" />
           <Property Name="DOB" Type="datetime" />
           <Property Name="DOJ" Type="datetime" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="LoginId" Type="int" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -828,6 +883,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CustomFormat">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Department">
               <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1264,6 +1331,90 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PurchaseRequest_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_PurchaseRequest">
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="1" />
+          <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="PRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_UOM">
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
+          <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UOM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="UOMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestStatusDetail_PurchaseRequest">
+          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="0..1" />
+          <End Role="PurchaseRequestStatusDetail" Type="Self.PurchaseRequestStatusDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestStatusDetail">
+              <PropertyRef Name="PRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestStatusDetail_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="PurchaseRequestStatusDetail" Type="Self.PurchaseRequestStatusDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestStatusDetail">
+              <PropertyRef Name="RequestBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestStatusDetail_Staff1">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="PurchaseRequestStatusDetail" Type="Self.PurchaseRequestStatusDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestStatusDetail">
+              <PropertyRef Name="RequestTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PurchaseReturn_Ledger">
           <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
           <End Role="PurchaseReturn" Type="Self.PurchaseReturn" Multiplicity="*" />
@@ -1564,6 +1715,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Staff_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Staff_Ledger">
           <End Role="Ledger" Type="Self.Ledger" Multiplicity="0..1" />
           <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
@@ -1573,6 +1736,18 @@
             </Principal>
             <Dependent Role="Staff">
               <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_UserAccount">
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="LoginId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1884,6 +2059,7 @@
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomFormat" EntityType="Self.CustomFormat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataKeyValue" EntityType="Self.DataKeyValue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityType" EntityType="Self.EntityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobOrderIssue" EntityType="Self.JobOrderIssue" Schema="dbo" store:Type="Tables" />
@@ -1905,6 +2081,9 @@
           <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrderDetail" EntityType="Self.PurchaseOrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseRequest" EntityType="Self.PurchaseRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseRequestDetail" EntityType="Self.PurchaseRequestDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseRequestStatusDetail" EntityType="Self.PurchaseRequestStatusDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseReturn" EntityType="Self.PurchaseReturn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseReturnDetail" EntityType="Self.PurchaseReturnDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
@@ -1955,6 +2134,10 @@
           <AssociationSet Name="FK_CustomFormat_CompanyDetail" Association="Self.FK_CustomFormat_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
             <End Role="CustomFormat" EntitySet="CustomFormat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Department_CompanyDetail" Association="Self.FK_Department_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="Department" EntitySet="Department" />
           </AssociationSet>
           <AssociationSet Name="FK_JobOrderIssue_JobWorker" Association="Self.FK_JobOrderIssue_JobWorker">
             <End Role="JobWorker" EntitySet="JobWorker" />
@@ -2100,6 +2283,34 @@
             <End Role="UOM" EntitySet="UOM" />
             <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_Ledger" Association="Self.FK_PurchaseRequest_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_Product" Association="Self.FK_PurchaseRequestDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_PurchaseRequest" Association="Self.FK_PurchaseRequestDetail_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_UOM" Association="Self.FK_PurchaseRequestDetail_UOM">
+            <End Role="UOM" EntitySet="UOM" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestStatusDetail_PurchaseRequest" Association="Self.FK_PurchaseRequestStatusDetail_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
+            <End Role="PurchaseRequestStatusDetail" EntitySet="PurchaseRequestStatusDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestStatusDetail_Staff" Association="Self.FK_PurchaseRequestStatusDetail_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="PurchaseRequestStatusDetail" EntitySet="PurchaseRequestStatusDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestStatusDetail_Staff1" Association="Self.FK_PurchaseRequestStatusDetail_Staff1">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="PurchaseRequestStatusDetail" EntitySet="PurchaseRequestStatusDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_PurchaseReturn_Ledger" Association="Self.FK_PurchaseReturn_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
             <End Role="PurchaseReturn" EntitySet="PurchaseReturn" />
@@ -2200,8 +2411,16 @@
             <End Role="UOM" EntitySet="UOM" />
             <End Role="SalesReturnDetail" EntitySet="SalesReturnDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_Staff_Department" Association="Self.FK_Staff_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
           <AssociationSet Name="FK_Staff_Ledger" Association="Self.FK_Staff_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_UserAccount" Association="Self.FK_Staff_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccount" />
             <End Role="Staff" EntitySet="Staff" />
           </AssociationSet>
           <AssociationSet Name="FK_StockGroup_CompanyDetail" Association="Self.FK_StockGroup_CompanyDetail">
@@ -2737,6 +2956,50 @@
             <End Role="UserTypeFormDetail" EntitySet="UserTypeFormDetails" />
             <End Role="UserTypeDetail" EntitySet="UserTypeDetails" />
           </AssociationSet>
+          <EntitySet Name="Departments" EntityType="DBFMCGModel.Department" />
+          <EntitySet Name="PurchaseRequests" EntityType="DBFMCGModel.PurchaseRequest" />
+          <EntitySet Name="PurchaseRequestDetails" EntityType="DBFMCGModel.PurchaseRequestDetail" />
+          <EntitySet Name="PurchaseRequestStatusDetails" EntityType="DBFMCGModel.PurchaseRequestStatusDetail" />
+          <AssociationSet Name="FK_Department_CompanyDetail" Association="DBFMCGModel.FK_Department_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Department" Association="DBFMCGModel.FK_Staff_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_Ledger" Association="DBFMCGModel.FK_PurchaseRequest_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_Product" Association="DBFMCGModel.FK_PurchaseRequestDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_PurchaseRequest" Association="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestStatusDetail_PurchaseRequest" Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+            <End Role="PurchaseRequestStatusDetail" EntitySet="PurchaseRequestStatusDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_UOM" Association="DBFMCGModel.FK_PurchaseRequestDetail_UOM">
+            <End Role="UOM" EntitySet="UOMs" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestStatusDetail_Staff" Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="PurchaseRequestStatusDetail" EntitySet="PurchaseRequestStatusDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestStatusDetail_Staff1" Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff1">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="PurchaseRequestStatusDetail" EntitySet="PurchaseRequestStatusDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_UserAccount" Association="DBFMCGModel.FK_Staff_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -2788,6 +3051,7 @@
           <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
           <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
           <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
+          <NavigationProperty Name="Departments" Relationship="DBFMCGModel.FK_Department_CompanyDetail" FromRole="CompanyDetail" ToRole="Department" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -3016,6 +3280,7 @@
           <NavigationProperty Name="StockIns" Relationship="DBFMCGModel.FK_StockIn_Ledger" FromRole="Ledger" ToRole="StockIn" />
           <NavigationProperty Name="StockOuts" Relationship="DBFMCGModel.FK_StockOut_Ledger" FromRole="Ledger" ToRole="StockOut" />
           <NavigationProperty Name="Suppliers" Relationship="DBFMCGModel.FK_Supplier_Ledger" FromRole="Ledger" ToRole="Supplier" />
+          <NavigationProperty Name="PurchaseRequests" Relationship="DBFMCGModel.FK_PurchaseRequest_Ledger" FromRole="Ledger" ToRole="PurchaseRequest" />
         </EntityType>
         <EntityType Name="LogDetail">
           <Key>
@@ -3121,6 +3386,7 @@
           <NavigationProperty Name="StockInProcessDetails" Relationship="DBFMCGModel.FK_StockInProcessDetail_Product" FromRole="Product" ToRole="StockInProcessDetail" />
           <NavigationProperty Name="StockOutDetails" Relationship="DBFMCGModel.FK_StockOutDetail_Product" FromRole="Product" ToRole="StockOutDetail" />
           <NavigationProperty Name="StockSeperatedDetails" Relationship="DBFMCGModel.FK_StockSeperatedDetail_Product" FromRole="Product" ToRole="StockSeperatedDetail" />
+          <NavigationProperty Name="PurchaseRequestDetails" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_Product" FromRole="Product" ToRole="PurchaseRequestDetail" />
         </EntityType>
         <EntityType Name="ProductDetail">
           <Key>
@@ -3428,6 +3694,12 @@
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Staff_Ledger" FromRole="Staff" ToRole="Ledger" />
           <NavigationProperty Name="StockInProcesses" Relationship="DBFMCGModel.FK_StockInProcess_Staff" FromRole="Staff" ToRole="StockInProcess" />
           <NavigationProperty Name="StockSeparateds" Relationship="DBFMCGModel.FK_StockSeparated_Staff" FromRole="Staff" ToRole="StockSeparated" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="LoginId" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="DBFMCGModel.FK_Staff_Department" FromRole="Staff" ToRole="Department" />
+          <NavigationProperty Name="PurchaseRequestStatusDetails" Relationship="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff" FromRole="Staff" ToRole="PurchaseRequestStatusDetail" />
+          <NavigationProperty Name="PurchaseRequestStatusDetails1" Relationship="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff1" FromRole="Staff" ToRole="PurchaseRequestStatusDetail" />
+          <NavigationProperty Name="UserAccount" Relationship="DBFMCGModel.FK_Staff_UserAccount" FromRole="Staff" ToRole="UserAccount" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -3623,6 +3895,7 @@
           <NavigationProperty Name="StockInProcessDetails" Relationship="DBFMCGModel.FK_StockInProcessDetail_UOM" FromRole="UOM" ToRole="StockInProcessDetail" />
           <NavigationProperty Name="StockOutDetails" Relationship="DBFMCGModel.FK_StockOutDetail_UOM" FromRole="UOM" ToRole="StockOutDetail" />
           <NavigationProperty Name="StockSeperatedDetails" Relationship="DBFMCGModel.FK_StockSeperatedDetail_UOM" FromRole="UOM" ToRole="StockSeperatedDetail" />
+          <NavigationProperty Name="PurchaseRequestDetails" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_UOM" FromRole="UOM" ToRole="PurchaseRequestDetail" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -3636,6 +3909,7 @@
           <NavigationProperty Name="LogDetails" Relationship="DBFMCGModel.FK_LogDetail_UserAccount" FromRole="UserAccount" ToRole="LogDetail" />
           <NavigationProperty Name="LogMasters" Relationship="DBFMCGModel.FK_LogMaster_UserAccount" FromRole="UserAccount" ToRole="LogMaster" />
           <NavigationProperty Name="UserType" Relationship="DBFMCGModel.FK_UserAccount_UserType" FromRole="UserAccount" ToRole="UserType" />
+          <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_UserAccount" FromRole="UserAccount" ToRole="Staff" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -4795,6 +5069,190 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="Budget" Type="Double" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_Department_CompanyDetail" FromRole="Department" ToRole="CompanyDetail" />
+          <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_Department" FromRole="Department" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="PurchaseRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PRDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="ItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Extras" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_PurchaseRequest_Ledger" FromRole="PurchaseRequest" ToRole="Ledger" />
+          <NavigationProperty Name="PurchaseRequestDetails" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
+          <NavigationProperty Name="PurchaseRequestStatusDetails" Relationship="DBFMCGModel.FK_PurchaseRequestStatusDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestStatusDetail" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PRId" Type="Int64" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="UOMId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DiscountAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="GSTAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_Product" FromRole="PurchaseRequestDetail" ToRole="Product" />
+          <NavigationProperty Name="PurchaseRequest" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequestDetail" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="UOM" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_UOM" FromRole="PurchaseRequestDetail" ToRole="UOM" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestStatusDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PRId" Type="Int64" />
+          <Property Name="RequestBy" Type="Int32" />
+          <Property Name="RequestAt" Type="DateTime" Precision="3" />
+          <Property Name="RequestTo" Type="Int32" />
+          <Property Name="ResponseAt" Type="DateTime" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PurchaseRequest" Relationship="DBFMCGModel.FK_PurchaseRequestStatusDetail_PurchaseRequest" FromRole="PurchaseRequestStatusDetail" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="Staff" Relationship="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff" FromRole="PurchaseRequestStatusDetail" ToRole="Staff" />
+          <NavigationProperty Name="Staff1" Relationship="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff1" FromRole="PurchaseRequestStatusDetail" ToRole="Staff" />
+        </EntityType>
+        <Association Name="FK_Department_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Department" Role="Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Department">
+          <End Type="DBFMCGModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBFMCGModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_Product">
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DBFMCGModel.PurchaseRequestDetail" Role="PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_PurchaseRequest">
+          <End Type="DBFMCGModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="1" />
+          <End Type="DBFMCGModel.PurchaseRequestDetail" Role="PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="PRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestStatusDetail_PurchaseRequest">
+          <End Type="DBFMCGModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.PurchaseRequestStatusDetail" Role="PurchaseRequestStatusDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestStatusDetail">
+              <PropertyRef Name="PRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_UOM">
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="1" />
+          <End Type="DBFMCGModel.PurchaseRequestDetail" Role="PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UOM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="UOMId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestStatusDetail_Staff">
+          <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.PurchaseRequestStatusDetail" Role="PurchaseRequestStatusDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestStatusDetail">
+              <PropertyRef Name="RequestBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestStatusDetail_Staff1">
+          <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.PurchaseRequestStatusDetail" Role="PurchaseRequestStatusDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestStatusDetail">
+              <PropertyRef Name="RequestTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_UserAccount">
+          <End Type="DBFMCGModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="LoginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5390,6 +5848,8 @@
           <EntitySetMapping Name="Staffs">
             <EntityTypeMapping TypeName="DBFMCGModel.Staff">
               <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="DOJ" ColumnName="DOJ" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Designation" ColumnName="Designation" />
@@ -5607,6 +6067,63 @@
                 <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
                 <ScalarProperty Name="FormType" ColumnName="FormType" />
                 <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="DBFMCGModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequests">
+            <EntityTypeMapping TypeName="DBFMCGModel.PurchaseRequest">
+              <MappingFragment StoreEntitySet="PurchaseRequest">
+                <ScalarProperty Name="Narration" ColumnName="Narration" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="Extras" ColumnName="Extras" />
+                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="ItemAmount" ColumnName="ItemAmount" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
+                <ScalarProperty Name="RefCode" ColumnName="RefCode" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="PRDate" ColumnName="PRDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequestDetails">
+            <EntityTypeMapping TypeName="DBFMCGModel.PurchaseRequestDetail">
+              <MappingFragment StoreEntitySet="PurchaseRequestDetail">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="GSTAmount" ColumnName="GSTAmount" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UOMId" ColumnName="UOMId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="PRId" ColumnName="PRId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequestStatusDetails">
+            <EntityTypeMapping TypeName="DBFMCGModel.PurchaseRequestStatusDetail">
+              <MappingFragment StoreEntitySet="PurchaseRequestStatusDetail">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ResponseAt" ColumnName="ResponseAt" />
+                <ScalarProperty Name="RequestTo" ColumnName="RequestTo" />
+                <ScalarProperty Name="RequestAt" ColumnName="RequestAt" />
+                <ScalarProperty Name="RequestBy" ColumnName="RequestBy" />
+                <ScalarProperty Name="PRId" ColumnName="PRId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

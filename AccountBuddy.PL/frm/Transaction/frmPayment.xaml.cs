@@ -240,8 +240,8 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbDebitAC.SelectedValuePath = "Id";
             cmbDebitAC.DisplayMemberPath = "AccountName";
 
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            btnSave.Visibility = (BLL.Payment.UserPermission.AllowInsert || BLL.Payment.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.Payment.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
             data.Clear();
 

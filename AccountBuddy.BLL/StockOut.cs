@@ -162,6 +162,7 @@ namespace AccountBuddy.BLL
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
                     AmountInwords = value.ToCurrencyInWords();
+                   
                 }
             }
         }
@@ -371,6 +372,7 @@ namespace AccountBuddy.BLL
                 STOutDetail.toCopy<StockOutDetail>(pod);
                 ClearDetail();
                 ItemAmount = STOutDetails.Sum(x => x.Amount);
+               
             }
 
         }

@@ -153,6 +153,20 @@
         <AssociationConnector Association="DBFMCGModel.FK_UserAccount_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserType" />
         <AssociationConnector Association="DBFMCGModel.FK_UserTypeDetail_UserTypeFormDetail" />
+        <EntityTypeShape EntityType="DBFMCGModel.Department" Width="1.5" PointX="3" PointY="72.125" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequest" Width="1.5" PointX="5.25" PointY="56.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestDetail" Width="1.5" PointX="12.75" PointY="37.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestStatusDetail" Width="1.5" PointX="10.5" PointY="60.25" />
+        <AssociationConnector Association="DBFMCGModel.FK_Department_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_Staff_Department" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequest_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_PurchaseRequest" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_PurchaseRequest" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_UOM" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff" />
+        <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff1" />
+        <AssociationConnector Association="DBFMCGModel.FK_Staff_UserAccount" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -54,21 +54,23 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    foreach (var d_SOd in d.SalesOrderDetails)
-                    {
-                        BLL.SalesOrderDetail b_SOd = SO.SODetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
-                        if (b_SOd == null) d.SalesOrderDetails.Remove(d_SOd);
-                    }
+                    //foreach (var d_SOd in d.SalesOrderDetails.ToList())
+                    //{
+                    //    BLL.SalesOrderDetail b_SOd = SO.SODetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
+                    //    if (b_SOd == null) d.SalesOrderDetails.Remove(d_SOd);
+                    //}
+                    decimal rd = SO.SODetails.Select(X => X.SOId).FirstOrDefault().Value;
+                    DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails.Where(x => x.SOId == rd).ToList());
 
                     SO.toCopy<DAL.SalesOrder>(d);
                     foreach (var b_SOd in SO.SODetails)
                     {
-                        DAL.SalesOrderDetail d_SOd = d.SalesOrderDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
-                        if (d_SOd == null)
-                        {
-                            d_SOd = new DAL.SalesOrderDetail();
+                        //  DAL.SalesOrderDetail d_SOd = d.SalesOrderDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
+                        //  if (d_SOd == null)
+                        // {
+                        DAL.SalesOrderDetail d_SOd = new DAL.SalesOrderDetail();
                             d.SalesOrderDetails.Add(d_SOd);
-                        }
+                      //  }
                         b_SOd.toCopy<DAL.SalesOrderDetail>(d_SOd);
                     }
                     LogDetailStore(SO, LogDetailType.UPDATE);

@@ -60,6 +60,7 @@
     <Compile Include="CustomerWiseReport.cs" />
     <Compile Include="CustomFormat.cs" />
     <Compile Include="DataKeyValue.cs" />
+    <Compile Include="Department.cs" />
     <Compile Include="FormPrefix.cs" />
     <Compile Include="GeneralLedger.cs" />
     <Compile Include="GeneralStock.cs" />
@@ -84,6 +85,10 @@
     <Compile Include="PurchaseDetail.cs" />
     <Compile Include="PurchaseOrder.cs" />
     <Compile Include="PurchaseOrderDetail.cs" />
+    <Compile Include="PurchaseRequest.cs" />
+    <Compile Include="PurchaseRequestDetail.cs" />
+    <Compile Include="PurchaseRequestReport.cs" />
+    <Compile Include="PurchaseRequestStatusDetail.cs" />
     <Compile Include="PurchaseReturn.cs" />
     <Compile Include="PurchaseReturnDetail.cs" />
     <Compile Include="Receipt.cs" />

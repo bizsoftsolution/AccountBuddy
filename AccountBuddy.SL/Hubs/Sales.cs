@@ -50,20 +50,24 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    foreach (var d_Sd in d.SalesDetails)
-                    {
-                        BLL.SalesDetail b_Sd = P.SDetails.Where(x => x.Id == d_Sd.Id).FirstOrDefault();
-                        if (b_Sd == null) d.SalesDetails.Remove(d_Sd);
-                    }
+                    //foreach (var d_Sd in d.SalesDetails.ToList())
+                    //{
+                    //    BLL.SalesDetail b_Sd = P.SDetails.Where(x => x.Id == d_Sd.Id).FirstOrDefault();
+                    //    if (b_Sd == null) d.SalesDetails.Remove(d_Sd);
+                    //}
+                    decimal rd = P.SDetails.Select(X => X.SalesId).FirstOrDefault();
+                    DB.SalesDetails.RemoveRange(d.SalesDetails.Where(x => x.SalesId == rd).ToList());
+
+
                     P.toCopy<DAL.Sale>(d);
                     foreach (var b_Sd in P.SDetails)
                     {
-                        DAL.SalesDetail d_Sd = d.SalesDetails.Where(x => x.Id == b_Sd.Id).FirstOrDefault();
-                        if (d_Sd == null)
-                        {
-                            d_Sd = new DAL.SalesDetail();
+                        //  DAL.SalesDetail d_Sd = d.SalesDetails.Where(x => x.Id == b_Sd.Id).FirstOrDefault();
+                        // if (d_Sd == null)
+                        // {
+                        DAL.SalesDetail d_Sd = new DAL.SalesDetail();
                             d.SalesDetails.Add(d_Sd);
-                        }
+                       // }
                         b_Sd.toCopy<DAL.SalesDetail>(d_Sd);
                     }
                     LogDetailStore(P, LogDetailType.UPDATE);                   

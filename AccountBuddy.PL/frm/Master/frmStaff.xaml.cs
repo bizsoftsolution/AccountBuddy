@@ -39,6 +39,8 @@ namespace AccountBuddy.PL.frm.Master
             data.Clear();
             rptStaff.SetDisplayMode(DisplayMode.PrintLayout);
             onClientEvents();
+            
+
         }
 
         #endregion
@@ -47,8 +49,12 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            BLL.Supplier.Init();
+            BLL.Staff.Init();
+
             dgvStaff.ItemsSource = BLL.Staff.toList;
+            cmbDepartment.ItemsSource = BLL.Department.toList;
+            cmbDesignation.ItemsSource = BLL.Staff.toList.Select(x=> x.Designation).Distinct().ToList();
+            cmbLoginId.ItemsSource = BLL.UserAccount.toList;
 
             CollectionViewSource.GetDefaultView(dgvStaff.ItemsSource).Filter = Staff_Filter;
             CollectionViewSource.GetDefaultView(dgvStaff.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.LedgerName), System.ComponentModel.ListSortDirection.Ascending));
@@ -56,9 +62,10 @@ namespace AccountBuddy.PL.frm.Master
             rptContain.IsChecked = true;
 
 
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            btnSave.Visibility = (BLL.Staff.UserPermission.AllowInsert || BLL.Staff.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.Staff.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
+            btnAddUser.Visibility = BLL.UserAccount.UserPermission.AllowInsert  ? Visibility.Visible : Visibility.Collapsed;
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -66,13 +73,21 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Staff Name"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Designation == null)
+            else if ( string.IsNullOrWhiteSpace( data.Designation) )
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Designation"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-           else if (data.Salary == 0)
+            else if (data.Salary == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Salary"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.DepartmentId == 0)
+            {
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Department"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (data.LoginId == 0)
+            {
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Login Id"), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (data.DOB == null)
             {
@@ -87,11 +102,11 @@ namespace AccountBuddy.PL.frm.Master
                 MessageBox.Show("Please Enter the Valid Email or Leave Empty");
 
             }
-            else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Common.Forms.frmStaff))
+            else if (data.Id == 0 && !BLL.Staff.UserPermission.AllowInsert)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Common.Forms.frmStaff))
+            else if (data.Id != 0 && !BLL.Staff.UserPermission.AllowUpdate)
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -102,6 +117,7 @@ namespace AccountBuddy.PL.frm.Master
                     MessageBox.Show(Message.PL.Saved_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                     Grid_Refresh();
+                    cmbDesignation.ItemsSource = BLL.Staff.toList.Select(x => x.Designation).Distinct().ToList();
                 }
 
                 else
@@ -115,7 +131,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Id != 0)
             {
-                if (!BLL.UserAccount.AllowDelete(FormName))
+                if (!BLL.Staff.UserPermission.AllowDelete)
                 {
                     MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
@@ -128,6 +144,7 @@ namespace AccountBuddy.PL.frm.Master
                             MessageBox.Show(Message.PL.Delete_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                             data.Clear();
                             Grid_Refresh();
+                            cmbDesignation.ItemsSource = BLL.Staff.toList.Select(x => x.Designation).Distinct().ToList();
                         }
                         else
                         {
@@ -274,6 +291,9 @@ namespace AccountBuddy.PL.frm.Master
                 rptStaff.LocalReport.DataSources.Add(data1);
 
                 rptStaff.LocalReport.ReportPath = @"rpt\master\rptStaff.rdlc";
+
+                rptStaff.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
                 rptStaff.RefreshReport();
 
             }
@@ -283,6 +303,12 @@ namespace AccountBuddy.PL.frm.Master
             }
 
 
+        }
+
+        private void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+     
         }
 
         private void onClientEvents()
@@ -325,9 +351,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             Grid_Refresh();
         }
-
-       
-
+      
         private void dgvStaff_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var d = dgvStaff.SelectedItem as BLL.Supplier;
@@ -367,5 +391,16 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
+        private void btnAddUser_Click(object sender, RoutedEventArgs e)
+        {
+            frmUser frm = new frmUser();
+            frm.LoadWindow( BLL.UserAccount.User.UserType.CompanyId);
+            frm.ShowDialog();
+            //if (frm.LastCreateUserId != 0)
+            //{
+            //    data.LoginId = frm.LastCreateUserId;
+            //    cmbLoginId.SelectedValue = frm.LastCreateUserId;
+            //}
+        }
     }
 }

@@ -322,13 +322,20 @@ namespace AccountBuddy.BLL
                     toList.Add(d);
                 }
 
-               
+                else
+                {
+                    d.GroupName = this.GroupName;
+                    d.UnderGroupId = this.UnderGroupId;
+                    d.GroupCode = this.GroupCode;
+                }
+
+
 
                 this.toCopy<AccountGroup>(d);
                 if (isServerCall == false)
                 {
-                   AccountGroup ag = new AccountGroup() {GroupName=this.GroupName,UnderGroupId=this.UnderGroupId, GroupCode = this.GroupCode };
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("AccountGroup_Save",ag).Result;
+                  // AccountGroup ag = new AccountGroup() {GroupName=this.GroupName,UnderGroupId=this.UnderGroupId, GroupCode = this.GroupCode };
+                    var i = FMCGHubClient.FMCGHub.Invoke<int>("AccountGroup_Save",d).Result;
                     d.Id = i;
                 }
 
@@ -406,6 +413,7 @@ namespace AccountBuddy.BLL
         public static void Init()
         {
             _toList = null;
+            _UserPermission = null;
         }
 
         void SetGroupNameWithCode()

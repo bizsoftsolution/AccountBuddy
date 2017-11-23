@@ -168,7 +168,7 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                    if (value != 0) SetAmount();
+                   SetAmount();
                 }
             }
         }
@@ -260,7 +260,7 @@ namespace AccountBuddy.BLL
                 {
                     _ExtraAmount = value;
                     NotifyPropertyChanged(nameof(ExtraAmount));
-                    if (value != 0) SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -559,6 +559,7 @@ namespace AccountBuddy.BLL
                 PRDetail.toCopy<PurchaseReturnDetail>(pod);
                 ClearDetail();
                 ItemAmount = PRDetails.Sum(x => x.Amount);
+                SetAmount();
             }
 
         }
@@ -577,6 +578,7 @@ namespace AccountBuddy.BLL
             {
                 PRDetails.Remove(pod);
                 ItemAmount = PRDetails.Sum(x => x.Amount);
+                SetAmount();
             }
         }
 

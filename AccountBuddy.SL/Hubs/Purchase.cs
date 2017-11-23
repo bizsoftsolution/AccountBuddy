@@ -57,21 +57,24 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
 
-                    foreach (var d_Pd in d.PurchaseDetails)
-                    {
-                        BLL.PurchaseDetail b_Pd = P.PDetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
-                        if (b_Pd == null) d.PurchaseDetails.Remove(d_Pd);
-                    }
+                    //foreach (var d_Pd in d.PurchaseDetails.ToList())
+                    //{
+                    //    BLL.PurchaseDetail b_Pd = P.PDetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
+                    //    if (b_Pd == null) d.PurchaseDetails.Remove(d_Pd);
+                    //}
+
+                    decimal rd = P.PDetails.Select(X => X.PurchaseId).FirstOrDefault();
+                    DB.PurchaseDetails.RemoveRange(d.PurchaseDetails.Where(x => x.PurchaseId == rd).ToList());
 
                     P.toCopy<DAL.Purchase>(d);
                     foreach (var b_Pd in P.PDetails)
                     {
-                        DAL.PurchaseDetail d_Pd = d.PurchaseDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
-                        if (d_Pd == null)
-                        {
-                            d_Pd = new DAL.PurchaseDetail();
+                        // DAL.PurchaseDetail d_Pd = d.PurchaseDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
+                        // if (d_Pd == null)
+                        // {
+                        DAL.PurchaseDetail d_Pd = new DAL.PurchaseDetail();
                             d.PurchaseDetails.Add(d_Pd);
-                        }
+                      //  }
                         b_Pd.toCopy<DAL.PurchaseDetail>(d_Pd);
                     }
                     DB.SaveChanges();
@@ -83,8 +86,8 @@ namespace AccountBuddy.SL.Hubs
                 return true;
             }
 
-            catch (Exception ex) { }
-            return false;
+            catch (Exception ex) { return false; }
+            
         }
 
         #region Sales

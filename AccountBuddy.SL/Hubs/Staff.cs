@@ -23,7 +23,21 @@ namespace AccountBuddy.SL.Hubs
             return DB.Staffs.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => Staff_DALtoBLL(x)).ToList();
         }
+        //public List<BLL.Staff> Staff_RequestToList()
+        //{
+        //    List<BLL.Staff> lst = new List<BLL.Staff>();
+        //    try
+        //    {
+        //        var HierarchicalOrderNo = DB.UserTypes.Where(x => x.CompanyId == Caller.CompanyId && x.HierarchicalOrderNo < Caller.HierarchicalOrderNo).OrderByDescending(x => x.HierarchicalOrderNo).FirstOrDefault().HierarchicalOrderNo;
+        //        lst= DB.Staffs.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.UserAccount.UserType.HierarchicalOrderNo == HierarchicalOrderNo).ToList()
+        //                         .Select(x => Staff_DALtoBLL(x)).ToList();
+        //    }
+        //    catch(Exception ex)
+        //    {
 
+        //    }
+        //    return lst;
+        //}
         public BLL.Staff Staff_Save(BLL.Staff cus)
         {
             try

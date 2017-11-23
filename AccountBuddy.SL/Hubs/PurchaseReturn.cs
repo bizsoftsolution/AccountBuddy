@@ -55,21 +55,23 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    foreach (var d_Pd in d.PurchaseReturnDetails)
-                    {
-                        BLL.PurchaseReturnDetail b_Pd = P.PRDetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
-                        if (b_Pd == null) d.PurchaseReturnDetails.Remove(d_Pd);
-                    }
+                    //foreach (var d_Pd in d.PurchaseReturnDetails)
+                    //{
+                    //    BLL.PurchaseReturnDetail b_Pd = P.PRDetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
+                    //    if (b_Pd == null) d.PurchaseReturnDetails.Remove(d_Pd);
+                    //}
+                    decimal rd = P.PRDetails.Select(X => X.PRId).FirstOrDefault();
+                    DB.PurchaseReturnDetails.RemoveRange(d.PurchaseReturnDetails.Where(x => x.PRId == rd).ToList());
 
                     P.toCopy<DAL.PurchaseReturn>(d);
                     foreach (var b_Pd in P.PRDetails)
                     {
-                        DAL.PurchaseReturnDetail d_Pd = d.PurchaseReturnDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
-                        if (d_Pd == null)
-                        {
-                            d_Pd = new DAL.PurchaseReturnDetail();
+                        // DAL.PurchaseReturnDetail d_Pd = d.PurchaseReturnDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
+                        //if (d_Pd == null)
+                        //{
+                        DAL.PurchaseReturnDetail d_Pd = new DAL.PurchaseReturnDetail();
                             d.PurchaseReturnDetails.Add(d_Pd);
-                        }
+                       // }
                         b_Pd.toCopy<DAL.PurchaseReturnDetail>(d_Pd);
                     }
                     DB.SaveChanges();

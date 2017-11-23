@@ -28,6 +28,7 @@ namespace AccountBuddy.BLL
 
         public static string StockInProcess = "SP";
         public static string StockSeparated = "SS";
+        public static string PurchaseRequest = "PQ";
 
 
     }

@@ -89,6 +89,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 data.SaveDetail();
                 FindDiff();
+               
             }
         }
 
@@ -140,6 +141,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     MessageBox.Show(Message.PL.Saved_Alert);
                     if (ckxAutoPrint.IsChecked == true) Print();
                     data.Clear();
+                    lblMsg.Text = "";
                 }
             }
         }
@@ -260,9 +262,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-
+        
             data.Clear();
 
 
@@ -278,8 +278,8 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 btnPrint.IsEnabled = false;
             }
-            btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            btnSave.Visibility = (BLL.Journal.UserPermission.AllowInsert || BLL.Journal.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.Journal.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
         }
 

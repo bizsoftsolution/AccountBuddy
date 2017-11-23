@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Hubs
                 SLUser u = UserList.Where(x => x.ConnectionId == Context.ConnectionId).FirstOrDefault();
                 if (u == null)
                 {
-                    u = new SLUser() { ConnectionId = Context.ConnectionId, UserId = 0, CompanyId = 0 };
+                    u = new SLUser() { ConnectionId = Context.ConnectionId, UserId = 0, CompanyId = 0, StaffId=0 };
                     UserList.Add(u);
                 }
                 return u;

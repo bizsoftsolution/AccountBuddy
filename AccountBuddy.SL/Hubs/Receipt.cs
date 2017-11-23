@@ -53,22 +53,24 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
 
-                    foreach (var d_pod in d.ReceiptDetails)
-                    {
-                        BLL.ReceiptDetail b_pod = PO.RDetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
-                        if (b_pod == null) d.ReceiptDetails.Remove(d_pod);
-                    }
+                    //foreach (var d_pod in d.ReceiptDetails.ToList())
+                    //{
+                    //    BLL.ReceiptDetail b_pod = PO.RDetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
+                    //    if (b_pod == null) d.ReceiptDetails.Remove(d_pod);
+                    //}
+                    decimal rd = PO.RDetails.Select(X => X.ReceiptId).FirstOrDefault();
+                    DB.ReceiptDetails.RemoveRange(d.ReceiptDetails.Where(x => x.ReceiptId == rd).ToList());
 
                     PO.toCopy<DAL.Receipt>(d);
 
                     foreach (var b_pod in PO.RDetails)
                     {
-                        DAL.ReceiptDetail d_pod = d.ReceiptDetails.Where(x => x.Id == b_pod.Id).FirstOrDefault();
-                        if (d_pod == null)
-                        {
-                            d_pod = new DAL.ReceiptDetail();
+                        //DAL.ReceiptDetail d_pod = d.ReceiptDetails.Where(x => x.Id == b_pod.Id).FirstOrDefault();
+                        //if (d_pod == null)
+                        // {
+                        DAL.ReceiptDetail d_pod = new DAL.ReceiptDetail();
                             d.ReceiptDetails.Add(d_pod);
-                        }
+                      //  }
                         b_pod.toCopy<DAL.ReceiptDetail>(d_pod);
                     }
                     DB.SaveChanges();
