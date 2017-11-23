@@ -527,5 +527,26 @@ namespace AccountBuddy.PL.frm.Report
         {
 
         }
+
+        private void btnPrintPreviewReject_Click(object sender, RoutedEventArgs e)
+        {
+            frmPRReportPrint f = new frmPRReportPrint();
+            f.LoadReport_Rq_Rejected(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            f.ShowDialog();
+        }
+
+        private void btnPrintPreviewApproved_Click(object sender, RoutedEventArgs e)
+        {
+            frmPRReportPrint f = new frmPRReportPrint();
+            f.LoadReport_Rq_Approved(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            f.ShowDialog();
+        }
+
+        private void btnPrintPreviewBudget_Click(object sender, RoutedEventArgs e)
+        {
+            frmPRReportPrint f = new frmPRReportPrint();
+            f.LoadReport_Budget(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            f.ShowDialog();
+        }
     }
 }

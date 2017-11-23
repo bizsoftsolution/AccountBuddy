@@ -112,12 +112,12 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="100,0,0,0" VerticalAlignment="Center">
 
-                                            <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                            <!--<Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
                                                 PDF
                                             </Button>
                                             <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
                                                 PRINT
-                                            </Button>
+                                            </Button>-->
                                             <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
                                                 PRINT PREVIEW
                                             </Button>
@@ -199,13 +199,13 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="100,0,0,0" VerticalAlignment="Center">
 
-                                            <Button  Grid.Column="1" Name="btnExportReject" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                            <!--<Button  Grid.Column="1" Name="btnExportReject" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
                                                 PDF
                                             </Button>
                                             <Button  Grid.Column="1" Name="btnPrintReject" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
                                                 PRINT
-                                            </Button>
-                                            <Button  Grid.Column="1" Name="btnPrintPreviewReject" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                            </Button>-->
+                                            <Button  Grid.Column="1" Name="btnPrintPreviewReject" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreviewReject_Click"  >
                                                 PRINT PREVIEW
                                             </Button>
                                         </StackPanel>
@@ -259,13 +259,13 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="100,0,0,0" VerticalAlignment="Center">
 
-                                            <Button  Grid.Column="1" Name="btnExportApproved" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                            <!--<Button  Grid.Column="1" Name="btnExportApproved"  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
                                                 PDF
                                             </Button>
                                             <Button  Grid.Column="1" Name="btnPrintApproved" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
                                                 PRINT
-                                            </Button>
-                                            <Button  Grid.Column="1" Name="btnPrintPreviewApproved" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                            </Button>-->
+                                            <Button  Grid.Column="1" Name="btnPrintPreviewApproved" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreviewApproved_Click"  >
                                                 PRINT PREVIEW
                                             </Button>
                                         </StackPanel>
@@ -320,13 +320,13 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="100,0,0,0" VerticalAlignment="Center">
 
-                                            <Button  Grid.Column="1" Name="btnExportBudget" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                            <!--<Button  Grid.Column="1" Name="btnExportBudget" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
                                                 PDF
                                             </Button>
                                             <Button  Grid.Column="1" Name="btnPrintBudget" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
                                                 PRINT
-                                            </Button>
-                                            <Button  Grid.Column="1" Name="btnPrintPreviewBudget" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                            </Button>-->
+                                            <Button  Grid.Column="1" Name="btnPrintPreviewBudget" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreviewBudget_Click"  >
                                                 PRINT PREVIEW
                                             </Button>
                                         </StackPanel>
