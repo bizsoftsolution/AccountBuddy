@@ -54,6 +54,33 @@ namespace AccountBuddy.SL.Hubs
                     d.ResponseAt = DateTime.Now;
                     d.Status = "Approval";
                     DB.SaveChanges();
+                    var r = d.PurchaseRequest;
+                    BLL.PurchaseOrder po = new BLL.PurchaseOrder()
+                    {
+                        LedgerId = r.LedgerId,
+                        PODate = r.PRDate,
+                        RefCode = r.RefNo,
+                        RefNo = PurchaseOrder_NewRefNo(),
+                        ItemAmount = r.ItemAmount,
+                        DiscountAmount = r.DiscountAmount,
+                        Extras = r.Extras,
+                        GSTAmount = r.GSTAmount,
+                        TotalAmount = r.TotalAmount,
+                        Narration = r.Narration
+                    };
+                    foreach(var rd in r.PurchaseRequestDetails)
+                    {
+                        po.PODetails.Add(new BLL.PurchaseOrderDetail() {
+                            ProductId = rd.ProductId,
+                            Quantity = rd.Quantity,
+                            UnitPrice = rd.UnitPrice,
+                            UOMId = rd.UOMId,
+                            Amount =rd.Amount,
+                            DiscountAmount = rd.DiscountAmount,
+                            GSTAmount =rd.GSTAmount                                                        
+                        });
+                    }
+                    PurchaseOrder_Save(po);
                     return true;
                 }
             }
