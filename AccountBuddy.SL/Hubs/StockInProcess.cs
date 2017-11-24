@@ -54,21 +54,23 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    foreach (var d_SOd in d.StockInProcessDetails)
-                    {
-                        BLL.StockInProcessDetail b_SOd = SO.STPDetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
-                        if (b_SOd == null) d.StockInProcessDetails.Remove(d_SOd);
-                    }
+                    //foreach (var d_SOd in d.StockInProcessDetails)
+                    //{
+                    //    BLL.StockInProcessDetail b_SOd = SO.STPDetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
+                    //    if (b_SOd == null) d.StockInProcessDetails.Remove(d_SOd);
+                    //}
+                    decimal rd = SO.STPDetails.Select(X => X.SPId).FirstOrDefault().Value;
+                    DB.StockInProcessDetails.RemoveRange(d.StockInProcessDetails.Where(x => x.SPId == rd).ToList());
 
                     SO.toCopy<DAL.StockInProcess>(d);
                     foreach (var b_SOd in SO.STPDetails)
                     {
-                        DAL.StockInProcessDetail d_SOd = d.StockInProcessDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
-                        if (d_SOd == null)
-                        {
-                            d_SOd = new DAL.StockInProcessDetail();
-                            d.StockInProcessDetails.Add(d_SOd);
-                        }
+                        //DAL.StockInProcessDetail d_SOd = d.StockInProcessDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
+                        //if (d_SOd == null)
+                        //{
+                        DAL.StockInProcessDetail d_SOd = new DAL.StockInProcessDetail();
+                        d.StockInProcessDetails.Add(d_SOd);
+                        // }
                         b_SOd.toCopy<DAL.StockInProcessDetail>(d_SOd);
                     }
                     LogDetailStore(SO, LogDetailType.UPDATE);

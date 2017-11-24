@@ -825,10 +825,10 @@ namespace AccountBuddy.BLL
             {
                 RValue = false;
             }
-            else if (toList.Where(x => x.ItemCode.ToLower() == ItemCode.ToLower() && x.Id != Id).Count() > 0)
-            {
-                RValue = false;
-            }
+            //else if (toList.Where(x => x.ItemCode.ToLower() == ItemCode.ToLower() && x.Id != Id).Count() > 0)
+            //{
+            //    RValue = false;
+            //}
             return RValue;
 
         }

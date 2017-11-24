@@ -52,6 +52,11 @@
                                         <TextBlock Text="Category"/>
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
                             </ComboBox>
 
                             <TextBox x:Name="txtGroupCode" MaxLength="10" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding GroupCode, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Width="350">

@@ -57,21 +57,25 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
 
-                    foreach (var d_Pd in d.StockOutDetails)
-                    {
-                        BLL.StockOutDetail b_Pd = P.STOutDetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
-                        if (b_Pd == null) d.StockOutDetails.Remove(d_Pd);
-                    }
+                    //foreach (var d_Pd in d.StockOutDetails)
+                    //{
+                    //    BLL.StockOutDetail b_Pd = P.STOutDetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
+                    //    if (b_Pd == null) d.StockOutDetails.Remove(d_Pd);
+                    //}
+
+                    decimal rd = P.STOutDetails.Select(X => X.StockOutId).FirstOrDefault();
+                    DB.StockOutDetails.RemoveRange(d.StockOutDetails.Where(x => x.StockOutId == rd).ToList());
+
 
                     P.toCopy<DAL.StockOut>(d);
                     foreach (var b_Pd in P.STOutDetails)
                     {
-                        DAL.StockOutDetail d_Pd = d.StockOutDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
-                        if (d_Pd == null)
-                        {
-                            d_Pd = new DAL.StockOutDetail();
+                        //DAL.StockOutDetail d_Pd = d.StockOutDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
+                        // if (d_Pd == null)
+                        // {
+                        DAL.StockOutDetail d_Pd = new DAL.StockOutDetail();
                             d.StockOutDetails.Add(d_Pd);
-                        }
+                      //  }
                         b_Pd.toCopy<DAL.StockOutDetail>(d_Pd);
                     }
                     DB.SaveChanges();

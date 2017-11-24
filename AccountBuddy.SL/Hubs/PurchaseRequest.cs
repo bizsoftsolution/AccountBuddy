@@ -37,7 +37,7 @@ namespace AccountBuddy.SL.Hubs
                     d.ResponseAt = DateTime.Now;
                     d.Status = "Reject";
                     DB.SaveChanges();
-                    return true;                    
+                    return true;
                 }
             }
             catch (Exception) { }
@@ -82,10 +82,11 @@ namespace AccountBuddy.SL.Hubs
                         b_prd.toCopy<DAL.PurchaseRequestDetail>(d_prd);
                         d.PurchaseRequestDetails.Add(d_prd);
                     }
-                    d.PurchaseRequestStatusDetails.Add(new DAL.PurchaseRequestStatusDetail() {
-                       // RequestBy=Caller.StaffId,
+                    d.PurchaseRequestStatusDetails.Add(new DAL.PurchaseRequestStatusDetail()
+                    {
+                        // RequestBy=Caller.StaffId,
                         RequestAt = DateTime.Now,
-                        RequestTo = PR.RequestTo                        
+                        RequestTo = PR.RequestTo
                     });
                     DB.SaveChanges();
                     PR.Id = d.Id;
@@ -106,24 +107,27 @@ namespace AccountBuddy.SL.Hubs
                             });
                         }
                     }
-                    
 
 
-                    foreach (var d_prd in d.PurchaseRequestDetails)
-                    {
-                        BLL.PurchaseRequestDetail b_prd = PR.PRDetails.Where(x => x.Id == d_prd.Id).FirstOrDefault();
-                        if (b_prd == null) d.PurchaseRequestDetails.Remove(d_prd);
-                    }
+
+                    //foreach (var d_prd in d.PurchaseRequestDetails)
+                    //{
+                    //    BLL.PurchaseRequestDetail b_prd = PR.PRDetails.Where(x => x.Id == d_prd.Id).FirstOrDefault();
+                    //    if (b_prd == null) d.PurchaseRequestDetails.Remove(d_prd);
+                    //}
+
+                    decimal rd = PR.PRDetails.Select(X => X.POId).FirstOrDefault();
+                    DB.PurchaseRequestDetails.RemoveRange(d.PurchaseRequestDetails.Where(x => x.PRId == rd).ToList());
 
                     PR.toCopy<DAL.PurchaseRequest>(d);
                     foreach (var b_prd in PR.PRDetails)
                     {
-                        DAL.PurchaseRequestDetail d_prd = d.PurchaseRequestDetails.Where(x => x.Id == b_prd.Id).FirstOrDefault();
-                        if (d_prd == null)
-                        {
-                            d_prd = new DAL.PurchaseRequestDetail();
-                            d.PurchaseRequestDetails.Add(d_prd);
-                        }
+                        //DAL.PurchaseRequestDetail d_prd = d.PurchaseRequestDetails.Where(x => x.Id == b_prd.Id).FirstOrDefault();
+                        //if (d_prd == null)
+                        //{
+                        DAL.PurchaseRequestDetail d_prd = new DAL.PurchaseRequestDetail();
+                        d.PurchaseRequestDetails.Add(d_prd);
+                        // }
                         b_prd.toCopy<DAL.PurchaseRequestDetail>(d_prd);
                     }
                     DB.SaveChanges();
@@ -132,14 +136,14 @@ namespace AccountBuddy.SL.Hubs
 
                 Clients.Clients(OtherLoginClientsOnGroup).PurchaseRequest_RefNoRefresh(PurchaseRequest_NewRefNo());
 
-             //   SalesOrder_SaveByPurchaseRequest(d);
+                //   SalesOrder_SaveByPurchaseRequest(d);
                 return true;
             }
             catch (Exception ex) { }
             return false;
         }
 
-       
+
         #region SalesOrder
 
         void PurchaseRequest_SaveBySalesOrder(DAL.SalesOrder S)
@@ -248,7 +252,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.PurchaseRequests.Remove(d);
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
-                  //  SalesOrder_DeleteByPurchaseRequest(d);
+                    //  SalesOrder_DeleteByPurchaseRequest(d);
                 }
 
                 return true;

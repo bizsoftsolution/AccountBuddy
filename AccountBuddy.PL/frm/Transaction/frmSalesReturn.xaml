@@ -67,6 +67,11 @@
                                     <TextBlock Text="Customer Name"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                         </ComboBox>
                         <TextBox x:Name="txtRefNo" Text="{Binding RefNo, Mode=TwoWay}" Width="120" IsReadOnly="True" materialDesign:HintAssist.Hint="Bill No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"  MaxLength="10"/>
                     </StackPanel>
@@ -91,6 +96,11 @@
                                     <TextBlock Text="Item Name"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                         </ComboBox>
                         <ComboBox x:Name="cmbUOM" Margin="0,0,10,0" Loaded="cmbUOM_Loaded" Text="{Binding SRDetail.UOMName}" SelectedValue="{Binding SRDetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
                             <materialDesign:HintAssist.Hint>

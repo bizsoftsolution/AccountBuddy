@@ -54,21 +54,25 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    foreach (var d_SOd in d.StockSeperatedDetails)
-                    {
-                        BLL.StockSeperatedDetail b_SOd = SO.SSDetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
-                        if (b_SOd == null) d.StockSeperatedDetails.Remove(d_SOd);
-                    }
+                    //foreach (var d_SOd in d.StockSeperatedDetails)
+                    //{
+                    //    BLL.StockSeperatedDetail b_SOd = SO.SSDetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
+                    //    if (b_SOd == null) d.StockSeperatedDetails.Remove(d_SOd);
+                    //}
+
+                    decimal rd = SO.SSDetails.Select(X => X.SSId).FirstOrDefault().Value;
+                    DB.StockSeperatedDetails.RemoveRange(d.StockSeperatedDetails.Where(x => x.SSId == rd).ToList());
+
 
                     SO.toCopy<DAL.StockSeparated>(d);
                     foreach (var b_SOd in SO.SSDetails)
                     {
-                        DAL.StockSeperatedDetail d_SOd = d.StockSeperatedDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
-                        if (d_SOd == null)
-                        {
-                            d_SOd = new DAL.StockSeperatedDetail();
-                            d.StockSeperatedDetails.Add(d_SOd);
-                        }
+                        //DAL.StockSeperatedDetail d_SOd = d.StockSeperatedDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
+                        //if (d_SOd == null)
+                        //{
+                        DAL.StockSeperatedDetail d_SOd = new DAL.StockSeperatedDetail();
+                        d.StockSeperatedDetails.Add(d_SOd);
+                        //}
                         b_SOd.toCopy<DAL.StockSeperatedDetail>(d_SOd);
                     }
                     LogDetailStore(SO, LogDetailType.UPDATE);

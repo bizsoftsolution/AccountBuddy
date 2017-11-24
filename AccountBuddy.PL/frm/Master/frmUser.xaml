@@ -66,6 +66,11 @@
                                     <TextBlock Text="User Type"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                         </ComboBox>
                         <Button x:Name="btnUserTypeSetting"  Background="Transparent"  ToolTip="Setting" BorderThickness="0" Height="35" Width="67" Click="btnUserTypeSetting_Click" >
                             <materialDesign:PackIcon Kind="Settings" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="28" />

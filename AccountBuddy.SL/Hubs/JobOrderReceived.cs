@@ -21,12 +21,12 @@ namespace AccountBuddy.SL.Hubs
             long No = 0;
             try
             {
-                 var d = DB.JobOrderReceiveds.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
-                                                        .OrderByDescending(x => x.RefNo)
-                                                        .FirstOrDefault();
+                var d = DB.JobOrderReceiveds.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
+                                                       .OrderByDescending(x => x.RefNo)
+                                                       .FirstOrDefault();
                 if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length), 16);
                 NewRefNo = string.Format("{0}{1:X5}", Prefix, No + 1);
-               
+
             }
             catch (Exception ex)
             {
@@ -62,21 +62,24 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    foreach (var d_SOd in d.JobOrderReceivedDetails)
-                    {
-                        BLL.JobOrderReceivedDetail b_SOd = SO.JRDetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
-                        if (b_SOd == null) d.JobOrderReceivedDetails.Remove(d_SOd);
-                    }
+                    //foreach (var d_SOd in d.JobOrderReceivedDetails)
+                    //{
+                    //    BLL.JobOrderReceivedDetail b_SOd = SO.JRDetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
+                    //    if (b_SOd == null) d.JobOrderReceivedDetails.Remove(d_SOd);
+                    //}
+
+                    decimal rd = SO.JRDetails.Select(X => X.JRId).FirstOrDefault().Value;
+                    DB.JobOrderReceivedDetails.RemoveRange(d.JobOrderReceivedDetails.Where(x => x.JRId == rd).ToList());
 
                     SO.toCopy<DAL.JobOrderReceived>(d);
                     foreach (var b_SOd in SO.JRDetails)
                     {
-                        DAL.JobOrderReceivedDetail d_SOd = d.JobOrderReceivedDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
-                        if (d_SOd == null)
-                        {
-                            d_SOd = new DAL.JobOrderReceivedDetail();
-                            d.JobOrderReceivedDetails.Add(d_SOd);
-                        }
+                        //DAL.JobOrderReceivedDetail d_SOd = d.JobOrderReceivedDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
+                        //if (d_SOd == null)
+                        //{
+                        DAL.JobOrderReceivedDetail d_SOd = new DAL.JobOrderReceivedDetail();
+                        d.JobOrderReceivedDetails.Add(d_SOd);
+                        //}
                         b_SOd.toCopy<DAL.JobOrderReceivedDetail>(d_SOd);
                     }
                     LogDetailStore(SO, LogDetailType.UPDATE);

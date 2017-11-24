@@ -86,7 +86,11 @@
                                     <TextBlock Text="Receipt Mode"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
-
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                         </ComboBox>
                         <ComboBox x:Name="cmbDebitAC"    SelectedValue="{Binding LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0">
                             <materialDesign:HintAssist.Hint>
@@ -94,6 +98,11 @@
                                     <TextBlock Text="Debit A/C"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                         </ComboBox>
 
                     </StackPanel>
@@ -168,6 +177,11 @@
                                     <TextBlock Text="Credit A/C"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                         </ComboBox>
                         <TextBox x:Name="txtAmount" IsReadOnly="{Binding IsReadOnly}"  TextChanged="txtAmount_TextChanged" Text="{Binding RDetail.Amount, Mode=TwoWay,StringFormat={}{0:N2}}" TextAlignment="Right" Width="100" materialDesign:HintAssist.Hint="Amount" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                         <Button   Width="65" Height="30" x:Name="btnAdd" Content="ADD" Margin="10,0,0,0" Click="btnAdd_Click" />

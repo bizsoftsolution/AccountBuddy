@@ -56,6 +56,11 @@
                                     <TextBlock Text="Staff Name"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                         </ComboBox>
                         <TextBox x:Name="txtRefNo"  Text="{Binding RefNo, Mode=TwoWay}" Width="120" IsReadOnly="True" materialDesign:HintAssist.Hint="SP Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,12,10,24" FontWeight="Bold"  MaxLength="10"/>
                     </StackPanel>
@@ -80,6 +85,11 @@
                                     <TextBlock Text="Item Name"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                         </ComboBox>
                         <ComboBox x:Name="cmbUOM" Loaded="cmbUOM_Loaded" Margin="5,0,10,0" Text="{Binding STPDetail.UOMName}" SelectedValue="{Binding STPDetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
                             <materialDesign:HintAssist.Hint>
@@ -88,6 +98,11 @@
                                     <TextBlock Text="UOM"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
                         </ComboBox>
                         <TextBox x:Name="txtRate" TextChanged="txtRate_TextChanged" Margin="0,0,10,0" Text="{Binding STPDetail.UnitPrice}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="70"  TextAlignment="Right">
                             <materialDesign:HintAssist.Hint>
