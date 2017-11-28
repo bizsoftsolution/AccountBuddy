@@ -14,6 +14,7 @@ namespace AccountBuddy.BLL
         #region Field
         private static HubConnection _hubCon;
         private static IHubProxy _fmcgHub;
+        public static string URLPath = "";
         #endregion
 
         #region Property
@@ -48,12 +49,6 @@ namespace AccountBuddy.BLL
         #region Method
         public static void HubConnect()
         {
-           //string URLPath = "http://ubs3/fmcg/SignalR";
-            string URLPath = "http://localhost:51068";
-            //string URLPath = "http://localhost/AccountBuddy.SL";
-
-            //string URLPath = "http://localhost/fmcg";
-          // string URLPath = "http://192.168.1.170/fmcg/SignalR"; 
             try
             {
                 AccountBuddy.Common.AppLib.WriteLog(URLPath);
@@ -70,10 +65,7 @@ namespace AccountBuddy.BLL
             {
                 AccountBuddy.Common.AppLib.WriteLog("Could Not Start Service");
 
-            }
-            // _hubCon = new HubConnection("http://110.4.40.46/fmcgsl/SignalR");
-            // _hubCon = new HubConnection("http://ubs3/fmcg/SignalR");
-
+            }            
         }
 
         public static void HubDisconnect()
