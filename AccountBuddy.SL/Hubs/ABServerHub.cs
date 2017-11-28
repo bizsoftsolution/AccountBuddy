@@ -223,7 +223,11 @@ namespace AccountBuddy.SL.Hubs
                 DAL.LogMaster l = DB.LogMasters.Where(x => x.EntityId == EntityId && x.EntityTypeId == ETypeId).FirstOrDefault();
                 DAL.LogDetail ld = new DAL.LogDetail();
                 DateTime dt = DateTime.Now;
-
+               
+                if(Caller.UserId==0)
+                {
+                    Caller.UserId = Common.AppLib.userId;
+                }
 
                 if (l == null)
                 {
@@ -232,7 +236,9 @@ namespace AccountBuddy.SL.Hubs
                     l.EntityId = EntityId;
                     l.EntityTypeId = ETypeId;
                     l.CreatedAt = dt;
+                    
                     l.CreatedBy = Caller.UserId;
+                 
                 }
 
                 if (Type == LogDetailType.UPDATE)

@@ -236,13 +236,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
-            cmbDebitAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts");
-            cmbDebitAC.SelectedValuePath = "Id";
-            cmbDebitAC.DisplayMemberPath = "AccountName";
 
-            cmbCreditAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts");
-            cmbCreditAC.SelectedValuePath = "Id";
-            cmbCreditAC.DisplayMemberPath = "AccountName";
 
             btnSave.Visibility = (BLL.Receipt.UserPermission.AllowInsert || BLL.Receipt.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.Receipt.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
@@ -258,6 +252,27 @@ namespace AccountBuddy.PL.frm.Transaction
                 btnPrint.IsEnabled = false;
             }
             
+        }
+
+        private void cmbReceiptMode_Loaded(object sender, RoutedEventArgs e)
+        {
+
+          
+        }
+
+        private void cmbDebitAC_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            cmbDebitAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts");
+            cmbDebitAC.SelectedValuePath = "Id";
+            cmbDebitAC.DisplayMemberPath = "AccountName";
+        }
+
+        private void cmbCreditAC_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbCreditAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts");
+            cmbCreditAC.SelectedValuePath = "Id";
+            cmbCreditAC.DisplayMemberPath = "AccountName";
         }
     }
 }

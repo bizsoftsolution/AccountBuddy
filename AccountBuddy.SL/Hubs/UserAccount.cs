@@ -28,6 +28,57 @@ namespace AccountBuddy.SL.Hubs
                                     && x.LoginId == LoginId
                                     && x.Password == Password && x.UserType.CompanyDetail.IsActive != false)
                                     .FirstOrDefault();
+
+                if (ua != null)
+                {
+                    Groups.Add(Context.ConnectionId, ua.UserType.CompanyId.ToString());
+                    Caller.CompanyId = ua.UserType.CompanyId;
+                    Caller.UnderCompanyId = ua.UserType.CompanyDetail.UnderCompanyId;
+                    Caller.CompanyType = ua.UserType.CompanyDetail.CompanyType;
+                    Caller.UserId = ua.Id;
+                    Caller.AccYear = AccYear;
+                    var stf = ua.Staffs.FirstOrDefault();
+                    if (stf != null)
+                    {
+                        Caller.StaffId = stf.Id;
+                    }
+
+                    Common.AppLib.userId = ua.Id;
+
+                    rv = UserAccountDAL_BLL(ua);
+                    int yy = DateTime.Now.Month < 4 ? DateTime.Now.Year - 1 : DateTime.Now.Year;
+                    if (AccYear.Length > 4) int.TryParse(AccYear.Substring(0, 4), out yy);
+                    rv.UserType.Company.LoginAccYear = yy;
+                    return rv;
+
+                }
+                else
+                {
+                    return rv;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                WriteErrorLog("Login", "UserAccount_Login", rv.Id, Caller.CompanyId, ex.Message);
+                return rv;
+            }
+
+
+        }
+
+
+        public BLL.UserAccount UserAccount_ReLogin(string AccYear, String CompanyName, String LoginId, String Password)
+        {
+            var rv = new BLL.UserAccount();
+            try
+            {
+                DAL.UserAccount ua = DB.UserAccounts
+                                  .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
+                                    && x.LoginId == LoginId
+                                    && x.Password == Password && x.UserType.CompanyDetail.IsActive != false)
+                                    .FirstOrDefault();
                 if (ua != null)
                 {
                     Groups.Add(Context.ConnectionId, ua.UserType.CompanyId.ToString());
@@ -57,12 +108,14 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex)
             {
 
-                WriteErrorLog("Login", "UserAccount_Login", rv.Id, Caller.CompanyId, ex.Message);
+                WriteErrorLog("Login", "UserAccount_ReLogin", rv.Id, Caller.CompanyId, ex.Message);
                 return rv;
             }
 
 
         }
+
+
 
         public List<BLL.UserAccount> UserAccount_List()
         {

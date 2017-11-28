@@ -31,7 +31,19 @@ namespace AccountBuddy.PL.frm.Transaction
             this.DataContext = data;
             data.Clear();
             onClientEvents();
+
+            LoadWindow();
         }
+
+        private void LoadWindow()
+        {
+            data.Clear();        
+            btnPrint.IsEnabled = false;           
+            btnSave.Visibility = (BLL.Journal.UserPermission.AllowInsert || BLL.Journal.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.Journal.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+
+        }
+
         private void onClientEvents()
         {
             BLL.FMCGHubClient.FMCGHub.On<String>("Journal_RefNoRefresh", (EntryNo) =>
@@ -262,25 +274,8 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-        
-            data.Clear();
 
-
-            cmbDebitAC.ItemsSource = BLL.Ledger.toList;
-            cmbDebitAC.SelectedValuePath = "Id";
-            cmbDebitAC.DisplayMemberPath = "AccountName";
-
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-            else
-            {
-                btnPrint.IsEnabled = false;
-            }
-            btnSave.Visibility = (BLL.Journal.UserPermission.AllowInsert || BLL.Journal.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.Journal.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-
+            LoadWindow();
         }
 
         private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)
@@ -291,6 +286,13 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.Text = AppLib.NumericOnly(txtChequeNo.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
+        }
+
+        private void cmbDebitAC_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbDebitAC.ItemsSource = BLL.Ledger.toList;
+            cmbDebitAC.SelectedValuePath = "Id";
+            cmbDebitAC.DisplayMemberPath = "AccountName";
         }
 
         private void txtAmountDr_TextChanged(object sender, TextChangedEventArgs e)

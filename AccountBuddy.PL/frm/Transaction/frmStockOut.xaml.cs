@@ -240,13 +240,9 @@ namespace AccountBuddy.PL.frm.Transaction
             btnDelete.Visibility = BLL.StockOut.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
 
-            cmbItem.ItemsSource = BLL.Product.toList.ToList();
-            cmbItem.DisplayMemberPath = "ProductName";
-            cmbItem.SelectedValuePath = "Id";
+            
 
-            cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
-            cmbUOM.DisplayMemberPath = "Symbol";
-            cmbUOM.SelectedValuePath = "Id";
+           
         }
 
         private void txtRate_TextChanged(object sender, TextChangedEventArgs e)
@@ -279,6 +275,20 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.Text = AppLib.NumericOnly(txtDiscount.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
+        }
+
+        private void cmbItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbItem.ItemsSource = BLL.Product.toList.ToList();
+            cmbItem.DisplayMemberPath = "ProductName";
+            cmbItem.SelectedValuePath = "Id";
+        }
+
+        private void cmbUOM_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
+            cmbUOM.DisplayMemberPath = "Symbol";
+            cmbUOM.SelectedValuePath = "Id";
         }
     }
 }

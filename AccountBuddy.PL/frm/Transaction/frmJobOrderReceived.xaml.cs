@@ -32,9 +32,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
             data.Clear();
             onClientEvents();
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
+            LoadWindow();
 
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
+
         }
         private void onClientEvents()
         {
@@ -299,10 +299,16 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadWindow();
+        }
+
+        private void LoadWindow()
+        {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.JobOrderReceived.UserPermission.AllowInsert || BLL.JobOrderReceived.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.JobOrderReceived.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+
         }
     }
 }

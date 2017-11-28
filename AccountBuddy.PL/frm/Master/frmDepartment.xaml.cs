@@ -267,7 +267,7 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
-        private void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+     public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {            
             e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }

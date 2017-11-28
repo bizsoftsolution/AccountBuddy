@@ -64,7 +64,10 @@ namespace AccountBuddy.BLL
                 AccountBuddy.Common.AppLib.WriteLog("Hub Created");
                 _hubCon.Start(new LongPollingTransport()).Wait();
                 AccountBuddy.Common.AppLib.WriteLog("Hub Started");
-
+                if (UserAccount.User.Id != 0)
+                {
+                    var r = FMCGHubClient.FMCGHub.Invoke<UserAccount>("UserAccount_ReLogin", UserAccount.User.UserType.Company.CompanyName, UserAccount.User.LoginId, UserAccount.User.Password).Result;
+                }
             }
             catch (Exception ex)
             {

@@ -17,6 +17,9 @@ namespace AccountBuddy.Common
 
         public static decimal GSTPer = (decimal)0.06;
 
+        public static int userId=0;
+
+
         public static string AppName = "";
 
         public static int BankId;

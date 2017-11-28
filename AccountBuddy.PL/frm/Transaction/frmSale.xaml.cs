@@ -31,14 +31,6 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            cmbPType.ItemsSource = BLL.TransactionType.toList;
-            cmbPType.DisplayMemberPath = "Type";
-            cmbPType.SelectedValuePath = "Id";
-
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
-
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
-
             data.Clear();
             onClientEvents();
            
@@ -467,6 +459,13 @@ namespace AccountBuddy.PL.frm.Transaction
             Int32 selectionLength = textBox.SelectionLength;
             textBox.Text = AppLib.NumericOnly(txtChequeNo.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+        }
+
+        private void cmbPType_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbPType.ItemsSource = BLL.TransactionType.toList;
+            cmbPType.DisplayMemberPath = "Type";
+            cmbPType.SelectedValuePath = "Id";
         }
     }
 }

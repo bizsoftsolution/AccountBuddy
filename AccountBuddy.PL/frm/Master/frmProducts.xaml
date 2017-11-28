@@ -123,7 +123,11 @@
                                             <TextBlock Text="UOM" />
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
-
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="100"/>
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
                                 </ComboBox>
                             </StackPanel>
 
@@ -224,7 +228,7 @@
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <DataGrid x:Name="dgvProduct" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="20" Grid.ColumnSpan="2" SelectionChanged="dgvProduct_SelectionChanged" MouseDoubleClick="dgvProduct_MouseDoubleClick" >
+                                <DataGrid x:Name="dgvProduct" CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="20" Grid.ColumnSpan="2" SelectionChanged="dgvProduct_SelectionChanged" MouseDoubleClick="dgvProduct_MouseDoubleClick" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True">
                                     <DataGrid.ColumnHeaderStyle>
                                         <Style TargetType="{x:Type DataGridColumnHeader}">
                                             <Setter Property="FontWeight" Value="Bold" />

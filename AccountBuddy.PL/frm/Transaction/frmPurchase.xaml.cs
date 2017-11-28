@@ -33,7 +33,6 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-
             cmbPType.ItemsSource = BLL.TransactionType.toList;
             cmbPType.DisplayMemberPath = "Type";
             cmbPType.SelectedValuePath = "Id";
@@ -41,8 +40,7 @@ namespace AccountBuddy.PL.frm.Transaction
             data.Clear();
             onClientEvents();
 
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+           
         }
         private void onClientEvents()
         {
@@ -319,10 +317,18 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+
+            LoadWindow();
+
+        }
+
+        private void LoadWindow()
+        {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.Purchase.UserPermission.AllowInsert || BLL.Purchase.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.Purchase.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+
         }
 
         private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)

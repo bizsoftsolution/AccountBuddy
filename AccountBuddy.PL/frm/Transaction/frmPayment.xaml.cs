@@ -30,7 +30,22 @@ namespace AccountBuddy.PL.frm.Transaction
             this.DataContext = data;
             data.Clear();
             onClientEvents();
+
+            LoadWindow();
         }
+
+        private void LoadWindow()
+        {
+
+            btnSave.Visibility = (BLL.Payment.UserPermission.AllowInsert || BLL.Payment.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.Payment.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+
+            data.Clear();
+            btnPrint.IsEnabled = false;
+
+
+        }
+
         private void onClientEvents()
         {
             BLL.FMCGHubClient.FMCGHub.On<String>("Payment_RefNoRefresh", (RefNo) =>
@@ -81,7 +96,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("select Paymode");
             }
-            
+
             else if (data.PDetails.Count == 0)
             {
                 MessageBox.Show("Enter Payment");
@@ -148,7 +163,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
             var rv = data.Find();
-            if (data.Id != 0) 
+            if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
             }
@@ -209,7 +224,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.ClearDetail();
         }
-      
+
         private void txtAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -229,34 +244,25 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
-     
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadWindow();
+        }
+
+        private void cmbCreditAC_Loaded(object sender, RoutedEventArgs e)
         {
             cmbCreditAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts");
             cmbCreditAC.SelectedValuePath = "Id";
             cmbCreditAC.DisplayMemberPath = "AccountName";
+        }
 
+        private void cmbDebitAC_Loaded(object sender, RoutedEventArgs e)
+        {
             cmbDebitAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts");
             cmbDebitAC.SelectedValuePath = "Id";
             cmbDebitAC.DisplayMemberPath = "AccountName";
 
-            btnSave.Visibility = (BLL.Payment.UserPermission.AllowInsert || BLL.Payment.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.Payment.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-
-            data.Clear();
-
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-            else
-            {
-                btnPrint.IsEnabled = false;
-            }
-
-
         }
-
-
     }
 }

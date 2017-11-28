@@ -88,16 +88,34 @@ namespace AccountBuddy.SL.Hubs
                 var d = DB.Ledgers.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null && Ledger_CanDelete(d))
                 {
-                    DB.Ledgers.Remove(d);
-                    DB.SaveChanges();
-                    LogDetailStore(LedgerDAL_BLL(d), LogDetailType.DELETE);
+                    if(DB.Suppliers.Where(x=>x.LedgerId==pk).Count()==0)
+                    {
+                        if (DB.Banks.Where(x => x.LedgerId == pk).Count() == 0)
+                        {
+                            if (DB.Customers.Where(x => x.LedgerId == pk).Count() == 0)
+                            {
+                                if (DB.Staffs.Where(x => x.LedgerId == pk).Count() == 0)
+                                {
+                                    DB.Ledgers.Remove(d);
+                                    DB.SaveChanges();
+                                    Clients.Clients(OtherLoginClientsOnGroup).Ledger_Delete(pk);
+                                    Clients.All.delete(pk);
+                                    rv = true;
+                                }
+                            }
+                        }
+                    }
+
+                                    
+                }
+                else
+                {
+                    rv = false;
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).Ledger_Delete(pk);
-                Clients.All.delete(pk);
-
-                rv = true;
-
+                
+             
+                LogDetailStore(LedgerDAL_BLL(d), LogDetailType.DELETE);
             }
             catch (Exception ex)
             {
@@ -112,7 +130,17 @@ namespace AccountBuddy.SL.Hubs
                    l.PaymentDetails.Count() == 0 &&
                    l.Receipts.Count() == 0 &&
                    l.ReceiptDetails.Count() == 0 &&
-                   l.JournalDetails.Count() == 0;
+                   l.JournalDetails.Count() == 0 &&
+                   l.PurchaseOrders.Count() == 0 &&
+                   l.PurchaseRequests.Count() == 0 &&
+                   l.PurchaseReturns.Count() == 0 &&
+                   l.Purchases.Count() == 0 &&
+                   l.Sales.Count() == 0 &&
+                   l.SalesOrders.Count() == 0 &&
+                   l.SalesReturns.Count() == 0 &&
+                   l.StockIns.Count() == 0 &&
+                   l.StockOuts.Count() == 0;
+            
             return rv;
         }
 

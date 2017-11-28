@@ -80,7 +80,7 @@
                 <StackPanel Orientation="Vertical" Margin="0,25,0,0">
                     <StackPanel Orientation="Horizontal">
                         <DatePicker x:Name="dtpReceiptDate" materialDesign:HintAssist.Hint="Date"  SelectedDate="{Binding ReceiptDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,0,0" Width="100" FontWeight="Bold"  />
-                        <ComboBox x:Name="cmbReceiptMode"  SelectedValue="{Binding ReceiptMode, Mode=TwoWay}" ItemsSource="{Binding ReceiptModeList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="125" Height="43" Margin="10,0,0,0">
+                        <ComboBox x:Name="cmbReceiptMode"  SelectedValue="{Binding ReceiptMode, Mode=TwoWay}" ItemsSource="{Binding ReceiptModeList}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="125" Height="43" Margin="10,0,0,0" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Receipt Mode"/>
@@ -92,7 +92,7 @@
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <ComboBox x:Name="cmbDebitAC"    SelectedValue="{Binding LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0">
+                        <ComboBox x:Name="cmbDebitAC"    SelectedValue="{Binding LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" Loaded="cmbDebitAC_Loaded">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Debit A/C"/>
@@ -171,7 +171,7 @@
             <Grid Grid.Column="1">
                 <StackPanel Orientation="Vertical" Margin="0,25,0,0">
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox x:Name="cmbCreditAC" IsReadOnly="{Binding IsReadOnly}"  ItemsSource="{Binding LedgerList}" SelectedValuePath="Id" DisplayMemberPath="AccountName" IsEditable="True" Text="{Binding RDetail.LedgerName}" SelectedValue="{Binding RDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" >
+                        <ComboBox x:Name="cmbCreditAC" IsReadOnly="{Binding IsReadOnly}"  ItemsSource="{Binding LedgerList}" SelectedValuePath="Id" DisplayMemberPath="AccountName" IsEditable="True" Text="{Binding RDetail.LedgerName}" SelectedValue="{Binding RDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" Loaded="cmbCreditAC_Loaded">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Credit A/C"/>

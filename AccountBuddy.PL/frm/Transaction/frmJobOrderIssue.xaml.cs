@@ -32,9 +32,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
             data.Clear();
             onClientEvents();
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
 
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AccountBuddy.Common.AppLib.CurrencyPositiveSymbolPrefix);
+            LoadWindow();
+
         }
         private void onClientEvents()
         {
@@ -95,7 +95,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-             if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmJobOrderIssue))
+            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmJobOrderIssue))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -103,7 +103,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-           else if (data.RefNo == null)
+            else if (data.RefNo == null)
             {
                 MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "JO Code"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtRefNo.Focus();
@@ -119,7 +119,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Transaction_ItemDetails_Validation), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbItem.Focus();
             }
-           
+
             else if (data.FindRefNo() == false)
             {
                 var rv = data.Save();
@@ -175,7 +175,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     btnPrint.IsEnabled = true;
 
             }
-           
+
             if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
@@ -307,6 +307,11 @@ namespace AccountBuddy.PL.frm.Transaction
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadWindow();
+        }
+
+        private void LoadWindow()
         {
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);

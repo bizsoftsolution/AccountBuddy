@@ -53,6 +53,9 @@
     <EmbeddedResource Include="rpt\Master\rptBank.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Master\rptCompanyName.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Master\rptDepartment.rdlc" />
     <EmbeddedResource Include="rpt\Master\rptJobWorker.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

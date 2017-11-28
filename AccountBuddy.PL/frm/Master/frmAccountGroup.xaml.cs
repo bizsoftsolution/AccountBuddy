@@ -66,27 +66,27 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.GroupName == null)
             {
-                MessageBox.Show(String.Format(Message.BLL.Required_Data, "Group Name"));
+                MessageBox.Show(String.Format(Message.BLL.Required_Data, "Group Name"),FormName, MessageBoxButton.OK, MessageBoxImage.Asterisk );
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Common.Forms.frmAccountGroup))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Asterisk);
             }
             else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Common.Forms.frmAccountGroup))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Asterisk);
             }
             else
             {
                 if (data.Save() == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(Message.PL.Saved_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     clear();
                     Grid_Refresh();
                 }
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.GroupName));
+                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.GroupName), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
 
@@ -98,7 +98,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (!BLL.UserAccount.AllowDelete(FormName))
                 {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
@@ -106,13 +106,13 @@ namespace AccountBuddy.PL.frm.Master
                     {
                         if (data.Delete() == true)
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert);
+                            MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                             clear();
                             Grid_Refresh();
                         }
                         else
                         {
-                            MessageBox.Show(Message.PL.Cant_Delete_Alert);
+                            MessageBox.Show(Message.PL.Cant_Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                             clear();
                         }
 
@@ -121,7 +121,7 @@ namespace AccountBuddy.PL.frm.Master
             }
             else
             {
-                MessageBox.Show("No Records to Delete");
+                MessageBox.Show("No Records to Delete", FormName, MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
 
@@ -265,6 +265,8 @@ namespace AccountBuddy.PL.frm.Master
                 RptAccount.LocalReport.DataSources.Add(data1);
                 RptAccount.LocalReport.ReportPath = @"rpt\master\rptAccountGroup.rdlc";
 
+                RptAccount.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
                 RptAccount.RefreshReport();
 
             }
@@ -275,6 +277,11 @@ namespace AccountBuddy.PL.frm.Master
 
 
         }
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
+       
 
         private void onClientEvents()
         {

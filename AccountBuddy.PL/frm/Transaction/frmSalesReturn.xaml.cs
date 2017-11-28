@@ -29,16 +29,26 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            cmbPType.ItemsSource = BLL.TransactionType.toList;
-            cmbPType.DisplayMemberPath = "Type";
-            cmbPType.SelectedValuePath = "Id";
+
 
             data.Clear();
             onClientEvents();
 
+            LoadWindow();
+        }
+
+        private void LoadWindow()
+        {
+            cmbPType.ItemsSource = BLL.TransactionType.toList;
+            cmbPType.DisplayMemberPath = "Type";
+            cmbPType.SelectedValuePath = "Id";
+
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            btnSave.Visibility = (BLL.SalesReturn.UserPermission.AllowInsert || BLL.SalesReturn.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            btnDelete.Visibility = BLL.SalesReturn.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }
+
         private void onClientEvents()
         {
             BLL.FMCGHubClient.FMCGHub.On<String>("SalesReturn_RefNoRefresh", (RefNo) =>
@@ -66,7 +76,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtRate.Focus();
             }
-            else if (data.SRDetail.Particulars==null)
+            else if (data.SRDetail.Particulars == null)
             {
                 MessageBox.Show("Enter Reason for Resale", FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtRate.Focus();
@@ -339,10 +349,8 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            btnSave.Visibility = (BLL.SalesReturn.UserPermission.AllowInsert || BLL.SalesReturn.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.SalesReturn.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            LoadWindow();
+
         }
 
         private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)
