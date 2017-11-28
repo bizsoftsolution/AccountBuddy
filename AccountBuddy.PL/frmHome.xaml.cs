@@ -146,5 +146,10 @@ namespace AccountBuddy.PL
             CollectionViewSource.GetDefaultView(lstReport.Items).Filter = Menu_Filter;
 
         }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            BLL.UserAccount.Re_Login();
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace AccountBuddy.SL.Controllers
         public JsonResult toList(int CompanyId)
         {
           
-            var l1 = DB.Customers.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId)
+            var l1 =DB.Customers.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId)
                                        .ToList();
             //var l2 = l1.Select(x => new BLL.Ledger()
             //{
@@ -67,7 +67,7 @@ namespace AccountBuddy.SL.Controllers
         {
             try
             {
-                int AGId = DB.DataKeyValues.Where(x => x.CompanyId == DealerId && x.DataKey == BLL.DataKeyValue.SundryDebtors_Key).FirstOrDefault().DataValue;
+                int AGId =DB.DataKeyValues.Where(x => x.CompanyId == DealerId && x.DataKey == BLL.DataKeyValue.SundryDebtors_Key).FirstOrDefault().DataValue;
                 DAL.Customer cus = new DAL.Customer();
                 DAL.Ledger led = new DAL.Ledger()
                 {
@@ -80,10 +80,10 @@ namespace AccountBuddy.SL.Controllers
                     AccountGroupId = AGId,
                     GSTNo = GSTNo
                 };
-                DB.Ledgers.Add(led);
+                 DB.Ledgers.Add(led);
                 DB.SaveChanges();
                 cus.LedgerId = led.Id;
-                DB.Customers.Add(cus);
+               DB.Customers.Add(cus);
                 DB.SaveChanges();
                 return Json(new { Id = cus.LedgerId, HasError = false }, JsonRequestBehavior.AllowGet);
             }

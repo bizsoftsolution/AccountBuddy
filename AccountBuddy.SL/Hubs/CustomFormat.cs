@@ -17,7 +17,7 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.CustomFormat> CustomFormat_List()
         {
-            return DB.CustomFormats.ToList()
+            return Caller.DB.CustomFormats.ToList()
                                .Select(x => CustomFormatDAL_BLL(x)).ToList();
         }
 
@@ -26,15 +26,15 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 agp.CompanyId = Caller.CompanyId;
-                DAL.CustomFormat d = DB.CustomFormats.Where(x => x.Id == agp.Id).FirstOrDefault();
+                DAL.CustomFormat d = Caller.DB.CustomFormats.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
                 {
                     d = new DAL.CustomFormat();
-                    DB.CustomFormats.Add(d);
+                    Caller.DB.CustomFormats.Add(d);
 
                     agp.toCopy<DAL.CustomFormat>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
 
                     agp.Id = d.Id;
                     LogDetailStore(agp, LogDetailType.INSERT);
@@ -42,7 +42,7 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
                     agp.toCopy<DAL.CustomFormat>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
@@ -59,12 +59,12 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = DB.CustomFormats.Where(x => x.Id == pk).FirstOrDefault();
+                var d = Caller.DB.CustomFormats.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
-                    DB.CustomFormats.Remove(d);
-                    DB.SaveChanges();
+                    Caller.DB.CustomFormats.Remove(d);
+                    Caller.DB.SaveChanges();
                     LogDetailStore(d.toCopy<BLL.CustomFormat>(new BLL.CustomFormat()), LogDetailType.DELETE);
                 }
                 else

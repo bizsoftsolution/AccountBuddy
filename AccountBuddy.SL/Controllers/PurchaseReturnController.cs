@@ -14,7 +14,7 @@ namespace AccountBuddy.SL.Controllers
         {
             return View();
         }
-        public JsonResult Save(int LedgerId, string PayMode, string PurchaseReturnDetails, bool IsGST, string ChqNo, DateTime? ChqDate, string ChqBankName)
+        public  JsonResult Save(int LedgerId, string PayMode, string PurchaseReturnDetails, bool IsGST, string ChqNo, DateTime? ChqDate, string ChqBankName)
         {
             try
             {
@@ -71,12 +71,15 @@ namespace AccountBuddy.SL.Controllers
                     pur.TransactionTypeId = 2;
                 }
                 pur.Narration = PayMode;
-                pur.RefNo = Hubs.ABServerHub.PurchaseReturn_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+                Hubs.ABServerHub ab = new Hubs.ABServerHub();
+                pur.RefNo = ab.PurchaseReturn_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
 
                 db.PurchaseReturns.Add(pur);
-                db.SaveChanges();
+               db.SaveChanges();
 
-                Hubs.ABServerHub.Journal_SaveByPurchaseReturn(pur);
+               
+
+                ab.Journal_SaveByPurchaseReturn(pur);
                 return Json(new { Id = pur.Id, HasError = false }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

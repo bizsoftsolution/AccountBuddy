@@ -14,7 +14,7 @@ namespace AccountBuddy.BLL
         #region Field
 
         public static UserAccount User = new UserAccount();
-
+        public static string LoginedACYear;
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
         private bool _IsEnabled;
@@ -224,7 +224,8 @@ namespace AccountBuddy.BLL
             {
                 try
                 {                    
-                    User = ua;        
+                    User = ua;
+                    LoginedACYear = AccYear;
                     Data_Init();
                     return "";
                 }
@@ -234,6 +235,32 @@ namespace AccountBuddy.BLL
                
             }
             return string.Join("\n", ua.lstValidation.Select(x => x.Message));
+        }
+        public static string Re_Login()
+        {
+            try
+            {
+                var rv = FMCGHubClient.FMCGHub.Invoke<UserAccount>("UserAccount_ReLogin", UserAccount.LoginedACYear, UserAccount.User.UserType.Company.CompanyName, UserAccount.User.LoginId, UserAccount.User.Password).Result;
+                try
+                {
+                    if (rv != null)
+                    {
+                        return "";
+                    }
+                    else
+                    {
+                        return string.Join("\n", rv.lstValidation.Select(x => x.Message));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return string.Join("\n", "ReConnected");
+                }
+            }
+            catch (Exception ex)
+            {
+                return string.Join("\n", "ReConnected");
+            }
         }
 
         static void Data_Init()
@@ -264,6 +291,7 @@ namespace AccountBuddy.BLL
             return rv;
         }
 
+ 
         public static bool AllowInsert(string FormName)
         {
             bool rv = true;

@@ -19,7 +19,7 @@ namespace AccountBuddy.SL.Hubs
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.PurchaseRequest, dt, dt.Month);
             long No = 0;
 
-            var d = DB.PurchaseRequests.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = Caller.DB.PurchaseRequests.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
@@ -31,12 +31,12 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                var d = DB.PurchaseRequestStatusDetails.Where(x => x.Id == PurchaseRequestStatusDetailId).FirstOrDefault();
+                var d = Caller.DB.PurchaseRequestStatusDetails.Where(x => x.Id == PurchaseRequestStatusDetailId).FirstOrDefault();
                 if (d != null)
                 {
                     d.ResponseAt = DateTime.Now;
                     d.Status = "Reject";
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     return true;
                 }
             }
@@ -48,12 +48,12 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                var d = DB.PurchaseRequestStatusDetails.Where(x => x.Id == PurchaseRequestStatusDetailId).FirstOrDefault();
+                var d = Caller.DB.PurchaseRequestStatusDetails.Where(x => x.Id == PurchaseRequestStatusDetailId).FirstOrDefault();
                 if (d != null)
                 {
                     d.ResponseAt = DateTime.Now;
                     d.Status = "Approval";
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     return true;
                 }
             }
@@ -66,13 +66,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.PurchaseRequest d = DB.PurchaseRequests.Where(x => x.Id == PR.Id).FirstOrDefault();
+                DAL.PurchaseRequest d = Caller.DB.PurchaseRequests.Where(x => x.Id == PR.Id).FirstOrDefault();
 
                 if (d == null)
                 {
 
                     d = new DAL.PurchaseRequest();
-                    DB.PurchaseRequests.Add(d);
+                    Caller.DB.PurchaseRequests.Add(d);
 
                     PR.toCopy<DAL.PurchaseRequest>(d);
 
@@ -88,7 +88,7 @@ namespace AccountBuddy.SL.Hubs
                         RequestAt = DateTime.Now,
                         RequestTo = PR.RequestTo
                     });
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     PR.Id = d.Id;
                     LogDetailStore(PR, LogDetailType.INSERT);
                 }
@@ -117,7 +117,7 @@ namespace AccountBuddy.SL.Hubs
                     //}
 
                     decimal rd = PR.PRDetails.Select(X => X.POId).FirstOrDefault();
-                    DB.PurchaseRequestDetails.RemoveRange(d.PurchaseRequestDetails.Where(x => x.PRId == rd).ToList());
+                    Caller.DB.PurchaseRequestDetails.RemoveRange(d.PurchaseRequestDetails.Where(x => x.PRId == rd).ToList());
 
                     PR.toCopy<DAL.PurchaseRequest>(d);
                     foreach (var b_prd in PR.PRDetails)
@@ -130,7 +130,7 @@ namespace AccountBuddy.SL.Hubs
                         // }
                         b_prd.toCopy<DAL.PurchaseRequestDetail>(d_prd);
                     }
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(PR, LogDetailType.UPDATE);
                 }
 
@@ -150,7 +150,7 @@ namespace AccountBuddy.SL.Hubs
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesOrder, S.Id);
 
-            DAL.PurchaseRequest p = DB.PurchaseRequests.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.PurchaseRequest p = Caller.DB.PurchaseRequests.Where(x => x.RefCode == RefCode).FirstOrDefault();
 
             if (S.Ledger.LedgerName.StartsWith("CM-") || S.Ledger.LedgerName.StartsWith("WH-") || S.Ledger.LedgerName.StartsWith("DL-"))
             {
@@ -165,11 +165,11 @@ namespace AccountBuddy.SL.Hubs
                         p = new DAL.PurchaseRequest();
                         p.RefNo = PurchaseRequest_NewRefNoByCompanyId(CId);
                         p.RefCode = RefCode;
-                        DB.PurchaseRequests.Add(p);
+                        Caller.DB.PurchaseRequests.Add(p);
                     }
                     else
                     {
-                        DB.PurchaseRequestDetails.RemoveRange(p.PurchaseRequestDetails);
+                        Caller.DB.PurchaseRequestDetails.RemoveRange(p.PurchaseRequestDetails);
                     }
 
                     p.PRDate = S.SODate;
@@ -185,7 +185,7 @@ namespace AccountBuddy.SL.Hubs
                         b_prd.toCopy<DAL.PurchaseRequestDetail>(d_prd);
                         p.PurchaseRequestDetails.Add(d_prd);
                     }
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
 
                 }
             }
@@ -197,7 +197,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesOrder, s.Id);
-                DAL.PurchaseRequest d = DB.PurchaseRequests.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                DAL.PurchaseRequest d = Caller.DB.PurchaseRequests.Where(x => x.RefCode == RefCode).FirstOrDefault();
                 if (d != null)
                 {
                     PurchaseRequest_Delete(d.Id);
@@ -217,20 +217,20 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.PurchaseRequest d = DB.PurchaseRequests.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
-                DB.Entry(d).Reload();
+                DAL.PurchaseRequest d = Caller.DB.PurchaseRequests.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
+                Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.PurchaseRequest>(PR);
-                    PR.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    PR.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     foreach (var d_prd in d.PurchaseRequestDetails)
                     {
                         BLL.PurchaseRequestDetail b_prd = new BLL.PurchaseRequestDetail();
                         d_prd.toCopy<BLL.PurchaseRequestDetail>(b_prd);
                         PR.PRDetails.Add(b_prd);
-                        b_prd.ProductName = (d_prd.Product ?? DB.Products.Find(d_prd.ProductId) ?? new DAL.Product()).ProductName;
-                        b_prd.UOMName = (d_prd.UOM ?? DB.UOMs.Find(d_prd.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_prd.ProductName = (d_prd.Product ?? Caller.DB.Products.Find(d_prd.ProductId) ?? new DAL.Product()).ProductName;
+                        b_prd.UOMName = (d_prd.UOM ?? Caller.DB.UOMs.Find(d_prd.UOMId) ?? new DAL.UOM()).Symbol;
                     }
 
                 }
@@ -243,14 +243,14 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.PurchaseRequest d = DB.PurchaseRequests.Where(x => x.Id == pk).FirstOrDefault();
+                DAL.PurchaseRequest d = Caller.DB.PurchaseRequests.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
                     var P = PurchaseRequest_DALtoBLL(d);
-                    DB.PurchaseRequestDetails.RemoveRange(d.PurchaseRequestDetails);
-                    DB.PurchaseRequests.Remove(d);
-                    DB.SaveChanges();
+                    Caller.DB.PurchaseRequestDetails.RemoveRange(d.PurchaseRequestDetails);
+                    Caller.DB.PurchaseRequests.Remove(d);
+                    Caller.DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
                     //  SalesOrder_DeleteByPurchaseRequest(d);
                 }
@@ -263,7 +263,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.PurchaseRequest> PurchaseRequest_PRPendingList()
         {
-            return DB.PurchaseRequests.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
+            return Caller.DB.PurchaseRequests.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
                                     .ToList()
                                     .Select(x => PurchaseRequest_DALtoBLL(x))
                                     .ToList();
@@ -280,7 +280,7 @@ namespace AccountBuddy.SL.Hubs
         }
         public bool Find_PRQRef(string RefNo, BLL.PurchaseRequest PR)
         {
-            DAL.PurchaseRequest d = DB.PurchaseRequests.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PR.Id).FirstOrDefault();
+            DAL.PurchaseRequest d = Caller.DB.PurchaseRequests.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PR.Id).FirstOrDefault();
             if (d == null)
             {
                 return false;

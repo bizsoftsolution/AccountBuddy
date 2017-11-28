@@ -20,6 +20,7 @@ namespace AccountBuddy.SL.Controllers
             try
             {
                 DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
+                Hubs.ABServerHub ab = new Hubs.ABServerHub();
 
                 dynamic l1 = JsonConvert.DeserializeObject(SaleReturnDetails);
                 DAL.SalesReturn sal = new DAL.SalesReturn();
@@ -72,12 +73,13 @@ namespace AccountBuddy.SL.Controllers
                     sal.TransactionTypeId = 2;
                 }
                 sal.Narration = PayMode;
-                sal.RefNo = Hubs.ABServerHub.SalesReturn_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+                sal.RefNo =ab.SalesReturn_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
                 sal.RefCode = RefCode;
                 db.SalesReturns.Add(sal);
                 db.SaveChanges();
 
-                Hubs.ABServerHub.Journal_SaveBySalesReturn(sal);
+               
+                ab.Journal_SaveBySalesReturn(sal);
                 return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

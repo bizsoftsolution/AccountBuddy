@@ -16,7 +16,7 @@ namespace AccountBuddy.SL.Hubs
 
             BLL.GeneralLedger gl = new BLL.GeneralLedger();
 
-            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == LedgerId).ToList();
+            var lstLedger = Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == LedgerId).ToList();
 
 
             #region Ledger

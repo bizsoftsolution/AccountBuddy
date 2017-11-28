@@ -13,15 +13,15 @@ namespace AccountBuddy.SL.Hubs
         #region CreditLimit
 
         #region list
-        public static List<BLL.CreditLimitType> _creditLimitList;
-        public static List<BLL.CreditLimitType> creditLimitList
+        public  List<BLL.CreditLimitType> _creditLimitList;
+        public  List<BLL.CreditLimitType> creditLimitList
         {
             get
             {
                 if (_creditLimitList == null)
                 {
                     _creditLimitList = new List<BLL.CreditLimitType>();
-                    foreach (var d1 in DB.CreditLimitTypes.ToList())
+                    foreach (var d1 in Caller.DB.CreditLimitTypes.ToList())
                     {
                         BLL.CreditLimitType d2 = new BLL.CreditLimitType();
                         d1.toCopy<BLL.CreditLimitType>(d2);

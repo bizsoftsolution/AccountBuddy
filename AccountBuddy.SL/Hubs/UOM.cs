@@ -19,17 +19,17 @@ namespace AccountBuddy.SL.Hubs
         {
             if (Caller.CompanyType == "Warehouse")
             {
-                return DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
+                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
                               .Select(x => UOM_DALtoBLL(x)).ToList();
             }
             else if (Caller.CompanyType == "Dealer")
             {
-               var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
-                    return DB.UOMs.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
+               var wh = Caller.DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
+                    return Caller.DB.UOMs.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
                                   .Select(x => UOM_DALtoBLL(x)).ToList();                              
             }
             else{
-                return DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).ToList()
                               .Select(x => UOM_DALtoBLL(x)).ToList();
             }
            
@@ -40,15 +40,15 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 agp.CompanyId = Caller.CompanyId;
-                DAL.UOM d = DB.UOMs.Where(x => x.Id == agp.Id).FirstOrDefault();
+                DAL.UOM d = Caller.DB.UOMs.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
                 {
                     d = new DAL.UOM();
-                    DB.UOMs.Add(d);
+                    Caller.DB.UOMs.Add(d);
 
                     agp.toCopy<DAL.UOM>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
 
                     agp.Id = d.Id;
                     LogDetailStore(agp, LogDetailType.INSERT);
@@ -56,7 +56,7 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
                     agp.toCopy<DAL.UOM>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
@@ -73,13 +73,13 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = DB.UOMs.Where(x => x.Id == pk).FirstOrDefault();
+                var d = Caller.DB.UOMs.Where(x => x.Id == pk).FirstOrDefault();
                 if (d.Products != null)
                 {
                     if (d != null)
                     {
-                        DB.UOMs.Remove(d);
-                        DB.SaveChanges();
+                        Caller.DB.UOMs.Remove(d);
+                        Caller.DB.SaveChanges();
                         LogDetailStore(d.toCopy<BLL.UOM>(new BLL.UOM()), LogDetailType.DELETE);
                     }
 

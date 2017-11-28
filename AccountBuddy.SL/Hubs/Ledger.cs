@@ -14,9 +14,9 @@ namespace AccountBuddy.SL.Hubs
 
         #region Ledger
 
-        private  BLL.Ledger LedgerDAL_BLL(DAL.Ledger ledgerFrom)
+        private BLL.Ledger LedgerDAL_BLL(DAL.Ledger ledgerFrom)
         {
-            BLL.Ledger ledgerTo=new BLL.Ledger();
+            BLL.Ledger ledgerTo = new BLL.Ledger();
             try
             {
                 ledgerTo = ledgerFrom.toCopy<BLL.Ledger>(new BLL.Ledger());
@@ -26,11 +26,11 @@ namespace AccountBuddy.SL.Hubs
                 ledgerTo.CreditLimitType = new BLL.CreditLimitType();
                 ledgerFrom.CreditLimitType.toCopy<BLL.CreditLimitType>(ledgerTo.CreditLimitType);
                 ledgerTo.OPBal = GetLedgerBalance(ledgerFrom);
-              
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               
+
             }
             return ledgerTo;
 
@@ -38,13 +38,13 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Ledger> Ledger_List()
         {
-            return DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+            return Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => LedgerDAL_BLL(x)).ToList();
         }
-      
+
         public List<BLL.Ledger> CashLedger_List()
         {
-            return DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.AccountGroup.GroupName == "Bank Accounts" || x.AccountGroup.GroupName == "Cash-in-Hand").ToList()
+            return Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.AccountGroup.GroupName == "Bank Accounts" || x.AccountGroup.GroupName == "Cash-in-Hand").ToList()
                              .Select(x => LedgerDAL_BLL(x)).ToList();
         }
 
@@ -52,15 +52,17 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.Ledger d = DB.Ledgers.Where(x => x.Id == led.Id).FirstOrDefault();
+                DAL.Ledger d = Caller.DB.Ledgers.Where(x => x.Id == led.Id).FirstOrDefault();
+             
                 if (d == null)
                 {
-                    d = new DAL.Ledger();
-                    DB.Ledgers.Add(d);
+                    d = new DAL.Ledger(); 
+                    Caller.DB.Ledgers.Add(d);
 
                     led.toCopy<DAL.Ledger>(d);
 
-                    DB.SaveChanges();
+                   
+                    Caller.DB.SaveChanges();
                     led.Id = d.Id;
 
                     LogDetailStore(led, LogDetailType.INSERT);
@@ -68,7 +70,7 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
                     led.toCopy<DAL.Ledger>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(led, LogDetailType.UPDATE);
                 }
 
@@ -85,36 +87,24 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = DB.Ledgers.Where(x => x.Id == pk).FirstOrDefault();
+                var d = Caller.DB.Ledgers.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null && Ledger_CanDelete(d))
                 {
-                    if(DB.Suppliers.Where(x=>x.LedgerId==pk).Count()==0)
-                    {
-                        if (DB.Banks.Where(x => x.LedgerId == pk).Count() == 0)
-                        {
-                            if (DB.Customers.Where(x => x.LedgerId == pk).Count() == 0)
-                            {
-                                if (DB.Staffs.Where(x => x.LedgerId == pk).Count() == 0)
-                                {
-                                    DB.Ledgers.Remove(d);
-                                    DB.SaveChanges();
-                                    Clients.Clients(OtherLoginClientsOnGroup).Ledger_Delete(pk);
-                                    Clients.All.delete(pk);
-                                    rv = true;
-                                }
-                            }
-                        }
-                    }
 
-                                    
+                    Caller.DB.Ledgers.Remove(d);
+                    Caller.DB.SaveChanges();
+                    Clients.Clients(OtherLoginClientsOnGroup).Ledger_Delete(pk);
+                    Clients.All.delete(pk);
+                    rv = true;
+
                 }
                 else
                 {
                     rv = false;
                 }
 
-                
-             
+
+
                 LogDetailStore(LedgerDAL_BLL(d), LogDetailType.DELETE);
             }
             catch (Exception ex)
@@ -140,13 +130,13 @@ namespace AccountBuddy.SL.Hubs
                    l.SalesReturns.Count() == 0 &&
                    l.StockIns.Count() == 0 &&
                    l.StockOuts.Count() == 0;
-            
+
             return rv;
         }
 
         public bool Ledger_CanDeleteById(int Id)
         {
-            return Ledger_CanDelete(DB.Ledgers.Where(x => x.Id == Id).FirstOrDefault()); 
+            return Ledger_CanDelete(Caller.DB.Ledgers.Where(x => x.Id == Id).FirstOrDefault());
         }
 
         public void Existing_Ledger()
@@ -170,8 +160,8 @@ namespace AccountBuddy.SL.Hubs
             //        DAL.Ledger ast = new DAL.Ledger();
             //        ast.LedgerName = reader.GetString(0);
             //        ast.AccountGroupId = BLL.DataKeyValue.Primary_Value;
-            //        DB.Ledgers.Add(ast);
-            //        DB.SaveChanges();
+            //        Caller.DB.Ledgers.Add(ast);
+            //        Caller.DB.SaveChanges();
             //    }
             //}
 

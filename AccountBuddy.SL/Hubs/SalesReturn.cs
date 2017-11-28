@@ -13,13 +13,13 @@ namespace AccountBuddy.SL.Hubs
         {
             return SalesReturn_NewRefNoByCompanyId(Caller.CompanyId);
         }
-        public static string SalesReturn_NewRefNoByCompanyId(int CompanyId)
+        public  string SalesReturn_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.SalesReturn, dt, dt.Month);
             long No = 0;
 
-            var d = DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = Caller.DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
@@ -32,13 +32,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                
-                DAL.SalesReturn d = DB.SalesReturns.Where(x => x.Id == P.Id).FirstOrDefault();
+                DAL.SalesReturn d = Caller.DB.SalesReturns.Where(x => x.Id == P.Id).FirstOrDefault();
 
                 if (d == null)
                 {
 
                     d = new DAL.SalesReturn();
-                    DB.SalesReturns.Add(d);
+                    Caller.DB.SalesReturns.Add(d);
 
                     P.toCopy<DAL.SalesReturn>(d);
 
@@ -48,7 +48,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.SalesReturnDetail>(d_pod);
                         d.SalesReturnDetails.Add(d_pod);
                     }
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
 
                     P.Id = d.Id;
                     LogDetailStore(P, LogDetailType.INSERT);
@@ -62,7 +62,7 @@ namespace AccountBuddy.SL.Hubs
                     //    }
 
                     decimal rd = P.SRDetails.Select(X => X.SRId).FirstOrDefault();
-                    DB.SalesReturnDetails.RemoveRange(d.SalesReturnDetails.Where(x => x.SRId == rd).ToList());
+                    Caller.DB.SalesReturnDetails.RemoveRange(d.SalesReturnDetails.Where(x => x.SRId == rd).ToList());
 
 
                     P.toCopy<DAL.SalesReturn>(d);
@@ -93,21 +93,21 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.SalesReturn d = DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
-                DB.Entry(d).Reload();
+                DAL.SalesReturn d = Caller.DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
+                Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.SalesReturn>(P);
-                    P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
-                    P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    P.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    P.TransactionType = (d.TransactionType ?? Caller.DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     foreach (var d_pod in d.SalesReturnDetails)
                     {
                         BLL.SalesReturnDetail b_pod = new BLL.SalesReturnDetail();
                         d_pod.toCopy<BLL.SalesReturnDetail>(b_pod);
                         P.SRDetails.Add(b_pod);
-                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }
 
                 }
@@ -120,14 +120,14 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.SalesReturn d = DB.SalesReturns.Where(x => x.Id == pk).FirstOrDefault();
+                DAL.SalesReturn d = Caller.DB.SalesReturns.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
                     var P = SalesReturn_DALtoBLL(d);
-                    DB.SalesReturnDetails.RemoveRange(d.SalesReturnDetails);
-                    DB.SalesReturns.Remove(d);
-                    DB.SaveChanges();
+                    Caller.DB.SalesReturnDetails.RemoveRange(d.SalesReturnDetails);
+                    Caller.DB.SalesReturns.Remove(d);
+                    Caller.DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
                     Journal_DeleteBySalesReturn(P);
                     PurchaseReturn_DeleteBySalesReturn(d);
@@ -150,7 +150,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_SRRef(string RefNo, BLL.SalesReturn PO)
 
         {
-            DAL.SalesReturn d = DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.SalesReturn d = Caller.DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
             if (d == null)
             {
                 return false;
@@ -167,7 +167,7 @@ namespace AccountBuddy.SL.Hubs
         {
              string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, PR.Id);
 
-            DAL.SalesReturn s = DB.SalesReturns.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.SalesReturn s = Caller.DB.SalesReturns.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (PR.Ledger.LedgerName.StartsWith("CM-") || PR.Ledger.LedgerName.StartsWith("WH-") || PR.Ledger.LedgerName.StartsWith("DL-"))
             {
                 var LName = LedgerNameByCompanyId(Caller.CompanyId);
@@ -181,11 +181,11 @@ namespace AccountBuddy.SL.Hubs
                         s = new DAL.SalesReturn();
                         s.RefNo = SalesReturn_NewRefNoByCompanyId(CId);
                         s.RefCode = RefCode;
-                        DB.SalesReturns.Add(s);
+                        Caller.DB.SalesReturns.Add(s);
                     }
                     else
                     {
-                       DB.SalesReturnDetails.RemoveRange(s.SalesReturnDetails);
+                       Caller.DB.SalesReturnDetails.RemoveRange(s.SalesReturnDetails);
                     }
 
                     s.SRDate = PR.PRDate;
@@ -202,7 +202,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.SalesReturnDetail>(d_pod);
                         s.SalesReturnDetails.Add(d_pod);
                     }
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     Journal_SaveBySalesReturn(s);
                 }
             }
@@ -212,7 +212,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, P.Id);
-                DAL.SalesReturn d = DB.SalesReturns.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                DAL.SalesReturn d = Caller.DB.SalesReturns.Where(x => x.RefCode == RefCode).FirstOrDefault();
                 if (d != null)
                 {
                     SalesReturn_Delete(d.Id);
@@ -228,21 +228,21 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.SalesReturn d = DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
-                DB.Entry(d).Reload();
+                DAL.SalesReturn d = Caller.DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.SalesReturn>(P);
-                    P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
-                    P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    P.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    P.TransactionType = (d.TransactionType ?? Caller.DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     foreach (var d_pod in d.SalesReturnDetails)
                     {
                         BLL.SalesReturnDetail b_pod = new BLL.SalesReturnDetail();
                         d_pod.toCopy<BLL.SalesReturnDetail>(b_pod);
                         P.SRDetails.Add(b_pod);
-                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }
 
                 }

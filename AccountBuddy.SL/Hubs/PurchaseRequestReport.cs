@@ -10,7 +10,7 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.PurchaseRequestReport> PurchaseRequestReport_List(DateTime dtFrom, DateTime dtTo)
         {
             List<BLL.PurchaseRequestReport> lstPurchaseRequestReport = new List<BLL.PurchaseRequestReport>();
-            foreach(var d in DB.PurchaseRequests.Where(x=> x.PRDate>=dtFrom && x.PRDate<=dtTo).ToList())
+            foreach(var d in Caller.DB.PurchaseRequests.Where(x=> x.PRDate>=dtFrom && x.PRDate<=dtTo).ToList())
             {
                 var prsd = d.PurchaseRequestStatusDetails.Where(x => x.RequestBy == Caller.StaffId || x.RequestTo == Caller.StaffId).FirstOrDefault();
                 if (prsd == null) continue;

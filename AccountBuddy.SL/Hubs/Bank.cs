@@ -21,7 +21,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Bank> Bank_List()
         {
-            return DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+            return Caller.DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => Bank_DALtoBLL(x)).ToList();
         }
 
@@ -29,7 +29,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.Bank d = DB.Banks.Where(x => x.Id == cus.Id).FirstOrDefault();
+                DAL.Bank d = Caller.DB.Banks.Where(x => x.Id == cus.Id).FirstOrDefault();
                 if (d == null)
                 {
 
@@ -38,8 +38,8 @@ namespace AccountBuddy.SL.Hubs
                     d.LedgerId = Ledger_Save(cus.Ledger);
                     if (d.LedgerId != 0)
                     {
-                        DB.Banks.Add(d);                        
-                        DB.SaveChanges();
+                        Caller.DB.Banks.Add(d);                        
+                        Caller.DB.SaveChanges();
                         cus.Id = d.Id;
                         LogDetailStore(cus, LogDetailType.INSERT);
                     }
@@ -48,7 +48,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     cus.toCopy<DAL.Bank>(d);
                     Ledger_Save(cus.Ledger);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(cus, LogDetailType.UPDATE);
                 }
                 var b = Bank_DALtoBLL(d);
@@ -65,13 +65,13 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = DB.Banks.Where(x => x.Id == pk).FirstOrDefault();
+                var d = Caller.DB.Banks.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null && Ledger_CanDelete(d.Ledger))
                 {
                     var b = Bank_DALtoBLL(d);
-                    DB.Banks.Remove(d);
+                    Caller.DB.Banks.Remove(d);
                     Ledger_Delete((int)d.LedgerId);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(b, LogDetailType.DELETE);
                 }
 

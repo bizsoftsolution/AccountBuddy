@@ -41,7 +41,7 @@ namespace AccountBuddy.SL.Controllers
             if (c != null)
             {
                 int CompanyId = (int)c.UnderCompanyId;
-                var l1 = DB.Products.Where(x => x.StockGroup.CompanyId == CompanyId)
+                var l1 =DB.Products.Where(x => x.StockGroup.CompanyId == CompanyId)
                                     .ToList()
                                     .ToList().Select(x => Product_DALtoBLL(x, c.Id))
                                     .Select(x => new BLL.Product()

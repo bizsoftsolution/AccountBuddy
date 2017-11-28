@@ -24,7 +24,7 @@ namespace AccountBuddy.SL.Hubs
 
         #region Field
 
-        private static  DAL.DBFMCGEntities DB = new DAL.DBFMCGEntities();
+       // private static  DAL.DBFMCGEntities MDB = new DAL.DBFMCGEntities();
 
         private static List<SLUser> UserList = new List<SLUser>();
         private static List<DAL.EntityType> _entityTypeList;
@@ -34,13 +34,13 @@ namespace AccountBuddy.SL.Hubs
 
         #region Property
 
-        private static List<DAL.EntityType> EntityTypeList
+        private  List<DAL.EntityType> EntityTypeList
         {
             get
             {
                 if (_entityTypeList == null)
                 {
-                    _entityTypeList = DB.EntityTypes.ToList();
+                    _entityTypeList = Caller.DB.EntityTypes.ToList();
                 }
                 return _entityTypeList;
             }
@@ -49,11 +49,11 @@ namespace AccountBuddy.SL.Hubs
                 _entityTypeList = value;
             }
         }
-        private static List<DAL.LogDetailType> LogDetailTypeList
+        private  List<DAL.LogDetailType> LogDetailTypeList
         {
             get
             {
-                if (_logDetailTypeList == null) _logDetailTypeList = DB.LogDetailTypes.ToList();
+                if (_logDetailTypeList == null) _logDetailTypeList =Caller.DB.LogDetailTypes.ToList();
                 return _logDetailTypeList;
             }
             set
@@ -72,7 +72,7 @@ namespace AccountBuddy.SL.Hubs
 
         #region ClientSelection
 
-        private SLUser Caller
+        public  SLUser Caller
         {
             get
             {
@@ -198,10 +198,10 @@ namespace AccountBuddy.SL.Hubs
             if (et == null)
             {
                 et = new DAL.EntityType();
-                DB.EntityTypes.Add(et);
+                Caller.DB.EntityTypes.Add(et);
                 EntityTypeList.Add(et);
                 et.Entity = Type;
-                DB.SaveChanges();
+                Caller.DB.SaveChanges();
             }
             return et.Id;
         }
@@ -220,7 +220,7 @@ namespace AccountBuddy.SL.Hubs
                 long EntityId = Convert.ToInt64(t.GetProperty("Id").GetValue(Data));
                 int ETypeId = EntityTypeId(t.Name);
 
-                DAL.LogMaster l = DB.LogMasters.Where(x => x.EntityId == EntityId && x.EntityTypeId == ETypeId).FirstOrDefault();
+                DAL.LogMaster l = Caller.DB.LogMasters.Where(x => x.EntityId == EntityId && x.EntityTypeId == ETypeId).FirstOrDefault();
                 DAL.LogDetail ld = new DAL.LogDetail();
                 DateTime dt = DateTime.Now;
                
@@ -232,7 +232,7 @@ namespace AccountBuddy.SL.Hubs
                 if (l == null)
                 {
                     l = new DAL.LogMaster();
-                    DB.LogMasters.Add(l);
+                    Caller.DB.LogMasters.Add(l);
                     l.EntityId = EntityId;
                     l.EntityTypeId = ETypeId;
                     l.CreatedAt = dt;
@@ -252,15 +252,15 @@ namespace AccountBuddy.SL.Hubs
                     l.DeletedBy = Caller.UserId;
                 }
 
-                DB.SaveChanges();
+                Caller.DB.SaveChanges();
 
-                DB.LogDetails.Add(ld);
+                Caller.DB.LogDetails.Add(ld);
                 ld.LogMasterId = l.Id;
                 ld.RecordDetail = new JavaScriptSerializer().Serialize(Data);
                 ld.EntryBy = Caller.UserId;
                 ld.EntryAt = dt;
                 ld.LogDetailTypeId = LogDetailTypeId(Type);
-                DB.SaveChanges();
+                Caller.DB.SaveChanges();
             }
             catch (Exception ex) { }
 

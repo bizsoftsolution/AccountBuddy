@@ -20,7 +20,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.JobWorker> JobWorker_List()
         {
-            return DB.JobWorkers.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+            return Caller.DB.JobWorkers.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => JobWorker_DALtoBLL(x)).ToList();
         }
 
@@ -28,7 +28,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.JobWorker d = DB.JobWorkers.Where(x => x.Id == cus.Id).FirstOrDefault();
+                DAL.JobWorker d = Caller.DB.JobWorkers.Where(x => x.Id == cus.Id).FirstOrDefault();
                 if (d == null)
                 {
 
@@ -38,8 +38,8 @@ namespace AccountBuddy.SL.Hubs
                     if (d.LedgerId != 0)
                     {
 
-                        DB.JobWorkers.Add(d);
-                        DB.SaveChanges();
+                        Caller.DB.JobWorkers.Add(d);
+                        Caller.DB.SaveChanges();
                         cus.Id = d.Id;
                         LogDetailStore(cus, LogDetailType.INSERT);
                     }
@@ -48,7 +48,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     cus.toCopy<DAL.JobWorker>(d);
                     Ledger_Save(cus.Ledger);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(cus, LogDetailType.UPDATE);
                 }
                 var b = JobWorker_DALtoBLL(d);
@@ -71,12 +71,12 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = DB.JobWorkers.Where(x => x.Id == pk).FirstOrDefault();
+                var d = Caller.DB.JobWorkers.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null && Ledger_CanDelete(d.Ledger))
                 {
                     var b = JobWorker_DALtoBLL(d);
-                    DB.JobWorkers.Remove(d);
-                    DB.SaveChanges();
+                    Caller.DB.JobWorkers.Remove(d);
+                    Caller.DB.SaveChanges();
                     Ledger_Delete(d.LedgerId.Value);
                     LogDetailStore(b, LogDetailType.DELETE);
                 }

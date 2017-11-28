@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.ProfitLoss> ProfitLoss_List(DateTime dtFrom, DateTime dtTo)
         {
             List<BLL.ProfitLoss> lstProfitLoss = new List<BLL.ProfitLoss>();
-            var l1 = DB.AccountGroups.Where(x => x.CompanyId==Caller.CompanyId && ( x.GroupName == "Income" || x.GroupName == "Expenses")).ToList();
+            var l1 = Caller.DB.AccountGroups.Where(x => x.CompanyId==Caller.CompanyId && ( x.GroupName == "Income" || x.GroupName == "Expenses")).ToList();
             decimal GTotalDr = 0, GTotalCr = 0, GTotalDrOP = 0, GTotalCrOP = 0;
             foreach (var ag in l1)
             {

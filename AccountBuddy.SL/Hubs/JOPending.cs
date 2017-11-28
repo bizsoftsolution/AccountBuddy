@@ -12,7 +12,7 @@ namespace AccountBuddy.SL.Hubs
             List<BLL.JOPending> lstJOPending = new List<BLL.JOPending>();
             BLL.JOPending tb = new BLL.JOPending();
 
-            var lstLedger = DB.JobWorkers.Where(x=>x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).ToList();
+            var lstLedger = Caller.DB.JobWorkers.Where(x=>x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).ToList();
 
             foreach (var l in lstLedger)
             {

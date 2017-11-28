@@ -52,8 +52,8 @@ namespace AccountBuddy.SL.Controllers
             {
                 UId = ua.Id;
                 SalRefCode = DB.Sales.Where(x => x.SalesDate.Month == DateTime.Now.Month && x.Ledger.AccountGroup.CompanyId == ua.UserType.CompanyId).Max(x => x.RefNo.Substring(x.RefNo.Length - 5, x.RefNo.Length));
-                SRRefCode = DB.SalesReturns.Where(x => x.SRDate.Month == DateTime.Now.Month && x.Ledger.AccountGroup.CompanyId == ua.UserType.CompanyId).Max(x => x.RefNo.Substring(x.RefNo.Length - 5, x.RefNo.Length));
-                SORefCode = DB.SalesOrders.Where(x => x.SODate.Month == DateTime.Now.Month && x.Ledger.AccountGroup.CompanyId == ua.UserType.CompanyId).Max(x => x.RefNo.Substring(x.RefNo.Length - 5, x.RefNo.Length));
+                SRRefCode =DB.SalesReturns.Where(x => x.SRDate.Month == DateTime.Now.Month && x.Ledger.AccountGroup.CompanyId == ua.UserType.CompanyId).Max(x => x.RefNo.Substring(x.RefNo.Length - 5, x.RefNo.Length));
+                SORefCode =DB.SalesOrders.Where(x => x.SODate.Month == DateTime.Now.Month && x.Ledger.AccountGroup.CompanyId == ua.UserType.CompanyId).Max(x => x.RefNo.Substring(x.RefNo.Length - 5, x.RefNo.Length));
 
                 SalPrefix =  string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Sales, dt, dt.Month);
                 SRPrefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.SalesReturn, dt, dt.Month);

@@ -18,7 +18,7 @@ namespace AccountBuddy.SL.Controllers
         {
             try
             {
-                DAL.DBFMCGEntities db = new DAL.DBFMCGEntities();
+                DAL.DBFMCGEntities DB = new DAL.DBFMCGEntities();
 
                 dynamic l1 = JsonConvert.DeserializeObject(SaleOrderDetails);
                 DAL.SalesOrder sal = new DAL.SalesOrder();
@@ -50,10 +50,11 @@ namespace AccountBuddy.SL.Controllers
                     sal.GSTAmount = 0;
                     sal.TotalAmount = sal.ItemAmount - DiscountAmount; ;
                 }
-                sal.RefNo = Hubs.ABServerHub.SalesOrder_NewRefNoByCompanyId(db.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
+                Hubs.ABServerHub ab = new Hubs.ABServerHub();
+                sal.RefNo = ab.SalesOrder_NewRefNoByCompanyId(DB.Ledgers.Where(x => x.Id == LedgerId).FirstOrDefault().AccountGroup.CompanyId);
                 
-                db.SalesOrders.Add(sal);
-                db.SaveChanges();
+                DB.SalesOrders.Add(sal);
+                DB.SaveChanges();
                 return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

@@ -65,7 +65,7 @@ namespace AccountBuddy.SL.Hubs
 
         public decimal GetLedgerBalance(int LedgerId)
         {
-            return GetLedgerBalance(DB.Ledgers.Where(x=> x.Id==LedgerId).FirstOrDefault());            
+            return GetLedgerBalance(Caller.DB.Ledgers.Where(x=> x.Id==LedgerId).FirstOrDefault());            
         }
 
         public static decimal GetLedgerBalance(DAL.Ledger l)
@@ -92,7 +92,7 @@ namespace AccountBuddy.SL.Hubs
             List<BLL.TrialBalance> lstTrialBalance = new List<BLL.TrialBalance>();
             BLL.TrialBalance tb = new BLL.TrialBalance();
 
-            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+            var lstLedger = Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
             decimal TotDr = 0, TotCr = 0, TotOPCr = 0, TotOPDr = 0;
                     
             foreach (var l in lstLedger)

@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
 
             List<BLL.SalesReport> rv = new List<BLL.SalesReport>();
             
-            var l1 = DB.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.CompanyDetail.CompanyType == "Dealer" && 
+            var l1 = Caller.DB.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.CompanyDetail.CompanyType == "Dealer" && 
                                                 x.Sale.Ledger.AccountGroup.CompanyDetail.UnderCompanyId==Caller.CompanyId && 
                                                 x.Sale.SalesDate >= dtFrom && 
                                                 x.Sale.SalesDate <= dtTo)
@@ -454,7 +454,7 @@ namespace AccountBuddy.SL.Hubs
 
             List<BLL.SalesReport> rv = new List<BLL.SalesReport>();
 
-            var l1 = DB.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.GroupName==BLL.DataKeyValue.SundryDebtors_Key && 
+            var l1 = Caller.DB.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.GroupName==BLL.DataKeyValue.SundryDebtors_Key && 
                                                 x.Sale.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId &&
 
                                                 x.Sale.SalesDate >= dtFrom &&
@@ -909,10 +909,10 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    CompanyId = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault().UnderCompanyId.Value;
+                    CompanyId = Caller.DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault().UnderCompanyId.Value;
                 }
-                var lstProduct = DB.Products.Where(x => x.StockGroup.CompanyId == CompanyId).ToList();
-                var lstWarehouse = DB.CompanyDetails.Where(x => x.UnderCompanyId == CompanyId).ToList();
+                var lstProduct = Caller.DB.Products.Where(x => x.StockGroup.CompanyId == CompanyId).ToList();
+                var lstWarehouse = Caller.DB.CompanyDetails.Where(x => x.UnderCompanyId == CompanyId).ToList();
                 decimal GTotM1 = 0, GTotM2 = 0, GTotM3 = 0, GTotM4 = 0, GTotM5 = 0, GTotM6 = 0, GTot = 0;
                 BLL.SalesReport sr = new BLL.SalesReport();
 
@@ -924,7 +924,7 @@ namespace AccountBuddy.SL.Hubs
 
                     foreach (var wh in lstWarehouse)
                     {
-                        var lstDealer = DB.CompanyDetails.Where(x => x.UnderCompanyId == wh.Id).ToList();
+                        var lstDealer = Caller.DB.CompanyDetails.Where(x => x.UnderCompanyId == wh.Id).ToList();
 
                         decimal TotM1 = 0, TotM2 = 0, TotM3 = 0, TotM4 = 0, TotM5 = 0, TotM6 = 0, Tot = 0;
                         foreach (var dl in lstDealer)
@@ -1013,7 +1013,7 @@ namespace AccountBuddy.SL.Hubs
             decimal rv = 0;
             try
             {
-                rv = DB.SalesDetails.Where(x => x.ProductId == ProductId && x.Sale.Ledger.AccountGroup.CompanyId == CompanyId && x.Sale.SalesDate.Month == dt.Month && x.Sale.SalesDate.Year == dt.Year).Sum(x => x.Amount);
+                rv = Caller.DB.SalesDetails.Where(x => x.ProductId == ProductId && x.Sale.Ledger.AccountGroup.CompanyId == CompanyId && x.Sale.SalesDate.Month == dt.Month && x.Sale.SalesDate.Year == dt.Year).Sum(x => x.Amount);
             }catch(Exception ex) { }
             return rv;
         }

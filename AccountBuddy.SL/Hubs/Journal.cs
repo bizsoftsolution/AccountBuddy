@@ -16,13 +16,13 @@ namespace AccountBuddy.SL.Hubs
             return Journal_NewRefNoByCompanyId(Caller.CompanyId);
         }
 
-        public static string Journal_NewRefNoByCompanyId(int CompanyId)
+        public  string Journal_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Journal, dt, dt.Month);
             long No = 0;
 
-            var d = DB.Journals.Where(x => x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == CompanyId && x.EntryNo.StartsWith(Prefix))
+            var d = Caller.DB.Journals.Where(x => x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == CompanyId && x.EntryNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.EntryNo)
                                      .FirstOrDefault();
 
@@ -36,13 +36,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Journal d = DB.Journals.Where(x => x.Id == PO.Id).FirstOrDefault();
+                DAL.Journal d = Caller.DB.Journals.Where(x => x.Id == PO.Id).FirstOrDefault();
 
                 if (d == null)
                 {
 
                     d = new DAL.Journal();
-                    DB.Journals.Add(d);
+                    Caller.DB.Journals.Add(d);
                     
                     PO.toCopy<DAL.Journal>(d);
                   
@@ -52,7 +52,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.JournalDetail>(d_pod);
                         d.JournalDetails.Add(d_pod);
                     }
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     PO.Id = d.Id;
                     LogDetailStore(PO, LogDetailType.INSERT);
                 }
@@ -66,7 +66,7 @@ namespace AccountBuddy.SL.Hubs
                     //}
 
                     decimal pd = PO.JDetails.Select(X => X.JournalId).FirstOrDefault();
-                    DB.JournalDetails.RemoveRange(d.JournalDetails.Where(x => x.JournalId == pd).ToList());
+                    Caller.DB.JournalDetails.RemoveRange(d.JournalDetails.Where(x => x.JournalId == pd).ToList());
 
 
                     PO.toCopy<DAL.Journal>(d);
@@ -81,7 +81,7 @@ namespace AccountBuddy.SL.Hubs
                         //}
                         b_pod.toCopy<DAL.JournalDetail>(d_pod);
                     }
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
 
@@ -98,8 +98,8 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Journal d = DB.Journals.Where(x => x.EntryNo == SearchText && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
-                DB.Entry(d).Reload();
+                DAL.Journal d = Caller.DB.Journals.Where(x => x.EntryNo == SearchText && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
 
@@ -109,7 +109,7 @@ namespace AccountBuddy.SL.Hubs
                         BLL.JournalDetail b_pod = new BLL.JournalDetail();
                         d_pod.toCopy<BLL.JournalDetail>(b_pod);
                         PO.JDetails.Add(b_pod);
-                        b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                        b_pod.LedgerName = (d_pod.Ledger ?? Caller.DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
 
                 }
@@ -123,8 +123,8 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Journal d = DB.Journals.Where(x => x.Id == id && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
-                DB.Entry(d).Reload();
+                DAL.Journal d = Caller.DB.Journals.Where(x => x.Id == id && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
 
@@ -134,7 +134,7 @@ namespace AccountBuddy.SL.Hubs
                         BLL.JournalDetail b_pod = new BLL.JournalDetail();
                         d_pod.toCopy<BLL.JournalDetail>(b_pod);
                         PO.JDetails.Add(b_pod);
-                        b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                        b_pod.LedgerName = (d_pod.Ledger ?? Caller.DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
 
                 }
@@ -147,13 +147,13 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.Journal d = DB.Journals.Where(x => x.Id == pk).FirstOrDefault();
+                DAL.Journal d = Caller.DB.Journals.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
-                    DB.JournalDetails.RemoveRange(d.JournalDetails);
-                    DB.Journals.Remove(d);
-                    DB.SaveChanges();
+                    Caller.DB.JournalDetails.RemoveRange(d.JournalDetails);
+                    Caller.DB.Journals.Remove(d);
+                    Caller.DB.SaveChanges();
                     LogDetailStore(Journal_DALtoBLL(d), LogDetailType.DELETE);
                 }
                 return true;
@@ -175,7 +175,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_JEntryNo(string entryNo, BLL.Payment PO)
 
         {
-            DAL.Journal d = DB.Journals.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+            DAL.Journal d = Caller.DB.Journals.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
             if (d == null)
             {
                 return false;
@@ -192,24 +192,24 @@ namespace AccountBuddy.SL.Hubs
             return LedgerIdByKeyAndCompany(key, Caller.CompanyId);
         }
 
-        public static int LedgerIdByKeyAndCompany(string key, int CompanyId)
+        public  int LedgerIdByKeyAndCompany(string key, int CompanyId)
         {
-            return DB.DataKeyValues.Where(x => x.CompanyId == CompanyId && x.DataKey == key).FirstOrDefault().DataValue;
+            return Caller.DB.DataKeyValues.Where(x => x.CompanyId == CompanyId && x.DataKey == key).FirstOrDefault().DataValue;
         }
         int LedgerIdByCompany(string LName, int CompanyId)
         {
-            var l = DB.Ledgers.Where(x => x.LedgerName == LName && x.AccountGroup.CompanyId == CompanyId).FirstOrDefault();
+            var l = Caller.DB.Ledgers.Where(x => x.LedgerName == LName && x.AccountGroup.CompanyId == CompanyId).FirstOrDefault();
             return l == null ? 0 : l.Id;
         }
         int CompanyIdByLedgerName(string LedgerName)
         {
             var CName = LedgerName.Substring(3);
-            var cm = DB.CompanyDetails.Where(x => x.CompanyName == CName).FirstOrDefault();
+            var cm = Caller.DB.CompanyDetails.Where(x => x.CompanyName == CName).FirstOrDefault();
             return cm == null ? 0 : cm.Id;
         }
         string LedgerNameByCompanyId(int CompanyId)
         {
-            var cm = DB.CompanyDetails.Where(x => x.Id == CompanyId).FirstOrDefault();
+            var cm = Caller.DB.CompanyDetails.Where(x => x.Id == CompanyId).FirstOrDefault();
             return string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), cm.CompanyName);
         }
 
@@ -233,7 +233,7 @@ namespace AccountBuddy.SL.Hubs
                 Mode = "Cheque";
                 status = "Process";
             }
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -263,7 +263,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                        LedgerId = Caller.DB.Banks.FirstOrDefault().LedgerId,
                         CrAmt = P.TotalAmount,
                         TransactionMode = "Cheque",
                         Particulars = P.Narration,
@@ -296,7 +296,7 @@ namespace AccountBuddy.SL.Hubs
                     Status = status
                 });
 
-                DB.Journals.Add(j);
+                Caller.DB.Journals.Add(j);
             }
             else
             {
@@ -321,7 +321,7 @@ namespace AccountBuddy.SL.Hubs
                         }
                         else
                         {
-                            jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
+                            jd.LedgerId = Caller.DB.Banks.FirstOrDefault().LedgerId;
                             jd.CrAmt = P.TotalAmount;
                             jd.TransactionMode = "Cheque";
                             jd.ChequeDate = P.ChequeDate;
@@ -343,19 +343,19 @@ namespace AccountBuddy.SL.Hubs
             }
 
             j.JournalDate = P.PurchaseDate;
-            DB.SaveChanges();
+            Caller.DB.SaveChanges();
         }
         void Journal_DeleteByPurchase(BLL.Purchase P)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
 
         #endregion
 
         #region sales return 
-        public static void Journal_SaveBySalesReturn(DAL.SalesReturn SR)
+        public  void Journal_SaveBySalesReturn(DAL.SalesReturn SR)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
             string Mode, status = null;
@@ -374,7 +374,7 @@ namespace AccountBuddy.SL.Hubs
                 Mode = "Cheque";
                 status = "Process";
             }
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -405,7 +405,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                        LedgerId = Caller.DB.Banks.FirstOrDefault().LedgerId,
                         CrAmt = SR.TotalAmount,
                         TransactionMode = "Cheque",
                         Particulars = SR.Narration,
@@ -438,7 +438,7 @@ namespace AccountBuddy.SL.Hubs
                     Status = status
                 });
 
-                DB.Journals.Add(j);
+                Caller.DB.Journals.Add(j);
             }
             else
             {
@@ -463,7 +463,7 @@ namespace AccountBuddy.SL.Hubs
                         }
                         else
                         {
-                            jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
+                            jd.LedgerId = Caller.DB.Banks.FirstOrDefault().LedgerId;
                             jd.CrAmt = SR.TotalAmount;
                             jd.TransactionMode = "Cheque";
                             jd.ChequeDate = SR.ChequeDate;
@@ -484,19 +484,19 @@ namespace AccountBuddy.SL.Hubs
                 }
             }
             j.JournalDate = SR.SRDate;
-            DB.SaveChanges();
+            Caller.DB.SaveChanges();
         }
         void Journal_DeleteBySalesReturn(BLL.SalesReturn SR)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
 
         #region Sales
 
-        public static void Journal_SaveBySales(DAL.Sale S)
+        public  void Journal_SaveBySales(DAL.Sale S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
             string Mode=null, status = null;
@@ -515,7 +515,7 @@ namespace AccountBuddy.SL.Hubs
                 Mode = "Cheque";
                 status = "Process";
             }
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -546,7 +546,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                        LedgerId = Caller.DB.Banks.FirstOrDefault().LedgerId,
                         DrAmt = S.TotalAmount,
                         Particulars = S.Narration,
                         TransactionMode = "Cheque",
@@ -577,7 +577,7 @@ namespace AccountBuddy.SL.Hubs
                     Particulars = S.Narration
                 });
 
-                DB.Journals.Add(j);
+                Caller.DB.Journals.Add(j);
             }
             else
             {
@@ -602,7 +602,7 @@ namespace AccountBuddy.SL.Hubs
                         }
                         else
                         {
-                            jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
+                            jd.LedgerId = Caller.DB.Banks.FirstOrDefault().LedgerId;
                             jd.DrAmt = S.TotalAmount;
                             jd.TransactionMode = "Cheque";
                             jd.Particulars = S.Narration;
@@ -624,19 +624,19 @@ namespace AccountBuddy.SL.Hubs
                 }
             }
             j.JournalDate = S.SalesDate;
-            DB.SaveChanges();
+            Caller.DB.SaveChanges();
         }
         void Journal_DeleteBySales(BLL.Sale S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
 
         #region Purchase Return
-        public static void Journal_SaveByPurchaseReturn(DAL.PurchaseReturn PR)
+        public   void Journal_SaveByPurchaseReturn(DAL.PurchaseReturn PR)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, PR.Id);
             string Mode, status = null;
@@ -655,7 +655,7 @@ namespace AccountBuddy.SL.Hubs
                 Mode = "Cheque";
                 status = "Process";
             }
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.EntryNo == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -685,7 +685,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                        LedgerId = Caller.DB.Banks.FirstOrDefault().LedgerId,
                         DrAmt = PR.TotalAmount,
                         TransactionMode = "Cheque",
                         Particulars = PR.Narration,
@@ -719,7 +719,7 @@ namespace AccountBuddy.SL.Hubs
                 });
 
 
-                DB.Journals.Add(j);
+                Caller.DB.Journals.Add(j);
             }
             else
             {
@@ -744,7 +744,7 @@ namespace AccountBuddy.SL.Hubs
                         }
                         else
                         {
-                            jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
+                            jd.LedgerId = Caller.DB.Banks.FirstOrDefault().LedgerId;
                             jd.DrAmt = PR.TotalAmount;
                             jd.TransactionMode = "Cheque";
                             jd.Particulars = PR.Narration;
@@ -766,13 +766,13 @@ namespace AccountBuddy.SL.Hubs
                 }
             }
             j.JournalDate = PR.PRDate;
-            DB.SaveChanges();
+            Caller.DB.SaveChanges();
         }
         void Journal_DeleteByPurchaseReturn(BLL.PurchaseReturn PR)
         {
 
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, PR.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
@@ -782,11 +782,11 @@ namespace AccountBuddy.SL.Hubs
         {
             var EntryNo = string.Format("PMT-{0}", P.Id);
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
             {
                 var pd = P.PDetails.FirstOrDefault();
-                var ld = DB.Ledgers.Where(x => x.Id == pd.LedgerId).FirstOrDefault();
+                var ld = Caller.DB.Ledgers.Where(x => x.Id == pd.LedgerId).FirstOrDefault();
 
                 if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
                 {
@@ -812,8 +812,8 @@ namespace AccountBuddy.SL.Hubs
                             CrAmt = P.Amount,
                             Particulars = P.Particulars
                         });
-                        DB.Journals.Add(j);
-                        DB.SaveChanges();
+                        Caller.DB.Journals.Add(j);
+                        Caller.DB.SaveChanges();
                     }
 
 
@@ -828,14 +828,14 @@ namespace AccountBuddy.SL.Hubs
                     if (jd.DrAmt != 0) jd.DrAmt = P.Amount;
                     jd.Particulars = P.Particulars;
                 }
-                DB.SaveChanges();
+                Caller.DB.SaveChanges();
             }
 
         }
         void Journal_DeleteByPayment(BLL.Payment P)
         {
             var EntryNo = string.Format("PMT-{0}", P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
 
@@ -846,11 +846,11 @@ namespace AccountBuddy.SL.Hubs
         {
             var EntryNo = string.Format("RPT-{0}", R.Id);
 
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j == null)
             {
                 var pd = R.RDetails.FirstOrDefault();
-                var ld = DB.Ledgers.Where(x => x.Id == pd.LedgerId).FirstOrDefault();
+                var ld = Caller.DB.Ledgers.Where(x => x.Id == pd.LedgerId).FirstOrDefault();
 
                 if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
                 {
@@ -876,8 +876,8 @@ namespace AccountBuddy.SL.Hubs
                             CrAmt = R.Amount,
                             Particulars = R.Particulars
                         });
-                        DB.Journals.Add(j);
-                        DB.SaveChanges();
+                        Caller.DB.Journals.Add(j);
+                        Caller.DB.SaveChanges();
                     }
 
 
@@ -893,14 +893,14 @@ namespace AccountBuddy.SL.Hubs
                     if (jd.DrAmt != 0) jd.DrAmt = R.Amount;
                     jd.Particulars = R.Particulars;
                 }
-                DB.SaveChanges();
+                Caller.DB.SaveChanges();
             }
 
         }
         void Journal_DeleteByReceipt(BLL.Receipt P)
         {
             var EntryNo = string.Format("RPT-{0}", P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
@@ -912,7 +912,7 @@ namespace AccountBuddy.SL.Hubs
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, STout.Id);
             var CId = STout.Ledger.AccountGroup.CompanyId;
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -934,7 +934,7 @@ namespace AccountBuddy.SL.Hubs
                     Particulars = STout.Narration
                 });
 
-                DB.Journals.Add(j);
+                Caller.DB.Journals.Add(j);
             }
             else
             {
@@ -954,13 +954,13 @@ namespace AccountBuddy.SL.Hubs
             }
 
             j.JournalDate = STout.Date;
-            DB.SaveChanges();
+            Caller.DB.SaveChanges();
         }
         void Journal_DeleteByStockOut(BLL.StockOut P)
         {
 
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
 
@@ -973,7 +973,7 @@ namespace AccountBuddy.SL.Hubs
             var CId = STIn.Ledger.AccountGroup.CompanyId;
 
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -995,7 +995,7 @@ namespace AccountBuddy.SL.Hubs
                     Particulars = STIn.Narration
                 });
 
-                DB.Journals.Add(j);
+                Caller.DB.Journals.Add(j);
             }
             else
             {
@@ -1015,13 +1015,13 @@ namespace AccountBuddy.SL.Hubs
             }
 
             j.JournalDate = STIn.Date;
-            DB.SaveChanges();
+            Caller.DB.SaveChanges();
         }
         void Journal_DeleteByStockIn(BLL.StockIn P)
         {
 
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
@@ -1032,7 +1032,7 @@ namespace AccountBuddy.SL.Hubs
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.JobOrderIssue, P.Id);
             var CId = P.JobWorker.Ledger.AccountGroup.CompanyId;
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -1059,7 +1059,7 @@ namespace AccountBuddy.SL.Hubs
                     Particulars = P.Narration
                 });
 
-                DB.Journals.Add(j);
+                Caller.DB.Journals.Add(j);
             }
             else
             {
@@ -1079,12 +1079,12 @@ namespace AccountBuddy.SL.Hubs
             }
 
             j.JournalDate = P.JODate;
-            DB.SaveChanges();
+            Caller.DB.SaveChanges();
         }
         void Journal_DeleteByJobOrderIssue(BLL.JobOrderIssue P)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.JobOrderIssue, P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
 
@@ -1098,7 +1098,7 @@ namespace AccountBuddy.SL.Hubs
 
             var CId = S.JobWorker.Ledger.AccountGroup.CompanyId;
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -1125,7 +1125,7 @@ namespace AccountBuddy.SL.Hubs
                     Particulars = S.Narration
                 });
 
-                DB.Journals.Add(j);
+                Caller.DB.Journals.Add(j);
             }
             else
             {
@@ -1144,13 +1144,13 @@ namespace AccountBuddy.SL.Hubs
                 }
             }
             j.JournalDate = S.JRDate;
-            DB.SaveChanges();
+            Caller.DB.SaveChanges();
         }
         void Journal_DeleteByJobOrderReceived(BLL.JobOrderReceived S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.JobOrderReceived, S.Id);
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
@@ -1163,7 +1163,7 @@ namespace AccountBuddy.SL.Hubs
 
             var CId = S.Staff.Ledger.AccountGroup.CompanyId;
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -1190,7 +1190,7 @@ namespace AccountBuddy.SL.Hubs
                     Particulars = S.Narration
                 });
 
-                DB.Journals.Add(j);
+                Caller.DB.Journals.Add(j);
             }
             else
             {
@@ -1209,13 +1209,13 @@ namespace AccountBuddy.SL.Hubs
                 }
             }
             j.JournalDate = S.SPDate;
-            DB.SaveChanges();
+            Caller.DB.SaveChanges();
         }
         void Journal_DeleteByStockInProcess(BLL.StockInProcess S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockInProcess, S.Id);
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
@@ -1227,7 +1227,7 @@ namespace AccountBuddy.SL.Hubs
 
             var CId = S.Staff.Ledger.AccountGroup.CompanyId;
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -1254,7 +1254,7 @@ namespace AccountBuddy.SL.Hubs
                     Particulars = S.Narration
                 });
 
-                DB.Journals.Add(j);
+                Caller.DB.Journals.Add(j);
             }
             else
             {
@@ -1273,13 +1273,13 @@ namespace AccountBuddy.SL.Hubs
                 }
             }
             j.JournalDate = S.Date;
-            DB.SaveChanges();
+            Caller.DB.SaveChanges();
         }
         void Journal_DeleteByStockSeparated(BLL.StockSeperated S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockSeparated, S.Id);
 
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion

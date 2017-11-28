@@ -20,6 +20,9 @@
         <Controls:WindowCommands>
             <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
                                         x:Name="MenuToggleButton" Height="Auto"/>
+            <Button Name="btnRefresh"  Click="btnRefresh_Click" Height="25"  ToolTip="Refresh Connectivity">
+                <materialDesign:PackIcon Kind="Refresh" />
+            </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
 
