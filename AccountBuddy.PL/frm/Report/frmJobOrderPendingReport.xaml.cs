@@ -99,8 +99,8 @@ namespace AccountBuddy.PL.frm.Report
             try
             {
                 var po = dgvDetails.SelectedItem as BLL.JOPending;
-                Transaction.frmJobOrderIssue f = new Transaction.frmJobOrderIssue();
-                App.frmHome.ShowForm(f);
+                Transaction.frmJobOrderIssue f = App.frmHome.ShowForm(Common.Forms.frmJobOrderIssue) as Transaction.frmJobOrderIssue;
+
                 System.Windows.Forms.Application.DoEvents();
                 f.data.SearchText = po.EntryNo;
                 System.Windows.Forms.Application.DoEvents();

@@ -262,6 +262,9 @@ namespace AccountBuddy.PL.frm.Master
                 rptJobWorker.LocalReport.DataSources.Add(data1);
 
                 rptJobWorker.LocalReport.ReportPath = @"rpt\master\rptJobWorker.rdlc";
+
+                rptJobWorker.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
                 rptJobWorker.RefreshReport();
 
             }
@@ -272,7 +275,10 @@ namespace AccountBuddy.PL.frm.Master
          
 
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
         private void onClientEvents()
         {
             BLL.FMCGHubClient.FMCGHub.On<BLL.JobWorker>("JobWorker_Save", (Cus) =>

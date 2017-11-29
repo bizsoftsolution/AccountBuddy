@@ -290,6 +290,9 @@ namespace AccountBuddy.PL.frm.Master
                 param[0] = new ReportParameter("Title", "LEDGER LIST");
 
                 RptLedger.LocalReport.SetParameters(param);
+
+                RptLedger.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
                 RptLedger.RefreshReport();
 
             }
@@ -300,7 +303,10 @@ namespace AccountBuddy.PL.frm.Master
 
 
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
         private void onClientEvents()
         {
             BLL.FMCGHubClient.FMCGHub.On<BLL.Ledger>("Ledger_Save", (led) =>

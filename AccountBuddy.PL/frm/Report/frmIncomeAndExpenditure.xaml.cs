@@ -227,8 +227,8 @@ namespace AccountBuddy.PL.frm.Report
                 {
                     if (PL.Ledger.Id != 0)
                     {
-                        frmGeneralLedger frm = new frmGeneralLedger();
-                        App.frmHome.ShowForm(frm);
+                        frmGeneralLedger frm = App.frmHome.ShowForm(Common.Forms.frmGeneralLedger) as frmGeneralLedger;
+
 
                         System.Windows.Forms.Application.DoEvents();
                         frm.cmbAccountName.SelectedValue = PL.Ledger.Id;

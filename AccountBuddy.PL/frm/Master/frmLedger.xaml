@@ -265,7 +265,10 @@
                             </Grid>
                             <Grid Grid.Row="1">
 
-                                <DataGrid x:Name="dgvLedger"  CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="20" Grid.ColumnSpan="2" SelectionChanged="dgvLedger_SelectionChanged" MouseDoubleClick="dgvLedger_MouseDoubleClick" >
+                                <DataGrid x:Name="dgvLedger"  CanUserSortColumns="True" CanUserAddRows="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black"  Margin="20" Grid.ColumnSpan="2" SelectionChanged="dgvLedger_SelectionChanged" MouseDoubleClick="dgvLedger_MouseDoubleClick"  EnableRowVirtualization="True" 
+             EnableColumnVirtualization="True"
+             VirtualizingStackPanel.VirtualizationMode="Standard"
+             VirtualizingStackPanel.IsVirtualizing="True">
                                     <DataGrid.ColumnHeaderStyle>
                                         <Style TargetType="{x:Type DataGridColumnHeader}">
                                             <Setter Property="FontWeight" Value="Bold" />

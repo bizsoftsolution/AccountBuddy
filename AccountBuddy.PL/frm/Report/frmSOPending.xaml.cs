@@ -92,8 +92,8 @@ namespace AccountBuddy.PL.frm.Report
             try
             {
                 var po = dgvDetails.SelectedItem as BLL.SOPending;
-                Transaction.frmSalesOrder f = new Transaction.frmSalesOrder();
-                App.frmHome.ShowForm(f);
+                Transaction.frmSalesOrder f = App.frmHome.ShowForm(Common.Forms.frmSalesOrder) as Transaction.frmSalesOrder;
+
                 System.Windows.Forms.Application.DoEvents();
                 f.data.SearchText = po.EntryNo;
                 System.Windows.Forms.Application.DoEvents();

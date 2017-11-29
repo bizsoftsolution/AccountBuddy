@@ -53,30 +53,28 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 DAL.Ledger d = Caller.DB.Ledgers.Where(x => x.Id == led.Id).FirstOrDefault();
+                DAL.Supplier s = Caller.DB.Suppliers.Where(x => x.LedgerId == led.Id).FirstOrDefault();
              
+
                 if (d == null)
                 {
                     d = new DAL.Ledger(); 
                     Caller.DB.Ledgers.Add(d);
-
-                    led.toCopy<DAL.Ledger>(d);
-
-                   
-                    Caller.DB.SaveChanges();
+                    led.toCopy<DAL.Ledger>(d);                  
                     led.Id = d.Id;
-
                     LogDetailStore(led, LogDetailType.INSERT);
                 }
                 else
                 {
-                    led.toCopy<DAL.Ledger>(d);
-                    Caller.DB.SaveChanges();
+                    led.toCopy<DAL.Ledger>(d);                   
                     LogDetailStore(led, LogDetailType.UPDATE);
                 }
-
+                Caller.DB.SaveChanges();
                 Clients.Clients(OtherLoginClientsOnGroup).Ledger_Save(led);
 
                 return led.Id = d.Id;
+
+
             }
             catch (Exception ex) { }
             return 0;

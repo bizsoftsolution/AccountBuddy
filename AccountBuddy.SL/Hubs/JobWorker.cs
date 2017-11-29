@@ -72,12 +72,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 var d = Caller.DB.JobWorkers.Where(x => x.Id == pk).FirstOrDefault();
+                int LID =(int) d.LedgerId;
                 if (d != null && Ledger_CanDelete(d.Ledger))
                 {
                     var b = JobWorker_DALtoBLL(d);
                     Caller.DB.JobWorkers.Remove(d);
                     Caller.DB.SaveChanges();
-                    Ledger_Delete(d.LedgerId.Value);
+                    Ledger_Delete(LID);
                     LogDetailStore(b, LogDetailType.DELETE);
                 }
 

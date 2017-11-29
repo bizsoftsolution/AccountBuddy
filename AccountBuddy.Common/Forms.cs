@@ -58,6 +58,10 @@ namespace AccountBuddy.Common
                                            frmSalesReport = "AccountBuddy.PL.frm.Reports.frmSalesReport",
                                            frmCustomerSalesReport = "AccountBuddy.PL.frm.Reports.frmCustomerSalesReport",
                                            frmPayableReceivable = "AccountBuddy.PL.frm.Reports.frmPayableReceivable",
-        frmPurchaseRequestReport = "AccountBuddy.PL.frm.Report.frmPurchaseRequestReport";
+        frmPurchaseRequestReport = "AccountBuddy.PL.frm.Report.frmPurchaseRequestReport",
+               frmWelcome = "AccountBuddy.PL.frmWelcome"
+
+
+            ;
     }
 }

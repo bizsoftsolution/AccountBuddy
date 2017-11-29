@@ -233,8 +233,7 @@ namespace AccountBuddy.PL.frm.Report
                 {
                     if (bs.LedgerList.Id != 0)
                     {
-                        frmGeneralLedger frm = new frmGeneralLedger();
-                        App.frmHome.ShowForm(frm);
+                        frmGeneralLedger frm = App.frmHome.ShowForm(Common.Forms.frmGeneralLedger) as frmGeneralLedger;
 
                         System.Windows.Forms.Application.DoEvents();
                         frm.cmbAccountName.SelectedValue = bs.LedgerList.Id;

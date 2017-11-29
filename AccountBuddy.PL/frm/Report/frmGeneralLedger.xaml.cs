@@ -105,8 +105,8 @@ namespace AccountBuddy.PL.frm.Report
                 {
                     if (gl.EType.StartsWith(BLL.FormPrefix.Payment))
                     {
-                        Transaction.frmPayment f = new Transaction.frmPayment();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmPayment f = App.frmHome.ShowForm(Common.Forms.frmPayment) as Transaction.frmPayment;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -120,8 +120,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.Receipt))
                     {
-                        Transaction.frmReceipt f = new Transaction.frmReceipt();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmReceipt f = App.frmHome.ShowForm(Common.Forms.frmReceipt) as Transaction.frmReceipt;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -135,8 +135,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.Journal))
                     {
-                        Transaction.frmJournal f = new Transaction.frmJournal();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmJournal f = App.frmHome.ShowForm(Common.Forms.frmJournal) as Transaction.frmJournal;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
 
@@ -151,8 +151,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.Sales))
                     {
-                        Transaction.frmSale f = new Transaction.frmSale();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmSale f = App.frmHome.ShowForm(Common.Forms.frmSales) as Transaction.frmSale;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -167,8 +167,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.Purchase))
                     {
-                        Transaction.frmPurchase f = new Transaction.frmPurchase();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmPurchase f = App.frmHome.ShowForm(Common.Forms.frmPurchase) as Transaction.frmPurchase;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -182,8 +182,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.SalesReturn))
                     {
-                        Transaction.frmSalesReturn f = new Transaction.frmSalesReturn();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmSalesReturn f = App.frmHome.ShowForm(Common.Forms.frmSalesReturn) as Transaction.frmSalesReturn;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -197,8 +197,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.PurchaseReturn))
                     {
-                        Transaction.frmPurchaseReturn f = new Transaction.frmPurchaseReturn();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmPurchaseReturn f = App.frmHome.ShowForm(Common.Forms.frmPurchaseReturn) as Transaction.frmPurchaseReturn;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -212,8 +212,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.StockOut))
                     {
-                        Transaction.frmStockOut f = new Transaction.frmStockOut();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmStockOut f = App.frmHome.ShowForm(Common.Forms.frmStockOut) as Transaction.frmStockOut;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -227,8 +227,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.StockIn))
                     {
-                        Transaction.frmStockInOut f = new Transaction.frmStockInOut();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmStockInOut f = App.frmHome.ShowForm(Common.Forms.frmStockInOut) as Transaction.frmStockInOut;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -242,8 +242,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.JobOrderIssue))
                     {
-                        Transaction.frmJobOrderIssue f = new Transaction.frmJobOrderIssue();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmJobOrderIssue f = App.frmHome.ShowForm(Common.Forms.frmJobOrderIssue) as Transaction.frmJobOrderIssue;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.RefEntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -256,8 +256,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.JobOrderReceived))
                     {
-                        Transaction.frmJobOrderReceived f = new Transaction.frmJobOrderReceived();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmJobOrderReceived f = App.frmHome.ShowForm(Common.Forms.frmJobOrderReceived) as Transaction.frmJobOrderReceived;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.RefEntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -267,8 +267,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.StockInProcess))
                     {
-                        Transaction.frmStockInProcess f = new Transaction.frmStockInProcess();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmStockInProcess f = App.frmHome.ShowForm(Common.Forms.frmStockInProcess) as Transaction.frmStockInProcess;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.RefEntryNo;
                         System.Windows.Forms.Application.DoEvents();
@@ -278,8 +278,8 @@ namespace AccountBuddy.PL.frm.Report
                     }
                     else if (gl.EType.StartsWith(BLL.FormPrefix.StockSeparated))
                     {
-                        Transaction.frmStockSeparated  f = new Transaction.frmStockSeparated();
-                        App.frmHome.ShowForm(f);
+                        Transaction.frmStockSeparated  f = App.frmHome.ShowForm(Common.Forms.frmStockSeparated) as Transaction.frmStockSeparated;
+
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.RefEntryNo;
                         f.data.Find(); System.Windows.Forms.Application.DoEvents();
@@ -290,8 +290,8 @@ namespace AccountBuddy.PL.frm.Report
                 }
                 else
                 {
-                    Transaction.frmJournal f = new Transaction.frmJournal();
-                    App.frmHome.ShowForm(f);
+                    Transaction.frmJournal f = App.frmHome.ShowForm(Common.Forms.frmJournal) as Transaction.frmJournal;
+
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = gl.EntryNo;
                     System.Windows.Forms.Application.DoEvents();

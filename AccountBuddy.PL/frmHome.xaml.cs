@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL
 {
@@ -22,6 +23,7 @@ namespace AccountBuddy.PL
     public partial class frmHome : MetroWindow
     {
         public bool IsForcedClose = false;
+        List<NavMenuItem> lstActiveForms = new List<NavMenuItem>();
         public frmHome()
         {
             InitializeComponent();
@@ -77,15 +79,42 @@ namespace AccountBuddy.PL
         }
         public void ShowWelcome()
         {
-            ccContent.Content = new frmWelcome();
+            var f = lstActiveForms.Where(x => x.FormName == Forms.frmWelcome).FirstOrDefault();
+            if (f == null)
+            {
+                f = new NavMenuItem();
+                f.FormName = Forms.frmWelcome;
+                f.Content = Activator.CreateInstance(Type.GetType(Forms.frmWelcome));
+            }
+
+            ccContent.Content = f.Content;
         }
         public void ShowBank()
         {
             ccContent.Content = new frm.Master.frmBank();
         }
-        public void ShowForm(object o)
+        public object ShowForm(String Formname)
         {
-            ccContent.Content = o;
+            var f = lstActiveForms.Where(x => x.FormName == Formname).FirstOrDefault();
+            if (f == null)
+            {
+                f = new NavMenuItem();
+                f.FormName = Formname;
+                f.Content = Activator.CreateInstance(Type.GetType(Formname));
+                lstActiveForms.Add(f);
+            }
+
+            ccContent.Content = f.Content;
+            return f.Content;
+        }
+        public bool CloseForm()
+        {
+            var n = lstActiveForms.Count();
+            if (n <= 1) return true;
+            lstActiveForms.RemoveAt(n - 1);
+            var f = lstActiveForms.LastOrDefault();
+            ccContent.Content = f.Content;
+            return false;
         }
 
         private void onClientEvents()
@@ -107,18 +136,11 @@ namespace AccountBuddy.PL
 
                 ListBox lb = sender as ListBox;
                 Common.NavMenuItem mi = lb.SelectedItem as Common.NavMenuItem;
-                if (mi.Content == null)
-                {
-                    object obj = Activator.CreateInstance(Type.GetType(mi.FormName));
-                    mi.Content = obj;
-                }
-                if (mi.Content != null) ccContent.Content = mi.Content;
+                lstActiveForms.Clear();
+                ShowForm(mi.FormName);
+                txtSearch.Text = "";
                 
-                else
-                {
-                    ccContent.Content = mi.Content;
-                    txtSearch.Text = "";
-                }
+
             }
             catch (Exception ex) { }
             MenuToggleButton.IsChecked = false;
@@ -131,7 +153,7 @@ namespace AccountBuddy.PL
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!IsForcedClose && MessageBox.Show("Are you sure to Exit?", "Exit", MessageBoxButton.YesNo) != MessageBoxResult.Yes) e.Cancel = true;
+            if (!IsForcedClose) if (MessageBox.Show("Are you sure to Close?", "Close", MessageBoxButton.YesNo) == MessageBoxResult.Yes) e.Cancel = !CloseForm(); else e.Cancel = true;
         }
 
         private void Menu_CleanUpVirtualizedItem(object sender, CleanUpVirtualizedItemEventArgs e)

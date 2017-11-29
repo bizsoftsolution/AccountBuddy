@@ -249,8 +249,8 @@ namespace AccountBuddy.PL.frm.Report
             {
                 if (rp.EType == 'P')
                 {
-                    Transaction.frmPayment f = new Transaction.frmPayment();
-                    App.frmHome.ShowForm(f);
+                    Transaction.frmPayment f = App.frmHome.ShowForm(Common.Forms.frmPayment) as Transaction.frmPayment;
+
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = rp.EntryNo;
                     System.Windows.Forms.Application.DoEvents();
@@ -258,8 +258,8 @@ namespace AccountBuddy.PL.frm.Report
                 }
                 else if (rp.EType == 'R')
                 {
-                    Transaction.frmReceipt f = new Transaction.frmReceipt();
-                    App.frmHome.ShowForm(f);
+                    Transaction.frmReceipt f = App.frmHome.ShowForm(Common.Forms.frmReceipt) as Transaction.frmReceipt;
+
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = rp.EntryNo;
                     System.Windows.Forms.Application.DoEvents();
@@ -267,8 +267,8 @@ namespace AccountBuddy.PL.frm.Report
                 }
                 else if (rp.EType == 'J')
                 {
-                    Transaction.frmJournal f = new Transaction.frmJournal();
-                    App.frmHome.ShowForm(f);
+                    Transaction.frmJournal f = App.frmHome.ShowForm(Common.Forms.frmJournal) as Transaction.frmJournal;
+
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = rp.EntryNo;
                     System.Windows.Forms.Application.DoEvents();

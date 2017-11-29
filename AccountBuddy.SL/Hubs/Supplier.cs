@@ -19,10 +19,15 @@ namespace AccountBuddy.SL.Hubs
             return SupplierTo;
         }
 
+
+
         public List<BLL.Supplier> Supplier_List()
         {
             return Caller.DB.Suppliers.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => Supplier_DALtoBLL(x)).ToList();
+
+          
+
         }
 
         public BLL.Supplier Supplier_Save(BLL.Supplier sup)

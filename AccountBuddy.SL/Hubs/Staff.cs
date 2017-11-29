@@ -86,12 +86,14 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 var d = Caller.DB.Staffs.Where(x => x.Id == pk).FirstOrDefault();
+                int lId = (int)d.LedgerId;
                 if (d != null && Ledger_CanDelete(d.Ledger))
                 {
                     var b = Staff_DALtoBLL(d);
                     Caller.DB.Staffs.Remove(d);
+                  
+                    Ledger_Delete(lId);
                     Caller.DB.SaveChanges();
-                    Ledger_Delete(d.LedgerId.Value);
                     LogDetailStore(b, LogDetailType.DELETE);
                 }
 

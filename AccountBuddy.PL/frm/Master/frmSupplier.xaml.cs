@@ -50,6 +50,8 @@ namespace AccountBuddy.PL.frm.Master
             BLL.Supplier.Init();
             dgvSupplier.ItemsSource = BLL.Supplier.toList;
 
+         
+
             CollectionViewSource.GetDefaultView(dgvSupplier.ItemsSource).Filter = Supplier_Filter;
             CollectionViewSource.GetDefaultView(dgvSupplier.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.LedgerName), System.ComponentModel.ListSortDirection.Ascending));
 
@@ -264,7 +266,7 @@ namespace AccountBuddy.PL.frm.Master
                 param[0] = new ReportParameter("Title", "SUPPLIER LIST");
                 rptSupplier.LocalReport.SetParameters(param);
 
-
+                rptSupplier.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                 rptSupplier.RefreshReport();
 
@@ -276,7 +278,10 @@ namespace AccountBuddy.PL.frm.Master
 
 
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
         private void onClientEvents()
         {
             BLL.FMCGHubClient.FMCGHub.On<BLL.Supplier>("Supplier_Save", (Cus) =>

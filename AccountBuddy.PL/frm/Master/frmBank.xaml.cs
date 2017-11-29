@@ -290,11 +290,15 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptBank.Reset();
-                ReportDataSource data = new ReportDataSource("Bank", BLL.Bank.toList.Where(x => Bank_Filter(x)).Select(x => new { AccountName= x.BankAccountName,GroupCode=x.AccountNo,x.Ledger.LedgerName, x.Ledger.PersonIncharge, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.CreditAmount, x.Ledger.CreditLimit, CreditLimitTypeName = x.Ledger.CreditLimitType.LimitType, x.Ledger.OPCr, x.Ledger.OPDr }).OrderBy(x => x.AccountName).ToList());
+                ReportDataSource data = new ReportDataSource("Bank", BLL.Bank.toList.Where(x => Bank_Filter(x)).Select(x => new { AccountName= x.BankAccountName,GroupCode=x.AccountNo,x.Ledger.LedgerName, x.Ledger.PersonIncharge, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.CreditAmount, x.Ledger.CreditLimit, CreditLimitTypeName = x.Ledger.CreditLimitType == null ? null : x.Ledger.CreditLimitType.LimitType, x.Ledger.OPCr, x.Ledger.OPDr }).OrderBy(x => x.AccountName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptBank.LocalReport.DataSources.Add(data);
                 rptBank.LocalReport.DataSources.Add(data1);
+
+
                 rptBank.LocalReport.ReportPath = @"rpt\master\rptBank.rdlc";
+
+                rptBank.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                 rptBank.RefreshReport();
 
@@ -306,7 +310,10 @@ namespace AccountBuddy.PL.frm.Master
 
 
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
         private void onClientEvents()
         {
             BLL.FMCGHubClient.FMCGHub.On<BLL.Bank>("Bank_Save", (Cus) => {
@@ -317,7 +324,14 @@ namespace AccountBuddy.PL.frm.Master
                 });
 
             });
+            BLL.FMCGHubClient.FMCGHub.On<BLL.Ledger>("Ledger_Save", (Cus) => {
 
+                this.Dispatcher.Invoke(() =>
+                {
+                    Cus.Save(true);
+                });
+
+            });
             BLL.FMCGHubClient.FMCGHub.On("Bank_Delete", (Action<int>)((pk) => {
                 this.Dispatcher.Invoke((Action)(() => {
                     BLL.Bank led = new BLL.Bank();
