@@ -24,7 +24,7 @@ namespace AccountBuddy.PL.frm.Master
     {
         #region Field
 
-        public static string FormName = "UOM";
+        public static string FormName = "Department";
         BLL.Department data = new BLL.Department();
 
         #endregion
@@ -248,7 +248,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptUOM.Reset();
-                ReportDataSource data = new ReportDataSource("Department", BLL.Department.toList.Where(x => Department_Filter(x)).Select(x => new { x.DepartmentName, x.Description }).OrderBy(x => x.DepartmentName).ToList());
+                ReportDataSource data = new ReportDataSource("Department", BLL.Department.toList.Where(x => Department_Filter(x)).Select(x => new { x.DepartmentName, x.Description, x.Budget }).OrderBy(x => x.DepartmentName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptUOM.LocalReport.DataSources.Add(data);
                 rptUOM.LocalReport.DataSources.Add(data1);

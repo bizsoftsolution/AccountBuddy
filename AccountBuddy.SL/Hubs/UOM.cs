@@ -60,8 +60,8 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).UOM_Save(agp);
-
+                Clients.Clients(OtherLoginClients).UOM_Save(agp);
+               // Clients.Others.UOM_Save(agp);
                 return agp.Id;
             }
             catch (Exception ex) { }
@@ -83,8 +83,11 @@ namespace AccountBuddy.SL.Hubs
                         LogDetailStore(d.toCopy<BLL.UOM>(new BLL.UOM()), LogDetailType.DELETE);
                     }
 
-                    Clients.Clients(OtherLoginClientsOnGroup).SUOM_Delete(pk);
-                    Clients.All.delete(pk);
+                    // Clients.Clients(OtherLoginClientsOnGroup).UOM_Delete(pk);
+                   
+                   Clients.Clients(OtherLoginClients).UOM_Delete(pk);
+
+
                     rv = true;
                 }
                 else

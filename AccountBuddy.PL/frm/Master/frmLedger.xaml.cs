@@ -77,33 +77,33 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.LedgerName == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "LedgerName"));
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "LedgerName"), "Ledger",MessageBoxButton.OK,MessageBoxImage.Warning);
             }
             else if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
             {
-                MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+                MessageBox.Show("Please Enter the Valid Email or Leave Empty", "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmLedger))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmLedger))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
                 if (data.Save() == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(Message.PL.Saved_Alert, "Ledger", MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                     Grid_Refresh();
                 }
 
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.LedgerName));
+                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.LedgerName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (!BLL.UserAccount.AllowDelete(FormName))
                 {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else
                 {
@@ -122,20 +122,20 @@ namespace AccountBuddy.PL.frm.Master
                     {
                         if (data.Delete() == true)
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert);
+                            MessageBox.Show(Message.PL.Delete_Alert, "Ledger", MessageBoxButton.OK, MessageBoxImage.Information);
                             data.Clear();
                             Grid_Refresh();
                         }
                         else
                         {
-                            MessageBox.Show(Message.PL.Cant_Delete_Alert);
+                            MessageBox.Show(Message.PL.Cant_Delete_Alert, "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                 }
             }
             else
             {
-                MessageBox.Show("No Records to Delete");
+                MessageBox.Show("No Records to Delete", "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
 
@@ -280,7 +280,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 RptLedger.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).Select(x => new { LedgerName = x.AccountName, x.PersonIncharge, x.AddressLine1, x.AddressLine2, x.CityName, x.CreditAmount, CreditLimitTypeName = x.CreditLimitType.LimitType == "" ? "" : x.CreditLimitType.LimitType, x.OPCr, x.OPDr }).OrderBy(x => x.LedgerName).ToList());
+                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).Select(x => new { LedgerName = x.AccountName, x.PersonIncharge, x.AddressLine1, x.AddressLine2, x.CityName, x.CreditAmount, CreditLimitTypeName = x.CreditLimitType==null ? "" : x.CreditLimitType.LimitType,x.TelephoneNo, x.OPCr, x.OPDr }).OrderBy(x => x.LedgerName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);

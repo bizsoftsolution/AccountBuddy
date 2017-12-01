@@ -7,10 +7,10 @@
         <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
         <MIMEType>image/png</MIMEType>
         <Sizing>FitProportional</Sizing>
-        <Top>0.23025cm</Top>
-        <Left>0.26458cm</Left>
-        <Height>2.74354cm</Height>
-        <Width>3.61667cm</Width>
+        <Top>0.54775cm</Top>
+        <Left>0.92604cm</Left>
+        <Height>2.10854cm</Height>
+        <Width>2.95521cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -72,7 +72,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>AddressLine1</rd:DefaultName>
-        <Top>1.10323cm</Top>
+        <Top>1.03268cm</Top>
         <Left>4.05764cm</Left>
         <Height>0.6cm</Height>
         <Width>9.34542cm</Width>
@@ -106,7 +106,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>AddressLine2</rd:DefaultName>
-        <Top>1.73851cm</Top>
+        <Top>1.63268cm</Top>
         <Left>4.05764cm</Left>
         <Height>0.6cm</Height>
         <Width>9.34542cm</Width>
@@ -140,7 +140,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CityPincode</rd:DefaultName>
-        <Top>2.37379cm</Top>
+        <Top>2.23268cm</Top>
         <Left>4.05764cm</Left>
         <Height>0.6cm</Height>
         <Width>9.34542cm</Width>

@@ -65,41 +65,41 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Ledger.LedgerName == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "LedgerName"));
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "LedgerName"), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.AccountNo == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "AccountNo"));
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "AccountNo"), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.BankAccountName == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "BankAccountName"));
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "BankAccountName"), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
             {
-                MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+                MessageBox.Show("Please Enter the Valid Email or Leave Empty", "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmBank))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmBank))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
                 if (data.Save() == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(Message.PL.Saved_Alert, "Ledger", MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                     Grid_Refresh();
                 }
 
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.Ledger.LedgerName));
+                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.Ledger.LedgerName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (!BLL.UserAccount.AllowDelete(FormName))
                 {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else
                 {
@@ -118,13 +118,13 @@ namespace AccountBuddy.PL.frm.Master
                     {
                         if (data.Delete() == true)
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert);
+                            MessageBox.Show(Message.PL.Delete_Alert, "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
                             data.Clear();
                             Grid_Refresh();
                         }
                         else
                         {
-                            MessageBox.Show(Message.PL.Cant_Delete_Alert);
+                            MessageBox.Show(Message.PL.Cant_Delete_Alert, "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                 }
@@ -290,7 +290,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptBank.Reset();
-                ReportDataSource data = new ReportDataSource("Bank", BLL.Bank.toList.Where(x => Bank_Filter(x)).Select(x => new { AccountName= x.BankAccountName,GroupCode=x.AccountNo,x.Ledger.LedgerName, x.Ledger.PersonIncharge, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.CreditAmount, x.Ledger.CreditLimit, CreditLimitTypeName = x.Ledger.CreditLimitType == null ? null : x.Ledger.CreditLimitType.LimitType, x.Ledger.OPCr, x.Ledger.OPDr }).OrderBy(x => x.AccountName).ToList());
+                ReportDataSource data = new ReportDataSource("Bank", BLL.Bank.toList.Where(x => Bank_Filter(x)).Select(x => new { AccountName= x.BankAccountName,GroupCode=x.AccountNo,x.Ledger.LedgerName, x.Ledger.PersonIncharge, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.CreditAmount, x.Ledger.CreditLimit, CreditLimitTypeName = x.Ledger.CreditLimitType == null ? null : x.Ledger.CreditLimitType.LimitType, x.Ledger.OPCr, x.Ledger.OPDr, x.Ledger.TelephoneNo }).OrderBy(x => x.AccountName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptBank.LocalReport.DataSources.Add(data);
                 rptBank.LocalReport.DataSources.Add(data1);
