@@ -19,6 +19,7 @@ namespace AccountBuddy.PL
         {
             try
             {
+                BLL.FMCGHubClient.URLPath = ConfigurationManager.AppSettings["SLPath"];
                 Common.AppLib.WriteLog("Application Startup");
                 Window frm = new frmLogin();
                 frm.Show();
