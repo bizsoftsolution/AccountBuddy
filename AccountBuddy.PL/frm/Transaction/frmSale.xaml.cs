@@ -53,15 +53,15 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             BLL.Product.Init();
 
-            var max = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
-            var min = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
+            var max = data.SDetail.Product.MaxSellingRate;
+            var min = data.SDetail.Product.MinSellingRate;
 
             if (data.SDetail.ProductId == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbItem.Focus();
             }
-            else if (BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault() < data.SDetail.Quantity)
+            else if (data.SDetail.Product.AvailableStock < data.SDetail.Quantity)
             {
                 var v = BLL.Product.toList.Where(x => x.Id == data.SDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
                 MessageBox.Show(String.Format(Message.PL.Product_Available_Stock, v), FormName, MessageBoxButton.OK, MessageBoxImage.Error);

@@ -89,7 +89,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <ComboBox x:Name="cmbItem" Margin="10,0,10,0" Loaded="cmbItem_Loaded" Text="{Binding SDetail.ProductName}" SelectedValue="{Binding SDetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
+                        <ComboBox x:Name="cmbItem" Margin="10,0,10,0" Loaded="cmbItem_Loaded" Text="{Binding SDetail.ProductName}" SelectedItem="{Binding SDetail.Product, Mode=TwoWay}" SelectedValue="{Binding SDetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />

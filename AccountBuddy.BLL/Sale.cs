@@ -597,13 +597,15 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
+                
+
                 Common.AppLib.WriteLog("FindRefNo_Start");
                 rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_SRef", RefNo, this).Result;
                 Common.AppLib.WriteLog("FindRefNo_End");
             }
             catch (Exception ex)
             {
-                Common.AppLib.WriteLog("FindRefNo_Error");
+                Common.AppLib.WriteLog(string.Format("FindRefNo_Error {0}-{1}", ex.Message, ex.InnerException));
                 rv = true;
             }
             return rv;

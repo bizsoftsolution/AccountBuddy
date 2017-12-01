@@ -13,6 +13,7 @@ namespace AccountBuddy.BLL
         private long _Id;
         private long _SalesId;
         private long? _SODId;
+        private Product _Product;
         private int _ProductId;
         private int _UOMId;
         private double _Quantity;
@@ -77,7 +78,23 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public Product Product
+        {
+            get
+            {
+                return _Product;
+            }
+            set
+            {
+                if (_Product != value)
+                {
+                    _Product = value;
+                    SetProduct();
 
+                    NotifyPropertyChanged(nameof(Product));
+                }                
+            }
+        }
         public int ProductId
         {
             get
@@ -88,8 +105,7 @@ namespace AccountBuddy.BLL
             {
                 if (_ProductId != value)
                 {
-                    _ProductId = value;
-                    if (value != 0 ) SetProduct(new Product(_ProductId));
+                    _ProductId = value;                    
                     NotifyPropertyChanged(nameof(ProductId));
                 }
             }
@@ -123,14 +139,15 @@ namespace AccountBuddy.BLL
                 {
                     _Quantity = value;
                     Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
-                    if (_ProductId != 0) SetDiscount(new Product(_ProductId));
+                    if (_ProductId != 0) SetDiscount();
                     NotifyPropertyChanged(nameof(Quantity));
                 }
             }
         }
 
-        private void SetDiscount(Product p)
+        private void SetDiscount()
         {
+            var p = Product ?? new Product();
             DiscountAmount = p.DiscountAmount * (decimal)Quantity;
         }
 
@@ -274,8 +291,10 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Methods
-        private void SetProduct(Product p)
+        private void SetProduct()
         {
+            var p = Product ?? new Product();
+            ProductId = p.Id;
             UOMId = p.UOMId;
             ProductName = p.ProductName;
             UnitPrice = p.SellingRate;
