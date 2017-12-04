@@ -119,7 +119,9 @@ namespace AccountBuddy.BLL
                         _toList = new ObservableCollection<Ledger>(FMCGHubClient.FMCGHub.Invoke<List<Ledger>>("Ledger_List").Result);
                     }
                     catch(Exception ex)
-                    { }
+                    {
+                        Common.AppLib.WriteLog(string.Format("Ledger List={0}", ex.Message));
+                    }
                 }
                 return _toList;
             }

@@ -22,8 +22,11 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.AccountGroup> accountGroup_List()
         {
-            return Caller.DB.AccountGroups.Where(x => x.CompanyId == Caller.CompanyId && x.GroupName != "Primary").ToList()
-                               .Select(x => AccountGroupDAL_BLL(x)).ToList();
+            var l= Caller.DB.AccountGroups.Where(x => x.CompanyId == Caller.CompanyId && x.GroupName != "Primary").ToList()
+                              .Select(x => AccountGroupDAL_BLL(x)).ToList();
+            //var l = Caller.DB.AccountGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+            //                   .Select(x => AccountGroupDAL_BLL(x)).ToList();
+            return l;
         }
         protected DbContext DbContext { get; set; }
      

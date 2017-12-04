@@ -66,11 +66,18 @@ namespace AccountBuddy.BLL
             {
                 try
                 {
-                    if (_toList == null)
+                    if (_toList == null||_toList.Count==0)
                     {
-                        _toList = new ObservableCollection<AccountGroup>();
-                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<AccountGroup>>("accountGroup_List").Result;
-                        _toList = new ObservableCollection<AccountGroup>(l1.OrderBy(x=> x.GroupNameWithCode));
+                        try
+                        {
+                            _toList = new ObservableCollection<AccountGroup>();
+                            var l1 = FMCGHubClient.FMCGHub.Invoke<List<AccountGroup>>("accountGroup_List").Result;
+                            _toList = new ObservableCollection<AccountGroup>(l1.OrderBy(x => x.GroupNameWithCode));
+                        }
+                        catch(Exception ex)
+                        {
+                            Common.AppLib.WriteLog(string.Format("{Account Group List={0}", ex.Message));
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -87,17 +94,18 @@ namespace AccountBuddy.BLL
         }
         public static List<AccountGroup> toGroup(int? UGId)
         {
-            
             List<AccountGroup> RV = new List<AccountGroup>();
-
-            foreach(var ag in toList.Where(x=> x.UnderGroupId == UGId).OrderBy(x=>  x.GroupCode).ThenBy(x=> x.GroupName).ToList())
-            {
-                ag.SubAccountGroup = toGroup(ag.Id);
-                RV.Add(ag);
+            try
+            {             
+                foreach (var ag in toList.Where(x => x.UnderGroupId == UGId ).OrderBy(x => x.GroupCode).ThenBy(x => x.GroupName).ToList())
+                {
+                    ag.SubAccountGroup = toGroup(ag.Id);
+                    RV.Add(ag);
+                }
+                return RV;
             }
-
+            catch(Exception ex) { }
             return RV;
-            
         }
         public int Id
         {
@@ -390,6 +398,7 @@ namespace AccountBuddy.BLL
                     if(rv==true)
                     {
                         toList.Remove(d);
+                        toList = null;
                     }
                 }
                 else

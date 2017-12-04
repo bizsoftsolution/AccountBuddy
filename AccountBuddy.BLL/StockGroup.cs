@@ -451,6 +451,7 @@ namespace AccountBuddy.BLL
                     if (rv == true)
                     {
                         toList.Remove(d);
+                        toList = null;
                     }
                 }
                 else

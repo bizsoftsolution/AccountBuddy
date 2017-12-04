@@ -298,7 +298,7 @@ namespace AccountBuddy.SL.Hubs
             ast.GroupName = BLL.DataKeyValue.Assets_Key;
             ast.GroupCode = "100";
             ast.CompanyId = pr.CompanyId;
-            ast.UnderGroupId = pr.Id;
+            ast.UnderGroupId = null;
             Caller.DB.AccountGroups.Add(ast);
             Caller.DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, ast.GroupName, ast.Id);
@@ -463,7 +463,7 @@ namespace AccountBuddy.SL.Hubs
             liab.GroupName = BLL.DataKeyValue.Liabilities_Key;
             liab.GroupCode = "200";
             liab.CompanyId = pr.CompanyId;
-            liab.UnderGroupId = pr.Id;
+            liab.UnderGroupId =null;
             Caller.DB.AccountGroups.Add(liab);
             Caller.DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, liab.GroupName, liab.Id);
@@ -609,7 +609,7 @@ namespace AccountBuddy.SL.Hubs
             Inc.GroupName = BLL.DataKeyValue.Income_Key;
             Inc.GroupCode = "300";
             Inc.CompanyId = pr.CompanyId;
-            Inc.UnderGroupId = pr.Id;
+            Inc.UnderGroupId = null;
             Caller.DB.AccountGroups.Add(Inc);
             Caller.DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, Inc.GroupName, Inc.Id);
@@ -681,7 +681,7 @@ namespace AccountBuddy.SL.Hubs
             Exp.GroupName = BLL.DataKeyValue.Expenses_Key;
             Exp.GroupCode = "400";
             Exp.CompanyId = pr.CompanyId;
-            Exp.UnderGroupId = pr.Id;
+            Exp.UnderGroupId = null;
             Caller.DB.AccountGroups.Add(Exp);
             Caller.DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, Exp.GroupName, Exp.Id);
