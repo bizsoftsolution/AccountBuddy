@@ -177,7 +177,7 @@ namespace AccountBuddy.SL.Hubs
             {
                 u = new SLUser() { ConnectionId = Context.ConnectionId, UserId = 0, CompanyId = 0 };
                 UserList.Add(u);
-            }
+            }            
             return base.OnConnected();
         }
 
@@ -191,7 +191,10 @@ namespace AccountBuddy.SL.Hubs
 
             return base.OnDisconnected(stopCalled);
         }
-
+        public override Task OnReconnected()
+        {
+            return base.OnReconnected();
+        }
         private int EntityTypeId(string Type)
         {
             DAL.EntityType et = EntityTypeList.Where(x => x.Entity == Type).FirstOrDefault();
