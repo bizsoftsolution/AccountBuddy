@@ -65,41 +65,41 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (data.Ledger.LedgerName == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "LedgerName"), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "LedgerName"), "Bank", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.AccountNo == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "AccountNo"), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "AccountNo"), "Bank", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.BankAccountName == null)
             {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "BankAccountName"), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(Message.PL.Empty_Record, "BankAccountName"), "Bank", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
             {
-                MessageBox.Show("Please Enter the Valid Email or Leave Empty", "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please Enter the Valid Email or Leave Empty", "Bank", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }
             else if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmBank))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), "Bank", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmBank))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), "Bank", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
                 if (data.Save() == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert, "Ledger", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(Message.PL.Saved_Alert, "Bank", MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                     Grid_Refresh();
                 }
 
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.Ledger.LedgerName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.Ledger.LedgerName), "Bank", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
@@ -110,21 +110,21 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (!BLL.UserAccount.AllowDelete(FormName))
                 {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), "Bank", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else
                 {
-                    if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    if (MessageBox.Show(Message.PL.Delete_confirmation, "Bank", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.No)
                     {
                         if (data.Delete() == true)
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert, "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(Message.PL.Delete_Alert, "Bank", MessageBoxButton.OK, MessageBoxImage.Information);
                             data.Clear();
                             Grid_Refresh();
                         }
                         else
                         {
-                            MessageBox.Show(Message.PL.Cant_Delete_Alert, "Ledger", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(Message.PL.Cant_Delete_Alert, "Bank", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                 }

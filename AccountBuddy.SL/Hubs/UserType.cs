@@ -73,7 +73,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(ut, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).userType_Save(ut);
+                Clients.Clients(OtherLoginClients).userType_Save(ut);
 
                 return ut.Id;
             }
@@ -94,7 +94,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(UserTypeDAL_BLL(d), LogDetailType.DELETE);                 
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).userType_Delete(pk);
+                Clients.Clients(OtherLoginClients).userType_Delete(pk);
                 Clients.All.delete(pk);
             }
             catch (Exception ex) { }

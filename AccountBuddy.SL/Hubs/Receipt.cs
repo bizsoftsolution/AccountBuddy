@@ -74,7 +74,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.ReceiptDetail>(d_pod);
                     }
                     Caller.DB.SaveChanges();
-                    Clients.Clients(OtherLoginClientsOnGroup).Receipt_RefNoRefresh(Receipt_NewRefNo());
+                    Clients.Clients(OtherLoginClients).Receipt_RefNoRefresh(Receipt_NewRefNo());
                     LogDetailStore(PO, LogDetailType.UPDATE);
                     Journal_SaveByReceipt(PO);
                 }
@@ -126,6 +126,7 @@ namespace AccountBuddy.SL.Hubs
                     Caller.DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
                     Journal_DeleteByReceipt(P);
+                    Clients.Clients(OtherLoginClients).Receipt_RefNoRefresh(Receipt_NewRefNo());
                 }
                 return true;
             }

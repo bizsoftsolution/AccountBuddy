@@ -19,7 +19,7 @@ namespace AccountBuddy.BLL
 
         private static ObservableCollection<UserType> _toList;
         public List<BLL.Validation> lstValidation = new List<BLL.Validation>();
-        
+
         private int _id;
         private string _typeOfUser;
         private string _description;
@@ -36,7 +36,7 @@ namespace AccountBuddy.BLL
             {
                 if (_UserPermission == null)
                 {
-                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail(): UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmUser.ToString()).FirstOrDefault();
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmUser.ToString()).FirstOrDefault();
                 }
                 return _UserPermission;
             }
@@ -91,7 +91,7 @@ namespace AccountBuddy.BLL
             {
                 if (_toList == null)
                 {
-                    _toList =new ObservableCollection<UserType>( FMCGHubClient.FMCGHub.Invoke<List<UserType>>("UserType_List").Result);
+                    _toList = new ObservableCollection<UserType>(FMCGHubClient.FMCGHub.Invoke<List<UserType>>("UserType_List").Result);
                 }
 
                 return _toList;
@@ -249,12 +249,12 @@ namespace AccountBuddy.BLL
         {
             new UserType().toCopy<UserType>(this);
             this.UserTypeDetails = new ObservableCollection<UserTypeDetail>();
-            foreach(var d in UserTypeFormDetail.toList)
+            foreach (var d in UserTypeFormDetail.toList)
             {
                 UserTypeDetail utd = new UserTypeDetail();
                 utd.UserTypeFormDetail = d.toCopy<BLL.UserTypeFormDetail>(new UserTypeFormDetail());
                 utd.UserTypeFormDetailId = utd.UserTypeFormDetail.Id;
-                UserTypeDetails.Add(utd);             
+                UserTypeDetails.Add(utd);
             }
             IsReadOnly = !UserPermission.AllowInsert;
             NotifyAllPropertyChanged();
@@ -279,11 +279,19 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 toList.Remove(d);
-                if (isServerCall == false) FMCGHubClient.FMCGHub.Invoke<int>("userType_Delete", this.Id);
-                return true;
+                if (isServerCall == false)
+                {
+                    FMCGHubClient.FMCGHub.Invoke<int>("userType_Delete", this.Id);
+                    return true;
+                }
+                else
+                {
+                    toList.Remove(d);
+                }
             }
 
             return false;
+
         }
         public bool isValid()
         {
@@ -300,15 +308,15 @@ namespace AccountBuddy.BLL
                 lstValidation.Add(new Validation() { Name = nameof(TypeOfUser), Message = string.Format(Message.BLL.Existing_Data, TypeOfUser) });
                 RValue = false;
             }
-            
+
             return RValue;
 
         }
         public static void Init()
         {
             _toList = null;
-            UserPermission = null;        
+            UserPermission = null;
         }
-            #endregion
-        }
+        #endregion
     }
+}

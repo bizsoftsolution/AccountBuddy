@@ -61,7 +61,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).Department_Save(agp);
+                Clients.Clients(OtherLoginClients).Department_Save(agp);
 
                 return agp.Id;
             }
@@ -81,8 +81,8 @@ namespace AccountBuddy.SL.Hubs
                     Caller.DB.SaveChanges();
                     LogDetailStore(d.toCopy<BLL.Department>(new BLL.Department()), LogDetailType.DELETE);
 
-                    Clients.Clients(OtherLoginClientsOnGroup).SDepartment_Delete(pk);
-                    Clients.All.delete(pk);
+                    Clients.Clients(OtherLoginClients).SDepartment_Delete(pk);
+                
                     rv = true;
                 }                
                 else

@@ -7,10 +7,10 @@
         <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
         <MIMEType>image/png</MIMEType>
         <Sizing>FitProportional</Sizing>
-        <Top>0.54775cm</Top>
-        <Left>0.92604cm</Left>
-        <Height>2.10854cm</Height>
-        <Width>2.95521cm</Width>
+        <Top>0.18602cm</Top>
+        <Left>0.84667cm</Left>
+        <Height>2.64666cm</Height>
+        <Width>3.03459cm</Width>
         <Style>
           <Border>
             <Style>None</Style>

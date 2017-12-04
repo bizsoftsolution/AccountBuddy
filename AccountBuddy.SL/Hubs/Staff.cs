@@ -67,7 +67,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 var b = Staff_DALtoBLL(d);
 
-                Clients.Clients(OtherLoginClientsOnGroup).Staff_Save(b);
+                Clients.Clients(OtherLoginClients).Staff_Save(b);
                 //Clients.All.Staff_Save(b);
                 // WriteLog("Staff_Save", BLL.UserAccount.User.Id,BLL.UserAccount.User.UserType.CompanyId , "Connection Timedout");
                 return b;
@@ -97,7 +97,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(b, LogDetailType.DELETE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).Staff_Delete(pk);
+                Clients.Clients(OtherLoginClients).Staff_Delete(pk);
                 Clients.All.delete(pk);
 
                 rv = true;

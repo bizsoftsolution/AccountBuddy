@@ -56,7 +56,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(sup, LogDetailType.UPDATE);
                 }
                 var s = Supplier_DALtoBLL(d);
-                Clients.Clients(OtherLoginClientsOnGroup).Supplier_Save(s);
+                Clients.Clients(OtherLoginClients).Supplier_Save(s);
 
                 return s;
             }
@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(s, LogDetailType.DELETE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).Supplier_Delete(pk);
+                Clients.Clients(OtherLoginClients).Supplier_Delete(pk);
                 Clients.All.delete(pk);
 
                 rv = true;

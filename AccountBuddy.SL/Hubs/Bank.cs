@@ -52,7 +52,8 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(cus, LogDetailType.UPDATE);
                 }
                 var b = Bank_DALtoBLL(d);
-                Clients.Clients(OtherLoginClientsOnGroup).Bank_Save(b);
+                // Clients.Clients(OtherLoginClientsOnGroup).Bank_Save(b);
+                Clients.Clients(OtherLoginClients).Bank_Save(b);
 
                 return b;
             }
@@ -75,8 +76,11 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(b, LogDetailType.DELETE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).Bank_Delete(pk);
-                Clients.All.delete(pk);
+                //Clients.Clients(OtherLoginClientsOnGroup).Bank_Delete(pk);
+                //Clients.All.delete(pk);
+
+                Clients.Clients(OtherLoginClients).Bank_Delete(pk);
+
 
                 rv = true;
 

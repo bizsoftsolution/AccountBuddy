@@ -184,7 +184,7 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                    if (value != null) SetAmount();
+                     SetAmount();
                 }
             }
         }
@@ -201,7 +201,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                    if (value != null) SetAmount();
+                     SetAmount();
                 }
             }
         }
@@ -234,7 +234,7 @@ namespace AccountBuddy.BLL
                 {
                     _Extras = value;
                     NotifyPropertyChanged(nameof(Extras));
-                    if (value != null) SetAmount();
+                     SetAmount();
                 }
             }
         }
@@ -242,7 +242,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_TotalAmount == null) _TotalAmount = 0;
+                if (_TotalAmount == null) _Extras = 0;
                 return _TotalAmount;
             }
             set

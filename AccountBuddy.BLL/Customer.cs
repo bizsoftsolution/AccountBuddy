@@ -249,7 +249,7 @@ namespace AccountBuddy.BLL
                         var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
                         Ledger.toList.Remove(l1);                        
                     }
-
+                    
                 }
                 else
                 {

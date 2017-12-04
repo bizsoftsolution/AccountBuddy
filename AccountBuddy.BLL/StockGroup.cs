@@ -453,6 +453,10 @@ namespace AccountBuddy.BLL
                         toList.Remove(d);
                     }
                 }
+                else
+                {
+                    toList.Remove(d);
+                }
                 return rv;
             }
 

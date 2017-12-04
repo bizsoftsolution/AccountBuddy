@@ -78,7 +78,7 @@ namespace AccountBuddy.SL.Hubs
                     }
                     LogDetailStore(P, LogDetailType.UPDATE);
                       }
-                Clients.Clients(OtherLoginClientsOnGroup).SalesReturn_RefNoRefresh(SalesReturn_NewRefNo());
+                Clients.Clients(OtherLoginClients).SalesReturn_RefNoRefresh(SalesReturn_NewRefNo());
                 Journal_SaveBySalesReturn(d);
                 PurchaseReturn_SaveBySalesReturn(d);
                 return true;
@@ -131,6 +131,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.DELETE);
                     Journal_DeleteBySalesReturn(P);
                     PurchaseReturn_DeleteBySalesReturn(d);
+                    Clients.Clients(OtherLoginClients).SalesReturn_RefNoRefresh(SalesReturn_NewRefNo());
                 }
                 return true;
             }

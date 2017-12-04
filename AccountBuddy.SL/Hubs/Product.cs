@@ -109,7 +109,7 @@ namespace AccountBuddy.SL.Hubs
                     
                     return p;
                 }
-                Clients.Clients(OtherLoginClientsOnGroup).Product_Save(Product_DALtoBLL(d));
+                Clients.Clients(OtherLoginClients).Product_Save(Product_DALtoBLL(d));
 
             }
             catch (Exception ex)
@@ -135,7 +135,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(p, LogDetailType.DELETE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).Customer_Delete(pk);
+                Clients.Clients(OtherLoginClients).Customer_Delete(pk);
 
                 rv = true;
 

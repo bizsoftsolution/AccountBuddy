@@ -24,10 +24,27 @@ namespace AccountBuddy.BLL
         private string _ItemCode;
         private string _ProductName;
         private string _UOMName;
+        private Product _Product;
         #endregion
 
         #region Property
+        public Product Product
+        {
+            get
+            {
+                return _Product;
+            }
+            set
+            {
+                if (_Product != value)
+                {
+                    _Product = value;
+                    SetProduct();
 
+                    NotifyPropertyChanged(nameof(Product));
+                }
+            }
+        }
 
         public long Id
         {
@@ -72,7 +89,7 @@ namespace AccountBuddy.BLL
                 if (_ProductId != value)
                 {
                     _ProductId = value;
-                    if (value != 0) SetProduct(new Product(_ProductId));
+                   
                     NotifyPropertyChanged(nameof(ProductId));
                 }
             }
@@ -107,7 +124,7 @@ namespace AccountBuddy.BLL
                     _Quantity = value;
 
                     Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
-                    if (_ProductId != 0) SetDiscount(new Product(_ProductId));
+                    if (_ProductId != 0) SetDiscount();
                     NotifyPropertyChanged(nameof(Quantity));
                 }
             }
@@ -255,8 +272,10 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Methods
-        private void SetProduct(Product p)
+        private void SetProduct()
         {
+            var p = Product ?? new Product();
+            ProductId = p.Id;
             UOMId = p.UOMId;
             ProductName = p.ProductName;
             UnitPrice = p.PurchaseRate;
@@ -264,8 +283,9 @@ namespace AccountBuddy.BLL
             DiscountAmount = p.DiscountAmount;
         }
 
-        private void SetDiscount(Product p)
+        private void SetDiscount()
         {
+            var p = Product ?? new Product();
             DiscountAmount = p.DiscountAmount * (decimal)Quantity;
 
         }

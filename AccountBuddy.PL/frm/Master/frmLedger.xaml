@@ -22,7 +22,7 @@
         <!--#region Form Body-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="30*"/>
                 <ColumnDefinition Width="60*"/>
             </Grid.ColumnDefinitions>
             <!--#region Form Left-->

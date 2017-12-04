@@ -118,7 +118,7 @@ namespace AccountBuddy.PL.frm.Master
                 }
                 else
                 {
-                    if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    if (MessageBox.Show(Message.PL.Delete_confirmation, "Ledger", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.No)
                     {
                         if (data.Delete() == true)
                         {
