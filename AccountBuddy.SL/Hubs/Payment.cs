@@ -73,7 +73,7 @@ namespace AccountBuddy.SL.Hubs
                     Caller.DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
-                Clients.Clients(OtherLoginClientsOnGroup).Payment_RefNoRefresh(Payment_NewRefNo());
+                Clients.Clients(OtherLoginClients).Payment_RefNoRefresh(Payment_NewRefNo());
                 Journal_SaveByPayment(PO);
                 return true;
             }
@@ -103,6 +103,7 @@ namespace AccountBuddy.SL.Hubs
                     }
 
                 }
+         
             }
             catch (Exception ex) { }
             return PO;
@@ -122,8 +123,9 @@ namespace AccountBuddy.SL.Hubs
                     Caller.DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
                     Journal_DeleteByPayment(P);
+                    Clients.Clients(OtherLoginClients).Payment_RefNoRefresh(Payment_NewRefNo());
                 }
-                
+
                 return true;
             }
             catch (Exception ex) { }

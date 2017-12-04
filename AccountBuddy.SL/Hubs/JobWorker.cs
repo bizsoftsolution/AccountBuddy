@@ -53,7 +53,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 var b = JobWorker_DALtoBLL(d);
 
-                Clients.Clients(OtherLoginClientsOnGroup).JobWorker_Save(b);
+                Clients.Clients(OtherLoginClients).JobWorker_Save(b);
                 //Clients.All.JobWorker_Save(b);
                 // WriteLog("JobWorker_Save", BLL.UserAccount.User.Id,BLL.UserAccount.User.UserType.CompanyId , "Connection Timedout");
                 return b;
@@ -82,7 +82,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(b, LogDetailType.DELETE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).JobWorker_Delete(pk);
+                Clients.Clients(OtherLoginClients).JobWorker_Delete(pk);
                 Clients.All.delete(pk);
 
                 rv = true;

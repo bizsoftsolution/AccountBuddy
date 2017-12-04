@@ -380,11 +380,22 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 toList.Remove(d);
-                if (isServerCall == false) FMCGHubClient.FMCGHub.Invoke<int>("UserAccount_Delete", this.Id);
-                return true;
+                if (isServerCall == false)
+                {
+                    FMCGHubClient.FMCGHub.Invoke<int>("UserAccount_Delete", this.Id);
+                    return true;
+                }
+                else
+                {
+                    toList.Remove(d);
+                    return true;
+                }
             }
-
-            return false;
+            else
+            {
+                return false;
+            }
+          
         }
 
         public bool isValid()

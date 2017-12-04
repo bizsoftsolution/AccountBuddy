@@ -71,8 +71,8 @@ namespace AccountBuddy.SL.Hubs
                 {
                     rv = false;
                 }
-                Clients.Clients(OtherLoginClientsOnGroup).CustomFormat_Delete(pk);
-                Clients.All.delete(pk);
+                Clients.Clients(OtherLoginClients).CustomFormat_Delete(pk);
+               
                 rv = true;
 
 

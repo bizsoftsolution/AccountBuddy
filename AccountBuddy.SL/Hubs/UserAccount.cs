@@ -150,7 +150,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(ua, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).UserAccount_Save(ua);
+                Clients.Clients(OtherLoginClients).UserAccount_Save(ua);
 
                 return ua.Id;
             }
@@ -176,7 +176,7 @@ namespace AccountBuddy.SL.Hubs
                     Caller.DB.SaveChanges();
                     LogDetailStore(d.toCopy<BLL.UserAccount>(new BLL.UserAccount()), LogDetailType.DELETE);
                 }
-                Clients.Clients(OtherLoginClientsOnGroup).UserAccount_Delete(pk);
+                Clients.Clients(OtherLoginClients).UserAccount_Delete(pk);
                 Clients.All.delete(pk);
             }
             catch (Exception ex) { }

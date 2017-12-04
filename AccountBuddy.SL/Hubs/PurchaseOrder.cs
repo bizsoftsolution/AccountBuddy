@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).PurchaseOrder_RefNoRefresh(PurchaseOrder_NewRefNo());
+                Clients.Clients(OtherLoginClients).PurchaseOrder_RefNoRefresh(PurchaseOrder_NewRefNo());
 
                 SalesOrder_SaveByPurchaseOrder(d);
                 return true;
@@ -242,6 +242,7 @@ namespace AccountBuddy.SL.Hubs
                     Caller.DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
                     SalesOrder_DeleteByPurchaseOrder(d);
+                    Clients.Clients(OtherLoginClients).PurchaseOrder_RefNoRefresh(PurchaseOrder_NewRefNo());
                 }
 
                 return true;

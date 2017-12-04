@@ -8,7 +8,7 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Job OrderIssue     
+        #region Job Order Received   
         public string JobOrderReceived_NewRefNo()
         {
             return JobOrderReceived_NewRefNoByCompanyId(Caller.CompanyId);
@@ -85,7 +85,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
                 }
-                Clients.Clients(OtherLoginClientsOnGroup).JobOrderReceived_RefNoRefresh(JobOrderReceived_NewRefNo());
+                Clients.Clients(OtherLoginClients).JobOrderReceived_RefNoRefresh(JobOrderReceived_NewRefNo());
                 Journal_SaveByJobOrderReceived(d);
                 return true;
 

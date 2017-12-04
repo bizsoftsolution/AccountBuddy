@@ -547,9 +547,17 @@ namespace AccountBuddy.BLL
             if (d != null)
             {
                 toList.Remove(d);
-                if (isServerCall == false) FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Delete", this.Id);
-                return true;
+                if (isServerCall == false)
+                {
+                    FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Delete", this.Id);
+                    return true;
+                }
+                else
+                {
+                    toList.Remove(d);
+                }
             }
+           
 
             return false;
         }
@@ -560,8 +568,15 @@ namespace AccountBuddy.BLL
             if (c != null)
             {
                 toList.Remove(c);
-                if (isServerCall == false) FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Delete", c.Id);
-                return true;
+                if (isServerCall == false)
+                {
+                    FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Delete", c.Id);
+                    return true;
+                }
+                else
+                {
+                    toList.Remove(c);
+                }
             }
             return false;
         }

@@ -11,7 +11,7 @@ namespace AccountBuddy.BLL
 {
     public class Ledger : INotifyPropertyChanged
     {
-        #region Fileds
+        #region Fields
 
         private static ObservableCollection<Ledger> _toList;
         private static ObservableCollection<Ledger> _Sd_toList;

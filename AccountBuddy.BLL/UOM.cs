@@ -282,7 +282,8 @@ namespace AccountBuddy.BLL
                     {
                         toList.Remove(d);
                     }
-                }else
+                }
+                else
                 {
                     toList.Remove(d);
                 }

@@ -26,10 +26,27 @@ namespace AccountBuddy.BLL
         private string _ItemCode;
         private string _ProductName;
         private string _UOMName;
+        private Product _Product;
         #endregion
 
         #region Property
+        public Product Product
+        {
+            get
+            {
+                return _Product;
+            }
+            set
+            {
+                if (_Product != value)
+                {
+                    _Product = value;
+                    SetProduct();
 
+                    NotifyPropertyChanged(nameof(Product));
+                }
+            }
+        }
         public long Id
         {
             get
@@ -87,7 +104,6 @@ namespace AccountBuddy.BLL
                 if (_ProductId != value)
                 {
                     _ProductId = value;
-                    if (value != null) SetProduct(new Product(_ProductId.Value));
                     NotifyPropertyChanged(nameof(ProductId));
                 }
             }
@@ -274,8 +290,10 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Methods
-        private void SetProduct(Product p)
+        private void SetProduct()
         {
+            var p = Product ?? new Product();
+            ProductId = p.Id;
             UOMId = p.UOMId;
             ProductName = p.ProductName;
             UnitPrice = p.SellingRate;

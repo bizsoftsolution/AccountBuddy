@@ -8,7 +8,7 @@ namespace AccountBuddy.SL.Hubs
 {
     public partial class ABServerHub
     {
-        #region Job OrderIssue     
+        #region Stock Seperated 
         public string StockSeperated_NewRefNo()
         {
             return StockSeperated_NewRefNoByCompanyId(Caller.CompanyId);
@@ -78,7 +78,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
                 }
-                Clients.Clients(OtherLoginClientsOnGroup).StockSeperated_RefNoRefresh(StockSeperated_NewRefNo());
+                Clients.Clients(OtherLoginClients).StockSeperated_RefNoRefresh(StockSeperated_NewRefNo());
                 Journal_SaveByStockSeparated(d);
                 return true;
 

@@ -156,7 +156,8 @@ namespace AccountBuddy.SL.Hubs
                 }
 
                 //  Clients.All.CompanyDetail_Save(cm);
-                Clients.Clients(OtherLoginClientsOnGroup).CompanyDetail_Save(cm); 
+                // Clients.Clients(OtherLoginClientsOnGroup).CompanyDetail_Save(cm); 
+                Clients.Clients(OtherLoginClients).CompanyDetail_Save(cm);
 
                 return cm.Id;
             }
@@ -209,8 +210,8 @@ namespace AccountBuddy.SL.Hubs
                 Caller.DB.UserAccounts.RemoveRange(uac);
                 Caller.DB.SaveChanges();
 
-                Clients.Clients(OtherLoginClientsOnGroup).CompanyDetail_Delete(pk);
-                Clients.All.delete(pk);
+                Clients.Clients(OtherLoginClients).CompanyDetail_Delete(pk);
+               // Clients.All.delete(pk);
             }
             catch (Exception ex) { }
         }

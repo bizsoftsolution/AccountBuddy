@@ -85,7 +85,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).Journal_RefNoRefresh(Journal_NewRefNo());
+                Clients.Clients(OtherLoginClients).Journal_RefNoRefresh(Journal_NewRefNo());
                 return true;
             }
             catch (Exception ex) { }
@@ -156,6 +156,8 @@ namespace AccountBuddy.SL.Hubs
                     Caller.DB.SaveChanges();
                     LogDetailStore(Journal_DALtoBLL(d), LogDetailType.DELETE);
                 }
+                Clients.Clients(OtherLoginClients).Journal_RefNoRefresh(Journal_NewRefNo());
+
                 return true;
             }
             catch (Exception ex) { }

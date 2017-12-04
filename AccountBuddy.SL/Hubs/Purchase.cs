@@ -80,7 +80,7 @@ namespace AccountBuddy.SL.Hubs
                     Caller.DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
-                Clients.Clients(OtherLoginClientsOnGroup).Purchase_RefNoRefresh(Purchase_NewRefNo());
+                Clients.Clients(OtherLoginClients).Purchase_RefNoRefresh(Purchase_NewRefNo());
                 Journal_SaveByPurchase(d);
                 Sales_SaveByPurchase(d);
                 return true;
@@ -204,6 +204,7 @@ namespace AccountBuddy.SL.Hubs
                     Sales_DeleteByPurchase(d);
                     return true;
                 }
+                Clients.Clients(OtherLoginClients).Purchase_RefNoRefresh(Purchase_NewRefNo());
 
             }
             catch (Exception ex) { }
