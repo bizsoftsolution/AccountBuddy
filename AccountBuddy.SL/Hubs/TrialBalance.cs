@@ -75,7 +75,7 @@ namespace AccountBuddy.SL.Hubs
             return Dr + Cr;
         }
 
-        public void GetLedgerTotal(DAL.AccountGroup ag,ref decimal total)
+        private void GetLedgerTotal(DAL.AccountGroup ag,ref decimal total)
         {            
             foreach(var l in ag.Ledgers)
             {

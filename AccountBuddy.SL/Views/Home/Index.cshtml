@@ -11,8 +11,19 @@
     <title>Account Buddy</title>
 </head>
 <body>
-    <div> 
-        Service Started
+    <div id="lblMsg"> 
+        
     </div>
+    <script src="~/Scripts/jquery-1.6.4.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/SignalR/Hubs"></script>
+    <script>
+        $(function () {
+            $.connection.aBServerHub.client.Display = function (str) { $('#lblMsg').Text(str); }
+            $.connection.hub.start().done(function () {
+                $('#lblMsg').text('Service Started');
+            });
+        });
+    </script>
 </body>
 </html>
