@@ -114,11 +114,11 @@ namespace AccountBuddy.PL.frm.Master
                 }
                 else
                 {
-                    if (MessageBox.Show(Message.PL.Delete_confirmation, "Bank", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    if (MessageBox.Show(Message.PL.Delete_confirmation, "Bank", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.No)
                     {
                         if (data.Delete() == true)
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert, "Bank", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(Message.PL.Delete_Alert, "Bank", MessageBoxButton.OK, MessageBoxImage.Information);
                             data.Clear();
                             Grid_Refresh();
                         }
