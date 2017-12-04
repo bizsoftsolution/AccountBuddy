@@ -47,13 +47,13 @@ namespace AccountBuddy.PL.frm.Master
             var r = BLL.UserAccount.Admin_Authentication(BLL.UserAccount.User.UserType.Company.CompanyName, txtLoginId.Text, txtPassword.Password);
             if (r == true)
             {
-                MessageBox.Show("Verified", "", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Verified", this.Title.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                 RValue = true;
                 Close();
             }
             else
             {
-                MessageBox.Show("Wrong User", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Wrong User", this.Title.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 RValue = false;
                 Close();
             }
