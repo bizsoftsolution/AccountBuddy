@@ -233,6 +233,7 @@ namespace AccountBuddy.BLL
             Quantity = p.Id != 0 ? 1 : 0;
             DiscountAmount = p.DiscountAmount;
         }
+
         public string ProductName
         {
             get

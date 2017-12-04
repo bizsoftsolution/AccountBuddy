@@ -175,8 +175,8 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_ItemAmount == null) _ItemAmount = 0;
-                return _ItemAmount;
+               if (_ItemAmount == null) _ItemAmount = 0;
+                 return _ItemAmount;
             }
             set
             {
@@ -184,7 +184,7 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                    if (value != null) SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -201,7 +201,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                    if (value != null) SetAmount();
+                     SetAmount();
                 }
             }
         }
@@ -234,7 +234,7 @@ namespace AccountBuddy.BLL
                 {
                     _ExtraAmount = value;
                     NotifyPropertyChanged(nameof(ExtraAmount));
-                    if (value != null) SetAmount();
+                     SetAmount();
                 }
             }
         }
@@ -520,8 +520,13 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
-            TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+            try
+            {
+                GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
+                TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+            }
+            catch(Exception ex)
+            { }
         }
 
         public bool FindRefNo()
