@@ -22,8 +22,8 @@
         <!--#region Form Body-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30*"/>
-                <ColumnDefinition Width="60*"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!--#region Form Left-->
             <Grid Grid.Column="0" Margin="10,70,10,0">
@@ -36,7 +36,7 @@
                 <Grid Grid.Row="0" Margin="0,-50,0,0"  >
 
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Height="655" Width="360" >
+                        <StackPanel Orientation="Vertical" x:Name = "pnlForm" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
                             <TextBox x:Name="txtLedgerName" MaxLength="100" IsReadOnly="{Binding IsReadOnly,Mode=OneWay}" Text="{Binding LedgerName}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold" FontSize="14" Width="350">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
