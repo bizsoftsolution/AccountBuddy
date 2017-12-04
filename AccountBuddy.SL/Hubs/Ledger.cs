@@ -53,8 +53,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 DAL.Ledger d = Caller.DB.Ledgers.Where(x => x.Id == led.Id).FirstOrDefault();
-                DAL.Supplier s = Caller.DB.Suppliers.Where(x => x.LedgerId == led.Id).FirstOrDefault();
-             
+               
 
                 if (d == null)
                 {

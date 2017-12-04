@@ -112,7 +112,15 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<Ledger>(FMCGHubClient.FMCGHub.Invoke<List<Ledger>>("Ledger_List").Result);
+                if (_toList == null)
+                {
+                    try
+                    {
+                        _toList = new ObservableCollection<Ledger>(FMCGHubClient.FMCGHub.Invoke<List<Ledger>>("Ledger_List").Result);
+                    }
+                    catch(Exception ex)
+                    { }
+                }
                 return _toList;
             }
             set
