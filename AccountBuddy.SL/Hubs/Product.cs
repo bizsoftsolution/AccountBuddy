@@ -64,10 +64,10 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.Product Product_Save(BLL.Product pro)
         {
+            DAL.Product d = Caller.DB.Products.Where(x => x.Id == pro.Id).FirstOrDefault();
             try
             {
 
-                DAL.Product d = Caller.DB.Products.Where(x => x.Id == pro.Id).FirstOrDefault();
                 if (d == null)
                 {
                     d = new DAL.Product();
@@ -103,19 +103,21 @@ namespace AccountBuddy.SL.Hubs
 
                     Caller.DB.SaveChanges();
                 }
+                Clients.Clients(OtherLoginClients).Product_Save(Product_DALtoBLL(d));
+
                 if (d.Id != 0)
                 {
                     var p = Product_DALtoBLL(d);
-                    
+
                     return p;
                 }
-                Clients.Clients(OtherLoginClients).Product_Save(Product_DALtoBLL(d));
-
+               
             }
             catch (Exception ex)
             {
                 WriteErrorLog("Product", "Product_Save", BLL.UserAccount.User.Id, Caller.CompanyId, ex.Message);
             }
+           
             return new BLL.Product();
         }
 

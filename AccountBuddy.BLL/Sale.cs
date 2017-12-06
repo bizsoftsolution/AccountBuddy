@@ -629,6 +629,8 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
             TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
         }
         public bool FindRefNo()
         {
@@ -662,6 +664,9 @@ namespace AccountBuddy.BLL
             return rv;
 
         }
+
+        
+
         #endregion
     }
 }
