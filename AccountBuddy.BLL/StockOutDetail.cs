@@ -136,15 +136,16 @@ namespace AccountBuddy.BLL
                 if (_UnitPrice != value)
                 {
                     _UnitPrice = value;
-                    if (_ProductId != 0) SetDiscount(new Product(_ProductId));
+                    if (_ProductId != 0) SetDiscount();
                     Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
                     NotifyPropertyChanged(nameof(UnitPrice));
                 }
             }
         }
 
-        private void SetDiscount(Product p)
+        private void SetDiscount()
         {
+            var p = Product ?? new Product();
             DiscountAmount = p.DiscountAmount * (decimal)Quantity;
         }
 

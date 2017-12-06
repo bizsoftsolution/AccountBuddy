@@ -65,9 +65,16 @@ namespace AccountBuddy.BLL
             {
                 if (_POPendingList == null)
                 {
-                    _POPendingList = new ObservableCollection<PurchaseOrder>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_POPendingList").Result;
-                    _POPendingList = new ObservableCollection<PurchaseOrder>(l1);
+                    try
+                    {
+                        _POPendingList = new ObservableCollection<PurchaseOrder>();
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_POPendingList").Result;
+                        _POPendingList = new ObservableCollection<PurchaseOrder>(l1);
+                    }
+                    catch(Exception ex)
+                    {
+                        Common.AppLib.WriteLog(string.Format("POPending List_{0}-{1}", ex.Message, ex.InnerException));
+                    }
                 }
                 return _POPendingList;
             }
@@ -446,29 +453,40 @@ namespace AccountBuddy.BLL
 
         public void SaveDetail()
         {
-
-            PurchaseOrderDetail pod = PODetails.Where(x => x.ProductId == PODetail.ProductId).FirstOrDefault();
-
-            if (pod == null)
+            try
             {
-                pod = new PurchaseOrderDetail();
-                PODetails.Add(pod);
-            }
-            else
-            {
-                PODetail.Quantity += pod.Quantity;
-            }
-            PODetail.toCopy<PurchaseOrderDetail>(pod);
-            ClearDetail();
-            ItemAmount = PODetails.Sum(x => x.Amount);
+                PurchaseOrderDetail pod = PODetails.Where(x => x.ProductId == PODetail.ProductId).FirstOrDefault();
 
-            SetAmount();
+                if (pod == null)
+                {
+                    pod = new PurchaseOrderDetail();
+                    PODetails.Add(pod);
+                }
+                else
+                {
+                    PODetail.Quantity += pod.Quantity;
+                                     
+                }
+               
+              
+                PODetail.toCopy<PurchaseOrderDetail>(pod);
+                ItemAmount = PODetails.Sum(x => x.Amount);
+                
+                SetAmount();
+                ClearDetail();
+
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Purchase Order save Detail_{0}", ex.Message));
+            }
         }
 
         public void ClearDetail()
         {
             PurchaseOrderDetail pod = new PurchaseOrderDetail();
             pod.toCopy<PurchaseOrderDetail>(PODetail);
+            
         }
 
         public void DeleteDetail(string PName)
@@ -480,6 +498,7 @@ namespace AccountBuddy.BLL
                 PODetails.Remove(pod);
                 ItemAmount = PODetails.Sum(x => x.Amount);
                 SetAmount();
+                ClearDetail();
             }
         }
         #endregion

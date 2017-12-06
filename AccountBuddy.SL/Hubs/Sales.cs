@@ -14,7 +14,7 @@ namespace AccountBuddy.SL.Hubs
         {
             return Sales_NewRefNoByCompanyId(Caller.CompanyId);
         }
-        public  string Sales_NewRefNoByCompanyId(int CompanyId)
+        public string Sales_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Sales, dt, dt.Month);
@@ -24,15 +24,16 @@ namespace AccountBuddy.SL.Hubs
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
-            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length ), 16);
+            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length), 16);
 
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
         public bool Sales_Save(BLL.Sale P)
         {
             try
-            {                 
+            {
                 DAL.Sale d = Caller.DB.Sales.Where(x => x.Id == P.Id).FirstOrDefault();
+
                 if (d == null)
                 {
                     d = new DAL.Sale();
@@ -50,27 +51,25 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    //foreach (var d_Sd in d.SalesDetails.ToList())
-                    //{
-                    //    BLL.SalesDetail b_Sd = P.SDetails.Where(x => x.Id == d_Sd.Id).FirstOrDefault();
-                    //    if (b_Sd == null) d.SalesDetails.Remove(d_Sd);
-                    //}
-                    decimal rd = P.SDetails.Select(X => X.SalesId).FirstOrDefault();
-                    Caller.DB.SalesDetails.RemoveRange(d.SalesDetails.Where(x => x.SalesId == rd).ToList());
+                    foreach (var d_Sd in d.SalesDetails.ToList())
+                    {
+                        d.SalesDetails.Remove(d_Sd);
+                    }
+                    //decimal rd = P.SDetails.Select(X => X.SalesId).FirstOrDefault();
+                    //Caller.DB.SalesDetails.RemoveRange(d.SalesDetails.Where(x => x.SalesId == rd).ToList());
 
 
                     P.toCopy<DAL.Sale>(d);
                     foreach (var b_Sd in P.SDetails)
                     {
-                        //  DAL.SalesDetail d_Sd = d.SalesDetails.Where(x => x.Id == b_Sd.Id).FirstOrDefault();
-                        // if (d_Sd == null)
-                        // {
+
                         DAL.SalesDetail d_Sd = new DAL.SalesDetail();
-                            d.SalesDetails.Add(d_Sd);
-                       // }
+                        d.SalesDetails.Add(d_Sd);
+
                         b_Sd.toCopy<DAL.SalesDetail>(d_Sd);
                     }
-                    LogDetailStore(P, LogDetailType.UPDATE);                   
+                    Caller.DB.SaveChanges();
+                    LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 //Clients.Clients(OtherLoginClientsOnGroup).Sales_RefNoRefresh(Sales_NewRefNo());
 
@@ -110,7 +109,7 @@ namespace AccountBuddy.SL.Hubs
                     }
 
                     s.SalesDate = P.PurchaseDate;
-                  s.DiscountAmount = P.DiscountAmount;
+                    s.DiscountAmount = P.DiscountAmount;
                     s.ExtraAmount = P.ExtraAmount;
                     s.GSTAmount = P.GSTAmount;
                     s.ItemAmount = P.ItemAmount;
@@ -247,7 +246,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     Common.AppLib.WriteLog(string.Format("Find_SRef is return false"));
                     return false;
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -255,6 +254,49 @@ namespace AccountBuddy.SL.Hubs
             }
             return true;
         }
+
+
+
+        public List<BLL.Sale> Sale_List(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.Sale> lstSale = new List<BLL.Sale>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.Sale rp = new BLL.Sale();
+            try
+            {
+                foreach (var l in Caller.DB.Sales.
+                      Where(x => x.SalesDate >= dtFrom && x.SalesDate <= dtTo
+                      && (x.LedgerId == LedgerId || LedgerId == null)
+                      && (PayMode == null || x.TransactionType.Type == PayMode)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
+                      x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.Sale();
+                    rp.TotalAmount = l.TotalAmount;
+                    rp.ChequeDate = l.ChequeDate;
+                    rp.ChequeNo = l.ChequeNo;
+                    rp.SalesDate = l.SalesDate;
+                    rp.RefNo = l.RefNo;
+
+                    rp.Id = l.Id;
+                    rp.LedgerId = l.LedgerId;
+                    rp.LedgerName = string.Format("{0}-{1}", l.Ledger.AccountGroup.GroupCode, l.Ledger.LedgerName);
+
+                    rp.TransactionType = l.TransactionType.Type;
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+
+                    lstSale.Add(rp);
+                    lstSale = lstSale.OrderBy(x => x.SalesDate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstSale;
+        }
+
+
 
         #endregion
     }

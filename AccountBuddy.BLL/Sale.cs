@@ -15,7 +15,7 @@ namespace AccountBuddy.BLL
 
         private long _Id;
         private DateTime _SalesDate;
-        private string _RefNo;        
+        private string _RefNo;
         private int _LedgerId;
         private int _TransactionTypeId;
         private decimal _ItemAmount;
@@ -41,6 +41,9 @@ namespace AccountBuddy.BLL
         private string _BankName;
         private bool _IsShowChequeDetail;
         private static UserTypeDetail _UserPermission;
+
+        private string _lblDiscount;
+        private string _lblExtra;
 
         #endregion
 
@@ -176,7 +179,7 @@ namespace AccountBuddy.BLL
         public decimal DiscountAmount
         {
             get
-            {                
+            {
                 return _DiscountAmount;
             }
             set
@@ -455,6 +458,41 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+
+        public string lblDiscount
+        {
+            get
+            {
+                return _lblDiscount;
+            }
+            set
+            {
+                if (_lblDiscount != value)
+                {
+                    _lblDiscount = value;
+                    NotifyPropertyChanged(nameof(lblDiscount));
+
+                }
+            }
+        }
+
+        public string lblExtra
+        {
+            get
+            {
+                return _lblExtra;
+            }
+            set
+            {
+                if (_lblExtra != value)
+                {
+                    _lblExtra = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
         #endregion
 
         #region Property Changed
@@ -490,7 +528,7 @@ namespace AccountBuddy.BLL
         {
             new Sale().toCopy<Sale>(this);
             _SDetail = new SalesDetail();
-           _SDetails = new ObservableCollection<SalesDetail>();
+            _SDetails = new ObservableCollection<SalesDetail>();
 
             SalesDate = DateTime.Now;
             RefNo = FMCGHubClient.FMCGHub.Invoke<string>("Sales_NewRefNo").Result;
@@ -589,7 +627,7 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            GSTAmount = (ItemAmount - DiscountAmount ) * Common.AppLib.GSTPer;
+            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
             TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;
         }
         public bool FindRefNo()
@@ -597,7 +635,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                
+
 
                 Common.AppLib.WriteLog("FindRefNo_Start");
                 rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_SRef", RefNo, this).Result;
@@ -610,7 +648,20 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+        public static List<Sale> ToList(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<Sale> rv = new List<Sale>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<Sale>>("Sale_List", LedgerId, PayMode, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+               Common.AppLib.WriteLog(string.Format("Sales List= {0}-{1}", ex.Message, ex.InnerException));               
+            }
+            return rv;
 
+        }
         #endregion
     }
 }

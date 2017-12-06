@@ -137,14 +137,15 @@ namespace AccountBuddy.BLL
                 {
                     _Quantity = value;
                     Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
-                    if (_ProductId != null) SetDiscount(new Product(_ProductId.Value));
+                    if (_ProductId != null) SetDiscount();
                     NotifyPropertyChanged(nameof(Quantity));
                 }
             }
         }
 
-        private void SetDiscount(Product p)
+        private void SetDiscount()
         {
+            var p = Product ?? new Product();
             DiscountAmount = p.DiscountAmount * (decimal)Quantity;
         }
 

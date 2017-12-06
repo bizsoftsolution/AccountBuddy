@@ -16,15 +16,15 @@ namespace AccountBuddy.SL.Hubs
         public string PurchaseOrder_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
-            string Prefix = string.Format("{0}{1:yy}{2:X}",BLL.FormPrefix.PurchaseOrder,dt,dt.Month);
+            string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.PurchaseOrder, dt, dt.Month);
             long No = 0;
 
             var d = Caller.DB.PurchaseOrders.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
-                                     .OrderByDescending(x=> x.RefNo)
+                                     .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
-            if (d != null)  No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length), 16);
-            
+            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length), 16);
+
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
 
@@ -32,7 +32,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-             
+
                 DAL.PurchaseOrder d = Caller.DB.PurchaseOrders.Where(x => x.Id == PO.Id).FirstOrDefault();
 
                 if (d == null)
@@ -55,32 +55,25 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-
-                    //foreach(var d_pod in d.PurchaseOrderDetails)
-                    //{
-                    //    BLL.PurchaseOrderDetail b_pod = PO.PODetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
-                    //    if (b_pod == null)d.PurchaseOrderDetails.Remove(d_pod);                        
-                    //}
-                    decimal rd = PO.PODetails.Select(X => X.POId).FirstOrDefault();
-                    Caller.DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails.Where(x => x.POId == rd).ToList());
-
                     PO.toCopy<DAL.PurchaseOrder>(d);
+                    foreach (var d_Pd in d.PurchaseOrderDetails.ToList())
+                    {
+                        //BLL.PurchaseOrderDetail b_Pd = PO.PODetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
+                        d.PurchaseOrderDetails.Remove(d_Pd);
+                    }
                     foreach (var b_pod in PO.PODetails)
                     {
-                        //  DAL.PurchaseOrderDetail d_pod = d.PurchaseOrderDetails.Where(x => x.Id == b_pod.Id).FirstOrDefault();
-                        // if (d_pod == null)
-                        // {
                         DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
-                            d.PurchaseOrderDetails.Add(d_pod);
-                       // }
-                        b_pod.toCopy<DAL.PurchaseOrderDetail>(d_pod);                        
+                        b_pod.toCopy<DAL.PurchaseOrderDetail>(d_pod);
+                       
+                        d.PurchaseOrderDetails.Add(d_pod);
                     }
                     Caller.DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
-
+              
                 Clients.Clients(OtherLoginClients).PurchaseOrder_RefNoRefresh(PurchaseOrder_NewRefNo());
-
+                Clients.Clients(OtherLoginClients).PurchaseOrder_Save(PO);
                 SalesOrder_SaveByPurchaseOrder(d);
                 return true;
             }
@@ -95,7 +88,7 @@ namespace AccountBuddy.SL.Hubs
                 BLL.Purchase P = new BLL.Purchase();
 
                 P.PurchaseDate = PO.PODate.Value;
-                P.RefNo =Purchase_NewRefNo();
+                P.RefNo = Purchase_NewRefNo();
                 P.LedgerId = PO.LedgerId;
                 P.TransactionType = "Cash";
                 P.TransactionTypeId = 1;
@@ -104,18 +97,19 @@ namespace AccountBuddy.SL.Hubs
                 P.GSTAmount = PO.GSTAmount.Value;
                 P.ExtraAmount = PO.Extras.Value;
                 P.TotalAmount = PO.TotalAmount.Value;
-                P.Narration = PO.Narration;               
+                P.Narration = PO.Narration;
 
 
                 foreach (var pod in PO.PODetails)
                 {
-                    BLL.PurchaseDetail PD = new BLL.PurchaseDetail() {
+                    BLL.PurchaseDetail PD = new BLL.PurchaseDetail()
+                    {
                         PODId = pod.Id,
-                        ProductId =pod.ProductId,
+                        ProductId = pod.ProductId,
                         UOMId = pod.UOMId,
                         UOMName = pod.UOMName,
                         Quantity = pod.Quantity,
-                        UnitPrice =pod.UnitPrice,
+                        UnitPrice = pod.UnitPrice,
                         DiscountAmount = pod.DiscountAmount,
                         GSTAmount = pod.GSTAmount,
                         ProductName = pod.ProductName,
@@ -173,7 +167,7 @@ namespace AccountBuddy.SL.Hubs
                         p.PurchaseOrderDetails.Add(d_pod);
                     }
                     Caller.DB.SaveChanges();
-                  
+
                 }
             }
 
@@ -210,12 +204,14 @@ namespace AccountBuddy.SL.Hubs
                 {
 
                     d.toCopy<BLL.PurchaseOrder>(PO);
-                    PO.LedgerName = (d.Ledger?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
-                    foreach (var d_pod in d.PurchaseOrderDetails)
+                    PO.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    foreach (var d_pod in Caller.DB.PurchaseOrderDetails.Where(x=>x.POId==d.Id).ToList())
                     {
                         BLL.PurchaseOrderDetail b_pod = new BLL.PurchaseOrderDetail();
                         d_pod.toCopy<BLL.PurchaseOrderDetail>(b_pod);
                         PO.PODetails.Add(b_pod);
+                        b_pod.Product = Product_DALtoBLL(d_pod.Product);
+                        
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         PO.Status = d.PurchaseOrderDetails.FirstOrDefault().PurchaseDetails.Count() > 0 ? "Purchased" : "Pending";
@@ -255,14 +251,14 @@ namespace AccountBuddy.SL.Hubs
         {
             return Caller.DB.PurchaseOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
                                     .ToList()
-                                    .Select(x=> PurchaseOrder_DALtoBLL(x) )
-                                    .ToList() ;
+                                    .Select(x => PurchaseOrder_DALtoBLL(x))
+                                    .ToList();
         }
 
         public BLL.PurchaseOrder PurchaseOrder_DALtoBLL(DAL.PurchaseOrder d)
         {
             BLL.PurchaseOrder PO = d.toCopy<BLL.PurchaseOrder>(new BLL.PurchaseOrder());
-            foreach(var d_pod in d.PurchaseOrderDetails)
+            foreach (var d_pod in d.PurchaseOrderDetails)
             {
                 PO.PODetails.Add(d_pod.toCopy<BLL.PurchaseOrderDetail>(new BLL.PurchaseOrderDetail()));
             }
@@ -272,7 +268,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_PORef(string RefNo, BLL.PurchaseOrder PO)
 
         {
-            DAL.PurchaseOrder d = Caller.DB.PurchaseOrders.Where(x => x.Ledger.AccountGroup.CompanyId==Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.PurchaseOrder d = Caller.DB.PurchaseOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
             if (d == null)
             {
                 return false;

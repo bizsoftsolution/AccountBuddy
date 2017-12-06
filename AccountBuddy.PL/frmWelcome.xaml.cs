@@ -22,7 +22,8 @@ namespace AccountBuddy.PL
     {
         public frmWelcome()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            BLL.CustomFormat.SetDataFormat();           
         }
     }
 }

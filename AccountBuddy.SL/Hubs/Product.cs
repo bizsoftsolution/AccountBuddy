@@ -19,7 +19,7 @@ namespace AccountBuddy.SL.Hubs
                 ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
                 var pd = ProductsFrom.ProductDetails.Where(x => x.CompanyId == Caller.CompanyId).FirstOrDefault();
                 if (pd == null) pd = new DAL.ProductDetail();
-
+            
                 ProductsTo.UOM = ProductsFrom.UOM == null ? null : UOM_DALtoBLL(ProductsFrom.UOM);
                 ProductsTo.OpeningStock = pd.OpeningStock;
                 ProductsTo.ReOrderLevel = pd.ReorderLevel;

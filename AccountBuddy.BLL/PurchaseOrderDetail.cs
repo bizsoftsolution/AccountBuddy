@@ -121,7 +121,7 @@ namespace AccountBuddy.BLL
                     _Quantity = value;
 
                     Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
-                    if (_ProductId != 0) SetDiscount(new Product(_ProductId));
+                  
                     NotifyPropertyChanged(nameof(Quantity));
                 }
             }
@@ -156,7 +156,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
-                    
+                   
                     NotifyPropertyChanged(nameof(DiscountAmount));
                 }
             }
@@ -277,12 +277,12 @@ namespace AccountBuddy.BLL
             ProductName = p.ProductName;
             UnitPrice = p.PurchaseRate;
             Quantity = p.Id != 0 ? 1 : 0;
-            DiscountAmount = p.DiscountAmount;
+            
         }
 
-        private void SetDiscount(Product p)
+        private void SetDiscount()
         {
-            DiscountAmount = p.DiscountAmount * (decimal)Quantity;
+            DiscountAmount = DiscountAmount * (decimal)Quantity;
 
         }
         #endregion

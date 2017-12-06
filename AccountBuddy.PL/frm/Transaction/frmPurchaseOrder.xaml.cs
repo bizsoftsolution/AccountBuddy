@@ -242,9 +242,16 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbSupplier_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
-            cmbSupplier.DisplayMemberPath = "LedgerName";
-            cmbSupplier.SelectedValuePath = "Id";
+            try
+            {
+                cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
+                cmbSupplier.DisplayMemberPath = "LedgerName";
+                cmbSupplier.SelectedValuePath = "Id";
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Purchase Order_Supplier List_{0}", ex.Message));
+            }
         }
 
         private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
@@ -318,6 +325,17 @@ namespace AccountBuddy.PL.frm.Transaction
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.PurchaseOrder.UserPermission.AllowInsert || BLL.PurchaseOrder.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.PurchaseOrder.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.PurchaseOrderDetail pod = dgvDetails.SelectedItem as BLL.PurchaseOrderDetail;
+                pod.toCopy<BLL.PurchaseOrderDetail>(data.PODetail);
+            }
+            catch (Exception ex) { }
+
         }
     }
 }

@@ -35,11 +35,17 @@ namespace AccountBuddy.PL.frm.Report
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadWindow();
+        }
+
+        private void LoadWindow()
+        {
             BLL.Product.Init();
             dgvStockReport.ItemsSource = BLL.Product.toList;
             CollectionViewSource.GetDefaultView(dgvStockReport.ItemsSource).Filter = DGV_Filter;
             LoadReport();
         }
+
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             Grid_Refresh();
@@ -300,8 +306,12 @@ namespace AccountBuddy.PL.frm.Report
 
         }
 
+
         #endregion
 
-       
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            LoadWindow();
+        }
     }
 }

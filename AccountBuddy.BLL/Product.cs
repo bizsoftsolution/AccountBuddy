@@ -18,12 +18,12 @@ namespace AccountBuddy.BLL
 
         }
 
-        public Product(int ProductId)
-        {
-            Product p = toList.Where(x => x.Id == ProductId).FirstOrDefault();
-            if (p == null) p = new Product();
-            p.toCopy<Product>(this);
-        }
+        //public Product(int ProductId)
+        //{
+        //    Product p = toList.Where(x => x.Id == ProductId).FirstOrDefault();
+        //    if (p == null) p = new Product();
+        //    p.toCopy<Product>(this);
+        //}
 
         public Product(string ProductCode)
         {
@@ -416,7 +416,13 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<Product>(FMCGHubClient.FMCGHub.Invoke<List<Product>>("Product_List").Result);
+                try
+                {
+                    if (_toList == null || _toList.Count==0) _toList = new ObservableCollection<Product>(FMCGHubClient.FMCGHub.Invoke<List<Product>>("Product_List").Result);
+                   
+                }
+                catch(Exception ex)
+                { }
                 return _toList;
             }
             set

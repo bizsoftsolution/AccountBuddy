@@ -40,7 +40,10 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Height="77">
-                            <TextBox  Name="txtSearch" Width="350"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  FontSize="16" FontWeight="Bold" Foreground="Black">
+                            <StackPanel Orientation="Horizontal">
+                                
+                            
+                            <TextBox  Name="txtSearch" Width="350" Margin="5"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  FontSize="16" FontWeight="Bold" Foreground="Black">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
@@ -48,6 +51,8 @@
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
+                            <Button x:Name="btnSearch" Margin="5" Click="btnSearch_Click">Search</Button>
+                            </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked"  Unchecked="cbxCase_Unchecked" FontSize="14" FontWeight="Bold"/>
                                 <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked"  FontSize="14" FontWeight="Bold"/>
