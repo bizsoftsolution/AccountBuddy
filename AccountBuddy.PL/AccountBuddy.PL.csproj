@@ -435,6 +435,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmPurchaseOrderSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmPurchaseRequest.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -727,6 +731,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmPurchaseOrder.xaml.cs">
       <DependentUpon>frmPurchaseOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmPurchaseOrderSearch.xaml.cs">
+      <DependentUpon>frmPurchaseOrderSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmPurchaseRequest.xaml.cs">
       <DependentUpon>frmPurchaseRequest.xaml</DependentUpon>

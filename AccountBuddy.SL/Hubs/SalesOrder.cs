@@ -243,7 +243,7 @@ namespace AccountBuddy.SL.Hubs
         void SalesOrder_SaveByPurchaseOrder(DAL.PurchaseOrder P)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseOrder, P.Id);
-
+            if (P.Ledger == null) P.Ledger = Caller.DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault();
             DAL.SalesOrder s = Caller.DB.SalesOrders.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (P.Ledger.LedgerName.StartsWith("CM-") || P.Ledger.LedgerName.StartsWith("WH-") || P.Ledger.LedgerName.StartsWith("DL-"))
             {

@@ -51,14 +51,12 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    
                     foreach (var d_Sd in d.SalesDetails.ToList())
                     {
                         d.SalesDetails.Remove(d_Sd);
                     }
-                    //decimal rd = P.SDetails.Select(X => X.SalesId).FirstOrDefault();
-                    //Caller.DB.SalesDetails.RemoveRange(d.SalesDetails.Where(x => x.SalesId == rd).ToList());
-
-
+                   
                     P.toCopy<DAL.Sale>(d);
                     foreach (var b_Sd in P.SDetails)
                     {
@@ -71,8 +69,7 @@ namespace AccountBuddy.SL.Hubs
                     Caller.DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
-                //Clients.Clients(OtherLoginClientsOnGroup).Sales_RefNoRefresh(Sales_NewRefNo());
-
+                
                 Clients.Clients(OtherLoginClients).Sales_RefNoRefresh(Sales_NewRefNo());
                 Journal_SaveBySales(d);
                 Purchase_SaveBySales(d);
@@ -163,6 +160,7 @@ namespace AccountBuddy.SL.Hubs
                         BLL.SalesDetail b_pod = new BLL.SalesDetail();
                         d_pod.toCopy<BLL.SalesDetail>(b_pod);
                         P.SDetails.Add(b_pod);
+                        b_pod.Product = Product_DALtoBLL(d_pod.Product);
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }

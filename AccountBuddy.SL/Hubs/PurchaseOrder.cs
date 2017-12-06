@@ -32,6 +32,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
+                Caller.DB = new DAL.DBFMCGEntities();
 
                 DAL.PurchaseOrder d = Caller.DB.PurchaseOrders.Where(x => x.Id == PO.Id).FirstOrDefault();
 
@@ -55,12 +56,13 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    PO.toCopy<DAL.PurchaseOrder>(d);
+                   
                     foreach (var d_Pd in d.PurchaseOrderDetails.ToList())
                     {
                         //BLL.PurchaseOrderDetail b_Pd = PO.PODetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
                         d.PurchaseOrderDetails.Remove(d_Pd);
                     }
+                    PO.toCopy<DAL.PurchaseOrder>(d);
                     foreach (var b_pod in PO.PODetails)
                     {
                         DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
@@ -279,6 +281,44 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+
+        public List<BLL.PurchaseOrder> PurchaseOrder_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.PurchaseOrder> lstPurchaseOrder = new List<BLL.PurchaseOrder>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.PurchaseOrder rp = new BLL.PurchaseOrder();
+            try
+            {
+                foreach (var l in Caller.DB.PurchaseOrders.
+                      Where(x => x.PODate >= dtFrom && x.PODate <= dtTo
+                      && (x.LedgerId == LedgerId || LedgerId == null)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
+                      x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.PurchaseOrder();
+                    rp.TotalAmount = l.TotalAmount;
+                   
+                    rp.RefNo = l.RefNo;
+
+                    rp.Id = l.Id;
+                    rp.LedgerId = l.LedgerId;
+                    rp.LedgerName = string.Format("{0}-{1}", l.Ledger.AccountGroup.GroupCode, l.Ledger.LedgerName);
+                    rp.PODate = l.PODate;
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+                    rp.Status = l.PurchaseOrderDetails.FirstOrDefault().PurchaseDetails.Count() > 0 ? "Purchased" : "Pending";
+                    lstPurchaseOrder.Add(rp);
+                    lstPurchaseOrder = lstPurchaseOrder.OrderBy(x => x.PODate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstPurchaseOrder;
+        }
+
+
+
 
 
         #endregion

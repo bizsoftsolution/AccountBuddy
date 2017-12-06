@@ -262,6 +262,47 @@ namespace AccountBuddy.SL.Hubs
             return P;
         }
 
+
+        public List<BLL.Purchase> Purchase_List(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.Purchase> lstPurchase = new List<BLL.Purchase>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.Purchase rp = new BLL.Purchase();
+            try
+            {
+                foreach (var l in Caller.DB.Purchases.
+                      Where(x => x.PurchaseDate >= dtFrom && x.PurchaseDate <= dtTo
+                      && (x.LedgerId == LedgerId || LedgerId == null)
+                      && (PayMode == null || x.TransactionType.Type == PayMode)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
+                      x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.Purchase();
+                    rp.TotalAmount = l.TotalAmount;
+                    rp.ChequeDate = l.ChequeDate;
+                    rp.ChequeNo = l.ChequeNo;
+                    rp.PurchaseDate = l.PurchaseDate;
+                    rp.RefNo = l.RefNo;
+
+                    rp.Id = l.Id;
+                    rp.LedgerId = l.LedgerId;
+                    rp.LedgerName = string.Format("{0}-{1}", l.Ledger.AccountGroup.GroupCode, l.Ledger.LedgerName);
+
+                    rp.TransactionType = l.TransactionType.Type;
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+
+                    lstPurchase.Add(rp);
+                    lstPurchase = lstPurchase.OrderBy(x => x.PurchaseDate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstPurchase;
+        }
+
+
         #endregion
     }
 }

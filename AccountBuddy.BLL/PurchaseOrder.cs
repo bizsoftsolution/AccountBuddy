@@ -524,6 +524,21 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<PurchaseOrder> PO_List(int?LedgerId,DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<PurchaseOrder> rv = new List<PurchaseOrder>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_List", LedgerId,  dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Purchase Order List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
         #endregion
     }
 }

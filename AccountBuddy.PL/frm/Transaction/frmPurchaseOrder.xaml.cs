@@ -172,23 +172,10 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-
-            if (data.Id != 0)
-            {
-                btnMakepurchase.IsEnabled = data.Status == "Pending" ? true : false;
-                btnPrint.IsEnabled = true;
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-                btnMakepurchase.IsEnabled = false;
-            }
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            btnMakepurchase.Visibility = (BLL.Purchase.UserPermission.AllowInsert || BLL.Purchase.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-          
-
+            
+            frmPurchaseOrderSearch f = new frmPurchaseOrderSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
         private void btnMakepurchase_Click(object sender, RoutedEventArgs e)
@@ -242,6 +229,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbSupplier_Loaded(object sender, RoutedEventArgs e)
         {
+            BLL.Ledger.toList = null;
             try
             {
                 cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
