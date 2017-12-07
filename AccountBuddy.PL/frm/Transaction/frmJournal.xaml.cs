@@ -187,10 +187,11 @@ namespace AccountBuddy.PL.frm.Transaction
                         }
                     }
                 }
-                else
-                {
-                    MessageBox.Show(Message.PL.No_Records_Delete, FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                
+            }
+            else
+            {
+                MessageBox.Show(Message.PL.No_Records_Delete, FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
