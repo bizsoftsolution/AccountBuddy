@@ -161,31 +161,36 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-
-            if (!BLL.UserAccount.AllowDelete(FormName))
+            if(data.Id!=0)
             {
-                MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else
-            {
-                if (MessageBox.Show("Do you want to delete?", "DELETE", MessageBoxButton.YesNo,MessageBoxImage.Question)== MessageBoxResult.Yes)
+                if (!BLL.UserAccount.AllowDelete(FormName))
                 {
-                    var rv = data.Delete();
-                    if (rv == true)
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    if (MessageBox.Show("Do you want to delete?", "DELETE", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                        data.Clear();
-                        if (data.Id != 0)
+                        var rv = data.Delete();
+                        if (rv == true)
                         {
-                            btnPrint.IsEnabled = true;
-                        }
-                        else
-                        {
-                            btnPrint.IsEnabled = false;
+                            MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
+                            data.Clear();
+                            if (data.Id != 0)
+                            {
+                                btnPrint.IsEnabled = true;
+                            }
+                            else
+                            {
+                                btnPrint.IsEnabled = false;
+                            }
                         }
                     }
                 }
-
+                else
+                {
+                    MessageBox.Show(Message.PL.No_Records_Delete, FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
 
