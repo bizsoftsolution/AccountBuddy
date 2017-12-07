@@ -165,7 +165,7 @@ namespace AccountBuddy.SL.Hubs
                 foreach (var l in Caller.DB.Payments.
                       Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo
                       && (x.LedgerId == LedgerId || LedgerId == null)
-                      && (EntryNo == "" || x.VoucherNo == x.EntryNo)
+                      && (EntryNo == "" || x.EntryNo == EntryNo)
                       && (Status == "" || x.Status == Status)
                       && (x.Amount >= amtFrom && x.Amount <= amtTo) &&
                       x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())

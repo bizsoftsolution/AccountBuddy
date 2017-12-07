@@ -339,7 +339,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Journal po = FMCGHubClient.FMCGHub.Invoke<Journal>("Journal_Find", SearchText).Result;
+                Journal po = FMCGHubClient.FMCGHub.Invoke<Journal>("Journal_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Journal>(this);
                 this.JDetails = po.JDetails;
@@ -443,7 +443,10 @@ namespace AccountBuddy.BLL
                 pod.toCopy<JournalDetail>(JDetail);
             }
         }
-
+        public static List<Journal> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<Journal>>("Journal_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
+        }
         #endregion
     }
 }

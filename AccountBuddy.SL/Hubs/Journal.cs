@@ -92,13 +92,13 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-        public BLL.Journal Journal_Find(string SearchText)
+        public BLL.Journal Journal_Find(string EntryNo)
         {
             BLL.Journal PO = new BLL.Journal();
             try
             {
 
-                DAL.Journal d = Caller.DB.Journals.Where(x => x.EntryNo == SearchText && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                DAL.Journal d = Caller.DB.Journals.Where(x => x.EntryNo == EntryNo && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
                 Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
@@ -1286,6 +1286,46 @@ namespace AccountBuddy.SL.Hubs
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
+
+        public List<BLL.Journal> Journal_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
+        {
+            Caller.DB = new DAL.DBFMCGEntities();
+            List<BLL.Journal> lstJournal = new List<BLL.Journal>();
+            BLL.Journal rp = new BLL.Journal();
+            try
+            {
+                foreach (var l1 in Caller.DB.JournalDetails.
+                      Where(x => x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo
+                      && (x.LedgerId == LedgerId || LedgerId == null)
+                      && (EntryNo == "" || x.Journal.EntryNo == EntryNo)
+                      && (Status == "" || x.Status == Status) &&
+                      ((x.CrAmt <= amtTo && x.CrAmt >= amtFrom)
+                     || (x.DrAmt <= amtTo && x.DrAmt >= amtFrom))&&
+                      x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.Journal();
+                    rp.JDetail.CrAmt = l1.CrAmt;
+                    rp.JDetail.DrAmt = l1.DrAmt;
+                    rp.EntryNo = l1.Journal.EntryNo;
+                    rp.Id = l1.Journal.Id;
+                    rp.JDetail.LedgerId = l1.LedgerId;
+                    rp.JDetail.LedgerName = string.Format("{0}-{1}", l1.Ledger.AccountGroup.GroupCode, l1.Ledger.LedgerName);
+                    rp.Particular = l1.Journal.Particular;
+                    rp.JournalDate = l1.Journal.JournalDate;
+
+                    rp.RefCode = l1.Journal.RefCode;
+                    rp.VoucherNo = l1.Journal.VoucherNo;
+                    lstJournal.Add(rp);
+
+                    lstJournal = lstJournal.OrderBy(x => x.JournalDate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstJournal;
+        }
+
+
         #endregion
     }
 }

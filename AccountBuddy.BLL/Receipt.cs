@@ -623,7 +623,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Receipt po = FMCGHubClient.FMCGHub.Invoke<Receipt>("Receipt_Find", SearchText).Result;
+                Receipt po = FMCGHubClient.FMCGHub.Invoke<Receipt>("Receipt_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Receipt>(this);
                 this.RDetails = po.RDetails;
@@ -710,7 +710,10 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
-
+        public static List<Receipt> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<Receipt>>("Receipt_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
+        }
 
 
         #region Property  Changed Event

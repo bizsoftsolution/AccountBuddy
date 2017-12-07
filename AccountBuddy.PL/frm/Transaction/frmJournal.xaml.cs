@@ -59,42 +59,42 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.JDetail.LedgerId == 0)
             {
-                MessageBox.Show("Enter LedgerName");
+                MessageBox.Show("Enter LedgerName", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbDebitAC.Focus();
             }
             else if (data.JDetail.DrAmt == 0 && data.JDetail.CrAmt == 0)
             {
-                MessageBox.Show("Enter Amount Dr or Amount Cr");
+                MessageBox.Show("Enter Amount Dr or Amount Cr", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtAmountCr.Focus();
             }
             else if(data.JDetail.TransactionMode==null)
             {
-                MessageBox.Show("Enter Mode of Transaction");
+                MessageBox.Show("Enter Mode of Transaction", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbMode.Focus();
             }
             else if (data.JDetail.TransactionMode == "Cheque" && (data.JDetail.ChequeDate==null||data.JDetail.ChequeNo==""||cmbCqStatus.Text==""))
             {
-                MessageBox.Show("Enter Cheque Details");
+                MessageBox.Show("Enter Cheque Details", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtChequeNo.Focus();
             }
             else if (data.JDetail.TransactionMode == "Cheque" && data.JDetail.Status == "Completed" && data.JDetail.ClearDate==null)
             {
-                MessageBox.Show("Enter Cheque Collection Date");
-             dtpChequeCollectionDate.Focus();
+                MessageBox.Show("Enter Cheque Collection Date", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                dtpChequeCollectionDate.Focus();
             }
             else if (data.JDetail.TransactionMode == "Cheque" && data.JDetail.Status == "Returned" && (data.JDetail.ClearDate == null|| data.JDetail.ExtraCharge==null))
             {
-                MessageBox.Show("Enter Cheque Returned Date And Extra charge");
+                MessageBox.Show("Enter Cheque Returned Date And Extra charge", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 dtpChequeReturnDate.Focus();
             }
             else if (data.JDetail.TransactionMode == "Online" && (txtOnlineRefno.Text == "" || dtpOnlineTDate.SelectedDate == null ||cmbOnStatus.Text==""))
             {
-                MessageBox.Show("Enter Online Details");
+                MessageBox.Show("Enter Online Details", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtOnlineRefno.Focus();
             }
             else if (data.JDetail.TransactionMode == "TT" && (txtTTRefNo.Text==""||dtpTTDate.SelectedDate==null||cmbTTStatus.Text==""))
             {
-                MessageBox.Show("Enter TT Details");
+                MessageBox.Show("Enter TT Details", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtTTRefNo.Focus();
             }
             else
@@ -120,29 +120,29 @@ namespace AccountBuddy.PL.frm.Transaction
             DiffAmt = Math.Abs(drAmt - crAmt);
             if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmJournal))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Warning); ;
             }
             else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmJournal))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.EntryNo == null)
             {
-                MessageBox.Show("Enter Entry No");
+                MessageBox.Show("Enter Entry No", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.JDetails.Count == 0)
             {
-                MessageBox.Show("Enter Details");
+                MessageBox.Show("Enter Details", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }
             else if ( DiffAmt!= 0)
             {
-                MessageBox.Show("Difference between Credit and Debit Should be Zero");
+                MessageBox.Show("Difference between Credit and Debit Should be Zero", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }
             else if(data.FindEntryNo())
             {
-                MessageBox.Show("Entry No Already Exist!..");
+                MessageBox.Show("Entry No Already Exist!..", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
             else
@@ -150,7 +150,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(Message.PL.Saved_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     if (ckxAutoPrint.IsChecked == true) Print();
                     data.Clear();
                     lblMsg.Text = "";
@@ -164,16 +164,16 @@ namespace AccountBuddy.PL.frm.Transaction
 
             if (!BLL.UserAccount.AllowDelete(FormName))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
-                if (MessageBox.Show("Do you want to delete?", "DELETE", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Do you want to delete?", "DELETE", MessageBoxButton.YesNo,MessageBoxImage.Question)== MessageBoxResult.Yes)
                 {
                     var rv = data.Delete();
                     if (rv == true)
                     {
-                        MessageBox.Show(Message.PL.Delete_Alert);
+                        MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                         data.Clear();
                         if (data.Id != 0)
                         {
@@ -206,18 +206,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-           
-            if(data.RefCode!=null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
-            if (rv == false) MessageBox.Show(String.Format("Data Not Found"));
+            frmJournalSearch f = new frmJournalSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -258,7 +249,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                if (MessageBox.Show("do you want to delete this detail?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("do you want to delete this detail?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     Button btn = (Button)sender;
                     data.DeleteDetail((int)btn.Tag);
@@ -292,9 +283,26 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbDebitAC_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbDebitAC.ItemsSource = BLL.Ledger.toList;
-            cmbDebitAC.SelectedValuePath = "Id";
-            cmbDebitAC.DisplayMemberPath = "AccountName";
+            LoadDebitAc();
+        }
+
+        private void LoadDebitAc()
+        {
+            try
+            {
+                cmbDebitAC.ItemsSource = BLL.Ledger.toList;
+                cmbDebitAC.SelectedValuePath = "Id";
+                cmbDebitAC.DisplayMemberPath = "AccountName";
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Jounal Account Name Load_{0}_{1}", ex.Message, ex.InnerException));
+            }
+        }
+
+        private void cmbDebitAC_DropDownOpened(object sender, EventArgs e)
+        {
+            LoadDebitAc();
         }
 
         private void txtAmountDr_TextChanged(object sender, TextChangedEventArgs e)

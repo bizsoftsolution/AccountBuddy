@@ -86,13 +86,13 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-        public BLL.Receipt Receipt_Find(string SearchText)
+        public BLL.Receipt Receipt_Find(string EntryNo)
         {
             BLL.Receipt PO = new BLL.Receipt();
             try
             {
 
-                DAL.Receipt d = Caller.DB.Receipts.Where(x => x.EntryNo == SearchText && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                DAL.Receipt d = Caller.DB.Receipts.Where(x => x.EntryNo == EntryNo && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
                 Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
@@ -161,6 +161,47 @@ namespace AccountBuddy.SL.Hubs
 
         }
 
+        public List<BLL.Receipt> Receipt_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
+        {
+            Caller.DB = new DAL.DBFMCGEntities();
+            List<BLL.Receipt> lstReceipt = new List<BLL.Receipt>();
+            BLL.Receipt rp = new BLL.Receipt();
+            try
+            {
+                foreach (var l in Caller.DB.Receipts.
+                      Where(x => x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo
+                      && (x.LedgerId == LedgerId || LedgerId == null)
+                      && (EntryNo == "" || x.EntryNo == EntryNo)
+                      && (Status == "" || x.Status == Status)
+                      && (x.Amount >= amtFrom && x.Amount <= amtTo) &&
+                      x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.Receipt();
+                    rp.Amount = l.Amount;
+                    rp.ChequeDate = l.ChequeDate;
+                    rp.ChequeNo = l.ChequeNo;
+                    rp.CleareDate = l.CleareDate;
+                    rp.EntryNo = l.EntryNo;
+                    rp.ExtraCharge = l.Extracharge;
+                    rp.Id = l.Id;
+                    rp.LedgerId = l.LedgerId;
+                    rp.LedgerName = string.Format("{0}-{1}", l.Ledger.AccountGroup.GroupCode, l.Ledger.LedgerName);
+                    rp.Particulars = l.Particulars;
+                    rp.ReceiptDate = l.ReceiptDate;
+                    rp.ReceiptMode = l.ReceiptMode;
+                    rp.ReceivedFrom = l.ReceivedFrom;
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+                    rp.Status = l.Status;
+                    rp.VoucherNo = l.VoucherNo;
+                    lstReceipt.Add(rp);
+                    lstReceipt = lstReceipt.OrderBy(x => x.ReceiptDate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstReceipt;
+        }
 
         #endregion
     }

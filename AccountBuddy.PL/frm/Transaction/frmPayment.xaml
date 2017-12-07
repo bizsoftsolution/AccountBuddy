@@ -56,18 +56,18 @@
 
     </UserControl.Resources>
 
-    <Grid Margin="0,0,10,10">
+    <Grid>
 
 
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="5" Margin="0,0,0,-15" />
+        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" Margin="0,0,-10,-15" />
 
         <!--#region Heading-->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  TextAlignment="Center" FontSize="18" Width="512" Height="30" Margin="238,1,330,-1" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5" Text="Payment "/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  TextAlignment="Center" FontSize="18" Width="1100" Height="29" Margin="0,1,0,0" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5" Text="Payment "/>
         </Grid>
         <!--#endregion-->
 
@@ -89,7 +89,7 @@
                             </materialDesign:HintAssist.Hint>
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="100"/>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="200"/>
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
@@ -107,7 +107,7 @@
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <TextBox x:Name="txtEntryNo"  IsReadOnly="True" Text="{Binding EntryNo, Mode=TwoWay}" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold" Width="150" TextAlignment="Right"/>
+                        <TextBox x:Name="txtEntryNo"  IsReadOnly="True" Text="{Binding EntryNo, Mode=TwoWay}" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold" Width="150" TextAlignment="Left"/>
                         <TextBox x:Name="txtPayTo" MaxLength="50" IsReadOnly="{Binding IsReadOnly}" Text="{Binding PayTo, Mode=TwoWay}" Width="335" materialDesign:HintAssist.Hint="Pay To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                     </StackPanel>
 

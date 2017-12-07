@@ -415,6 +415,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmJournalSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmLedgerOpening.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -456,6 +460,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Transaction\frmReceipt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmReceiptSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -721,6 +729,9 @@
     <Compile Include="frm\Transaction\frmJournal.xaml.cs">
       <DependentUpon>frmJournal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmJournalSearch.xaml.cs">
+      <DependentUpon>frmJournalSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmLedgerOpening.xaml.cs">
       <DependentUpon>frmLedgerOpening.xaml</DependentUpon>
     </Compile>
@@ -753,6 +764,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmReceipt.xaml.cs">
       <DependentUpon>frmReceipt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmReceiptSearch.xaml.cs">
+      <DependentUpon>frmReceiptSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmSale.xaml.cs">
       <DependentUpon>frmSale.xaml</DependentUpon>

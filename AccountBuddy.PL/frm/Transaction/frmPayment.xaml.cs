@@ -62,11 +62,11 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.PDetail.LedgerId == 0)
             {
-                MessageBox.Show("Enter LedgerName");
+                MessageBox.Show("Enter LedgerName", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.PDetail.Amount == 0)
             {
-                MessageBox.Show("Enter Amount");
+                MessageBox.Show("Enter Amount", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
