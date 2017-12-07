@@ -103,7 +103,7 @@
                         </materialDesign:HintAssist.Hint>
                         <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="150"/>
                             </ItemsPanelTemplate>
                         </ComboBox.ItemsPanel>
                     </ComboBox>
