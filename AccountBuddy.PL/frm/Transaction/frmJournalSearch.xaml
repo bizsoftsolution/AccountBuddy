@@ -115,6 +115,8 @@
                                     <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="300" Binding="{Binding JDetail.LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header="Debit"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding JDetail.CrAmt, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="Credit"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding JDetail.DrAmt, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    <DataGridTextColumn Header="Transaction Mode"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding JDetail.TransactionMode, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

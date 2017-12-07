@@ -1312,7 +1312,7 @@ namespace AccountBuddy.SL.Hubs
                     rp.JDetail.LedgerName = string.Format("{0}-{1}", l1.Ledger.AccountGroup.GroupCode, l1.Ledger.LedgerName);
                     rp.Particular = l1.Journal.Particular;
                     rp.JournalDate = l1.Journal.JournalDate;
-
+                    rp.JDetail.TransactionMode = l1.TransactionMode;
                     rp.RefCode = l1.Journal.RefCode;
                     rp.VoucherNo = l1.Journal.VoucherNo;
                     lstJournal.Add(rp);
