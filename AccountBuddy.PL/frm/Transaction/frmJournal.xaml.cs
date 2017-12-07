@@ -32,7 +32,7 @@ namespace AccountBuddy.PL.frm.Transaction
             data.Clear();
             onClientEvents();
 
-            LoadWindow();
+          
         }
 
         private void LoadWindow()
@@ -154,6 +154,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     if (ckxAutoPrint.IsChecked == true) Print();
                     data.Clear();
                     lblMsg.Text = "";
+                  
                 }
             }
         }
@@ -200,6 +201,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 btnPrint.IsEnabled = false;
             }
             lblMsg.Text = "";
+            LoadWindow();
         }
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)

@@ -81,13 +81,13 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
 
-        public BLL.Payment Payment_Find(string SearchText)
+        public BLL.Payment Payment_Find(string EntryNo)
         {
             BLL.Payment PO = new BLL.Payment();
             try
             {
 
-                DAL.Payment d = Caller.DB.Payments.Where(x => x.EntryNo == SearchText && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
+                DAL.Payment d = Caller.DB.Payments.Where(x => x.EntryNo == EntryNo && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
                 Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
@@ -154,6 +154,47 @@ namespace AccountBuddy.SL.Hubs
                 return true;
             }
 
+        }
+        public List<BLL.Payment> Payment_List(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
+        {
+            Caller.DB = new DAL.DBFMCGEntities();
+            List<BLL.Payment> lstPayment = new List<BLL.Payment>();
+            BLL.Payment rp = new BLL.Payment();
+            try
+            {
+                foreach (var l in Caller.DB.Payments.
+                      Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo
+                      && (x.LedgerId == LedgerId || LedgerId == null)
+                      && (EntryNo == "" || x.VoucherNo == x.EntryNo)
+                      && (Status == "" || x.Status == Status)
+                      && (x.Amount >= amtFrom && x.Amount <= amtTo) &&
+                      x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.Payment();
+                    rp.Amount = l.Amount;
+                    rp.ChequeDate = l.ChequeDate;
+                    rp.ChequeNo = l.ChequeNo;
+                    rp.ClearDate = l.ClearDate;
+                    rp.EntryNo = l.EntryNo;
+                    rp.ExtraCharge = l.ExtraCharge;
+                    rp.Id = l.Id;
+                    rp.LedgerId = l.LedgerId;
+                    rp.LedgerName = string.Format("{0}-{1}", l.Ledger.AccountGroup.GroupCode, l.Ledger.LedgerName);
+                    rp.Particulars = l.Particulars;
+                    rp.PaymentDate = l.PaymentDate;
+                    rp.PaymentMode = l.PaymentMode;
+                    rp.PayTo = l.PayTo;
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+                    rp.Status = l.Status;
+                    rp.VoucherNo = l.VoucherNo;
+                    lstPayment.Add(rp);
+                    lstPayment = lstPayment.OrderBy(x => x.PaymentDate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstPayment;
         }
 
 

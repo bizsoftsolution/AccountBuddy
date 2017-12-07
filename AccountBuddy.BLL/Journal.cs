@@ -429,7 +429,8 @@ namespace AccountBuddy.BLL
             if (pod != null)
             {
                 JDetails.Remove(pod);
-                Amount = JDetails.Sum(x => x.DrAmt) - JDetails.Sum(x=> x.CrAmt);
+                Amount = JDetails.Sum(x => x.DrAmt) - JDetails.Sum(x => x.CrAmt);
+                ClearDetail();
             }
         }
 

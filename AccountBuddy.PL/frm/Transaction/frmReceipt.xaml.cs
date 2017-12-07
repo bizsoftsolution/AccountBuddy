@@ -33,11 +33,11 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<String>("Receipt_RefNoRefresh", (RefNo) =>
+            BLL.FMCGHubClient.FMCGHub.On<String>("Receipt_RefNoRefresh", (EntryNo) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    data.RefNo = RefNo;
+                    data.EntryNo = EntryNo;
                 });
             });
         }

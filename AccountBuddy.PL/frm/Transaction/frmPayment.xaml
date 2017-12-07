@@ -89,11 +89,11 @@
                             </materialDesign:HintAssist.Hint>
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="100"/>
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <ComboBox x:Name="cmbCreditAC" IsReadOnly="{Binding IsReadOnly}"   SelectedValue="{Binding LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True" Loaded="cmbCreditAC_Loaded">
+                        <ComboBox x:Name="cmbCreditAC" IsReadOnly="{Binding IsReadOnly}"   SelectedValue="{Binding LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True" Loaded="cmbCreditAC_Loaded" DropDownOpened="cmbCreditAC_DropDownOpened">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Credit A/C"/>
@@ -171,7 +171,7 @@
             <Grid Grid.Column="1">
                 <StackPanel Orientation="Vertical" Margin="0,25,0,0">
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox x:Name="cmbDebitAC" IsReadOnly="{Binding IsReadOnly}"  Text="{Binding PDetail.LedgerName}" SelectedValue="{Binding PDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True" Loaded="cmbDebitAC_Loaded">
+                        <ComboBox x:Name="cmbDebitAC" IsReadOnly="{Binding IsReadOnly}"  Text="{Binding PDetail.LedgerName}" SelectedValue="{Binding PDetail.LedgerId, Mode=TwoWay}"  Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True" Loaded="cmbDebitAC_Loaded" DropDownOpened="cmbDebitAC_DropDownOpened">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Debit A/C"/>
@@ -239,7 +239,7 @@
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,85,0">
-                        <TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>
+                        <!--<TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold"/>-->
                         <Button Click="btnsearch_Click" Width="85"  Height="30" x:Name="btnsearch" Content="SEARCH" Margin="5 5" />
 
                     </StackPanel>

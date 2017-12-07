@@ -84,9 +84,17 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<Supplier>(FMCGHubClient.FMCGHub.Invoke<List<Supplier>>("Supplier_List").Result);
-                return _toList;
+                try
+                {
+                    if (_toList == null) _toList = new ObservableCollection<Supplier>(FMCGHubClient.FMCGHub.Invoke<List<Supplier>>("Supplier_List").Result);
+                    
+                }
+                catch(Exception ex)
+                {
+                    Common.AppLib.WriteLog(string.Format("Supplier List {0}-{1}", ex.Message, ex.InnerException));
 
+                }
+                return _toList;
             }
             set
             {

@@ -74,11 +74,12 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.ReceiptDetail>(d_pod);
                     }
                     Caller.DB.SaveChanges();
-                    Clients.Clients(OtherLoginClients).Receipt_RefNoRefresh(Receipt_NewRefNo());
+                   
                     LogDetailStore(PO, LogDetailType.UPDATE);
-                    Journal_SaveByReceipt(PO);
+                    
                 }
-              
+                Clients.Clients(OtherLoginClients).Receipt_RefNoRefresh(Receipt_NewRefNo());
+                Journal_SaveByReceipt(PO);
                 return true;
             }
             catch (Exception ex) { }

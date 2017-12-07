@@ -187,6 +187,15 @@ namespace AccountBuddy.Message {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Records To Delete!.
+        /// </summary>
+        public static string No_Records_Delete {
+            get {
+                return ResourceManager.GetString("No_Records_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password_Exist!.
         /// </summary>
         public static string Password_Exist {

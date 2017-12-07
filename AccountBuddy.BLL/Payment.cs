@@ -612,43 +612,10 @@ namespace AccountBuddy.BLL
         }
 
         #region List
-        public static ObservableCollection<Ledger> LedgerList
-        {
-            get
-            {
-                try
-                {
-                    return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts").ToList());
-
-                }
-                catch (Exception ex)
-                {
-
-                }
-                return new ObservableCollection<Ledger>(Ledger.toList.ToList());
-            }
+      
 
 
-        }
-
-
-        public static ObservableCollection<Ledger> CashLedgerList
-        {
-            get
-            {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList());
-            }
-        }
-
-        public static ObservableCollection<Ledger> BLedgerList
-        {
-            get
-            {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Back AC").ToList());
-            }
-        }
-
-
+    
         #endregion
 
         #region Master
@@ -680,7 +647,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Payment po = FMCGHubClient.FMCGHub.Invoke<Payment>("Payment_Find", SearchText).Result;
+                Payment po = FMCGHubClient.FMCGHub.Invoke<Payment>("Payment_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Payment>(this);
                 this.PDetails = po.PDetails;
@@ -740,6 +707,7 @@ namespace AccountBuddy.BLL
             {
                 PDetails.Remove(pod);
                 Amount = PDetails.Sum(x => x.Amount);
+                ClearDetail();
             }
         }
 
@@ -771,6 +739,10 @@ namespace AccountBuddy.BLL
             return rv;
         }
 
+        public static List<Payment> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<Payment>>("Payment_List", LedgerId,  dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
+        }
 
         #region Property  Changed Event
 

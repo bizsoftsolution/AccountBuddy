@@ -592,23 +592,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-
-        #region List
-        public static ObservableCollection<Ledger> LedgerList
-        {
-            get
-            {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts").ToList());
-            }
-        }
-        public static ObservableCollection<Ledger> CashLedgerList
-        {
-            get
-            {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList());
-            }
-        }
-        #endregion
+        
 
         #region Master
         public bool Save()
@@ -697,6 +681,7 @@ namespace AccountBuddy.BLL
             {
                 RDetails.Remove(pod);
                 Amount = RDetails.Sum(x => x.Amount);
+                ClearDetail();
             }
         }
 

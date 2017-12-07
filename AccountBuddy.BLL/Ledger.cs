@@ -595,7 +595,7 @@ namespace AccountBuddy.BLL
                     var i = FMCGHubClient.FMCGHub.Invoke<int>("Ledger_Save", this).Result;
                     d.Id = i;
                 }
-
+               
                 return true;
             }
             catch (Exception ex)
