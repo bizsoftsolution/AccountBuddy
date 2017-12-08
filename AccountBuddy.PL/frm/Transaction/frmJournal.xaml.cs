@@ -169,7 +169,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 }
                 else
                 {
-                    if (MessageBox.Show("Do you want to delete?", "DELETE", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("Do you want to delete?", FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         var rv = data.Delete();
                         if (rv == true)
@@ -255,7 +255,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                if (MessageBox.Show("do you want to delete this detail?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Do you want to delete this detail?", FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     Button btn = (Button)sender;
                     data.DeleteDetail((int)btn.Tag);
