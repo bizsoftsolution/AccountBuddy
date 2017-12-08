@@ -54,7 +54,7 @@ namespace AccountBuddy.PL.frm.Transaction
             var d = BLL.Receipt.ToList((int?)cmbAccountName.SelectedValue,  dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, cmbstatus.Text, amtFrom, amtTo);
             //dgvDetails.ItemsSource = BLL.Receipt.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, cmbstatus.Text);
             dgvDetails.ItemsSource = d;
-            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.Amount).ToString());
+            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.Amount));
         }
 
         private void cmbAccountName_Loaded(object sender, RoutedEventArgs e)

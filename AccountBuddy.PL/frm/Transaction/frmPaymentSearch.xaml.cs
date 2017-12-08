@@ -41,7 +41,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
             var d = BLL.Payment.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, cmbstatus.Text, amtfrom, amtTo);
             dgvDetails.ItemsSource = d;
-            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.Amount).ToString());
+            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.Amount));
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -57,7 +57,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             var d = BLL.Payment.ToList((int?)cmbAccountName.SelectedValue,dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, cmbstatus.Text, amtfrom, amtTo);
             dgvDetails.ItemsSource = d;
-            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.Amount).ToString());
+            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.Amount));
         }
         private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
