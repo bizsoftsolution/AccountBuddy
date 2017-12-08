@@ -40,7 +40,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
             var d = BLL.Journal.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, status, txtEntryNo.Text, amtFrom, amtTo);
             dgvDetails.ItemsSource = d;
-            lblTotal.Content = string.Format("Total CrAmt: {0:N2}, DrAmt: {1:N2}", d.Sum(x => x.JDetail.CrAmt).ToString(), d.Sum(x => x.JDetail.DrAmt).ToString());
+            lblTotal.Content = string.Format("Total CrAmt: {0:0.00}, DrAmt: {1:0.00}", d.Sum(x => x.JDetail.CrAmt).ToString(), d.Sum(x => x.JDetail.DrAmt).ToString());
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)

@@ -111,7 +111,7 @@ namespace AccountBuddy.PL.frm.Transaction
             drAmt= l1.Sum(x => x.CrAmt);
             crAmt = l1.Sum(x => x.DrAmt);
 
-            lblMsg.Text = string.Format("Total Debit Balance : {0:N2}, Total Credit Balance : {1:N2}, Difference : {2:N2}", drAmt, crAmt, Math.Abs(drAmt - crAmt));
+            lblMsg.Text = string.Format("Total Debit Balance : {0:N2}, Total Credit Balance : {1:N2}, Difference : {2:N2}", crAmt, drAmt, Math.Abs(drAmt - crAmt));
             lblMsg.Foreground = drAmt == crAmt ? new SolidColorBrush(Color.FromRgb(0, 0, 255)) : new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
 
