@@ -396,6 +396,21 @@ namespace AccountBuddy.BLL
 
         #endregion
 
+        public static List<StockOut> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<StockOut> rv = new List<StockOut>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<StockOut>>("Sale_List", LedgerId,  dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("StockOut List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
 
 
         public bool FindRefNo()

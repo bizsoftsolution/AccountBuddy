@@ -538,6 +538,23 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<SalesOrder> ToList(int? LedgerId,DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<SalesOrder> rv = new List<SalesOrder>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<SalesOrder>>("Sales Order_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Sales Order List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
         #endregion
 
     }

@@ -129,7 +129,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
                 else
                 {
-                    if (MessageBox.Show("Do you want to delete?", "DELETE", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("Do you want to delete?", FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         var rv = data.Delete();
                         if (rv == true)

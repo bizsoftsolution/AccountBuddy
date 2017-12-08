@@ -617,6 +617,25 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+
+        public static List<Purchase> ToList(int? LedgerId, int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<Purchase> rv = new List<Purchase>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<Purchase>>("Purchase_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Purchase List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
+
         #endregion
 
     }

@@ -506,6 +506,7 @@ namespace AccountBuddy.BLL
                 ClearDetail();
             }
         }
+       
         #endregion
 
 
@@ -528,6 +529,24 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<StockSeperated> ToList(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<StockSeperated> rv = new List<StockSeperated>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<StockSeperated>>("Sale_List", LedgerId,dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("StockSeperated List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
+
         #endregion
     }
 }

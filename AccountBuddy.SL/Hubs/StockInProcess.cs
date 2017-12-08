@@ -197,34 +197,34 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { }
             return P;
         }
-        public List<BLL.StockIn> StockIn_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        public List<BLL.StockInProcess> StockInProcess_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
-            List<BLL.StockIn> lstStockIn = new List<BLL.StockIn>();
+            List<BLL.StockInProcess> lstStockIn = new List<BLL.StockInProcess>();
             Caller.DB = new DAL.DBFMCGEntities();
-            BLL.StockIn rp = new BLL.StockIn();
+            BLL.StockInProcess rp = new BLL.StockInProcess();
             try
             {
-                foreach (var l in Caller.DB.StockIns.
-                      Where(x => x.Date >= dtFrom && x.Date <= dtTo
-                      && (x.LedgerId == LedgerId || LedgerId == null)
+                foreach (var l in Caller.DB.StockInProcesses.
+                      Where(x => x.SPDate >= dtFrom && x.SPDate <= dtTo
+                      && (x.StaffId == LedgerId || LedgerId == null)
                       && (BillNo == "" || x.RefNo == BillNo)
                       && (x.ItemAmount >= amtFrom && x.ItemAmount <= amtTo) &&
-                      x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                      x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
                 {
-                    rp = new BLL.StockIn();
+                    rp = new BLL.StockInProcess();
                     rp.ItemAmount = l.ItemAmount;
-                    rp.Date = l.Date;
+                    rp.SPDate = l.SPDate;
                     rp.RefNo = l.RefNo;
 
                     rp.Id = l.Id;
-                    rp.LedgerId = l.LedgerId;
-                    rp.LedgerName = string.Format("{0}-{1}", l.Ledger.AccountGroup.GroupCode, l.Ledger.LedgerName);
+                    rp.StaffId = l.StaffId;
+                    rp.StaffName = string.Format("{0}-{1}", l.Staff.Ledger.AccountGroup.GroupCode, l.Staff.Ledger.LedgerName);
 
                     rp.RefCode = l.RefCode;
                     rp.RefNo = l.RefNo;
 
                     lstStockIn.Add(rp);
-                    lstStockIn = lstStockIn.OrderBy(x => x.Date).ToList();
+                    lstStockIn = lstStockIn.OrderBy(x => x.SPDate).ToList();
                 }
 
             }

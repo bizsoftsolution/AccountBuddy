@@ -550,6 +550,22 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<JobOrderReceived> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<JobOrderReceived> rv = new List<JobOrderReceived>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<JobOrderReceived>>("JobOrderReceived_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("JobOrderReceived List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
         #endregion
 
     }

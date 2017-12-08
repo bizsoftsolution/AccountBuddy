@@ -21,7 +21,7 @@ namespace AccountBuddy.PL.frm.Transaction
     public partial class frmPurchaseSearch : MetroWindow
     {
         decimal amtfrom = 0, amtTo = 99999999;
-
+       
         public frmPurchaseSearch()
         {
             InitializeComponent();
@@ -60,17 +60,9 @@ namespace AccountBuddy.PL.frm.Transaction
                     f.btnSave.IsEnabled = true;
                     f.btnDelete.IsEnabled = true;
                 }
-
-             
+                
                 f.btnPrint.IsEnabled = true;
-
-                if (f.data.RefCode != null)
-                {
-                    f.btnSave.IsEnabled = true;
-                    f.btnDelete.IsEnabled = true;
-                    
-                }
-               
+                
                 System.Windows.Forms.Application.DoEvents();
                 this.Close();
             }
@@ -78,9 +70,10 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
             try
             {
-                var d = BLL.PurchaseOrder.PO_List((int?)cmbSupplierName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtAmtFrom.Text, amtfrom, amtTo);
+                var d = BLL.Purchase.ToList((int?)cmbSupplierName.SelectedValue,(int?)cmbTransactionType.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtAmtFrom.Text, amtfrom, amtTo);
                 dgvDetails.ItemsSource = d;
                 lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount).ToString());
             }
@@ -88,11 +81,13 @@ namespace AccountBuddy.PL.frm.Transaction
             { }
         }
 
-        private void cmbPayMode_Loaded(object sender, RoutedEventArgs e)
+      
+
+        private void cmbTransactionType_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbPayMode.ItemsSource = BLL.TransactionType.toList;
-            cmbPayMode.DisplayMemberPath = "Type";
-            cmbPayMode.SelectedValuePath = "Type";
+            cmbTransactionType.ItemsSource = BLL.TransactionType.toList;
+            cmbTransactionType.SelectedValuePath = "Id";
+            cmbTransactionType.DisplayMemberPath = "Type";
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -113,7 +108,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 amtTo = 999999999;
             }
-            var d = BLL.PurchaseOrder.PO_List((int?)cmbSupplierName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtBillNo.Text, amtfrom, amtTo);
+            var d = BLL.Purchase.ToList((int?)cmbSupplierName.SelectedValue,(int?)cmbTransactionType.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtBillNo.Text, amtfrom, amtTo);
             dgvDetails.ItemsSource = d;
             lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount).ToString());
         }

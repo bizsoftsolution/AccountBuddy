@@ -198,6 +198,39 @@ namespace AccountBuddy.SL.Hubs
             return P;
         }
 
+        public List<BLL.StockSeperated> StockSeperated_List(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.StockSeperated> lstStockSeperated = new List<BLL.StockSeperated>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.StockSeperated rp = new BLL.StockSeperated();
+            try
+            {
+                foreach (var l in Caller.DB.StockSeparateds.
+                      Where(x => x.Date >= dtFrom && x.Date <= dtTo
+                      && (x.StaffId == LedgerId || LedgerId == null)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
+                      x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.StockSeperated();
+                    rp.TotalAmount = l.TotalAmount;
+
+                    rp.RefNo = l.RefNo;
+
+                    rp.Id = l.Id;
+                    rp.StaffId = l.StaffId;
+                    rp.StaffName = string.Format("{0}-{1}", l.Staff.Ledger.AccountGroup.GroupCode, l.Staff.Ledger.LedgerName);
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+
+                    lstStockSeperated.Add(rp);
+                    lstStockSeperated = lstStockSeperated.OrderBy(x => x.Date).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstStockSeperated;
+        }
 
 
         #endregion

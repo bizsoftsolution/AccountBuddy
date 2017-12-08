@@ -51,17 +51,13 @@
                                         </ItemsPanelTemplate>
                                     </ComboBox.ItemsPanel>
                                 </ComboBox>
-                                <ComboBox x:Name="cmbPayMode" Loaded="cmbPayMode_Loaded" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="297" Margin="10" Height="46" >
+                                <ComboBox x:Name="cmbTransactionType" Loaded="cmbTransactionType_Loaded" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="297" Margin="10" Height="46" >
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Pay Mode"/>
+                                            <TextBlock Text="Transaction Type"/>
                                         </StackPanel>
                                     </materialDesign:HintAssist.Hint>
-                                    <ComboBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
-                                        </ItemsPanelTemplate>
-                                    </ComboBox.ItemsPanel>
+                                    
                                 </ComboBox>
                                 <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,20,10,10" Width="104" >
                                     <materialDesign:HintAssist.Hint>
@@ -86,6 +82,7 @@
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                 <TextBox x:Name="txtBillNo"  IsReadOnly="False"  materialDesign:HintAssist.Hint="Bill No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10" FontWeight="Bold" FontSize="14" Width="150" />
+                                
                                 <Label x:Name="lblAmount" Content="Amount" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,0,-5"></Label>
                                 <TextBox x:Name="txtAmtFrom"  IsReadOnly="False"  materialDesign:HintAssist.Hint="From" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10" FontWeight="Bold" FontSize="14" Width="150" />
                                 <TextBox x:Name="txtAmtTo"  IsReadOnly="False" materialDesign:HintAssist.Hint="To" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10" FontWeight="Bold" FontSize="14" Width="150" />

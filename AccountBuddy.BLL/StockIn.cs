@@ -410,6 +410,23 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<StockIn> ToList(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<StockIn> rv = new List<StockIn>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<StockIn>>("StockIn_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("StockIn List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
         #endregion
     }
 }

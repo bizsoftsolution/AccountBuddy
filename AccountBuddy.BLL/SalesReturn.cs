@@ -609,6 +609,24 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<SalesReturn> ToList(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<SalesReturn> rv = new List<SalesReturn>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<SalesReturn>>("SalesReturn_List", LedgerId, PayMode, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("SalesReturn List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
+
         #endregion
     }
 }

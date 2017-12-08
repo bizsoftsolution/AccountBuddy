@@ -537,6 +537,23 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+        public static List<StockInProcess> ToList(int? LedgerId,DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<StockInProcess> rv = new List<StockInProcess>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<StockInProcess>>("StockInProcess_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("StockInProcess List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
+
         #endregion
     }
 }

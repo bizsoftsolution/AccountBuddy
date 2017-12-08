@@ -263,7 +263,7 @@ namespace AccountBuddy.SL.Hubs
         }
 
 
-        public List<BLL.Purchase> Purchase_List(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        public List<BLL.Purchase> Purchase_List(int? LedgerId, int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<BLL.Purchase> lstPurchase = new List<BLL.Purchase>();
             Caller.DB = new DAL.DBFMCGEntities();
@@ -273,7 +273,7 @@ namespace AccountBuddy.SL.Hubs
                 foreach (var l in Caller.DB.Purchases.
                       Where(x => x.PurchaseDate >= dtFrom && x.PurchaseDate <= dtTo
                       && (x.LedgerId == LedgerId || LedgerId == null)
-                      && (PayMode == null || x.TransactionType.Type == PayMode)
+                      && (TType == null || x.TransactionTypeId == TType)
                       && (BillNo == "" || x.RefNo == BillNo)
                       && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
                       x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
