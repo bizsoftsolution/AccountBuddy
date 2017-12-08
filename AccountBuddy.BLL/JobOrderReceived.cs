@@ -48,9 +48,16 @@ namespace AccountBuddy.BLL
             {
                 if (_JRPendingList== null)
                 {
-                    _JRPendingList = new ObservableCollection<JobOrderReceived>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<JobOrderReceived>>("JobOrderReceived_JRPendingList").Result;
-                    _JRPendingList = new ObservableCollection<JobOrderReceived>(l1);
+                    try
+                    {
+                        _JRPendingList = new ObservableCollection<JobOrderReceived>();
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<JobOrderReceived>>("JobOrderReceived_JRPendingList").Result;
+                        _JRPendingList = new ObservableCollection<JobOrderReceived>(l1);
+                    }
+                    catch(Exception ex)
+                    {
+                        Common.AppLib.WriteLog(string.Format("JRPending List_{0}_{1}", ex.Message, ex.InnerException));
+                    }
                 }
                 return _JRPendingList;
             }
@@ -372,6 +379,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
+                
                 if (_JRDetails == null) _JRDetails = new ObservableCollection<JobOrderReceivedDetail>();
                 return _JRDetails;
             }

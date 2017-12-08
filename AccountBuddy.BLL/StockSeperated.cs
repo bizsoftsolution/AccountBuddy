@@ -355,7 +355,15 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_SSDetails == null) _SSDetails = new ObservableCollection<StockSeperatedDetail>();
+                try
+                {
+                    if (_SSDetails == null) _SSDetails = new ObservableCollection<StockSeperatedDetail>();
+                  
+                }
+                catch(Exception ex)
+                {
+                    Common.AppLib.WriteLog(string.Format("Stock Seperated _{0}_{1}", ex.InnerException, ex.Message));
+                }
                 return _SSDetails;
             }
             set

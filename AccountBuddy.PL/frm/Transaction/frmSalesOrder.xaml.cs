@@ -50,14 +50,14 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            var max = BLL.Product.toList.Where(x => x.Id == data.SODetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
-            var min = BLL.Product.toList.Where(x => x.Id == data.SODetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
+            var max = data.SODetail.Product.MaxSellingRate;
+            var min = data.SODetail.Product.MinSellingRate;
 
             if (data.SODetail.ProductId == null)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            else if (min > data.SODetail.UnitPrice || max < data.SODetail.UnitPrice)
+            else if (data.SODetail.Product.MinSellingRate > data.SODetail.UnitPrice || data.SODetail.Product.MaxSellingRate < data.SODetail.UnitPrice)
             {
                 MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtRate.Focus();

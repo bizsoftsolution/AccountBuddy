@@ -87,7 +87,14 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<JobWorker>(FMCGHubClient.FMCGHub.Invoke<List<JobWorker>>("JobWorker_List").Result);
+                try
+                {
+                    if (_toList == null) _toList = new ObservableCollection<JobWorker>(FMCGHubClient.FMCGHub.Invoke<List<JobWorker>>("JobWorker_List").Result);                   
+                }
+                catch(Exception ex)
+                {
+                    Common.AppLib.WriteLog(string.Format("Job Worker ToList_{0}_{1}", ex.Message, ex.InnerException));
+                }
                 return _toList;
             }
             set

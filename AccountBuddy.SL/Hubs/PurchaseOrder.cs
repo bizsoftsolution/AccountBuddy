@@ -56,12 +56,10 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                   
-                    foreach (var d_Pd in d.PurchaseOrderDetails.ToList())
-                    {
-                        //BLL.PurchaseOrderDetail b_Pd = PO.PODetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
-                        d.PurchaseOrderDetails.Remove(d_Pd);
-                    }
+                    decimal rd = PO.PODetails.Select(X => X.POId).FirstOrDefault();
+                    Caller.DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails.Where(x => x.POId == rd).ToList());
+
+
                     PO.toCopy<DAL.PurchaseOrder>(d);
                     foreach (var b_pod in PO.PODetails)
                     {

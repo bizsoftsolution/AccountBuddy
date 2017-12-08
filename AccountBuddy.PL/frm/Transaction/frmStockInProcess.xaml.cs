@@ -302,9 +302,16 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbStaff_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbStaff.ItemsSource = BLL.Staff.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
-            cmbStaff.DisplayMemberPath = "Ledger.LedgerName";
-            cmbStaff.SelectedValuePath = "Id";
+            try
+            {
+                cmbStaff.ItemsSource = BLL.Staff.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
+                cmbStaff.DisplayMemberPath = "Ledger.LedgerName";
+                cmbStaff.SelectedValuePath = "Id";
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Stock In Process Staff List_{0}_{1}", ex.Message, ex.InnerException));
+            }
 
 
         }

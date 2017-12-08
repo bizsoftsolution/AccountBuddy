@@ -67,9 +67,16 @@ namespace AccountBuddy.BLL
             {
                 if (_JOPendingList == null)
                 {
-                    _JOPendingList = new ObservableCollection<JobOrderIssue>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<JobOrderIssue>>("JobOrderIssue_JOPendingList").Result;
-                    _JOPendingList = new ObservableCollection<JobOrderIssue>(l1);
+                    try
+                    {
+                        _JOPendingList = new ObservableCollection<JobOrderIssue>();
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<JobOrderIssue>>("JobOrderIssue_JOPendingList").Result;
+                        _JOPendingList = new ObservableCollection<JobOrderIssue>(l1);
+                    }
+                    catch(Exception ex)
+                    {
+                        Common.AppLib.WriteLog(string.Format("JOPendingList_{0}_{1}", ex.Message, ex.InnerException));
+                    }
                 }
                 return _JOPendingList;
             }

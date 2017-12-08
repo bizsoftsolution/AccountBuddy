@@ -57,21 +57,19 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
 
-                    foreach (var d_Pd in d.StockInDetails)
-                    {
-                        BLL.StockInDetail b_Pd = P.STInDetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();
-                        if (b_Pd == null) d.StockInDetails.Remove(d_Pd);
-                    }
+
+                    decimal pd = P.STInDetails.Select(X => X.StockInId).FirstOrDefault();
+                    Caller.DB.StockInDetails.RemoveRange(d.StockInDetails.Where(x => x.StockInId == pd).ToList());
 
                     P.toCopy<DAL.StockIn>(d);
                     foreach (var b_Pd in P.STInDetails)
                     {
-                        DAL.StockInDetail d_Pd = d.StockInDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
-                        if (d_Pd == null)
-                        {
-                            d_Pd = new DAL.StockInDetail();
+                        //DAL.StockInDetail d_Pd = d.StockInDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
+                       // if (d_Pd == null)
+                        //{
+                            DAL.StockInDetail d_Pd = new DAL.StockInDetail();
                             d.StockInDetails.Add(d_Pd);
-                        }
+                       // }
                         b_Pd.toCopy<DAL.StockInDetail>(d_Pd);
                     }
                     Caller.DB.SaveChanges();

@@ -63,7 +63,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" Margin="0,0,-10,-15" />
+        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" Margin="0,0,0,0" />
 
         <!--#region Heading-->
         <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">

@@ -55,8 +55,6 @@ namespace AccountBuddy.SL.Hubs
                     decimal pd = P.SDetails.Select(X => X.SalesId).FirstOrDefault();
                     Caller.DB.SalesDetails.RemoveRange(d.SalesDetails.Where(x => x.SalesId == pd).ToList());
 
-
-
                     P.toCopy<DAL.Sale>(d);
                     foreach (var b_Sd in P.SDetails)
                     {

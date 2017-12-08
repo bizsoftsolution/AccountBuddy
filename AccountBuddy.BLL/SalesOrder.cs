@@ -66,10 +66,16 @@ namespace AccountBuddy.BLL
             get
             {
                 if (_SOPendingList == null)
-                {
-                    _SOPendingList = new ObservableCollection<SalesOrder>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<SalesOrder>>("SalesOrder_SOPendingList").Result;
-                    _SOPendingList = new ObservableCollection<SalesOrder>(l1);
+                {try
+                    {
+                        _SOPendingList = new ObservableCollection<SalesOrder>();
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<SalesOrder>>("SalesOrder_SOPendingList").Result;
+                        _SOPendingList = new ObservableCollection<SalesOrder>(l1);
+                    }
+                    catch(Exception ex)
+                    {
+                        Common.AppLib.WriteLog(string.Format("SOPending List_{0}_{1}", ex.Message, ex.InnerException));
+                    }
                 }
                 return _SOPendingList;
             }
