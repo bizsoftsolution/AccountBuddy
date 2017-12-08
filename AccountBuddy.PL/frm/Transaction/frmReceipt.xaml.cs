@@ -37,7 +37,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    if (data.Id != 0) data.EntryNo = EntryNo;
+                    if (data.Id == 0) data.EntryNo = EntryNo;
                 });
             });
         }

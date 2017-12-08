@@ -245,6 +245,41 @@ namespace AccountBuddy.SL.Hubs
             return P;
         }
 
+
+        public List<BLL.JobOrderIssue> JobOrderIssue_List(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.JobOrderIssue> lstJobOrderIssue = new List<BLL.JobOrderIssue>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.JobOrderIssue rp = new BLL.JobOrderIssue();
+            try
+            {
+                foreach (var l in Caller.DB.JobOrderIssues.
+                      Where(x => x.JODate >= dtFrom && x.JODate <= dtTo
+                      && (x.JobWorkerId == LedgerId || LedgerId == null)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
+                      x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.JobOrderIssue();
+                    rp.TotalAmount = l.TotalAmount;                 
+                    rp.RefNo = l.RefNo;
+                    rp.Id = l.Id;
+                    rp.JobWorkerId = l.JobWorkerId;
+                    rp.JobWorkerName = string.Format("{0}-{1}", l.JobWorker.Ledger.AccountGroup.GroupCode, l.JobWorker.Ledger.LedgerName);
+
+                  
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+
+                    lstJobOrderIssue.Add(rp);
+                    lstJobOrderIssue = lstJobOrderIssue.OrderBy(x => x.JODate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstJobOrderIssue;
+        }
+
         #endregion
     }
 }

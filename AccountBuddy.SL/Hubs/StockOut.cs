@@ -253,6 +253,42 @@ namespace AccountBuddy.SL.Hubs
 
         }
 
+
+        public List<BLL.StockOut> StockOut_List(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.StockOut> lstStockOut = new List<BLL.StockOut>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.StockOut rp = new BLL.StockOut();
+            try
+            {
+                foreach (var l in Caller.DB.StockOuts.
+                      Where(x => x.Date >= dtFrom && x.Date <= dtTo
+                      && (x.LedgerId == LedgerId || LedgerId == null)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.ItemAmount >= amtFrom && x.ItemAmount <= amtTo) &&
+                      x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.StockOut();
+                    rp.ItemAmount = l.ItemAmount;
+                  
+                    rp.RefNo = l.RefNo;
+
+                    rp.Id = l.Id;
+                    rp.LedgerId = l.LedgerId;
+                    rp.LedgerName = string.Format("{0}-{1}", l.Ledger.AccountGroup.GroupCode, l.Ledger.LedgerName);
+
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+
+                    lstStockOut.Add(rp);
+                    lstStockOut = lstStockOut.OrderBy(x => x.Date).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstStockOut;
+        }
+
         #endregion
     }
 }

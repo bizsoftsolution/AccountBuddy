@@ -455,6 +455,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmPurchaseSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmQuickStockOut.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -758,6 +762,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmPurchaseReturn.xaml.cs">
       <DependentUpon>frmPurchaseReturn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmPurchaseSearch.xaml.cs">
+      <DependentUpon>frmPurchaseSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmQuickStockOut.xaml.cs">
       <DependentUpon>frmQuickStockOut.xaml</DependentUpon>

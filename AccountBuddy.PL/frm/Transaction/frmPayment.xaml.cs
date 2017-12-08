@@ -51,9 +51,9 @@ namespace AccountBuddy.PL.frm.Transaction
             BLL.FMCGHubClient.FMCGHub.On<String>("Payment_RefNoRefresh", (EntryNo) =>
             {
                 this.Dispatcher.Invoke(() =>
-                {
-                    if (data.Id!=0)data.EntryNo = EntryNo;
-                });
+                            {
+                                if (data.Id == 0) data.EntryNo = EntryNo;
+                            });
             });
         }
 

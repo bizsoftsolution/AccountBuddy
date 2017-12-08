@@ -206,6 +206,42 @@ namespace AccountBuddy.SL.Hubs
             return P;
         }
 
+
+        public List<BLL.JobOrderReceived> JobOrderReceived_List(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.JobOrderReceived> lstJobOrderReceived = new List<BLL.JobOrderReceived>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.JobOrderReceived rp = new BLL.JobOrderReceived();
+            try
+            {
+                foreach (var l in Caller.DB.JobOrderReceiveds.
+                      Where(x => x.JRDate >= dtFrom && x.JRDate <= dtTo
+                      && (x.JobWorkerId == LedgerId || LedgerId == null)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
+                      x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.JobOrderReceived();
+                    rp.TotalAmount = l.TotalAmount;
+                  
+                    rp.RefNo = l.RefNo;
+
+                    rp.Id = l.Id;
+                    rp.JobWorkerId = l.JobWorkerId;
+                    rp.JobWorkerName = string.Format("{0}-{1}", l.JobWorker.Ledger.AccountGroup.GroupCode, l.JobWorker.Ledger.LedgerName);
+
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+
+                    lstJobOrderReceived.Add(rp);
+                    lstJobOrderReceived = lstJobOrderReceived.OrderBy(x => x.JRDate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstJobOrderReceived;
+        }
+
         #endregion
     }
 }

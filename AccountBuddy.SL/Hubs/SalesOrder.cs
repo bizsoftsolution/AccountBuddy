@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
         {
             return SalesOrder_NewRefNoByCompanyId(Caller.CompanyId);
         }
-        public  string SalesOrder_NewRefNoByCompanyId(int CompanyId)
+        public string SalesOrder_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.SalesOrder, dt, dt.Month);
@@ -23,7 +23,7 @@ namespace AccountBuddy.SL.Hubs
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
-            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length ), 16);
+            if (d != null) No = Convert.ToInt64(d.RefNo.Substring(Prefix.Length), 16);
 
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
@@ -31,7 +31,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                
+
                 DAL.SalesOrder d = Caller.DB.SalesOrders.Where(x => x.Id == SO.Id).FirstOrDefault();
 
                 if (d == null)
@@ -69,21 +69,21 @@ namespace AccountBuddy.SL.Hubs
                         //  if (d_SOd == null)
                         // {
                         DAL.SalesOrderDetail d_SOd = new DAL.SalesOrderDetail();
-                            d.SalesOrderDetails.Add(d_SOd);
-                      //  }
+                        d.SalesOrderDetails.Add(d_SOd);
+                        //  }
                         b_SOd.toCopy<DAL.SalesOrderDetail>(d_SOd);
                     }
                     LogDetailStore(SO, LogDetailType.UPDATE);
-                   
-                }                
+
+                }
                 Clients.Clients(OtherLoginClients).SalesOrder_RefNoRefresh(SalesOrder_NewRefNo());
                 Clients.Clients(OtherLoginClients).SalesOrder_SOPendingSave(SO);
                 PurchaseOrder_SaveBySalesOrder(d);
                 return true;
-                
+
             }
 
-           catch (Exception ex) { }
+            catch (Exception ex) { }
             return false;
         }
 
@@ -94,7 +94,7 @@ namespace AccountBuddy.SL.Hubs
                 BLL.Sale S = new BLL.Sale();
 
                 S.SalesDate = SO.SODate.Value;
-                S.RefNo =Sales_NewRefNo();
+                S.RefNo = Sales_NewRefNo();
                 S.LedgerId = SO.LedgerId.Value;
                 S.TransactionType = "Cash";
                 S.TransactionTypeId = 1;
@@ -133,7 +133,7 @@ namespace AccountBuddy.SL.Hubs
 
 
 
-       
+
         public BLL.SalesOrder SalesOrder_Find(string SearchText)
         {
             BLL.SalesOrder SO = new BLL.SalesOrder();
@@ -214,21 +214,21 @@ namespace AccountBuddy.SL.Hubs
             if (LName.StartsWith("CM-"))
             {
                 var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
-                var LId=  LedgerIdByCompany(LNameTo, Caller.UnderCompanyId.Value);
+                var LId = LedgerIdByCompany(LNameTo, Caller.UnderCompanyId.Value);
 
-                d2 = Caller.DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId && x.RefNo == RefNo ).FirstOrDefault();
+                d2 = Caller.DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId && x.RefNo == RefNo).FirstOrDefault();
                 if (d2 != null)
                 {
-                    if(d2.LedgerId == LId)
+                    if (d2.LedgerId == LId)
                     {
                         d2 = null;
                     }
                 }
             }
-           
 
 
-            if (d1 == null || d2 ==null)
+
+            if (d1 == null || d2 == null)
             {
                 return false;
             }
@@ -279,7 +279,7 @@ namespace AccountBuddy.SL.Hubs
                         s.SalesOrderDetails.Add(d_pod);
                     }
                     Caller.DB.SaveChanges();
-            
+
                 }
             }
         }
@@ -298,6 +298,40 @@ namespace AccountBuddy.SL.Hubs
             return false;
         }
         #endregion
+
+
+        public List<BLL.SalesOrder> SalesOrder_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.SalesOrder> lstSalesOrder = new List<BLL.SalesOrder>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.SalesOrder rp = new BLL.SalesOrder();
+            try
+            {
+                foreach (var l in Caller.DB.SalesOrders.
+                      Where(x => x.SODate >= dtFrom && x.SODate <= dtTo
+                      && (x.LedgerId == LedgerId || LedgerId == null)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
+                      x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.SalesOrder();
+                    rp.TotalAmount = l.TotalAmount;
+                    rp.SODate = l.SODate;
+                    rp.RefNo = l.RefNo;
+                    rp.Id = l.Id;
+                    rp.LedgerId = l.LedgerId;
+                    rp.LedgerName = string.Format("{0}-{1}", l.Ledger.AccountGroup.GroupCode, l.Ledger.LedgerName);
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+                    lstSalesOrder.Add(rp);
+                    lstSalesOrder = lstSalesOrder.OrderBy(x => x.SODate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstSalesOrder;
+        }
+
 
     }
 }

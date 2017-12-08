@@ -511,6 +511,7 @@ namespace AccountBuddy.BLL
                 STPDetails.Remove(pod);
                 ItemAmount = STPDetails.Sum(x => x.Amount);
                 SetAmount();
+                ClearDetail();
             }
         }
         #endregion

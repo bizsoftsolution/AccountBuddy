@@ -252,6 +252,46 @@ namespace AccountBuddy.SL.Hubs
             return P;
         }
 
+
+        public List<BLL.SalesReturn> SalesReturn_List(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.SalesReturn> lstSalesReturn = new List<BLL.SalesReturn>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.SalesReturn rp = new BLL.SalesReturn();
+            try
+            {
+                foreach (var l in Caller.DB.SalesReturns.
+                      Where(x => x.SRDate >= dtFrom && x.SRDate <= dtTo
+                      && (x.LedgerId == LedgerId || LedgerId == null)
+                      && (PayMode == null || x.TransactionType.Type == PayMode)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
+                      x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.SalesReturn();
+                    rp.TotalAmount = l.TotalAmount;
+                    rp.ChequeDate = l.ChequeDate;
+                    rp.ChequeNo = l.ChequeNo;
+                    rp.SRDate = l.SRDate;
+                    rp.RefNo = l.RefNo;
+
+                    rp.Id = l.Id;
+                    rp.LedgerId = l.LedgerId;
+                    rp.LedgerName = string.Format("{0}-{1}", l.Ledger.AccountGroup.GroupCode, l.Ledger.LedgerName);
+
+                    rp.TransactionType = l.TransactionType.Type;
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+
+                    lstSalesReturn.Add(rp);
+                    lstSalesReturn = lstSalesReturn.OrderBy(x => x.SRDate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstSalesReturn;
+        }
+
         #endregion
 
 

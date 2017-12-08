@@ -32,7 +32,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             InitializeComponent();
             this.DataContext = data;
-           CultureInfo cultureInfo = new CultureInfo("en-US");  
+            CultureInfo cultureInfo = new CultureInfo("en-US");  
 
             data.Clear();
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-MY");
@@ -50,7 +50,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    data.RefNo = RefNo;
+                   if(data.Id!=0) data.RefNo = RefNo;
                 });
             });
         }
@@ -309,8 +309,8 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.PurchaseOrder.UserPermission.AllowInsert || BLL.PurchaseOrder.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.PurchaseOrder.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }

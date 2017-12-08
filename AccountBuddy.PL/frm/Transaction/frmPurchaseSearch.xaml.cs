@@ -16,13 +16,13 @@ using MahApps.Metro.Controls;
 namespace AccountBuddy.PL.frm.Transaction
 {
     /// <summary>
-    /// Interaction logic for frmPurchaseOrderSearch.xaml
+    /// Interaction logic for frmPurchaseSearch.xaml
     /// </summary>
-    public partial class frmPurchaseOrderSearch : MetroWindow
+    public partial class frmPurchaseSearch : MetroWindow
     {
         decimal amtfrom = 0, amtTo = 99999999;
 
-        public frmPurchaseOrderSearch()
+        public frmPurchaseSearch()
         {
             InitializeComponent();
             dtpDateFrom.SelectedDate = DateTime.Now;
@@ -48,7 +48,7 @@ namespace AccountBuddy.PL.frm.Transaction
             var rp = dgvDetails.SelectedItem as BLL.PurchaseOrder;
             if (rp != null)
             {
-                Transaction.frmPurchaseOrder f = App.frmHome.ShowForm(Common.Forms.frmPurchaseOrder) as Transaction.frmPurchaseOrder;
+                Transaction.frmPurchase f = App.frmHome.ShowForm(Common.Forms.frmPurchase) as Transaction.frmPurchase;
 
                 System.Windows.Forms.Application.DoEvents();
                 f.data.RefNo = rp.RefNo;
@@ -60,18 +60,17 @@ namespace AccountBuddy.PL.frm.Transaction
                     f.btnSave.IsEnabled = true;
                     f.btnDelete.IsEnabled = true;
                 }
-               
-                    f.btnMakepurchase.IsEnabled = f.data.Status == "Pending" ? true : false;
-                    f.btnPrint.IsEnabled = true;
-                
+
+             
+                f.btnPrint.IsEnabled = true;
+
                 if (f.data.RefCode != null)
                 {
                     f.btnSave.IsEnabled = true;
                     f.btnDelete.IsEnabled = true;
-                    f.btnMakepurchase.IsEnabled = false;
+                    
                 }
-                f.btnMakepurchase.Visibility = (BLL.Purchase.UserPermission.AllowInsert || BLL.Purchase.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-
+               
                 System.Windows.Forms.Application.DoEvents();
                 this.Close();
             }
@@ -97,7 +96,7 @@ namespace AccountBuddy.PL.frm.Transaction
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             if (txtAmtFrom.Text != "")
             {
                 amtfrom = Convert.ToDecimal(txtAmtFrom.Text.ToString());
