@@ -39,13 +39,13 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             catch (Exception ex)
             {
-                Common.AppLib.WriteLog(string.Format("Purchase Order_Supplier List_{0}", ex.Message));
+                Common.AppLib.WriteLog(string.Format("Purchase_Supplier List_{0}", ex.Message));
             }
         }
 
         private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var rp = dgvDetails.SelectedItem as BLL.PurchaseOrder;
+            var rp = dgvDetails.SelectedItem as BLL.Purchase;
             if (rp != null)
             {
                 Transaction.frmPurchase f = App.frmHome.ShowForm(Common.Forms.frmPurchase) as Transaction.frmPurchase;
@@ -75,14 +75,12 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 var d = BLL.Purchase.ToList((int?)cmbSupplierName.SelectedValue,(int?)cmbTransactionType.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtAmtFrom.Text, amtfrom, amtTo);
                 dgvDetails.ItemsSource = d;
-                lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount).ToString());
+                lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount));
             }
             catch (Exception ex)
             { }
         }
-
-      
-
+     
         private void cmbTransactionType_Loaded(object sender, RoutedEventArgs e)
         {
             cmbTransactionType.ItemsSource = BLL.TransactionType.toList;
@@ -110,7 +108,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             var d = BLL.Purchase.ToList((int?)cmbSupplierName.SelectedValue,(int?)cmbTransactionType.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtBillNo.Text, amtfrom, amtTo);
             dgvDetails.ItemsSource = d;
-            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount).ToString());
+            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount));
         }
     }
 }

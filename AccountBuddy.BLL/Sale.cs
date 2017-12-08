@@ -650,12 +650,12 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
-        public static List<Sale> ToList(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        public static List<Sale> ToList(int? LedgerId, int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<Sale> rv = new List<Sale>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<Sale>>("Sale_List", LedgerId, PayMode, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.FMCGHub.Invoke<List<Sale>>("Sale_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

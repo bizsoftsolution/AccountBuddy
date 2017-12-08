@@ -455,6 +455,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmPurchaseReturnSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmPurchaseSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -479,9 +483,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="frm\Transaction\frmSalesOrderSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmSalesReturn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Transaction\frmSalesReturnSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Transaction\frmSalesSearch.xaml">
       <SubType>Designer</SubType>
@@ -495,11 +507,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmStockInProcessSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmStockInwardSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmStockOut.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmStockOutwardSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmStockSeparated.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmStockSeperatedSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -759,6 +787,9 @@
     <Compile Include="frm\Transaction\frmPurchaseReturn.xaml.cs">
       <DependentUpon>frmPurchaseReturn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmPurchaseReturnSearch.xaml.cs">
+      <DependentUpon>frmPurchaseReturnSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmPurchaseSearch.xaml.cs">
       <DependentUpon>frmPurchaseSearch.xaml</DependentUpon>
     </Compile>
@@ -777,8 +808,14 @@
     <Compile Include="frm\Transaction\frmSalesOrder.xaml.cs">
       <DependentUpon>frmSalesOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmSalesOrderSearch.xaml.cs">
+      <DependentUpon>frmSalesOrderSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmSalesReturn.xaml.cs">
       <DependentUpon>frmSalesReturn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmSalesReturnSearch.xaml.cs">
+      <DependentUpon>frmSalesReturnSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmSalesSearch.xaml.cs">
       <DependentUpon>frmSalesSearch.xaml</DependentUpon>
@@ -789,11 +826,23 @@
     <Compile Include="frm\Transaction\frmStockInProcess.xaml.cs">
       <DependentUpon>frmStockInProcess.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmStockInProcessSearch.xaml.cs">
+      <DependentUpon>frmStockInProcessSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmStockInwardSearch.xaml.cs">
+      <DependentUpon>frmStockInwardSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmStockOut.xaml.cs">
       <DependentUpon>frmStockOut.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmStockOutwardSearch.xaml.cs">
+      <DependentUpon>frmStockOutwardSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmStockSeparated.xaml.cs">
       <DependentUpon>frmStockSeparated.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmStockSeperatedSearch.xaml.cs">
+      <DependentUpon>frmStockSeperatedSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Vouchers\frmQuickJournalVoucher.xaml.cs">
       <DependentUpon>frmQuickJournalVoucher.xaml</DependentUpon>

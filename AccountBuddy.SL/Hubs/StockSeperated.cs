@@ -106,6 +106,7 @@ namespace AccountBuddy.SL.Hubs
                         BLL.StockSeperatedDetail b_pod = new BLL.StockSeperatedDetail();
                         d_pod.toCopy<BLL.StockSeperatedDetail>(b_pod);
                         SO.SSDetails.Add(b_pod);
+                        b_pod.Product = Product_DALtoBLL(d_pod.Product);
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         //  SO.Status = d.StockSeperatedDetails.FirstOrDefault()..Count() > 0 ? "Sold" : "Pending";
@@ -198,7 +199,7 @@ namespace AccountBuddy.SL.Hubs
             return P;
         }
 
-        public List<BLL.StockSeperated> StockSeperated_List(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        public List<BLL.StockSeperated> StockSeperated_List(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<BLL.StockSeperated> lstStockSeperated = new List<BLL.StockSeperated>();
             Caller.DB = new DAL.DBFMCGEntities();
@@ -213,7 +214,7 @@ namespace AccountBuddy.SL.Hubs
                       x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
                 {
                     rp = new BLL.StockSeperated();
-                    rp.TotalAmount = l.TotalAmount;
+                    rp.ItemAmount = l.ItemAmount;
 
                     rp.RefNo = l.RefNo;
 
@@ -222,7 +223,7 @@ namespace AccountBuddy.SL.Hubs
                     rp.StaffName = string.Format("{0}-{1}", l.Staff.Ledger.AccountGroup.GroupCode, l.Staff.Ledger.LedgerName);
                     rp.RefCode = l.RefCode;
                     rp.RefNo = l.RefNo;
-
+                    rp.Date = l.Date;
                     lstStockSeperated.Add(rp);
                     lstStockSeperated = lstStockSeperated.OrderBy(x => x.Date).ToList();
                 }

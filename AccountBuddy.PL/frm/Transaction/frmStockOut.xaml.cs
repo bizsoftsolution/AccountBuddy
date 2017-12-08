@@ -48,9 +48,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            var max = BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
-            var min = BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
-            var av = BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.AvailableStock).FirstOrDefault();
+            var max = data.STOutDetail.Product.MaxSellingRate;
+            var min = data.STOutDetail.Product.MinSellingRate;
+            var av = data.STOutDetail.Product.AvailableStock;
             if (data.STOutDetail.ProductId == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -91,12 +91,12 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
                 {
-                    MessageBox.Show("Deleted");
+                    MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear(); clear();
                 }
             }
@@ -107,23 +107,23 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmStockOut))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmStockOut))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.RefNo == null)
             {
-                MessageBox.Show("Enter Reference No");
+                MessageBox.Show("Enter Reference No", FormName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             }
             else if (data.LedgerName == null)
             {
-                MessageBox.Show("Enter Supplier");
+                MessageBox.Show("Enter Supplier", FormName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             }
             else if (data.STOutDetails.Count == 0)
             {
-                MessageBox.Show("Enter Product Details");
+                MessageBox.Show("Enter Product Details", FormName, MessageBoxButton.YesNo, MessageBoxImage.Warning);
             }
             else if (data.FindRefNo() == false)
             {
@@ -131,8 +131,8 @@ namespace AccountBuddy.PL.frm.Transaction
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
-                    if(ckbAutoPrint.IsChecked==true)
+                    MessageBox.Show(Message.PL.Saved_Alert, FormName, MessageBoxButton.YesNo, MessageBoxImage.Information);
+                    if (ckbAutoPrint.IsChecked==true)
                     {
                         Print();
                     }
@@ -142,7 +142,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             else
             {
-                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo));
+                MessageBox.Show(string.Format(Message.PL.Existing_Data, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Information);
 
             }
         }
@@ -164,25 +164,15 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         void Print()
         {
-
             frmQuickStockOut f = new frmQuickStockOut();
             f.LoadReport(data);
             f.ShowDialog();
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-
-            if (rv == false) MessageBox.Show(String.Format("{0} is not found", data.SearchText));
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = false;
-                btnDelete.IsEnabled = false;
-            }
+            frmStockOutwardSearch f = new frmStockOutwardSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -200,8 +190,8 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (e.Key == Key.Return && data.STOutDetail.ProductId != 0)
             {
-                var max = BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
-                var min = BLL.Product.toList.Where(x => x.Id == data.STOutDetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
+                var max = data.STOutDetail.Product.MaxSellingRate;
+                var min = data.STOutDetail.Product.MinSellingRate;
 
                 if (data.STOutDetail.ProductId == 0)
                 {

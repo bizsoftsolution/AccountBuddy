@@ -205,8 +205,8 @@
                         <Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" IsEnabled="False"/>
                         <CheckBox x:Name="ckbAutoPrint" Width="100" Margin="5 5">AutoPrint</CheckBox>
                     </StackPanel>
-                    <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                        <TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,19" FontWeight="Bold"/>
+                    <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="219" Height="42" Margin="0,0,0,10">
+                        <!--<TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,19" FontWeight="Bold"/>-->
                         <Button Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" Margin="5 5" />
 
                     </StackPanel>

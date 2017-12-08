@@ -290,6 +290,7 @@ namespace AccountBuddy.SL.Hubs
                 foreach (var l in Caller.DB.PurchaseOrders.
                       Where(x => x.PODate >= dtFrom && x.PODate <= dtTo
                       && (x.LedgerId == LedgerId || LedgerId == null)
+                      
                       && (BillNo == "" || x.RefNo == BillNo)
                       && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
                       x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())

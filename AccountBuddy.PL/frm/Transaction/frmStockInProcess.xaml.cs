@@ -38,8 +38,8 @@ namespace AccountBuddy.PL.frm.Transaction
         private void LoadWindow()
         {
 
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.lblDiscount= string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.StockInProcess.UserPermission.AllowInsert || BLL.StockInProcess.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.StockInProcess.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
@@ -174,18 +174,11 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (data.Id != 0)
-            {
-                //btnPrint.IsEnabled = true;
+            frmStockInProcessSearch f = new frmStockInProcessSearch();
+            f.ShowDialog();
+            f.Close();
 
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+
         }
 
 
@@ -308,7 +301,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 cmbStaff.DisplayMemberPath = "Ledger.LedgerName";
                 cmbStaff.SelectedValuePath = "Id";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.AppLib.WriteLog(string.Format("Stock In Process Staff List_{0}_{1}", ex.Message, ex.InnerException));
             }

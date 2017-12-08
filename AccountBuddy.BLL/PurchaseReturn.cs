@@ -41,6 +41,8 @@ namespace AccountBuddy.BLL
         private string _BankName;
         private bool _IsShowChequeDetail;
         private static UserTypeDetail _UserPermission;
+        private string _lblDiscount;
+        private string _lblExtra;
 
         #endregion
 
@@ -452,6 +454,43 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public string lblDiscount
+        {
+            get
+            {
+                return _lblDiscount;
+            }
+            set
+            {
+                if (_lblDiscount != value)
+                {
+                    _lblDiscount = value;
+                    NotifyPropertyChanged(nameof(lblDiscount));
+
+                }
+            }
+        }
+
+        public string lblExtra
+        {
+            get
+            {
+                return _lblExtra;
+            }
+            set
+            {
+                if (_lblExtra != value)
+                {
+                    _lblExtra = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
+
+
+
         #endregion
 
         #region Property Changed
@@ -588,6 +627,8 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
             TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
         }
 
         public bool FindRefNo()
@@ -604,12 +645,12 @@ namespace AccountBuddy.BLL
             return rv;
         }
 
-        public static List<PurchaseReturn> ToList(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        public static List<PurchaseReturn> ToList(int? LedgerId, int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<PurchaseReturn> rv = new List<PurchaseReturn>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<PurchaseReturn>>("PurchaseReturn_List", LedgerId, PayMode, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.FMCGHub.Invoke<List<PurchaseReturn>>("PurchaseReturn_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

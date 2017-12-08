@@ -16,55 +16,40 @@ using MahApps.Metro.Controls;
 namespace AccountBuddy.PL.frm.Transaction
 {
     /// <summary>
-    /// Interaction logic for frmPurchaseOrderSearch.xaml
+    /// Interaction logic for frmStockOutwardSearch.xaml
     /// </summary>
-    public partial class frmPurchaseOrderSearch : MetroWindow
+    public partial class frmStockOutwardSearch : MetroWindow
     {
         decimal amtfrom = 0, amtTo = 99999999;
 
-        public frmPurchaseOrderSearch()
+        public frmStockOutwardSearch()
         {
             InitializeComponent();
             dtpDateFrom.SelectedDate = DateTime.Now;
             dtpDateTo.SelectedDate = DateTime.Now;
         }
 
-        private void cmbSupplierName_Loaded(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                cmbSupplierName.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
-                cmbSupplierName.DisplayMemberPath = "LedgerName";
-                cmbSupplierName.SelectedValuePath = "Id";
-            }
-            catch (Exception ex)
-            {
-                Common.AppLib.WriteLog(string.Format("Purchase Order_Supplier List_{0}", ex.Message));
-            }
-        }
+      
 
         private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var rp = dgvDetails.SelectedItem as BLL.PurchaseOrder;
+            var rp = dgvDetails.SelectedItem as BLL.StockOut;
             if (rp != null)
             {
-                Transaction.frmPurchaseOrder f = App.frmHome.ShowForm(Common.Forms.frmPurchaseOrder) as Transaction.frmPurchaseOrder;
+                Transaction.frmStockOut f = App.frmHome.ShowForm(Common.Forms.frmStockOut) as Transaction.frmStockOut;
 
                 System.Windows.Forms.Application.DoEvents();
                 f.data.RefNo = rp.RefNo;
                 f.data.SearchText = rp.RefNo;
                 f.btnPrint.IsEnabled = true;
                 f.data.Find();
-                
-                    f.btnMakepurchase.IsEnabled = f.data.Status == "Pending" ? true : false;
-                  
                 if (f.data.RefCode != null)
                 {
                     f.btnSave.IsEnabled = true;
                     f.btnDelete.IsEnabled = true;
-                    f.btnMakepurchase.IsEnabled = false;
                 }
-                f.btnMakepurchase.Visibility = (BLL.Purchase.UserPermission.AllowInsert || BLL.Purchase.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+
+                f.btnPrint.IsEnabled = true;
 
                 System.Windows.Forms.Application.DoEvents();
                 this.Close();
@@ -75,16 +60,23 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                var d = BLL.PurchaseOrder.PO_List((int?)cmbSupplierName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtAmtFrom.Text, amtfrom, amtTo);
+                var d = BLL.StockOut.ToList((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtAmtFrom.Text, amtfrom, amtTo);
                 dgvDetails.ItemsSource = d;
-                lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount));
+                lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.ItemAmount));
             }
             catch (Exception ex)
             { }
         }
 
+        private void cmbCustomerName_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbCustomerName.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
+            cmbCustomerName.DisplayMemberPath = "LedgerName";
+            cmbCustomerName.SelectedValuePath = "Id";
+        }
+
         private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             if (txtAmtFrom.Text != "")
             {
                 amtfrom = Convert.ToDecimal(txtAmtFrom.Text.ToString());
@@ -101,9 +93,11 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 amtTo = 999999999;
             }
-            var d = BLL.PurchaseOrder.PO_List((int?)cmbSupplierName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtBillNo.Text, amtfrom, amtTo);
+            var d = BLL.StockOut.ToList((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtBillNo.Text, amtfrom, amtTo);
             dgvDetails.ItemsSource = d;
-            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount));
+            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.ItemAmount));
         }
+
+
     }
 }

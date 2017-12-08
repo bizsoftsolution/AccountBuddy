@@ -37,7 +37,42 @@ namespace AccountBuddy.BLL
         private string _Status;
         private string _RefCode;
         private static UserTypeDetail _UserPermission;
+        private string _lblDiscount;
+        private string _lblExtra;
 
+        public string lblDiscount
+        {
+            get
+            {
+                return _lblDiscount;
+            }
+            set
+            {
+                if (_lblDiscount != value)
+                {
+                    _lblDiscount = value;
+                    NotifyPropertyChanged(nameof(lblDiscount));
+
+                }
+            }
+        }
+
+        public string lblExtra
+        {
+            get
+            {
+                return _lblExtra;
+            }
+            set
+            {
+                if (_lblExtra != value)
+                {
+                    _lblExtra = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
         #endregion
 
         #region Property
@@ -514,6 +549,8 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
             TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
         }
 
         public bool FindRefNo()
@@ -535,7 +572,7 @@ namespace AccountBuddy.BLL
             List<StockSeperated> rv = new List<StockSeperated>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<StockSeperated>>("Sale_List", LedgerId,dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.FMCGHub.Invoke<List<StockSeperated>>("StockSeperated_List", LedgerId,dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

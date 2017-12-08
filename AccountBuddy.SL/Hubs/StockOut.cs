@@ -254,7 +254,7 @@ namespace AccountBuddy.SL.Hubs
         }
 
 
-        public List<BLL.StockOut> StockOut_List(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        public List<BLL.StockOut> StockOut_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<BLL.StockOut> lstStockOut = new List<BLL.StockOut>();
             Caller.DB = new DAL.DBFMCGEntities();

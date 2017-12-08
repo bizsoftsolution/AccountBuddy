@@ -401,7 +401,7 @@ namespace AccountBuddy.BLL
             List<StockOut> rv = new List<StockOut>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<StockOut>>("Sale_List", LedgerId,  dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.FMCGHub.Invoke<List<StockOut>>("StockOut_List", LedgerId,  dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

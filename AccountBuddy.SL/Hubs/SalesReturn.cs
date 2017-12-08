@@ -253,7 +253,7 @@ namespace AccountBuddy.SL.Hubs
         }
 
 
-        public List<BLL.SalesReturn> SalesReturn_List(int? LedgerId, string PayMode, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        public List<BLL.SalesReturn> SalesReturn_List(int? LedgerId,int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<BLL.SalesReturn> lstSalesReturn = new List<BLL.SalesReturn>();
             Caller.DB = new DAL.DBFMCGEntities();
@@ -263,7 +263,7 @@ namespace AccountBuddy.SL.Hubs
                 foreach (var l in Caller.DB.SalesReturns.
                       Where(x => x.SRDate >= dtFrom && x.SRDate <= dtTo
                       && (x.LedgerId == LedgerId || LedgerId == null)
-                      && (PayMode == null || x.TransactionType.Type == PayMode)
+                      && (TType == null || x.TransactionTypeId== TType)
                       && (BillNo == "" || x.RefNo == BillNo)
                       && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
                       x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())

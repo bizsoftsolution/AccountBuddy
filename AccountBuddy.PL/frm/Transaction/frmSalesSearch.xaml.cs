@@ -70,32 +70,25 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                var d = BLL.Sale.ToList((int?)cmbCustomerName.SelectedValue, paymode, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtAmtFrom.Text, amtfrom, amtTo);
+                var d = BLL.Sale.ToList((int?)cmbCustomerName.SelectedValue, (int?) cmbTransactionType.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtAmtFrom.Text, amtfrom, amtTo);
                 dgvDetails.ItemsSource = d;
-                lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount).ToString());
+                lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount));
             }
             catch(Exception ex)
             { }
         }
 
-        private void cmbPayMode_Loaded(object sender, RoutedEventArgs e)
+        private void cmbTransactionType_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbPayMode.ItemsSource = BLL.TransactionType.toList;
-            cmbPayMode.DisplayMemberPath = "Type";
-            cmbPayMode.SelectedValuePath = "Type";
+            cmbTransactionType.ItemsSource = BLL.TransactionType.toList;
+            cmbTransactionType.DisplayMemberPath = "Type";
+            cmbTransactionType.SelectedValuePath = "Id";
         }
 
+       
+
         private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            
-            if (cmbPayMode.SelectedValue != null)
-            {
-                paymode = cmbPayMode.SelectedValue.ToString();
-            }
-            else
-            {
-                paymode = null;
-            }
+        {                     
             if (txtAmtFrom.Text != "")
             {
                 amtfrom = Convert.ToDecimal(txtAmtFrom.Text.ToString());
@@ -112,9 +105,9 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 amtTo = 999999999;
             }
-            var d = BLL.Sale.ToList((int?)cmbCustomerName.SelectedValue, paymode, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtBillNo.Text,  amtfrom, amtTo);
+            var d = BLL.Sale.ToList((int?)cmbCustomerName.SelectedValue, (int?) cmbTransactionType.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtBillNo.Text,  amtfrom, amtTo);
             dgvDetails.ItemsSource = d;
-            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount).ToString());
+            lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount));
         }
     }
 }

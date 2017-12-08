@@ -73,6 +73,7 @@ namespace AccountBuddy.SL.Hubs
                         // }
                         b_SOd.toCopy<DAL.StockInProcessDetail>(d_SOd);
                     }
+                    Caller.DB.SaveChanges();
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
                 }
@@ -104,6 +105,7 @@ namespace AccountBuddy.SL.Hubs
                         BLL.StockInProcessDetail b_pod = new BLL.StockInProcessDetail();
                         d_pod.toCopy<BLL.StockInProcessDetail>(b_pod);
                         SO.STPDetails.Add(b_pod);
+                        b_pod.Product = Product_DALtoBLL(d_pod.Product);
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         //SO.Status = d.StockInProcessDetails.FirstOrDefault().JobOrderReceivedDetails.Count() > 0 ? "Received" : "Pending";
