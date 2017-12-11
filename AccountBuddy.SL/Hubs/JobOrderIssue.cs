@@ -261,12 +261,13 @@ namespace AccountBuddy.SL.Hubs
                       x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
                 {
                     rp = new BLL.JobOrderIssue();
-                    rp.TotalAmount = l.TotalAmount;                 
+                    rp.ItemAmount = l.ItemAmount;
+                    rp.TotalAmount = l.TotalAmount;                
                     rp.RefNo = l.RefNo;
                     rp.Id = l.Id;
                     rp.JobWorkerId = l.JobWorkerId;
                     rp.JobWorkerName = string.Format("{0}-{1}", l.JobWorker.Ledger.AccountGroup.GroupCode, l.JobWorker.Ledger.LedgerName);
-
+                    rp.JODate = l.JODate;
                   
                     rp.RefCode = l.RefCode;
                     rp.RefNo = l.RefNo;

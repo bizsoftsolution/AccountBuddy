@@ -165,18 +165,9 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            frmJobOrderReceivedSearch f = new frmJobOrderReceivedSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
 
@@ -304,8 +295,8 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void LoadWindow()
         {
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.JobOrderReceived.UserPermission.AllowInsert || BLL.JobOrderReceived.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.JobOrderReceived.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 

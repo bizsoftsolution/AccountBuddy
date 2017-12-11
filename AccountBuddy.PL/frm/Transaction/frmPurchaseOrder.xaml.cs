@@ -264,9 +264,17 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbItem.ItemsSource = BLL.Product.toList.Where(x => x.StockGroup.IsPurchase != false).ToList();
-            cmbItem.DisplayMemberPath = "ProductName";
-            cmbItem.SelectedValuePath = "Id";
+            try
+            {
+                cmbItem.ItemsSource = BLL.Product.toList.Where(x => x.StockGroup.IsPurchase != false).ToList();
+                cmbItem.DisplayMemberPath = "ProductName";
+                cmbItem.SelectedValuePath = "Id";
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("PO Product List_{0}_{1}", ex.Message, ex.InnerException));
+
+            }
         }
 
         private void cmbUOM_Loaded(object sender, RoutedEventArgs e)

@@ -407,7 +407,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmJobOrderIssueSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmJobOrderReceived.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmJobOrderReceivedSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -751,8 +759,14 @@
     <Compile Include="frm\Transaction\frmJobOrderIssue.xaml.cs">
       <DependentUpon>frmJobOrderIssue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Transaction\frmJobOrderIssueSearch.xaml.cs">
+      <DependentUpon>frmJobOrderIssueSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Transaction\frmJobOrderReceived.xaml.cs">
       <DependentUpon>frmJobOrderReceived.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmJobOrderReceivedSearch.xaml.cs">
+      <DependentUpon>frmJobOrderReceivedSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Transaction\frmJournal.xaml.cs">
       <DependentUpon>frmJournal.xaml</DependentUpon>

@@ -42,7 +42,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    if(data.Id==0) data.RefNo = RefNo;
+                    if (data.Id == 0) data.RefNo = RefNo;
                 });
             });
         }
@@ -167,16 +167,9 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (data.Id != 0)
-            {
-                btnJobReceived.IsEnabled = data.Status == "Pending" ? true : false; if (data.Id != 0)
-
-                    btnPrint.IsEnabled = true;
-
-            }
-
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            frmJobOrderIssueSearch f = new frmJobOrderIssueSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
 
@@ -313,8 +306,8 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void LoadWindow()
         {
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
 
             btnSave.Visibility = (BLL.JobOrderIssue.UserPermission.AllowInsert || BLL.JobOrderIssue.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.JobOrderIssue.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;

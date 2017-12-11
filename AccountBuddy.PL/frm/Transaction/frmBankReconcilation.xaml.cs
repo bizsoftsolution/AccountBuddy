@@ -39,10 +39,14 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
-            cmbAccountName.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Bank Accounts").ToList();
-            cmbAccountName.DisplayMemberPath = "AccountName";
-            cmbAccountName.SelectedValuePath = "Id";
+            try
+            {
+                cmbAccountName.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.BankAccounts_Key).ToList();
+                cmbAccountName.DisplayMemberPath = "AccountName";
+                cmbAccountName.SelectedValuePath = "Id";
+            }
+            catch(Exception ex)
+            { }
         }
 
 
@@ -72,6 +76,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = gl.EntryNo;
+                    f.data.EntryNo = gl.EntryNo;
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
@@ -81,7 +86,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = gl.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
+                    f.data.EntryNo = gl.EntryNo; System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
                 else if (gl.EType == 'J')
@@ -90,7 +95,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = gl.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
+                    f.data.EntryNo = gl.EntryNo; System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
             }
@@ -239,6 +244,7 @@ namespace AccountBuddy.PL.frm.Transaction
                         {
                             BLL.Payment p = new BLL.Payment();
                             p.SearchText = b.EntryNo;
+                            p.EntryNo = b.EntryNo;
                             p.Find();
                             p.Status = b.IsCompleted ? "Completed" : "Process";
                             p.Save();
@@ -247,6 +253,7 @@ namespace AccountBuddy.PL.frm.Transaction
                         {
                             BLL.Receipt R = new BLL.Receipt();
                             R.SearchText = b.EntryNo;
+                            R.EntryNo = b.EntryNo;
                             R.Find();
                             R.Status = b.IsCompleted ? "Completed" : "Process";
                             R.Save();
@@ -255,6 +262,7 @@ namespace AccountBuddy.PL.frm.Transaction
                         {
                             BLL.Journal R = new BLL.Journal();
                             R.SearchText = b.EntryNo;
+                            R.EntryNo = b.EntryNo;
                             R.Find();
                             var s = b.IsCompleted ? "Completed" : "Process";
                             R.JDetails.Where(x => x.JournalId == R.Id).ToList().ForEach(x => x.Status = s);

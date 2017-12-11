@@ -223,7 +223,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     rp = new BLL.JobOrderReceived();
                     rp.TotalAmount = l.TotalAmount;
-                  
+                    rp.JRDate = l.JRDate;
                     rp.RefNo = l.RefNo;
 
                     rp.Id = l.Id;

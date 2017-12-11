@@ -392,10 +392,17 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbItem_DropDownOpened(object sender, EventArgs e)
         {
-            BLL.Product.toList = null;
-            cmbItem.ItemsSource = BLL.Product.toList.Where(x => x.StockGroup.IsSale != false).ToList();
-            cmbItem.DisplayMemberPath = "ProductName";
-            cmbItem.SelectedValuePath = "Id";
+            try
+            {
+                BLL.Product.toList = null;
+                cmbItem.ItemsSource = BLL.Product.toList.Where(x => x.StockGroup.IsSale != false).ToList();
+                cmbItem.DisplayMemberPath = "ProductName";
+                cmbItem.SelectedValuePath = "Id";
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Sales Product List_{0}_{1}", ex.Message, ex.InnerException));
+            }
         }
 
         private void cmbUOM_DropDownOpened(object sender, EventArgs e)

@@ -214,7 +214,7 @@ namespace AccountBuddy.PL.frm.Transaction
                         l1.Save();
                     }
                 }
-                MessageBox.Show(Message.PL.Saved_Alert);
+                MessageBox.Show(Message.PL.Saved_Alert, "Ledger Opening", MessageBoxButton.OK, MessageBoxImage.Information);
                 App.frmHome.ShowWelcome();
                 BLL.Ledger.Init();
             }

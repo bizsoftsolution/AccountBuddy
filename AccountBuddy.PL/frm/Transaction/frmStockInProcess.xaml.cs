@@ -177,8 +177,6 @@ namespace AccountBuddy.PL.frm.Transaction
             frmStockInProcessSearch f = new frmStockInProcessSearch();
             f.ShowDialog();
             f.Close();
-
-
         }
 
 

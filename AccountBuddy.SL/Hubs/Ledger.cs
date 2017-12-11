@@ -26,6 +26,8 @@ namespace AccountBuddy.SL.Hubs
                 ledgerTo.CreditLimitType = new BLL.CreditLimitType();
                 ledgerFrom.CreditLimitType.toCopy<BLL.CreditLimitType>(ledgerTo.CreditLimitType);
                 ledgerTo.OPBal = GetLedgerBalance(ledgerFrom);
+                ledgerTo.OPCr = ledgerFrom.OPCr;
+                ledgerTo.OPDr = ledgerFrom.OPDr;
 
             }
             catch (Exception ex)
@@ -54,7 +56,6 @@ namespace AccountBuddy.SL.Hubs
             {
                 DAL.Ledger d = Caller.DB.Ledgers.Where(x => x.Id == led.Id).FirstOrDefault();
                
-
                 if (d == null)
                 {
                     d = new DAL.Ledger(); 
