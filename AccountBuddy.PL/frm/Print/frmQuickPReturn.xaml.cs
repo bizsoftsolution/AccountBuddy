@@ -102,7 +102,6 @@ namespace AccountBuddy.PL.frm.Print
             }
 
            
-
             for (int i = 0; i < NoRecPerPage - data.PRDetails.Count(); i++)
             {
                 newRow = dt.NewRow();

@@ -215,7 +215,7 @@
                         </DataGrid>
                     </GroupBox>
                     <StackPanel>
-                        <TextBlock Grid.Column="0" Name="lblMsg" FontWeight="Bold" FontSize="18" Foreground="Blue" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
+                        <TextBlock Grid.Column="0" Name="lblMsg" FontWeight="Bold" FontSize="18" Foreground="Blue" HorizontalAlignment="Left" VerticalAlignment="Center" Text="" TextWrapping="Wrap"/>
 
                     </StackPanel>
 
