@@ -17,9 +17,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.UOM> UOM_List()
         {
+            Caller.DB = new DAL.DBFMCGEntities();
             if (Caller.CompanyType == "Company")
             {
-                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
+                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).ToList()
                               .Select(x => UOM_DALtoBLL(x)).ToList();
             }
 
@@ -33,6 +34,8 @@ namespace AccountBuddy.SL.Hubs
 
         public int UOM_Save(BLL.UOM agp)
         {
+
+            Caller.DB = new DAL.DBFMCGEntities();
             try
             {
                 agp.CompanyId = Caller.CompanyId;
@@ -66,6 +69,7 @@ namespace AccountBuddy.SL.Hubs
 
         public bool UOM_Delete(int pk)
         {
+            Caller.DB = new DAL.DBFMCGEntities();
             var rv = false;
             try
             {
