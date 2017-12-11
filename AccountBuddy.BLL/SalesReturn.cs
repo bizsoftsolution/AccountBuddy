@@ -537,7 +537,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                SalesReturn po = FMCGHubClient.FMCGHub.Invoke<SalesReturn>("SalesReturn_Find", SearchText).Result;
+                SalesReturn po = FMCGHubClient.FMCGHub.Invoke<SalesReturn>("SalesReturn_Find", RefNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<SalesReturn>(this);
                 this.SRDetails = po.SRDetails;

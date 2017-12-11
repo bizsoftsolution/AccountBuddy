@@ -41,6 +41,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 System.Windows.Forms.Application.DoEvents();
                 f.data.RefNo = rp.RefNo;
                 f.data.SearchText = rp.RefNo;
+                f.data.RefNo = rp.RefNo;
                 f.btnPrint.IsEnabled = true;
                 f.data.Find();
                 if (f.data.RefCode != null)
@@ -107,7 +108,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 amtTo = 999999999;
             }
-            var d = BLL.PurchaseReturn.ToList((int?)cmbCustomerName.SelectedValue, (int?)cmbTransactionType.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtBillNo.Text, amtfrom, amtTo);
+            var d = BLL.SalesReturn.ToList((int?)cmbCustomerName.SelectedValue, (int?)cmbTransactionType.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtBillNo.Text, amtfrom, amtTo);
             dgvDetails.ItemsSource = d;
             lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount));
         }

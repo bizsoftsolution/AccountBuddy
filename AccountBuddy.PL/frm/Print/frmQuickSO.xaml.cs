@@ -55,6 +55,10 @@ namespace AccountBuddy.PL.frm.Print
                 rptQuickSalesOrder.LocalReport.DataSources.Add(data4);
                 rptQuickSalesOrder.LocalReport.ReportPath = @"rpt\Transaction\rptQuickSalesOrder.rdlc";
 
+                rptQuickSalesOrder.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
+
+
                 rptQuickSalesOrder.RefreshReport();
 
             }
@@ -63,10 +67,13 @@ namespace AccountBuddy.PL.frm.Print
 
             }
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
         public DataTable GetDetails(BLL.SalesOrder data)
         {
-            int NoRecPerPage = 12;
+            int NoRecPerPage = 18;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);

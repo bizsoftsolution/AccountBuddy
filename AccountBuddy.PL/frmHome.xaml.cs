@@ -79,15 +79,8 @@ namespace AccountBuddy.PL
         }
         public void ShowWelcome()
         {
-            var f = lstActiveForms.Where(x => x.FormName == Forms.frmWelcome).FirstOrDefault();
-            if (f == null)
-            {
-                f = new NavMenuItem();
-                f.FormName = Forms.frmWelcome;
-                f.Content = Activator.CreateInstance(Type.GetType(Forms.frmWelcome));
-            }
-
-            ccContent.Content = f.Content;
+            lstActiveForms.Clear();
+            ShowForm(Common.Forms.frmWelcome);
         }
         public void ShowBank()
         {
@@ -110,11 +103,25 @@ namespace AccountBuddy.PL
         public bool CloseForm()
         {
             var n = lstActiveForms.Count();
-            if (n <= 1) return true;
-            lstActiveForms.RemoveAt(n - 1);
             var f = lstActiveForms.LastOrDefault();
-            ccContent.Content = f.Content;
-            return false;
+            if (n == 1)
+            {
+                if (f.FormName == Common.Forms.frmWelcome)
+                {
+                    return true;
+                }else
+                {
+                    ShowWelcome();
+                    return false;
+                }                
+            }
+            else
+            {
+                lstActiveForms.RemoveAt(n - 1);
+                f = lstActiveForms.LastOrDefault();
+                ccContent.Content = f.Content;
+                return false;
+            }
         }
 
         private void onClientEvents()

@@ -210,7 +210,6 @@ namespace AccountBuddy.SL.Hubs
                         BLL.PurchaseOrderDetail b_pod = new BLL.PurchaseOrderDetail();
                         d_pod.toCopy<BLL.PurchaseOrderDetail>(b_pod);
                         PO.PODetails.Add(b_pod);
-                        b_pod.Product = Product_DALtoBLL(d_pod.Product);
                         
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;

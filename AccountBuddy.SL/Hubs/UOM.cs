@@ -13,26 +13,22 @@ namespace AccountBuddy.SL.Hubs
         {
             BLL.UOM b = d.toCopy<BLL.UOM>(new BLL.UOM());
             b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
-             return b;
+            return b;
         }
         public List<BLL.UOM> UOM_List()
         {
-            if (Caller.CompanyType == "Warehouse")
+            if (Caller.CompanyType == "Company")
             {
                 return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
                               .Select(x => UOM_DALtoBLL(x)).ToList();
             }
-            else if (Caller.CompanyType == "Dealer")
+
+            else
             {
-               var wh = Caller.DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
-                    return Caller.DB.UOMs.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
-                                  .Select(x => UOM_DALtoBLL(x)).ToList();                              
-            }
-            else{
-                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
                               .Select(x => UOM_DALtoBLL(x)).ToList();
             }
-           
+
         }
 
         public int UOM_Save(BLL.UOM agp)
@@ -61,7 +57,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
                 Clients.Clients(OtherLoginClients).UOM_Save(agp);
-               // Clients.Others.UOM_Save(agp);
+                // Clients.Others.UOM_Save(agp);
                 return agp.Id;
             }
             catch (Exception ex) { }
@@ -84,8 +80,8 @@ namespace AccountBuddy.SL.Hubs
                     }
 
                     // Clients.Clients(OtherLoginClientsOnGroup).UOM_Delete(pk);
-                   
-                   Clients.Clients(OtherLoginClients).UOM_Delete(pk);
+
+                    Clients.Clients(OtherLoginClients).UOM_Delete(pk);
 
 
                     rv = true;
