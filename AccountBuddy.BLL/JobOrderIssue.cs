@@ -576,8 +576,8 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
-            TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (Extras ?? 0);
+            GSTAmount = (ItemAmount  - DiscountAmount ) * Common.AppLib.GSTPer;
+            TotalAmount = (ItemAmount -DiscountAmount ) + GSTAmount + (Extras ?? 0);
             lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
         }

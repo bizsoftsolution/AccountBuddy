@@ -94,11 +94,13 @@ namespace AccountBuddy.SL.Hubs
 
                     d.toCopy<BLL.Payment>(PO);
                     PO.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    int i = 0;
                     foreach (var d_pod in d.PaymentDetails)
                     {
                         BLL.PaymentDetail b_pod = new BLL.PaymentDetail();
                         d_pod.toCopy<BLL.PaymentDetail>(b_pod);
                         PO.PDetails.Add(b_pod);
+                        b_pod.SNo = ++i;
                         b_pod.LedgerName = (d_pod.Ledger ?? Caller.DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
 

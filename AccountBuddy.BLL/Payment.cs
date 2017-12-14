@@ -56,6 +56,7 @@ namespace AccountBuddy.BLL
         private bool _IsReadOnly;
         private bool _IsEnabled;
         private string _RefCode;
+        private int _SNo;
         #endregion
 
         #region Property
@@ -122,7 +123,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
+       
 
         public long Id
         {
@@ -680,7 +681,7 @@ namespace AccountBuddy.BLL
         public void SaveDetail()
         {
 
-            PaymentDetail pod = PDetails.Where(x => x.LedgerId == PDetail.LedgerId).FirstOrDefault();
+            PaymentDetail pod = PDetails.Where(x => x.SNo == PDetail.SNo).FirstOrDefault();
 
             if (pod == null)
             {
@@ -696,12 +697,13 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             PaymentDetail pod = new PaymentDetail();
+            pod.SNo = PDetails.Count == 0 ? 1 : PDetails.Max(x => x.SNo) + 1;
             pod.toCopy<PaymentDetail>(PDetail);
         }
 
-        public void DeleteDetail(int LedgerId)
+        public void DeleteDetail(int SNo)
         {
-            PaymentDetail pod = PDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            PaymentDetail pod = PDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
@@ -711,9 +713,9 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public void FindDetail(int LedgerId)
+        public void FindDetail(int SNO)
         {
-            PaymentDetail pod = PDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            PaymentDetail pod = PDetails.Where(x => x.SNo == SNO).FirstOrDefault();
 
             if (pod != null)
             {

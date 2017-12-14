@@ -34,6 +34,7 @@ namespace AccountBuddy.BLL
         private string _TransactionMode;
         private static List<string> _TransactionModeList;
         private static List<string> _StatusList;
+        private int _SNo;
 
         #endregion
 
@@ -78,6 +79,21 @@ namespace AccountBuddy.BLL
                 if (_StatusList != value)
                 {
                     _StatusList = value;
+                }
+            }
+        }
+        public int SNo
+        {
+            get
+            {
+                return _SNo;
+            }
+            set
+            {
+                if (_SNo != value)
+                {
+                    _SNo = value;
+                    NotifyPropertyChanged(nameof(SNo));
                 }
             }
         }

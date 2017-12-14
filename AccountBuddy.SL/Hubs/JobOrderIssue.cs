@@ -187,7 +187,7 @@ namespace AccountBuddy.SL.Hubs
                 P.JobWorkerId = JO.JobWorkerId;
 
                 P.ItemAmount = JO.ItemAmount.Value;
-                P.DiscountAmount = JO.DiscountAmount.Value;
+                P.DiscountAmount = JO.DiscountAmount;
                 P.GSTAmount = JO.GSTAmount.Value;
                 P.ExtraAmount = JO.Extras.Value;
                 P.TotalAmount = JO.TotalAmount.Value;

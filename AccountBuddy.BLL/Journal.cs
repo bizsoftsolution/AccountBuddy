@@ -403,7 +403,7 @@ namespace AccountBuddy.BLL
         public void SaveDetail()
         {
 
-            JournalDetail pod = JDetails.Where(x => x.LedgerId == JDetail.LedgerId).FirstOrDefault();
+            JournalDetail pod = JDetails.Where(x => x.SNo == JDetail.SNo).FirstOrDefault();
 
             if (pod == null)
             {
@@ -419,12 +419,13 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             JournalDetail pod = new JournalDetail();
+            pod.SNo = JDetails.Count == 0 ? 1 : JDetails.Max(x => x.SNo) + 1;
             pod.toCopy<JournalDetail>(JDetail);
         }
 
-        public void DeleteDetail(int LedgerId)
+        public void DeleteDetail(int SNo)
         {
-            JournalDetail pod = JDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            JournalDetail pod = JDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
@@ -434,9 +435,9 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public void FindDetail(int LedgerId)
+        public void FindDetail(int SNo)
         {
-            JournalDetail pod = JDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            JournalDetail pod = JDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {

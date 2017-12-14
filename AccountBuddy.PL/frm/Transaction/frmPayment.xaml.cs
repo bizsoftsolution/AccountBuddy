@@ -210,7 +210,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                if (MessageBox.Show("do you want to delete this detail?", FormName, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Do you want to delete this detail?", FormName, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     Button btn = (Button)sender;
                     data.DeleteDetail((int)btn.Tag);
@@ -297,6 +297,16 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 Common.AppLib.WriteLog(string.Format("Payment Credit Ac List {0}-{1}", ex.Message, ex.InnerException));
             }
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.PaymentDetail pod = dgvDetails.SelectedItem as BLL.PaymentDetail;
+                pod.toCopy<BLL.PaymentDetail>(data.PDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

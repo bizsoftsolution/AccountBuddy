@@ -204,7 +204,7 @@
                                 <DataGridTemplateColumn Header="Edit" TextBlock.TextAlignment="Center"  Width="75">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button   x:Name="btnEditDetail" Tag="{Binding LedgerId}" Click="btnEditDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                            <Button   x:Name="btnEditDetail" Tag="{Binding SNo}" Click="btnEditDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
                                                 <materialDesign:PackIcon Kind="Pencil" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
                                             </Button>
                                         </DataTemplate>
@@ -213,7 +213,7 @@
                                 <DataGridTemplateColumn Header="Delete"  TextBlock.TextAlignment="Center"  Width="75">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="btnDeleteDetail" Tag="{Binding LedgerId}" Click="btnDeleteDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                            <Button x:Name="btnDeleteDetail" Tag="{Binding SNo}" Click="btnDeleteDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
                                                 <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
                                             </Button>
                                         </DataTemplate>

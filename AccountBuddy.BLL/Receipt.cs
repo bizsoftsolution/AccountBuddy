@@ -654,7 +654,7 @@ namespace AccountBuddy.BLL
         public void SaveDetail()
         {
 
-            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == RDetail.LedgerId).FirstOrDefault();
+            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == RDetail.SNo).FirstOrDefault();
 
             if (pod == null)
             {
@@ -670,12 +670,13 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             ReceiptDetail pod = new ReceiptDetail();
+            pod.SNo = RDetails.Count == 0 ? 1 : RDetails.Max(x => x.SNo) + 1;
             pod.toCopy<ReceiptDetail>(RDetail);
         }
 
-        public void DeleteDetail(int LedgerId)
+        public void DeleteDetail(int SNo)
         {
-            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == SNo).FirstOrDefault();
 
             if (pod != null)
             {
@@ -685,9 +686,9 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public void FindDetail(int LedgerId)
+        public void FindDetail(int SNo)
         {
-            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            ReceiptDetail pod = RDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {

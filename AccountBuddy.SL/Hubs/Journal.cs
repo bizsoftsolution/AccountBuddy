@@ -104,11 +104,13 @@ namespace AccountBuddy.SL.Hubs
                 {
 
                     d.toCopy<BLL.Journal>(PO);
+                    int i = 0;
                     foreach (var d_pod in d.JournalDetails)
                     {
                         BLL.JournalDetail b_pod = new BLL.JournalDetail();
                         d_pod.toCopy<BLL.JournalDetail>(b_pod);
                         PO.JDetails.Add(b_pod);
+                        b_pod.SNo = ++i;
                         b_pod.LedgerName = (d_pod.Ledger ?? Caller.DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
 
