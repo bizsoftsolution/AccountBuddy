@@ -106,6 +106,8 @@ namespace AccountBuddy.SL.Hubs
                         d_pod.toCopy<BLL.ReceiptDetail>(b_pod);
                         PO.RDetails.Add(b_pod);
                         b_pod.SNo = ++i;
+                       
+                        b_pod.LedgerId = d_pod.LedgerId;
                         b_pod.LedgerName = (d_pod.Ledger ?? Caller.DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
 

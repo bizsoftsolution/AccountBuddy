@@ -31,7 +31,7 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-            onClientEvents();
+           onClientEvents();
         }
         private void onClientEvents()
         {

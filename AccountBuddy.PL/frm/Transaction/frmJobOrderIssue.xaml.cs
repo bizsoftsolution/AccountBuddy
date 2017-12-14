@@ -33,6 +33,7 @@ namespace AccountBuddy.PL.frm.Transaction
             data.Clear();
             onClientEvents();
 
+            data.setLabel();
             LoadWindow();
 
         }
@@ -73,7 +74,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
             btnJobReceived.IsEnabled = false;
-
+            data.setLabel();
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
@@ -81,7 +82,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
@@ -302,13 +303,12 @@ namespace AccountBuddy.PL.frm.Transaction
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LoadWindow();
+            data.setLabel();
         }
 
         private void LoadWindow()
         {
-            data.lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            data.lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
-
+         
             btnSave.Visibility = (BLL.JobOrderIssue.UserPermission.AllowInsert || BLL.JobOrderIssue.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.JobOrderIssue.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }

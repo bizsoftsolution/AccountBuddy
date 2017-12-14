@@ -26,7 +26,7 @@ namespace AccountBuddy.BLL
         private string _Narration;
         private string _Status;
 
-        private string _LedgerName;        
+        private string _LedgerName;
         private string _AmountInwords;
 
         private string _SearchText;
@@ -73,7 +73,7 @@ namespace AccountBuddy.BLL
                         var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_POPendingList").Result;
                         _POPendingList = new ObservableCollection<PurchaseOrder>(l1);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Common.AppLib.WriteLog(string.Format("POPending List_{0}-{1}", ex.Message, ex.InnerException));
                     }
@@ -194,7 +194,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                 SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -294,7 +294,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+
 
         public string SearchText
         {
@@ -444,13 +444,20 @@ namespace AccountBuddy.BLL
             _PODetails = new ObservableCollection<PurchaseOrderDetail>();
 
             PODate = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_NewRefNo").Result;          
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_NewRefNo").Result;
+
+
             NotifyAllPropertyChanged();
         }
+        public void setLabel()
+        {
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
 
+        }
         private void MaxRef()
         {
-           RefNo= FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_MaxRef").Result;
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_MaxRef").Result;
         }
 
         public bool Find()
@@ -499,16 +506,16 @@ namespace AccountBuddy.BLL
                 else
                 {
                     PODetail.Quantity += pod.Quantity;
-                                     
+
                 }
-                            
+
                 PODetail.toCopy<PurchaseOrderDetail>(pod);
-                ItemAmount = PODetails.Sum(x => x.Amount);               
+                ItemAmount = PODetails.Sum(x => x.Amount);
                 SetAmount();
                 ClearDetail();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.AppLib.WriteLog(string.Format("Purchase Order save Detail_{0}", ex.Message));
             }
@@ -517,9 +524,9 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             PurchaseOrderDetail pod = new PurchaseOrderDetail();
-            pod.SNo =PODetails.Count == 0 ? 1 : PODetails.Max(x => x.SNo) + 1;
+            pod.SNo = PODetails.Count == 0 ? 1 : PODetails.Max(x => x.SNo) + 1;
             pod.toCopy<PurchaseOrderDetail>(PODetail);
-            
+
         }
 
         public void DeleteDetail(int SNo)
@@ -539,11 +546,10 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-           
+
             GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
             TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (Extras ?? 0);
-            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            setLabel();
         }
 
         public bool FindRefNo()
@@ -560,12 +566,12 @@ namespace AccountBuddy.BLL
             return rv;
         }
 
-        public static List<PurchaseOrder> PO_List(int?LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        public static List<PurchaseOrder> PO_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<PurchaseOrder> rv = new List<PurchaseOrder>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_List", LedgerId,dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

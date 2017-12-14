@@ -9,7 +9,7 @@ using AccountBuddy.Common;
 
 namespace AccountBuddy.BLL
 {
-   public class StockSeperated : INotifyPropertyChanged
+    public class StockSeperated : INotifyPropertyChanged
     {
         #region Field
         private static ObservableCollection<StockSeperated> _JRPendingList;
@@ -202,7 +202,7 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                   SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                  SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -393,9 +393,9 @@ namespace AccountBuddy.BLL
                 try
                 {
                     if (_SSDetails == null) _SSDetails = new ObservableCollection<StockSeperatedDetail>();
-                  
+
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Common.AppLib.WriteLog(string.Format("Stock Seperated _{0}_{1}", ex.InnerException, ex.Message));
                 }
@@ -542,7 +542,7 @@ namespace AccountBuddy.BLL
                 ClearDetail();
             }
         }
-       
+
         #endregion
 
 
@@ -550,10 +550,14 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
             TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+            setLabel();
+        }
+        public void setLabel()
+        {
             lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
-        }
 
+        }
         public bool FindRefNo()
         {
             var rv = false;
@@ -568,12 +572,12 @@ namespace AccountBuddy.BLL
             return rv;
         }
 
-        public static List<StockSeperated> ToList(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        public static List<StockSeperated> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<StockSeperated> rv = new List<StockSeperated>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<StockSeperated>>("StockSeperated_List", LedgerId,dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.FMCGHub.Invoke<List<StockSeperated>>("StockSeperated_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

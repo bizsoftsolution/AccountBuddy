@@ -654,7 +654,7 @@ namespace AccountBuddy.BLL
         public void SaveDetail()
         {
 
-            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == RDetail.SNo).FirstOrDefault();
+            ReceiptDetail pod = RDetails.Where(x => x.SNo == RDetail.SNo).FirstOrDefault();
 
             if (pod == null)
             {

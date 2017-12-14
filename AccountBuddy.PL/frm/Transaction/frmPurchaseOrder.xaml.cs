@@ -41,7 +41,7 @@ namespace AccountBuddy.PL.frm.Transaction
             dateInfo.ShortDatePattern = "MM/yyyy";
             cultureInfo.DateTimeFormat = dateInfo;
             onClientEvents();
-           
+            data.setLabel();
         }
 
         private void onClientEvents()                 
@@ -79,12 +79,12 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             Clear();
-        }
+                    }
 
         void Clear()
         {
             data.Clear();
-            
+            data.setLabel();
             btnMakepurchase.IsEnabled = false;
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
@@ -93,14 +93,16 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (data.Id != 0)
             {
-                var rv = data.Delete();
-                if (rv == true)
+                if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    data.Clear(); Clear();
+                    var rv = data.Delete();
+                    if (rv == true)
+                    {
+                        MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
+                        data.Clear(); Clear();
+                    }
                 }
             }
 
@@ -317,10 +319,10 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            data.lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            data.lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.PurchaseOrder.UserPermission.AllowInsert || BLL.PurchaseOrder.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.PurchaseOrder.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            data.setLabel();
+
         }
 
         private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)

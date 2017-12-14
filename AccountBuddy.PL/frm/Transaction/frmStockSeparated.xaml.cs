@@ -29,7 +29,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             InitializeComponent();
             this.DataContext = data;
-
+            data.setLabel();
             data.Clear();
             onClientEvents();
         }
@@ -69,8 +69,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
-
-            //btnPrint.IsEnabled = false;
+            data.setLabel();
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
         }
@@ -121,14 +120,8 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    //if (ckbAutoPrint.IsChecked == true)
-                    //{
-                    //    Print();
-                    //}
-
+                   
                     data.Clear();
-
-                    //btnPrint.IsEnabled = false;
 
                 }
             }
@@ -292,8 +285,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            data.lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            data.lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.setLabel();
             btnSave.Visibility = (BLL.StockSeperated.UserPermission.AllowInsert || BLL.StockSeperated.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.StockSeperated.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }

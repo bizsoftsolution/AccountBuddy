@@ -578,8 +578,14 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = (ItemAmount  - DiscountAmount ) * Common.AppLib.GSTPer;
             TotalAmount = (ItemAmount -DiscountAmount ) + GSTAmount + (Extras ?? 0);
+            setLabel();
+
+        }
+        public void setLabel()
+        {
             lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+
         }
 
         public bool FindRefNo()

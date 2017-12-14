@@ -544,7 +544,12 @@ namespace AccountBuddy.BLL
             RefNo = FMCGHubClient.FMCGHub.Invoke<string>("Purchase_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
+        public void setLabel()
+        {
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
 
+        }
         public bool Find()
         {
             try
@@ -641,8 +646,7 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
             TotalAmount = ItemAmount - DiscountAmount  + GSTAmount + ExtraAmount;
-            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            setLabel();
         }
 
         public bool FindRefNo()
