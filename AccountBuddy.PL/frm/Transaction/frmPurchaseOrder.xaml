@@ -155,7 +155,7 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="300"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <DataGrid Grid.Column="0" x:Name="dgvDetails" ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectionChanged="dgvDetails_SelectionChanged" MouseDoubleClick="dgvDetails_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Auto"  ItemsSource="{Binding PODetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,25,10,75"   BorderThickness="1" >
+                    <DataGrid Grid.Column="0" x:Name="dgvDetails" ScrollViewer.HorizontalScrollBarVisibility="Auto"  MouseDoubleClick="dgvDetails_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Auto"  ItemsSource="{Binding PODetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,25,10,75"   BorderThickness="1" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="FontWeight" Value="Bold" />
@@ -171,7 +171,7 @@
                             <DataGridTextColumn Header="Qty"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="75" Binding="{Binding Quantity, Mode=TwoWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTextColumn Header="Discount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="120" Binding="{Binding DiscountAmount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                             <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}"  TextBlock.TextAlignment="Right" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=TwoWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                           
+
                             <!--<DataGridTemplateColumn Header="Edit" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -184,7 +184,7 @@
                             <DataGridTemplateColumn Header="Delete" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding ProductName}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding SNo}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
                                             <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
                                         </Button>
                                     </DataTemplate>
@@ -217,8 +217,8 @@
                         <Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" IsEnabled="False" />
                         <CheckBox x:Name="ckbAutoprint" Margin="10" FontWeight="Bold" Width="100">Autoprint</CheckBox>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <Button   Width="200" Height="30" x:Name="btnMakepurchase" Content="MAKE PURCHASE" Click="btnMakepurchase_Click"  Margin="5 5" IsEnabled="False"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="50" Margin="0,0,0,20" Width="340">
+                        <Button   Width="210" Height="30" x:Name="btnMakepurchase" Content="MAKE PURCHASE" Click="btnMakepurchase_Click"  Margin="5,10" IsEnabled="False"/>
                         <!--<TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="PO Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold" Height="41"/>-->
                         <Button Margin="10" Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" />
 

@@ -100,11 +100,14 @@ namespace AccountBuddy.SL.Hubs
 
                     d.toCopy<BLL.StockInProcess>(SO);
                     SO.StaffName = (d.Staff ?? Caller.DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
+                    int i = 0;
+
                     foreach (var d_pod in d.StockInProcessDetails)
                     {
                         BLL.StockInProcessDetail b_pod = new BLL.StockInProcessDetail();
                         d_pod.toCopy<BLL.StockInProcessDetail>(b_pod);
                         SO.STPDetails.Add(b_pod);
+                        b_pod.SNo = i++;
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         //SO.Status = d.StockInProcessDetails.FirstOrDefault().JobOrderReceivedDetails.Count() > 0 ? "Received" : "Pending";

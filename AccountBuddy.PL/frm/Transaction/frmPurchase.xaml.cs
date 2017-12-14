@@ -156,7 +156,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -331,6 +331,16 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.Text = AppLib.NumericOnly(txtChequeNo.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.PurchaseDetail pod = dgvDetails.SelectedItem as BLL.PurchaseDetail;
+                pod.toCopy<BLL.PurchaseDetail>(data.PDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

@@ -19,7 +19,7 @@ namespace AccountBuddy.SL.Hubs
         {
             if (Caller.CompanyType == "Company")
             {
-                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
+                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).ToList()
                               .Select(x => UOM_DALtoBLL(x)).ToList();
             }
 

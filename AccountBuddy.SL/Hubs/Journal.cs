@@ -1033,7 +1033,9 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByJobOrderIssue(DAL.JobOrderIssue P)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.JobOrderIssue, P.Id);
-            var CId = P.JobWorker.Ledger.AccountGroup.CompanyId;
+
+            var LId = Caller.DB.JobWorkers.Where(x => x.Id == P.JobWorkerId).FirstOrDefault().Ledger;
+             var CId = LId.AccountGroup.CompanyId;
 
             DAL.Journal j = Caller.DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)

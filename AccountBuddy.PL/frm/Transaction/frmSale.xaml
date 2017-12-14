@@ -60,7 +60,7 @@
                             </materialDesign:HintAssist.Hint>
                             
                         </ComboBox>
-                        <ComboBox x:Name="cmbCustomer"  DropDownOpened="cmbCustomer_DropDownOpened" Loaded="cmbCustomer_Loaded" Text="{Binding LedgerName}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="230" Height="43" Margin="0,12,0,24">
+                        <ComboBox x:Name="cmbCustomer"   Loaded="cmbCustomer_Loaded" Text="{Binding LedgerName}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="230" Height="43" Margin="0,12,0,24">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -89,7 +89,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        <ComboBox x:Name="cmbItem" Margin="10,0,10,0"  Text="{Binding SDetail.ProductName}" DropDownOpened="cmbItem_DropDownOpened" SelectedItem="{Binding SDetail.Product, Mode=TwoWay}" SelectedValue="{Binding SDetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
+                        <ComboBox x:Name="cmbItem" Margin="10,0,10,0"  Text="{Binding SDetail.ProductName}"  SelectedItem="{Binding SDetail.Product, Mode=TwoWay}" SelectedValue="{Binding SDetail.ProductId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -102,7 +102,7 @@
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <ComboBox x:Name="cmbUOM" Margin="0,0,10,0" Loaded="cmbUOM_Loaded"  DropDownOpened="cmbUOM_DropDownOpened" Text="{Binding SDetail.UOMName}" SelectedValue="{Binding SDetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
+                        <ComboBox x:Name="cmbUOM" Margin="0,0,10,0" Loaded="cmbUOM_Loaded"   Text="{Binding SDetail.UOMName}" SelectedValue="{Binding SDetail.UOMId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold"  FontSize="14" Width="100" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Weight" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -163,7 +163,7 @@
                         <RowDefinition Height="200"></RowDefinition>
                         <RowDefinition Height="150"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="dgvDetails" Grid.Column="0" Grid.Row="0" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding SDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10" >
+                    <DataGrid x:Name="dgvDetails" Grid.Column="0" Grid.Row="0" MouseDoubleClick="dgvDetails_MouseDoubleClick" ItemsSource="{Binding SDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10" >
 
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -183,7 +183,7 @@
                             <DataGridTemplateColumn Header="Delete" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding ProductName}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding SNo}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
                                             <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
                                         </Button>
                                     </DataTemplate>

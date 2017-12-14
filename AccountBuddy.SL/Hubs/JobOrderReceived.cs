@@ -108,11 +108,14 @@ namespace AccountBuddy.SL.Hubs
 
                     d.toCopy<BLL.JobOrderReceived>(SO);
                     SO.JobWorkerName = (d.JobWorker ?? Caller.DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
+                    int i = 0;
+
                     foreach (var d_pod in d.JobOrderReceivedDetails)
                     {
                         BLL.JobOrderReceivedDetail b_pod = new BLL.JobOrderReceivedDetail();
                         d_pod.toCopy<BLL.JobOrderReceivedDetail>(b_pod);
                         SO.JRDetails.Add(b_pod);
+                        b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         //  SO.Status = d.JobOrderReceivedDetails.FirstOrDefault()..Count() > 0 ? "Sold" : "Pending";

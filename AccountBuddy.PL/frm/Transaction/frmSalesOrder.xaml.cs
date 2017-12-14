@@ -111,7 +111,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "SO Code"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtRefNo.Focus();
             }
-            else if (data.LedgerId == 0)
+            else if (data.LedgerId == 0||data.LedgerId==null)
             {
                 MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Customer), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbCustomer.Focus();
@@ -151,7 +151,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -312,6 +312,17 @@ namespace AccountBuddy.PL.frm.Transaction
             data.lblExtra= string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.SalesOrder.UserPermission.AllowInsert || BLL.SalesOrder.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.SalesOrder.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.SalesOrderDetail pod = dgvDetails.SelectedItem as BLL.SalesOrderDetail;
+                pod.toCopy<BLL.SalesOrderDetail>(data.SODetail);
+            }
+            catch (Exception ex) { }
+
         }
     }
 }

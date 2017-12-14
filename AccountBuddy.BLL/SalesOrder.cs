@@ -515,7 +515,7 @@ namespace AccountBuddy.BLL
         {
             if (SODetail.ProductId != 0)
             {
-                SalesOrderDetail pod = SODetails.Where(x => x.ProductId == SODetail.ProductId).FirstOrDefault();
+                SalesOrderDetail pod = SODetails.Where(x => x.SNo == SODetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -526,10 +526,10 @@ namespace AccountBuddy.BLL
                 {
                     SODetail.Quantity += pod.Quantity;
                 }
-                SODetail.toCopy<SalesOrderDetail>(pod);
-                ClearDetail();
+                SODetail.toCopy<SalesOrderDetail>(pod);               
                 ItemAmount = SODetails.Sum(x => x.Amount);
                 SetAmount();
+                ClearDetail();
             }
 
         }
@@ -537,12 +537,13 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             SalesOrderDetail pod = new SalesOrderDetail();
+            pod.SNo = SODetails.Count == 0 ? 1 : SODetails.Max(x => x.SNo) + 1;
             pod.toCopy<SalesOrderDetail>(SODetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int sno)
         {
-            SalesOrderDetail pod = SODetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            SalesOrderDetail pod = SODetails.Where(x => x.SNo == sno).FirstOrDefault();
 
             if (pod != null)
             {

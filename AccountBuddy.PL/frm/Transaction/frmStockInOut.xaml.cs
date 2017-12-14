@@ -140,7 +140,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -259,6 +259,16 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
 
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.StockInDetail pod = dgvDetails.SelectedItem as BLL.StockInDetail;
+                pod.toCopy<BLL.StockInDetail>(data.STInDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

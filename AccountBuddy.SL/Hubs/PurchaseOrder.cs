@@ -205,10 +205,12 @@ namespace AccountBuddy.SL.Hubs
 
                     d.toCopy<BLL.PurchaseOrder>(PO);
                     PO.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    int i = 0;
                     foreach (var d_pod in Caller.DB.PurchaseOrderDetails.Where(x=>x.POId==d.Id).ToList())
                     {
                         BLL.PurchaseOrderDetail b_pod = new BLL.PurchaseOrderDetail();
                         d_pod.toCopy<BLL.PurchaseOrderDetail>(b_pod);
+                        b_pod.SNo = ++i;
                         PO.PODetails.Add(b_pod);
                         
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;

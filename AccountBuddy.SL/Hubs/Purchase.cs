@@ -172,11 +172,14 @@ namespace AccountBuddy.SL.Hubs
                     d.toCopy<BLL.Purchase>(P);
                     P.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? Caller.DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+
+                    int i = 0;
                     foreach (var d_pod in d.PurchaseDetails)
                     {
                         BLL.PurchaseDetail b_pod = new BLL.PurchaseDetail();
                         d_pod.toCopy<BLL.PurchaseDetail>(b_pod);
                         P.PDetails.Add(b_pod);
+                        b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }

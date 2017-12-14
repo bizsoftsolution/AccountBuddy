@@ -191,7 +191,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -362,6 +362,17 @@ namespace AccountBuddy.PL.frm.Transaction
         private void ckbIsReSale_Unchecked(object sender, RoutedEventArgs e)
         {
             data.SRDetail.IsResale = false;
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            try
+            {
+                BLL.SalesReturnDetail pod = dgvDetails.SelectedItem as BLL.SalesReturnDetail;
+                pod.toCopy<BLL.SalesReturnDetail>(data.SRDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

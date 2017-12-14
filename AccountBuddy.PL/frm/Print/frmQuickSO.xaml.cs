@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL.frm.Print
 {
@@ -55,6 +56,13 @@ namespace AccountBuddy.PL.frm.Print
                 rptQuickSalesOrder.LocalReport.DataSources.Add(data4);
                 rptQuickSalesOrder.LocalReport.ReportPath = @"rpt\Transaction\rptQuickSalesOrder.rdlc";
 
+                ReportParameter[] rp = new ReportParameter[2];
+                rp[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix);
+                rp[1] = new ReportParameter("ItemAmount", string.Format("{0:N2} {1}", data.ItemAmount, AppLib.CurrencyPositiveSymbolPrefix));
+             
+                rptQuickSalesOrder.LocalReport.SetParameters(rp);
+
+
                 rptQuickSalesOrder.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
 
@@ -73,7 +81,7 @@ namespace AccountBuddy.PL.frm.Print
         }
         public DataTable GetDetails(BLL.SalesOrder data)
         {
-            int NoRecPerPage = 18;
+            int NoRecPerPage =22;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);
@@ -104,9 +112,27 @@ namespace AccountBuddy.PL.frm.Print
 
                 dt.Rows.Add(newRow);
             }
+            if (NoRecPerPage < data.SODetails.Count)
+            {
+
+                for (int i = 0; i < 35; i++)
+                {
+                    newRow = dt.NewRow();
+
+                    // fill the properties into the cells
+                    newRow["ProductName"] = "";
+                    newRow["Quantity"] = "";
+                    newRow["UnitPrice"] = "";
+                    newRow["Amount"] = "";
+                    newRow["Id"] = "";
+                    newRow["DiscountAmount"] = "";
+
+                    dt.Rows.Add(newRow);
+
+                }
+            }
 
 
-        
             for (int i = 0; i < NoRecPerPage - data.SODetails.Count(); i++)
             {
                 newRow = dt.NewRow();

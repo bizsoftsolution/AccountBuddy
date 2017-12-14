@@ -152,7 +152,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -228,11 +228,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             btnSave.Visibility = (BLL.StockOut.UserPermission.AllowInsert || BLL.StockOut.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.StockOut.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-
-
-            
-
-           
+      
         }
 
         private void txtRate_TextChanged(object sender, TextChangedEventArgs e)
@@ -279,6 +275,16 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
             cmbUOM.DisplayMemberPath = "Symbol";
             cmbUOM.SelectedValuePath = "Id";
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.StockOutDetail pod = dgvDetails.SelectedItem as BLL.StockOutDetail;
+                pod.toCopy<BLL.StockOutDetail>(data.STOutDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

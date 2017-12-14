@@ -512,7 +512,7 @@ namespace AccountBuddy.BLL
         {
             if (STPDetail.ProductId != 0)
             {
-                StockInProcessDetail pod = STPDetails.Where(x => x.ProductId == STPDetail.ProductId).FirstOrDefault();
+                StockInProcessDetail pod = STPDetails.Where(x => x.SNo == STPDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -534,12 +534,13 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             StockInProcessDetail pod = new StockInProcessDetail();
+            pod.SNo = STPDetails.Count == 0 ? 1 : STPDetails.Max(x => x.SNo) + 1;
             pod.toCopy<StockInProcessDetail>(STPDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            StockInProcessDetail pod = STPDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            StockInProcessDetail pod = STPDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {

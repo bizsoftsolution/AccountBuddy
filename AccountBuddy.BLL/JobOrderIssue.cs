@@ -20,7 +20,7 @@ namespace AccountBuddy.BLL
         private string _JONo;
         private int? _JobWorkerId;
         private decimal? _ItemAmount;
-        private decimal? _DiscountAmount;
+        private decimal _DiscountAmount;
         private decimal? _GSTAmount;
         private decimal? _Extras;
         private decimal? _TotalAmount;
@@ -197,7 +197,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? DiscountAmount
+        public decimal DiscountAmount
         {
             get
             {
@@ -535,7 +535,7 @@ namespace AccountBuddy.BLL
         {
             if (JODetail.ProductId != 0)
             {
-                JobOrderIssueDetail pod = JODetails.Where(x => x.ProductId == JODetail.ProductId).FirstOrDefault();
+                JobOrderIssueDetail pod = JODetails.Where(x => x.SNo == JODetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -557,17 +557,19 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             JobOrderIssueDetail pod = new JobOrderIssueDetail();
+            pod.SNo = JODetails.Count == 0 ? 1 : JODetails.Max(x => x.SNo) + 1;
             pod.toCopy<JobOrderIssueDetail>(JODetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            JobOrderIssueDetail pod = JODetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            JobOrderIssueDetail pod = JODetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 JODetails.Remove(pod);
                 ItemAmount = JODetails.Sum(x => x.Amount);
+                ClearDetail();
             }
         }
         #endregion
@@ -609,7 +611,6 @@ namespace AccountBuddy.BLL
             return rv;
 
         }
-
 
 
         #endregion

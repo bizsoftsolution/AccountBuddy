@@ -504,7 +504,7 @@ namespace AccountBuddy.BLL
         {
             if (SSDetail.ProductId != 0)
             {
-                StockSeperatedDetail pod = SSDetails.Where(x => x.ProductId == SSDetail.ProductId).FirstOrDefault();
+                StockSeperatedDetail pod = SSDetails.Where(x => x.SNo == SSDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -526,12 +526,13 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             StockSeperatedDetail pod = new StockSeperatedDetail();
+            pod.SNo = SSDetails.Count == 0 ? 1 : SSDetails.Max(x => x.SNo) + 1;
             pod.toCopy<StockSeperatedDetail>(SSDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            StockSeperatedDetail pod = SSDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            StockSeperatedDetail pod = SSDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {

@@ -116,7 +116,7 @@ namespace AccountBuddy.SL.Hubs
                         UOMName = SOd.UOMName,
                         Quantity = SOd.Quantity.Value,
                         UnitPrice = SOd.UnitPrice.Value,
-                        DiscountAmount = SOd.DiscountAmount.Value,
+                        DiscountAmount = SOd.DiscountAmount,
                         GSTAmount = SOd.GSTAmount.Value,
                         ProductName = SOd.ProductName,
                         Amount = SOd.Amount.Value
@@ -147,10 +147,13 @@ namespace AccountBuddy.SL.Hubs
 
                     d.toCopy<BLL.SalesOrder>(SO);
                     SO.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    int i = 0;
+
                     foreach (var d_pod in d.SalesOrderDetails)
                     {
                         BLL.SalesOrderDetail b_pod = new BLL.SalesOrderDetail();
                         d_pod.toCopy<BLL.SalesOrderDetail>(b_pod);
+                        b_pod.SNo = ++i;
                         SO.SODetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;

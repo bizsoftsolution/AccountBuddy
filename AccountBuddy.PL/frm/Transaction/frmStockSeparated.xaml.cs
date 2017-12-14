@@ -144,7 +144,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -296,6 +296,16 @@ namespace AccountBuddy.PL.frm.Transaction
             data.lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.StockSeperated.UserPermission.AllowInsert || BLL.StockSeperated.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.StockSeperated.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.StockSeperatedDetail pod = dgvDetails.SelectedItem as BLL.StockSeperatedDetail;
+                pod.toCopy<BLL.StockSeperatedDetail>(data.SSDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

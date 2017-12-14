@@ -101,11 +101,13 @@ namespace AccountBuddy.SL.Hubs
                     d.toCopy<BLL.SalesReturn>(P);
                     P.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? Caller.DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    int i = 0;
                     foreach (var d_pod in d.SalesReturnDetails)
                     {
                         BLL.SalesReturnDetail b_pod = new BLL.SalesReturnDetail();
                         d_pod.toCopy<BLL.SalesReturnDetail>(b_pod);
                         P.SRDetails.Add(b_pod);
+                        b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }

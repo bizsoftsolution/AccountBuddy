@@ -162,12 +162,13 @@ namespace AccountBuddy.SL.Hubs
 
                     d.toCopy<BLL.StockIn>(P);
                     P.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
-
+                    int i = 0;
                     foreach (var d_pod in d.StockInDetails)
                     {
                         BLL.StockInDetail b_pod = new BLL.StockInDetail();
                         d_pod.toCopy<BLL.StockInDetail>(b_pod);
                         P.STInDetails.Add(b_pod);
+                        b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }

@@ -52,7 +52,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     f.btnSave.IsEnabled = true;
                     f.btnDelete.IsEnabled = true;
                 }
-
+                f.btnPrint.IsEnabled = true;
 
                 System.Windows.Forms.Application.DoEvents();
                 this.Close();

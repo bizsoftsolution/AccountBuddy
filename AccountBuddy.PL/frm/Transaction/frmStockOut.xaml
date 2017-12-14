@@ -159,8 +159,12 @@
                 <!--#endregion-->
                 <!--#region Grid-->
                 <Grid Margin="10,2,10,10" Grid.Row="2" x:Name="gvPurchaseDetails">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80*"></ColumnDefinition>
+                        <ColumnDefinition Width="20*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="dgvDetails" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding STOutDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,215,104" >
+                    <DataGrid x:Name="dgvDetails" MouseDoubleClick="dgvDetails_MouseDoubleClick" ItemsSource="{Binding STOutDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,10,104" >
 
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -193,6 +197,11 @@
                     <StackPanel Orientation="Horizontal" Margin="10,250,0,0">
                         <TextBox IsReadOnly="True" x:Name="txtAmtInwords" TextWrapping="Wrap" Text="{Binding ItemAmount, Mode=TwoWay,Converter={StaticResource CurrencyInWordFormat}}" materialDesign:HintAssist.Hint="Amount In Words"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14"   TextAlignment="Left"  Width="730"/>
                     </StackPanel>
+                    <Grid Grid.Column="1" Grid.RowSpan="2"  Margin="0,10">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="165">
+                            <TextBox IsReadOnly="True" Text="{Binding ItemAmount,Mode=TwoWay,Converter={StaticResource NumberFormat}}" materialDesign:HintAssist.Hint="Item Amount"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0" TextAlignment="Right"  />
+                        </StackPanel>
+                    </Grid>
 
                 </Grid>
                 <!--#endregion-->

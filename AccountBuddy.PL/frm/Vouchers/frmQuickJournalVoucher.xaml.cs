@@ -49,6 +49,7 @@ namespace AccountBuddy.PL.frm.Vouchers
                 rptQuickJournal.LocalReport.DataSources.Add(data2);
                 rptQuickJournal.LocalReport.DataSources.Add(data3);
                 rptQuickJournal.LocalReport.ReportPath = @"rpt\Transaction\rptJournalReceipt.rdlc";
+                rptQuickJournal.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                 rptQuickJournal.RefreshReport();
 
@@ -57,6 +58,11 @@ namespace AccountBuddy.PL.frm.Vouchers
             {
 
             }
+        }
+
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
     }
 }

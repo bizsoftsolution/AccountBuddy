@@ -586,7 +586,7 @@ namespace AccountBuddy.BLL
         {
             if (SDetail.ProductId != 0)
             {
-                SalesDetail sod = SDetails.Where(x => x.ProductId == SDetail.ProductId).FirstOrDefault();
+                SalesDetail sod = SDetails.Where(x => x.SNo == SDetail.SNo).FirstOrDefault();
 
                 if (sod == null)
                 {
@@ -608,17 +608,19 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             SalesDetail sod = new SalesDetail();
+            sod.SNo = SDetails.Count == 0 ? 1 : SDetails.Max(x => x.SNo) + 1;
             sod.toCopy<SalesDetail>(SDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            SalesDetail sod = SDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            SalesDetail sod = SDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (sod != null)
             {
                 SDetails.Remove(sod);
-                ClearDetail(); ItemAmount = SDetails.Sum(x => x.Amount);
+                ClearDetail();
+                ItemAmount = SDetails.Sum(x => x.Amount);
                 SetAmount();
             }
         }

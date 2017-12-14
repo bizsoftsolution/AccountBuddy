@@ -47,11 +47,14 @@ namespace AccountBuddy.PL.frm.Vouchers
                 rptQuickPayment.LocalReport.DataSources.Add(data3);
                 rptQuickPayment.LocalReport.ReportPath = @"rpt\Transaction\rptPaymentVoucher.rdlc";
                 
-                ReportParameter[] par = new ReportParameter[1];
+                ReportParameter[] par = new ReportParameter[2];
                 par[0] = new ReportParameter("AmountInWords", data.AmountInwords);
-                
+                par[1] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix);
+
+
                 rptQuickPayment.LocalReport.SetParameters(par);
-                
+                rptQuickPayment.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
                 rptQuickPayment.RefreshReport();
 
             }
@@ -59,6 +62,10 @@ namespace AccountBuddy.PL.frm.Vouchers
             {
 
             }
+        }
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
     }
 }

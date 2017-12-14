@@ -522,7 +522,7 @@ namespace AccountBuddy.BLL
         {
             if (JRDetail.ProductId != 0)
             {
-                JobOrderReceivedDetail pod = JRDetails.Where(x => x.ProductId == JRDetail.ProductId).FirstOrDefault();
+                JobOrderReceivedDetail pod = JRDetails.Where(x => x.SNo == JRDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -544,17 +544,19 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             JobOrderReceivedDetail pod = new JobOrderReceivedDetail();
+            pod.SNo = JRDetails.Count == 0 ? 1 : JRDetails.Max(x => x.SNo) + 1;
             pod.toCopy<JobOrderReceivedDetail>(JRDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            JobOrderReceivedDetail pod = JRDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            JobOrderReceivedDetail pod = JRDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 JRDetails.Remove(pod);
                 ItemAmount = JRDetails.Sum(x => x.Amount);
+                ClearDetail();
             }
         }
         #endregion

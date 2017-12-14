@@ -147,7 +147,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -300,6 +300,16 @@ namespace AccountBuddy.PL.frm.Transaction
             btnSave.Visibility = (BLL.JobOrderReceived.UserPermission.AllowInsert || BLL.JobOrderReceived.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.JobOrderReceived.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.JobOrderReceivedDetail pod = dgvDetails.SelectedItem as BLL.JobOrderReceivedDetail;
+                pod.toCopy<BLL.JobOrderReceivedDetail>(data.JRDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

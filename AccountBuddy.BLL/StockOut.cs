@@ -358,7 +358,7 @@ namespace AccountBuddy.BLL
         {
             if (STOutDetail.ProductId != 0)
             {
-                StockOutDetail pod = STOutDetails.Where(x => x.ProductId == STOutDetail.ProductId).FirstOrDefault();
+                StockOutDetail pod = STOutDetails.Where(x => x.SNo == STOutDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -380,17 +380,19 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             StockOutDetail pod = new StockOutDetail();
+            pod.SNo = STOutDetails.Count == 0 ? 1 : STOutDetails.Max(x => x.SNo) + 1;
             pod.toCopy<StockOutDetail>(STOutDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            StockOutDetail pod = STOutDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            StockOutDetail pod = STOutDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 STOutDetails.Remove(pod);
                 ItemAmount = STOutDetails.Sum(x => x.Amount);
+                ClearDetail();
             }
         }
 

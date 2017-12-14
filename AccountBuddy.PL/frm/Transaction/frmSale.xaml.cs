@@ -193,7 +193,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -504,6 +504,16 @@ namespace AccountBuddy.PL.frm.Transaction
         private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
         {
             LoadCustomer();
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.SalesDetail pod = dgvDetails.SelectedItem as BLL.SalesDetail;
+                pod.toCopy<BLL.SalesDetail>(data.SDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

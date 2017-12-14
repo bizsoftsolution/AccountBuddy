@@ -586,7 +586,7 @@ namespace AccountBuddy.BLL
         {
             if (SRDetail.ProductId != 0)
             {
-                SalesReturnDetail pod = SRDetails.Where(x => x.ProductId == SRDetail.ProductId).FirstOrDefault();
+                SalesReturnDetail pod = SRDetails.Where(x => x.SNo == SRDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -608,12 +608,13 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             SalesReturnDetail pod = new SalesReturnDetail();
+            pod.SNo = SRDetails.Count == 0 ? 1 : SRDetails.Max(x => x.SNo) + 1;
             pod.toCopy<SalesReturnDetail>(SRDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            SalesReturnDetail pod = SRDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            SalesReturnDetail pod = SRDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {

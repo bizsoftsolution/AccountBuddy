@@ -167,7 +167,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="150"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <DataGrid Grid.Column="0" x:Name="dgvDetails" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding SRDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,5,10,10"  >
+                    <DataGrid Grid.Column="0" x:Name="dgvDetails" MouseDoubleClick="dgvDetails_MouseDoubleClick" ItemsSource="{Binding SRDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,5,10,10"  >
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="FontWeight" Value="Bold" />
@@ -194,7 +194,7 @@
                             <DataGridTemplateColumn Header="Delete" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding ProductName}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding SNo}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
                                             <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
                                         </Button>
                                     </DataTemplate>

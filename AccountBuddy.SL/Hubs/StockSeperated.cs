@@ -101,11 +101,13 @@ namespace AccountBuddy.SL.Hubs
 
                     d.toCopy<BLL.StockSeperated>(SO);
                     SO.StaffName = (d.Staff ?? Caller.DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
+                    int i = 0;
                     foreach (var d_pod in d.StockSeperatedDetails)
                     {
                         BLL.StockSeperatedDetail b_pod = new BLL.StockSeperatedDetail();
                         d_pod.toCopy<BLL.StockSeperatedDetail>(b_pod);
                         SO.SSDetails.Add(b_pod);
+                        b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         //  SO.Status = d.StockSeperatedDetails.FirstOrDefault()..Count() > 0 ? "Sold" : "Pending";

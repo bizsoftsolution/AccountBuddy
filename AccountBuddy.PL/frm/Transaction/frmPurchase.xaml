@@ -169,7 +169,7 @@
                         <RowDefinition Height="200"></RowDefinition>
                         <RowDefinition Height="150"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="dgvDetails" Grid.Column="0" Grid.Row="0"  SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding PDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,10,10" >
+                    <DataGrid x:Name="dgvDetails" Grid.Column="0" Grid.Row="0"  MouseDoubleClick="dgvDetails_MouseDoubleClick" ItemsSource="{Binding PDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,10,10" >
 
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -236,7 +236,7 @@
                         <Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" IsEnabled="False"/>
                         <CheckBox x:Name="ckbAutoprint" Margin="10" FontWeight="Bold" Width="100">Autoprint</CheckBox>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,24" Width="225" Height="52">
                         <!--<TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold" Height="41"/>-->
                         <Button Margin="10" Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" />
 

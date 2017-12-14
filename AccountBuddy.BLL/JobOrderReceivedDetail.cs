@@ -27,6 +27,7 @@ namespace AccountBuddy.BLL
         private string _ProductName;
         private string _UOMName;
         private Product _Product;
+        private int _SNo;
         #endregion
 
         #region Property
@@ -44,6 +45,21 @@ namespace AccountBuddy.BLL
                     SetProduct();
 
                     NotifyPropertyChanged(nameof(Product));
+                }
+            }
+        }
+        public int SNo
+        {
+            get
+            {
+                return _SNo;
+            }
+            set
+            {
+                if (_SNo != value)
+                {
+                    _SNo = value;
+                    NotifyPropertyChanged(nameof(SNo));
                 }
             }
         }
@@ -139,17 +155,12 @@ namespace AccountBuddy.BLL
                 {
                     _Quantity = value;
                     Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
-                    if (_ProductId != null) SetDiscount();
                     NotifyPropertyChanged(nameof(Quantity));
                 }
             }
         }
 
-        private void SetDiscount()
-        {
-            var p = Product ?? new Product();
-            DiscountAmount = p.DiscountAmount * (decimal)Quantity;
-        }
+     
 
         public decimal? UnitPrice
         {
@@ -229,20 +240,22 @@ namespace AccountBuddy.BLL
                 if (_ItemCode != value)
                 {
                     _ItemCode = value;
-                    if (value != null) SetProductbyItemCode(new Product(_ItemCode.ToLower()));
+                    if (value != null) SetProductbyItemCode();
 
                     NotifyPropertyChanged(nameof(ItemCode));
                 }
             }
         }
 
-        private void SetProductbyItemCode(Product p)
+        private void SetProductbyItemCode()
         {
+            var p = Product ?? new Product();
+            ItemCode = p.ItemCode;
+            ProductId = p.Id;
             UOMId = p.UOMId;
             ProductName = p.ProductName;
             UnitPrice = p.SellingRate;
             Quantity = p.Id != 0 ? 1 : 0;
-            DiscountAmount = p.DiscountAmount;
         }
         public string ProductName
         {
@@ -301,7 +314,7 @@ namespace AccountBuddy.BLL
             ProductName = p.ProductName;
             UnitPrice = p.SellingRate;
             Quantity = p.Id != 0 ? 1 : 0;
-            DiscountAmount = p.DiscountAmount;
+          //  DiscountAmount = p.DiscountAmount;
         }
         #endregion
     }

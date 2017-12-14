@@ -15,6 +15,7 @@ using Microsoft.Reporting.WinForms;
 using MahApps.Metro.Controls;
 using System.Collections.ObjectModel;
 using System.Data;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL.frm.Print
 {
@@ -58,9 +59,16 @@ namespace AccountBuddy.PL.frm.Print
                 rptQuickPO.LocalReport.DataSources.Add(data4);
                 rptQuickPO.LocalReport.ReportPath = @"rpt\Transaction\rptQuickPurchaseOrder.rdlc";
 
-                ReportParameter[] par = new ReportParameter[1];
-                par[0] = new ReportParameter("AmtInWords", data.AmountInwords);
-                rptQuickPO.LocalReport.SetParameters(par);
+
+                ReportParameter[] rp = new ReportParameter[6];
+                rp[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix);
+                rp[1] = new ReportParameter("ItemAmount", string.Format("{0:N2} {1}", data.ItemAmount, AppLib.CurrencyPositiveSymbolPrefix));
+                rp[2] = new ReportParameter("DiscountAmount", string.Format("{0:N2} {1}", data.DiscountAmount, AppLib.CurrencyPositiveSymbolPrefix));
+                rp[3] = new ReportParameter("Extra", string.Format("{0:N2} {1}", data.Extras, AppLib.CurrencyPositiveSymbolPrefix));
+                rp[4] = new ReportParameter("GST", string.Format("{0:N2} {1}", data.GSTAmount, AppLib.CurrencyPositiveSymbolPrefix));
+                rp[5] = new ReportParameter("BillAmount", string.Format("{0:N2} {1}", data.TotalAmount, AppLib.CurrencyPositiveSymbolPrefix));
+
+                rptQuickPO.LocalReport.SetParameters(rp);
                 rptQuickPO.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
 
@@ -80,7 +88,7 @@ namespace AccountBuddy.PL.frm.Print
         }
         public DataTable GetDetails(BLL.PurchaseOrder data)
         {
-            int NoRecPerPage = 18;
+            int NoRecPerPage = 21;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);
@@ -110,6 +118,27 @@ namespace AccountBuddy.PL.frm.Print
                 newRow["DiscountAmount"] = element.DiscountAmount == 0 ? "" : String.Format("{0:0.00}", element.DiscountAmount);
 
                 dt.Rows.Add(newRow);
+            }
+
+
+            if (NoRecPerPage < data.PODetails.Count)
+            {
+
+                for (int i = 0; i < 30; i++)
+                {
+                    newRow = dt.NewRow();
+
+                    // fill the properties into the cells
+                    newRow["ProductName"] = "";
+                    newRow["Quantity"] = "";
+                    newRow["UnitPrice"] = "";
+                    newRow["Amount"] = "";
+                    newRow["Id"] = "";
+                    newRow["DiscountAmount"] = "";
+
+                    dt.Rows.Add(newRow);
+
+                }
             }
             for (int i = 0; i < NoRecPerPage - data.PODetails.Count(); i++)
             {

@@ -596,7 +596,7 @@ namespace AccountBuddy.BLL
         {
             if (PDetail.ProductId != 0)
             {
-                PurchaseDetail pod = PDetails.Where(x => x.ProductId == PDetail.ProductId).FirstOrDefault();
+                PurchaseDetail pod = PDetails.Where(x => x.SNo == PDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -618,12 +618,13 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             PurchaseDetail pod = new PurchaseDetail();
+            pod.SNo = PDetails.Count == 0 ? 1 : PDetails.Max(x => x.SNo) + 1;
             pod.toCopy<PurchaseDetail>(PDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            PurchaseDetail pod = PDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            PurchaseDetail pod = PDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {

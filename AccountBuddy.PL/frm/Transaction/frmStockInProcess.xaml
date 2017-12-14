@@ -153,7 +153,7 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="300"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <DataGrid Grid.Column="0" x:Name="dgvDetails" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding STPDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="50,5,10,45"   BorderThickness="1" >
+                    <DataGrid Grid.Column="0" x:Name="dgvDetails" MouseDoubleClick="dgvDetails_MouseDoubleClick" ItemsSource="{Binding STPDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="50,5,10,45"   BorderThickness="1" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="FontWeight" Value="Bold" />
@@ -172,7 +172,7 @@
                             <DataGridTemplateColumn Header="Delete" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding ProductName}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding SNo}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
                                             <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
                                         </Button>
                                     </DataTemplate>
@@ -199,15 +199,15 @@
                 <!--#region Buttons-->
                 <Grid Grid.Row="3">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <Button Click="btnSave_Click" Width="100" Height="30" x:Name="btnSave" Content="SAVE"   Margin="5 5" />
-                        <Button Click="btnDelete_Click" Width="100" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="5 5" />
-                        <Button Click="btnClear_Click"  Width="100" Height="30" x:Name="btnClear" Content="CLEAR" Margin="5 5" />
+                        <Button Click="btnSave_Click" Width="100" Height="30" x:Name="btnSave" Content="SAVE"   Margin="10 10" />
+                        <Button Click="btnDelete_Click" Width="100" Height="30" x:Name="btnDelete" Content="DELETE"   Margin="10 10" />
+                        <Button Click="btnClear_Click"  Width="100" Height="30" x:Name="btnClear" Content="CLEAR" Margin="10 10" />
                         <!--<Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" IsEnabled="False" Visibility="Hidden" />
                         <CheckBox Margin="10" x:Name="ckbAutoPrint" FontWeight="Bold" Width="100">Autoprint</CheckBox>-->
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <TextBox Text="{Binding SearchText}" Width="125" materialDesign:HintAssist.Hint="SP Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,0,24" FontWeight="Bold" Height="41"/>
-                        <Button Margin="10" Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" />
+                        <!--<TextBox Text="{Binding SearchText}" Width="125" materialDesign:HintAssist.Hint="SP Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,0,24" FontWeight="Bold" Height="41"/>-->
+                        <Button  Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" Margin="10,12,10,24"  />
 
                     </StackPanel>
                 </Grid>

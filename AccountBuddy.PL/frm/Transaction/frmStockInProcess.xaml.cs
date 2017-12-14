@@ -156,7 +156,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -310,6 +310,16 @@ namespace AccountBuddy.PL.frm.Transaction
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LoadWindow();
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.StockInProcessDetail pod = dgvDetails.SelectedItem as BLL.StockInProcessDetail;
+                pod.toCopy<BLL.StockInProcessDetail>(data.STPDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }
