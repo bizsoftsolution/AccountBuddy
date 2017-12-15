@@ -280,6 +280,10 @@ namespace AccountBuddy.PL.frm.Master
                 rptProduct.LocalReport.DataSources.Add(data1);
                 rptProduct.LocalReport.ReportPath = @"rpt\master\rptProducts.rdlc";
 
+                ReportParameter[] rp = new ReportParameter[1];
+                rp[0] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix);
+                rptProduct.LocalReport.SetParameters(rp);
+
                 rptProduct.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                 rptProduct.RefreshReport();

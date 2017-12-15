@@ -504,8 +504,7 @@ namespace AccountBuddy.SL.Hubs
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
             string Mode=null, status = null;
-            var l = Caller.DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault();
-            var CId = l.AccountGroup.CompanyId;
+             var CId = Caller.DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault().AccountGroup.CompanyId; ;
             if (S.TransactionTypeId == 1)
             {
                 Mode = "Cash";
