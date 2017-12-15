@@ -307,21 +307,12 @@
                       <rd:DefaultName>Id</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Style>None</Style>
-                        </BottomBorder>
                         <LeftBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </LeftBorder>
                         <RightBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -353,21 +344,12 @@
                       <rd:DefaultName>ProductName</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Style>None</Style>
-                        </BottomBorder>
                         <LeftBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </LeftBorder>
                         <RightBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -399,21 +381,12 @@
                       <rd:DefaultName>UOMName</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Style>None</Style>
-                        </BottomBorder>
                         <LeftBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </LeftBorder>
                         <RightBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -448,21 +421,12 @@
                       <rd:DefaultName>UnitPrice</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Style>None</Style>
-                        </BottomBorder>
                         <LeftBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </LeftBorder>
                         <RightBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -496,21 +460,12 @@
                       <rd:DefaultName>DiscountAmount</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Style>None</Style>
-                        </BottomBorder>
                         <LeftBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </LeftBorder>
                         <RightBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -544,21 +499,12 @@
                       <rd:DefaultName>Quantity</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Style>None</Style>
-                        </BottomBorder>
                         <LeftBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </LeftBorder>
                         <RightBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -593,21 +539,12 @@
                       <rd:DefaultName>Amount</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <TopBorder>
-                          <Style>None</Style>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Style>None</Style>
-                        </BottomBorder>
                         <LeftBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </LeftBorder>
                         <RightBorder>
-                          <Color>Black</Color>
                           <Width>1pt</Width>
                         </RightBorder>
                         <PaddingLeft>2pt</PaddingLeft>

@@ -18,34 +18,16 @@ namespace AccountBuddy.BLL
         private string _RefNo;
         private Ledger _Ledger;
         private decimal _CrAmt;
-        private decimal _DrAmt;        
+        private decimal _DrAmt;
         private string _AccountName;
         private string _Particular;
         private bool _IsCompleted;
-        private static UserTypeDetail _UserPermission;
-
+        private string _VoucherNo;
+        private decimal _Amount;
+        private string _PayeeName;
         #endregion
 
         #region Property
-        public static UserTypeDetail UserPermission
-        {
-            get
-            {
-                if (_UserPermission == null)
-                {
-                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmBankReconciliation.ToString()).FirstOrDefault();
-                }
-                return _UserPermission;
-            }
-
-            set
-            {
-                if (_UserPermission != value)
-                {
-                    _UserPermission = value;
-                }
-            }
-        }
 
         public long EId
         {
@@ -138,6 +120,21 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public string VoucherNo
+        {
+            get
+            {
+                return _VoucherNo;
+            }
+            set
+            {
+                if (_VoucherNo != value)
+                {
+                    _VoucherNo = value;
+                    NotifyPropertyChanged(nameof(VoucherNo));
+                }
+            }
+        }
         public Ledger Ledger
         {
             get
@@ -183,7 +180,21 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+        public decimal Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                if (_Amount != value)
+                {
+                    _Amount = value;
+                    NotifyPropertyChanged(nameof(Amount));
+                }
+            }
+        }
 
         public string AccountName
         {
@@ -216,6 +227,23 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public string PayeeName
+        {
+            get
+            {
+                return _PayeeName;
+            }
+            set
+            {
+                if (_PayeeName != value)
+                {
+                    _PayeeName = value;
+                    NotifyPropertyChanged(nameof(PayeeName));
+                }
+            }
+        }
+
         #endregion
 
         #region Property  Changed Event

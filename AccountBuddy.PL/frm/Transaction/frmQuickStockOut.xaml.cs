@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using Microsoft.Reporting.WinForms;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL.frm.Transaction
 {
@@ -54,6 +55,13 @@ namespace AccountBuddy.PL.frm.Transaction
                 rptViewer.LocalReport.DataSources.Add(data4);
                 rptViewer.LocalReport.ReportPath = @"rpt\Transaction\rptStockOut.rdlc";
 
+                ReportParameter[] rp = new ReportParameter[2];
+                rp[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix);
+                rp[1] = new ReportParameter("ItemAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.ItemAmount));
+                rptViewer.LocalReport.SetParameters(rp);
+
+                rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
                 rptViewer.RefreshReport();
 
             }
@@ -62,9 +70,13 @@ namespace AccountBuddy.PL.frm.Transaction
 
             }
         }
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
         public DataTable GetDetails(BLL.StockOut data)
         {
-            int NoRecPerPage = 12;
+            int NoRecPerPage = 20;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);
@@ -75,6 +87,7 @@ namespace AccountBuddy.PL.frm.Transaction
             dt.Columns.Add("UOMName");
             dt.Columns.Add("Amount");
             dt.Columns.Add("Id");
+            dt.Columns.Add("DiscountAmount");
 
             var newRow = dt.NewRow();
 
@@ -91,10 +104,29 @@ namespace AccountBuddy.PL.frm.Transaction
                 newRow["UOMName"] = element.UOMName;
                 newRow["Amount"] = String.Format("{0:0.00}", element.Amount);
                 newRow["Id"] = n.ToString();
+                newRow["DiscountAmount"] = element.DiscountAmount == 0 ? "" : String.Format("{0:0.00}", element.DiscountAmount);
 
                 dt.Rows.Add(newRow);
             }
+            if (NoRecPerPage < data.STOutDetails.Count)
+            {
 
+                for (int i = 0; i < 33; i++)
+                {
+                    newRow = dt.NewRow();
+
+                    // fill the properties into the cells
+                    newRow["ProductName"] = "";
+                    newRow["Quantity"] = "";
+                    newRow["UnitPrice"] = "";
+                    newRow["Amount"] = "";
+                    newRow["Id"] = "";
+                    newRow["DiscountAmount"] = "";
+
+                    dt.Rows.Add(newRow);
+
+                }
+            }
 
             for (int i = 0; i < NoRecPerPage - data.STOutDetails.Count(); i++)
             {
@@ -105,6 +137,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 newRow["UnitPrice"] = "";
                 newRow["Amount"] = "";
                 newRow["Id"] = "";
+                newRow["DiscountAmount"] = "";
 
                 dt.Rows.Add(newRow);
             }

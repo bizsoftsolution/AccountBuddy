@@ -286,8 +286,10 @@ namespace AccountBuddy.PL.frm.Master
                 RptLedger.LocalReport.DataSources.Add(data1);
                 RptLedger.LocalReport.ReportPath = @"rpt\master\RptLedger.rdlc";
 
-                ReportParameter[] param = new ReportParameter[1];
+                ReportParameter[] param = new ReportParameter[2];
                 param[0] = new ReportParameter("Title", "LEDGER LIST");
+                param[1] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix.ToString());
+
 
                 RptLedger.LocalReport.SetParameters(param);
 

@@ -18,7 +18,7 @@ namespace AccountBuddy.BLL
         private int? _UOMId;
         private double? _Quantity;
         private decimal? _UnitPrice;
-        private decimal? _DiscountAmount;
+        private decimal _DiscountAmount;
         private decimal? _GSTAmount;
         private decimal? _Amount;
 
@@ -178,7 +178,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public decimal? DiscountAmount
+        public decimal DiscountAmount
         {
             get
             {

@@ -16,14 +16,14 @@ namespace AccountBuddy.SL.Hubs
 
             BLL.BankReconcilation gl = new BLL.BankReconcilation();
 
-            var lstLedger = Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == LedgerId ).ToList();
+            var lstLedger = Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyId== Caller.CompanyId && x.Id == LedgerId).ToList();
 
             #region Ledger
-            
+
             foreach (var l in lstLedger)
             {
-                
-                foreach (var pd in l.PaymentDetails.Where(x => x.Payment.Status== "Process" && x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).ToList())
+
+                foreach (var pd in l.PaymentDetails.Where(x => x.Payment.Status == "Process" && x.Payment.PaymentDate >= dtFrom && x.Payment.PaymentDate <= dtTo).ToList())
                 {
                     gl = new BLL.BankReconcilation();
                     gl.Ledger = new BLL.Ledger();
@@ -34,48 +34,52 @@ namespace AccountBuddy.SL.Hubs
                     gl.EDate = pd.Payment.PaymentDate;
                     gl.RefNo = pd.Payment.PaymentMode == "Cheque" ? pd.Payment.ChequeNo : pd.Payment.RefNo;
                     gl.EntryNo = pd.Payment.EntryNo;
+                    gl.VoucherNo = pd.Payment.EntryNo;
                     gl.DrAmt = pd.Amount;
                     gl.CrAmt = 0;
-
+                    gl.Amount = pd.Amount;
+                    gl.PayeeName = pd.Payment.PayTo;
                     lstBankReconcilation.Add(gl);
                 }
 
                 foreach (var p in l.Payments.Where(x => x.Status == "Process" && x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo).ToList())
                 {
-                    foreach (var pd in p.PaymentDetails)
-                    {
-                        gl = new BLL.BankReconcilation();
-                        gl.Ledger = new BLL.Ledger();
-                        gl.Ledger = LedgerDAL_BLL(pd.Ledger);
-                        gl.Particular = pd.Particular;
-                        gl.EId = p.Id;
-                        gl.EType = 'P';
-                        gl.EDate = p.PaymentDate;
-                        gl.RefNo = p.PaymentMode == "Cheque" ? p.ChequeNo : p.RefNo;
-                        gl.EntryNo = p.EntryNo;
-                        gl.DrAmt = 0;
-                        gl.CrAmt = pd.Amount;
-                        lstBankReconcilation.Add(gl);
-                    }
+                    gl = new BLL.BankReconcilation();
+                    gl.Ledger = new BLL.Ledger();
+                    gl.Ledger.AccountName = String.Join("\n", p.PaymentDetails.Select(x => LedgerDAL_BLL(x.Ledger).AccountName).ToList());
+                    gl.Particular = p.Particulars;
+                    gl.EId = p.Id;
+                    gl.EType = 'P';
+                    gl.EDate = p.PaymentDate;
+                    gl.RefNo = p.PaymentMode == "Cheque" ? p.ChequeNo : p.RefNo;
+                    gl.EntryNo = p.EntryNo;
+                    gl.VoucherNo = p.VoucherNo;
+                    gl.DrAmt = 0;
+                    gl.CrAmt = p.PaymentDetails.Sum(x => x.Amount);
+                    gl.Amount = p.PaymentDetails.Sum(x => x.Amount);
+                    gl.PayeeName = p.PayTo;
+                    lstBankReconcilation.Add(gl);
+
                 }
 
                 foreach (var r in l.Receipts.Where(x => x.Status == "Process" && x.ReceiptDate >= dtFrom && x.ReceiptDate <= dtTo).ToList())
                 {
-                    foreach (var rd in r.ReceiptDetails)
-                    {
-                        gl = new BLL.BankReconcilation();
-                        gl.Ledger = new BLL.Ledger();
-                        gl.Ledger = LedgerDAL_BLL(rd.Ledger);
-                        gl.Particular = rd.Particulars;
-                        gl.EId = r.Id;
-                        gl.EType = 'R';
-                        gl.EDate = r.ReceiptDate;
-                        gl.RefNo = r.ReceiptMode == "Cheque" ? r.ChequeNo : r.RefNo;
-                        gl.EntryNo = r.EntryNo;
-                        gl.DrAmt = rd.Amount;
-                        gl.CrAmt = 0;
-                        lstBankReconcilation.Add(gl);
-                    }
+                    gl = new BLL.BankReconcilation();
+                    gl.Ledger = new BLL.Ledger();
+                    gl.Ledger.AccountName = String.Join("\n", r.ReceiptDetails.Select(x => LedgerDAL_BLL(x.Ledger).AccountName).ToList());
+                    gl.Particular = r.Particulars;
+                    gl.EId = r.Id;
+                    gl.EType = 'R';
+                    gl.EDate = r.ReceiptDate;
+                    gl.RefNo = r.ReceiptMode == "Cheque" ? r.ChequeNo : r.RefNo;
+                    gl.EntryNo = r.EntryNo;
+                    gl.VoucherNo = r.VoucherNo;
+                    gl.DrAmt = r.ReceiptDetails.Sum(x => x.Amount);
+                    gl.CrAmt = 0;
+                    gl.Amount = r.ReceiptDetails.Sum(x => x.Amount);
+                    gl.PayeeName = r.ReceivedFrom;
+                    lstBankReconcilation.Add(gl);
+
 
                 }
                 foreach (var rd in l.ReceiptDetails.Where(x => x.Receipt.Status == "Process" && x.Receipt.ReceiptDate >= dtFrom && x.Receipt.ReceiptDate <= dtTo).ToList())
@@ -89,31 +93,11 @@ namespace AccountBuddy.SL.Hubs
                     gl.EDate = rd.Receipt.ReceiptDate;
                     gl.RefNo = rd.Receipt.ReceiptMode == "Cheque" ? rd.Receipt.ChequeNo : rd.Receipt.RefNo;
                     gl.EntryNo = rd.Receipt.EntryNo;
+                    gl.VoucherNo = rd.Receipt.VoucherNo;
                     gl.DrAmt = 0;
                     gl.CrAmt = rd.Amount;
-                    lstBankReconcilation.Add(gl);
-                }
-                foreach (var rd in l.JournalDetails.Where(x => x.Status == "Process" && x.Journal.JournalDate >= dtFrom && x.Journal.JournalDate <= dtTo).ToList())
-                {
-                    gl = new BLL.BankReconcilation();
-                    gl.Ledger = new BLL.Ledger();
-                    gl.Ledger = LedgerDAL_BLL(rd.Ledger);
-                    gl.Particular = rd.Particulars;
-                    gl.EId = rd.Journal.Id;
-                    gl.EType = 'J';
-                    gl.EDate = rd.Journal.JournalDate;
-                    if( rd.TransactionMode == "Cheque")
-                    {
-                        gl.RefNo = rd.ChequeNo;
-                    }
-                    else
-                    {
-                        gl.RefNo = rd.RefNo;
-                    }
-                   
-                    gl.EntryNo = rd.Journal.EntryNo;
-                    gl.DrAmt = rd.DrAmt;
-                    gl.CrAmt = rd.CrAmt;
+                    gl.Amount = rd.Amount;
+                    gl.PayeeName = rd.Receipt.ReceivedFrom;
                     lstBankReconcilation.Add(gl);
                 }
             }

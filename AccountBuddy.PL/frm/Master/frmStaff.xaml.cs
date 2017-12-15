@@ -292,6 +292,10 @@ namespace AccountBuddy.PL.frm.Master
 
                 rptStaff.LocalReport.ReportPath = @"rpt\master\rptStaff.rdlc";
 
+                ReportParameter[] param = new ReportParameter[1];
+                param[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix.ToString());
+                rptStaff.LocalReport.SetParameters(param);
+
                 rptStaff.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                 rptStaff.RefreshReport();
