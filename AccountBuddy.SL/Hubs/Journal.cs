@@ -221,7 +221,7 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByPurchase(DAL.Purchase P)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
-            var CId = P.Ledger.AccountGroup.CompanyId;
+            var CId = Caller.DB.Ledgers.Where(X => X.Id == P.LedgerId).FirstOrDefault().AccountGroup.CompanyId;
             string Mode = null, status = null;
             if (P.TransactionTypeId == 1)
             {

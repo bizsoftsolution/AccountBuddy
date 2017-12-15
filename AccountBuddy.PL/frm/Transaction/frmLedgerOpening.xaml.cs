@@ -138,6 +138,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
 
         }
+
         private void FindDiff()
         {
             var l1 = BLL.Ledger.toList.Where(x => Ledger_Filter(x)).ToList();
@@ -147,6 +148,7 @@ namespace AccountBuddy.PL.frm.Transaction
             lblMsg.Text = string.Format("Total Debit Balance : {0:N2}, Total Credit Balance : {1:N2}\nDifference : {2:N2}", drAmt, crAmt, Math.Abs(drAmt - crAmt));
             lblMsg.Foreground = drAmt == crAmt ? new SolidColorBrush(Color.FromRgb(0, 0, 255)) : new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
+
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             Grid_Refresh();

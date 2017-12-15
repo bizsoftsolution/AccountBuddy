@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using AccountBuddy.Common;
 using MahApps.Metro.Controls;
 using Microsoft.Reporting.WinForms;
 
@@ -43,6 +44,13 @@ namespace AccountBuddy.PL.frm.Transaction
                 RptLedger.LocalReport.DataSources.Add(data1);
                 RptLedger.LocalReport.ReportPath = @"rpt\Transaction\rptLedgerOpening.rdlc";
 
+                ReportParameter[] rp = new ReportParameter[1];
+                rp[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix);
+                RptLedger.LocalReport.SetParameters(rp);
+
+                RptLedger.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
+
                 RptLedger.RefreshReport();
 
             }
@@ -52,6 +60,11 @@ namespace AccountBuddy.PL.frm.Transaction
             }
 
 
+        }
+
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
     }
 }
