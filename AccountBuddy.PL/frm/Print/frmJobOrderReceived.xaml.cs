@@ -64,7 +64,7 @@ namespace AccountBuddy.PL.frm.Print
                 rp[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix);
                 rp[1] = new ReportParameter("ItemAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.ItemAmount));
                 rp[2] = new ReportParameter("DiscountAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.DiscountAmount));
-                rp[3] = new ReportParameter("Extra", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.Extras));
+                rp[3] = new ReportParameter("Extra", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.ExtraAmount));
                 rp[4] = new ReportParameter("GST", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.GSTAmount));
                 rp[5] = new ReportParameter("BillAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.TotalAmount));
 
@@ -117,7 +117,7 @@ namespace AccountBuddy.PL.frm.Print
                 newRow["UOMName"] = element.UOMName;
                 newRow["Amount"] = String.Format("{0:0.00}", element.Amount);
                 newRow["Id"] = n.ToString();
-                newRow["DiscountAmount"] = element.DiscountAmount == 0 ? "0.00 : String.Format("{ 0:0.00}", element.DiscountAmount);
+                newRow["DiscountAmount"] = element.DiscountAmount == 0 ? "0.00" : String.Format("{ 0:0.00}", element.DiscountAmount);
 
                 dt.Rows.Add(newRow);
             }
