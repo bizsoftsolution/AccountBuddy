@@ -240,7 +240,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>AMOUNT[</Value>
+                              <Value>AMOUNT  [</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -649,7 +649,7 @@
         <Top>6.41257cm</Top>
         <Left>0.58298cm</Left>
         <Height>1.2cm</Height>
-        <Width>17.6722cm</Width>
+        <Width>17.67219cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1017,7 +1017,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>OUTWARD</Value>
+                        <Value>STOCK OUTWARD</Value>
                         <Style>
                           <FontWeight>Bold</FontWeight>
                         </Style>

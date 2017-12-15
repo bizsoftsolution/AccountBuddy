@@ -353,7 +353,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Amount[</Value>
+                              <Value>Amount [</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>

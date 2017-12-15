@@ -59,11 +59,11 @@ namespace AccountBuddy.PL.frm.Print
 
                 ReportParameter[] rp = new ReportParameter[6];
                 rp[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix);
-                rp[1] = new ReportParameter("ItemAmount", string.Format("{0:N2} {1}", data.ItemAmount, AppLib.CurrencyPositiveSymbolPrefix));
-                rp[2] = new ReportParameter("DiscountAmount", string.Format("{0:N2} {1}", data.DiscountAmount, AppLib.CurrencyPositiveSymbolPrefix));
-                rp[3] = new ReportParameter("Extra", string.Format("{0:N2} {1}", data.ExtraAmount, AppLib.CurrencyPositiveSymbolPrefix));
-                rp[4] = new ReportParameter("GST", string.Format("{0:N2} {1}", data.GSTAmount, AppLib.CurrencyPositiveSymbolPrefix));
-                rp[5] = new ReportParameter("BillAmount", string.Format("{0:N2} {1}", data.TotalAmount, AppLib.CurrencyPositiveSymbolPrefix));
+                rp[1] = new ReportParameter("ItemAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.ItemAmount));
+                rp[2] = new ReportParameter("DiscountAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.DiscountAmount));
+                rp[3] = new ReportParameter("Extra", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.ExtraAmount));
+                rp[4] = new ReportParameter("GST", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.GSTAmount));
+                rp[5] = new ReportParameter("BillAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.TotalAmount));
 
                 rptQuickSales.LocalReport.SetParameters(rp);
 

@@ -55,9 +55,12 @@ namespace AccountBuddy.PL.frm.Print
                 rptViewer.LocalReport.DataSources.Add(data4);
                 rptViewer.LocalReport.ReportPath = @"rpt\Transaction\rptStockIn.rdlc";
 
+               
                 ReportParameter[] rp = new ReportParameter[2];
                 rp[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix);
-                rp[1] = new ReportParameter("ItemAmount", string.Format("{0:N2} {1}", data.ItemAmount, AppLib.CurrencyPositiveSymbolPrefix));
+                rp[1] = new ReportParameter("ItemAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.ItemAmount));
+              
+
                 rptViewer.LocalReport.SetParameters(rp);
 
 

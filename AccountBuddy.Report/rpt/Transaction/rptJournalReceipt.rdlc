@@ -148,7 +148,7 @@
               <Width>2.62425cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3.00271cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -271,7 +271,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Credit[</Value>
+                              <Value>Credit [</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -600,7 +600,7 @@
         <Top>3.149cm</Top>
         <Left>1.00909cm</Left>
         <Height>1.8cm</Height>
-        <Width>17.76649cm</Width>
+        <Width>18.2692cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>

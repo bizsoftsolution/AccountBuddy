@@ -998,7 +998,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>PURCHASE </Value>
+                        <Value>PURCHASE  RETURN</Value>
                         <Style>
                           <FontWeight>Bold</FontWeight>
                         </Style>

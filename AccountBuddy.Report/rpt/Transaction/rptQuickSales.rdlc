@@ -242,7 +242,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>AMOUNT[</Value>
+                              <Value>AMOUNT  [</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1549,7 +1549,6 @@
               </Style>
             </Textbox>
             <Line Name="Line6">
-              <Top>0cm</Top>
               <Left>1.33032in</Left>
               <Height>1.6146in</Height>
               <Width>0in</Width>
