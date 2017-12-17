@@ -20,7 +20,7 @@ namespace AccountBuddy.SL.Hubs
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.JobOrderIssue, dt, dt.Month);
             long No = 0;
 
-            var d = DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = Caller.DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
@@ -33,13 +33,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.JobOrderIssue d = DB.JobOrderIssues.Where(x => x.Id == SO.Id).FirstOrDefault();
+                DAL.JobOrderIssue d = Caller.DB.JobOrderIssues.Where(x => x.Id == SO.Id).FirstOrDefault();
 
                 if (d == null)
                 {
 
                     d = new DAL.JobOrderIssue();
-                    DB.JobOrderIssues.Add(d);
+                    Caller.DB.JobOrderIssues.Add(d);
 
                     SO.toCopy<DAL.JobOrderIssue>(d);
 
@@ -49,7 +49,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.JobOrderIssueDetail>(d_pod);
                         d.JobOrderIssueDetails.Add(d_pod);
                     }
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     SO.Id = d.Id;
                     LogDetailStore(SO, LogDetailType.INSERT);
                 }
@@ -61,7 +61,7 @@ namespace AccountBuddy.SL.Hubs
                     //        if (b_SOd == null) d.JobOrderIssueDetails.Remove(d_SOd);
                     //    }
                     decimal rd = SO.JODetails.Select(X => X.JOId).FirstOrDefault().Value;
-                    DB.JobOrderIssueDetails.RemoveRange(d.JobOrderIssueDetails.Where(x => x.JOId == rd).ToList());
+                    Caller.DB.JobOrderIssueDetails.RemoveRange(d.JobOrderIssueDetails.Where(x => x.JOId == rd).ToList());
 
                     SO.toCopy<DAL.JobOrderIssue>(d);
                     foreach (var b_SOd in SO.JODetails)
@@ -74,6 +74,7 @@ namespace AccountBuddy.SL.Hubs
                         //}
                         b_SOd.toCopy<DAL.JobOrderIssueDetail>(d_SOd);
                     }
+                    Caller.DB.SaveChanges();
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
                 }
@@ -92,20 +93,23 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.JobOrderIssue d = DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
-                DB.Entry(d).Reload();
+                DAL.JobOrderIssue d = Caller.DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
+                Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.JobOrderIssue>(SO);
-                    SO.JobWorkerName = (d.JobWorker ?? DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
+                    SO.JobWorkerName = (d.JobWorker ?? Caller.DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
+
+                    int i = 0;
                     foreach (var d_pod in d.JobOrderIssueDetails)
                     {
                         BLL.JobOrderIssueDetail b_pod = new BLL.JobOrderIssueDetail();
                         d_pod.toCopy<BLL.JobOrderIssueDetail>(b_pod);
                         SO.JODetails.Add(b_pod);
-                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.SNo = ++i;
+                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         SO.Status = d.JobOrderIssueDetails.FirstOrDefault().JobOrderReceivedDetails.Count() > 0 ? "Received" : "Pending";
                     }
 
@@ -119,14 +123,14 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.JobOrderIssue d = DB.JobOrderIssues.Where(x => x.Id == pk).FirstOrDefault();
+                DAL.JobOrderIssue d = Caller.DB.JobOrderIssues.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
                     var s = JobOrderIssue_DALtoBLL(d);
-                    DB.JobOrderIssueDetails.RemoveRange(d.JobOrderIssueDetails);
-                    DB.JobOrderIssues.Remove(d);
-                    DB.SaveChanges();
+                    Caller.DB.JobOrderIssueDetails.RemoveRange(d.JobOrderIssueDetails);
+                    Caller.DB.JobOrderIssues.Remove(d);
+                    Caller.DB.SaveChanges();
 
                     LogDetailStore(s, LogDetailType.DELETE);
                     Journal_DeleteByJobOrderIssue(s);
@@ -142,7 +146,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.JobOrderIssue> JobOrderIssue_JOPendingList()
         {
-            return DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
+            return Caller.DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
                                      .ToList()
                                      .Select(x => JobOrderIssue_DALtoBLL(x))
                                      .ToList();
@@ -159,7 +163,7 @@ namespace AccountBuddy.SL.Hubs
         }
         public bool Find_JOIssueRef(string RefNo, BLL.JobOrderIssue JO)
         {
-            DAL.JobOrderIssue d1 = DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo && x.Id != JO.Id).FirstOrDefault();
+            DAL.JobOrderIssue d1 = Caller.DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo && x.Id != JO.Id).FirstOrDefault();
 
             if (d1 == null)
             {
@@ -183,7 +187,7 @@ namespace AccountBuddy.SL.Hubs
                 P.JobWorkerId = JO.JobWorkerId;
 
                 P.ItemAmount = JO.ItemAmount.Value;
-                P.DiscountAmount = JO.DiscountAmount.Value;
+                P.DiscountAmount = JO.DiscountAmount;
                 P.GSTAmount = JO.GSTAmount.Value;
                 P.ExtraAmount = JO.Extras.Value;
                 P.TotalAmount = JO.TotalAmount.Value;
@@ -221,26 +225,62 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.JobOrderIssue d = DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
-                DB.Entry(d).Reload();
+                DAL.JobOrderIssue d = Caller.DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.JobOrderIssue>(P);
-                    P.JobWorkerName = (d.JobWorker ?? DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
+                    P.JobWorkerName = (d.JobWorker ?? Caller.DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
                     foreach (var d_pod in d.JobOrderIssueDetails)
                     {
                         BLL.JobOrderIssueDetail b_pod = new BLL.JobOrderIssueDetail();
                         d_pod.toCopy<BLL.JobOrderIssueDetail>(b_pod);
                         P.JODetails.Add(b_pod);
-                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }
 
                 }
             }
             catch (Exception ex) { }
             return P;
+        }
+
+
+        public List<BLL.JobOrderIssue> JobOrderIssue_List(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.JobOrderIssue> lstJobOrderIssue = new List<BLL.JobOrderIssue>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.JobOrderIssue rp = new BLL.JobOrderIssue();
+            try
+            {
+                foreach (var l in Caller.DB.JobOrderIssues.
+                      Where(x => x.JODate >= dtFrom && x.JODate <= dtTo
+                      && (x.JobWorkerId == LedgerId || LedgerId == null)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
+                      x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.JobOrderIssue();
+                    rp.ItemAmount = l.ItemAmount;
+                    rp.TotalAmount = l.TotalAmount;                
+                    rp.RefNo = l.RefNo;
+                    rp.Id = l.Id;
+                    rp.JobWorkerId = l.JobWorkerId;
+                    rp.JobWorkerName = string.Format("{0}-{1}", l.JobWorker.Ledger.AccountGroup.GroupCode, l.JobWorker.Ledger.LedgerName);
+                    rp.JODate = l.JODate;
+                  
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+
+                    lstJobOrderIssue.Add(rp);
+                    lstJobOrderIssue = lstJobOrderIssue.OrderBy(x => x.JODate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstJobOrderIssue;
         }
 
         #endregion

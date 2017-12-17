@@ -41,6 +41,8 @@ namespace AccountBuddy.BLL
         private string _BankName;
         private bool _IsShowChequeDetail;
         private static UserTypeDetail _UserPermission;
+        private string _lblDiscount;
+        private string _lblExtra;
 
         #endregion
 
@@ -452,6 +454,43 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public string lblDiscount
+        {
+            get
+            {
+                return _lblDiscount;
+            }
+            set
+            {
+                if (_lblDiscount != value)
+                {
+                    _lblDiscount = value;
+                    NotifyPropertyChanged(nameof(lblDiscount));
+
+                }
+            }
+        }
+
+        public string lblExtra
+        {
+            get
+            {
+                return _lblExtra;
+            }
+            set
+            {
+                if (_lblExtra != value)
+                {
+                    _lblExtra = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
+
+
+
         #endregion
 
         #region Property Changed
@@ -482,7 +521,12 @@ namespace AccountBuddy.BLL
                 return false;
             }
         }
+        public void setLabel()
+        {
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
 
+        }
         public void Clear()
         {
             new PurchaseReturn().toCopy<PurchaseReturn>(this);
@@ -545,7 +589,7 @@ namespace AccountBuddy.BLL
         {
             if (PRDetail.ProductId != 0)
             {
-                PurchaseReturnDetail pod = PRDetails.Where(x => x.ProductId == PRDetail.ProductId).FirstOrDefault();
+                PurchaseReturnDetail pod = PRDetails.Where(x => x.SNo == PRDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -567,18 +611,20 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             PurchaseReturnDetail pod = new PurchaseReturnDetail();
+            pod.SNo = PRDetails.Count == 0 ? 1 : PRDetails.Max(x => x.SNo) + 1;
             pod.toCopy<PurchaseReturnDetail>(PRDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            PurchaseReturnDetail pod = PRDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            PurchaseReturnDetail pod = PRDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 PRDetails.Remove(pod);
                 ItemAmount = PRDetails.Sum(x => x.Amount);
                 SetAmount();
+                ClearDetail();
             }
         }
 
@@ -588,8 +634,9 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
             TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;
+            setLabel();
         }
-
+       
         public bool FindRefNo()
         {
             var rv = false;
@@ -603,6 +650,23 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<PurchaseReturn> ToList(int? LedgerId, int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<PurchaseReturn> rv = new List<PurchaseReturn>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<PurchaseReturn>>("PurchaseReturn_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("PurchaseReturn List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
         #endregion
     }
 }

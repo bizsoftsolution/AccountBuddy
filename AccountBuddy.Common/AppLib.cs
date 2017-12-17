@@ -121,7 +121,7 @@ namespace AccountBuddy.Common
                 }
                 else
                 {
-                    return words;
+                    return words.ToUpper();
                 }
                 
             }

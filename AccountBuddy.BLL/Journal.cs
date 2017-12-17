@@ -339,7 +339,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Journal po = FMCGHubClient.FMCGHub.Invoke<Journal>("Journal_Find", SearchText).Result;
+                Journal po = FMCGHubClient.FMCGHub.Invoke<Journal>("Journal_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Journal>(this);
                 this.JDetails = po.JDetails;
@@ -403,7 +403,7 @@ namespace AccountBuddy.BLL
         public void SaveDetail()
         {
 
-            JournalDetail pod = JDetails.Where(x => x.LedgerId == JDetail.LedgerId).FirstOrDefault();
+            JournalDetail pod = JDetails.Where(x => x.SNo == JDetail.SNo).FirstOrDefault();
 
             if (pod == null)
             {
@@ -419,30 +419,35 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             JournalDetail pod = new JournalDetail();
+            pod.SNo = JDetails.Count == 0 ? 1 : JDetails.Max(x => x.SNo) + 1;
             pod.toCopy<JournalDetail>(JDetail);
         }
 
-        public void DeleteDetail(int LedgerId)
+        public void DeleteDetail(int SNo)
         {
-            JournalDetail pod = JDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            JournalDetail pod = JDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 JDetails.Remove(pod);
-                Amount = JDetails.Sum(x => x.DrAmt) - JDetails.Sum(x=> x.CrAmt);
+                Amount = JDetails.Sum(x => x.DrAmt) - JDetails.Sum(x => x.CrAmt);
+                ClearDetail();
             }
         }
 
-        public void FindDetail(int LedgerId)
+        public void FindDetail(int SNo)
         {
-            JournalDetail pod = JDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            JournalDetail pod = JDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 pod.toCopy<JournalDetail>(JDetail);
             }
         }
-
+        public static List<Journal> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<Journal>>("Journal_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
+        }
         #endregion
     }
 }

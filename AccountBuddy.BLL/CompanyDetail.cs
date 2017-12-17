@@ -70,8 +70,15 @@ namespace AccountBuddy.BLL
             {
                 if (_toList == null)
                 {
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<CompanyDetail>>("CompanyDetail_List").Result;
-                    _toList = new ObservableCollection<CompanyDetail>(l1);
+                    try
+                    {
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<CompanyDetail>>("CompanyDetail_List").Result;
+                        _toList = new ObservableCollection<CompanyDetail>(l1);
+                    }
+                    catch(Exception ex)
+                    {
+                        Common.AppLib.WriteLog(string.Format("Company Detail ToList-{0}", ex.Message));
+                    }
                 }
 
                 return _toList;
@@ -84,8 +91,15 @@ namespace AccountBuddy.BLL
             {
                 if (_AcYearList == null)
                 {
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<string>>("CompanyDetail_AcYearList").Result;
-                    _AcYearList = new ObservableCollection<string>(l1);
+                    try
+                    {
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<string>>("CompanyDetail_AcYearList").Result;
+                        _AcYearList = new ObservableCollection<string>(l1);
+                    }
+                    catch(Exception ex)
+                    {
+                        Common.AppLib.WriteLog(string.Format("AcYearList-{0}", ex.Message));
+                    }
                 }
 
                 return _AcYearList;
@@ -483,62 +497,68 @@ namespace AccountBuddy.BLL
         {
             bool RValue = true;
 
-            lstValidation.Clear();
-            var cm = toList.Where(x => x.CompanyName == CompanyName && x.CompanyType == CompanyType && x.UnderCompanyId == UnderCompanyId).FirstOrDefault();
-
-            var user = BLL.UserAccount.toList.Where(x => x.UserType.Company.UnderCompanyId == (UnderCompanyId == null ? null : UnderCompanyId) && x.UserName == UserId && x.UserType.Company.CompanyName==CompanyName).FirstOrDefault();
-
-
-
-
-            if (string.IsNullOrWhiteSpace(CompanyName))
+            try
             {
-                lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Required_Data, nameof(CompanyName)) });
-                RValue = false;
-            }
-            else if (cm != null)
+               
+                lstValidation.Clear();
+                var cm = toList.Where(x => x.CompanyName == CompanyName && x.CompanyType == CompanyType && x.UnderCompanyId == UnderCompanyId).FirstOrDefault();
+
+                var user = BLL.UserAccount.toList.Where(x => x.UserType.Company.UnderCompanyId == (UnderCompanyId == null ? null : UnderCompanyId) && x.UserName == UserId && x.UserType.Company.CompanyName == CompanyName).FirstOrDefault();
+
+
+
+
+                if (string.IsNullOrWhiteSpace(CompanyName))
+                {
+                    lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Required_Data, nameof(CompanyName)) });
+                    RValue = false;
+                }
+                else if (cm != null)
+                {
+                    if (cm.IsActive == false)
+                    {
+                        lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format("{0} is Deleted {1}. Please Contact DENARIUSOFT Administrator.", CompanyName, CompanyType) });
+                        RValue = false;
+                    }
+                    else if (cm.Id != Id)
+                    {
+                        lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Existing_Data, CompanyName) });
+                        RValue = false;
+                    }
+
+
+                }
+                else if (user != null)
+                {
+                    if (user.UserName == UserId)
+                    {
+                        lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.PL.User_Id_Exist, CompanyName) });
+                        RValue = false;
+                    }
+                }
+
+                else if (Id == 0)
+                {
+                    if (string.IsNullOrWhiteSpace(UserId))
+                    {
+                        lstValidation.Add(new Validation() { Name = nameof(UserId), Message = string.Format(Message.BLL.Required_Data, nameof(UserId)) });
+                        RValue = false;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(Password))
+                    {
+                        lstValidation.Add(new Validation() { Name = nameof(Password), Message = string.Format(Message.BLL.Required_Data, nameof(Password)) });
+                        RValue = false;
+                    }
+
+
+                }
+
+                return RValue;
+            }catch(Exception ex)
             {
-                if (cm.IsActive == false)
-                {
-                    lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format("{0} is Deleted {1}. Please Contact DENARIUSOFT Administrator.", CompanyName, CompanyType) });
-                    RValue = false;
-                }
-                else if (cm.Id != Id)
-                {
-                    lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.BLL.Existing_Data, CompanyName) });
-                    RValue = false;
-                }
-
-
+                return RValue;
             }
-            else if (user != null)
-            {
-                if (user.UserName == UserId)
-                {
-                    lstValidation.Add(new Validation() { Name = nameof(CompanyName), Message = string.Format(Message.PL.User_Id_Exist, CompanyName) });
-                    RValue = false;
-                }
-            }
-
-            else if (Id == 0)
-            {
-                if (string.IsNullOrWhiteSpace(UserId))
-                {
-                    lstValidation.Add(new Validation() { Name = nameof(UserId), Message = string.Format(Message.BLL.Required_Data, nameof(UserId)) });
-                    RValue = false;
-                }
-
-                if (string.IsNullOrWhiteSpace(Password))
-                {
-                    lstValidation.Add(new Validation() { Name = nameof(Password), Message = string.Format(Message.BLL.Required_Data, nameof(Password)) });
-                    RValue = false;
-                }
-
-
-            }
-
-            return RValue;
-
         }
 
         public bool Delete(bool isServerCall = false)

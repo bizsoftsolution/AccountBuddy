@@ -6,7 +6,7 @@
         <Source>Database</Source>
         <Value>=First(Fields!Logo.Value, "CompanyDetail")</Value>
         <MIMEType>image/png</MIMEType>
-        <Sizing>FitProportional</Sizing>
+        <Sizing>Fit</Sizing>
         <Top>0.18602cm</Top>
         <Left>0.84667cm</Left>
         <Height>2.64666cm</Height>

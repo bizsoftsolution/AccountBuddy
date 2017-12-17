@@ -38,6 +38,8 @@ namespace AccountBuddy.BLL
         private string _RefCode;
         private ObservableCollection<StockInProcessDetail> _STPDetails;
         private static UserTypeDetail _UserPermission;
+        private string _lblDiscount;
+        private string _lblExtra;
 
         #endregion
 
@@ -368,6 +370,39 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public string lblDiscount
+        {
+            get
+            {
+                return _lblDiscount;
+            }
+            set
+            {
+                if (_lblDiscount != value)
+                {
+                    _lblDiscount = value;
+                    NotifyPropertyChanged(nameof(lblDiscount));
+
+                }
+            }
+        }
+
+        public string lblExtra
+        {
+            get
+            {
+                return _lblExtra;
+            }
+            set
+            {
+                if (_lblExtra != value)
+                {
+                    _lblExtra = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
 
         #endregion
 
@@ -477,7 +512,7 @@ namespace AccountBuddy.BLL
         {
             if (STPDetail.ProductId != 0)
             {
-                StockInProcessDetail pod = STPDetails.Where(x => x.ProductId == STPDetail.ProductId).FirstOrDefault();
+                StockInProcessDetail pod = STPDetails.Where(x => x.SNo == STPDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -499,18 +534,20 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             StockInProcessDetail pod = new StockInProcessDetail();
+            pod.SNo = STPDetails.Count == 0 ? 1 : STPDetails.Max(x => x.SNo) + 1;
             pod.toCopy<StockInProcessDetail>(STPDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            StockInProcessDetail pod = STPDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            StockInProcessDetail pod = STPDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 STPDetails.Remove(pod);
                 ItemAmount = STPDetails.Sum(x => x.Amount);
                 SetAmount();
+                ClearDetail();
             }
         }
         #endregion
@@ -520,8 +557,14 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
             TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+            setLabel();
         }
+        public void setLabel()
+        {
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
 
+        }
         public bool FindRefNo()
         {
             var rv = false;
@@ -536,6 +579,23 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+        public static List<StockInProcess> ToList(int? LedgerId,DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<StockInProcess> rv = new List<StockInProcess>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<StockInProcess>>("StockInProcess_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("StockInProcess List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
+
         #endregion
     }
 }

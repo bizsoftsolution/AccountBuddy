@@ -592,23 +592,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-
-        #region List
-        public static ObservableCollection<Ledger> LedgerList
-        {
-            get
-            {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts").ToList());
-            }
-        }
-        public static ObservableCollection<Ledger> CashLedgerList
-        {
-            get
-            {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList());
-            }
-        }
-        #endregion
+        
 
         #region Master
         public bool Save()
@@ -639,7 +623,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Receipt po = FMCGHubClient.FMCGHub.Invoke<Receipt>("Receipt_Find", SearchText).Result;
+                Receipt po = FMCGHubClient.FMCGHub.Invoke<Receipt>("Receipt_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Receipt>(this);
                 this.RDetails = po.RDetails;
@@ -670,7 +654,7 @@ namespace AccountBuddy.BLL
         public void SaveDetail()
         {
 
-            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == RDetail.LedgerId).FirstOrDefault();
+            ReceiptDetail pod = RDetails.Where(x => x.SNo == RDetail.SNo).FirstOrDefault();
 
             if (pod == null)
             {
@@ -686,23 +670,25 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             ReceiptDetail pod = new ReceiptDetail();
+            pod.SNo = RDetails.Count == 0 ? 1 : RDetails.Max(x => x.SNo) + 1;
             pod.toCopy<ReceiptDetail>(RDetail);
         }
 
-        public void DeleteDetail(int LedgerId)
+        public void DeleteDetail(int SNo)
         {
-            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 RDetails.Remove(pod);
                 Amount = RDetails.Sum(x => x.Amount);
+                ClearDetail();
             }
         }
 
-        public void FindDetail(int LedgerId)
+        public void FindDetail(int SNo)
         {
-            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            ReceiptDetail pod = RDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
@@ -725,7 +711,10 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
-
+        public static List<Receipt> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<Receipt>>("Receipt_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
+        }
 
 
         #region Property  Changed Event

@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using AccountBuddy.Common;
 using MahApps.Metro.Controls;
 using Microsoft.Reporting.WinForms;
 
@@ -54,6 +55,17 @@ namespace AccountBuddy.PL.frm.Print
                 rptViewer.LocalReport.DataSources.Add(data4);
                 rptViewer.LocalReport.ReportPath = @"rpt\Transaction\rptStockIn.rdlc";
 
+                rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
+
+                ReportParameter[] rp = new ReportParameter[2];
+                rp[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix);
+                rp[1] = new ReportParameter("ItemAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.ItemAmount));
+              
+
+                rptViewer.LocalReport.SetParameters(rp);
+
+
                 rptViewer.RefreshReport();
 
             }
@@ -62,9 +74,14 @@ namespace AccountBuddy.PL.frm.Print
 
             }
         }
+
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
         public DataTable GetDetails(BLL.StockIn data)
         {
-            int NoRecPerPage = 12;
+            int NoRecPerPage = 20;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);
@@ -86,16 +103,35 @@ namespace AccountBuddy.PL.frm.Print
                 newRow = dt.NewRow();
                 n = n + 1;
                 newRow["ProductName"] = element.ProductName;
-                newRow["Quantity"] = element.Quantity == 0 ? "" : element.Quantity.ToString();
-                newRow["UnitPrice"] = element.UnitPrice == 0 ? "" : String.Format("{0:0.00}", element.UnitPrice);
+                newRow["Quantity"] = element.Quantity == 0 ? "0.00" : element.Quantity.ToString();
+                newRow["UnitPrice"] = element.UnitPrice == 0 ? "0.00" : String.Format("{0:0.00}", element.UnitPrice);
                 newRow["UOMName"] = element.UOMName;
                 newRow["Amount"] = String.Format("{0:0.00}", element.Amount);
                 newRow["Id"] = n.ToString();
-                newRow["DiscountAmount"] = element.DiscountAmount == 0 ? "" : String.Format("{0:0.00}", element.DiscountAmount);
+                newRow["DiscountAmount"] = element.DiscountAmount == 0 ? "0.00" : String.Format("{0:0.00}", element.DiscountAmount);
 
                 dt.Rows.Add(newRow);
             }
 
+            if (NoRecPerPage < data.STInDetails.Count)
+            {
+
+                for (int i = 0; i < 30; i++)
+                {
+                    newRow = dt.NewRow();
+
+                    // fill the properties into the cells
+                    newRow["ProductName"] = "";
+                    newRow["Quantity"] = "";
+                    newRow["UnitPrice"] = "";
+                    newRow["Amount"] = "";
+                    newRow["Id"] = "";
+                    newRow["DiscountAmount"] = "";
+
+                    dt.Rows.Add(newRow);
+
+                }
+            }
 
             for (int i = 0; i < NoRecPerPage - data.STInDetails.Count(); i++)
             {

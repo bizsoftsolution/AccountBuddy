@@ -49,11 +49,11 @@ namespace AccountBuddy.PL.frm.Master
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             BLL.AccountGroup.Init();
-            dgvAccount.ItemsSource = BLL.AccountGroup.toList;
+            //dgvAccount.ItemsSource = BLL.AccountGroup.toList;
 
            
-            CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Filter = AccountGroup_Filter;
-            CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
+            //CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Filter = AccountGroup_Filter;
+            //CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
 
             rptContain.IsChecked = true;
             btnSave.Visibility = (BLL.AccountGroup.UserPermission.AllowInsert || BLL.AccountGroup.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
@@ -102,7 +102,7 @@ namespace AccountBuddy.PL.frm.Master
                 }
                 else
                 {
-                    if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    if (MessageBox.Show(Message.PL.Delete_confirmation,FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.No)
                     {
                         if (data.Delete() == true)
                         {
@@ -336,8 +336,8 @@ namespace AccountBuddy.PL.frm.Master
         void clear()
         {
             data.Clear();
-            trvAccount.ItemsSource = BLL.AccountGroup.toGroup(null);
-            //  trvAccount.ItemsSource = BLL.AccountGroup.toGroup(BLL.DataKeyValue.Primary_Value);
+           trvAccount.ItemsSource = BLL.AccountGroup.toGroup(null);
+           //trvAccount.ItemsSource = BLL.AccountGroup.toGroup(BLL.DataKeyValue.Primary_Value);
         }
         private void cmbUnder_GotFocus(object sender, RoutedEventArgs e)
         {

@@ -56,6 +56,7 @@ namespace AccountBuddy.BLL
         private bool _IsReadOnly;
         private bool _IsEnabled;
         private string _RefCode;
+        private int _SNo;
         #endregion
 
         #region Property
@@ -122,7 +123,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
+       
 
         public long Id
         {
@@ -612,43 +613,10 @@ namespace AccountBuddy.BLL
         }
 
         #region List
-        public static ObservableCollection<Ledger> LedgerList
-        {
-            get
-            {
-                try
-                {
-                    return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts").ToList());
-
-                }
-                catch (Exception ex)
-                {
-
-                }
-                return new ObservableCollection<Ledger>(Ledger.toList.ToList());
-            }
+      
 
 
-        }
-
-
-        public static ObservableCollection<Ledger> CashLedgerList
-        {
-            get
-            {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList());
-            }
-        }
-
-        public static ObservableCollection<Ledger> BLedgerList
-        {
-            get
-            {
-                return new ObservableCollection<Ledger>(Ledger.toList.Where(x => x.AccountGroup.GroupName == "Back AC").ToList());
-            }
-        }
-
-
+    
         #endregion
 
         #region Master
@@ -680,7 +648,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Payment po = FMCGHubClient.FMCGHub.Invoke<Payment>("Payment_Find", SearchText).Result;
+                Payment po = FMCGHubClient.FMCGHub.Invoke<Payment>("Payment_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Payment>(this);
                 this.PDetails = po.PDetails;
@@ -713,7 +681,7 @@ namespace AccountBuddy.BLL
         public void SaveDetail()
         {
 
-            PaymentDetail pod = PDetails.Where(x => x.LedgerId == PDetail.LedgerId).FirstOrDefault();
+            PaymentDetail pod = PDetails.Where(x => x.SNo == PDetail.SNo).FirstOrDefault();
 
             if (pod == null)
             {
@@ -729,23 +697,25 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             PaymentDetail pod = new PaymentDetail();
+            pod.SNo = PDetails.Count == 0 ? 1 : PDetails.Max(x => x.SNo) + 1;
             pod.toCopy<PaymentDetail>(PDetail);
         }
 
-        public void DeleteDetail(int LedgerId)
+        public void DeleteDetail(int SNo)
         {
-            PaymentDetail pod = PDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            PaymentDetail pod = PDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 PDetails.Remove(pod);
                 Amount = PDetails.Sum(x => x.Amount);
+                ClearDetail();
             }
         }
 
-        public void FindDetail(int LedgerId)
+        public void FindDetail(int SNO)
         {
-            PaymentDetail pod = PDetails.Where(x => x.LedgerId == LedgerId).FirstOrDefault();
+            PaymentDetail pod = PDetails.Where(x => x.SNo == SNO).FirstOrDefault();
 
             if (pod != null)
             {
@@ -771,6 +741,10 @@ namespace AccountBuddy.BLL
             return rv;
         }
 
+        public static List<Payment> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<Payment>>("Payment_List", LedgerId,  dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
+        }
 
         #region Property  Changed Event
 

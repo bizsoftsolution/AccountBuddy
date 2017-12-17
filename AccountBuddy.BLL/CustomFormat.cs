@@ -107,7 +107,15 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<CustomFormat>(FMCGHubClient.FMCGHub.Invoke<List<CustomFormat>>("CustomFormat_List").Result);
+                try
+                {
+                    if (_toList == null) _toList = new ObservableCollection<CustomFormat>(FMCGHubClient.FMCGHub.Invoke<List<CustomFormat>>("CustomFormat_List").Result);
+                   
+                }
+                catch(Exception ex)
+                {
+                    Common.AppLib.WriteLog(string.Format("Custom format tolist={0}-{1}", ex.Message, ex.InnerException));
+                }
                 return _toList;
             }
             set

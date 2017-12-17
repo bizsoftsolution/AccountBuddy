@@ -17,6 +17,7 @@ using System.IO;
 using Microsoft.Win32;
 using System.Drawing.Printing;
 using System.Drawing.Imaging;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL.frm.Transaction
 {
@@ -122,22 +123,32 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 RptLedger.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).ToList());
+
+                var l = BLL.Ledger.toList.Where(x => Ledger_Filter(x)).ToList();
+                l = l.Select(x => new BLL.Ledger { AccountName = x.AccountName, OPDr = x.OPDr, OPCr = x.OPCr }).ToList();
+
+                ReportDataSource data = new ReportDataSource("Ledger", l);
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);
                 RptLedger.LocalReport.ReportPath = @"rpt\Transaction\rptLedgerOpening.rdlc";
 
+                ReportParameter[] rp = new ReportParameter[2];
+                rp[0] = new ReportParameter("Total", lblMsg.Text);
+                rp[1] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix.ToString());
+                RptLedger.LocalReport.SetParameters(rp);
+                RptLedger.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
                 RptLedger.RefreshReport();
-
             }
             catch (Exception ex)
-            {
-
-            }
-
-
+            {}
         }
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
+
+
         private void FindDiff()
         {
             var l1 = BLL.Ledger.toList.Where(x => Ledger_Filter(x)).ToList();
@@ -147,6 +158,7 @@ namespace AccountBuddy.PL.frm.Transaction
             lblMsg.Text = string.Format("Total Debit Balance : {0:N2}, Total Credit Balance : {1:N2}\nDifference : {2:N2}", drAmt, crAmt, Math.Abs(drAmt - crAmt));
             lblMsg.Foreground = drAmt == crAmt ? new SolidColorBrush(Color.FromRgb(0, 0, 255)) : new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
+
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             Grid_Refresh();
@@ -214,7 +226,7 @@ namespace AccountBuddy.PL.frm.Transaction
                         l1.Save();
                     }
                 }
-                MessageBox.Show(Message.PL.Saved_Alert);
+                MessageBox.Show(Message.PL.Saved_Alert, "Ledger Opening", MessageBoxButton.OK, MessageBoxImage.Information);
                 App.frmHome.ShowWelcome();
                 BLL.Ledger.Init();
             }
@@ -275,12 +287,12 @@ namespace AccountBuddy.PL.frm.Transaction
                 string deviceInfo =
              @"<DeviceInfo>
                 <OutputFormat>EMF</OutputFormat>
-                <PageWidth>11.6in</PageWidth>
-                <PageHeight>8.2</PageHeight>
-                <MarginTop>0.7in</MarginTop>
-                <MarginLeft>0.7in</MarginLeft>
-                <MarginRight>0.7in</MarginRight>
-                <MarginBottom>0.7in</MarginBottom>
+                <PageWidth>8.27in</PageWidth>
+                <PageHeight>11.69in</PageHeight>
+                <MarginTop>1cm</MarginTop>
+                <MarginLeft>1cm</MarginLeft>
+                <MarginRight>0cm</MarginRight>
+                <MarginBottom>1cm</MarginBottom>
             </DeviceInfo>";
                 Warning[] warnings;
                 m_streams = new List<Stream>();
@@ -345,6 +357,11 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
             frmLedgerOpeningPrint f = new frmLedgerOpeningPrint();
+            var l = BLL.Ledger.toList.Where(x => Ledger_Filter(x)).ToList() ;
+
+            l = l.Select(x => new BLL.Ledger { AccountName = x.AccountName, OPDr = x.OPDr, OPCr = x.OPCr }).ToList();
+
+            f.LoadReport(l, lblMsg.Text);
             f.ShowDialog();
         }
 

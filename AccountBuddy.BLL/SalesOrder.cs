@@ -37,6 +37,8 @@ namespace AccountBuddy.BLL
         private string _Status;
         private string _RefCode;
         private static UserTypeDetail _UserPermission;
+        private string _lblDiscount;
+        private string _lblExtra;
 
         #endregion
 
@@ -66,10 +68,16 @@ namespace AccountBuddy.BLL
             get
             {
                 if (_SOPendingList == null)
-                {
-                    _SOPendingList = new ObservableCollection<SalesOrder>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<SalesOrder>>("SalesOrder_SOPendingList").Result;
-                    _SOPendingList = new ObservableCollection<SalesOrder>(l1);
+                {try
+                    {
+                        _SOPendingList = new ObservableCollection<SalesOrder>();
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<SalesOrder>>("SalesOrder_SOPendingList").Result;
+                        _SOPendingList = new ObservableCollection<SalesOrder>(l1);
+                    }
+                    catch(Exception ex)
+                    {
+                        Common.AppLib.WriteLog(string.Format("SOPending List_{0}_{1}", ex.Message, ex.InnerException));
+                    }
                 }
                 return _SOPendingList;
             }
@@ -384,6 +392,39 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public string lblDiscount
+        {
+            get
+            {
+                return _lblDiscount;
+            }
+            set
+            {
+                if (_lblDiscount != value)
+                {
+                    _lblDiscount = value;
+                    NotifyPropertyChanged(nameof(lblDiscount));
+
+                }
+            }
+        }
+
+        public string lblExtra
+        {
+            get
+            {
+                return _lblExtra;
+            }
+            set
+            {
+                if (_lblExtra != value)
+                {
+                    _lblExtra = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
 
         #endregion
 
@@ -474,7 +515,7 @@ namespace AccountBuddy.BLL
         {
             if (SODetail.ProductId != 0)
             {
-                SalesOrderDetail pod = SODetails.Where(x => x.ProductId == SODetail.ProductId).FirstOrDefault();
+                SalesOrderDetail pod = SODetails.Where(x => x.SNo == SODetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -485,10 +526,10 @@ namespace AccountBuddy.BLL
                 {
                     SODetail.Quantity += pod.Quantity;
                 }
-                SODetail.toCopy<SalesOrderDetail>(pod);
-                ClearDetail();
+                SODetail.toCopy<SalesOrderDetail>(pod);               
                 ItemAmount = SODetails.Sum(x => x.Amount);
                 SetAmount();
+                ClearDetail();
             }
 
         }
@@ -496,18 +537,20 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             SalesOrderDetail pod = new SalesOrderDetail();
+            pod.SNo = SODetails.Count == 0 ? 1 : SODetails.Max(x => x.SNo) + 1;
             pod.toCopy<SalesOrderDetail>(SODetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int sno)
         {
-            SalesOrderDetail pod = SODetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            SalesOrderDetail pod = SODetails.Where(x => x.SNo == sno).FirstOrDefault();
 
             if (pod != null)
             {
                 SODetails.Remove(pod);
                 ItemAmount = SODetails.Sum(x => x.Amount);
                 SetAmount();
+                ClearDetail();
             }
         }
         #endregion
@@ -517,8 +560,14 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
             TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
+            setLabel();
         }
+        public void setLabel()
+        {
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
 
+        }
         public bool FindRefNo()
         {
             var rv = false;
@@ -532,6 +581,23 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<SalesOrder> ToList(int? LedgerId,DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<SalesOrder> rv = new List<SalesOrder>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<SalesOrder>>("SalesOrder_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Sales Order List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
         #endregion
 
     }

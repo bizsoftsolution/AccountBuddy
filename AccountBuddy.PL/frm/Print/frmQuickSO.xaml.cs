@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL.frm.Print
 {
@@ -55,6 +56,22 @@ namespace AccountBuddy.PL.frm.Print
                 rptQuickSalesOrder.LocalReport.DataSources.Add(data4);
                 rptQuickSalesOrder.LocalReport.ReportPath = @"rpt\Transaction\rptQuickSalesOrder.rdlc";
 
+                ReportParameter[] rp = new ReportParameter[6];
+                rp[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix);
+                rp[1] = new ReportParameter("ItemAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.ItemAmount));
+                rp[2] = new ReportParameter("DiscountAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.DiscountAmount));
+                rp[3] = new ReportParameter("Extra", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.ExtraAmount));
+                rp[4] = new ReportParameter("GST", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.GSTAmount));
+                rp[5] = new ReportParameter("BillAmount", string.Format("{0} {1:N2}", AppLib.CurrencyPositiveSymbolPrefix, data.TotalAmount));
+
+
+                rptQuickSalesOrder.LocalReport.SetParameters(rp);
+
+
+                rptQuickSalesOrder.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
+
+
                 rptQuickSalesOrder.RefreshReport();
 
             }
@@ -63,10 +80,13 @@ namespace AccountBuddy.PL.frm.Print
 
             }
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
         public DataTable GetDetails(BLL.SalesOrder data)
         {
-            int NoRecPerPage = 12;
+            int NoRecPerPage =22;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);
@@ -97,9 +117,27 @@ namespace AccountBuddy.PL.frm.Print
 
                 dt.Rows.Add(newRow);
             }
+            if (NoRecPerPage < data.SODetails.Count)
+            {
+
+                for (int i = 0; i < 35; i++)
+                {
+                    newRow = dt.NewRow();
+
+                    // fill the properties into the cells
+                    newRow["ProductName"] = "";
+                    newRow["Quantity"] = "";
+                    newRow["UnitPrice"] = "";
+                    newRow["Amount"] = "";
+                    newRow["Id"] = "";
+                    newRow["DiscountAmount"] = "";
+
+                    dt.Rows.Add(newRow);
+
+                }
+            }
 
 
-        
             for (int i = 0; i < NoRecPerPage - data.SODetails.Count(); i++)
             {
                 newRow = dt.NewRow();

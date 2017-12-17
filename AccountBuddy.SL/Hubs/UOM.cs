@@ -13,42 +13,41 @@ namespace AccountBuddy.SL.Hubs
         {
             BLL.UOM b = d.toCopy<BLL.UOM>(new BLL.UOM());
             b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
-             return b;
+            return b;
         }
         public List<BLL.UOM> UOM_List()
         {
-            if (Caller.CompanyType == "Warehouse")
+            Caller.DB = new DAL.DBFMCGEntities();
+            if (Caller.CompanyType == "Company")
             {
-                return DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
+                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).ToList()
                               .Select(x => UOM_DALtoBLL(x)).ToList();
             }
-            else if (Caller.CompanyType == "Dealer")
+
+            else
             {
-               var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
-                    return DB.UOMs.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
-                                  .Select(x => UOM_DALtoBLL(x)).ToList();                              
-            }
-            else{
-                return DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
                               .Select(x => UOM_DALtoBLL(x)).ToList();
             }
-           
+
         }
 
         public int UOM_Save(BLL.UOM agp)
         {
+
+            Caller.DB = new DAL.DBFMCGEntities();
             try
             {
                 agp.CompanyId = Caller.CompanyId;
-                DAL.UOM d = DB.UOMs.Where(x => x.Id == agp.Id).FirstOrDefault();
+                DAL.UOM d = Caller.DB.UOMs.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
                 {
                     d = new DAL.UOM();
-                    DB.UOMs.Add(d);
+                    Caller.DB.UOMs.Add(d);
 
                     agp.toCopy<DAL.UOM>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
 
                     agp.Id = d.Id;
                     LogDetailStore(agp, LogDetailType.INSERT);
@@ -56,12 +55,12 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
                     agp.toCopy<DAL.UOM>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
                 Clients.Clients(OtherLoginClients).UOM_Save(agp);
-               // Clients.Others.UOM_Save(agp);
+                // Clients.Others.UOM_Save(agp);
                 return agp.Id;
             }
             catch (Exception ex) { }
@@ -70,22 +69,23 @@ namespace AccountBuddy.SL.Hubs
 
         public bool UOM_Delete(int pk)
         {
+            Caller.DB = new DAL.DBFMCGEntities();
             var rv = false;
             try
             {
-                var d = DB.UOMs.Where(x => x.Id == pk).FirstOrDefault();
+                var d = Caller.DB.UOMs.Where(x => x.Id == pk).FirstOrDefault();
                 if (d.Products != null)
                 {
                     if (d != null)
                     {
-                        DB.UOMs.Remove(d);
-                        DB.SaveChanges();
+                        Caller.DB.UOMs.Remove(d);
+                        Caller.DB.SaveChanges();
                         LogDetailStore(d.toCopy<BLL.UOM>(new BLL.UOM()), LogDetailType.DELETE);
                     }
 
                     // Clients.Clients(OtherLoginClientsOnGroup).UOM_Delete(pk);
-                   
-                   Clients.Clients(OtherLoginClients).UOM_Delete(pk);
+
+                    Clients.Clients(OtherLoginClients).UOM_Delete(pk);
 
 
                     rv = true;

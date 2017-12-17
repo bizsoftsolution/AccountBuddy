@@ -152,7 +152,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
-                        
+
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
@@ -178,7 +178,7 @@
                         <RowDefinition Height="200"></RowDefinition>
                         <RowDefinition Height="150"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="dgvDetails" Grid.Column="0" SelectionChanged="dgvDetails_SelectionChanged" ItemsSource="{Binding PRDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,16,10" >
+                    <DataGrid x:Name="dgvDetails" Grid.Column="0" MouseDoubleClick="dgvDetails_MouseDoubleClick" ItemsSource="{Binding PRDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,8,16,10" >
 
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -207,7 +207,7 @@
                             <DataGridTemplateColumn Header="Delete" TextBlock.TextAlignment="Center"  Width="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding ProductName}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                        <Button   x:Name="btnDeleteDetail" Click="OnDelete" Tag="{Binding SNo}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
                                             <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
                                         </Button>
                                     </DataTemplate>
@@ -239,11 +239,9 @@
                     <Grid  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,0,0,80" Width="180">
                             <TextBox Text="{Binding ItemAmount,Mode=TwoWay,Converter={StaticResource NumberFormat}}" materialDesign:HintAssist.Hint="Item Amount" IsReadOnly="True" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0" TextAlignment="Right"  />
-                            <TextBlock x:Name="lblDiscountAmount">Discount Amount</TextBlock>
-                            <TextBox x:Name="txtDiscountAmount" TextChanged="txtDiscountAmount_TextChanged" Text="{Binding DiscountAmount,StringFormat={}{0:N2}}"   Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0" RenderTransformOrigin="0.5,0.375" TextAlignment="Right"/>
+                            <TextBox x:Name="txtDiscountAmount" materialDesign:HintAssist.Hint="{Binding lblDiscount}" TextChanged="txtDiscountAmount_TextChanged" Text="{Binding DiscountAmount,StringFormat={}{0:N2}}"   Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0" RenderTransformOrigin="0.5,0.375" TextAlignment="Right"/>
                             <TextBox IsReadOnly="True" Text="{Binding GSTAmount, Mode=TwoWay,Converter={StaticResource NumberFormat}}" materialDesign:HintAssist.Hint="GST Amount"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0" RenderTransformOrigin="0.5,0.375" TextAlignment="Right"/>
-                            <TextBlock x:Name="lblExtraAmount">Extra Amount</TextBlock>
-                            <TextBox x:Name="txtExtraAmount" TextChanged="txtExtraAmount_TextChanged" Text="{Binding ExtraAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0"  RenderTransformOrigin="0.5,0.375" TextAlignment="Right"/>
+                            <TextBox x:Name="txtExtraAmount" materialDesign:HintAssist.Hint="{Binding lblExtra}" TextChanged="txtExtraAmount_TextChanged" Text="{Binding ExtraAmount, Mode=TwoWay,StringFormat={}{0:N2}}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0"  RenderTransformOrigin="0.5,0.375" TextAlignment="Right"/>
                             <TextBox x:Name="txtTotal" Text="{Binding TotalAmount, Mode=TwoWay,Converter={StaticResource NumberFormat}}" materialDesign:HintAssist.Hint="Total Amount"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontWeight="Bold" FontSize="14" Margin="0,0,10,0"  IsReadOnly="True" RenderTransformOrigin="0.5,0.5" TextAlignment="Right" />
                         </StackPanel>
 
@@ -261,8 +259,8 @@
                         <Button Click="btnPrint_Click"  Width="100" Height="30" x:Name="btnPrint" Content="PRINT" Margin="5 5" IsEnabled="False"/>
                         <CheckBox x:Name="ckbAutoPrint" Margin="10" FontWeight="Bold" Width="100">Autoprint</CheckBox>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold" Height="41"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,40,10,25" Width="225">
+                        <!--<TextBox Text="{Binding SearchText}" Width="120" materialDesign:HintAssist.Hint="Invoice No" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,12,10,24" FontWeight="Bold" Height="41"/>-->
                         <Button Margin="10" Click="btnsearch_Click"  Width="100" Height="30" x:Name="btnsearch" Content="SEARCH" />
 
                     </StackPanel>

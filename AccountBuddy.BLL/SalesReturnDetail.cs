@@ -27,6 +27,7 @@ namespace AccountBuddy.BLL
         private object _Particulars;
         private bool _IsResale;
         private Product _Product;
+        private int _SNo;
         #endregion
 
         #region Property
@@ -47,7 +48,21 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
+        public int SNo
+        {
+            get
+            {
+                return _SNo;
+            }
+            set
+            {
+                if (_SNo != value)
+                {
+                    _SNo = value;
+                    NotifyPropertyChanged(nameof(SNo));
+                }
+            }
+        }
         public long Id
         {
             get
@@ -135,7 +150,7 @@ namespace AccountBuddy.BLL
                 {
                     _Quantity = value;
                     Amount = Convert.ToDecimal(_Quantity) * _UnitPrice - DiscountAmount;
-                    if (_ProductId != 0) SetDiscount();
+                  
                     NotifyPropertyChanged(nameof(Quantity));
                 }
             }
@@ -220,20 +235,22 @@ namespace AccountBuddy.BLL
                 if (_ItemCode != value)
                 {
                     _ItemCode = value;
-                    if (value != null) SetProductbyItemCode(new Product(_ItemCode.ToLower()));
+                    if (value != null) SetProductbyItemCode();
 
                     NotifyPropertyChanged(nameof(ItemCode));
                 }
             }
         }
 
-        private void SetProductbyItemCode(Product p)
+        private void SetProductbyItemCode()
         {
+            var p = Product ?? new Product();
+            ItemCode = p.ItemCode;
+            ProductId = p.Id;
             UOMId = p.UOMId;
             ProductName = p.ProductName;
             UnitPrice = p.SellingRate;
             Quantity = p.Id != 0 ? 1 : 0;
-            DiscountAmount = p.DiscountAmount;
 
         }
 
@@ -322,7 +339,7 @@ namespace AccountBuddy.BLL
             ProductName = p.ProductName;
             UnitPrice = p.SellingRate;
             Quantity = p.Id != 0 ? 1 : 0;
-            DiscountAmount = p.DiscountAmount;
+           // DiscountAmount = p.DiscountAmount;
         }
         #endregion
     }

@@ -159,6 +159,9 @@
   <data name="Login_Warehouse_Validation" xml:space="preserve">
     <value>Enter warehouse !</value>
   </data>
+  <data name="No_Records_Delete" xml:space="preserve">
+    <value>No Records To Delete!</value>
+  </data>
   <data name="Password_Exist" xml:space="preserve">
     <value>Password_Exist!</value>
   </data>

@@ -33,11 +33,11 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<String>("Receipt_RefNoRefresh", (RefNo) =>
+            BLL.FMCGHubClient.FMCGHub.On<String>("Receipt_RefNoRefresh", (EntryNo) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    data.RefNo = RefNo;
+                    if (data.Id == 0) data.EntryNo = EntryNo;
                 });
             });
         }
@@ -45,11 +45,11 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             if (data.RDetail.LedgerId == 0)
             {
-                MessageBox.Show("Enter LedgerName");
+                MessageBox.Show("Enter LedgerName", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.RDetail.Amount == 0)
             {
-                MessageBox.Show("Enter Amount");
+                MessageBox.Show("Enter Amount", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -70,31 +70,31 @@ namespace AccountBuddy.PL.frm.Transaction
             
             else if(data.EntryNo == null)
             {
-                MessageBox.Show("Enter Entry No");
+                MessageBox.Show("Enter Entry No", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.LedgerId == 0)
             {
-                MessageBox.Show("Enter LedgerName");
+                MessageBox.Show("Enter LedgerName", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.ReceiptMode == null)
             {
-                MessageBox.Show("select Paymode");
+                MessageBox.Show("select Paymode", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
             else if (data.RDetails.Count == 0)
             {
-                MessageBox.Show("Enter Receipt");
+                MessageBox.Show("Enter Receipt", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.FindEntryNo())
             {
-                MessageBox.Show("Entry No Already Exist");
+                MessageBox.Show("Entry No Already Exist", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else 
             {
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(Message.PL.Saved_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     if (ckxAutoPrint.IsChecked == true) Print();
                     data.Clear();
                 }
@@ -104,29 +104,36 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (!BLL.UserAccount.AllowDelete(FormName))
+            if (data.Id != 0)
             {
-                MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
-            }
-            else
-            {
-                if (MessageBox.Show("Do you want to delete?", "DELETE", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (!BLL.UserAccount.AllowDelete(FormName))
                 {
-                    var rv = data.Delete();
-                    if (rv == true)
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                }
+                else
+                {
+                    if (MessageBox.Show("Do you want to delete?", FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        MessageBox.Show(Message.PL.Delete_Alert);
-                        data.Clear();
-                        if (data.Id != 0)
+                        var rv = data.Delete();
+                        if (rv == true)
                         {
-                            btnPrint.IsEnabled = true;
-                        }
-                        else
-                        {
-                            btnPrint.IsEnabled = false;
+                            MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
+                            data.Clear();
+                            if (data.Id != 0)
+                            {
+                                btnPrint.IsEnabled = true;
+                            }
+                            else
+                            {
+                                btnPrint.IsEnabled = false;
+                            }
                         }
                     }
                 }
+            }
+            else
+            {
+                MessageBox.Show(Message.PL.No_Records_Delete, FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -145,17 +152,10 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if(data.Id!=0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
-            if (rv == false) MessageBox.Show(String.Format("Data Not Found"));
+
+            frmReceiptSearch f = new frmReceiptSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -198,7 +198,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                if (MessageBox.Show("do you want to delete this detail?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Do you want to delete this detail?",  FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     Button btn = (Button)sender;
                     data.DeleteDetail((int)btn.Tag);
@@ -262,17 +262,46 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbDebitAC_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadDebitAC();
+        }
 
-            cmbDebitAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts");
-            cmbDebitAC.SelectedValuePath = "Id";
-            cmbDebitAC.DisplayMemberPath = "AccountName";
+        private void LoadDebitAC()
+        {
+            try
+            {
+                cmbDebitAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == "Cash-in-Hand" || x.AccountGroup.GroupName == "Bank Accounts");
+                cmbDebitAC.SelectedValuePath = "Id";
+                cmbDebitAC.DisplayMemberPath = "AccountName";
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Receipt Combo Box {0}-{1}", ex.Message, ex.InnerException));
+            }
         }
 
         private void cmbCreditAC_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCreditAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts");
-            cmbCreditAC.SelectedValuePath = "Id";
-            cmbCreditAC.DisplayMemberPath = "AccountName";
+            LoadCreditAC();
+        }
+
+        private void LoadCreditAC()
+        {
+            try
+            {
+                cmbCreditAC.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName != "Primary" && x.AccountGroup.GroupName != "Cash-in-Hand" && x.AccountGroup.GroupName != "Bank Accounts");
+                cmbCreditAC.SelectedValuePath = "Id";
+                cmbCreditAC.DisplayMemberPath = "AccountName";
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Receipt Credit Ac_{0}_{1}", ex.Message, ex.InnerException));
+            }
+        }
+
+        private void cmbDebitAC_DropDownOpened(object sender, EventArgs e)
+        {
+            LoadDebitAC();
+
         }
     }
 }

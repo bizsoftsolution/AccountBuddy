@@ -33,6 +33,7 @@ namespace AccountBuddy.PL.frm.Transaction
             data.Clear();
             onClientEvents();
 
+            data.setLabel();
             LoadWindow();
 
         }
@@ -42,7 +43,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    data.RefNo = RefNo;
+                    if (data.Id == 0) data.RefNo = RefNo;
                 });
             });
         }
@@ -73,7 +74,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
             btnJobReceived.IsEnabled = false;
-
+            data.setLabel();
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
@@ -81,7 +82,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
@@ -149,7 +150,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -167,16 +168,9 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (data.Id != 0)
-            {
-                btnJobReceived.IsEnabled = data.Status == "Pending" ? true : false; if (data.Id != 0)
-
-                    btnPrint.IsEnabled = true;
-
-            }
-
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            frmJobOrderIssueSearch f = new frmJobOrderIssueSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
 
@@ -288,11 +282,15 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void cmbJobWorker_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbJobWorker.ItemsSource = BLL.JobWorker.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
-            cmbJobWorker.DisplayMemberPath = "Ledger.LedgerName";
-            cmbJobWorker.SelectedValuePath = "Id";
+            try
+            {
+                cmbJobWorker.ItemsSource = BLL.JobWorker.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
+                cmbJobWorker.DisplayMemberPath = "Ledger.LedgerName";
+                cmbJobWorker.SelectedValuePath = "Id";
 
-
+            }
+            catch(Exception ex)
+            { }
         }
         #endregion
 
@@ -309,15 +307,24 @@ namespace AccountBuddy.PL.frm.Transaction
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LoadWindow();
+            data.setLabel();
         }
 
         private void LoadWindow()
         {
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
-
+         
             btnSave.Visibility = (BLL.JobOrderIssue.UserPermission.AllowInsert || BLL.JobOrderIssue.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.JobOrderIssue.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.JobOrderIssueDetail pod = dgvDetails.SelectedItem as BLL.JobOrderIssueDetail;
+                pod.toCopy<BLL.JobOrderIssueDetail>(data.JODetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

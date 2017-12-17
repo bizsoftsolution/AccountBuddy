@@ -18,36 +18,26 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.StockGroup> StockGroup_List()
         {
+            Caller.DB = new DAL.DBFMCGEntities();
             if (Caller.CompanyType == "Company")
             {
-                return DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+                return Caller.DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList()
                               .Select(x => StockGroup_DALtoBLL(x)).ToList();
             }
-            else if (Caller.CompanyType == "Warehouse")
+            else 
             {
-                return DB.StockGroups.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
+                return Caller.DB.StockGroups.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
                               .Select(x => StockGroup_DALtoBLL(x)).ToList();
             }
-            else
-            {
-                List<BLL.StockGroup> c = new List<BLL.StockGroup>();
-                var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
-                if (wh != null)
-                {
-                    c = DB.StockGroups.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
-                            .Select(x => StockGroup_DALtoBLL(x)).ToList();
-                }
-                return c;
-            }
-
+           
         }
         public List<BLL.StockGroup> StockGroup_PrimaryList()
         {
 
             List<BLL.StockGroup> rv = new List<BLL.StockGroup>();
             BLL.StockGroup stg = new BLL.StockGroup();
-            var lst = DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList();
-            var id = DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList();
+            var lst = Caller.DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList();
+            var id = Caller.DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList();
             foreach (var i in id)
             {
                 foreach (var l in lst.Where(x=>x.UnderGroupId!=i.Id).ToList())
@@ -66,15 +56,15 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 agp.CompanyId = Caller.CompanyId;
-                DAL.StockGroup d = DB.StockGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
+                DAL.StockGroup d = Caller.DB.StockGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
                 {
                     d = new DAL.StockGroup();
-                    DB.StockGroups.Add(d);
+                    Caller.DB.StockGroups.Add(d);
 
                     agp.toCopy<DAL.StockGroup>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
 
                     agp.Id = d.Id;
                     LogDetailStore(agp, LogDetailType.INSERT);
@@ -82,7 +72,7 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
                     agp.toCopy<DAL.StockGroup>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
@@ -99,13 +89,13 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = DB.StockGroups.Where(x => x.Id == pk).FirstOrDefault();
+                var d = Caller.DB.StockGroups.Where(x => x.Id == pk).FirstOrDefault();
                 if (d.Products != null && StockGroup_CanDelete(d))
                 {
                     if (d != null)
                     {
-                        DB.StockGroups.Remove(d);
-                        DB.SaveChanges();
+                        Caller.DB.StockGroups.Remove(d);
+                        Caller.DB.SaveChanges();
                         LogDetailStore(d.toCopy<BLL.StockGroup>(new BLL.StockGroup()), LogDetailType.DELETE);
                     }
 

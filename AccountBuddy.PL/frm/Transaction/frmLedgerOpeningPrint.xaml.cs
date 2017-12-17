@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using AccountBuddy.Common;
 using MahApps.Metro.Controls;
 using Microsoft.Reporting.WinForms;
 
@@ -29,19 +30,30 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadReport();
+          //  LoadReport();
         }
 
-        public void LoadReport()
+        public void LoadReport(List<BLL.Ledger> l, string lblTotal)
         {
             try
             {
                 RptLedger.Reset();
-                ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList);
+               // l = l.Select(x => new BLL.Ledger { AccountName = x.AccountName, OPDr = x.OPDr, OPCr = x.OPCr }).ToList();
+                ReportDataSource data = new ReportDataSource("Ledger",l);
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);
                 RptLedger.LocalReport.ReportPath = @"rpt\Transaction\rptLedgerOpening.rdlc";
+
+                ReportParameter[] rp = new ReportParameter[2];
+                rp[0] = new ReportParameter("Total", lblTotal);
+                rp[1] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix.ToString());
+                RptLedger.LocalReport.SetParameters(rp);
+
+
+
+                RptLedger.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
 
                 RptLedger.RefreshReport();
 
@@ -52,6 +64,10 @@ namespace AccountBuddy.PL.frm.Transaction
             }
 
 
+        }
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
     }
 }

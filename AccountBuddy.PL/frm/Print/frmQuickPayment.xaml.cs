@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL.frm.Print
 {
@@ -46,11 +47,11 @@ namespace AccountBuddy.PL.frm.Print
                 rptQuickPayment.LocalReport.DataSources.Add(data2);
                 rptQuickPayment.LocalReport.ReportPath = @"rpt\Transaction\rptPaymentvoucher.rdlc";
 
-                ReportParameter[] par = new ReportParameter[3];
-                par[0] = new ReportParameter("PayTo", Payto.ToUpper());
-                par[1] = new ReportParameter("ChequeNo", ChequeNo);
-                par[2] = new ReportParameter("AmtInwords", AmtInWords.ToUpper());
-               rptQuickPayment.LocalReport.SetParameters(par);
+                ReportParameter[] par = new ReportParameter[2];
+                par[0] = new ReportParameter("AmtInwords", AmtInWords.ToUpper());
+                par[1] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix);
+
+                rptQuickPayment.LocalReport.SetParameters(par);
 
 
 

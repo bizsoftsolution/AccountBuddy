@@ -257,12 +257,22 @@ namespace AccountBuddy.SL.Hubs
                     catch(Exception ex)
                     { }
                   }
+
+                lstGeneralLedger = lstGeneralLedger.OrderBy(x => x.EDate).ToList();
+                BalAmt = 0;
+                foreach(var lg in lstGeneralLedger)
+                {
+                    BalAmt += (lg.DrAmt - lg.CrAmt);
+                    lg.BalAmt = Math.Abs(BalAmt);
+                }
+
                 gl = new BLL.GeneralLedger();
                 gl.Ledger = new BLL.Ledger();
                 gl.Particular = "Total";
                 gl.DrAmt = lstGeneralLedger.Sum(x => x.DrAmt);
                 gl.CrAmt = lstGeneralLedger.Sum(x => x.CrAmt);
                 gl.BalAmt = Math.Abs(BalAmt);
+              
                 lstGeneralLedger.Add(gl);
 
             }

@@ -17,10 +17,26 @@ namespace AccountBuddy.BLL
         private string _Particulars;
 
         private string _LedgerName;
+        private int _SNo;
 
         #endregion
 
         #region Property
+        public int SNo
+        {
+            get
+            {
+                return _SNo;
+            }
+            set
+            {
+                if (_SNo != value)
+                {
+                    _SNo = value;
+                    NotifyPropertyChanged(nameof(SNo));
+                }
+            }
+        }
         public long Id
         {
             get

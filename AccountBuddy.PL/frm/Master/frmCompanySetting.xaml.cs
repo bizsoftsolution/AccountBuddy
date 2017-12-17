@@ -111,22 +111,22 @@ namespace AccountBuddy.PL.frm.Master
 
             if (data.Id==0&&!BLL.UserAccount.AllowInsert(Forms.frmCompanySetting))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (data.Id!=0&&!BLL.UserAccount.AllowUpdate(Forms.frmCompanySetting))
             {
-                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName));
+                MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else if (txtMail.Text != "" && !Common.AppLib.IsValidEmailAddress(txtMail.Text))
             {
-                MessageBox.Show("Please Enter the Valid Email or Leave Empty");
+                MessageBox.Show("Please Enter the Valid Email or Leave Empty", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }
             else
             {
                 if (data.Save() == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(Message.PL.Saved_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     App.frmHome.ShowWelcome();
                 }
             }
@@ -138,7 +138,7 @@ namespace AccountBuddy.PL.frm.Master
             if (!BLL.CompanyDetail.UserPermission.AllowDelete)
                 MessageBox.Show(string.Format(Message.PL.DenyDelete, lblHead.Text));
             //    else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
-            else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+            else if (MessageBox.Show(Message.PL.Delete_confirmation, FormName, MessageBoxButton.YesNo,MessageBoxImage.Warning) != MessageBoxResult.No)
             {
                 frmDeleteConfirmation frm = new frmDeleteConfirmation();
                 frm.ShowDialog();
@@ -146,14 +146,14 @@ namespace AccountBuddy.PL.frm.Master
                 {
                     if (data.Delete() == true)
                     {
-                        MessageBox.Show(Message.PL.Delete_Alert);
+                        MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                         App.frmHome.IsForcedClose = true;
                         App.frmHome.Close();
                     }
                 }
                 else
                 {
-                    MessageBox.Show(Message.PL.Cant_Delete_Alert);
+                    MessageBox.Show(Message.PL.Cant_Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
 
                 }
 
@@ -245,9 +245,9 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (!BLL.UserAccount.AllowDelete(FormName))
                 {
-                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                    MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                else if (MessageBox.Show(Message.PL.Delete_confirmation, FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.No)
                 {
                     frmDeleteConfirmation frm = new frmDeleteConfirmation();
                     frm.ShowDialog();
@@ -256,13 +256,13 @@ namespace AccountBuddy.PL.frm.Master
 
                         if (data.DeleteWareHouse(d.Id))
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert);
+                            MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                             Grid_Refresh();
                         }
                         else
                         {
 
-                            MessageBox.Show(Message.PL.Cant_Delete_Alert);
+                            MessageBox.Show(Message.PL.Cant_Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
@@ -273,7 +273,7 @@ namespace AccountBuddy.PL.frm.Master
             }
             else
             {
-                MessageBox.Show("No Records to Delete");
+                MessageBox.Show("No Records to Delete", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
         }
@@ -317,10 +317,10 @@ namespace AccountBuddy.PL.frm.Master
                 {
                     if (!BLL.UserAccount.AllowDelete(FormName))
                     {
-                        MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName));
+                        MessageBox.Show(string.Format(Message.PL.DenyDelete, FormName), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
 
-                    else if (MessageBox.Show(Message.PL.Delete_confirmation, "", MessageBoxButton.YesNo) != MessageBoxResult.No)
+                    else if (MessageBox.Show(Message.PL.Delete_confirmation, FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.No)
                     {
                         frmDeleteConfirmation frm = new frmDeleteConfirmation();
                         frm.ShowDialog();
@@ -342,7 +342,7 @@ namespace AccountBuddy.PL.frm.Master
                 }
                 else
                 {
-                    MessageBox.Show("No Records to Delete");
+                    MessageBox.Show("No Records to Delete", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }

@@ -22,8 +22,11 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.AccountGroup> accountGroup_List()
         {
-            return DB.AccountGroups.Where(x => x.CompanyId == Caller.CompanyId && x.GroupName != "Primary").ToList()
-                               .Select(x => AccountGroupDAL_BLL(x)).ToList();
+            var l= Caller.DB.AccountGroups.Where(x => x.CompanyId == Caller.CompanyId && x.GroupName != "Primary").ToList()
+                              .Select(x => AccountGroupDAL_BLL(x)).ToList();
+            //var l = Caller.DB.AccountGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+            //                   .Select(x => AccountGroupDAL_BLL(x)).ToList();
+            return l;
         }
         protected DbContext DbContext { get; set; }
      
@@ -33,15 +36,15 @@ namespace AccountBuddy.SL.Hubs
             {
             
         agp.CompanyId = Caller.CompanyId;
-                DAL.AccountGroup d = DB.AccountGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
+                DAL.AccountGroup d = Caller.DB.AccountGroups.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
                 {
                     d = new DAL.AccountGroup();
-                    DB.AccountGroups.Add(d);
+                    Caller.DB.AccountGroups.Add(d);
 
                     agp.toCopy<DAL.AccountGroup>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
 
                     agp.Id = d.Id;
                     LogDetailStore(agp, LogDetailType.INSERT);
@@ -49,7 +52,7 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
                     agp.toCopy<DAL.AccountGroup>(d);
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
@@ -66,13 +69,13 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = DB.AccountGroups.Where(x => x.Id == pk).FirstOrDefault();
+                var d = Caller.DB.AccountGroups.Where(x => x.Id == pk).FirstOrDefault();
                 if (d.Ledgers != null && AccountGroup_CanDelete(d))
                 {
                     if (d != null)
                     {
-                        DB.AccountGroups.Remove(d);
-                        DB.SaveChanges();
+                        Caller.DB.AccountGroups.Remove(d);
+                        Caller.DB.SaveChanges();
                         LogDetailStore(d.toCopy<BLL.AccountGroup>(new BLL.AccountGroup()), LogDetailType.DELETE);
                     }
 

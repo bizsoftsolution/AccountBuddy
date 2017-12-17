@@ -21,19 +21,17 @@ namespace AccountBuddy.PL.frm.Transaction
     {
         private int m_currentPageIndex;
         private IList<Stream> m_streams;
+        decimal OPBal = 0, CLBal = 0, EDAmt = 0, BalAmt = 0, DifAmt = 0;
 
         public frmBankReconcilation()
         {
             InitializeComponent();
             rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
 
-            int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
+         
 
-            DateTime? dtFrom = new DateTime(yy, 4, 1);
-            DateTime? dtTo = new DateTime(yy + 1, 3, 31);
-
-            dtpDateFrom.SelectedDate = dtFrom;
-            dtpDateTo.SelectedDate = dtTo;
+            dtpDateFrom.SelectedDate = DateTime.Now;
+            dtpDateTo.SelectedDate = DateTime.Now;
 
         }
 
@@ -55,12 +53,44 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             else
             {
-                if (cmbAccountName.SelectedValue != null) dgvBankReconciliation.ItemsSource = BLL.BankReconcilation.ToList((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-                //LoadReport();
+                if (cmbAccountName.SelectedValue != null)
+                {
+
+                    int LedgerId = (int)cmbAccountName.SelectedValue;
+                    var l1 = BLL.BankReconcilation.ToList(LedgerId, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                    dgvBankReconciliation.ItemsSource = l1;
+                    OPBal = 0;
+                    CLBal = 0;
+
+                    try
+                    {
+                        OPBal = BLL.TrialBalance.GetLedgerBalance(LedgerId, dtpDateFrom.SelectedDate.Value);
+                        CLBal = BLL.TrialBalance.GetLedgerBalance(LedgerId, dtpDateTo.SelectedDate.Value);
+
+                    }
+                    catch (Exception ex) { }
+
+                }
+
+
             }
 
         }
+        void FindBalance()
+        {
+            EDAmt = string.IsNullOrEmpty(txtEndingBalance.Text) ? 0 : Convert.ToDecimal(txtEndingBalance.Text);
+            BalAmt = 0;
+            DifAmt = 0;
+            try
+            {
+                var l1 = dgvBankReconciliation.ItemsSource as List<BLL.BankReconcilation>;
+                BalAmt = OPBal + Math.Abs(l1.Where(x => x.IsCompleted != true).Sum(x => x.DrAmt) - l1.Where(x => x.IsCompleted != true).Sum(x => x.CrAmt));
+                DifAmt = Math.Abs(EDAmt - BalAmt);
 
+            }
+            catch (Exception ex) { }
+            lblStatus.Text = string.Format(" Opening Balance : {0:0.00}, Closing Balance : {1:0.00}, Cleared Balance : {2:0.00}, Diffrence : {3:0.00}", OPBal, CLBal, BalAmt, DifAmt);
+        }
         private void dgvBankReconciliation_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var gl = dgvBankReconciliation.SelectedItem as BLL.BankReconcilation;
@@ -68,31 +98,23 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 if (gl.EType == 'P')
                 {
-                    Transaction.frmPayment f = App.frmHome.ShowForm(Common.Forms.frmPayment) as Transaction.frmPayment;
-
+                    Transaction.frmPayment f = App.frmHome.ShowForm(Common.Forms.frmPayment) as frmPayment;
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = gl.EntryNo;
+                    f.data.EntryNo = gl.EntryNo;
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
                 else if (gl.EType == 'R')
                 {
-                    Transaction.frmReceipt f = App.frmHome.ShowForm(Common.Forms.frmReceipt) as Transaction.frmReceipt;
-
+                    Transaction.frmReceipt f = App.frmHome.ShowForm(Common.Forms.frmReceipt) as frmReceipt;
                     System.Windows.Forms.Application.DoEvents();
                     f.data.SearchText = gl.EntryNo;
+                    f.data.EntryNo = gl.EntryNo;
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
-                else if (gl.EType == 'J')
-                {
-                    Transaction.frmJournal f = App.frmHome.ShowForm(Common.Forms.frmJournal) as Transaction.frmJournal;
 
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = gl.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
-                }
             }
         }
 
@@ -218,15 +240,38 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
-            //frmGeneralLedgerPrint f = new frmGeneralLedgerPrint();
-            //f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-            //f.ShowDialog();
+            Common.AppLib.WriteLog("Bank Receomciliation Print");
+            try
+            {
+                var l1 = dgvBankReconciliation.ItemsSource as List<BLL.BankReconcilation>;
+                var l2 = l1.Where(x => x.EType == 'P' && !x.IsCompleted).ToList();
+                var l3 = l1.Where(x => x.EType == 'R' && !x.IsCompleted).ToList();
+                l2 = l2.Select(x => new BLL.BankReconcilation { PayeeName = x.PayeeName, Amount = x.Amount, EDate = x.EDate, EntryNo = x.EntryNo, RefNo = x.RefNo, VoucherNo = x.VoucherNo }).ToList();
+                l3 = l3.Select(x => new BLL.BankReconcilation { PayeeName = x.PayeeName, Amount = x.Amount, EDate = x.EDate, EntryNo = x.EntryNo, RefNo = x.RefNo, VoucherNo = x.VoucherNo }).ToList();
+
+                var lName = "";
+                if (cmbAccountName.SelectedValue != null)
+                {
+                    lName = BLL.Ledger.toList.Where(x => x.Id == (int)cmbAccountName.SelectedValue).FirstOrDefault().LedgerName;
+                }
+                frmBankReconciliationPrint f = new frmBankReconciliationPrint();
+                f.LoadReport(lName, dtpDateTo.SelectedDate.Value, l3, l2, Convert.ToDecimal(txtEndingBalance.Text), Convert.ToDecimal(CLBal.ToString()));
+                f.ShowDialog();
+            }
+            catch (Exception ex) { }
         }
 
         #endregion
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+
+            Save();
+        }
+
+        private void Save()
+        {
+            Common.AppLib.WriteLog("Bank reconciliation Save =>Begins");
             var l1 = dgvBankReconciliation.ItemsSource;
             if (l1 != null)
             {
@@ -239,53 +284,96 @@ namespace AccountBuddy.PL.frm.Transaction
                         {
                             BLL.Payment p = new BLL.Payment();
                             p.SearchText = b.EntryNo;
+                            p.EntryNo = b.EntryNo;
                             p.Find();
-                            p.Status = b.IsCompleted ? "Completed" : "Process";
+                            p.Status = b.IsCompleted ? "Completed" : "Proccess";
                             p.Save();
                         }
                         else if (b.EType == 'R')
                         {
                             BLL.Receipt R = new BLL.Receipt();
                             R.SearchText = b.EntryNo;
+                            R.EntryNo = b.EntryNo;
                             R.Find();
-                            R.Status = b.IsCompleted ? "Completed" : "Process";
-                            R.Save();
-                        }
-                        else if (b.EType == 'J')
-                        {
-                            BLL.Journal R = new BLL.Journal();
-                            R.SearchText = b.EntryNo;
-                            R.Find();
-                            var s = b.IsCompleted ? "Completed" : "Process";
-                            R.JDetails.Where(x => x.JournalId == R.Id).ToList().ForEach(x => x.Status = s);
+
+                            R.Status = b.IsCompleted ? "Completed" : "Proccess";
                             R.Save();
                         }
                     }
                 }
+                Common.AppLib.WriteLog("Bank reconciliation Saved Successfully");
                 MessageBox.Show(Message.PL.Saved_Alert);
                 App.frmHome.ShowWelcome();
             }
-
         }
 
         private void ckbStatus_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
-                var d = ((CheckBox)sender).Tag as BLL.BankReconcilation;
-                if (d != null) d.IsCompleted = true;
+                var b = ((CheckBox)sender).Tag as BLL.BankReconcilation;
+                //if (d != null) d.IsCompleted = true;
+
+                // var b = d as BLL.BankReconcilation;
+                if (b != null)
+                {
+                    if (b.EType == 'P')
+                    {
+                        BLL.Payment p = new BLL.Payment();
+                        p.SearchText = b.EntryNo;
+                        p.EntryNo = b.EntryNo;
+                        p.Find();
+                        p.Status = b.IsCompleted ? "Completed" : "Proccess";
+                        p.Save();
+                    }
+                    else if (b.EType == 'R')
+                    {
+                        BLL.Receipt R = new BLL.Receipt();
+                        R.SearchText = b.EntryNo;
+                        R.EntryNo = b.EntryNo;
+                        R.Find();
+
+                        R.Status = b.IsCompleted ? "Completed" : "Proccess";
+                        R.Save();
+                    }
+                }
+
             }
             catch (Exception ex) { }
+            FindBalance();
         }
 
         private void ckbStatus_Unchecked(object sender, RoutedEventArgs e)
         {
             try
             {
-                var d = ((CheckBox)sender).Tag as BLL.BankReconcilation;
-                if (d != null) d.IsCompleted = false;
+                var b = ((CheckBox)sender).Tag as BLL.BankReconcilation;
+                //if (d != null) d.IsCompleted = false;
+                if (b != null)
+                {
+                    if (b.EType == 'P')
+                    {
+                        BLL.Payment p = new BLL.Payment();
+                        p.SearchText = b.EntryNo;
+                        p.EntryNo = b.EntryNo;
+                        p.Find();
+                        p.Status = b.IsCompleted ? "Completed" : "Proccess";
+                        p.Save();
+                    }
+                    else if (b.EType == 'R')
+                    {
+                        BLL.Receipt R = new BLL.Receipt();
+                        R.SearchText = b.EntryNo;
+                        R.EntryNo = b.EntryNo;
+                        R.Find();
+
+                        R.Status = b.IsCompleted ? "Completed" : "Proccess";
+                        R.Save();
+                    }
+                }
             }
             catch (Exception ex) { }
+            FindBalance();
         }
     }
 }

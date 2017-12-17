@@ -262,8 +262,9 @@ namespace AccountBuddy.PL.frm.Master
 
                 rptSupplier.LocalReport.ReportPath = @"rpt\master\RptLedger.rdlc";
 
-                ReportParameter[] param = new ReportParameter[1];
+                ReportParameter[] param = new ReportParameter[2];
                 param[0] = new ReportParameter("Title", "SUPPLIER LIST");
+                param[1] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix.ToString());
                 rptSupplier.LocalReport.SetParameters(param);
 
                 rptSupplier.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);

@@ -161,7 +161,10 @@ namespace AccountBuddy.BLL
         {
             return FMCGHubClient.FMCGHub.Invoke<List<TrialBalance>>("TrialBalance_List",dtFrom,dtTo).Result;        
         }
-
+        public static decimal GetLedgerBalance(int LedgerId, DateTime dt)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<decimal>("TrialBalance_GetLedgerBalance", LedgerId, dt).Result;
+        }
         #endregion
 
     }

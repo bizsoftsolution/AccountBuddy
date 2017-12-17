@@ -30,7 +30,7 @@ namespace AccountBuddy.PL.frm.Transaction
             this.DataContext = data;
 
 
-
+            data.setLabel();
             data.Clear();
             onClientEvents();
 
@@ -43,8 +43,7 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbPType.DisplayMemberPath = "Type";
             cmbPType.SelectedValuePath = "Id";
 
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.setLabel();
             btnSave.Visibility = (BLL.SalesReturn.UserPermission.AllowInsert || BLL.SalesReturn.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.SalesReturn.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -55,7 +54,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    data.RefNo = RefNo;
+                    if (data.Id == 0) data.RefNo = RefNo;
                 });
             });
         }
@@ -96,7 +95,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
-
+            data.setLabel();
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
@@ -104,7 +103,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
@@ -191,7 +190,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -209,17 +208,9 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
+            frmSalesReturnSearch f = new frmSalesReturnSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
         private void dgvDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -370,6 +361,17 @@ namespace AccountBuddy.PL.frm.Transaction
         private void ckbIsReSale_Unchecked(object sender, RoutedEventArgs e)
         {
             data.SRDetail.IsResale = false;
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            try
+            {
+                BLL.SalesReturnDetail pod = dgvDetails.SelectedItem as BLL.SalesReturnDetail;
+                pod.toCopy<BLL.SalesReturnDetail>(data.SRDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

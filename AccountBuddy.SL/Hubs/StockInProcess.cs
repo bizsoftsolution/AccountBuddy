@@ -19,7 +19,7 @@ namespace AccountBuddy.SL.Hubs
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.StockInProcess, dt, dt.Month);
             long No = 0;
 
-            var d = DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = Caller.DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
@@ -32,13 +32,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.StockInProcess d = DB.StockInProcesses.Where(x => x.Id == SO.Id).FirstOrDefault();
+                DAL.StockInProcess d = Caller.DB.StockInProcesses.Where(x => x.Id == SO.Id).FirstOrDefault();
 
                 if (d == null)
                 {
 
                     d = new DAL.StockInProcess();
-                    DB.StockInProcesses.Add(d);
+                    Caller.DB.StockInProcesses.Add(d);
 
                     SO.toCopy<DAL.StockInProcess>(d);
 
@@ -48,7 +48,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.StockInProcessDetail>(d_pod);
                         d.StockInProcessDetails.Add(d_pod);
                     }
-                    DB.SaveChanges();
+                    Caller.DB.SaveChanges();
                     SO.Id = d.Id;
                     LogDetailStore(SO, LogDetailType.INSERT);
                 }
@@ -60,7 +60,7 @@ namespace AccountBuddy.SL.Hubs
                     //    if (b_SOd == null) d.StockInProcessDetails.Remove(d_SOd);
                     //}
                     decimal rd = SO.STPDetails.Select(X => X.SPId).FirstOrDefault().Value;
-                    DB.StockInProcessDetails.RemoveRange(d.StockInProcessDetails.Where(x => x.SPId == rd).ToList());
+                    Caller.DB.StockInProcessDetails.RemoveRange(d.StockInProcessDetails.Where(x => x.SPId == rd).ToList());
 
                     SO.toCopy<DAL.StockInProcess>(d);
                     foreach (var b_SOd in SO.STPDetails)
@@ -73,6 +73,7 @@ namespace AccountBuddy.SL.Hubs
                         // }
                         b_SOd.toCopy<DAL.StockInProcessDetail>(d_SOd);
                     }
+                    Caller.DB.SaveChanges();
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
                 }
@@ -92,20 +93,23 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.StockInProcess d = DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
-                DB.Entry(d).Reload();
+                DAL.StockInProcess d = Caller.DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
+                Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.StockInProcess>(SO);
-                    SO.StaffName = (d.Staff ?? DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
+                    SO.StaffName = (d.Staff ?? Caller.DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
+                    int i = 0;
+
                     foreach (var d_pod in d.StockInProcessDetails)
                     {
                         BLL.StockInProcessDetail b_pod = new BLL.StockInProcessDetail();
                         d_pod.toCopy<BLL.StockInProcessDetail>(b_pod);
                         SO.STPDetails.Add(b_pod);
-                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.SNo = i++;
+                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         //SO.Status = d.StockInProcessDetails.FirstOrDefault().JobOrderReceivedDetails.Count() > 0 ? "Received" : "Pending";
                     }
 
@@ -119,14 +123,14 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.StockInProcess d = DB.StockInProcesses.Where(x => x.Id == pk).FirstOrDefault();
+                DAL.StockInProcess d = Caller.DB.StockInProcesses.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
                     var s = StockInProcess_DALtoBLL(d);
-                    DB.StockInProcessDetails.RemoveRange(d.StockInProcessDetails);
-                    DB.StockInProcesses.Remove(d);
-                    DB.SaveChanges();
+                    Caller.DB.StockInProcessDetails.RemoveRange(d.StockInProcessDetails);
+                    Caller.DB.StockInProcesses.Remove(d);
+                    Caller.DB.SaveChanges();
 
                     LogDetailStore(s, LogDetailType.DELETE);
                     Journal_DeleteByStockInProcess(s);
@@ -141,7 +145,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.StockInProcess> StockInProcess_JOPendingList()
         {
-            return DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
+            return Caller.DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
                                      .ToList()
                                      .Select(x => StockInProcess_DALtoBLL(x))
                                      .ToList();
@@ -158,7 +162,7 @@ namespace AccountBuddy.SL.Hubs
         }
         public bool Find_STPRef(string RefNo, BLL.StockInProcess JO)
         {
-            DAL.StockInProcess d1 = DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo && x.Id != JO.Id).FirstOrDefault();
+            DAL.StockInProcess d1 = Caller.DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo && x.Id != JO.Id).FirstOrDefault();
 
             if (d1 == null)
             {
@@ -176,26 +180,60 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.StockInProcess d = DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
-                DB.Entry(d).Reload();
+                DAL.StockInProcess d = Caller.DB.StockInProcesses.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                Caller.DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.StockInProcess>(P);
-                    P.StaffName = (d.Staff ?? DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
+                    P.StaffName = (d.Staff ?? Caller.DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
                     foreach (var d_pod in d.StockInProcessDetails)
                     {
                         BLL.StockInProcessDetail b_pod = new BLL.StockInProcessDetail();
                         d_pod.toCopy<BLL.StockInProcessDetail>(b_pod);
                         P.STPDetails.Add(b_pod);
-                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }
 
                 }
             }
             catch (Exception ex) { }
             return P;
+        }
+        public List<BLL.StockInProcess> StockInProcess_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<BLL.StockInProcess> lstStockIn = new List<BLL.StockInProcess>();
+            Caller.DB = new DAL.DBFMCGEntities();
+            BLL.StockInProcess rp = new BLL.StockInProcess();
+            try
+            {
+                foreach (var l in Caller.DB.StockInProcesses.
+                      Where(x => x.SPDate >= dtFrom && x.SPDate <= dtTo
+                      && (x.StaffId == LedgerId || LedgerId == null)
+                      && (BillNo == "" || x.RefNo == BillNo)
+                      && (x.ItemAmount >= amtFrom && x.ItemAmount <= amtTo) &&
+                      x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
+                {
+                    rp = new BLL.StockInProcess();
+                    rp.ItemAmount = l.ItemAmount;
+                    rp.SPDate = l.SPDate;
+                    rp.RefNo = l.RefNo;
+
+                    rp.Id = l.Id;
+                    rp.StaffId = l.StaffId;
+                    rp.StaffName = string.Format("{0}-{1}", l.Staff.Ledger.AccountGroup.GroupCode, l.Staff.Ledger.LedgerName);
+
+                    rp.RefCode = l.RefCode;
+                    rp.RefNo = l.RefNo;
+
+                    lstStockIn.Add(rp);
+                    lstStockIn = lstStockIn.OrderBy(x => x.SPDate).ToList();
+                }
+
+            }
+            catch (Exception ex) { }
+            return lstStockIn;
         }
 
     }

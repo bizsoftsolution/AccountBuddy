@@ -38,9 +38,10 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbPType.SelectedValuePath = "Id";
 
             data.Clear();
+            data.setLabel();
             onClientEvents();
 
-           
+
         }
         private void onClientEvents()
         {
@@ -48,7 +49,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    data.RefNo = RefNo;
+                    if (data.Id == 0) data.RefNo = RefNo;
                 });
             });
         }
@@ -77,6 +78,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            data.setLabel();
             if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
@@ -85,12 +87,12 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
                 {
-                    MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                 }
             }
@@ -112,7 +114,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show("Enter Bank Details for check Transaction", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 App.frmHome.ShowBank();
             }
-            else if(data.RefNo == null)
+            else if (data.RefNo == null)
             {
                 MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "Invoice No"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtRefNo.Focus();
@@ -156,7 +158,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -169,17 +171,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = false;
-                btnDelete.IsEnabled = false;
-            }
+            frmPurchaseSearch f = new frmPurchaseSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
         #endregion
@@ -319,13 +313,11 @@ namespace AccountBuddy.PL.frm.Transaction
         {
 
             LoadWindow();
-
+            data.setLabel();
         }
 
         private void LoadWindow()
         {
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
             btnSave.Visibility = (BLL.Purchase.UserPermission.AllowInsert || BLL.Purchase.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.Purchase.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
@@ -339,6 +331,16 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.Text = AppLib.NumericOnly(txtChequeNo.Text);
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.PurchaseDetail pod = dgvDetails.SelectedItem as BLL.PurchaseDetail;
+                pod.toCopy<BLL.PurchaseDetail>(data.PDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

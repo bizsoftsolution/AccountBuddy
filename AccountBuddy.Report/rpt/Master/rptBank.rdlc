@@ -279,7 +279,23 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value> Credit [RM]</Value>
+                              <Value> Credit  [</Value>
+                              <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Parameters!AmtPrefix.Value</Value>
+                              <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>]</Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -314,7 +330,23 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Debit [RM]</Value>
+                              <Value>Debit [</Value>
+                              <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Parameters!AmtPrefix.Value</Value>
+                              <Style>
+                                <FontFamily>Cambria</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>]</Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -674,7 +706,7 @@
         <Top>2.3684cm</Top>
         <Left>0.9651cm</Left>
         <Height>1.2cm</Height>
-        <Width>25.25934cm</Width>
+        <Width>25.25933cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1055,6 +1087,14 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="AmtPrefix">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>272666b5-849d-424d-ad4a-194076fe29b1</rd:ReportID>
 </Report>

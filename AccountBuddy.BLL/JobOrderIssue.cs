@@ -20,7 +20,7 @@ namespace AccountBuddy.BLL
         private string _JONo;
         private int? _JobWorkerId;
         private decimal? _ItemAmount;
-        private decimal? _DiscountAmount;
+        private decimal _DiscountAmount;
         private decimal? _GSTAmount;
         private decimal? _Extras;
         private decimal? _TotalAmount;
@@ -37,6 +37,8 @@ namespace AccountBuddy.BLL
         private string _Status;
         private string _RefCode;
         private static UserTypeDetail _UserPermission;
+        private string _lblDiscount;
+        private string _lblExtra;
 
         #endregion
 
@@ -67,9 +69,16 @@ namespace AccountBuddy.BLL
             {
                 if (_JOPendingList == null)
                 {
-                    _JOPendingList = new ObservableCollection<JobOrderIssue>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<JobOrderIssue>>("JobOrderIssue_JOPendingList").Result;
-                    _JOPendingList = new ObservableCollection<JobOrderIssue>(l1);
+                    try
+                    {
+                        _JOPendingList = new ObservableCollection<JobOrderIssue>();
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<JobOrderIssue>>("JobOrderIssue_JOPendingList").Result;
+                        _JOPendingList = new ObservableCollection<JobOrderIssue>(l1);
+                    }
+                    catch(Exception ex)
+                    {
+                        Common.AppLib.WriteLog(string.Format("JOPendingList_{0}_{1}", ex.Message, ex.InnerException));
+                    }
                 }
                 return _JOPendingList;
             }
@@ -188,7 +197,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? DiscountAmount
+        public decimal DiscountAmount
         {
             get
             {
@@ -384,7 +393,39 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public string lblDiscount
+        {
+            get
+            {
+                return _lblDiscount;
+            }
+            set
+            {
+                if (_lblDiscount != value)
+                {
+                    _lblDiscount = value;
+                    NotifyPropertyChanged(nameof(lblDiscount));
 
+                }
+            }
+        }
+
+        public string lblExtra
+        {
+            get
+            {
+                return _lblExtra;
+            }
+            set
+            {
+                if (_lblExtra != value)
+                {
+                    _lblExtra = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
         #endregion
 
         #region Property Changed
@@ -494,7 +535,7 @@ namespace AccountBuddy.BLL
         {
             if (JODetail.ProductId != 0)
             {
-                JobOrderIssueDetail pod = JODetails.Where(x => x.ProductId == JODetail.ProductId).FirstOrDefault();
+                JobOrderIssueDetail pod = JODetails.Where(x => x.SNo == JODetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -516,25 +557,35 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             JobOrderIssueDetail pod = new JobOrderIssueDetail();
+            pod.SNo = JODetails.Count == 0 ? 1 : JODetails.Max(x => x.SNo) + 1;
             pod.toCopy<JobOrderIssueDetail>(JODetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            JobOrderIssueDetail pod = JODetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            JobOrderIssueDetail pod = JODetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 JODetails.Remove(pod);
                 ItemAmount = JODetails.Sum(x => x.Amount);
+                ClearDetail();
             }
         }
         #endregion
 
         private void SetAmount()
         {
-            GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
-            TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (Extras ?? 0);
+            GSTAmount = (ItemAmount  - DiscountAmount ) * Common.AppLib.GSTPer;
+            TotalAmount = (ItemAmount -DiscountAmount ) + GSTAmount + (Extras ?? 0);
+            setLabel();
+
+        }
+        public void setLabel()
+        {
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+
         }
 
         public bool FindRefNo()
@@ -551,6 +602,23 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<JobOrderIssue> ToList(int? LedgerId,DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<JobOrderIssue> rv = new List<JobOrderIssue>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<JobOrderIssue>>("JobOrderIssue_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("JobOrderIssue List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
         #endregion
     }
 }

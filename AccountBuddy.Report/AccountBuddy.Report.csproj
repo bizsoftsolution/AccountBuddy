@@ -108,6 +108,12 @@
     <EmbeddedResource Include="rpt\Report\rptSOPendingReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptBankReconciliation.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptCompanyNameTr.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptJobOrderIssue.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -124,7 +130,6 @@
     <EmbeddedResource Include="rpt\Report\rptTrialBalance.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="rpt\Transaction\rptBankReconciliation.rdlc" />
     <EmbeddedResource Include="rpt\Transaction\rptJournalReceipt.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

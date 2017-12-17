@@ -50,7 +50,7 @@ namespace AccountBuddy.PL
 
             if (data.Save() == true)
             {
-                MessageBox.Show(Message.PL.Saved_Alert);
+                MessageBox.Show(Message.PL.Saved_Alert, this.Title.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                 BLL.UserType.Init();
                 BLL.UserAccount.Init();
                 IsForcedClose = true;

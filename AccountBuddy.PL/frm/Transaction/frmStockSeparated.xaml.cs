@@ -29,7 +29,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             InitializeComponent();
             this.DataContext = data;
-
+            data.setLabel();
             data.Clear();
             onClientEvents();
         }
@@ -39,7 +39,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    data.RefNo = RefNo;
+                    if (data.Id == 0) data.RefNo = RefNo;
                 });
             });
         }
@@ -69,8 +69,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
-
-            //btnPrint.IsEnabled = false;
+            data.setLabel();
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
         }
@@ -121,14 +120,8 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    //if (ckbAutoPrint.IsChecked == true)
-                    //{
-                    //    Print();
-                    //}
-
+                   
                     data.Clear();
-
-                    //btnPrint.IsEnabled = false;
 
                 }
             }
@@ -144,7 +137,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -162,18 +155,11 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (data.Id != 0)
-            {
-                //btnPrint.IsEnabled = true;
+            frmStockSeperatedSearch f = new frmStockSeperatedSearch();
+            f.ShowDialog();
+            f.Close();
 
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+
         }
 
 
@@ -299,10 +285,19 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.setLabel();
             btnSave.Visibility = (BLL.StockSeperated.UserPermission.AllowInsert || BLL.StockSeperated.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.StockSeperated.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.StockSeperatedDetail pod = dgvDetails.SelectedItem as BLL.StockSeperatedDetail;
+                pod.toCopy<BLL.StockSeperatedDetail>(data.SSDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

@@ -26,7 +26,7 @@ namespace AccountBuddy.BLL
         private string _Narration;
         private string _Status;
 
-        private string _LedgerName;        
+        private string _LedgerName;
         private string _AmountInwords;
 
         private string _SearchText;
@@ -35,6 +35,8 @@ namespace AccountBuddy.BLL
         private ObservableCollection<PurchaseOrderDetail> _PODetails;
         private string _RefCode;
         private static UserTypeDetail _UserPermission;
+        private string _lblDiscount;
+        private string _lblExtra;
 
         #endregion
 
@@ -65,9 +67,16 @@ namespace AccountBuddy.BLL
             {
                 if (_POPendingList == null)
                 {
-                    _POPendingList = new ObservableCollection<PurchaseOrder>();
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_POPendingList").Result;
-                    _POPendingList = new ObservableCollection<PurchaseOrder>(l1);
+                    try
+                    {
+                        _POPendingList = new ObservableCollection<PurchaseOrder>();
+                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_POPendingList").Result;
+                        _POPendingList = new ObservableCollection<PurchaseOrder>(l1);
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.AppLib.WriteLog(string.Format("POPending List_{0}-{1}", ex.Message, ex.InnerException));
+                    }
                 }
                 return _POPendingList;
             }
@@ -185,7 +194,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                 SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -285,7 +294,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+
 
         public string SearchText
         {
@@ -353,7 +362,39 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public string lblDiscount
+        {
+            get
+            {
+                return _lblDiscount;
+            }
+            set
+            {
+                if (_lblDiscount != value)
+                {
+                    _lblDiscount = value;
+                    NotifyPropertyChanged(nameof(lblDiscount));
 
+                }
+            }
+        }
+
+        public string lblExtra
+        {
+            get
+            {
+                return _lblExtra;
+            }
+            set
+            {
+                if (_lblExtra != value)
+                {
+                    _lblExtra = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
         #endregion
 
         #region Property Changed
@@ -403,13 +444,20 @@ namespace AccountBuddy.BLL
             _PODetails = new ObservableCollection<PurchaseOrderDetail>();
 
             PODate = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_NewRefNo").Result;          
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_NewRefNo").Result;
+
+
             NotifyAllPropertyChanged();
         }
+        public void setLabel()
+        {
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
 
+        }
         private void MaxRef()
         {
-           RefNo= FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_MaxRef").Result;
+            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_MaxRef").Result;
         }
 
         public bool Find()
@@ -446,40 +494,51 @@ namespace AccountBuddy.BLL
 
         public void SaveDetail()
         {
-
-            PurchaseOrderDetail pod = PODetails.Where(x => x.ProductId == PODetail.ProductId).FirstOrDefault();
-
-            if (pod == null)
+            try
             {
-                pod = new PurchaseOrderDetail();
-                PODetails.Add(pod);
-            }
-            else
-            {
-                PODetail.Quantity += pod.Quantity;
-            }
-            PODetail.toCopy<PurchaseOrderDetail>(pod);
-            ClearDetail();
-            ItemAmount = PODetails.Sum(x => x.Amount);
+                PurchaseOrderDetail pod = PODetails.Where(x => x.SNo == PODetail.SNo).FirstOrDefault();
 
-            SetAmount();
+                if (pod == null)
+                {
+                    pod = new PurchaseOrderDetail();
+                    PODetails.Add(pod);
+                }
+                else
+                {
+                    PODetail.Quantity += pod.Quantity;
+
+                }
+
+                PODetail.toCopy<PurchaseOrderDetail>(pod);
+                ItemAmount = PODetails.Sum(x => x.Amount);
+                SetAmount();
+                ClearDetail();
+
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Purchase Order save Detail_{0}", ex.Message));
+            }
         }
 
         public void ClearDetail()
         {
             PurchaseOrderDetail pod = new PurchaseOrderDetail();
+            pod.SNo = PODetails.Count == 0 ? 1 : PODetails.Max(x => x.SNo) + 1;
             pod.toCopy<PurchaseOrderDetail>(PODetail);
+
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            PurchaseOrderDetail pod = PODetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            PurchaseOrderDetail pod = PODetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 PODetails.Remove(pod);
                 ItemAmount = PODetails.Sum(x => x.Amount);
                 SetAmount();
+                ClearDetail();
             }
         }
         #endregion
@@ -487,9 +546,10 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-           
+
             GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
             TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (Extras ?? 0);
+            setLabel();
         }
 
         public bool FindRefNo()
@@ -504,6 +564,21 @@ namespace AccountBuddy.BLL
                 rv = true;
             }
             return rv;
+        }
+
+        public static List<PurchaseOrder> PO_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<PurchaseOrder> rv = new List<PurchaseOrder>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Purchase Order List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
         }
         #endregion
     }

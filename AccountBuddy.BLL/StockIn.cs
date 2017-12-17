@@ -358,7 +358,7 @@ namespace AccountBuddy.BLL
         {
             if (STInDetail.ProductId != 0)
             {
-                StockInDetail pod = STInDetails.Where(x => x.ProductId == STInDetail.ProductId).FirstOrDefault();
+                StockInDetail pod = STInDetails.Where(x => x.SNo == STInDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -379,17 +379,19 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             StockInDetail pod = new StockInDetail();
+            pod.SNo = STInDetails.Count == 0 ? 1 : STInDetails.Max(x => x.SNo) + 1;
             pod.toCopy<StockInDetail>(STInDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            StockInDetail pod = STInDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            StockInDetail pod = STInDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
                 STInDetails.Remove(pod);
                 ItemAmount = STInDetails.Sum(x => x.Amount);
+                ClearDetail();
             }
         }
 
@@ -410,6 +412,23 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<StockIn> ToList(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<StockIn> rv = new List<StockIn>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<StockIn>>("StockIn_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("StockIn List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
         #endregion
     }
 }

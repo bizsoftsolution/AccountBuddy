@@ -42,6 +42,8 @@ namespace AccountBuddy.BLL
         private string _BankName;
         private bool _IsShowChequeDetail;
         private static UserTypeDetail _UserPermission;
+        private string _lblDiscount;
+        private string _lblExtra;
 
         #endregion
 
@@ -456,6 +458,39 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public string lblDiscount
+        {
+            get
+            {
+                return _lblDiscount;
+            }
+            set
+            {
+                if (_lblDiscount != value)
+                {
+                    _lblDiscount = value;
+                    NotifyPropertyChanged(nameof(lblDiscount));
+
+                }
+            }
+        }
+        public string lblExtra
+        {
+            get
+            {
+                return _lblExtra;
+            }
+            set
+            {
+                if (_lblExtra != value)
+                {
+                    _lblExtra = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
+
         #endregion
 
         #region Property Changed
@@ -502,7 +537,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                SalesReturn po = FMCGHubClient.FMCGHub.Invoke<SalesReturn>("SalesReturn_Find", SearchText).Result;
+                SalesReturn po = FMCGHubClient.FMCGHub.Invoke<SalesReturn>("SalesReturn_Find", RefNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<SalesReturn>(this);
                 this.SRDetails = po.SRDetails;
@@ -551,7 +586,7 @@ namespace AccountBuddy.BLL
         {
             if (SRDetail.ProductId != 0)
             {
-                SalesReturnDetail pod = SRDetails.Where(x => x.ProductId == SRDetail.ProductId).FirstOrDefault();
+                SalesReturnDetail pod = SRDetails.Where(x => x.SNo == SRDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -573,12 +608,13 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             SalesReturnDetail pod = new SalesReturnDetail();
+            pod.SNo = SRDetails.Count == 0 ? 1 : SRDetails.Max(x => x.SNo) + 1;
             pod.toCopy<SalesReturnDetail>(SRDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            SalesReturnDetail pod = SRDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            SalesReturnDetail pod = SRDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
@@ -594,8 +630,14 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
             TotalAmount = ItemAmount  - DiscountAmount + GSTAmount + ExtraAmount ;
-        }
+            setLabel();
+                }
+        public void setLabel()
+        {
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
 
+        }
         public bool FindRefNo()
         {
             var rv = false;
@@ -609,6 +651,24 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+        public static List<SalesReturn> ToList(int? LedgerId, int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<SalesReturn> rv = new List<SalesReturn>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<SalesReturn>>("SalesReturn_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("SalesReturn List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
+
         #endregion
     }
 }

@@ -29,7 +29,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             InitializeComponent();
             this.DataContext = data;
-
+            data.setLabel();
             data.Clear();
             onClientEvents();
             LoadWindow();
@@ -38,8 +38,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void LoadWindow()
         {
 
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.setLabel();
             btnSave.Visibility = (BLL.StockInProcess.UserPermission.AllowInsert || BLL.StockInProcess.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.StockInProcess.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
@@ -51,7 +50,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    data.RefNo = RefNo;
+                    if (data.Id == 0) data.RefNo = RefNo;
                 });
             });
         }
@@ -81,15 +80,14 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
-
-            //btnPrint.IsEnabled = false;
+            data.setLabel();
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
@@ -132,16 +130,9 @@ namespace AccountBuddy.PL.frm.Transaction
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    //if (ckbAutoPrint.IsChecked == true)
-                    //{
-                    //    Print();
-                    //}
-
+                    MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);                 
                     data.Clear();
-
-                    //btnPrint.IsEnabled = false;
-
+                    
                 }
             }
             else
@@ -156,7 +147,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -174,18 +165,9 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (data.Id != 0)
-            {
-                //btnPrint.IsEnabled = true;
-
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            frmStockInProcessSearch f = new frmStockInProcessSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
 
@@ -302,9 +284,16 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbStaff_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbStaff.ItemsSource = BLL.Staff.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
-            cmbStaff.DisplayMemberPath = "Ledger.LedgerName";
-            cmbStaff.SelectedValuePath = "Id";
+            try
+            {
+                cmbStaff.ItemsSource = BLL.Staff.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
+                cmbStaff.DisplayMemberPath = "Ledger.LedgerName";
+                cmbStaff.SelectedValuePath = "Id";
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Stock In Process Staff List_{0}_{1}", ex.Message, ex.InnerException));
+            }
 
 
         }
@@ -312,6 +301,16 @@ namespace AccountBuddy.PL.frm.Transaction
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LoadWindow();
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.StockInProcessDetail pod = dgvDetails.SelectedItem as BLL.StockInProcessDetail;
+                pod.toCopy<BLL.StockInProcessDetail>(data.STPDetail);
+            }
+            catch (Exception ex) { }
         }
     }
 }

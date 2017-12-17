@@ -32,8 +32,8 @@ namespace AccountBuddy.PL.frm.Transaction
             this.DataContext = data;
 
             data.Clear();
-            onClientEvents();
-           
+            data.setLabel(); onClientEvents();
+
 
         }
         private void onClientEvents()
@@ -42,7 +42,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    data.RefNo = RefNo;
+                    if (data.Id == 0) data.RefNo = RefNo;
                 });
             });
         }
@@ -86,6 +86,7 @@ namespace AccountBuddy.PL.frm.Transaction
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
+            data.setLabel();
             if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
@@ -96,15 +97,22 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (data.Id != 0)
             {
-                var rv = data.Delete();
-                if (rv == true)
+                if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    data.Clear();
-                    btnPrint.IsEnabled = false;
+                    var rv = data.Delete();
+                    if (rv == true)
+                    {
+                        MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
+                        data.Clear();
+                        btnPrint.IsEnabled = false;
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show("No Records to Delete", FormName, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
@@ -118,7 +126,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-           else if (cmbPType.Text=="Cheque" && BLL.Bank.toList.Count==0)
+            else if (cmbPType.Text == "Cheque" && BLL.Bank.toList.Count == 0)
             {
                 MessageBox.Show("Enter Bank Details for check Transaction", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 App.frmHome.ShowBank();
@@ -186,7 +194,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -194,17 +202,11 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
+            
+
+            frmSalesSearch f = new frmSalesSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
         #endregion
@@ -361,31 +363,34 @@ namespace AccountBuddy.PL.frm.Transaction
 
         #region Combobox Load
 
-        private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
-        {
-            cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
-            cmbCustomer.DisplayMemberPath = "LedgerName";
-            cmbCustomer.SelectedValuePath = "Id";
 
+        private void cmbPType_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbPType.ItemsSource = BLL.TransactionType.toList;
+            cmbPType.DisplayMemberPath = "Type";
+            cmbPType.SelectedValuePath = "Id";
         }
 
-        private void cmbItem_Loaded(object sender, RoutedEventArgs e)
-        {
-            cmbItem.ItemsSource = BLL.Product.toList.Where(x => x.StockGroup.IsSale != false).ToList();
-            cmbItem.DisplayMemberPath = "ProductName";
-            cmbItem.SelectedValuePath = "Id";
+     
 
+        private void LoadCustomer()
+        {
+            BLL.Ledger.toList = null;
+            try
+            {
+                cmbCustomer.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.BranchDivisions_Key).ToList();
+                cmbCustomer.DisplayMemberPath = "LedgerName";
+                cmbCustomer.SelectedValuePath = "Id";
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Sales Customer Combo box = {0}", ex.Message));
+            }
         }
 
-        private void cmbUOM_Loaded(object sender, RoutedEventArgs e)
-        {
-            cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
-            cmbUOM.DisplayMemberPath = "Symbol";
-            cmbUOM.SelectedValuePath = "Id";
+       
 
 
-
-        }
 
         #endregion
 
@@ -446,8 +451,8 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+           
+            data.setLabel();
             btnSave.Visibility = (BLL.Sale.UserPermission.AllowInsert || BLL.Sale.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.Sale.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -461,11 +466,34 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
         }
 
-        private void cmbPType_Loaded(object sender, RoutedEventArgs e)
+        private void cmbUOM_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbPType.ItemsSource = BLL.TransactionType.toList;
-            cmbPType.DisplayMemberPath = "Type";
-            cmbPType.SelectedValuePath = "Id";
+            BLL.UOM.toList = null;
+            cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
+            cmbUOM.DisplayMemberPath = "Symbol";
+            cmbUOM.SelectedValuePath = "Id";
+        }
+
+        private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadCustomer();
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.SalesDetail pod = dgvDetails.SelectedItem as BLL.SalesDetail;
+                pod.toCopy<BLL.SalesDetail>(data.SDetail);
+            }
+            catch (Exception ex) { }
+        }
+
+        private void cmbItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbItem.ItemsSource = BLL.Product.toList.Where(x => x.StockGroup.IsSale != false).ToList();
+            cmbItem.DisplayMemberPath = "ProductName";
+            cmbItem.SelectedValuePath = "Id";
         }
     }
 }

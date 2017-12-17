@@ -29,7 +29,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             InitializeComponent();
             this.DataContext = data;
-
+            data.setLabel();
             data.Clear();
             onClientEvents();
 
@@ -40,7 +40,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    data.RefNo = RefNo;
+                    if (data.Id == 0) data.RefNo = RefNo;
                 });
             });
         }
@@ -50,14 +50,14 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            var max = BLL.Product.toList.Where(x => x.Id == data.SODetail.ProductId).Select(x => x.MaxSellingRate).FirstOrDefault();
-            var min = BLL.Product.toList.Where(x => x.Id == data.SODetail.ProductId).Select(x => x.MinSellingRate).FirstOrDefault();
+            var max = data.SODetail.Product.MaxSellingRate;
+            var min = data.SODetail.Product.MinSellingRate;
 
             if (data.SODetail.ProductId == null)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            else if (min > data.SODetail.UnitPrice || max < data.SODetail.UnitPrice)
+            else if (data.SODetail.Product.MinSellingRate > data.SODetail.UnitPrice || data.SODetail.Product.MaxSellingRate < data.SODetail.UnitPrice)
             {
                 MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
                 txtRate.Focus();
@@ -80,11 +80,12 @@ namespace AccountBuddy.PL.frm.Transaction
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
+            data.setLabel();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var rv = data.Delete();
                 if (rv == true)
@@ -111,7 +112,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Transaction_POcode, "SO Code"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtRefNo.Focus();
             }
-            else if (data.LedgerId == 0)
+            else if (data.LedgerId == 0||data.LedgerId==null)
             {
                 MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Customer), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbCustomer.Focus();
@@ -151,7 +152,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.DeleteDetail(btn.Tag.ToString());
+                data.DeleteDetail((int)btn.Tag);
             }
             catch (Exception ex) { }
 
@@ -169,20 +170,9 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            var rv = data.Find();
-            if (data.Id != 0)
-            {
-                btnMakesales.IsEnabled = data.Status == "Pending" ? true : false;
-                    btnPrint.IsEnabled = true;
-
-            }
-            if (data.RefCode != null)
-            {
-                btnSave.IsEnabled = true;
-                btnDelete.IsEnabled = true;
-            }
-            if (rv == false) MessageBox.Show(string.Format(Message.PL.Transaction_Not_Fount, data.SearchText), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-            btnMakesales.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+            frmSalesOrderSearch f = new frmSalesOrderSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
         private void btnMakesales_Click(object sender, RoutedEventArgs e)
@@ -319,10 +309,20 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
-            lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            data.setLabel();
             btnSave.Visibility = (BLL.SalesOrder.UserPermission.AllowInsert || BLL.SalesOrder.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.SalesOrder.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void dgvDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BLL.SalesOrderDetail pod = dgvDetails.SelectedItem as BLL.SalesOrderDetail;
+                pod.toCopy<BLL.SalesOrderDetail>(data.SODetail);
+            }
+            catch (Exception ex) { }
+
         }
     }
 }

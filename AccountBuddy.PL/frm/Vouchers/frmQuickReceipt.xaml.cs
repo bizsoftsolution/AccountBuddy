@@ -51,6 +51,7 @@ namespace AccountBuddy.PL.frm.Vouchers
                 ReportParameter[] par = new ReportParameter[1];
                 par[0] = new ReportParameter("AmountInWords", data.AmountInwords);
                 rptQuickReceipt.LocalReport.SetParameters(par);
+                rptQuickReceipt.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
 
 
@@ -61,6 +62,10 @@ namespace AccountBuddy.PL.frm.Vouchers
             {
 
             }
+        }
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
     }
 }

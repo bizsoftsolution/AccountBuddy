@@ -297,6 +297,9 @@ namespace AccountBuddy.PL.frm.Master
 
 
                 rptBank.LocalReport.ReportPath = @"rpt\master\rptBank.rdlc";
+                ReportParameter[] param = new ReportParameter[1];
+                param[0] = new ReportParameter("AmtPrefix", AppLib.CurrencyPositiveSymbolPrefix.ToString());
+                rptBank.LocalReport.SetParameters(param);
 
                 rptBank.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 

@@ -43,6 +43,8 @@ namespace AccountBuddy.BLL
         private string _BankName;
         private bool _IsShowChequeDetail;
         private static UserTypeDetail _UserPermission;
+        private string _lblDiscount;
+        private string _lblExtra;
 
         #endregion
 
@@ -455,6 +457,42 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+
+        public string lblDiscount
+        {
+            get
+            {
+                return _lblDiscount;
+            }
+            set
+            {
+                if (_lblDiscount != value)
+                {
+                    _lblDiscount = value;
+                    NotifyPropertyChanged(nameof(lblDiscount));
+
+                }
+            }
+        }
+
+        public string lblExtra
+        {
+            get
+            {
+                return _lblExtra;
+            }
+            set
+            {
+                if (_lblExtra != value)
+                {
+                    _lblExtra = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
+
+
         #endregion
 
         #region Property Changed
@@ -506,7 +544,12 @@ namespace AccountBuddy.BLL
             RefNo = FMCGHubClient.FMCGHub.Invoke<string>("Purchase_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
+        public void setLabel()
+        {
+            lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
+            lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
 
+        }
         public bool Find()
         {
             try
@@ -558,7 +601,7 @@ namespace AccountBuddy.BLL
         {
             if (PDetail.ProductId != 0)
             {
-                PurchaseDetail pod = PDetails.Where(x => x.ProductId == PDetail.ProductId).FirstOrDefault();
+                PurchaseDetail pod = PDetails.Where(x => x.SNo == PDetail.SNo).FirstOrDefault();
 
                 if (pod == null)
                 {
@@ -580,12 +623,13 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             PurchaseDetail pod = new PurchaseDetail();
+            pod.SNo = PDetails.Count == 0 ? 1 : PDetails.Max(x => x.SNo) + 1;
             pod.toCopy<PurchaseDetail>(PDetail);
         }
 
-        public void DeleteDetail(string PName)
+        public void DeleteDetail(int SNo)
         {
-            PurchaseDetail pod = PDetails.Where(x => x.ProductName == PName).FirstOrDefault();
+            PurchaseDetail pod = PDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {
@@ -602,6 +646,7 @@ namespace AccountBuddy.BLL
         {
             GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
             TotalAmount = ItemAmount - DiscountAmount  + GSTAmount + ExtraAmount;
+            setLabel();
         }
 
         public bool FindRefNo()
@@ -617,6 +662,25 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+
+
+        public static List<Purchase> ToList(int? LedgerId, int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
+        {
+            List<Purchase> rv = new List<Purchase>();
+            try
+            {
+                rv = FMCGHubClient.FMCGHub.Invoke<List<Purchase>>("Purchase_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("Purchase List= {0}-{1}", ex.Message, ex.InnerException));
+            }
+            return rv;
+
+        }
+
+
+
         #endregion
 
     }
