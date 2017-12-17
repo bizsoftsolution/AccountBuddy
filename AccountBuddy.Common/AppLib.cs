@@ -20,6 +20,7 @@ namespace AccountBuddy.Common
         public static int userId=0;
 
         public static string SLPath = "";
+        public static string SLTransport = "";
         public static string AppName = "";
         public static string AppIdKey = "";        
         public static string AppIdValue = "";
@@ -323,9 +324,9 @@ namespace AccountBuddy.Common
             }
             catch (Exception) { }            
         }
-        public static void WriteLog(string str,Exception ex)
+        public static void WriteLog(Exception ex)
         {
-            WriteLog(string.Format("Error=> Message1:{0},ExMessage:{1},StackTrace:{2}", str,ex.Message,ex.StackTrace));            
+            WriteLog(string.Format("Error=> ExMessage:{0},StackTrace:{1}", ex.Message,ex.StackTrace));            
         }
     }
 }

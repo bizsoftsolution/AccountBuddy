@@ -9,7 +9,8 @@ namespace AccountBuddy.SL.Hubs
     public class SLUser
     {       
 
-        public string ConnectionId { get; set; }
+        public string CallerConnectionId { get; set; }
+        public string ReceiverConnectionId { get; set; }
         public string AppId { get; set; }
         public bool AppApproved { get; set; }
         public int UserId { get; set; }

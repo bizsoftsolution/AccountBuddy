@@ -69,24 +69,30 @@ namespace AccountBuddy.SL.Hubs
         {
             get
             {
-                SLUser u = UserList.Where(x => x.ConnectionId == Context.ConnectionId).FirstOrDefault();
+                SLUser u = UserList.Where(x => x.CallerConnectionId == Context.ConnectionId).FirstOrDefault();
                 return u.UserId != 0 ? true : false;
             }
         }
 
         #region ClientSelection
 
+        public SLUser CallerById(string ConnectionId)
+        {
+            SLUser u = UserList.Where(x => x.CallerConnectionId == ConnectionId).FirstOrDefault();
+            if (u == null)
+            {
+                u = new SLUser() { CallerConnectionId = Context.ConnectionId, UserId = 0, CompanyId = 0, StaffId = 0 };
+                UserList.Add(u);
+            }
+            return u;
+            
+        }
+
         public  SLUser Caller
         {
             get
-            {
-                SLUser u = UserList.Where(x => x.ConnectionId == Context.ConnectionId).FirstOrDefault();
-                if (u == null)
-                {
-                    u = new SLUser() { ConnectionId = Context.ConnectionId, UserId = 0, CompanyId = 0, StaffId=0 };
-                    UserList.Add(u);
-                }
-                return u;
+            {                
+                return CallerById(Context.ConnectionId);
             }
         }
 
@@ -94,7 +100,7 @@ namespace AccountBuddy.SL.Hubs
         {
             get
             {
-                return UserList.Select(x => x.ConnectionId.ToString()).ToList();
+                return UserList.Select(x => x.CallerConnectionId.ToString()).ToList();
             }
         }
 
@@ -103,7 +109,7 @@ namespace AccountBuddy.SL.Hubs
             get
             {
                 return UserList.Where(x => x.UserId != 0)
-                               .Select(x => x.ConnectionId.ToString())
+                               .Select(x => x.CallerConnectionId.ToString())
                                .ToList();
             }
         }
@@ -112,8 +118,8 @@ namespace AccountBuddy.SL.Hubs
         {
             get
             {
-                return UserList.Where(x => x.ConnectionId != Context.ConnectionId)
-                               .Select(x => x.ConnectionId.ToString())
+                return UserList.Where(x => x.CallerConnectionId != Context.ConnectionId)
+                               .Select(x => x.CallerConnectionId.ToString())
                                .ToList();
             }
         }
@@ -122,8 +128,8 @@ namespace AccountBuddy.SL.Hubs
         {
             get
             {
-                return UserList.Where(x => x.ConnectionId != Context.ConnectionId && x.UserId != 0)
-                               .Select(x => x.ConnectionId.ToString())
+                return UserList.Where(x => x.CallerConnectionId != Context.ConnectionId && x.UserId != 0)
+                               .Select(x => x.CallerConnectionId.ToString())
                                .ToList();
             }
         }
@@ -133,7 +139,7 @@ namespace AccountBuddy.SL.Hubs
             get
             {
                 return UserList.Where(x => x.CompanyId == Caller.CompanyId)
-                               .Select(x => x.ConnectionId.ToString())
+                               .Select(x => x.CallerConnectionId.ToString())
                                .ToList();
             }
         }
@@ -143,7 +149,7 @@ namespace AccountBuddy.SL.Hubs
             get
             {
                 return UserList.Where(x => x.CompanyId == Caller.CompanyId && x.UserId != 0)
-                               .Select(x => x.ConnectionId.ToString())
+                               .Select(x => x.CallerConnectionId.ToString())
                                .ToList();
             }
         }
@@ -153,7 +159,7 @@ namespace AccountBuddy.SL.Hubs
             get
             {
                 return UserList.Where(x => x.CompanyId == Caller.CompanyId && x.UserId != Caller.UserId)
-                               .Select(x => x.ConnectionId.ToString())
+                               .Select(x => x.CallerConnectionId.ToString())
                                .ToList();
             }
         }
@@ -163,7 +169,7 @@ namespace AccountBuddy.SL.Hubs
             get
             {
                 return UserList.Where(x => x.CompanyId == Caller.CompanyId && x.UserId != 0 && x.UserId != Caller.UserId)
-                               .Select(x => x.ConnectionId.ToString())
+                               .Select(x => x.CallerConnectionId.ToString())
                                .ToList();
             }
         }
@@ -173,7 +179,7 @@ namespace AccountBuddy.SL.Hubs
             get
             {
                 return UserList.Where(x => x.CompanyId == WebAdminCompanyId && x.UserId != 0  )
-                               .Select(x => x.ConnectionId.ToString())
+                               .Select(x => x.CallerConnectionId.ToString())
                                .ToList();
             }
         }
@@ -182,7 +188,7 @@ namespace AccountBuddy.SL.Hubs
             get
             {
                 return UserList.Where(x => x.CompanyId == WebAdminCompanyId && x.UserId != 0 && x.UserId != Caller.UserId)
-                               .Select(x => x.ConnectionId.ToString())
+                               .Select(x => x.CallerConnectionId.ToString())
                                .ToList();
             }
         }
@@ -196,10 +202,10 @@ namespace AccountBuddy.SL.Hubs
 
         public override Task OnConnected()
         {
-            SLUser u = UserList.Where(x => x.ConnectionId == Context.ConnectionId).FirstOrDefault();
+            SLUser u = UserList.Where(x => x.CallerConnectionId == Context.ConnectionId).FirstOrDefault();
             if (u == null)
             {
-                u = new SLUser() { ConnectionId = Context.ConnectionId, UserId = 0, CompanyId = 0 };
+                u = new SLUser() { CallerConnectionId = Context.ConnectionId, UserId = 0, CompanyId = 0 };
                 UserList.Add(u);
             }
                      
@@ -223,7 +229,7 @@ namespace AccountBuddy.SL.Hubs
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            SLUser u = UserList.Where(x => x.ConnectionId == Context.ConnectionId).FirstOrDefault();
+            SLUser u = UserList.Where(x => x.CallerConnectionId == Context.ConnectionId).FirstOrDefault();
             if (u != null)
             {
                 UserList.Remove(u);
@@ -257,10 +263,10 @@ namespace AccountBuddy.SL.Hubs
             return AppId;
         }
 
-        public bool SystemLogin(string AppId,string ComputerName,string Username,string UserDomainName)
+        public bool LoginHubCaller(string AppId,string ComputerName,string Username,string UserDomainName)
         {                        
             var d = DB.AppMasters.Where(x => x.AppId == AppId).FirstOrDefault();
-            var c = DB.AppConnections.Where(x => x.ConnectionId == Caller.ConnectionId).FirstOrDefault();
+            var c = DB.AppConnections.Where(x => x.ConnectionId == Caller.CallerConnectionId).FirstOrDefault();
             if (d == null)
             {
                 d = new DAL.AppMaster() { AppId = AppId, IsApproved = false };
@@ -284,7 +290,11 @@ namespace AccountBuddy.SL.Hubs
             Caller.AppApproved = d.IsApproved;
             return d.IsApproved;
         }
-
+        public bool SetReceiverConnectionIdToCaller(string ReceiverConnectionId)
+        {
+            Caller.ReceiverConnectionId = ReceiverConnectionId;
+            return true;
+        }
         public void AppApproved_Changed(string AppId,bool IsApproved)
         {
             var d = DB.AppMasters.Where(x => x.AppId == AppId).FirstOrDefault();
@@ -292,7 +302,7 @@ namespace AccountBuddy.SL.Hubs
             {
                 d.IsApproved = IsApproved;
                 DB.SaveChanges();
-                var lst = UserList.Where(x => x.AppId== AppId).Select(x=> x.ConnectionId).ToList();
+                var lst = UserList.Where(x => x.AppId== AppId).Select(x=> x.ReceiverConnectionId).ToList();
                 Clients.Clients(lst).AppApproved_Changed(IsApproved);
             }
         }

@@ -12,7 +12,7 @@ namespace AccountBuddy.SL.Hubs
         public bool WebLogin(string LoginId,string Password)
         {
             var d = DB.WebAdmins.Where(x => x.LoginId == LoginId && x.Password == Password).FirstOrDefault();
-            var app = DB.AppConnections.Where(x => x.ConnectionId == Caller.ConnectionId).ToList().LastOrDefault();
+            var app = DB.AppConnections.Where(x => x.ConnectionId == Caller.CallerConnectionId).ToList().LastOrDefault();
             if (d == null)
             {
                 if (app != null)
