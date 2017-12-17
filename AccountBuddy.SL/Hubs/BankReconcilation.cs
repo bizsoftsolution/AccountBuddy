@@ -16,7 +16,7 @@ namespace AccountBuddy.SL.Hubs
 
             BLL.BankReconcilation gl = new BLL.BankReconcilation();
 
-            var lstLedger = Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyId== Caller.CompanyId && x.Id == LedgerId).ToList();
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId== Caller.CompanyId && x.Id == LedgerId).ToList();
 
             #region Ledger
 

@@ -272,7 +272,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.UOM>("UOM_Save", (uom) =>
+            BLL.FMCGHubClient.HubCaller.On<BLL.UOM>("UOM_Save", (uom) =>
             {
 
                 this.Dispatcher.Invoke(() =>
@@ -282,7 +282,7 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("UOM_Delete", (Action<int>)((pk) =>
+            BLL.FMCGHubClient.HubCaller.On("UOM_Delete", (Action<int>)((pk) =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
                 {

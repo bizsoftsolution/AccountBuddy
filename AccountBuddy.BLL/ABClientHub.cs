@@ -13,21 +13,21 @@ namespace AccountBuddy.BLL
     {
         #region Field
         
-        private static IHubProxy _fmcgHub;
+        private static IHubProxy _hubCaller;
        
         #endregion
 
         #region Property
         
-        public static IHubProxy FMCGHub
+        public static IHubProxy HubCaller
         {
             get
             {                             
-                return _fmcgHub;
+                return _hubCaller;
             }
             set
             {
-                _fmcgHub = value;
+                _hubCaller = value;
             }
         }
         #endregion

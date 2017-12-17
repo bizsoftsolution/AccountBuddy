@@ -85,7 +85,7 @@ namespace AccountBuddy.BLL
             {
                 try
                 {
-                    if (_toList == null) _toList = new ObservableCollection<Customer>(FMCGHubClient.FMCGHub.Invoke<List<Customer>>("Customer_List").Result);
+                    if (_toList == null) _toList = new ObservableCollection<Customer>(FMCGHubClient.HubCaller.Invoke<List<Customer>>("Customer_List").Result);
                     
                 }
                 catch(Exception ex)
@@ -181,7 +181,7 @@ namespace AccountBuddy.BLL
             {
                 if (isServerCall == false)
                 {                    
-                    var d = FMCGHubClient.FMCGHub.Invoke<Customer>("Customer_Save", this).Result;
+                    var d = FMCGHubClient.HubCaller.Invoke<Customer>("Customer_Save", this).Result;
                     if(d.Id != 0)
                     {
                         if (Id == 0)
@@ -244,13 +244,13 @@ namespace AccountBuddy.BLL
         {
             var rv = false;
             var d = toList.Where(x => x.Id == Id).FirstOrDefault();
-            var b = FMCGHubClient.FMCGHub.Invoke<bool>("Ledger_CanDeleteById", this.LedgerId).Result;
+            var b = FMCGHubClient.HubCaller.Invoke<bool>("Ledger_CanDeleteById", this.LedgerId).Result;
             if (d != null && b==true)
             {
 
                 if (isServerCall == false)
                 {
-                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("Customer_Delete", this.Id).Result;
+                    rv = FMCGHubClient.HubCaller.Invoke<bool>("Customer_Delete", this.Id).Result;
                     if (rv == true)
                     {
                         toList.Remove(d);

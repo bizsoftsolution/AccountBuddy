@@ -72,7 +72,7 @@ namespace AccountBuddy.BLL
                 {
                     try
                     {
-                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<CompanyDetail>>("CompanyDetail_List").Result;
+                        var l1 = FMCGHubClient.HubCaller.Invoke<List<CompanyDetail>>("CompanyDetail_List").Result;
                         _toList = new ObservableCollection<CompanyDetail>(l1);
                     }
                     catch(Exception ex)
@@ -93,7 +93,7 @@ namespace AccountBuddy.BLL
                 {
                     try
                     {
-                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<string>>("CompanyDetail_AcYearList").Result;
+                        var l1 = FMCGHubClient.HubCaller.Invoke<List<string>>("CompanyDetail_AcYearList").Result;
                         _AcYearList = new ObservableCollection<string>(l1);
                     }
                     catch(Exception ex)
@@ -457,7 +457,7 @@ namespace AccountBuddy.BLL
                 this.toCopy<CompanyDetail>(d);
                 if (isServerCall == false)
                 {
-                    i = FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Save", this).Result;
+                    i = FMCGHubClient.HubCaller.Invoke<int>("CompanyDetail_Save", this).Result;
                     d.Id = i;
                 }
 
@@ -569,7 +569,7 @@ namespace AccountBuddy.BLL
                 toList.Remove(d);
                 if (isServerCall == false)
                 {
-                    FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Delete", this.Id);
+                    FMCGHubClient.HubCaller.Invoke<int>("CompanyDetail_Delete", this.Id);
                     return true;
                 }
                 else
@@ -590,7 +590,7 @@ namespace AccountBuddy.BLL
                 toList.Remove(c);
                 if (isServerCall == false)
                 {
-                    FMCGHubClient.FMCGHub.Invoke<int>("CompanyDetail_Delete", c.Id);
+                    FMCGHubClient.HubCaller.Invoke<int>("CompanyDetail_Delete", c.Id);
                     return true;
                 }
                 else

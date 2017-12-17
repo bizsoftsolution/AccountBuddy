@@ -156,7 +156,7 @@ namespace AccountBuddy.BLL
 
         public static List<BalanceSheet> ToList(DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<BalanceSheet>>("Balancesheet_List", dtFrom, dtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<BalanceSheet>>("Balancesheet_List", dtFrom, dtTo).Result;
         }
 
         #endregion

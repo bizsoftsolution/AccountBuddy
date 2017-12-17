@@ -10,7 +10,7 @@ namespace AccountBuddy.SL.Hubs
       
         public List<BLL.LedgerList> LedgerList()
         {
-            var rv = Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList();
+            var rv = DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList();
             List<BLL.LedgerList> l1 = new List<BLL.LedgerList>();
             BLL.LedgerList l2 = new BLL.LedgerList();
             foreach(var r in rv)

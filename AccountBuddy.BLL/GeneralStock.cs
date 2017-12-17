@@ -252,7 +252,7 @@ namespace AccountBuddy.BLL
 
         public static List<GeneralStock> ToList(int? CompanyId, int ProductId, DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<GeneralStock>>("GeneralStock_List", CompanyId, ProductId, dtFrom, dtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<GeneralStock>>("GeneralStock_List", CompanyId, ProductId, dtFrom, dtTo).Result;
         }
 
         #endregion

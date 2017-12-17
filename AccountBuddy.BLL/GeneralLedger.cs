@@ -267,7 +267,7 @@ namespace AccountBuddy.BLL
 
         public static List<GeneralLedger> ToList(int LedgerId, DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<GeneralLedger>>("GeneralLedger_List",LedgerId, dtFrom, dtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<GeneralLedger>>("GeneralLedger_List",LedgerId, dtFrom, dtTo).Result;
         }
 
         #endregion

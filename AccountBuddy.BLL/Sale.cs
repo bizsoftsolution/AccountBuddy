@@ -516,7 +516,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("Sales_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("Sales_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -531,7 +531,7 @@ namespace AccountBuddy.BLL
             _SDetails = new ObservableCollection<SalesDetail>();
 
             SalesDate = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("Sales_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("Sales_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
         public void setLabel()
@@ -544,7 +544,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Sale S = FMCGHubClient.FMCGHub.Invoke<Sale>("Sales_Find", SearchText).Result;
+                Sale S = FMCGHubClient.HubCaller.Invoke<Sale>("Sales_Find", SearchText).Result;
                 if (S.Id == 0) return false;
                 S.toCopy<Sale>(this);
                 this.SDetails = S.SDetails;
@@ -560,7 +560,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Sale S = FMCGHubClient.FMCGHub.Invoke<Sale>("Sales_FindById", Id).Result;
+                Sale S = FMCGHubClient.HubCaller.Invoke<Sale>("Sales_FindById", Id).Result;
                 if (S.Id == 0) return false;
                 S.toCopy<Sale>(this);
                 this.SDetails = S.SDetails;
@@ -576,7 +576,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("Sales_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("Sales_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -646,7 +646,7 @@ namespace AccountBuddy.BLL
 
 
                 Common.AppLib.WriteLog("FindRefNo_Start");
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_SRef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_SRef", RefNo, this).Result;
                 Common.AppLib.WriteLog("FindRefNo_End");
             }
             catch (Exception ex)
@@ -661,7 +661,7 @@ namespace AccountBuddy.BLL
             List<Sale> rv = new List<Sale>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<Sale>>("Sale_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<List<Sale>>("Sale_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

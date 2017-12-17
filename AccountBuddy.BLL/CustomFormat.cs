@@ -109,7 +109,7 @@ namespace AccountBuddy.BLL
             {
                 try
                 {
-                    if (_toList == null) _toList = new ObservableCollection<CustomFormat>(FMCGHubClient.FMCGHub.Invoke<List<CustomFormat>>("CustomFormat_List").Result);
+                    if (_toList == null) _toList = new ObservableCollection<CustomFormat>(FMCGHubClient.HubCaller.Invoke<List<CustomFormat>>("CustomFormat_List").Result);
                    
                 }
                 catch(Exception ex)
@@ -540,7 +540,7 @@ namespace AccountBuddy.BLL
                 this.toCopy<CustomFormat>(d);
                 if (isServerCall == false)
                 {
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("CustomFormat_Save", this).Result;
+                    var i = FMCGHubClient.HubCaller.Invoke<int>("CustomFormat_Save", this).Result;
                     d.Id = i;
                 }
                 SetDataFormat();
@@ -593,7 +593,7 @@ namespace AccountBuddy.BLL
 
                 if (isServerCall == false)
                 {
-                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("CustomFormat_Delete", this.Id).Result;
+                    rv = FMCGHubClient.HubCaller.Invoke<bool>("CustomFormat_Delete", this.Id).Result;
                     if (rv == true)
                     {
                         toList.Remove(d);

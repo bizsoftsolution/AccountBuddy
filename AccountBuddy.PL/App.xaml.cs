@@ -58,7 +58,7 @@ namespace AccountBuddy.PL
 
 
         private static HubConnection _hubCon;
-        private static IHubProxy _fmcgHub;
+        private static IHubProxy _hubReceiver;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -103,7 +103,7 @@ namespace AccountBuddy.PL
                         {
                             try
                             {
-                                Common.AppLib.AppIdValue = BLL.FMCGHubClient.FMCGHub.Invoke<string>("GetNewAppId").Result;
+                                Common.AppLib.AppIdValue = BLL.FMCGHubClient.HubCaller.Invoke<string>("GetNewAppId").Result;
                                 Environment.SetEnvironmentVariable(Common.AppLib.AppIdKey, Common.AppLib.AppIdValue, EnvironmentVariableTarget.Machine);
                             }
                             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace AccountBuddy.PL
 
                         }
 
-                        Common.AppLib.IsAppApproved = BLL.FMCGHubClient.FMCGHub.Invoke<bool>("SystemLogin", Common.AppLib.AppIdValue, Environment.MachineName, Environment.UserName, Environment.UserDomainName).Result;
+                        Common.AppLib.IsAppApproved = BLL.FMCGHubClient.HubCaller.Invoke<bool>("SystemLogin", Common.AppLib.AppIdValue, Environment.MachineName, Environment.UserName, Environment.UserDomainName).Result;
                         if (Common.AppLib.IsAppApproved)
                         {
                             frmInit.Hide();
@@ -181,10 +181,11 @@ namespace AccountBuddy.PL
                 Common.AppLib.WriteLog(string.Format("SLPath:{0}", Common.AppLib.SLPath));
                 _hubCon = new HubConnection(Common.AppLib.SLPath);
                 Common.AppLib.WriteLog("SL Connected");
-                _fmcgHub = _hubCon.CreateHubProxy("ABServerHub");
+                BLL.FMCGHubClient.HubCaller = _hubCon.CreateHubProxy("ABServerHub");
+                _hubReceiver = _hubCon.CreateHubProxy("ABServerHub");
                 Common.AppLib.WriteLog("Hub Created");
 
-                BLL.FMCGHubClient.FMCGHub = _fmcgHub;
+                
                 _hubCon.Closed += Hubcon_Closed;
                 _hubCon.ConnectionSlow += Hubcon_ConnectionSlow;
                 _hubCon.Error += Hubcon_Error;
@@ -219,14 +220,13 @@ namespace AccountBuddy.PL
 
         void ClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On("AppApproved_Changed", (IsApproved) =>
+            BLL.FMCGHubClient.HubCaller.On("AppApproved_Changed", (IsApproved) =>
             {
                 try
                 {
 
                     this.Dispatcher.Invoke(() =>
-                    {
-                        //var IsApproved = BLL.FMCGHubClient.FMCGHub.Invoke<bool>("SystemLogin", Common.AppLib.AppIdValue, Environment.MachineName, Environment.UserName, Environment.UserDomainName).Result;
+                    {                        
                         Common.AppLib.IsAppApproved = IsApproved;
                         if (IsApproved)
                         {
@@ -269,7 +269,7 @@ namespace AccountBuddy.PL
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On<BLL.CompanyDetail>("CompanyDetail_Save", (cs) =>
+            BLL.FMCGHubClient.HubCaller.On<BLL.CompanyDetail>("CompanyDetail_Save", (cs) =>
             {
 
                 this.Dispatcher.Invoke(() =>

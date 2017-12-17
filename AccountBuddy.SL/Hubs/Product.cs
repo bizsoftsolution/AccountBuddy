@@ -51,12 +51,12 @@ namespace AccountBuddy.SL.Hubs
 
             if (Caller.CompanyType == "Company")
             {
-                return Caller.DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+                return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => Product_DALtoBLL(x)).ToList();
             }
             else
             {
-                return Caller.DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.UnderCompanyId).ToList()
+                return DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.UnderCompanyId).ToList()
                            .Select(x => Product_DALtoBLL(x)).ToList();
 
             }
@@ -64,14 +64,14 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.Product Product_Save(BLL.Product pro)
         {
-            DAL.Product d = Caller.DB.Products.Where(x => x.Id == pro.Id).FirstOrDefault();
+            DAL.Product d = DB.Products.Where(x => x.Id == pro.Id).FirstOrDefault();
             try
             {
 
                 if (d == null)
                 {
                     d = new DAL.Product();
-                    Caller.DB.Products.Add(d);
+                    DB.Products.Add(d);
 
                     pro.toCopy<DAL.Product>(d);
 
@@ -83,7 +83,7 @@ namespace AccountBuddy.SL.Hubs
                     pd.ReorderLevel = pro.ReOrderLevel;
 
 
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     pro.Id = d.Id;
                     LogDetailStore(pro, LogDetailType.INSERT);
                 }
@@ -101,7 +101,7 @@ namespace AccountBuddy.SL.Hubs
                     pd.OpeningStock = pro.OpeningStock;
                     pd.ReorderLevel = pro.ReOrderLevel;
 
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                 }
                 Clients.Clients(OtherLoginClients).Product_Save(Product_DALtoBLL(d));
 
@@ -126,14 +126,14 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = Caller.DB.Products.Where(x => x.Id == pk).FirstOrDefault();
+                var d = DB.Products.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null)
                 {
                     var p = Product_DALtoBLL(d);
-                    Caller.DB.ProductDetails.RemoveRange(d.ProductDetails);
-                    Caller.DB.Products.Remove(d);
+                    DB.ProductDetails.RemoveRange(d.ProductDetails);
+                    DB.Products.Remove(d);
                     //Ledger_Delete((int)d.LedgerId);
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     LogDetailStore(p, LogDetailType.DELETE);
                 }
 
@@ -163,7 +163,7 @@ namespace AccountBuddy.SL.Hubs
 
         public bool Product_CanDeleteById(int Id)
         {
-            return Product_CanDelete(Caller.DB.Products.Where(x => x.Id == Id).FirstOrDefault());
+            return Product_CanDelete(DB.Products.Where(x => x.Id == Id).FirstOrDefault());
         }
 
         #endregion

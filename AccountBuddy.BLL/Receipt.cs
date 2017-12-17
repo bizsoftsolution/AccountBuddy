@@ -599,7 +599,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("Receipt_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("Receipt_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -615,7 +615,7 @@ namespace AccountBuddy.BLL
 
             ReceiptDate = DateTime.Now;
             IsReadOnly = !UserPermission.AllowInsert;
-            EntryNo = FMCGHubClient.FMCGHub.Invoke<string>("Receipt_NewRefNo").Result;
+            EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Receipt_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -623,7 +623,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Receipt po = FMCGHubClient.FMCGHub.Invoke<Receipt>("Receipt_Find", EntryNo).Result;
+                Receipt po = FMCGHubClient.HubCaller.Invoke<Receipt>("Receipt_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Receipt>(this);
                 this.RDetails = po.RDetails;
@@ -640,7 +640,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("Receipt_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("Receipt_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -703,7 +703,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_REntryNo", EntryNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_REntryNo", EntryNo, this).Result;
             }
             catch (Exception ex)
             {
@@ -713,7 +713,7 @@ namespace AccountBuddy.BLL
         }
         public static List<Receipt> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<Receipt>>("Receipt_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<Receipt>>("Receipt_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
         }
 
 

@@ -71,7 +71,7 @@ namespace AccountBuddy.BLL
                     if (_toList == null)
                     {
                         _toList = new ObservableCollection<StockGroup>();
-                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<StockGroup>>("StockGroup_List").Result;
+                        var l1 = FMCGHubClient.HubCaller.Invoke<List<StockGroup>>("StockGroup_List").Result;
                         _toList = new ObservableCollection<StockGroup>(l1.OrderBy(x => x.StockGroupNameWithCode));
                     }
                 }
@@ -110,7 +110,7 @@ namespace AccountBuddy.BLL
                     if (_StocktoList == null)
                     {
                         _StocktoList = new ObservableCollection<StockGroup>();
-                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<StockGroup>>("StockGroup_PrimaryList").Result;
+                        var l1 = FMCGHubClient.HubCaller.Invoke<List<StockGroup>>("StockGroup_PrimaryList").Result;
                         _StocktoList = new ObservableCollection<StockGroup>(l1.OrderBy(x => x.StockGroupNameWithCode));
                     }
                 }
@@ -396,7 +396,7 @@ namespace AccountBuddy.BLL
                 if (isServerCall == false)
                 {
                   //  StockGroup sg = new StockGroup() { StockGroupName = this.StockGroupName, UnderGroupId = this.UnderGroupId, GroupCode = this.GroupCode, IsPurchase=this.IsPurchase, IsSale=this.IsSale };
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("StockGroup_Save", d).Result;
+                    var i = FMCGHubClient.HubCaller.Invoke<int>("StockGroup_Save", d).Result;
                     d.Id = i;
                 }
 
@@ -447,7 +447,7 @@ namespace AccountBuddy.BLL
 
                 if (isServerCall == false)
                 {
-                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("StockGroup_Delete", this.Id).Result;
+                    rv = FMCGHubClient.HubCaller.Invoke<bool>("StockGroup_Delete", this.Id).Result;
                     if (rv == true)
                     {
                         toList.Remove(d);

@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
     {
         public ABServerHub()
         {
-            DB = new DAL.DBFMCGEntities();
+            DB = new DAL.DBFMCGEntities();            
         }
         #region Constant
 

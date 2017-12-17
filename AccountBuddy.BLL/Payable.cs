@@ -111,7 +111,7 @@ namespace AccountBuddy.BLL
         public static List<Payable> ToList(DateTime dt)
         {
             
-            return FMCGHubClient.FMCGHub.Invoke<List<Payable>>("Payable_List", dt).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<Payable>>("Payable_List", dt).Result;
         }
 
         #endregion

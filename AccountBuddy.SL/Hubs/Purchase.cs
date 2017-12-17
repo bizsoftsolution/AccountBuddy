@@ -19,7 +19,7 @@ namespace AccountBuddy.SL.Hubs
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Purchase, dt, dt.Month);
             long No = 0;
 
-            var d = Caller.DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
@@ -32,13 +32,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Purchase d = Caller.DB.Purchases.Where(x => x.Id == P.Id).FirstOrDefault();
+                DAL.Purchase d = DB.Purchases.Where(x => x.Id == P.Id).FirstOrDefault();
 
                 if (d == null)
                 {
 
                     d = new DAL.Purchase();
-                    Caller.DB.Purchases.Add(d);
+                    DB.Purchases.Add(d);
 
 
                     P.toCopy<DAL.Purchase>(d);
@@ -49,7 +49,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.PurchaseDetail>(d_pod);
                         d.PurchaseDetails.Add(d_pod);
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     P.Id = d.Id;
 
                     LogDetailStore(P, LogDetailType.INSERT);
@@ -64,7 +64,7 @@ namespace AccountBuddy.SL.Hubs
                     //}
 
                     decimal rd = P.PDetails.Select(X => X.PurchaseId).FirstOrDefault();
-                    Caller.DB.PurchaseDetails.RemoveRange(d.PurchaseDetails.Where(x => x.PurchaseId == rd).ToList());
+                    DB.PurchaseDetails.RemoveRange(d.PurchaseDetails.Where(x => x.PurchaseId == rd).ToList());
 
                     P.toCopy<DAL.Purchase>(d);
                     foreach (var b_Pd in P.PDetails)
@@ -77,7 +77,7 @@ namespace AccountBuddy.SL.Hubs
                       //  }
                         b_Pd.toCopy<DAL.PurchaseDetail>(d_Pd);
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 Clients.Clients(OtherLoginClients).Purchase_RefNoRefresh(Purchase_NewRefNo());
@@ -95,7 +95,7 @@ namespace AccountBuddy.SL.Hubs
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
 
-            DAL.Purchase p = Caller.DB.Purchases.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Purchase p = DB.Purchases.Where(x => x.RefCode == RefCode).FirstOrDefault();
 
             if (S.Ledger.LedgerName.StartsWith("CM-") || S.Ledger.LedgerName.StartsWith("WH-") || S.Ledger.LedgerName.StartsWith("DL-"))
             {
@@ -110,11 +110,11 @@ namespace AccountBuddy.SL.Hubs
                         p = new DAL.Purchase();
                         p.RefNo = Purchase_NewRefNoByCompanyId(CId);
                         p.RefCode = RefCode;
-                        Caller.DB.Purchases.Add(p);
+                        DB.Purchases.Add(p);
                     }
                     else
                     {
-                        Caller.DB.PurchaseDetails.RemoveRange(p.PurchaseDetails);
+                        DB.PurchaseDetails.RemoveRange(p.PurchaseDetails);
                     }
 
                     p.PurchaseDate = S.SalesDate;
@@ -131,7 +131,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.PurchaseDetail>(d_pod);
                         p.PurchaseDetails.Add(d_pod);
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     Journal_SaveByPurchase(p);
                 }
             }
@@ -143,7 +143,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, s.Id);
-                DAL.Purchase d = Caller.DB.Purchases.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                DAL.Purchase d = DB.Purchases.Where(x => x.RefCode == RefCode).FirstOrDefault();
                 if (d != null)
                 {
                     Purchase_Delete(d.Id);
@@ -164,14 +164,14 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Purchase d = Caller.DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
-                Caller.DB.Entry(d).Reload();
+                DAL.Purchase d = DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
+                DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.Purchase>(P);
-                    P.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
-                    P.TransactionType = (d.TransactionType ?? Caller.DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
 
                     int i = 0;
                     foreach (var d_pod in d.PurchaseDetails)
@@ -180,8 +180,8 @@ namespace AccountBuddy.SL.Hubs
                         d_pod.toCopy<BLL.PurchaseDetail>(b_pod);
                         P.PDetails.Add(b_pod);
                         b_pod.SNo = ++i;
-                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }
 
                 }
@@ -194,14 +194,14 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.Purchase d = Caller.DB.Purchases.Where(x => x.Id == pk).FirstOrDefault();
+                DAL.Purchase d = DB.Purchases.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
                     var P = Purchase_DALtoBLL(d);
-                    Caller.DB.PurchaseDetails.RemoveRange(d.PurchaseDetails);
-                    Caller.DB.Purchases.Remove(d);
-                    Caller.DB.SaveChanges();
+                    DB.PurchaseDetails.RemoveRange(d.PurchaseDetails);
+                    DB.Purchases.Remove(d);
+                    DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
                     Journal_DeleteByPurchase(P);
                     Sales_DeleteByPurchase(d);
@@ -225,7 +225,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_PRef(string RefNo, BLL.Purchase PO)
 
         {
-            DAL.Purchase d = Caller.DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.Purchase d = DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
             if (d == null)
             {
                 return false;
@@ -242,21 +242,21 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Purchase d = Caller.DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
-                Caller.DB.Entry(d).Reload();
+                DAL.Purchase d = DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.Purchase>(P);
-                    P.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
-                    P.TransactionType = (d.TransactionType ?? Caller.DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     foreach (var d_pod in d.PurchaseDetails)
                     {
                         BLL.PurchaseDetail b_pod = new BLL.PurchaseDetail();
                         d_pod.toCopy<BLL.PurchaseDetail>(b_pod);
                         P.PDetails.Add(b_pod);
-                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }
 
                 }
@@ -269,11 +269,11 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.Purchase> Purchase_List(int? LedgerId, int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<BLL.Purchase> lstPurchase = new List<BLL.Purchase>();
-            Caller.DB = new DAL.DBFMCGEntities();
+            
             BLL.Purchase rp = new BLL.Purchase();
             try
             {
-                foreach (var l in Caller.DB.Purchases.
+                foreach (var l in DB.Purchases.
                       Where(x => x.PurchaseDate >= dtFrom && x.PurchaseDate <= dtTo
                       && (x.LedgerId == LedgerId || LedgerId == null)
                       && (TType == null || x.TransactionTypeId == TType)

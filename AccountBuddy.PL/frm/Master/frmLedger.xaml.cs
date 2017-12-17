@@ -311,7 +311,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.Ledger>("Ledger_Save", (led) =>
+            BLL.FMCGHubClient.HubCaller.On<BLL.Ledger>("Ledger_Save", (led) =>
             {
 
                 this.Dispatcher.Invoke(() =>
@@ -321,7 +321,7 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("Ledger_Delete", (Action<int>)((pk) =>
+            BLL.FMCGHubClient.HubCaller.On("Ledger_Delete", (Action<int>)((pk) =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
                 {

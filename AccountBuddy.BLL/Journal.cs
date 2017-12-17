@@ -315,7 +315,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("Journal_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("Journal_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -331,7 +331,7 @@ namespace AccountBuddy.BLL
 
             JournalDate = DateTime.Now;
             IsReadOnly = !UserPermission.AllowInsert;
-            EntryNo = FMCGHubClient.FMCGHub.Invoke<string>("Journal_NewRefNo").Result;
+            EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Journal_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -339,7 +339,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Journal po = FMCGHubClient.FMCGHub.Invoke<Journal>("Journal_Find", EntryNo).Result;
+                Journal po = FMCGHubClient.HubCaller.Invoke<Journal>("Journal_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Journal>(this);
                 this.JDetails = po.JDetails;
@@ -357,7 +357,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Journal po = FMCGHubClient.FMCGHub.Invoke<Journal>("Journal_FindById", Id).Result;
+                Journal po = FMCGHubClient.HubCaller.Invoke<Journal>("Journal_FindById", Id).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Journal>(this);
                 this.JDetails = po.JDetails;
@@ -376,7 +376,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("Journal_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("Journal_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -389,7 +389,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("FindEntryNo", EntryNo, this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("FindEntryNo", EntryNo, this).Result;
             }
             catch (Exception ex)
             {
@@ -446,7 +446,7 @@ namespace AccountBuddy.BLL
         }
         public static List<Journal> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<Journal>>("Journal_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<Journal>>("Journal_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
         }
         #endregion
     }

@@ -25,7 +25,7 @@ namespace AccountBuddy.BLL
                 if (_tolist == null)
                 {
                     _tolist = new List<CreditLimitType>();
-                    _tolist = FMCGHubClient.FMCGHub.Invoke<List<BLL.CreditLimitType>>("creditLimitType_List").Result;
+                    _tolist = FMCGHubClient.HubCaller.Invoke<List<BLL.CreditLimitType>>("creditLimitType_List").Result;
                 }
                 return _tolist;
             }

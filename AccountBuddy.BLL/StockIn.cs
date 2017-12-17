@@ -287,7 +287,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("StockIn_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("StockIn_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -302,7 +302,7 @@ namespace AccountBuddy.BLL
             this.STInDetails = new ObservableCollection<StockInDetail>();
 
             Date = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("StockIn_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("StockIn_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -310,7 +310,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                StockIn po = FMCGHubClient.FMCGHub.Invoke<StockIn>("StockIn_Find", SearchText).Result;
+                StockIn po = FMCGHubClient.HubCaller.Invoke<StockIn>("StockIn_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<StockIn>(this);
                 this.STInDetails = po.STInDetails;
@@ -326,7 +326,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                StockIn po = FMCGHubClient.FMCGHub.Invoke<StockIn>("StockIn_FindById", Id).Result;
+                StockIn po = FMCGHubClient.HubCaller.Invoke<StockIn>("StockIn_FindById", Id).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<StockIn>(this);
                 this.STInDetails = po.STInDetails;
@@ -343,7 +343,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("StockIn_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("StockIn_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -404,7 +404,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_STInRef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_STInRef", RefNo, this).Result;
             }
             catch (Exception ex)
             {
@@ -418,7 +418,7 @@ namespace AccountBuddy.BLL
             List<StockIn> rv = new List<StockIn>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<StockIn>>("StockIn_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<List<StockIn>>("StockIn_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

@@ -89,7 +89,7 @@ namespace AccountBuddy.BLL
 
         public static List<Receivable> ToList(DateTime dt)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<Receivable>>("Receivable_List", dt).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<Receivable>>("Receivable_List", dt).Result;
         }
 
         #endregion

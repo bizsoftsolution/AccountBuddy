@@ -514,7 +514,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseReturn_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("PurchaseReturn_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -534,7 +534,7 @@ namespace AccountBuddy.BLL
             this.PRDetails = new ObservableCollection<PurchaseReturnDetail>();
 
             PRDate = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseReturn_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseReturn_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -542,7 +542,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                PurchaseReturn po = FMCGHubClient.FMCGHub.Invoke<PurchaseReturn>("PurchaseReturn_Find", SearchText).Result;
+                PurchaseReturn po = FMCGHubClient.HubCaller.Invoke<PurchaseReturn>("PurchaseReturn_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<PurchaseReturn>(this);
                 this.PRDetails = po.PRDetails;
@@ -558,7 +558,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                PurchaseReturn po = FMCGHubClient.FMCGHub.Invoke<PurchaseReturn>("PurchaseReturn_FindById", Id).Result;
+                PurchaseReturn po = FMCGHubClient.HubCaller.Invoke<PurchaseReturn>("PurchaseReturn_FindById", Id).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<PurchaseReturn>(this);
                 this.PRDetails = po.PRDetails;
@@ -574,7 +574,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseReturn_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("PurchaseReturn_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -642,7 +642,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_PRRef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_PRRef", RefNo, this).Result;
             }
             catch (Exception ex)
             {
@@ -656,7 +656,7 @@ namespace AccountBuddy.BLL
             List<PurchaseReturn> rv = new List<PurchaseReturn>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<PurchaseReturn>>("PurchaseReturn_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<List<PurchaseReturn>>("PurchaseReturn_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

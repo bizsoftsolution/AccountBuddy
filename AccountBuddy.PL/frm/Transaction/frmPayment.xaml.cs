@@ -48,7 +48,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<String>("Payment_RefNoRefresh", (EntryNo) =>
+            BLL.FMCGHubClient.HubCaller.On<String>("Payment_RefNoRefresh", (EntryNo) =>
             {
                 this.Dispatcher.Invoke(() =>
                             {
