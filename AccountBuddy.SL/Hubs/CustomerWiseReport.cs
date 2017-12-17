@@ -12,7 +12,7 @@ namespace AccountBuddy.SL.Hubs
             List<BLL.CustomerWiseReport> lstCustomerWise = new List<BLL.CustomerWiseReport>();
             BLL.CustomerWiseReport tb = new BLL.CustomerWiseReport();
 
-            var lstLedger = Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == CustomerId).ToList();
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == CustomerId).ToList();
 
 
             #region Ledger

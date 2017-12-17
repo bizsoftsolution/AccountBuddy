@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
             List<BLL.Receivable> lstReceivable = new List<BLL.Receivable>();
             BLL.Receivable tb = new BLL.Receivable();
 
-            var lstLedger = Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId);
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId);
             decimal TotAmt = 0;
 
             foreach (var l in lstLedger)

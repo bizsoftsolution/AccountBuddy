@@ -19,7 +19,7 @@ namespace AccountBuddy.SL.Hubs
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.StockSeparated, dt, dt.Month);
             long No = 0;
 
-            var d = Caller.DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
@@ -32,13 +32,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.StockSeparated d = Caller.DB.StockSeparateds.Where(x => x.Id == SO.Id).FirstOrDefault();
+                DAL.StockSeparated d = DB.StockSeparateds.Where(x => x.Id == SO.Id).FirstOrDefault();
 
                 if (d == null)
                 {
 
                     d = new DAL.StockSeparated();
-                    Caller.DB.StockSeparateds.Add(d);
+                    DB.StockSeparateds.Add(d);
 
                     SO.toCopy<DAL.StockSeparated>(d);
 
@@ -48,7 +48,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.StockSeperatedDetail>(d_pod);
                         d.StockSeperatedDetails.Add(d_pod);
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     SO.Id = d.Id;
                     LogDetailStore(SO, LogDetailType.INSERT);
                 }
@@ -61,7 +61,7 @@ namespace AccountBuddy.SL.Hubs
                     //}
 
                     decimal rd = SO.SSDetails.Select(X => X.SSId).FirstOrDefault().Value;
-                    Caller.DB.StockSeperatedDetails.RemoveRange(d.StockSeperatedDetails.Where(x => x.SSId == rd).ToList());
+                    DB.StockSeperatedDetails.RemoveRange(d.StockSeperatedDetails.Where(x => x.SSId == rd).ToList());
 
 
                     SO.toCopy<DAL.StockSeparated>(d);
@@ -94,20 +94,20 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.StockSeparated d = Caller.DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
-                Caller.DB.Entry(d).Reload();
+                DAL.StockSeparated d = DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
+                DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.StockSeperated>(SO);
-                    SO.StaffName = (d.Staff ?? Caller.DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
+                    SO.StaffName = (d.Staff ?? DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
                     foreach (var d_pod in d.StockSeperatedDetails)
                     {
                         BLL.StockSeperatedDetail b_pod = new BLL.StockSeperatedDetail();
                         d_pod.toCopy<BLL.StockSeperatedDetail>(b_pod);
                         SO.SSDetails.Add(b_pod);
-                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         //  SO.Status = d.StockSeperatedDetails.FirstOrDefault()..Count() > 0 ? "Sold" : "Pending";
                     }
 
@@ -121,14 +121,14 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.StockSeparated d = Caller.DB.StockSeparateds.Where(x => x.Id == pk).FirstOrDefault();
+                DAL.StockSeparated d = DB.StockSeparateds.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
                     var s = StockSeperated_DALtoBLL(d);
-                    Caller.DB.StockSeperatedDetails.RemoveRange(d.StockSeperatedDetails);
-                    Caller.DB.StockSeparateds.Remove(d);
-                    Caller.DB.SaveChanges();
+                    DB.StockSeperatedDetails.RemoveRange(d.StockSeperatedDetails);
+                    DB.StockSeparateds.Remove(d);
+                    DB.SaveChanges();
 
                     LogDetailStore(s, LogDetailType.DELETE);
                     Journal_DeleteByStockSeparated(s);
@@ -141,7 +141,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.StockSeperated> StockSeperated_JRPendingList()
         {
-            return Caller.DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
+            return DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
                                      .ToList()
                                      .Select(x => StockSeperated_DALtoBLL(x))
                                      .ToList();
@@ -158,7 +158,7 @@ namespace AccountBuddy.SL.Hubs
         }
         public bool Find_SSRef(string RefNo, BLL.StockSeperated JO)
         {
-            DAL.StockSeparated d1 = Caller.DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != JO.Id).FirstOrDefault();
+            DAL.StockSeparated d1 = DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != JO.Id).FirstOrDefault();
 
             if (d1 == null)
             {
@@ -176,20 +176,20 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.StockSeparated d = Caller.DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
-                Caller.DB.Entry(d).Reload();
+                DAL.StockSeparated d = DB.StockSeparateds.Where(x => x.Staff.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Id == ID).FirstOrDefault();
+                DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.StockSeperated>(P);
-                    P.StaffName = (d.Staff ?? Caller.DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
+                    P.StaffName = (d.Staff ?? DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
                     foreach (var d_pod in d.StockSeperatedDetails)
                     {
                         BLL.StockSeperatedDetail b_pod = new BLL.StockSeperatedDetail();
                         d_pod.toCopy<BLL.StockSeperatedDetail>(b_pod);
                         P.SSDetails.Add(b_pod);
-                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }
 
                 }

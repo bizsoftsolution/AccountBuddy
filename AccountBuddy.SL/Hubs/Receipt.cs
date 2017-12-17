@@ -16,7 +16,7 @@ namespace AccountBuddy.SL.Hubs
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Receipt, dt, dt.Month);
             long No = 0;
 
-            var d = Caller.DB.Receipts.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.EntryNo.StartsWith(Prefix))
+            var d = DB.Receipts.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.EntryNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.EntryNo)
                                      .FirstOrDefault();
 
@@ -30,13 +30,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Receipt d = Caller.DB.Receipts.Where(x => x.Id == PO.Id).FirstOrDefault();
+                DAL.Receipt d = DB.Receipts.Where(x => x.Id == PO.Id).FirstOrDefault();
 
                 if (d == null)
                 {
 
                     d = new DAL.Receipt();
-                    Caller.DB.Receipts.Add(d);
+                    DB.Receipts.Add(d);
 
                     PO.toCopy<DAL.Receipt>(d);
 
@@ -46,7 +46,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.ReceiptDetail>(d_pod);
                         d.ReceiptDetails.Add(d_pod);
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     PO.Id = d.Id;
                     LogDetailStore(PO, LogDetailType.INSERT);
                 }
@@ -59,7 +59,7 @@ namespace AccountBuddy.SL.Hubs
                     //    if (b_pod == null) d.ReceiptDetails.Remove(d_pod);
                     //}
                     decimal rd = PO.RDetails.Select(X => X.ReceiptId).FirstOrDefault();
-                    Caller.DB.ReceiptDetails.RemoveRange(d.ReceiptDetails.Where(x => x.ReceiptId == rd).ToList());
+                    DB.ReceiptDetails.RemoveRange(d.ReceiptDetails.Where(x => x.ReceiptId == rd).ToList());
 
                     PO.toCopy<DAL.Receipt>(d);
 
@@ -73,7 +73,7 @@ namespace AccountBuddy.SL.Hubs
                       //  }
                         b_pod.toCopy<DAL.ReceiptDetail>(d_pod);
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     Clients.Clients(OtherLoginClients).Receipt_RefNoRefresh(Receipt_NewRefNo());
                     LogDetailStore(PO, LogDetailType.UPDATE);
                     Journal_SaveByReceipt(PO);
@@ -91,19 +91,19 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Receipt d = Caller.DB.Receipts.Where(x => x.EntryNo == SearchText && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
-                Caller.DB.Entry(d).Reload();
+                DAL.Receipt d = DB.Receipts.Where(x => x.EntryNo == SearchText && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.Receipt>(PO);
-                    PO.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    PO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     foreach (var d_pod in d.ReceiptDetails)
                     {
                         BLL.ReceiptDetail b_pod = new BLL.ReceiptDetail();
                         d_pod.toCopy<BLL.ReceiptDetail>(b_pod);
                         PO.RDetails.Add(b_pod);
-                        b_pod.LedgerName = (d_pod.Ledger ?? Caller.DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                        b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
 
                 }
@@ -116,14 +116,14 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.Receipt d = Caller.DB.Receipts.Where(x => x.Id == pk).FirstOrDefault();
+                DAL.Receipt d = DB.Receipts.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
                     var P = Receipt_DALtoBLL(d);
-                    Caller.DB.ReceiptDetails.RemoveRange(d.ReceiptDetails);
-                    Caller.DB.Receipts.Remove(d);
-                    Caller.DB.SaveChanges();
+                    DB.ReceiptDetails.RemoveRange(d.ReceiptDetails);
+                    DB.Receipts.Remove(d);
+                    DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
                     Journal_DeleteByReceipt(P);
                     Clients.Clients(OtherLoginClients).Receipt_RefNoRefresh(Receipt_NewRefNo());
@@ -148,7 +148,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_REntryNo(string entryNo, BLL.Receipt PO)
 
         {
-            DAL.Receipt d = Caller.DB.Receipts.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+            DAL.Receipt d = DB.Receipts.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
             if (d == null)
             {
                 return false;

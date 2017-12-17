@@ -23,7 +23,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Supplier> Supplier_List()
         {
-            return Caller.DB.Suppliers.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+            return DB.Suppliers.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => Supplier_DALtoBLL(x)).ToList();
 
           
@@ -34,7 +34,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.Supplier d = Caller.DB.Suppliers.Where(x => x.Id == sup.Id).FirstOrDefault();
+                DAL.Supplier d = DB.Suppliers.Where(x => x.Id == sup.Id).FirstOrDefault();
                 if (d == null)
                 {
 
@@ -42,8 +42,8 @@ namespace AccountBuddy.SL.Hubs
                     d.LedgerId = Ledger_Save(sup.Ledger);
                     if (d.LedgerId != 0)
                     {
-                        Caller.DB.Suppliers.Add(d);
-                        Caller.DB.SaveChanges();
+                        DB.Suppliers.Add(d);
+                        DB.SaveChanges();
                         sup.Id = d.Id;
                         LogDetailStore(sup, LogDetailType.INSERT);
                     }
@@ -52,7 +52,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     sup.toCopy<DAL.Supplier>(d);
                     Ledger_Save(sup.Ledger);
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     LogDetailStore(sup, LogDetailType.UPDATE);
                 }
                 var s = Supplier_DALtoBLL(d);
@@ -69,12 +69,12 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = Caller.DB.Suppliers.Where(x => x.Id == pk).FirstOrDefault();
+                var d = DB.Suppliers.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null && Ledger_CanDelete(d.Ledger))
                 {
                     var s = Supplier_DALtoBLL(d);
-                    Caller.DB.Suppliers.Remove(d);
-                    Caller.DB.SaveChanges();
+                    DB.Suppliers.Remove(d);
+                    DB.SaveChanges();
                     Ledger_Delete((int)d.LedgerId);                    
                     LogDetailStore(s, LogDetailType.DELETE);
                 }

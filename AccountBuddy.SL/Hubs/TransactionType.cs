@@ -20,7 +20,7 @@ namespace AccountBuddy.SL.Hubs
                 if (_transactionType_List == null)
                 {
                     _transactionType_List = new List<BLL.TransactionType>();
-                    foreach (var d1 in Caller.DB.TransactionTypes.ToList())
+                    foreach (var d1 in DB.TransactionTypes.ToList())
                     {
                         BLL.TransactionType d2 = new BLL.TransactionType();
                         d1.toCopy<BLL.TransactionType>(d2);

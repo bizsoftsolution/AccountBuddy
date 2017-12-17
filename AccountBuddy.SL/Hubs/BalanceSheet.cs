@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.BalanceSheet> Balancesheet_List(DateTime dtFrom, DateTime dtTo)
         {
             List<BLL.BalanceSheet> lstBalanceSheet = new List<BLL.BalanceSheet>();
-            var l1 = Caller.DB.AccountGroups.Where(x => x.CompanyId==Caller.CompanyId && ( x.GroupName == "Assets" || x.GroupName == "Liabilities")).ToList();
+            var l1 = DB.AccountGroups.Where(x => x.CompanyId==Caller.CompanyId && ( x.GroupName == "Assets" || x.GroupName == "Liabilities")).ToList();
             decimal GTotalDr = 0, GTotalCr = 0, GTotalDrOP = 0, GTotalCrOP = 0;
             foreach (var ag in l1)
             {

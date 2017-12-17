@@ -19,18 +19,18 @@ namespace AccountBuddy.SL.Hubs
         {
             if (Caller.CompanyType == "Warehouse")
             {
-                return Caller.DB.Departments.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
+                return DB.Departments.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
                               .Select(x => Department_DALtoBLL(x)).ToList();
             }
             else if (Caller.CompanyType == "Dealer")
             {
-                var wh = Caller.DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
-                return Caller.DB.Departments.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
+                var wh = DB.CompanyDetails.Where(x => x.Id == Caller.UnderCompanyId).FirstOrDefault();
+                return DB.Departments.Where(x => x.CompanyId == wh.UnderCompanyId).ToList()
                               .Select(x => Department_DALtoBLL(x)).ToList();
             }
             else
             {
-                return Caller.DB.Departments.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+                return DB.Departments.Where(x => x.CompanyId == Caller.CompanyId).ToList()
                               .Select(x => Department_DALtoBLL(x)).ToList();
             }
 
@@ -41,15 +41,15 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 agp.CompanyId = Caller.CompanyId;
-                DAL.Department d = Caller.DB.Departments.Where(x => x.Id == agp.Id).FirstOrDefault();
+                DAL.Department d = DB.Departments.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
                 {
                     d = new DAL.Department();
-                    Caller.DB.Departments.Add(d);
+                    DB.Departments.Add(d);
 
                     agp.toCopy<DAL.Department>(d);
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
 
                     agp.Id = d.Id;
                     LogDetailStore(agp, LogDetailType.INSERT);
@@ -57,7 +57,7 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
                     agp.toCopy<DAL.Department>(d);
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
@@ -74,11 +74,11 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = Caller.DB.Departments.Where(x => x.Id == pk).FirstOrDefault();                
+                var d = DB.Departments.Where(x => x.Id == pk).FirstOrDefault();                
                 if (d != null)
                 {
-                    Caller.DB.Departments.Remove(d);
-                    Caller.DB.SaveChanges();
+                    DB.Departments.Remove(d);
+                    DB.SaveChanges();
                     LogDetailStore(d.toCopy<BLL.Department>(new BLL.Department()), LogDetailType.DELETE);
 
                     Clients.Clients(OtherLoginClients).SDepartment_Delete(pk);

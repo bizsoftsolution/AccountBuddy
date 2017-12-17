@@ -19,7 +19,7 @@ namespace AccountBuddy.SL.Hubs
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.SalesOrder, dt, dt.Month);
             long No = 0;
 
-            var d = Caller.DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
+            var d = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId && x.RefNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.RefNo)
                                      .FirstOrDefault();
 
@@ -32,13 +32,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 
-                DAL.SalesOrder d = Caller.DB.SalesOrders.Where(x => x.Id == SO.Id).FirstOrDefault();
+                DAL.SalesOrder d = DB.SalesOrders.Where(x => x.Id == SO.Id).FirstOrDefault();
 
                 if (d == null)
                 {
 
                     d = new DAL.SalesOrder();
-                    Caller.DB.SalesOrders.Add(d);
+                    DB.SalesOrders.Add(d);
 
                     SO.toCopy<DAL.SalesOrder>(d);
 
@@ -48,7 +48,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.SalesOrderDetail>(d_pod);
                         d.SalesOrderDetails.Add(d_pod);
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     SO.Id = d.Id;
                     LogDetailStore(SO, LogDetailType.INSERT);
                 }
@@ -60,7 +60,7 @@ namespace AccountBuddy.SL.Hubs
                     //    if (b_SOd == null) d.SalesOrderDetails.Remove(d_SOd);
                     //}
                     decimal rd = SO.SODetails.Select(X => X.SOId).FirstOrDefault().Value;
-                    Caller.DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails.Where(x => x.SOId == rd).ToList());
+                    DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails.Where(x => x.SOId == rd).ToList());
 
                     SO.toCopy<DAL.SalesOrder>(d);
                     foreach (var b_SOd in SO.SODetails)
@@ -140,20 +140,20 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.SalesOrder d = Caller.DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
-                Caller.DB.Entry(d).Reload();
+                DAL.SalesOrder d = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
+                DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.SalesOrder>(SO);
-                    SO.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    SO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     foreach (var d_pod in d.SalesOrderDetails)
                     {
                         BLL.SalesOrderDetail b_pod = new BLL.SalesOrderDetail();
                         d_pod.toCopy<BLL.SalesOrderDetail>(b_pod);
                         SO.SODetails.Add(b_pod);
-                        b_pod.ProductName = (d_pod.Product ?? Caller.DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
-                        b_pod.UOMName = (d_pod.UOM ?? Caller.DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                        b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
+                        b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         SO.Status = d.SalesOrderDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
                     }
 
@@ -167,14 +167,14 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.SalesOrder d = Caller.DB.SalesOrders.Where(x => x.Id == pk).FirstOrDefault();
+                DAL.SalesOrder d = DB.SalesOrders.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
                     var s = SalesOrder_DALtoBLL(d);
-                    Caller.DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails);
-                    Caller.DB.SalesOrders.Remove(d);
-                    Caller.DB.SaveChanges();
+                    DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails);
+                    DB.SalesOrders.Remove(d);
+                    DB.SaveChanges();
 
                     LogDetailStore(s, LogDetailType.DELETE);
                     PurchaseOrder_DeleteBySalesOrder(d);
@@ -188,7 +188,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.SalesOrder> SalesOrder_SOPendingList()
         {
-            return Caller.DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
+            return DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId)
                                      .ToList()
                                      .Select(x => SalesOrder_DALtoBLL(x))
                                      .ToList();
@@ -205,18 +205,18 @@ namespace AccountBuddy.SL.Hubs
         }
         public bool Find_SORef(string RefNo, BLL.SalesOrder PO)
         {
-            DAL.SalesOrder d1 = Caller.DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
+            DAL.SalesOrder d1 = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == RefNo & x.Id != PO.Id).FirstOrDefault();
             DAL.SalesOrder d2 = null;
 
 
-            var LName = Caller.DB.Ledgers.Where(x => x.Id == PO.LedgerId).FirstOrDefault().LedgerName;
+            var LName = DB.Ledgers.Where(x => x.Id == PO.LedgerId).FirstOrDefault().LedgerName;
 
             if (LName.StartsWith("CM-"))
             {
                 var LNameTo = LedgerNameByCompanyId(Caller.CompanyId);
                 var LId=  LedgerIdByCompany(LNameTo, Caller.UnderCompanyId.Value);
 
-                d2 = Caller.DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId && x.RefNo == RefNo ).FirstOrDefault();
+                d2 = DB.SalesOrders.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.UnderCompanyId && x.RefNo == RefNo ).FirstOrDefault();
                 if (d2 != null)
                 {
                     if(d2.LedgerId == LId)
@@ -244,7 +244,7 @@ namespace AccountBuddy.SL.Hubs
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseOrder, P.Id);
 
-            DAL.SalesOrder s = Caller.DB.SalesOrders.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.SalesOrder s = DB.SalesOrders.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (P.Ledger.LedgerName.StartsWith("CM-") || P.Ledger.LedgerName.StartsWith("WH-") || P.Ledger.LedgerName.StartsWith("DL-"))
             {
                 var LName = LedgerNameByCompanyId(Caller.CompanyId);
@@ -258,11 +258,11 @@ namespace AccountBuddy.SL.Hubs
                         s = new DAL.SalesOrder();
                         s.RefNo = SalesOrder_NewRefNoByCompanyId(CId);
                         s.RefCode = RefCode;
-                        Caller.DB.SalesOrders.Add(s);
+                        DB.SalesOrders.Add(s);
                     }
                     else
                     {
-                        Caller.DB.SalesOrderDetails.RemoveRange(s.SalesOrderDetails);
+                        DB.SalesOrderDetails.RemoveRange(s.SalesOrderDetails);
                     }
 
                     s.SODate = P.PODate;
@@ -278,7 +278,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.SalesOrderDetail>(d_pod);
                         s.SalesOrderDetails.Add(d_pod);
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
             
                 }
             }
@@ -288,7 +288,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseOrder, P.Id);
-                DAL.SalesOrder d = Caller.DB.SalesOrders.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                DAL.SalesOrder d = DB.SalesOrders.Where(x => x.RefCode == RefCode).FirstOrDefault();
                 if (d != null)
                 {
                     SalesOrder_Delete(d.Id);

@@ -24,24 +24,10 @@ namespace AccountBuddy.PL
 
         public frmLogin()
         {
-            InitializeComponent();
-            onClientEvents();
-
+            InitializeComponent();           
         }
 
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.CompanyDetail>("CompanyDetail_Save", (cs) =>
-            {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    cs.Save(true);
-
-                });
-
-            });
-        }
+     
 
         #region Button Events
 
@@ -75,26 +61,16 @@ namespace AccountBuddy.PL
 
                 if (RValue == "")
                 {
-                    if (Common.AppLib.AppName == "AccountBuddy")
+                    App.frmHome = new frmHome();         
+                    App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
+                    this.Hide();
+                    App.frmHome.ShowDialog();
+                    if (Common.AppLib.IsAppApproved)
                     {
-                        App.frmAccountBuddyHome = new frmAccountBuddyHome();
-                        App.frmAccountBuddyHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
-                        this.Hide();
-                        App.frmAccountBuddyHome.ShowDialog();
+                        BLL.UserAccount.User = new BLL.UserAccount();
                         ClearForm();
                         this.Show();
-                    }
-                    else
-                    {
-                        App.frmHome = new frmHome();
-                        App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
-                        this.Hide();
-                        App.frmHome.ShowDialog();
-                        ClearForm();
-                        this.Show();
-                    }
-
-
+                    }                    
                 }
                 else
                 {
@@ -154,7 +130,7 @@ namespace AccountBuddy.PL
         #endregion
 
         #region Methods
-        private void ClearForm()
+        public void ClearForm()
         {
             txtLoginId.Text = "";
             txtPassword.Password = "";

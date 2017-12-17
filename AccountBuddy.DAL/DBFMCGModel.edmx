@@ -15,6 +15,85 @@
           <Property Name="GroupCode" Type="nvarchar" MaxLength="10" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="AppConnection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConnectionId" Type="varchar" MaxLength="500" />
+          <Property Name="ConnectedAt" Type="datetime" />
+          <Property Name="DisconnectedAt" Type="datetime" />
+          <Property Name="Notes" Type="varchar" MaxLength="5000" />
+        </EntityType>
+        <EntityType Name="AppConnectionHeader">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppConnectionId" Type="bigint" />
+          <Property Name="HKey" Type="nvarchar" MaxLength="500" />
+          <Property Name="HValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AppConnectionLoginFailed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppConnectionId" Type="bigint" />
+          <Property Name="AccYear" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="500" />
+          <Property Name="LoginId" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="FailedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AppConnectionLoginSucceed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppConnectionId" Type="bigint" />
+          <Property Name="LoginId" Type="int" />
+          <Property Name="SucceedAt" Type="datetime" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="AppConnectionLoginSystem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppConnectionId" Type="bigint" />
+          <Property Name="AppMasterId" Type="int" />
+          <Property Name="IsApproved" Type="bit" />
+          <Property Name="LoginAt" Type="datetime" />
+          <Property Name="Computername" Type="nvarchar" MaxLength="50" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserDomainName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="AppConnectionLoginWebAdmin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppConnectionId" Type="bigint" />
+          <Property Name="WebAdminId" Type="int" />
+          <Property Name="LoginAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AppConnectionReConnected">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppConnectionId" Type="bigint" />
+          <Property Name="ReConnectedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AppMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Bank">
           <Key>
             <PropertyRef Name="Id" />
@@ -815,6 +894,15 @@
           <Property Name="IsMenu" Type="bit" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
+        <EntityType Name="WebAdmin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginId" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <Association Name="FK_AccountGroup_AccountGroup">
           <End Role="AccountGroup" Type="Self.AccountGroup" Multiplicity="0..1" />
           <End Role="AccountGroup1" Type="Self.AccountGroup" Multiplicity="*" />
@@ -836,6 +924,114 @@
             </Principal>
             <Dependent Role="AccountGroup">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionHeader_AppConnection">
+          <End Role="AppConnection" Type="Self.AppConnection" Multiplicity="0..1" />
+          <End Role="AppConnectionHeader" Type="Self.AppConnectionHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionHeader">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginFailed_AppConnection">
+          <End Role="AppConnection" Type="Self.AppConnection" Multiplicity="0..1" />
+          <End Role="AppConnectionLoginFailed" Type="Self.AppConnectionLoginFailed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginFailed">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginSucceeded_AppConnection">
+          <End Role="AppConnection" Type="Self.AppConnection" Multiplicity="0..1" />
+          <End Role="AppConnectionLoginSucceed" Type="Self.AppConnectionLoginSucceed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginSucceed">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginSucceeded_UserAccount">
+          <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="0..1" />
+          <End Role="AppConnectionLoginSucceed" Type="Self.AppConnectionLoginSucceed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginSucceed">
+              <PropertyRef Name="LoginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginSystem_AppConnection">
+          <End Role="AppConnection" Type="Self.AppConnection" Multiplicity="0..1" />
+          <End Role="AppConnectionLoginSystem" Type="Self.AppConnectionLoginSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginSystem">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginSystem_AppMaster">
+          <End Role="AppMaster" Type="Self.AppMaster" Multiplicity="0..1" />
+          <End Role="AppConnectionLoginSystem" Type="Self.AppConnectionLoginSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginSystem">
+              <PropertyRef Name="AppMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginWebAdmin_AppConnection">
+          <End Role="AppConnection" Type="Self.AppConnection" Multiplicity="0..1" />
+          <End Role="AppConnectionLoginWebAdmin" Type="Self.AppConnectionLoginWebAdmin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginWebAdmin">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginWebAdmin_WebAdmin">
+          <End Role="WebAdmin" Type="Self.WebAdmin" Multiplicity="0..1" />
+          <End Role="AppConnectionLoginWebAdmin" Type="Self.AppConnectionLoginWebAdmin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WebAdmin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginWebAdmin">
+              <PropertyRef Name="WebAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionReConnected_AppConnection">
+          <End Role="AppConnection" Type="Self.AppConnection" Multiplicity="0..1" />
+          <End Role="AppConnectionReConnected" Type="Self.AppConnectionReConnected" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionReConnected">
+              <PropertyRef Name="AppConnectionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -883,6 +1079,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CustomFormat">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataKeyValue_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
+          <End Role="DataKeyValue" Type="Self.DataKeyValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataKeyValue">
               <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2053,6 +2261,14 @@
         </Association>
         <EntityContainer Name="DBFMCGModelStoreContainer">
           <EntitySet Name="AccountGroup" EntityType="Self.AccountGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppConnection" EntityType="Self.AppConnection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppConnectionHeader" EntityType="Self.AppConnectionHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppConnectionLoginFailed" EntityType="Self.AppConnectionLoginFailed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppConnectionLoginSucceed" EntityType="Self.AppConnectionLoginSucceed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppConnectionLoginSystem" EntityType="Self.AppConnectionLoginSystem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppConnectionLoginWebAdmin" EntityType="Self.AppConnectionLoginWebAdmin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppConnectionReConnected" EntityType="Self.AppConnectionReConnected" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppMaster" EntityType="Self.AppMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bank" EntityType="Self.Bank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyDetail" EntityType="Self.CompanyDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CreditLimitType" EntityType="Self.CreditLimitType" Schema="dbo" store:Type="Tables" />
@@ -2111,6 +2327,7 @@
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTypeDetail" EntityType="Self.UserTypeDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTypeFormDetail" EntityType="Self.UserTypeFormDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WebAdmin" EntityType="Self.WebAdmin" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AccountGroup_AccountGroup" Association="Self.FK_AccountGroup_AccountGroup">
             <End Role="AccountGroup" EntitySet="AccountGroup" />
             <End Role="AccountGroup1" EntitySet="AccountGroup" />
@@ -2118,6 +2335,42 @@
           <AssociationSet Name="FK_AccountGroup_CompanyDetail" Association="Self.FK_AccountGroup_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
             <End Role="AccountGroup" EntitySet="AccountGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionHeader_AppConnection" Association="Self.FK_AppConnectionHeader_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnection" />
+            <End Role="AppConnectionHeader" EntitySet="AppConnectionHeader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginFailed_AppConnection" Association="Self.FK_AppConnectionLoginFailed_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnection" />
+            <End Role="AppConnectionLoginFailed" EntitySet="AppConnectionLoginFailed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginSucceeded_AppConnection" Association="Self.FK_AppConnectionLoginSucceeded_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnection" />
+            <End Role="AppConnectionLoginSucceed" EntitySet="AppConnectionLoginSucceed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginSucceeded_UserAccount" Association="Self.FK_AppConnectionLoginSucceeded_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="AppConnectionLoginSucceed" EntitySet="AppConnectionLoginSucceed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginSystem_AppConnection" Association="Self.FK_AppConnectionLoginSystem_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnection" />
+            <End Role="AppConnectionLoginSystem" EntitySet="AppConnectionLoginSystem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginSystem_AppMaster" Association="Self.FK_AppConnectionLoginSystem_AppMaster">
+            <End Role="AppMaster" EntitySet="AppMaster" />
+            <End Role="AppConnectionLoginSystem" EntitySet="AppConnectionLoginSystem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginWebAdmin_AppConnection" Association="Self.FK_AppConnectionLoginWebAdmin_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnection" />
+            <End Role="AppConnectionLoginWebAdmin" EntitySet="AppConnectionLoginWebAdmin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginWebAdmin_WebAdmin" Association="Self.FK_AppConnectionLoginWebAdmin_WebAdmin">
+            <End Role="WebAdmin" EntitySet="WebAdmin" />
+            <End Role="AppConnectionLoginWebAdmin" EntitySet="AppConnectionLoginWebAdmin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionReConnected_AppConnection" Association="Self.FK_AppConnectionReConnected_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnection" />
+            <End Role="AppConnectionReConnected" EntitySet="AppConnectionReConnected" />
           </AssociationSet>
           <AssociationSet Name="FK_Bank_Ledger" Association="Self.FK_Bank_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
@@ -2134,6 +2387,10 @@
           <AssociationSet Name="FK_CustomFormat_CompanyDetail" Association="Self.FK_CustomFormat_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
             <End Role="CustomFormat" EntitySet="CustomFormat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataKeyValue_CompanyDetail" Association="Self.FK_DataKeyValue_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="DataKeyValue" EntitySet="DataKeyValue" />
           </AssociationSet>
           <AssociationSet Name="FK_Department_CompanyDetail" Association="Self.FK_Department_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
@@ -3000,6 +3257,55 @@
             <End Role="UserAccount" EntitySet="UserAccounts" />
             <End Role="Staff" EntitySet="Staffs" />
           </AssociationSet>
+          <EntitySet Name="AppConnections" EntityType="DBFMCGModel.AppConnection" />
+          <AssociationSet Name="FK_DataKeyValue_CompanyDetail" Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="DataKeyValue" EntitySet="DataKeyValues" />
+          </AssociationSet>
+          <EntitySet Name="AppConnectionHeaders" EntityType="DBFMCGModel.AppConnectionHeader" />
+          <AssociationSet Name="FK_AppConnectionHeader_AppConnection" Association="DBFMCGModel.FK_AppConnectionHeader_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnections" />
+            <End Role="AppConnectionHeader" EntitySet="AppConnectionHeaders" />
+          </AssociationSet>
+          <EntitySet Name="AppConnectionLoginFaileds" EntityType="DBFMCGModel.AppConnectionLoginFailed" />
+          <EntitySet Name="AppConnectionLoginSucceeds" EntityType="DBFMCGModel.AppConnectionLoginSucceed" />
+          <EntitySet Name="AppConnectionReConnecteds" EntityType="DBFMCGModel.AppConnectionReConnected" />
+          <AssociationSet Name="FK_AppConnectionLoginFailed_AppConnection" Association="DBFMCGModel.FK_AppConnectionLoginFailed_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnections" />
+            <End Role="AppConnectionLoginFailed" EntitySet="AppConnectionLoginFaileds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginSucceeded_AppConnection" Association="DBFMCGModel.FK_AppConnectionLoginSucceeded_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnections" />
+            <End Role="AppConnectionLoginSucceed" EntitySet="AppConnectionLoginSucceeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionReConnected_AppConnection" Association="DBFMCGModel.FK_AppConnectionReConnected_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnections" />
+            <End Role="AppConnectionReConnected" EntitySet="AppConnectionReConnecteds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginSucceeded_UserAccount" Association="DBFMCGModel.FK_AppConnectionLoginSucceeded_UserAccount">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="AppConnectionLoginSucceed" EntitySet="AppConnectionLoginSucceeds" />
+          </AssociationSet>
+          <EntitySet Name="AppConnectionLoginWebAdmins" EntityType="DBFMCGModel.AppConnectionLoginWebAdmin" />
+          <EntitySet Name="WebAdmins" EntityType="DBFMCGModel.WebAdmin" />
+          <AssociationSet Name="FK_AppConnectionLoginWebAdmin_AppConnection" Association="DBFMCGModel.FK_AppConnectionLoginWebAdmin_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnections" />
+            <End Role="AppConnectionLoginWebAdmin" EntitySet="AppConnectionLoginWebAdmins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginWebAdmin_WebAdmin" Association="DBFMCGModel.FK_AppConnectionLoginWebAdmin_WebAdmin">
+            <End Role="WebAdmin" EntitySet="WebAdmins" />
+            <End Role="AppConnectionLoginWebAdmin" EntitySet="AppConnectionLoginWebAdmins" />
+          </AssociationSet>
+          <EntitySet Name="AppMasters" EntityType="DBFMCGModel.AppMaster" />
+          <EntitySet Name="AppConnectionLoginSystems" EntityType="DBFMCGModel.AppConnectionLoginSystem" />
+          <AssociationSet Name="FK_AppConnectionLoginSystem_AppConnection" Association="DBFMCGModel.FK_AppConnectionLoginSystem_AppConnection">
+            <End Role="AppConnection" EntitySet="AppConnections" />
+            <End Role="AppConnectionLoginSystem" EntitySet="AppConnectionLoginSystems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnectionLoginSystem_AppMaster" Association="DBFMCGModel.FK_AppConnectionLoginSystem_AppMaster">
+            <End Role="AppMaster" EntitySet="AppMasters" />
+            <End Role="AppConnectionLoginSystem" EntitySet="AppConnectionLoginSystems" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -3052,6 +3358,7 @@
           <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
           <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
           <NavigationProperty Name="Departments" Relationship="DBFMCGModel.FK_Department_CompanyDetail" FromRole="CompanyDetail" ToRole="Department" />
+          <NavigationProperty Name="DataKeyValues" Relationship="DBFMCGModel.FK_DataKeyValue_CompanyDetail" FromRole="CompanyDetail" ToRole="DataKeyValue" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -3099,6 +3406,7 @@
           <Property Name="DataKey" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="DataValue" Type="Int32" Nullable="false" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_DataKeyValue_CompanyDetail" FromRole="DataKeyValue" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="EntityType">
           <Key>
@@ -3910,6 +4218,7 @@
           <NavigationProperty Name="LogMasters" Relationship="DBFMCGModel.FK_LogMaster_UserAccount" FromRole="UserAccount" ToRole="LogMaster" />
           <NavigationProperty Name="UserType" Relationship="DBFMCGModel.FK_UserAccount_UserType" FromRole="UserAccount" ToRole="UserType" />
           <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_UserAccount" FromRole="UserAccount" ToRole="Staff" />
+          <NavigationProperty Name="AppConnectionLoginSucceeds" Relationship="DBFMCGModel.FK_AppConnectionLoginSucceeded_UserAccount" FromRole="UserAccount" ToRole="AppConnectionLoginSucceed" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -5253,6 +5562,231 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AppConnection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConnectionId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ConnectedAt" Type="DateTime" Precision="3" />
+          <Property Name="DisconnectedAt" Type="DateTime" Precision="3" />
+          <Property Name="Notes" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AppConnectionHeaders" Relationship="DBFMCGModel.FK_AppConnectionHeader_AppConnection" FromRole="AppConnection" ToRole="AppConnectionHeader" />
+          <NavigationProperty Name="AppConnectionLoginFaileds" Relationship="DBFMCGModel.FK_AppConnectionLoginFailed_AppConnection" FromRole="AppConnection" ToRole="AppConnectionLoginFailed" />
+          <NavigationProperty Name="AppConnectionLoginSucceeds" Relationship="DBFMCGModel.FK_AppConnectionLoginSucceeded_AppConnection" FromRole="AppConnection" ToRole="AppConnectionLoginSucceed" />
+          <NavigationProperty Name="AppConnectionReConnecteds" Relationship="DBFMCGModel.FK_AppConnectionReConnected_AppConnection" FromRole="AppConnection" ToRole="AppConnectionReConnected" />
+          <NavigationProperty Name="AppConnectionLoginWebAdmins" Relationship="DBFMCGModel.FK_AppConnectionLoginWebAdmin_AppConnection" FromRole="AppConnection" ToRole="AppConnectionLoginWebAdmin" />
+          <NavigationProperty Name="AppConnectionLoginSystems" Relationship="DBFMCGModel.FK_AppConnectionLoginSystem_AppConnection" FromRole="AppConnection" ToRole="AppConnectionLoginSystem" />
+        </EntityType>
+        <Association Name="FK_DataKeyValue_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.DataKeyValue" Role="DataKeyValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataKeyValue">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AppConnectionHeader">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppConnectionId" Type="Int64" />
+          <Property Name="HKey" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AppConnection" Relationship="DBFMCGModel.FK_AppConnectionHeader_AppConnection" FromRole="AppConnectionHeader" ToRole="AppConnection" />
+        </EntityType>
+        <Association Name="FK_AppConnectionHeader_AppConnection">
+          <End Type="DBFMCGModel.AppConnection" Role="AppConnection" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AppConnectionHeader" Role="AppConnectionHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionHeader">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AppConnectionLoginFailed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppConnectionId" Type="Int64" />
+          <Property Name="AccYear" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LoginId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AppConnection" Relationship="DBFMCGModel.FK_AppConnectionLoginFailed_AppConnection" FromRole="AppConnectionLoginFailed" ToRole="AppConnection" />
+          <Property Name="FailedAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="AppConnectionLoginSucceed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppConnectionId" Type="Int64" />
+          <Property Name="LoginId" Type="Int32" />
+          <Property Name="SucceedAt" Type="DateTime" Precision="3" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AppConnection" Relationship="DBFMCGModel.FK_AppConnectionLoginSucceeded_AppConnection" FromRole="AppConnectionLoginSucceed" ToRole="AppConnection" />
+          <NavigationProperty Name="UserAccount" Relationship="DBFMCGModel.FK_AppConnectionLoginSucceeded_UserAccount" FromRole="AppConnectionLoginSucceed" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="AppConnectionReConnected">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppConnectionId" Type="Int64" />
+          <Property Name="ReConnectedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AppConnection" Relationship="DBFMCGModel.FK_AppConnectionReConnected_AppConnection" FromRole="AppConnectionReConnected" ToRole="AppConnection" />
+        </EntityType>
+        <Association Name="FK_AppConnectionLoginFailed_AppConnection">
+          <End Type="DBFMCGModel.AppConnection" Role="AppConnection" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AppConnectionLoginFailed" Role="AppConnectionLoginFailed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginFailed">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginSucceeded_AppConnection">
+          <End Type="DBFMCGModel.AppConnection" Role="AppConnection" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AppConnectionLoginSucceed" Role="AppConnectionLoginSucceed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginSucceed">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionReConnected_AppConnection">
+          <End Type="DBFMCGModel.AppConnection" Role="AppConnection" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AppConnectionReConnected" Role="AppConnectionReConnected" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionReConnected">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginSucceeded_UserAccount">
+          <End Type="DBFMCGModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AppConnectionLoginSucceed" Role="AppConnectionLoginSucceed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginSucceed">
+              <PropertyRef Name="LoginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AppConnectionLoginWebAdmin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppConnectionId" Type="Int64" />
+          <Property Name="WebAdminId" Type="Int32" />
+          <Property Name="LoginAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AppConnection" Relationship="DBFMCGModel.FK_AppConnectionLoginWebAdmin_AppConnection" FromRole="AppConnectionLoginWebAdmin" ToRole="AppConnection" />
+          <NavigationProperty Name="WebAdmin" Relationship="DBFMCGModel.FK_AppConnectionLoginWebAdmin_WebAdmin" FromRole="AppConnectionLoginWebAdmin" ToRole="WebAdmin" />
+        </EntityType>
+        <EntityType Name="WebAdmin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AppConnectionLoginWebAdmins" Relationship="DBFMCGModel.FK_AppConnectionLoginWebAdmin_WebAdmin" FromRole="WebAdmin" ToRole="AppConnectionLoginWebAdmin" />
+        </EntityType>
+        <Association Name="FK_AppConnectionLoginWebAdmin_AppConnection">
+          <End Type="DBFMCGModel.AppConnection" Role="AppConnection" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AppConnectionLoginWebAdmin" Role="AppConnectionLoginWebAdmin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginWebAdmin">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginWebAdmin_WebAdmin">
+          <End Type="DBFMCGModel.WebAdmin" Role="WebAdmin" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AppConnectionLoginWebAdmin" Role="AppConnectionLoginWebAdmin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WebAdmin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginWebAdmin">
+              <PropertyRef Name="WebAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AppMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AppConnectionLoginSystems" Relationship="DBFMCGModel.FK_AppConnectionLoginSystem_AppMaster" FromRole="AppMaster" ToRole="AppConnectionLoginSystem" />
+        </EntityType>
+        <EntityType Name="AppConnectionLoginSystem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppConnectionId" Type="Int64" />
+          <Property Name="AppMasterId" Type="Int32" />
+          <Property Name="IsApproved" Type="Boolean" />
+          <Property Name="LoginAt" Type="DateTime" Precision="3" />
+          <Property Name="Computername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserDomainName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AppConnection" Relationship="DBFMCGModel.FK_AppConnectionLoginSystem_AppConnection" FromRole="AppConnectionLoginSystem" ToRole="AppConnection" />
+          <NavigationProperty Name="AppMaster" Relationship="DBFMCGModel.FK_AppConnectionLoginSystem_AppMaster" FromRole="AppConnectionLoginSystem" ToRole="AppMaster" />
+        </EntityType>
+        <Association Name="FK_AppConnectionLoginSystem_AppConnection">
+          <End Type="DBFMCGModel.AppConnection" Role="AppConnection" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AppConnectionLoginSystem" Role="AppConnectionLoginSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginSystem">
+              <PropertyRef Name="AppConnectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnectionLoginSystem_AppMaster">
+          <End Type="DBFMCGModel.AppMaster" Role="AppMaster" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AppConnectionLoginSystem" Role="AppConnectionLoginSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnectionLoginSystem">
+              <PropertyRef Name="AppMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6124,6 +6658,103 @@
                 <ScalarProperty Name="RequestAt" ColumnName="RequestAt" />
                 <ScalarProperty Name="RequestBy" ColumnName="RequestBy" />
                 <ScalarProperty Name="PRId" ColumnName="PRId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppConnections">
+            <EntityTypeMapping TypeName="DBFMCGModel.AppConnection">
+              <MappingFragment StoreEntitySet="AppConnection">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="DisconnectedAt" ColumnName="DisconnectedAt" />
+                <ScalarProperty Name="ConnectedAt" ColumnName="ConnectedAt" />
+                <ScalarProperty Name="ConnectionId" ColumnName="ConnectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppConnectionHeaders">
+            <EntityTypeMapping TypeName="DBFMCGModel.AppConnectionHeader">
+              <MappingFragment StoreEntitySet="AppConnectionHeader">
+                <ScalarProperty Name="HValue" ColumnName="HValue" />
+                <ScalarProperty Name="HKey" ColumnName="HKey" />
+                <ScalarProperty Name="AppConnectionId" ColumnName="AppConnectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppConnectionLoginFaileds">
+            <EntityTypeMapping TypeName="DBFMCGModel.AppConnectionLoginFailed">
+              <MappingFragment StoreEntitySet="AppConnectionLoginFailed">
+                <ScalarProperty Name="FailedAt" ColumnName="FailedAt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="AccYear" ColumnName="AccYear" />
+                <ScalarProperty Name="AppConnectionId" ColumnName="AppConnectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppConnectionLoginSucceeds">
+            <EntityTypeMapping TypeName="DBFMCGModel.AppConnectionLoginSucceed">
+              <MappingFragment StoreEntitySet="AppConnectionLoginSucceed">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="SucceedAt" ColumnName="SucceedAt" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="AppConnectionId" ColumnName="AppConnectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppConnectionReConnecteds">
+            <EntityTypeMapping TypeName="DBFMCGModel.AppConnectionReConnected">
+              <MappingFragment StoreEntitySet="AppConnectionReConnected">
+                <ScalarProperty Name="ReConnectedAt" ColumnName="ReConnectedAt" />
+                <ScalarProperty Name="AppConnectionId" ColumnName="AppConnectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppConnectionLoginWebAdmins">
+            <EntityTypeMapping TypeName="DBFMCGModel.AppConnectionLoginWebAdmin">
+              <MappingFragment StoreEntitySet="AppConnectionLoginWebAdmin">
+                <ScalarProperty Name="LoginAt" ColumnName="LoginAt" />
+                <ScalarProperty Name="WebAdminId" ColumnName="WebAdminId" />
+                <ScalarProperty Name="AppConnectionId" ColumnName="AppConnectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WebAdmins">
+            <EntityTypeMapping TypeName="DBFMCGModel.WebAdmin">
+              <MappingFragment StoreEntitySet="WebAdmin">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppMasters">
+            <EntityTypeMapping TypeName="DBFMCGModel.AppMaster">
+              <MappingFragment StoreEntitySet="AppMaster">
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppConnectionLoginSystems">
+            <EntityTypeMapping TypeName="DBFMCGModel.AppConnectionLoginSystem">
+              <MappingFragment StoreEntitySet="AppConnectionLoginSystem">
+                <ScalarProperty Name="UserDomainName" ColumnName="UserDomainName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Computername" ColumnName="Computername" />
+                <ScalarProperty Name="LoginAt" ColumnName="LoginAt" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="AppMasterId" ColumnName="AppMasterId" />
+                <ScalarProperty Name="AppConnectionId" ColumnName="AppConnectionId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
