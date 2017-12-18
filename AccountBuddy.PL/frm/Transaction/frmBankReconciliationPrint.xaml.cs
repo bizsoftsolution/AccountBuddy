@@ -33,13 +33,13 @@ namespace AccountBuddy.PL.frm.Transaction
 
                 try
                 {
-                    Common.AppLib.WriteLog("Bank Receomciliation Print");
+                    Common.AppLib.WriteLog("Bank Receonciliation Print");
                     RptViewer.Reset();
                     ReportDataSource data1 = new ReportDataSource("BankReconciliation1", l1);
                     ReportDataSource data2 = new ReportDataSource("BankReconciliation2", l2);
                     RptViewer.LocalReport.DataSources.Add(data1);
                     RptViewer.LocalReport.DataSources.Add(data2);
-                    RptViewer.LocalReport.ReportPath = @"Transaction\rptBankReconciliation.rdlc";
+                    RptViewer.LocalReport.ReportPath = @"Transaction\rptBankReconciliationReport.rdlc";
 
                     ReportParameter[] par = new ReportParameter[7];
                     par[0] = new ReportParameter("Company", BLL.UserAccount.User.UserType.Company.CompanyName);
