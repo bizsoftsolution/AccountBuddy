@@ -93,5 +93,6 @@ namespace AccountBuddy.DAL
         public virtual DbSet<WebAdmin> WebAdmins { get; set; }
         public virtual DbSet<AppMaster> AppMasters { get; set; }
         public virtual DbSet<AppConnectionLoginSystem> AppConnectionLoginSystems { get; set; }
+        public virtual DbSet<AppConnectionType> AppConnectionTypes { get; set; }
     }
 }

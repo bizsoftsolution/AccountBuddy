@@ -96,7 +96,5 @@ namespace AccountBuddy.DAL
         public virtual ICollection<Supplier> Suppliers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequest> PurchaseRequests { get; set; }
-
-        
     }
 }

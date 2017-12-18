@@ -24,6 +24,7 @@
           <Property Name="ConnectedAt" Type="datetime" />
           <Property Name="DisconnectedAt" Type="datetime" />
           <Property Name="Notes" Type="varchar" MaxLength="5000" />
+          <Property Name="AppConnectionTypeId" Type="int" />
         </EntityType>
         <EntityType Name="AppConnectionHeader">
           <Key>
@@ -85,6 +86,13 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppConnectionId" Type="bigint" />
           <Property Name="ReConnectedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AppConnectionType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AppMaster">
           <Key>
@@ -924,6 +932,18 @@
             </Principal>
             <Dependent Role="AccountGroup">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppConnection_AppConnectionType">
+          <End Role="AppConnectionType" Type="Self.AppConnectionType" Multiplicity="0..1" />
+          <End Role="AppConnection" Type="Self.AppConnection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnectionType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnection">
+              <PropertyRef Name="AppConnectionTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2268,6 +2288,7 @@
           <EntitySet Name="AppConnectionLoginSystem" EntityType="Self.AppConnectionLoginSystem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AppConnectionLoginWebAdmin" EntityType="Self.AppConnectionLoginWebAdmin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AppConnectionReConnected" EntityType="Self.AppConnectionReConnected" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppConnectionType" EntityType="Self.AppConnectionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AppMaster" EntityType="Self.AppMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bank" EntityType="Self.Bank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyDetail" EntityType="Self.CompanyDetail" Schema="dbo" store:Type="Tables" />
@@ -2335,6 +2356,10 @@
           <AssociationSet Name="FK_AccountGroup_CompanyDetail" Association="Self.FK_AccountGroup_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
             <End Role="AccountGroup" EntitySet="AccountGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppConnection_AppConnectionType" Association="Self.FK_AppConnection_AppConnectionType">
+            <End Role="AppConnectionType" EntitySet="AppConnectionType" />
+            <End Role="AppConnection" EntitySet="AppConnection" />
           </AssociationSet>
           <AssociationSet Name="FK_AppConnectionHeader_AppConnection" Association="Self.FK_AppConnectionHeader_AppConnection">
             <End Role="AppConnection" EntitySet="AppConnection" />
@@ -3305,6 +3330,11 @@
           <AssociationSet Name="FK_AppConnectionLoginSystem_AppMaster" Association="DBFMCGModel.FK_AppConnectionLoginSystem_AppMaster">
             <End Role="AppMaster" EntitySet="AppMasters" />
             <End Role="AppConnectionLoginSystem" EntitySet="AppConnectionLoginSystems" />
+          </AssociationSet>
+          <EntitySet Name="AppConnectionTypes" EntityType="DBFMCGModel.AppConnectionType" />
+          <AssociationSet Name="FK_AppConnection_AppConnectionType" Association="DBFMCGModel.FK_AppConnection_AppConnectionType">
+            <End Role="AppConnectionType" EntitySet="AppConnectionTypes" />
+            <End Role="AppConnection" EntitySet="AppConnections" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
@@ -5577,6 +5607,8 @@
           <NavigationProperty Name="AppConnectionReConnecteds" Relationship="DBFMCGModel.FK_AppConnectionReConnected_AppConnection" FromRole="AppConnection" ToRole="AppConnectionReConnected" />
           <NavigationProperty Name="AppConnectionLoginWebAdmins" Relationship="DBFMCGModel.FK_AppConnectionLoginWebAdmin_AppConnection" FromRole="AppConnection" ToRole="AppConnectionLoginWebAdmin" />
           <NavigationProperty Name="AppConnectionLoginSystems" Relationship="DBFMCGModel.FK_AppConnectionLoginSystem_AppConnection" FromRole="AppConnection" ToRole="AppConnectionLoginSystem" />
+          <Property Name="AppConnectionTypeId" Type="Int32" />
+          <NavigationProperty Name="AppConnectionType" Relationship="DBFMCGModel.FK_AppConnection_AppConnectionType" FromRole="AppConnection" ToRole="AppConnectionType" />
         </EntityType>
         <Association Name="FK_DataKeyValue_CompanyDetail">
           <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
@@ -5784,6 +5816,26 @@
             </Principal>
             <Dependent Role="AppConnectionLoginSystem">
               <PropertyRef Name="AppMasterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AppConnectionType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AppConnections" Relationship="DBFMCGModel.FK_AppConnection_AppConnectionType" FromRole="AppConnectionType" ToRole="AppConnection" />
+        </EntityType>
+        <Association Name="FK_AppConnection_AppConnectionType">
+          <End Type="DBFMCGModel.AppConnectionType" Role="AppConnectionType" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.AppConnection" Role="AppConnection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppConnectionType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppConnection">
+              <PropertyRef Name="AppConnectionTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6665,6 +6717,7 @@
           <EntitySetMapping Name="AppConnections">
             <EntityTypeMapping TypeName="DBFMCGModel.AppConnection">
               <MappingFragment StoreEntitySet="AppConnection">
+                <ScalarProperty Name="AppConnectionTypeId" ColumnName="AppConnectionTypeId" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="DisconnectedAt" ColumnName="DisconnectedAt" />
                 <ScalarProperty Name="ConnectedAt" ColumnName="ConnectedAt" />
@@ -6755,6 +6808,14 @@
                 <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
                 <ScalarProperty Name="AppMasterId" ColumnName="AppMasterId" />
                 <ScalarProperty Name="AppConnectionId" ColumnName="AppConnectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppConnectionTypes">
+            <EntityTypeMapping TypeName="DBFMCGModel.AppConnectionType">
+              <MappingFragment StoreEntitySet="AppConnectionType">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

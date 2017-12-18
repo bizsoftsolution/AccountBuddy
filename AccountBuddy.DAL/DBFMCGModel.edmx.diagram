@@ -186,6 +186,8 @@
         <EntityTypeShape EntityType="DBFMCGModel.AppConnectionLoginSystem" Width="1.5" PointX="8.625" PointY="2.375" />
         <AssociationConnector Association="DBFMCGModel.FK_AppConnectionLoginSystem_AppConnection" />
         <AssociationConnector Association="DBFMCGModel.FK_AppConnectionLoginSystem_AppMaster" />
+        <EntityTypeShape EntityType="DBFMCGModel.AppConnectionType" Width="1.5" PointX="0.75" PointY="8.75" />
+        <AssociationConnector Association="DBFMCGModel.FK_AppConnection_AppConnectionType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -30,6 +30,7 @@ namespace AccountBuddy.DAL
         public Nullable<System.DateTime> ConnectedAt { get; set; }
         public Nullable<System.DateTime> DisconnectedAt { get; set; }
         public string Notes { get; set; }
+        public Nullable<int> AppConnectionTypeId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AppConnectionHeader> AppConnectionHeaders { get; set; }
@@ -43,5 +44,6 @@ namespace AccountBuddy.DAL
         public virtual ICollection<AppConnectionLoginWebAdmin> AppConnectionLoginWebAdmins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AppConnectionLoginSystem> AppConnectionLoginSystems { get; set; }
+        public virtual AppConnectionType AppConnectionType { get; set; }
     }
 }
