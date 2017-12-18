@@ -414,7 +414,7 @@ namespace AccountBuddy.PL
 
             });
 
-            BLL.FMCGHubClient.HubCaller.On<BLL.CompanyDetail>("CompanyDetail_Save", (cs) =>
+            HubReceiver.On<BLL.CompanyDetail>("CompanyDetail_Save", (cs) =>
             {
 
                 this.Dispatcher.Invoke(() =>
@@ -424,6 +424,112 @@ namespace AccountBuddy.PL
                 });
 
             });
+
+            #region Account Group
+            HubReceiver.On<BLL.AccountGroup>("AccountGroup_Save", (Account) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Account.Save(true);
+                });
+
+            });
+            HubReceiver.On("AccountGroup_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    BLL.AccountGroup agp = new BLL.AccountGroup();
+                    agp.Find((int)pk);
+                    agp.Delete((bool)true);
+                }));
+
+            }));
+            #endregion
+
+            #region Bank
+            HubReceiver.On<BLL.Bank>("Bank_Save", (Cus) => {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Cus.Save(true);
+                });
+
+            });
+            HubReceiver.On<BLL.Ledger>("Ledger_Save", (Cus) => {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Cus.Save(true);
+                });
+
+            });
+            HubReceiver.On("Bank_Delete", (Action<int>)((pk) => {
+                this.Dispatcher.Invoke((Action)(() => {
+                    BLL.Bank led = new BLL.Bank();
+                    led.Find((int)pk);
+                    led.Delete((bool)true);
+                }));
+
+            }));
+            #endregion
+
+            #region Customer
+            HubReceiver.On<BLL.Customer>("Customer_Save", (Cus) => {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Cus.Save(true);
+                });
+
+            });
+            HubReceiver.On("Customer_Delete", (Action<int>)((pk) => {
+                this.Dispatcher.Invoke((Action)(() => {
+                    BLL.Customer led = new BLL.Customer();
+                    led.Find((int)pk);
+                    led.Delete((bool)true);
+                }));
+
+            }));
+            #endregion
+
+            #region Custom Setting
+            HubReceiver.On<BLL.CustomFormat>("CustomFormat_Save", (cs) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    cs.Save(true);
+                });
+
+            });
+
+            #endregion
+
+            #region Department
+            HubReceiver.On<BLL.Department>("Department_Save", (uom) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    uom.Save(true);
+                });
+
+            });
+
+            HubReceiver.On("Department_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    BLL.Department agp = new BLL.Department();
+                    agp.Find((int)pk);
+                    agp.Delete((bool)true);
+                }));
+
+            }));
+
+            #endregion
+
         }
         private void Application_Exit(object sender, ExitEventArgs e)
         {

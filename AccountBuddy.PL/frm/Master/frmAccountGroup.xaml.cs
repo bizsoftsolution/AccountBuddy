@@ -284,28 +284,7 @@ namespace AccountBuddy.PL.frm.Master
        
 
         private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<BLL.AccountGroup>("AccountGroup_Save", (Account) =>
-            {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    Account.Save(true);
-                });
-
-            });
-
-            BLL.FMCGHubClient.HubCaller.On("AccountGroup_Delete", (Action<int>)((pk) =>
-            {
-                this.Dispatcher.Invoke((Action)(() =>
-                {
-                    BLL.AccountGroup agp = new BLL.AccountGroup();
-                    agp.Find((int)pk);
-                    agp.Delete((bool)true);
-                }));
-
-            }));
-        }
+        {     }
 
         #endregion
 

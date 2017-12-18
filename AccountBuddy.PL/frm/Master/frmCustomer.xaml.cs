@@ -284,24 +284,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void onClientEvents()
        {
-            BLL.FMCGHubClient.HubCaller.On<BLL.Customer>("Customer_Save", (Cus) => {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    Cus.Save(true);
-                });
-
-            });
-
-            BLL.FMCGHubClient.HubCaller.On("Customer_Delete", (Action<int>)((pk) => {
-                this.Dispatcher.Invoke((Action)(() => {
-                    BLL.Customer led = new BLL.Customer();
-                    led.Find((int)pk);
-                    led.Delete((bool)true);
-                }));
-
-            }));
-        }
+            }
         private void EditItem()
         {
             try
