@@ -278,7 +278,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.StockGroup>("StockGroup_Save", (sgp) =>
+            BLL.FMCGHubClient.HubCaller.On<BLL.StockGroup>("StockGroup_Save", (sgp) =>
             {
 
                 this.Dispatcher.Invoke(() =>
@@ -288,7 +288,7 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("StockGroup_Delete", (Action<int>)((pk) =>
+            BLL.FMCGHubClient.HubCaller.On("StockGroup_Delete", (Action<int>)((pk) =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
                 {

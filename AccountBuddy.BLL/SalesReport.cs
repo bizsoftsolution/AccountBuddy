@@ -285,11 +285,11 @@ namespace AccountBuddy.BLL
 
         public static List<SalesReport> ToList(DateTime dtFrom,DateTime dtTo, bool isMonthly, string ReportType)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<SalesReport>>("SalesReport_List", dtFrom,dtTo,isMonthly,ReportType).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<SalesReport>>("SalesReport_List", dtFrom,dtTo,isMonthly,ReportType).Result;
         }
         public static List<SalesReport> ToListCustomerWise(DateTime dtFrom, DateTime dtTo, bool isMonthly, string ReportType)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<SalesReport>>("SalesReport_ListCustomerWise", dtFrom, dtTo, isMonthly, ReportType).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<SalesReport>>("SalesReport_ListCustomerWise", dtFrom, dtTo, isMonthly, ReportType).Result;
         }
         //public static List<SalesReport> ToListCustomerWise(DateTime dtFrom)
         //{
@@ -297,7 +297,7 @@ namespace AccountBuddy.BLL
         //}
         public static List<SalesReport> ToListProductWise(DateTime dtFrom)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<SalesReport>>("SalesReport_ListProductWise", dtFrom).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<SalesReport>>("SalesReport_ListProductWise", dtFrom).Result;
         }
 
         #endregion

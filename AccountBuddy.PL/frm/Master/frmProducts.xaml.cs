@@ -302,7 +302,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.Product>("Product_Save", (led) => {
+            BLL.FMCGHubClient.HubCaller.On<BLL.Product>("Product_Save", (led) => {
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -311,7 +311,7 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("Product_Delete", (Action<int>)((pk) => {
+            BLL.FMCGHubClient.HubCaller.On("Product_Delete", (Action<int>)((pk) => {
                 this.Dispatcher.Invoke((Action)(() => {
                     BLL.Product led = new BLL.Product();
                     led.Find((int)pk);

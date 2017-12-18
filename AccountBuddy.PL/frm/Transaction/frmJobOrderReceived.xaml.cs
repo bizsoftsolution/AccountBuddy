@@ -38,7 +38,7 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<string>("JobOrderReceived _RefNoRefresh", (RefNo) =>
+            BLL.FMCGHubClient.HubCaller.On<string>("JobOrderReceived _RefNoRefresh", (RefNo) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {

@@ -70,7 +70,7 @@ namespace AccountBuddy.BLL
                     try
                     {
                         _POPendingList = new ObservableCollection<PurchaseOrder>();
-                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_POPendingList").Result;
+                        var l1 = FMCGHubClient.HubCaller.Invoke<List<PurchaseOrder>>("PurchaseOrder_POPendingList").Result;
                         _POPendingList = new ObservableCollection<PurchaseOrder>(l1);
                     }
                     catch (Exception ex)
@@ -417,7 +417,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseOrder_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("PurchaseOrder_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -429,7 +429,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseOrder_MakePurchase", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("PurchaseOrder_MakePurchase", this).Result;
             }
             catch (Exception ex)
             {
@@ -444,7 +444,7 @@ namespace AccountBuddy.BLL
             _PODetails = new ObservableCollection<PurchaseOrderDetail>();
 
             PODate = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseOrder_NewRefNo").Result;
 
 
             NotifyAllPropertyChanged();
@@ -457,14 +457,14 @@ namespace AccountBuddy.BLL
         }
         private void MaxRef()
         {
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_MaxRef").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseOrder_MaxRef").Result;
         }
 
         public bool Find()
         {
             try
             {
-                PurchaseOrder po = FMCGHubClient.FMCGHub.Invoke<PurchaseOrder>("PurchaseOrder_Find", SearchText).Result;
+                PurchaseOrder po = FMCGHubClient.HubCaller.Invoke<PurchaseOrder>("PurchaseOrder_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<PurchaseOrder>(this);
                 this.PODetails = po.PODetails;
@@ -481,7 +481,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseOrder_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("PurchaseOrder_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -557,7 +557,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_PORef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_PORef", RefNo, this).Result;
             }
             catch (Exception ex)
             {
@@ -571,7 +571,7 @@ namespace AccountBuddy.BLL
             List<PurchaseOrder> rv = new List<PurchaseOrder>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<PurchaseOrder>>("PurchaseOrder_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<List<PurchaseOrder>>("PurchaseOrder_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

@@ -11,7 +11,7 @@ namespace AccountBuddy.SL.Hubs
     {
         public List<BLL.UserTypeFormDetail> UserTypeFormDetail_List()
         {
-            return Caller.DB.UserTypeFormDetails.Where(x => x.IsActive == true)
+            return DB.UserTypeFormDetails.Where(x => x.IsActive == true)
                                          .OrderBy(x => x.OrderNo).ToList()
                                          .Select(x => x.toCopy<BLL.UserTypeFormDetail>(new BLL.UserTypeFormDetail()))
                                          .ToList(); 

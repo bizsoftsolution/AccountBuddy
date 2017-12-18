@@ -72,7 +72,7 @@ namespace AccountBuddy.BLL
                     try
                     {
                         _JOPendingList = new ObservableCollection<JobOrderIssue>();
-                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<JobOrderIssue>>("JobOrderIssue_JOPendingList").Result;
+                        var l1 = FMCGHubClient.HubCaller.Invoke<List<JobOrderIssue>>("JobOrderIssue_JOPendingList").Result;
                         _JOPendingList = new ObservableCollection<JobOrderIssue>(l1);
                     }
                     catch(Exception ex)
@@ -440,7 +440,7 @@ namespace AccountBuddy.BLL
              
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("JobOrderIssue_MakeReceieved", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("JobOrderIssue_MakeReceieved", this).Result;
             }
             catch (Exception ex)
             {
@@ -463,7 +463,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("JobOrderIssue_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("JobOrderIssue_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -478,7 +478,7 @@ namespace AccountBuddy.BLL
             _JODetails = new ObservableCollection<JobOrderIssueDetail>();
 
             JODate = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("JobOrderIssue_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("JobOrderIssue_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -486,7 +486,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                JobOrderIssue po = FMCGHubClient.FMCGHub.Invoke<JobOrderIssue>("JobOrderIssue_Find", SearchText).Result;
+                JobOrderIssue po = FMCGHubClient.HubCaller.Invoke<JobOrderIssue>("JobOrderIssue_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<JobOrderIssue>(this);
                 this.JODetails = po.JODetails;
@@ -503,7 +503,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("JobOrderIssue_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("JobOrderIssue_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -515,7 +515,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                JobOrderIssue po = FMCGHubClient.FMCGHub.Invoke<JobOrderIssue>("JobOrderIssue_FindById", Id).Result;
+                JobOrderIssue po = FMCGHubClient.HubCaller.Invoke<JobOrderIssue>("JobOrderIssue_FindById", Id).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<JobOrderIssue>(this);
                 this.JODetails = po.JODetails;
@@ -593,7 +593,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_JOIssueRef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_JOIssueRef", RefNo, this).Result;
 
             }
             catch (Exception ex)
@@ -608,7 +608,7 @@ namespace AccountBuddy.BLL
             List<JobOrderIssue> rv = new List<JobOrderIssue>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<JobOrderIssue>>("JobOrderIssue_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<List<JobOrderIssue>>("JobOrderIssue_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

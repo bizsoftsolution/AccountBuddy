@@ -46,7 +46,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void onClientEvents()                 
         {
-            BLL.FMCGHubClient.FMCGHub.On<String>("PurchaseOrder_RefNoRefresh", (RefNo) =>
+            BLL.FMCGHubClient.HubCaller.On<String>("PurchaseOrder_RefNoRefresh", (RefNo) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {

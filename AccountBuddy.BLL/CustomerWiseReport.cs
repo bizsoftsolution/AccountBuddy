@@ -316,7 +316,7 @@ namespace AccountBuddy.BLL
 
         public static List<CustomerWiseReport> ToList(int LedgerId, DateTime dtFrom)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<CustomerWiseReport>>("CustomerWiseReport_List", LedgerId, dtFrom).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<CustomerWiseReport>>("CustomerWiseReport_List", LedgerId, dtFrom).Result;
         }
 
         #endregion

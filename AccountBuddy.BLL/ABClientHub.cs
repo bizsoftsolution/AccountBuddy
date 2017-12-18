@@ -12,69 +12,25 @@ namespace AccountBuddy.BLL
     public static class FMCGHubClient
     {
         #region Field
-        private static HubConnection _hubCon;
-        private static IHubProxy _fmcgHub;
-        public static string URLPath = "";
+        
+        private static IHubProxy _hubCaller;
+       
         #endregion
 
         #region Property
-        public static HubConnection Hubcon
+        
+        public static IHubProxy HubCaller
         {
             get
-            {
-                if (_hubCon == null) HubConnect();
-                return _hubCon;
+            {                             
+                return _hubCaller;
             }
             set
             {
-                _hubCon = value;
-            }
-        }
-
-        public static IHubProxy FMCGHub
-        {
-            get
-            {
-                if (_fmcgHub == null) HubConnect();
-                if (Hubcon.State != ConnectionState.Connected) HubConnect();
-                return _fmcgHub;
-            }
-            set
-            {
-                _fmcgHub = value;
+                _hubCaller = value;
             }
         }
         #endregion
-
-        #region Method
-        public static void HubConnect()
-        {
-            try
-            {
-                AccountBuddy.Common.AppLib.WriteLog(URLPath);
-                AccountBuddy.Common.AppLib.WriteLog("Service Starting...");
-                _hubCon = new HubConnection(URLPath);
-                AccountBuddy.Common.AppLib.WriteLog("Service Started");
-                _fmcgHub = _hubCon.CreateHubProxy("ABServerHub");
-                AccountBuddy.Common.AppLib.WriteLog("Hub Created");
-                _hubCon.Start(new LongPollingTransport()).Wait();
-                AccountBuddy.Common.AppLib.WriteLog("Hub Started");
-                if (UserAccount.User.Id != 0)
-                {
-                    var r = FMCGHubClient.FMCGHub.Invoke<UserAccount>("UserAccount_ReLogin", UserAccount.User.UserType.Company.CompanyName, UserAccount.User.LoginId, UserAccount.User.Password).Result;
-                }
-            }
-            catch (Exception ex)
-            {
-                AccountBuddy.Common.AppLib.WriteLog("Could Not Start Service");
-
-            }           
-        }
-
-        public static void HubDisconnect()
-        {
-            _hubCon.Stop();
-        }
-        #endregion
+        
     }
 }

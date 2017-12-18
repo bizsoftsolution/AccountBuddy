@@ -23,7 +23,7 @@ namespace AccountBuddy.SL.Hubs
             var rv = new BLL.UserAccount();
             try
             {
-                DAL.UserAccount ua = Caller.DB.UserAccounts
+                DAL.UserAccount ua = DB.UserAccounts
                                   .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
                                     && x.LoginId == LoginId
                                     && x.Password == Password && x.UserType.CompanyDetail.IsActive != false)
@@ -49,11 +49,43 @@ namespace AccountBuddy.SL.Hubs
                     int yy = DateTime.Now.Month < 4 ? DateTime.Now.Year - 1 : DateTime.Now.Year;
                     if (AccYear.Length > 4) int.TryParse(AccYear.Substring(0, 4), out yy);
                     rv.UserType.Company.LoginAccYear = yy;
+                    var appcon = DB.AppConnections.Where(x => x.ConnectionId == Context.ConnectionId).ToList().LastOrDefault();
+                    if (appcon == null)
+                    {
+                        appcon = new DAL.AppConnection();
+
+                    }
+                    else
+                    {
+                        appcon.AppConnectionLoginSucceeds.Add(new DAL.AppConnectionLoginSucceed() {
+                            LoginId = rv.Id,
+                            SucceedAt = DateTime.Now,
+                            Type = "Manual"                                                        
+                        });
+                        DB.SaveChanges();
+                    }
                     return rv;
 
                 }
                 else
                 {
+                    var appcon = DB.AppConnections.Where(x => x.ConnectionId == Context.ConnectionId).ToList().LastOrDefault();
+                    if (appcon == null)
+                    {
+                        appcon = new DAL.AppConnection();
+                    }
+                    else
+                    {
+                        appcon.AppConnectionLoginFaileds.Add(new DAL.AppConnectionLoginFailed()
+                        {
+                            AccYear = AccYear,
+                            CompanyName = CompanyName,
+                            LoginId = LoginId,
+                            Password = Password,
+                            FailedAt = DateTime.Now
+                        });
+                        DB.SaveChanges();
+                    }
                     return rv;
                 }
 
@@ -74,7 +106,7 @@ namespace AccountBuddy.SL.Hubs
             var rv = new BLL.UserAccount();
             try
             {
-                DAL.UserAccount ua = Caller.DB.UserAccounts
+                DAL.UserAccount ua = DB.UserAccounts
                                   .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
                                     && x.LoginId == LoginId
                                     && x.Password == Password && x.UserType.CompanyDetail.IsActive != false)
@@ -96,11 +128,43 @@ namespace AccountBuddy.SL.Hubs
                     int yy = DateTime.Now.Month < 4 ? DateTime.Now.Year - 1 : DateTime.Now.Year;
                     if (AccYear.Length > 4) int.TryParse(AccYear.Substring(0, 4), out yy);
                     rv.UserType.Company.LoginAccYear = yy;
+                    var appcon = DB.AppConnections.Where(x => x.ConnectionId == Context.ConnectionId).ToList().LastOrDefault();
+                    if (appcon == null)
+                    {
+                        appcon = new DAL.AppConnection();
+
+                    }
+                    else
+                    {
+                        appcon.AppConnectionLoginSucceeds.Add(new DAL.AppConnectionLoginSucceed()
+                        {
+                            LoginId = rv.Id,
+                            SucceedAt = DateTime.Now,
+                            Type = "ReLogin"
+                        });
+                        DB.SaveChanges();
+                    }
                     return rv;
 
                 }
                 else
                 {
+                    var appcon = DB.AppConnections.Where(x => x.ConnectionId == Context.ConnectionId).ToList().LastOrDefault();
+                    if (appcon == null)
+                    {
+                        appcon = new DAL.AppConnection();
+                    }
+                    else
+                    {
+                        appcon.AppConnectionLoginFaileds.Add(new DAL.AppConnectionLoginFailed()
+                        {
+                            AccYear = AccYear,
+                            CompanyName = CompanyName,
+                            LoginId = LoginId,
+                            Password = Password
+                        });
+                        DB.SaveChanges();
+                    }
                     return rv;
                 }
 
@@ -119,7 +183,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.UserAccount> UserAccount_List()
         {
-            var l1 = Caller.DB.UserAccounts.Where(x => x.UserType.CompanyDetail.Id == Caller.CompanyId || x.UserType.CompanyDetail.UnderCompanyId == Caller.CompanyId).ToList()
+            var l1 = DB.UserAccounts.Where(x => x.UserType.CompanyDetail.Id == Caller.CompanyId || x.UserType.CompanyDetail.UnderCompanyId == Caller.CompanyId).ToList()
                                   .Select(x => UserAccountDAL_BLL(x)).ToList();
 
             return l1;
@@ -130,15 +194,15 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.UserAccount d = Caller.DB.UserAccounts.Where(x => x.Id == ua.Id).FirstOrDefault();
+                DAL.UserAccount d = DB.UserAccounts.Where(x => x.Id == ua.Id).FirstOrDefault();
 
                 if (d == null)
                 {
                     d = new DAL.UserAccount();
-                    Caller.DB.UserAccounts.Add(d);
+                    DB.UserAccounts.Add(d);
 
                     ua.toCopy<DAL.UserAccount>(d);
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
 
                     ua.Id = d.Id;
                     LogDetailStore(ua, LogDetailType.INSERT);
@@ -146,7 +210,7 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
                     ua.toCopy<DAL.UserAccount>(d);
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     LogDetailStore(ua, LogDetailType.UPDATE);
                 }
 
@@ -162,18 +226,18 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                var d = Caller.DB.UserAccounts.Where(x => x.Id == pk).FirstOrDefault();
+                var d = DB.UserAccounts.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null)
                 {
-                    var ld = Caller.DB.LogDetails.Where(x => x.LogMaster.EntityTypeId == pk);
-                    Caller.DB.LogDetails.RemoveRange(ld);
-                    Caller.DB.SaveChanges();
+                    var ld = DB.LogDetails.Where(x => x.LogMaster.EntityTypeId == pk);
+                    DB.LogDetails.RemoveRange(ld);
+                    DB.SaveChanges();
 
-                    Caller.DB.LogMasters.RemoveRange(Caller.DB.LogMasters.Where(x => x.EntityTypeId == pk));
-                    Caller.DB.SaveChanges();
+                    DB.LogMasters.RemoveRange(DB.LogMasters.Where(x => x.EntityTypeId == pk));
+                    DB.SaveChanges();
 
-                    Caller.DB.UserAccounts.Remove(d);
-                    Caller.DB.SaveChanges();
+                    DB.UserAccounts.Remove(d);
+                    DB.SaveChanges();
                     LogDetailStore(d.toCopy<BLL.UserAccount>(new BLL.UserAccount()), LogDetailType.DELETE);
                 }
                 Clients.Clients(OtherLoginClients).UserAccount_Delete(pk);
@@ -187,7 +251,7 @@ namespace AccountBuddy.SL.Hubs
           
             try
             {
-                DAL.UserAccount ua = Caller.DB.UserAccounts
+                DAL.UserAccount ua = DB.UserAccounts
                                   .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
                                     && x.LoginId == LoginId
                                     && x.Password == Password 

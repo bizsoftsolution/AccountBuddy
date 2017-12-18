@@ -84,5 +84,14 @@ namespace AccountBuddy.DAL
         public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
         public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
         public virtual DbSet<PurchaseRequestStatusDetail> PurchaseRequestStatusDetails { get; set; }
+        public virtual DbSet<AppConnection> AppConnections { get; set; }
+        public virtual DbSet<AppConnectionHeader> AppConnectionHeaders { get; set; }
+        public virtual DbSet<AppConnectionLoginFailed> AppConnectionLoginFaileds { get; set; }
+        public virtual DbSet<AppConnectionLoginSucceed> AppConnectionLoginSucceeds { get; set; }
+        public virtual DbSet<AppConnectionReConnected> AppConnectionReConnecteds { get; set; }
+        public virtual DbSet<AppConnectionLoginWebAdmin> AppConnectionLoginWebAdmins { get; set; }
+        public virtual DbSet<WebAdmin> WebAdmins { get; set; }
+        public virtual DbSet<AppMaster> AppMasters { get; set; }
+        public virtual DbSet<AppConnectionLoginSystem> AppConnectionLoginSystems { get; set; }
     }
 }

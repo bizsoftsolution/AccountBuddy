@@ -27,7 +27,7 @@ namespace AccountBuddy.SL.Hubs
      
         public List<BLL.UserType> UserType_List()
         {
-            return Caller.DB.UserTypes.Where(x => x.CompanyId == Caller.CompanyId || x.CompanyDetail.UnderCompanyId==Caller.CompanyId).ToList()
+            return DB.UserTypes.Where(x => x.CompanyId == Caller.CompanyId || x.CompanyDetail.UnderCompanyId==Caller.CompanyId).ToList()
                                .Select(x=> UserTypeDAL_BLL(x)).ToList();
         }
 
@@ -35,11 +35,11 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.UserType d = Caller.DB.UserTypes.Where(x => x.Id == ut.Id).FirstOrDefault();
+                DAL.UserType d = DB.UserTypes.Where(x => x.Id == ut.Id).FirstOrDefault();
                 
                 if (d == null)
                 {
-                    var c = Caller.DB.CompanyDetails.Where(x => x.Id == ut.CompanyId).FirstOrDefault();
+                    var c = DB.CompanyDetails.Where(x => x.Id == ut.CompanyId).FirstOrDefault();
 
                     d = new DAL.UserType();
                     c.UserTypes.Add(d);
@@ -49,7 +49,7 @@ namespace AccountBuddy.SL.Hubs
                     {                        
                         d.UserTypeDetails.Add(utd.toCopy<DAL.UserTypeDetail>(new DAL.UserTypeDetail()));
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     ut.Id = d.Id;
                     ut.Company = c.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
                     LogDetailStore(ut, LogDetailType.INSERT);
@@ -69,7 +69,7 @@ namespace AccountBuddy.SL.Hubs
                         utd.toCopy<DAL.UserTypeDetail>(dd);                        
                     }
 
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     LogDetailStore(ut, LogDetailType.UPDATE);
                 }
 
@@ -85,12 +85,12 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                var d = Caller.DB.UserTypes.Where(x => x.Id == pk).FirstOrDefault();
+                var d = DB.UserTypes.Where(x => x.Id == pk).FirstOrDefault();
                 if (d != null)
                 {
-                    Caller.DB.UserTypeDetails.RemoveRange(d.UserTypeDetails);
-                    Caller.DB.UserTypes.Remove(d);
-                    Caller.DB.SaveChanges();
+                    DB.UserTypeDetails.RemoveRange(d.UserTypeDetails);
+                    DB.UserTypes.Remove(d);
+                    DB.SaveChanges();
                     LogDetailStore(UserTypeDAL_BLL(d), LogDetailType.DELETE);                 
                 }
 

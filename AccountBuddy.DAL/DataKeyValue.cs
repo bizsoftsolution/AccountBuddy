@@ -18,5 +18,7 @@ namespace AccountBuddy.DAL
         public string DataKey { get; set; }
         public int DataValue { get; set; }
         public int CompanyId { get; set; }
+    
+        public virtual CompanyDetail CompanyDetail { get; set; }
     }
 }

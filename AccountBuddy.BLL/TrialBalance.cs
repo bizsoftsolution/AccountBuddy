@@ -159,11 +159,11 @@ namespace AccountBuddy.BLL
 
         public static List<TrialBalance> ToList(DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<TrialBalance>>("TrialBalance_List",dtFrom,dtTo).Result;        
+            return FMCGHubClient.HubCaller.Invoke<List<TrialBalance>>("TrialBalance_List",dtFrom,dtTo).Result;        
         }
         public static decimal GetLedgerBalance(int LedgerId, DateTime dt)
         {
-            return FMCGHubClient.FMCGHub.Invoke<decimal>("TrialBalance_GetLedgerBalance", LedgerId, dt).Result;
+            return FMCGHubClient.HubCaller.Invoke<decimal>("TrialBalance_GetLedgerBalance", LedgerId, dt).Result;
         }
         #endregion
 

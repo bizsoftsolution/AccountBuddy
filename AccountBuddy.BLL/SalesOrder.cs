@@ -71,7 +71,7 @@ namespace AccountBuddy.BLL
                 {try
                     {
                         _SOPendingList = new ObservableCollection<SalesOrder>();
-                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<SalesOrder>>("SalesOrder_SOPendingList").Result;
+                        var l1 = FMCGHubClient.HubCaller.Invoke<List<SalesOrder>>("SalesOrder_SOPendingList").Result;
                         _SOPendingList = new ObservableCollection<SalesOrder>(l1);
                     }
                     catch(Exception ex)
@@ -448,7 +448,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("SalesOrder_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("SalesOrder_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -460,7 +460,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("SalesOrder_MakeSales", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("SalesOrder_MakeSales", this).Result;
             }
             catch (Exception ex)
             {
@@ -475,7 +475,7 @@ namespace AccountBuddy.BLL
             _SODetails = new ObservableCollection<SalesOrderDetail>();
 
             SODate = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("SalesOrder_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("SalesOrder_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -483,7 +483,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                SalesOrder po = FMCGHubClient.FMCGHub.Invoke<SalesOrder>("SalesOrder_Find", SearchText).Result;
+                SalesOrder po = FMCGHubClient.HubCaller.Invoke<SalesOrder>("SalesOrder_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<SalesOrder>(this);
                 this.SODetails = po.SODetails;
@@ -500,7 +500,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("SalesOrder_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("SalesOrder_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -573,7 +573,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_SORef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_SORef", RefNo, this).Result;
             }
             catch (Exception ex)
             {
@@ -587,7 +587,7 @@ namespace AccountBuddy.BLL
             List<SalesOrder> rv = new List<SalesOrder>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<SalesOrder>>("SalesOrder_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<List<SalesOrder>>("SalesOrder_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

@@ -288,7 +288,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("StockOut_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("StockOut_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -303,7 +303,7 @@ namespace AccountBuddy.BLL
             this.STOutDetails = new ObservableCollection<StockOutDetail>();
 
             Date = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("StockOut_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("StockOut_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -311,7 +311,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                StockOut po = FMCGHubClient.FMCGHub.Invoke<StockOut>("StockOut_Find", SearchText).Result;
+                StockOut po = FMCGHubClient.HubCaller.Invoke<StockOut>("StockOut_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<StockOut>(this);
                 this.STOutDetails = po.STOutDetails;
@@ -327,7 +327,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                StockOut po = FMCGHubClient.FMCGHub.Invoke<StockOut>("StockOut_FindById", id).Result;
+                StockOut po = FMCGHubClient.HubCaller.Invoke<StockOut>("StockOut_FindById", id).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<StockOut>(this);
                 this.STOutDetails = po.STOutDetails;
@@ -343,7 +343,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("StockOut_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("StockOut_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -403,7 +403,7 @@ namespace AccountBuddy.BLL
             List<StockOut> rv = new List<StockOut>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<StockOut>>("StockOut_List", LedgerId,  dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<List<StockOut>>("StockOut_List", LedgerId,  dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {
@@ -420,7 +420,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_STOutRef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_STOutRef", RefNo, this).Result;
             }
             catch (Exception ex)
             {

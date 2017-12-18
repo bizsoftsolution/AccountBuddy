@@ -624,7 +624,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("Payment_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("Payment_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -640,7 +640,7 @@ namespace AccountBuddy.BLL
 
             PaymentDate = DateTime.Now;
             IsReadOnly = !UserPermission.AllowInsert;
-            EntryNo = FMCGHubClient.FMCGHub.Invoke<string>("Payment_NewRefNo").Result;
+            EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Payment_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -648,7 +648,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Payment po = FMCGHubClient.FMCGHub.Invoke<Payment>("Payment_Find", EntryNo).Result;
+                Payment po = FMCGHubClient.HubCaller.Invoke<Payment>("Payment_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Payment>(this);
                 this.PDetails = po.PDetails;
@@ -667,7 +667,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("Payment_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("Payment_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -732,7 +732,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_EntryNo", EntryNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_EntryNo", EntryNo, this).Result;
             }
             catch (Exception ex)
             {
@@ -743,7 +743,7 @@ namespace AccountBuddy.BLL
 
         public static List<Payment> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<Payment>>("Payment_List", LedgerId,  dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<Payment>>("Payment_List", LedgerId,  dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
         }
 
         #region Property  Changed Event

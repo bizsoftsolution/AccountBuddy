@@ -164,7 +164,7 @@ namespace AccountBuddy.BLL
 
         public static List<POPending> ToList(DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<POPending>>("POPending_List", dtFrom, dtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<POPending>>("POPending_List", dtFrom, dtTo).Result;
         }
 
         #endregion

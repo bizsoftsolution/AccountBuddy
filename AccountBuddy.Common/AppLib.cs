@@ -19,8 +19,12 @@ namespace AccountBuddy.Common
 
         public static int userId=0;
 
-
+        public static string SLPath = "";
+        public static string SLTransport = "";
         public static string AppName = "";
+        public static string AppIdKey = "";        
+        public static string AppIdValue = "";
+        public static bool IsAppApproved = false;
 
         public static int BankId;
         public static string BankName;
@@ -311,11 +315,18 @@ namespace AccountBuddy.Common
 
         public static void WriteLog(String str)
         {
-
-            using (StreamWriter writer = new StreamWriter(Path.GetTempPath() + "FMCG_log.txt", true))
+            try
             {
-                writer.WriteLine(string.Format("{0:dd/MM/yyyy hh:mm:ss} => {1}", DateTime.Now, str));
+                using (StreamWriter writer = new StreamWriter(Path.GetTempPath() + "FMCG_log.txt", true))
+                {
+                    writer.WriteLine(string.Format("{0:dd/MM/yyyy hh:mm:ss} => {1}", DateTime.Now, str));
+                }
             }
+            catch (Exception) { }            
+        }
+        public static void WriteLog(Exception ex)
+        {
+            WriteLog(string.Format("Error=> ExMessage:{0},StackTrace:{1}", ex.Message,ex.StackTrace));            
         }
     }
 }

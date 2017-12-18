@@ -17,16 +17,16 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.UOM> UOM_List()
         {
-            Caller.DB = new DAL.DBFMCGEntities();
+            
             if (Caller.CompanyType == "Company")
             {
-                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).ToList()
+                return DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).ToList()
                               .Select(x => UOM_DALtoBLL(x)).ToList();
             }
 
             else
             {
-                return Caller.DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
+                return DB.UOMs.Where(x => x.CompanyId == Caller.UnderCompanyId).ToList()
                               .Select(x => UOM_DALtoBLL(x)).ToList();
             }
 
@@ -35,19 +35,19 @@ namespace AccountBuddy.SL.Hubs
         public int UOM_Save(BLL.UOM agp)
         {
 
-            Caller.DB = new DAL.DBFMCGEntities();
+            
             try
             {
                 agp.CompanyId = Caller.CompanyId;
-                DAL.UOM d = Caller.DB.UOMs.Where(x => x.Id == agp.Id).FirstOrDefault();
+                DAL.UOM d = DB.UOMs.Where(x => x.Id == agp.Id).FirstOrDefault();
 
                 if (d == null)
                 {
                     d = new DAL.UOM();
-                    Caller.DB.UOMs.Add(d);
+                    DB.UOMs.Add(d);
 
                     agp.toCopy<DAL.UOM>(d);
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
 
                     agp.Id = d.Id;
                     LogDetailStore(agp, LogDetailType.INSERT);
@@ -55,7 +55,7 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
                     agp.toCopy<DAL.UOM>(d);
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
@@ -69,17 +69,17 @@ namespace AccountBuddy.SL.Hubs
 
         public bool UOM_Delete(int pk)
         {
-            Caller.DB = new DAL.DBFMCGEntities();
+            
             var rv = false;
             try
             {
-                var d = Caller.DB.UOMs.Where(x => x.Id == pk).FirstOrDefault();
+                var d = DB.UOMs.Where(x => x.Id == pk).FirstOrDefault();
                 if (d.Products != null)
                 {
                     if (d != null)
                     {
-                        Caller.DB.UOMs.Remove(d);
-                        Caller.DB.SaveChanges();
+                        DB.UOMs.Remove(d);
+                        DB.SaveChanges();
                         LogDetailStore(d.toCopy<BLL.UOM>(new BLL.UOM()), LogDetailType.DELETE);
                     }
 

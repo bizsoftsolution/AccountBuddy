@@ -215,7 +215,7 @@ namespace AccountBuddy.BLL
 
         public static List<ReceiptAndPayment> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string entryNo, string Status)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<ReceiptAndPayment>>("ReceiptAndPayment_List", LedgerId, dtFrom, dtTo,entryNo, Status).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<ReceiptAndPayment>>("ReceiptAndPayment_List", LedgerId, dtFrom, dtTo,entryNo, Status).Result;
         }
 
         #endregion

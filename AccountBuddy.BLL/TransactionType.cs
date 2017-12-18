@@ -24,7 +24,7 @@ namespace AccountBuddy.BLL
                 if (_tolist == null)
                 {
                     _tolist = new List<TransactionType>();
-                    _tolist = FMCGHubClient.FMCGHub.Invoke<List<BLL.TransactionType>>("TransactionType_List").Result;
+                    _tolist = FMCGHubClient.HubCaller.Invoke<List<BLL.TransactionType>>("TransactionType_List").Result;
                 }
                 return _tolist;
             }

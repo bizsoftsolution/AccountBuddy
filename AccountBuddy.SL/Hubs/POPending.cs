@@ -12,7 +12,7 @@ namespace AccountBuddy.SL.Hubs
             List<BLL.POPending> lstPOPending = new List<BLL.POPending>();
             BLL.POPending tb = new BLL.POPending();
 
-            var lstLedger = Caller.DB.Ledgers.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName==BLL.DataKeyValue.BranchDivisions_Key && x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName==BLL.DataKeyValue.BranchDivisions_Key && x.AccountGroup.CompanyId == Caller.CompanyId).ToList();
 
             foreach (var l in lstLedger)
             {

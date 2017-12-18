@@ -102,7 +102,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null) _toList = new ObservableCollection<LedgerList>(FMCGHubClient.FMCGHub.Invoke<List<LedgerList>>("LedgerList").Result);
+                if (_toList == null) _toList = new ObservableCollection<LedgerList>(FMCGHubClient.HubCaller.Invoke<List<LedgerList>>("LedgerList").Result);
                 return _toList;
             }
             set

@@ -57,7 +57,7 @@ namespace AccountBuddy.BLL
                     if (_toList == null)
                     {
                         _toList = new ObservableCollection<UOM>();
-                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<UOM>>("UOM_List").Result;
+                        var l1 = FMCGHubClient.HubCaller.Invoke<List<UOM>>("UOM_List").Result;
                         _toList = new ObservableCollection<UOM>(l1.OrderBy(x => x.FormalName));
                     }
                 }
@@ -226,7 +226,7 @@ namespace AccountBuddy.BLL
                 this.toCopy<UOM>(d);
                 if (isServerCall == false)
                 {
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("UOM_Save", this).Result;
+                    var i = FMCGHubClient.HubCaller.Invoke<int>("UOM_Save", this).Result;
                     d.Id = i;
                 }
 
@@ -277,7 +277,7 @@ namespace AccountBuddy.BLL
 
                 if (isServerCall == false)
                 {
-                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("UOM_Delete", this.Id).Result;
+                    rv = FMCGHubClient.HubCaller.Invoke<bool>("UOM_Delete", this.Id).Result;
                     if (rv == true)
                     {
                         toList.Remove(d);

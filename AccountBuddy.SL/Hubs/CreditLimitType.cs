@@ -21,7 +21,7 @@ namespace AccountBuddy.SL.Hubs
                 if (_creditLimitList == null)
                 {
                     _creditLimitList = new List<BLL.CreditLimitType>();
-                    foreach (var d1 in Caller.DB.CreditLimitTypes.ToList())
+                    foreach (var d1 in DB.CreditLimitTypes.ToList())
                     {
                         BLL.CreditLimitType d2 = new BLL.CreditLimitType();
                         d1.toCopy<BLL.CreditLimitType>(d2);

@@ -16,7 +16,7 @@ namespace AccountBuddy.SL.Hubs
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Payment, dt, dt.Month);
             long No = 0;
 
-            var d = Caller.DB.Payments.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.EntryNo.StartsWith(Prefix))
+            var d = DB.Payments.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.EntryNo.StartsWith(Prefix))
                                      .OrderByDescending(x => x.EntryNo)
                                      .FirstOrDefault();
 
@@ -28,11 +28,11 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {                
-                DAL.Payment d = Caller.DB.Payments.Where(x => x.Id == PO.Id).FirstOrDefault();
+                DAL.Payment d = DB.Payments.Where(x => x.Id == PO.Id).FirstOrDefault();
                 if (d == null)
                 {
                     d = new DAL.Payment();
-                    Caller.DB.Payments.Add(d);
+                    DB.Payments.Add(d);
 
                     PO.toCopy<DAL.Payment>(d);
 
@@ -42,7 +42,7 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.toCopy<DAL.PaymentDetail>(d_pod);
                         d.PaymentDetails.Add(d_pod);
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     PO.Id = d.Id;
                     LogDetailStore(PO, LogDetailType.INSERT);
                 }
@@ -56,7 +56,7 @@ namespace AccountBuddy.SL.Hubs
 
                     //}
                     decimal pd = PO.PDetails.Select(X => X.PaymentId).FirstOrDefault();
-                    Caller.DB.PaymentDetails.RemoveRange(d.PaymentDetails.Where(x => x.PaymentId == pd).ToList());
+                    DB.PaymentDetails.RemoveRange(d.PaymentDetails.Where(x => x.PaymentId == pd).ToList());
 
                     PO.toCopy<DAL.Payment>(d);
 
@@ -70,7 +70,7 @@ namespace AccountBuddy.SL.Hubs
                        // }
                         b_pod.toCopy<DAL.PaymentDetail>(d_pod);                        
                     }
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
                 Clients.Clients(OtherLoginClients).Payment_RefNoRefresh(Payment_NewRefNo());
@@ -87,13 +87,13 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Payment d = Caller.DB.Payments.Where(x => x.EntryNo == EntryNo && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
-                Caller.DB.Entry(d).Reload();
+                DAL.Payment d = DB.Payments.Where(x => x.EntryNo == EntryNo && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
+                DB.Entry(d).Reload();
                 if (d != null)
                 {
 
                     d.toCopy<BLL.Payment>(PO);
-                    PO.LedgerName = (d.Ledger ?? Caller.DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                    PO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
                     foreach (var d_pod in d.PaymentDetails)
                     {
@@ -101,7 +101,7 @@ namespace AccountBuddy.SL.Hubs
                         d_pod.toCopy<BLL.PaymentDetail>(b_pod);
                         PO.PDetails.Add(b_pod);
                         b_pod.SNo = ++i;
-                        b_pod.LedgerName = (d_pod.Ledger ?? Caller.DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                        b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
 
                 }
@@ -115,14 +115,14 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.Payment d = Caller.DB.Payments.Where(x => x.Id == pk).FirstOrDefault();
+                DAL.Payment d = DB.Payments.Where(x => x.Id == pk).FirstOrDefault();
 
                 if (d != null)
                 {
                     var P = Payment_DALtoBLL(d);
-                    Caller.DB.PaymentDetails.RemoveRange(d.PaymentDetails);
-                    Caller.DB.Payments.Remove(d);
-                    Caller.DB.SaveChanges();
+                    DB.PaymentDetails.RemoveRange(d.PaymentDetails);
+                    DB.Payments.Remove(d);
+                    DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
                     Journal_DeleteByPayment(P);
                     Clients.Clients(OtherLoginClients).Payment_RefNoRefresh(Payment_NewRefNo());
@@ -146,7 +146,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_EntryNo(string entryNo, BLL.Payment PO)
 
         {
-            DAL.Payment d = Caller.DB.Payments.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
+            DAL.Payment d = DB.Payments.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
             if (d == null)
             {
                 return false;
@@ -159,12 +159,12 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.Payment> Payment_List(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
         {
-            Caller.DB = new DAL.DBFMCGEntities();
+            
             List<BLL.Payment> lstPayment = new List<BLL.Payment>();
             BLL.Payment rp = new BLL.Payment();
             try
             {
-                foreach (var l in Caller.DB.Payments.
+                foreach (var l in DB.Payments.
                       Where(x => x.PaymentDate >= dtFrom && x.PaymentDate <= dtTo
                       && (x.LedgerId == LedgerId || LedgerId == null)
                       && (EntryNo == "" || x.EntryNo == EntryNo)

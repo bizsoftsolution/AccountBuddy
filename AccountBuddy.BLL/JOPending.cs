@@ -164,7 +164,7 @@ namespace AccountBuddy.BLL
 
         public static List<JOPending> ToList(DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<JOPending>>("JOPending_List", dtFrom, dtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<JOPending>>("JOPending_List", dtFrom, dtTo).Result;
         }
 
         #endregion

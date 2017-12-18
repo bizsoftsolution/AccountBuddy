@@ -1,0 +1,26 @@
+﻿
+<div class="container-fluid" ng-show="IsWebAdminLogined==true">   
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Web Admin</a>
+                <button class="navbar-toggle" data-toggle="collapse" data-target="#myNavBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavBar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#!AppMaster">App Master</a></li>
+                    <li><a href="#!Connection">Connection</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>   
+    <div class="container-fluid" style="margin-top:50px">
+        <ng-view>
+
+        </ng-view>
+    </div> 
+</div>

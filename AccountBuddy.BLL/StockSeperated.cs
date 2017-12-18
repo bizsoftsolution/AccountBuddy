@@ -433,7 +433,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("StockSeperated_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("StockSeperated_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -448,7 +448,7 @@ namespace AccountBuddy.BLL
             _SSDetails = new ObservableCollection<StockSeperatedDetail>();
 
             Date = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("StockSeperated_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("StockSeperated_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -456,7 +456,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                StockSeperated po = FMCGHubClient.FMCGHub.Invoke<StockSeperated>("StockSeperated_Find", SearchText).Result;
+                StockSeperated po = FMCGHubClient.HubCaller.Invoke<StockSeperated>("StockSeperated_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<StockSeperated>(this);
                 this.SSDetails = po.SSDetails;
@@ -473,7 +473,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("StockSeperated_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("StockSeperated_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -484,7 +484,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                StockSeperated po = FMCGHubClient.FMCGHub.Invoke<StockSeperated>("StockSeperated_FindById", Id).Result;
+                StockSeperated po = FMCGHubClient.HubCaller.Invoke<StockSeperated>("StockSeperated_FindById", Id).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<StockSeperated>(this);
                 this.SSDetails = po.SSDetails;
@@ -563,7 +563,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_SSRef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_SSRef", RefNo, this).Result;
             }
             catch (Exception ex)
             {
@@ -577,7 +577,7 @@ namespace AccountBuddy.BLL
             List<StockSeperated> rv = new List<StockSeperated>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<StockSeperated>>("StockSeperated_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<List<StockSeperated>>("StockSeperated_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

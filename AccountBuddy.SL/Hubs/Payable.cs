@@ -12,7 +12,7 @@ namespace AccountBuddy.SL.Hubs
             List<BLL.Payable> lstPayable = new List<BLL.Payable>();
             BLL.Payable tb = new BLL.Payable();
 
-            var lstLedger = Caller.DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId);
+            var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyId == Caller.CompanyId);
             decimal TotAmt = 0;
 
             foreach (var l in lstLedger)

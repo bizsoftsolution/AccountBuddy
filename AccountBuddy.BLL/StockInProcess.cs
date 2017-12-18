@@ -418,7 +418,7 @@ namespace AccountBuddy.BLL
 
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("StockInProcess_MakeReceieved", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("StockInProcess_MakeReceieved", this).Result;
             }
             catch (Exception ex)
             {
@@ -441,7 +441,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("StockInProcess_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("StockInProcess_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -456,7 +456,7 @@ namespace AccountBuddy.BLL
             STPDetails = new ObservableCollection<StockInProcessDetail>();
 
             SPDate = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("StockInProcess_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("StockInProcess_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -464,7 +464,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                StockInProcess po = FMCGHubClient.FMCGHub.Invoke<StockInProcess>("StockInProcess_Find", SearchText).Result;
+                StockInProcess po = FMCGHubClient.HubCaller.Invoke<StockInProcess>("StockInProcess_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<StockInProcess>(this);
                 this.STPDetails = po.STPDetails;
@@ -481,7 +481,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("StockInProcess_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("StockInProcess_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -492,7 +492,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                StockInProcess po = FMCGHubClient.FMCGHub.Invoke<StockInProcess>("StockInProcess_FindById", Id).Result;
+                StockInProcess po = FMCGHubClient.HubCaller.Invoke<StockInProcess>("StockInProcess_FindById", Id).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<StockInProcess>(this);
                 this.STPDetails = po.STPDetails;
@@ -570,7 +570,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_STPRef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_STPRef", RefNo, this).Result;
 
             }
             catch (Exception ex)
@@ -584,7 +584,7 @@ namespace AccountBuddy.BLL
             List<StockInProcess> rv = new List<StockInProcess>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<StockInProcess>>("StockInProcess_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<List<StockInProcess>>("StockInProcess_List", LedgerId, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

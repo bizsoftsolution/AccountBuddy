@@ -390,7 +390,7 @@ namespace AccountBuddy.BLL
 
         public static List<PurchaseRequestReport> ToList(DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<PurchaseRequestReport>>("PurchaseRequestReport_List", dtFrom, dtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<PurchaseRequestReport>>("PurchaseRequestReport_List", dtFrom, dtTo).Result;
         }        
 
         #endregion

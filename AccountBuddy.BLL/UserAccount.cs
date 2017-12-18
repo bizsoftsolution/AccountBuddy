@@ -93,7 +93,7 @@ namespace AccountBuddy.BLL
             {
                 if (_toList == null)
                 {
-                    var l1 = FMCGHubClient.FMCGHub.Invoke<List<UserAccount>>("UserAccount_List").Result;
+                    var l1 = FMCGHubClient.HubCaller.Invoke<List<UserAccount>>("UserAccount_List").Result;
                     _toList = new ObservableCollection<UserAccount>(l1);
                 }
 
@@ -218,7 +218,7 @@ namespace AccountBuddy.BLL
         #region Method
         public static string Login(string AccYear, String CompanyName, String LId, String Pwd)
         {
-            var ua = FMCGHubClient.FMCGHub.Invoke<UserAccount>("UserAccount_Login", AccYear, CompanyName, LId, Pwd).Result;
+            var ua = FMCGHubClient.HubCaller.Invoke<UserAccount>("UserAccount_Login", AccYear, CompanyName, LId, Pwd).Result;
             
             if ( isValidLogin(ua,AccYear,CompanyName, LId,Pwd))
             {
@@ -240,7 +240,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                var rv = FMCGHubClient.FMCGHub.Invoke<UserAccount>("UserAccount_ReLogin", UserAccount.LoginedACYear, UserAccount.User.UserType.Company.CompanyName, UserAccount.User.LoginId, UserAccount.User.Password).Result;
+                var rv = FMCGHubClient.HubCaller.Invoke<UserAccount>("UserAccount_ReLogin", UserAccount.LoginedACYear, UserAccount.User.UserType.Company.CompanyName, UserAccount.User.LoginId, UserAccount.User.Password).Result;
                 try
                 {
                     if (rv != null)
@@ -334,7 +334,7 @@ namespace AccountBuddy.BLL
                 if (isServerCall == false)
                 {
 
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("UserAccount_Save", this).Result;
+                    var i = FMCGHubClient.HubCaller.Invoke<int>("UserAccount_Save", this).Result;
                     d.Id = i;
                 }
 
@@ -382,7 +382,7 @@ namespace AccountBuddy.BLL
                 toList.Remove(d);
                 if (isServerCall == false)
                 {
-                    FMCGHubClient.FMCGHub.Invoke<int>("UserAccount_Delete", this.Id);
+                    FMCGHubClient.HubCaller.Invoke<int>("UserAccount_Delete", this.Id);
                     return true;
                 }
                 else
@@ -481,7 +481,7 @@ namespace AccountBuddy.BLL
         }
         public static Boolean Admin_Authentication( String CompanyName, String LId, String Pwd)
         {
-            var ua = FMCGHubClient.FMCGHub.Invoke<Boolean>("Admin_Authentication",  CompanyName, LId, Pwd).Result;
+            var ua = FMCGHubClient.HubCaller.Invoke<Boolean>("Admin_Authentication",  CompanyName, LId, Pwd).Result;
 
             return ua;
             

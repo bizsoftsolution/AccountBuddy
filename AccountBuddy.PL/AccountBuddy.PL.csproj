@@ -162,6 +162,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frmInit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frmLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -574,6 +578,9 @@
     </Compile>
     <Compile Include="frmHome.xaml.cs">
       <DependentUpon>frmHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frmInit.xaml.cs">
+      <DependentUpon>frmInit.xaml</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.xaml.cs">
       <DependentUpon>frmLogin.xaml</DependentUpon>
@@ -1041,6 +1048,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\LogoFrame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\pleasewait.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

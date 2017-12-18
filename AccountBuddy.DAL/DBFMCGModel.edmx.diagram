@@ -167,6 +167,25 @@
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff1" />
         <AssociationConnector Association="DBFMCGModel.FK_Staff_UserAccount" />
+        <EntityTypeShape EntityType="DBFMCGModel.AppConnection" Width="1.5" PointX="0.75" PointY="3.75" />
+        <AssociationConnector Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail" />
+        <EntityTypeShape EntityType="DBFMCGModel.AppConnectionHeader" Width="1.5" PointX="3" PointY="3.875" />
+        <AssociationConnector Association="DBFMCGModel.FK_AppConnectionHeader_AppConnection" />
+        <EntityTypeShape EntityType="DBFMCGModel.AppConnectionLoginFailed" Width="1.5" PointX="3" PointY="17.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.AppConnectionLoginSucceed" Width="1.5" PointX="8.25" PointY="17.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.AppConnectionReConnected" Width="1.5" PointX="3" PointY="20.875" />
+        <AssociationConnector Association="DBFMCGModel.FK_AppConnectionLoginFailed_AppConnection" />
+        <AssociationConnector Association="DBFMCGModel.FK_AppConnectionLoginSucceeded_AppConnection" />
+        <AssociationConnector Association="DBFMCGModel.FK_AppConnectionReConnected_AppConnection" />
+        <AssociationConnector Association="DBFMCGModel.FK_AppConnectionLoginSucceeded_UserAccount" />
+        <EntityTypeShape EntityType="DBFMCGModel.AppConnectionLoginWebAdmin" Width="1.5" PointX="6" PointY="4.125" />
+        <EntityTypeShape EntityType="DBFMCGModel.WebAdmin" Width="1.5" PointX="3.75" PointY="95.25" />
+        <AssociationConnector Association="DBFMCGModel.FK_AppConnectionLoginWebAdmin_AppConnection" />
+        <AssociationConnector Association="DBFMCGModel.FK_AppConnectionLoginWebAdmin_WebAdmin" />
+        <EntityTypeShape EntityType="DBFMCGModel.AppMaster" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DBFMCGModel.AppConnectionLoginSystem" Width="1.5" PointX="8.625" PointY="2.375" />
+        <AssociationConnector Association="DBFMCGModel.FK_AppConnectionLoginSystem_AppConnection" />
+        <AssociationConnector Association="DBFMCGModel.FK_AppConnectionLoginSystem_AppMaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

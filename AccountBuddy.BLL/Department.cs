@@ -58,7 +58,7 @@ namespace AccountBuddy.BLL
                     if (_toList == null)
                     {
                         _toList = new ObservableCollection<Department>();
-                        var l1 = FMCGHubClient.FMCGHub.Invoke<List<Department>>("Department_List").Result;
+                        var l1 = FMCGHubClient.HubCaller.Invoke<List<Department>>("Department_List").Result;
                         _toList = new ObservableCollection<Department>(l1.OrderBy(x => x.DepartmentName));
                     }
                 }
@@ -241,7 +241,7 @@ namespace AccountBuddy.BLL
                 this.toCopy<Department>(d);
                 if (isServerCall == false)
                 {
-                    var i = FMCGHubClient.FMCGHub.Invoke<int>("Department_Save", this).Result;
+                    var i = FMCGHubClient.HubCaller.Invoke<int>("Department_Save", this).Result;
                     d.Id = i;
                 }
 
@@ -292,7 +292,7 @@ namespace AccountBuddy.BLL
 
                 if (isServerCall == false)
                 {
-                    rv = FMCGHubClient.FMCGHub.Invoke<bool>("Department_Delete", this.Id).Result;
+                    rv = FMCGHubClient.HubCaller.Invoke<bool>("Department_Delete", this.Id).Result;
                     if (rv == true)
                     {
                         toList.Remove(d);

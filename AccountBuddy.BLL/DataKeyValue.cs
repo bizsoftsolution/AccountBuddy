@@ -830,7 +830,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null) _toList = FMCGHubClient.FMCGHub.Invoke<List<DataKeyValue>>("DataKeyValue_List").Result;
+                if (_toList == null) _toList = FMCGHubClient.HubCaller.Invoke<List<DataKeyValue>>("DataKeyValue_List").Result;
                 return _toList;
             }
             set
@@ -925,7 +925,7 @@ namespace AccountBuddy.BLL
         #endregion
         public static void Init()
         {
-            _toList = FMCGHubClient.FMCGHub.Invoke<List<DataKeyValue>>("DataKeyValue_List").Result;
+            _toList = FMCGHubClient.HubCaller.Invoke<List<DataKeyValue>>("DataKeyValue_List").Result;
         }
     }
 }

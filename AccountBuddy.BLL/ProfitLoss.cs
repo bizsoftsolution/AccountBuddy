@@ -152,7 +152,7 @@ namespace AccountBuddy.BLL
 
         public static List<ProfitLoss> ToList(DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<ProfitLoss>>("ProfitLoss_List", dtFrom, dtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<ProfitLoss>>("ProfitLoss_List", dtFrom, dtTo).Result;
         }
 
         #endregion

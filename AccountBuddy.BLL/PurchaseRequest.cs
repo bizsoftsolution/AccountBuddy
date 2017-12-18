@@ -393,7 +393,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseRequest_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("PurchaseRequest_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -408,20 +408,20 @@ namespace AccountBuddy.BLL
             _PRDetails = new ObservableCollection<PurchaseRequestDetail>();
 
             PRDate = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseRequest_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseRequest_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
         private void MaxRef()
         {
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("PurchaseOrder_MaxRef").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseOrder_MaxRef").Result;
         }
 
         public bool Find()
         {
             try
             {
-                PurchaseRequest po = FMCGHubClient.FMCGHub.Invoke<PurchaseRequest>("PurchaseRequest_Find", SearchText).Result;
+                PurchaseRequest po = FMCGHubClient.HubCaller.Invoke<PurchaseRequest>("PurchaseRequest_Find", SearchText).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<PurchaseRequest>(this);
                 this.PRDetails = po.PRDetails;
@@ -438,7 +438,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseRequest_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("PurchaseRequest_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -489,12 +489,12 @@ namespace AccountBuddy.BLL
         #endregion
         public static bool Reject(long PurchaseRequestStatusDetailId)
         {
-            return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseRequest_Reject", PurchaseRequestStatusDetailId).Result;
+            return FMCGHubClient.HubCaller.Invoke<bool>("PurchaseRequest_Reject", PurchaseRequestStatusDetailId).Result;
         }
 
         public static bool Approval(long PurchaseRequestStatusDetailId)
         {
-            return FMCGHubClient.FMCGHub.Invoke<bool>("PurchaseRequest_Approval", PurchaseRequestStatusDetailId).Result;
+            return FMCGHubClient.HubCaller.Invoke<bool>("PurchaseRequest_Approval", PurchaseRequestStatusDetailId).Result;
         }
 
         private void SetAmount()
@@ -509,7 +509,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_PRQRef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_PRQRef", RefNo, this).Result;
             }
             catch (Exception ex)
             {

@@ -514,7 +514,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("SalesReturn_Save", this).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("SalesReturn_Save", this).Result;
             }
             catch (Exception ex)
             {
@@ -529,7 +529,7 @@ namespace AccountBuddy.BLL
             this.SRDetails = new ObservableCollection<SalesReturnDetail>();
 
             SRDate = DateTime.Now;
-            RefNo = FMCGHubClient.FMCGHub.Invoke<string>("SalesReturn_NewRefNo").Result;
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("SalesReturn_NewRefNo").Result;
             NotifyAllPropertyChanged();
         }
 
@@ -537,7 +537,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                SalesReturn po = FMCGHubClient.FMCGHub.Invoke<SalesReturn>("SalesReturn_Find", RefNo).Result;
+                SalesReturn po = FMCGHubClient.HubCaller.Invoke<SalesReturn>("SalesReturn_Find", RefNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<SalesReturn>(this);
                 this.SRDetails = po.SRDetails;
@@ -554,7 +554,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                SalesReturn po = FMCGHubClient.FMCGHub.Invoke<SalesReturn>("SalesReturn_FindById", Id).Result;
+                SalesReturn po = FMCGHubClient.HubCaller.Invoke<SalesReturn>("SalesReturn_FindById", Id).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<SalesReturn>(this);
                 this.SRDetails = po.SRDetails;
@@ -571,7 +571,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.FMCGHub.Invoke<bool>("SalesReturn_Delete", this.Id).Result;
+                return FMCGHubClient.HubCaller.Invoke<bool>("SalesReturn_Delete", this.Id).Result;
             }
             catch (Exception ex)
             {
@@ -643,7 +643,7 @@ namespace AccountBuddy.BLL
             var rv = false;
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<bool>("Find_SRRef", RefNo, this).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_SRRef", RefNo, this).Result;
             }
             catch (Exception ex)
             {
@@ -657,7 +657,7 @@ namespace AccountBuddy.BLL
             List<SalesReturn> rv = new List<SalesReturn>();
             try
             {
-                rv = FMCGHubClient.FMCGHub.Invoke<List<SalesReturn>>("SalesReturn_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
+                rv = FMCGHubClient.HubCaller.Invoke<List<SalesReturn>>("SalesReturn_List", LedgerId, TType, dtFrom, dtTo, BillNo, amtFrom, amtTo).Result;
             }
             catch (Exception ex)
             {

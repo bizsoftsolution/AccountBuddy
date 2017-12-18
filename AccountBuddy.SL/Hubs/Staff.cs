@@ -20,7 +20,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Staff> Staff_List()
         {
-            return Caller.DB.Staffs.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+            return DB.Staffs.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => Staff_DALtoBLL(x)).ToList();
         }
         //public List<BLL.Staff> Staff_RequestToList()
@@ -28,8 +28,8 @@ namespace AccountBuddy.SL.Hubs
         //    List<BLL.Staff> lst = new List<BLL.Staff>();
         //    try
         //    {
-        //        var HierarchicalOrderNo = Caller.DB.UserTypes.Where(x => x.CompanyId == Caller.CompanyId && x.HierarchicalOrderNo < Caller.HierarchicalOrderNo).OrderByDescending(x => x.HierarchicalOrderNo).FirstOrDefault().HierarchicalOrderNo;
-        //        lst= Caller.DB.Staffs.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.UserAccount.UserType.HierarchicalOrderNo == HierarchicalOrderNo).ToList()
+        //        var HierarchicalOrderNo = DB.UserTypes.Where(x => x.CompanyId == Caller.CompanyId && x.HierarchicalOrderNo < Caller.HierarchicalOrderNo).OrderByDescending(x => x.HierarchicalOrderNo).FirstOrDefault().HierarchicalOrderNo;
+        //        lst= DB.Staffs.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.UserAccount.UserType.HierarchicalOrderNo == HierarchicalOrderNo).ToList()
         //                         .Select(x => Staff_DALtoBLL(x)).ToList();
         //    }
         //    catch(Exception ex)
@@ -42,7 +42,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
-                DAL.Staff d = Caller.DB.Staffs.Where(x => x.Id == cus.Id).FirstOrDefault();
+                DAL.Staff d = DB.Staffs.Where(x => x.Id == cus.Id).FirstOrDefault();
                 if (d == null)
                 {
 
@@ -52,8 +52,8 @@ namespace AccountBuddy.SL.Hubs
                     if (d.LedgerId != 0)
                     {
                        
-                        Caller.DB.Staffs.Add(d);
-                        Caller.DB.SaveChanges();
+                        DB.Staffs.Add(d);
+                        DB.SaveChanges();
                         cus.Id = d.Id;
                         LogDetailStore(cus, LogDetailType.INSERT);
                     }
@@ -62,7 +62,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     cus.toCopy<DAL.Staff>(d);
                     Ledger_Save(cus.Ledger);
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     LogDetailStore(cus, LogDetailType.UPDATE);
                 }
                 var b = Staff_DALtoBLL(d);
@@ -85,15 +85,15 @@ namespace AccountBuddy.SL.Hubs
             var rv = false;
             try
             {
-                var d = Caller.DB.Staffs.Where(x => x.Id == pk).FirstOrDefault();
+                var d = DB.Staffs.Where(x => x.Id == pk).FirstOrDefault();
                 int lId = (int)d.LedgerId;
                 if (d != null && Ledger_CanDelete(d.Ledger))
                 {
                     var b = Staff_DALtoBLL(d);
-                    Caller.DB.Staffs.Remove(d);
+                    DB.Staffs.Remove(d);
                   
                     Ledger_Delete(lId);
-                    Caller.DB.SaveChanges();
+                    DB.SaveChanges();
                     LogDetailStore(b, LogDetailType.DELETE);
                 }
 

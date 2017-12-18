@@ -14,7 +14,7 @@ namespace AccountBuddy.SL.Hubs
 
             BLL.GeneralStock gl = new BLL.GeneralStock();
 
-            var lstProduct = Caller.DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == ProductId).ToList();
+            var lstProduct = DB.Products.Where(x => x.StockGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == ProductId).ToList();
 
 
             #region Ledger

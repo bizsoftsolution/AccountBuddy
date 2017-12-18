@@ -281,7 +281,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.FMCGHub.On<BLL.JobWorker>("JobWorker_Save", (Cus) =>
+            BLL.FMCGHubClient.HubCaller.On<BLL.JobWorker>("JobWorker_Save", (Cus) =>
             {
 
                 this.Dispatcher.Invoke(() =>
@@ -291,7 +291,7 @@ namespace AccountBuddy.PL.frm.Master
 
             });
 
-            BLL.FMCGHubClient.FMCGHub.On("JobWorker_Delete", (Action<int>)((pk) =>
+            BLL.FMCGHubClient.HubCaller.On("JobWorker_Delete", (Action<int>)((pk) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
