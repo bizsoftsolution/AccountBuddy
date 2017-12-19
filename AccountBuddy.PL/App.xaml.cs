@@ -154,6 +154,7 @@ namespace AccountBuddy.PL
                                 {
                                     frmInit.Hide();
                                     frmLogin.Show();
+                                    frmLogin.ClearForm();
                                 }
                                 else
                                 {
@@ -395,13 +396,13 @@ namespace AccountBuddy.PL
                             }
                             else
                             {
-                                App.frmHome.ShowDialog();
-                                if (Common.AppLib.IsAppApproved)
-                                {
-                                    BLL.UserAccount.User = new BLL.UserAccount();
-                                    frmLogin.ClearForm();
-                                    frmLogin.Show();
-                                }
+                                App.frmHome.Show();
+                                //if (Common.AppLib.IsAppApproved)
+                                //{
+                                //    BLL.UserAccount.User = new BLL.UserAccount();
+                                //    frmLogin.ClearForm();
+                                //    frmLogin.Show();
+                                //}
                             }
                         }
                         else

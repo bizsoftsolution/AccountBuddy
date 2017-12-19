@@ -63,14 +63,14 @@ namespace AccountBuddy.PL
                 {
                     App.frmHome = new frmHome();         
                     App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
-                    this.Hide();
-                    App.frmHome.ShowDialog();
-                    if (Common.AppLib.IsAppApproved)
-                    {
-                        BLL.UserAccount.User = new BLL.UserAccount();
-                        ClearForm();
-                        this.Show();
-                    }                    
+                    App.frmLogin.Hide();
+                    App.frmHome.Show();
+                    //if (Common.AppLib.IsAppApproved)
+                    //{
+                    //    BLL.UserAccount.User = new BLL.UserAccount();
+                    //    ClearForm();
+                    //    this.Show();
+                    //}                    
                 }
                 else
                 {
@@ -125,6 +125,8 @@ namespace AccountBuddy.PL
             {
                 e.Cancel = true;
             }
+
+            if (!e.Cancel) System.Windows.Application.Current.Shutdown();
         }
 
         #endregion

@@ -161,6 +161,7 @@ namespace AccountBuddy.PL
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!IsForcedClose) if (MessageBox.Show("Are you sure to Close?", "Close", MessageBoxButton.YesNo) == MessageBoxResult.Yes) e.Cancel = !CloseForm(); else e.Cancel = true;
+            if (!e.Cancel) { App.frmLogin.Show(); App.frmLogin.ClearForm(); }
         }
 
         private void Menu_CleanUpVirtualizedItem(object sender, CleanUpVirtualizedItemEventArgs e)
