@@ -36,16 +36,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         private void onClientEvents()
         {
-            BLL.FMCGHubClient.HubCaller.On<BLL.CustomFormat>("CustomFormat_Save", (cs) =>
-            {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    cs.Save(true);
-                });
-
-            });
-
+           
 
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)

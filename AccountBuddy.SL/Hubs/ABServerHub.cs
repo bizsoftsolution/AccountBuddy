@@ -129,7 +129,7 @@ namespace AccountBuddy.SL.Hubs
             get
             {
                 return UserList.Where(x => x.CallerConnectionId != Context.ConnectionId && x.UserId != 0)
-                               .Select(x => x.CallerConnectionId.ToString())
+                               .Select(x => x.ReceiverConnectionId.ToString())
                                .ToList();
             }
         }
