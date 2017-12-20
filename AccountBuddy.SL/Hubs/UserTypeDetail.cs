@@ -11,8 +11,8 @@ namespace AccountBuddy.SL.Hubs
     {        
         private BLL.UserTypeDetail UserTypeDetailDAL_BLL(DAL.UserTypeDetail d)
         {
-            BLL.UserTypeDetail b = d.toCopy<BLL.UserTypeDetail>(new BLL.UserTypeDetail());
-            b.UserTypeFormDetail = d.UserTypeFormDetail.toCopy<BLL.UserTypeFormDetail>(new BLL.UserTypeFormDetail());
+            BLL.UserTypeDetail b = d.ToMap(new BLL.UserTypeDetail());
+            b.UserTypeFormDetail = d.UserTypeFormDetail.ToMap(new BLL.UserTypeFormDetail());
             return b;
         }                
     }

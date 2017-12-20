@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
         {
             return DB.UserTypeFormDetails.Where(x => x.IsActive == true)
                                          .OrderBy(x => x.OrderNo).ToList()
-                                         .Select(x => x.toCopy<BLL.UserTypeFormDetail>(new BLL.UserTypeFormDetail()))
+                                         .Select(x => x.ToMap(new BLL.UserTypeFormDetail()))
                                          .ToList(); 
         }
     }

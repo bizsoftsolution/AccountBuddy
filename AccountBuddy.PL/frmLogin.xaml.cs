@@ -35,7 +35,7 @@ namespace AccountBuddy.PL
         #region company 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            Common.AppLib.WriteLog("btnLogin_Click_Start");
+            Common.AppLib.WriteLog("frmLogin_btnLogin_Click_Start");
             var tv = trvCompany.SelectedItem as TreeViewItem;
             if (tv == null)
             {
@@ -74,26 +74,26 @@ namespace AccountBuddy.PL
                     ClearForm();
                 }
             }
-            Common.AppLib.WriteLog("btnLogin_Click_End");
+            Common.AppLib.WriteLog("frmLogin_btnLogin_Click_End");
         }
 
         private void btnSignup_Click(object sender, RoutedEventArgs e)
         {
-            Common.AppLib.WriteLog("btnSignup_Click_Start");
+            Common.AppLib.WriteLog("frmLogin_btnSignup_Click_Start");
             frmCompanySignup f = new frmCompanySignup();
             f.data.Clear();
             f.data.CompanyType = "Company";
             f.ShowDialog();
             ClearForm();
-            Common.AppLib.WriteLog("btnSignup_Click_End");
+            Common.AppLib.WriteLog("frmLogin_btnSignup_Click_End");
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
 
-            Common.AppLib.WriteLog("btnClear_Click_Start");
+            Common.AppLib.WriteLog("frmLogin_btnClear_Click_Start");
             ClearForm();
-            Common.AppLib.WriteLog("btnClear_Click_End");
+            Common.AppLib.WriteLog("frmLogin_btnClear_Click_End");
         }
 
         #endregion
