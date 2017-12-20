@@ -60,6 +60,7 @@
     <Compile Include="CustomerWiseReport.cs" />
     <Compile Include="CustomFormat.cs" />
     <Compile Include="DataKeyValue.cs" />
+    <Compile Include="DataMapper.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="FormPrefix.cs" />
     <Compile Include="GeneralLedger.cs" />

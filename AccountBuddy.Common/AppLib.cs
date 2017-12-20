@@ -18,7 +18,7 @@ namespace AccountBuddy.Common
         public static decimal GSTPer = (decimal)0.06;
 
         public static int userId=0;
-
+        public static string WriteLogState = "";
         public static string SLPath = "";
         public static string SLTransport = "";
         public static string AppName = "";
@@ -53,6 +53,7 @@ namespace AccountBuddy.Common
 
         public static T toCopy<T>(this object objSource, T objDestination)
         {
+            
             try
             {
 
@@ -65,7 +66,10 @@ namespace AccountBuddy.Common
                         var pTo = objDestination.GetType().GetProperties().Where(x => x.Name == pFrom.Name).FirstOrDefault();
                         pTo.SetValue(objDestination, pFrom.GetValue(objSource));
                     }
-                    catch (Exception ex) { Common.AppLib.WriteLog(ex); }
+                    catch (Exception ex)
+                    {
+                        Common.AppLib.WriteLog(ex);
+                    }
 
                 }
             }
@@ -75,6 +79,7 @@ namespace AccountBuddy.Common
             }
             return objDestination;
         }
+        
 
         public static void MutateVerbose<TField>(this INotifyPropertyChanged instance, ref TField field, TField newValue, Action<PropertyChangedEventArgs> raise, [CallerMemberName] string propertyName = null)
         {
@@ -315,18 +320,22 @@ namespace AccountBuddy.Common
 
         public static void WriteLog(String str)
         {
-            try
+            if(Common.AppLib.WriteLogState.ToLower()!="off")
             {
-                using (StreamWriter writer = new StreamWriter(Path.GetTempPath() + "FMCG_log.txt", true))
+                try
                 {
-                    writer.WriteLine(string.Format("{0:dd/MM/yyyy hh:mm:ss} => {1}", DateTime.Now, str));
+                    using (StreamWriter writer = new StreamWriter(Path.GetTempPath() + "FMCG_log.txt", true))
+                    {
+                        writer.WriteLine(string.Format("{0:dd/MM/yyyy hh:mm:ss} => {1}", DateTime.Now, str));
+                    }
                 }
+                catch (Exception) { }
             }
-            catch (Exception) { }            
+
         }
         public static void WriteLog(Exception ex)
         {
             WriteLog(string.Format("Error=> ExMessage:{0},StackTrace:{1}", ex.Message,ex.StackTrace));            
         }
-    }
+    }   
 }

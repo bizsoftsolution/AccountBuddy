@@ -24,7 +24,8 @@ namespace AccountBuddy.PL
 
         public frmLogin()
         {
-            InitializeComponent();           
+            InitializeComponent();
+            Common.AppLib.WriteLog("frmLogin_Init");
         }
 
      
@@ -34,8 +35,7 @@ namespace AccountBuddy.PL
         #region company 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
-          
+            Common.AppLib.WriteLog("frmLogin_btnLogin_Click_Start");
             var tv = trvCompany.SelectedItem as TreeViewItem;
             if (tv == null)
             {
@@ -61,41 +61,39 @@ namespace AccountBuddy.PL
 
                 if (RValue == "")
                 {
+                    Common.AppLib.WriteLog("Login Succeed");
                     App.frmHome = new frmHome();         
                     App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
                     App.frmLogin.Hide();
-                    App.frmHome.Show();
-                    //if (Common.AppLib.IsAppApproved)
-                    //{
-                    //    BLL.UserAccount.User = new BLL.UserAccount();
-                    //    ClearForm();
-                    //    this.Show();
-                    //}                    
+                    App.frmHome.Show();                                        
                 }
                 else
                 {
+                    Common.AppLib.WriteLog("Login Failed");
                     MessageBox.Show(RValue);
                     ClearForm();
                 }
             }
-
-
+            Common.AppLib.WriteLog("frmLogin_btnLogin_Click_End");
         }
 
         private void btnSignup_Click(object sender, RoutedEventArgs e)
         {
-
+            Common.AppLib.WriteLog("frmLogin_btnSignup_Click_Start");
             frmCompanySignup f = new frmCompanySignup();
             f.data.Clear();
             f.data.CompanyType = "Company";
             f.ShowDialog();
             ClearForm();
+            Common.AppLib.WriteLog("frmLogin_btnSignup_Click_End");
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            Common.AppLib.WriteLog("Login_Clear");
+
+            Common.AppLib.WriteLog("frmLogin_btnClear_Click_Start");
             ClearForm();
+            Common.AppLib.WriteLog("frmLogin_btnClear_Click_End");
         }
 
         #endregion
@@ -202,7 +200,17 @@ namespace AccountBuddy.PL
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             ClearForm();
+            Common.AppLib.WriteLog("frmLogin_Loaded");
         }
 
+        private void MetroWindow_Activated(object sender, EventArgs e)
+        {
+            Common.AppLib.WriteLog("frmLogin_Activated");
+        }
+
+        private void MetroWindow_Deactivated(object sender, EventArgs e)
+        {
+            Common.AppLib.WriteLog("frmLogin_Deactivated");
+        }
     }
 }

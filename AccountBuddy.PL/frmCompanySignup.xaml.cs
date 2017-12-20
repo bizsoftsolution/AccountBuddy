@@ -30,24 +30,29 @@ namespace AccountBuddy.PL
             InitializeComponent();
             this.DataContext = data;
             IsForcedClose = false;
+            Common.AppLib.WriteLog("frmSignup_Init");
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
+            Common.AppLib.WriteLog("frmCompanySignup_btnBack_Click_Start");
             this.Close();
+            Common.AppLib.WriteLog("frmCompanySignup_btnBack_Click_End");
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
+            Common.AppLib.WriteLog("frmCompanySignup_btnClear_Click_Start");
             data.Clear();
             txtPassword.Password = "";
             iLogoImage.Tag = "";
+            Common.AppLib.WriteLog("frmCompanySignup_btnClear_Click_End");
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
 
-
+            Common.AppLib.WriteLog("frmCompanySignup_btnSave_Click_Start");
             if (data.Save() == true)
             {
                 MessageBox.Show(Message.PL.Saved_Alert, this.Title.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
@@ -60,6 +65,7 @@ namespace AccountBuddy.PL
             {
                 MessageBox.Show(string.Join("\n", data.lstValidation.Select(x => x.Message).ToList()));
             }
+            Common.AppLib.WriteLog("frmCompanySignup_btnSave_Click_End");
         }
         private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
@@ -112,6 +118,9 @@ namespace AccountBuddy.PL
             {
                 e.Cancel = true;
             }
+            else{
+                Common.AppLib.WriteLog("frmSignup_Closed");
+            }
         }
 
         private void txtMail_LostFocus(object sender, RoutedEventArgs e)
@@ -121,7 +130,7 @@ namespace AccountBuddy.PL
 
         private void btnImage_Click(object sender, RoutedEventArgs e)
         {
-
+            Common.AppLib.WriteLog("frmCompanySignup_btnImage_Click_Start");
             try
             {
                 OpenFileDialog OpenDialogBox = new OpenFileDialog();
@@ -147,8 +156,23 @@ namespace AccountBuddy.PL
             catch (Exception ex)
             { Common.AppLib.WriteLog(ex); }
 
+            Common.AppLib.WriteLog("frmCompanySignup_btnImage_Click_End");
 
+        }
 
+        private void MetroWindow_Activated(object sender, EventArgs e)
+        {
+            Common.AppLib.WriteLog("frmSignup_Activated");
+        }
+
+        private void MetroWindow_Deactivated(object sender, EventArgs e)
+        {
+            Common.AppLib.WriteLog("frmSignup_Deactivated");
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Common.AppLib.WriteLog("frmSignup_Loaded");
         }
     }
 }

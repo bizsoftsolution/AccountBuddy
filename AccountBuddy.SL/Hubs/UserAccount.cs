@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
 
         private BLL.UserAccount UserAccountDAL_BLL(DAL.UserAccount d)
         {
-            BLL.UserAccount b = d.toCopy<BLL.UserAccount>(new BLL.UserAccount());
+            BLL.UserAccount b = d.ToMap(new BLL.UserAccount());
             b.UserType = UserTypeDAL_BLL(d.UserType);
             return b;
         }
@@ -202,7 +202,7 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.UserAccount();
                     DB.UserAccounts.Add(d);
 
-                    ua.toCopy<DAL.UserAccount>(d);
+                    ua.ToMap(d);
                     DB.SaveChanges();
 
                     ua.Id = d.Id;
@@ -210,7 +210,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    ua.toCopy<DAL.UserAccount>(d);
+                    ua.ToMap(d);
                     DB.SaveChanges();
                     LogDetailStore(ua, LogDetailType.UPDATE);
                 }
@@ -239,7 +239,7 @@ namespace AccountBuddy.SL.Hubs
 
                     DB.UserAccounts.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(d.toCopy<BLL.UserAccount>(new BLL.UserAccount()), LogDetailType.DELETE);
+                    LogDetailStore(d.ToMap(new BLL.UserAccount()), LogDetailType.DELETE);
                 }
                 Clients.Clients(OtherLoginClients).UserAccount_Delete(pk);
                 Clients.All.delete(pk);

@@ -64,12 +64,23 @@ delete from UOM
 delete from TaxMaster
 delete from DataKeyValue
 
+
+delete from AppConnectionHeader
+delete from AppConnectionLoginFailed
+delete from AppConnectionLoginSucceed
+delete from AppConnectionLoginSystem
+delete from AppConnectionLoginWebAdmin
+delete from AppConnectionReConnected
+delete from AppConnection
+delete from AppMaster
+
+delete from LogDetail
+delete from LogMaster
+
 delete from UserTypeDetail
 delete from UserAccount
 delete from UserType
 
-delete from LogDetail
-delete from LogMaster
 
 delete from ErrorLog
 delete from CompanyDetail

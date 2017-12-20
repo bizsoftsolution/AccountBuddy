@@ -11,7 +11,7 @@
                    ShowMaxRestoreButton="False"
                    ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="COMPANY SIGNUP" Height="420" Width="800" Closing="MetroWindow_Closing" WindowStartupLocation="CenterScreen" >
+        Title="COMPANY SIGNUP" Height="420" Width="800" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" Loaded="MetroWindow_Loaded" Closing="MetroWindow_Closing" WindowStartupLocation="CenterScreen" >
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="CommandBinding_Executed" />
     </Window.CommandBindings>

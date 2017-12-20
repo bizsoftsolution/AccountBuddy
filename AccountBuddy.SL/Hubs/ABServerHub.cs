@@ -223,7 +223,8 @@ namespace AccountBuddy.SL.Hubs
             }
             DB.AppConnections.Add(d);
             DB.SaveChanges();
-            Clients.All.Display(string.Format("{0:dd/MM/yyyy hh:mm:ss}", DateTime.Now));                                
+            Clients.All.Display(string.Format("{0:dd/MM/yyyy hh:mm:ss}", DateTime.Now));
+            Common.AppLib.WriteLog(String.Format("Hub Connect on SL=> Connection Id: {0}", Context.ConnectionId));
             return base.OnConnected();
         }
 
