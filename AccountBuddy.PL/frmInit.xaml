@@ -9,7 +9,7 @@
         ShowMinButton="False"
         BorderThickness="0" GlowBrush="Black" ResizeMode="NoResize" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen"             
         mc:Ignorable="d"
-        Title="Connecting to server" Height="350" Width="500" Activated="Window_Activated" Loaded="Window_Loaded" >
+        Title="Connecting to server" Height="350" Width="500" Activated="Window_Activated" Deactivated="MetroWindow_Deactivated" Loaded="Window_Loaded" >
     <Grid>
         <MediaElement Source="Images\pleasewait.gif" MediaEnded="mediaElement_MediaEnded" x:Name="mediaElement" />
 

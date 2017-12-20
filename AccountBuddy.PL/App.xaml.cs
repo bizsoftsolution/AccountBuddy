@@ -106,7 +106,7 @@ namespace AccountBuddy.PL
 
                     if (HubConCaller.State != Microsoft.AspNet.SignalR.Client.ConnectionState.Connected || HubConReceiver.State != Microsoft.AspNet.SignalR.Client.ConnectionState.Connected)
                     {
-                        frmInit.Close();
+                        frmInit.Hide();
                     }
                     else
                     {
@@ -128,7 +128,7 @@ namespace AccountBuddy.PL
                         if (Common.AppLib.AppIdValue == null)
                         {
                             MessageBox.Show("Please Run as Administrator when First Time is open");
-                            frmInit.Close();
+                            Application.Current.Shutdown();
                         }
                         else
                         {
@@ -144,7 +144,7 @@ namespace AccountBuddy.PL
                                 string str = "SetReceiverConnectionIdToCaller_Failed";
                                 MessageBox.Show(str);
                                 Common.AppLib.WriteLog(str);
-                                frmInit.Close();
+                                Application.Current.Shutdown();
                             }
                             else
                             {
@@ -383,31 +383,24 @@ namespace AccountBuddy.PL
                 {
 
                     this.Dispatcher.Invoke(() =>
-                    {
-                        Common.AppLib.IsAppApproved = BLL.FMCGHubClient.HubCaller.Invoke<bool>("LoginHubCaller", Common.AppLib.AppIdValue, Environment.MachineName, Environment.UserName, Environment.UserDomainName).Result;
+                    {                        
                         Common.AppLib.IsAppApproved = IsApproved;
 
                         if (IsApproved)
                         {
-                            App.frmInit.Hide();
+                            frmInit.Hide();
                             if (BLL.UserAccount.User.Id == 0)
                             {
                                 App.frmLogin.Show();
                             }
                             else
                             {
-                                App.frmHome.Show();
-                                //if (Common.AppLib.IsAppApproved)
-                                //{
-                                //    BLL.UserAccount.User = new BLL.UserAccount();
-                                //    frmLogin.ClearForm();
-                                //    frmLogin.Show();
-                                //}
+                                App.frmHome.Show();                            
                             }
                         }
                         else
                         {
-                            App.frmInit.Show();
+                            frmInit.Show();
                             if (BLL.UserAccount.User.Id == 0)
                             {
                                 App.frmLogin.Hide();

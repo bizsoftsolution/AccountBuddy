@@ -28,7 +28,6 @@ namespace AccountBuddy.PL
         {
             InitializeComponent();
             ShowWelcome();
-            onClientEvents();
             IsForcedClose = false;
             var l1 = BLL.UserAccount.User.UserType.UserTypeDetails.Where(x => x.IsViewForm &&
                                                                               x.UserTypeFormDetail.IsMenu &&
@@ -65,6 +64,7 @@ namespace AccountBuddy.PL
                                                                   })
                                                                   .ToList();
             lstReport.ItemsSource = l3;
+            Common.AppLib.WriteLog("frmHome_Init");
         }
         private bool Menu_Filter(object obj)
         {
@@ -98,6 +98,7 @@ namespace AccountBuddy.PL
             }
 
             ccContent.Content = f.Content;
+            Common.AppLib.WriteLog(string.Format("frmHome_ShowForm_{0}",Formname));
             return f.Content;
         }
         public bool CloseForm()
@@ -123,11 +124,7 @@ namespace AccountBuddy.PL
                 return false;
             }
         }
-
-        private void onClientEvents()
-        {
-            
-        }
+        
 
         private void ListBox_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -161,14 +158,9 @@ namespace AccountBuddy.PL
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!IsForcedClose) if (MessageBox.Show("Are you sure to Close?", "Close", MessageBoxButton.YesNo) == MessageBoxResult.Yes) e.Cancel = !CloseForm(); else e.Cancel = true;
-            if (!e.Cancel) { App.frmLogin.Show(); App.frmLogin.ClearForm(); }
+            if (!e.Cancel) { App.frmLogin.Show(); App.frmLogin.ClearForm(); Common.AppLib.WriteLog("frmHome_Closed"); }
         }
-
-        private void Menu_CleanUpVirtualizedItem(object sender, CleanUpVirtualizedItemEventArgs e)
-        {
-
-        }
-
+        
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(lstMaster.Items).Filter = Menu_Filter;
@@ -179,7 +171,24 @@ namespace AccountBuddy.PL
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
+            Common.AppLib.WriteLog("frmHome_btnRefresh_Click_Start");
             BLL.UserAccount.Re_Login();
+            Common.AppLib.WriteLog("frmHome_btnRefresh_Click_End");
+        }
+
+        private void MetroWindow_Activated(object sender, EventArgs e)
+        {
+            Common.AppLib.WriteLog("frmHome_Activated");
+        }
+
+        private void MetroWindow_Deactivated(object sender, EventArgs e)
+        {
+            Common.AppLib.WriteLog("frmHome_Deactivated");
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Common.AppLib.WriteLog("frmHome_Loaded");
         }
     }
 }

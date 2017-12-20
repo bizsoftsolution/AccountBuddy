@@ -24,21 +24,30 @@ namespace AccountBuddy.PL
         public frmInit()
         {
             InitializeComponent();
+            Common.AppLib.WriteLog("frmInit_Init");
         }
 
         private void Window_Activated(object sender, EventArgs e)
         {
-            
+            Common.AppLib.WriteLog("frmInit_Activated");
+            mediaElement.Position = TimeSpan.FromMilliseconds(1);
+            mediaElement.Play();
         }
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            Common.AppLib.WriteLog("frmInit_Loaded");
         }
 
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
             mediaElement.Position = TimeSpan.FromMilliseconds(1);
+        }
+
+        private void MetroWindow_Deactivated(object sender, EventArgs e)
+        {
+            Common.AppLib.WriteLog("frmInit_Deactivated");
+            mediaElement.Stop();
         }
     }
 }
