@@ -184,5 +184,27 @@ namespace AccountBuddy.SL.Hubs
             D.UnderGroupId = S.UnderGroupId;
             return D;
         }
+
+        public static BLL.UOM ToMap(this DAL.UOM S, BLL.UOM D)
+        {
+            
+            D.CompanyId = S.CompanyId;
+            D.FormalName = S.FormalName;
+            D.Id = S.Id;
+            D.Symbol = S.Symbol;
+
+            return D;
+        }
+
+        public static DAL.UOM ToMap(this BLL.UOM S, DAL.UOM D)
+        {
+
+            D.CompanyId = S.CompanyId;
+            D.FormalName = S.FormalName;
+            D.Id = S.Id;
+            D.Symbol = S.Symbol;
+
+            return D;
+        }
     }
 }

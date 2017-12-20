@@ -223,7 +223,7 @@ namespace AccountBuddy.BLL
                     toList.Add(d);
                 }
 
-                this.toCopy<UOM>(d);
+                this.ToMap(d);
                 if (isServerCall == false)
                 {
                     var i = FMCGHubClient.HubCaller.Invoke<int>("UOM_Save", this).Result;
@@ -244,7 +244,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                new UOM().toCopy<UOM>(this);
+                new UOM().ToMap(this);
                 IsReadOnly = !UserPermission.AllowInsert;
 
                 NotifyAllPropertyChanged();
@@ -260,7 +260,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<UOM>(this);
+                d.ToMap(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }

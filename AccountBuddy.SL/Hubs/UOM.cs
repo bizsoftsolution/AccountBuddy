@@ -11,8 +11,8 @@ namespace AccountBuddy.SL.Hubs
         #region Account Group
         BLL.UOM UOM_DALtoBLL(DAL.UOM d)
         {
-            BLL.UOM b = d.toCopy<BLL.UOM>(new BLL.UOM());
-            b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+            BLL.UOM b = d.ToMap(new BLL.UOM());
+            b.Company = d.CompanyDetail.ToMap(new BLL.CompanyDetail());
             return b;
         }
         public List<BLL.UOM> UOM_List()
@@ -32,35 +32,35 @@ namespace AccountBuddy.SL.Hubs
 
         }
 
-        public int UOM_Save(BLL.UOM agp)
+        public int UOM_Save(BLL.UOM b)
         {
 
             
             try
             {
-                agp.CompanyId = Caller.CompanyId;
-                DAL.UOM d = DB.UOMs.Where(x => x.Id == agp.Id).FirstOrDefault();
+                b.CompanyId = Caller.CompanyId;
+                DAL.UOM d = DB.UOMs.Where(x => x.Id == b.Id).FirstOrDefault();
 
                 if (d == null)
                 {
                     d = new DAL.UOM();
                     DB.UOMs.Add(d);
 
-                    agp.toCopy<DAL.UOM>(d);
+                    b.ToMap(d);
                     DB.SaveChanges();
 
-                    agp.Id = d.Id;
-                    LogDetailStore(agp, LogDetailType.INSERT);
+                    b.Id = d.Id;
+                    LogDetailStore(b, LogDetailType.INSERT);
                 }
                 else
                 {
-                    agp.toCopy<DAL.UOM>(d);
+                    b.ToMap(d);
                     DB.SaveChanges();
-                    LogDetailStore(agp, LogDetailType.UPDATE);
+                    LogDetailStore(b, LogDetailType.UPDATE);
                 }
 
-                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).UOM_Save(agp);
-                return agp.Id;
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).UOM_Save(b);
+                return b.Id;
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return 0;
@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         DB.UOMs.Remove(d);
                         DB.SaveChanges();
-                        LogDetailStore(d.toCopy<BLL.UOM>(new BLL.UOM()), LogDetailType.DELETE);
+                        LogDetailStore(d.ToMap(new BLL.UOM()), LogDetailType.DELETE);
                     }
 
                     if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).UOM_Delete(pk);

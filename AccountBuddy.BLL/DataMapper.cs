@@ -123,5 +123,17 @@ namespace AccountBuddy.BLL
             return D;
         }
 
+        public static UOM ToMap(this UOM S, UOM D)
+        {
+            D.Company = S.Company;
+            D.CompanyId = S.CompanyId;
+            D.FormalName = S.FormalName;
+            D.Id = S.Id;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.Symbol = S.Symbol;            
+            return D;
+        }
+
     }
 }
