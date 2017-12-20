@@ -65,6 +65,7 @@ namespace AccountBuddy.SL.Hubs
             }
             catch(Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return rv=new List<BLL.CompanyDetail>();
             }
         }
@@ -161,7 +162,7 @@ namespace AccountBuddy.SL.Hubs
 
                 return cm.Id;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return 0;
         }
 
@@ -213,7 +214,7 @@ namespace AccountBuddy.SL.Hubs
                 Clients.Clients(OtherLoginClients).CompanyDetail_Delete(pk);
                // Clients.All.delete(pk);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         private void CompanySetup(BLL.CompanyDetail sgp)

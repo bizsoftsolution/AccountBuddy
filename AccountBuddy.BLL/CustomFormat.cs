@@ -547,7 +547,7 @@ namespace AccountBuddy.BLL
             return true;
               
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 

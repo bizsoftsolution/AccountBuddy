@@ -145,7 +145,7 @@ namespace AccountBuddy.PL
                 }
             }
             catch (Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
 
 
 

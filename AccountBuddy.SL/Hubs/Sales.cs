@@ -73,7 +73,7 @@ namespace AccountBuddy.SL.Hubs
                 Purchase_SaveBySales(d);
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -133,7 +133,7 @@ namespace AccountBuddy.SL.Hubs
                     Sales_Delete(d.Id);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
         #endregion
@@ -167,7 +167,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return P;
         }
         public BLL.Sale Sales_FindById(int Id)
@@ -195,7 +195,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return P;
         }
         public bool Sales_Delete(long pk)
@@ -220,7 +220,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -248,7 +248,7 @@ namespace AccountBuddy.SL.Hubs
             }
             catch (Exception ex)
             {
-                Common.AppLib.WriteLog("Error on Find_SRef");
+                Common.AppLib.WriteLog(ex); Common.AppLib.WriteLog("Error on Find_SRef");
             }
             return true;
         }
@@ -290,7 +290,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return lstSale;
         }
 

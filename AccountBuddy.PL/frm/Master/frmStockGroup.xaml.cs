@@ -245,7 +245,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Refresh();
             }
-            catch (Exception ex) { };
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); };
 
         }
 
@@ -267,7 +267,7 @@ namespace AccountBuddy.PL.frm.Master
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
 

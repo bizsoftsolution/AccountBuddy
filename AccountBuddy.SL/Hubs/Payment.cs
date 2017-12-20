@@ -77,7 +77,7 @@ namespace AccountBuddy.SL.Hubs
                 Journal_SaveByPayment(PO);
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -107,7 +107,7 @@ namespace AccountBuddy.SL.Hubs
                 }
          
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return PO;
         }
 
@@ -130,7 +130,7 @@ namespace AccountBuddy.SL.Hubs
 
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
         public BLL.Payment Payment_DALtoBLL(DAL.Payment d)
@@ -195,7 +195,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return lstPayment;
         }
 

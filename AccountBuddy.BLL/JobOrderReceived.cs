@@ -453,6 +453,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -483,6 +484,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -495,6 +497,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -511,6 +514,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -571,7 +575,7 @@ namespace AccountBuddy.BLL
                 setLabel();
             }
             catch (Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
         }
         public void setLabel()
         {
@@ -588,6 +592,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 rv = true;
             }
             return rv;

@@ -152,7 +152,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 Button btn = (Button)sender;
                 data.DeleteDetail((int)btn.Tag);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
 
@@ -186,7 +186,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 BLL.JobOrderIssueDetail pod = dgvDetails.SelectedItem as BLL.JobOrderIssueDetail;
                 pod.toCopy<BLL.JobOrderIssueDetail>(data.JODetail);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
 
@@ -290,7 +290,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
             }
             catch(Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
         }
         #endregion
 
@@ -324,7 +324,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 BLL.JobOrderIssueDetail pod = dgvDetails.SelectedItem as BLL.JobOrderIssueDetail;
                 pod.toCopy<BLL.JobOrderIssueDetail>(data.JODetail);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
     }
 }

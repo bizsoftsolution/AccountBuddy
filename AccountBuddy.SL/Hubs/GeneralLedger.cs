@@ -255,8 +255,8 @@ namespace AccountBuddy.SL.Hubs
                         lstGeneralLedger.Add(gl);
                     }
                     catch(Exception ex)
-                    { }
-                  }
+                    { Common.AppLib.WriteLog(ex); }
+                }
 
                 lstGeneralLedger = lstGeneralLedger.OrderBy(x => x.EDate).ToList();
                 BalAmt = 0;

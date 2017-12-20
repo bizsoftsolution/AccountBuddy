@@ -201,7 +201,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_DiscountAmount == null) _DiscountAmount = 0;
+                 _DiscountAmount = 0;
                 return _DiscountAmount;
             }
             set
@@ -444,6 +444,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         
@@ -467,6 +468,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -495,6 +497,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -507,6 +510,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -524,6 +528,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -598,6 +603,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 rv = true;
             }
             return rv;

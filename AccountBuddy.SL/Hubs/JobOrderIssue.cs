@@ -84,7 +84,7 @@ namespace AccountBuddy.SL.Hubs
 
             }
 
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
         public BLL.JobOrderIssue JobOrderIssue_Find(string SearchText)
@@ -115,7 +115,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return SO;
         }
 
@@ -138,7 +138,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -215,7 +215,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 return JobOrderReceived_Save(P);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return true;
         }
 
@@ -243,7 +243,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return P;
         }
 
@@ -279,7 +279,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return lstJobOrderIssue;
         }
 

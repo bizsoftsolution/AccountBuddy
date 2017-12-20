@@ -57,10 +57,11 @@ namespace AccountBuddy.SL.Hubs
                     }
                     else
                     {
-                        appcon.AppConnectionLoginSucceeds.Add(new DAL.AppConnectionLoginSucceed() {
+                        appcon.AppConnectionLoginSucceeds.Add(new DAL.AppConnectionLoginSucceed()
+                        {
                             LoginId = rv.Id,
                             SucceedAt = DateTime.Now,
-                            Type = "Manual"                                                        
+                            Type = "Manual"
                         });
                         DB.SaveChanges();
                     }
@@ -218,7 +219,7 @@ namespace AccountBuddy.SL.Hubs
 
                 return ua.Id;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return 0;
         }
 
@@ -243,24 +244,24 @@ namespace AccountBuddy.SL.Hubs
                 Clients.Clients(OtherLoginClients).UserAccount_Delete(pk);
                 Clients.All.delete(pk);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         public Boolean Admin_Authentication(string CompanyName, String LoginId, String Password)
         {
-          
+
             try
             {
                 DAL.UserAccount ua = DB.UserAccounts
                                   .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
                                     && x.LoginId == LoginId
-                                    && x.Password == Password 
-                                    && x.UserType.TypeOfUser ==BLL.DataKeyValue.Administrator_Key
+                                    && x.Password == Password
+                                    && x.UserType.TypeOfUser == BLL.DataKeyValue.Administrator_Key
                                     && x.UserType.CompanyDetail.IsActive != false)
                                     .FirstOrDefault();
                 if (ua != null)
                 {
-                   
+
                     return true;
 
                 }

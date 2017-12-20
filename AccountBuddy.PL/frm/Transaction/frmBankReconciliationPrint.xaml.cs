@@ -39,16 +39,17 @@ namespace AccountBuddy.PL.frm.Transaction
                     ReportDataSource data2 = new ReportDataSource("BankReconciliation2", l2);
                     RptViewer.LocalReport.DataSources.Add(data1);
                     RptViewer.LocalReport.DataSources.Add(data2);
-                    RptViewer.LocalReport.ReportPath = @"Transaction\rptBankReconciliationReport.rdlc";
+                    RptViewer.LocalReport.ReportPath = @"rpt\Transaction\rptBankReconciliationReport.rdlc";
 
-                    ReportParameter[] par = new ReportParameter[7];
+                    ReportParameter[] par = new ReportParameter[8];
                     par[0] = new ReportParameter("Company", BLL.UserAccount.User.UserType.Company.CompanyName);
-                    par[1] = new ReportParameter("EndingBalance", string.Format("{0:N2}", endBal));
+                    par[1] = new ReportParameter("EndingBalance", string.Format("{0} {1:N2}", Common.AppLib.CurrencyPositiveSymbolPrefix,endBal));
                     par[2] = new ReportParameter("BankName", lName);
                     par[3] = new ReportParameter("ReportMonth", dt.Date.ToString("MMMM-yy"));
-                    par[4] = new ReportParameter("RAmount", l1.Sum(x => x.Amount).ToString());
-                    par[5] = new ReportParameter("PAmount", l2.Sum(x => x.Amount).ToString());
-                    par[6] = new ReportParameter("CLBAl", CLBal.ToString());
+                    par[4] = new ReportParameter("RAmount",string.Format("{0} {1:N2}", Common.AppLib.CurrencyPositiveSymbolPrefix, l1.Sum(x => x.Amount)));
+                    par[5] = new ReportParameter("PAmount", string.Format("{0} {1:N2}", Common.AppLib.CurrencyPositiveSymbolPrefix, l2.Sum(x => x.Amount)));
+                    par[6] = new ReportParameter("CLBAl", string.Format("{0} {1:N2}", Common.AppLib.CurrencyPositiveSymbolPrefix, CLBal));
+                    par[7] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix);
                     RptViewer.LocalReport.SetParameters(par);
 
                     RptViewer.RefreshReport();
@@ -62,7 +63,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
         }

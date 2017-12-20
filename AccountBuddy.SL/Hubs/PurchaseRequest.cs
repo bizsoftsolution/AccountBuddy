@@ -139,7 +139,7 @@ namespace AccountBuddy.SL.Hubs
                 //   SalesOrder_SaveByPurchaseRequest(d);
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -205,7 +205,7 @@ namespace AccountBuddy.SL.Hubs
 
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -235,7 +235,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return PR;
         }
 
@@ -258,7 +258,7 @@ namespace AccountBuddy.SL.Hubs
 
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 

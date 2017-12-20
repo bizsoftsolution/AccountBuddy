@@ -72,7 +72,7 @@ namespace AccountBuddy.PL.frm.Print
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
         }
 

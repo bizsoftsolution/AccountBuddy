@@ -8,13 +8,13 @@ using AccountBuddy.Common;
 
 namespace AccountBuddy.BLL
 {
-    public class GeneralLedger: INotifyPropertyChanged
+    public class GeneralLedger : INotifyPropertyChanged
     {
         #region Fields
         private long _EId;
         private string _EType;
         private DateTime? _EDate;
-        private String _EntryNo;        
+        private String _EntryNo;
         private string _RefNo;
         private Ledger _Ledger;
         private decimal _CrAmt;
@@ -25,6 +25,7 @@ namespace AccountBuddy.BLL
         private string _RefEntryNo;
         private string _RefCode;
         private static UserTypeDetail _UserPermission;
+        private string _TType;
         #endregion
 
         #region Property
@@ -75,6 +76,21 @@ namespace AccountBuddy.BLL
                 {
                     _EType = value;
                     NotifyPropertyChanged(nameof(EType));
+                }
+            }
+        }
+        public string TType
+        {
+            get
+            {
+                return _TType;
+            }
+            set
+            {
+                if (_TType != value)
+                {
+                    _TType = value;
+                    NotifyPropertyChanged(nameof(TType));
                 }
             }
         }
@@ -152,7 +168,7 @@ namespace AccountBuddy.BLL
                     NotifyPropertyChanged(nameof(EntryNo));
                 }
             }
-        }   
+        }
         public Ledger Ledger
         {
             get
@@ -267,7 +283,18 @@ namespace AccountBuddy.BLL
 
         public static List<GeneralLedger> ToList(int LedgerId, DateTime dtFrom, DateTime dtTo)
         {
-            return FMCGHubClient.HubCaller.Invoke<List<GeneralLedger>>("GeneralLedger_List",LedgerId, dtFrom, dtTo).Result;
+            List<GeneralLedger> l = new List<GeneralLedger>();
+            try
+            {
+                l = FMCGHubClient.HubCaller.Invoke<List<GeneralLedger>>("GeneralLedger_List", LedgerId, dtFrom, dtTo).Result;
+                return l;
+
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+                return l;
+            }
         }
 
         #endregion

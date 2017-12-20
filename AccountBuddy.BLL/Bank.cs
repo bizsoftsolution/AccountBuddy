@@ -130,7 +130,8 @@ namespace AccountBuddy.BLL
             {
                 try
                 {
-                    if (_toList == null) _toList = new ObservableCollection<Bank>(FMCGHubClient.HubCaller.Invoke<List<Bank>>("Bank_List").Result);
+                    if (_toList == null ||_toList.Count()==0) _toList = new ObservableCollection<Bank>(FMCGHubClient.HubCaller.Invoke<List<Bank>>("Bank_List").Result);
+
                   
                 }
                 catch(Exception ex)
@@ -240,7 +241,7 @@ namespace AccountBuddy.BLL
                     this.Ledger.toCopy<Ledger>(l1);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
 
         }

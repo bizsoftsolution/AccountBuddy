@@ -48,17 +48,23 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            BLL.Bank.Init();
-            dgvBank.ItemsSource = BLL.Bank.toList;
+            try
+            {
+                BLL.Bank.Init();
+                dgvBank.ItemsSource = BLL.Bank.toList;
 
-            CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).Filter = Bank_Filter;
-            CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.AccountName), System.ComponentModel.ListSortDirection.Ascending));
-            
-            cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
+                CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).Filter = Bank_Filter;
+                CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.AccountName), System.ComponentModel.ListSortDirection.Ascending));
 
-            btnSave.Visibility = (BLL.Ledger.UserPermission.AllowInsert || BLL.Bank.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.Ledger.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+                cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
 
+                btnSave.Visibility = (BLL.Ledger.UserPermission.AllowInsert || BLL.Bank.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+                btnDelete.Visibility = BLL.Ledger.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -281,7 +287,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).Refresh();
             }
-            catch (Exception ex) { };
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); };
 
         }
 
@@ -308,7 +314,7 @@ namespace AccountBuddy.PL.frm.Master
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
 

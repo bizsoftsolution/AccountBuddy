@@ -61,24 +61,30 @@ namespace AccountBuddy.PL.frm.Report
                     rptViewer.LocalReport.DataSources.Add(data1);
                     rptViewer.LocalReport.ReportPath = @"rpt\Report\rptGeneralLedger.rdlc";
 
-                    ReportParameter[] par = new ReportParameter[2];
+                    ReportParameter[] par = new ReportParameter[3];
                     par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
                     par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
+                    par[2] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix);
                     rptViewer.LocalReport.SetParameters(par);
+                    rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                     rptViewer.RefreshReport();
 
                 }
                 catch (Exception ex)
                 {
-
+                    Common.AppLib.WriteLog(ex);
                 }
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
+        }
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -109,6 +115,7 @@ namespace AccountBuddy.PL.frm.Report
 
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
+                        f.data.EntryNo = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
                         f.data.Find();
                         f.btnPrint.IsEnabled = true;
@@ -124,7 +131,7 @@ namespace AccountBuddy.PL.frm.Report
 
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
-                        System.Windows.Forms.Application.DoEvents();
+                        f.data.EntryNo = gl.EntryNo; System.Windows.Forms.Application.DoEvents();
                         f.data.Find();
                         f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
@@ -139,7 +146,7 @@ namespace AccountBuddy.PL.frm.Report
 
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
-
+                        f.data.EntryNo = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
                         f.data.Find();
                         f.btnPrint.IsEnabled = true;
@@ -155,6 +162,7 @@ namespace AccountBuddy.PL.frm.Report
 
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
+                        f.data.RefNo = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find();
@@ -171,7 +179,7 @@ namespace AccountBuddy.PL.frm.Report
 
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
-                        System.Windows.Forms.Application.DoEvents();
+                        f.data.RefNo = gl.EntryNo; System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find(); f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
@@ -185,8 +193,8 @@ namespace AccountBuddy.PL.frm.Report
                         Transaction.frmSalesReturn f = App.frmHome.ShowForm(Common.Forms.frmSalesReturn) as Transaction.frmSalesReturn;
 
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.SearchText = gl.EntryNo;
-                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.EntryNo; f.data.RefNo = gl.EntryNo;
+                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find(); f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
@@ -200,8 +208,8 @@ namespace AccountBuddy.PL.frm.Report
                         Transaction.frmPurchaseReturn f = App.frmHome.ShowForm(Common.Forms.frmPurchaseReturn) as Transaction.frmPurchaseReturn;
 
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.SearchText = gl.EntryNo;
-                        System.Windows.Forms.Application.DoEvents();
+                        f.data.SearchText = gl.EntryNo; f.data.RefNo = gl.EntryNo;
+                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find(); f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
@@ -215,7 +223,7 @@ namespace AccountBuddy.PL.frm.Report
                         Transaction.frmStockOut f = App.frmHome.ShowForm(Common.Forms.frmStockOut) as Transaction.frmStockOut;
 
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.SearchText = gl.EntryNo;
+                        f.data.SearchText = gl.EntryNo; f.data.RefNo = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find(); f.btnPrint.IsEnabled = true;
@@ -230,7 +238,7 @@ namespace AccountBuddy.PL.frm.Report
                         Transaction.frmStockInOut f = App.frmHome.ShowForm(Common.Forms.frmStockInOut) as Transaction.frmStockInOut;
 
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.SearchText = gl.EntryNo;
+                        f.data.SearchText = gl.EntryNo; f.data.RefNo = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find(); f.btnPrint.IsEnabled = true;
@@ -245,7 +253,7 @@ namespace AccountBuddy.PL.frm.Report
                         Transaction.frmJobOrderIssue f = App.frmHome.ShowForm(Common.Forms.frmJobOrderIssue) as Transaction.frmJobOrderIssue;
 
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.SearchText = gl.RefEntryNo;
+                        f.data.SearchText = gl.RefEntryNo; f.data.RefNo = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
                         f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find();
@@ -343,6 +351,7 @@ namespace AccountBuddy.PL.frm.Report
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
             }
 
         }
@@ -362,10 +371,10 @@ namespace AccountBuddy.PL.frm.Report
                 <OutputFormat>EMF</OutputFormat>
                 <PageWidth>11.6in</PageWidth>
                 <PageHeight>8.2</PageHeight>
-                <MarginTop>0.7in</MarginTop>
-                <MarginLeft>0.7in</MarginLeft>
-                <MarginRight>0.7in</MarginRight>
-                <MarginBottom>0.7in</MarginBottom>
+                <MarginTop>1cm</MarginTop>
+                <MarginLeft>1cm</MarginLeft>
+                <MarginRight>0cm</MarginRight>
+                <MarginBottom>0cm</MarginBottom>
             </DeviceInfo>";
                 Warning[] warnings;
                 m_streams = new List<Stream>();
@@ -375,7 +384,7 @@ namespace AccountBuddy.PL.frm.Report
                     stream.Position = 0;
             }
             catch (Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
         }
 
         private void Print()
@@ -399,7 +408,7 @@ namespace AccountBuddy.PL.frm.Report
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
         }

@@ -114,7 +114,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).Refresh();
                 FindDiff();
             }
-            catch (Exception ex) { };
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); };
 
         }
 
@@ -141,7 +141,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 RptLedger.RefreshReport();
             }
             catch (Exception ex)
-            {}
+            { Common.AppLib.WriteLog(ex); }
         }
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
@@ -270,6 +270,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
             }
 
         }
@@ -302,7 +303,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     stream.Position = 0;
             }
             catch (Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
         }
 
         private void Print()
@@ -326,7 +327,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
         }

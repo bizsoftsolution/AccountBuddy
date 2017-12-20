@@ -80,7 +80,7 @@ namespace AccountBuddy.SL.Hubs
                 StockOut_SaveByStockIn(d);
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
         #region stock In
@@ -144,7 +144,7 @@ namespace AccountBuddy.SL.Hubs
 
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -175,7 +175,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return P;
         }
         public BLL.StockIn StockIn_FindById(int Id)
@@ -203,7 +203,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return P;
         }
 
@@ -226,7 +226,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
         public BLL.StockIn StockIn_DALtoBLL(DAL.StockIn d)
@@ -283,7 +283,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return lstStockIn;
         }
 

@@ -518,7 +518,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         public void setLabel()
@@ -551,7 +551,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         public bool FindById(int Id)
@@ -567,7 +567,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         public bool Delete()
@@ -578,7 +578,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         #endregion
@@ -646,7 +646,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                rv = true;
+                Common.AppLib.WriteLog(ex); rv = true;
             }
             return rv;
         }
@@ -660,7 +660,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                Common.AppLib.WriteLog(string.Format("PurchaseReturn List= {0}-{1}", ex.Message, ex.InnerException));
+               Common.AppLib.WriteLog(ex);  Common.AppLib.WriteLog(string.Format("PurchaseReturn List= {0}-{1}", ex.Message, ex.InnerException));
             }
             return rv;
 

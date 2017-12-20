@@ -74,7 +74,7 @@ namespace AccountBuddy.PL
                 var mnu = obj as Common.NavMenuItem;
                 return mnu.MenuName.ToLower().Contains(txtSearch.Text.ToLower());
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
         public void ShowWelcome()
@@ -149,7 +149,7 @@ namespace AccountBuddy.PL
                 
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             MenuToggleButton.IsChecked = false;
         }
 

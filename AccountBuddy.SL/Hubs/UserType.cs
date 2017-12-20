@@ -77,7 +77,7 @@ namespace AccountBuddy.SL.Hubs
 
                 return ut.Id;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return 0;
         }
 
@@ -97,7 +97,10 @@ namespace AccountBuddy.SL.Hubs
                 Clients.Clients(OtherLoginClients).userType_Delete(pk);
                 Clients.All.delete(pk);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
 
         #endregion

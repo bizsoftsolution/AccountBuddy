@@ -15,8 +15,7 @@ namespace AccountBuddy.BLL
         private decimal _DiscountAmount;
         private decimal _GSTAmount;
         private decimal _Amount;
-        private int _RowCount;
-
+   
         private string _ItemCode;
         private string _ProductName;
         private string _UOMName;

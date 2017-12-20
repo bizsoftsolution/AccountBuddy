@@ -12,9 +12,7 @@ namespace AccountBuddy.BLL
     public class StockSeperated : INotifyPropertyChanged
     {
         #region Field
-        private static ObservableCollection<StockSeperated> _JRPendingList;
-
-        private long _Id;
+            private long _Id;
         private DateTime? _Date;
         private string _RefNo;
         private string _SSNo;
@@ -437,7 +435,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
 
@@ -465,6 +463,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -477,7 +476,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         public bool FindById(int Id)
@@ -493,7 +492,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         #endregion
@@ -567,7 +566,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                rv = true;
+                Common.AppLib.WriteLog(ex); rv = true;
             }
             return rv;
         }

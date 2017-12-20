@@ -230,7 +230,7 @@ namespace AccountBuddy.BLL
                     return "";
                 }
                 catch(Exception ex)
-                { }
+                { Common.AppLib.WriteLog(ex); }
               
                
             }
@@ -254,12 +254,12 @@ namespace AccountBuddy.BLL
                 }
                 catch (Exception ex)
                 {
-                    return string.Join("\n", "ReConnected");
+                    Common.AppLib.WriteLog(ex); return string.Join("\n", "ReConnected");
                 }
             }
             catch (Exception ex)
             {
-                return string.Join("\n", "ReConnected");
+                Common.AppLib.WriteLog(ex); return string.Join("\n", "ReConnected");
             }
         }
 

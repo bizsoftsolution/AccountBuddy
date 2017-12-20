@@ -154,7 +154,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 Button btn = (Button)sender;
                 data.DeleteDetail((int)btn.Tag);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
 
@@ -196,7 +196,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 BLL.SalesOrderDetail pod = dgvDetails.SelectedItem as BLL.SalesOrderDetail;
                 pod.toCopy<BLL.SalesOrderDetail>(data.SODetail);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
 
@@ -321,7 +321,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 BLL.SalesOrderDetail pod = dgvDetails.SelectedItem as BLL.SalesOrderDetail;
                 pod.toCopy<BLL.SalesOrderDetail>(data.SODetail);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
     }

@@ -187,7 +187,7 @@ namespace AccountBuddy.PL.frm.Master
                 var d = ((CheckBox) sender).Tag as BLL.UserTypeDetail;
                 if (d != null) d.IsViewForm = true;
                 if(data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && !x.IsViewForm).Count() == 0)    ckbAllViewForm.IsChecked = true;
-            }catch(Exception ex) { }
+            }catch(Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         private void ckbAllowInsert_Checked(object sender, RoutedEventArgs e)
@@ -198,7 +198,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (d != null) d.AllowInsert = true;
                 if (data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsInsert && x.AllowInsert == false).Count() == 0) ckbAllAllowInsert.IsChecked = true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         private void ckbAllowUpdate_Checked(object sender, RoutedEventArgs e)
@@ -209,7 +209,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (d != null) d.AllowUpdate = true;
                 if(data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsUpdate && x.AllowUpdate == false).Count() == 0) ckbAllAllowUpdate.IsChecked = true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         private void ckbAllowDelete_Checked(object sender, RoutedEventArgs e)
@@ -220,7 +220,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (d != null) d.AllowDelete = true;
                 if (data.UserTypeDetails.Where(x => x.UserTypeFormDetail.IsActive && x.UserTypeFormDetail.IsDelete && x.AllowDelete == false).Count() == 0) ckbAllAllowDelete.IsChecked = true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
 
@@ -232,7 +232,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (d != null) d.IsViewForm = false;
                 ckbAllViewForm.IsChecked = false;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         
@@ -244,7 +244,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (d != null) d.AllowInsert = false;
                 ckbAllAllowInsert.IsChecked = false;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         
@@ -256,7 +256,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (d != null) d.AllowUpdate = false;
                 ckbAllAllowUpdate.IsChecked = false;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
        
@@ -268,7 +268,7 @@ namespace AccountBuddy.PL.frm.Master
                 if (d != null) d.AllowDelete = false;
                 ckbAllAllowDelete.IsChecked = false;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         private void dgvDetail_MouseDoubleClick(object sender, MouseButtonEventArgs e)

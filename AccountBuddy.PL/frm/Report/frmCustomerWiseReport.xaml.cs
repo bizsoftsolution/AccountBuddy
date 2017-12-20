@@ -83,7 +83,7 @@ namespace AccountBuddy.PL.frm.Report
             }
             catch(Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
            
         }
@@ -136,6 +136,7 @@ namespace AccountBuddy.PL.frm.Report
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
             }
 
         }
@@ -168,7 +169,7 @@ namespace AccountBuddy.PL.frm.Report
                     stream.Position = 0;
             }
             catch (Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
         }
 
         private void Print()
@@ -192,7 +193,7 @@ namespace AccountBuddy.PL.frm.Report
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
         }

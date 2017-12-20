@@ -557,6 +557,7 @@ namespace AccountBuddy.BLL
                 return RValue;
             }catch(Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return RValue;
             }
         }

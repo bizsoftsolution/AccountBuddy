@@ -69,8 +69,8 @@ namespace AccountBuddy.PL.frm.Print
         }
         catch (Exception ex)
         {
-
-        }
+                Common.AppLib.WriteLog(ex);
+            }
     }
 
         private void GetSubReportData(object sender, SubreportProcessingEventArgs e)

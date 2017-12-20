@@ -292,7 +292,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
 
@@ -320,7 +320,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         public bool FindById(int id)
@@ -336,7 +336,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         public bool Delete()
@@ -347,7 +347,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         #endregion
@@ -424,7 +424,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                rv = true;
+                Common.AppLib.WriteLog(ex); rv = true;
             }
             return rv;
         }

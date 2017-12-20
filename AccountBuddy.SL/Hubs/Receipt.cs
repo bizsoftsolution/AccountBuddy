@@ -82,7 +82,7 @@ namespace AccountBuddy.SL.Hubs
                 Journal_SaveByReceipt(PO);
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -113,7 +113,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return PO;
         }
 
@@ -135,7 +135,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -203,7 +203,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return lstReceipt;
         }
 

@@ -24,8 +24,8 @@ namespace AccountBuddy.PL.frm.Master
         BLL.CustomFormat data = new BLL.CustomFormat();
         public string FormName = "CustomFormat";
         double n = 123456789.12;
-        int number2 = 10;
-        string words = "";
+       
+     
         public bool IsForcedClose = false;
         public frmCustomSetting()
         {

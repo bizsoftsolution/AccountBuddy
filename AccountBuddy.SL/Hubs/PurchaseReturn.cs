@@ -82,7 +82,7 @@ namespace AccountBuddy.SL.Hubs
                 SaleReturn_SaveByPurchaseReturn(d);
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -145,7 +145,7 @@ namespace AccountBuddy.SL.Hubs
 
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
 
         }
@@ -178,7 +178,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return P;
         }
         public bool PurchaseReturn_Delete(long pk)
@@ -200,7 +200,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
         public BLL.PurchaseReturn PurchaseReturn_DALtoBLL(DAL.PurchaseReturn d)
@@ -251,7 +251,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return P;
         }
 
@@ -291,7 +291,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return lstPurchaseReturn;
         }
 

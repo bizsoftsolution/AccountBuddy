@@ -17,7 +17,7 @@ namespace AccountBuddy.PL.Conversion
                 var n = value as decimal?;
                 return n.ToCurrencySymbol();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return "";
         }
 

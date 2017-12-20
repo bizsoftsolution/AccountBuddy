@@ -68,7 +68,7 @@ namespace AccountBuddy.PL.frm.Transaction
                         CLBal = BLL.TrialBalance.GetLedgerBalance(LedgerId, dtpDateTo.SelectedDate.Value);
 
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
                 }
 
@@ -88,7 +88,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 DifAmt = Math.Abs(EDAmt - BalAmt);
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             lblStatus.Text = string.Format(" Opening Balance : {0:0.00}, Closing Balance : {1:0.00}, Cleared Balance : {2:0.00}, Diffrence : {3:0.00}", OPBal, CLBal, BalAmt, DifAmt);
         }
         private void dgvBankReconciliation_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -155,6 +155,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
             }
 
         }
@@ -187,7 +188,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     stream.Position = 0;
             }
             catch (Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
         }
 
         private void Print()
@@ -210,7 +211,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
         }
@@ -258,7 +259,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 f.LoadReport(lName, dtpDateTo.SelectedDate.Value, l3, l2, Convert.ToDecimal(txtEndingBalance.Text), Convert.ToDecimal(CLBal.ToString()));
                 f.ShowDialog();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         #endregion
@@ -339,7 +340,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             FindBalance();
         }
 
@@ -372,7 +373,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     }
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             FindBalance();
         }
     }

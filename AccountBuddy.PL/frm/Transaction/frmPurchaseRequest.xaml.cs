@@ -167,7 +167,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 Button btn = (Button)sender;
                 data.DeleteDetail(btn.Tag.ToString());
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
 
@@ -208,7 +208,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 BLL.PurchaseRequestDetail pod = dgvDetails.SelectedItem as BLL.PurchaseRequestDetail;
                 pod.toCopy<BLL.PurchaseRequestDetail>(data.PRDetail);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
 
@@ -248,7 +248,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 cmbSupplier.SelectedValuePath = "Id";
             }
             catch (Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
         }
 
         private void txtDiscountAmount_TextChanged(object sender, TextChangedEventArgs e)
@@ -330,7 +330,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 cmbRequestTo.ItemsSource = BLL.Staff.RequestToList;
                 cmbRequestTo.DisplayMemberPath = "Ledger.LedgerName";
                 cmbRequestTo.SelectedValuePath = "Id";
-            }catch(Exception ex) { }
+            }catch(Exception ex) { Common.AppLib.WriteLog(ex); }
         }
     }
 }

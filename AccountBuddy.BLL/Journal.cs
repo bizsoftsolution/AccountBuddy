@@ -19,8 +19,7 @@ namespace AccountBuddy.BLL
         private string _Particular;
         private string _HQNo;
         private string _VoucherNo;
-        private string _Status;
-
+      
         private string _AmountInwords;
         private JournalDetail _JDetail;
         
@@ -319,6 +318,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -350,6 +350,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -368,7 +369,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
 
@@ -380,7 +381,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
 
@@ -393,7 +394,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         #endregion

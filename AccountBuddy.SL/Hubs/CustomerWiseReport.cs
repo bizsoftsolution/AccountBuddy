@@ -13,11 +13,8 @@ namespace AccountBuddy.SL.Hubs
             BLL.CustomerWiseReport tb = new BLL.CustomerWiseReport();
 
             var lstLedger = DB.Ledgers.Where(x => x.AccountGroup.CompanyDetail.Id == Caller.CompanyId && x.Id == CustomerId).ToList();
-
-
             #region Ledger
 
-            decimal Qty = 0;
             tb.Month1 = dtFrom.ToString("MMMM");
             tb.Month2 = dtFrom.AddMonths(-1).ToString("MMMM");
             tb.Month3 = dtFrom.AddMonths(-2).ToString("MMMM");

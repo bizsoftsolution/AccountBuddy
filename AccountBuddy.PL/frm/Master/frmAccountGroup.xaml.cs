@@ -250,7 +250,7 @@ namespace AccountBuddy.PL.frm.Master
                 CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Refresh();
                 CollectionViewSource.GetDefaultView(trvAccount.ItemsSource).Refresh();
             }
-            catch (Exception ex) { };
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); };
 
         }
 
@@ -272,7 +272,7 @@ namespace AccountBuddy.PL.frm.Master
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
 

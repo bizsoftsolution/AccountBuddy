@@ -105,6 +105,7 @@ namespace AccountBuddy.SL.Hubs
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 rv = false;
             }
             return rv;

@@ -9,7 +9,7 @@ namespace AccountBuddy.SL.Controllers
 {
     public class SaleController : Controller
     {
-        string SalRefCode = "", SalPrefix = "";
+        string SalRefCode = "";
         public ActionResult Index()
         {
             return View();

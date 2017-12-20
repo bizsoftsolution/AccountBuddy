@@ -421,7 +421,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
 
@@ -433,6 +433,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -473,7 +474,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
 
@@ -485,7 +486,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         #endregion
@@ -561,7 +562,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                rv = true;
+                Common.AppLib.WriteLog(ex); rv = true;
             }
             return rv;
         }

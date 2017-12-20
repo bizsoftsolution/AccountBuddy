@@ -60,7 +60,7 @@ namespace AccountBuddy.PL.frm.Vouchers
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
         }
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)

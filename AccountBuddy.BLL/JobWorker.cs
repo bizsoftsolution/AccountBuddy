@@ -250,7 +250,7 @@ namespace AccountBuddy.BLL
                     this.Ledger.toCopy<Ledger>(l1);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -332,7 +332,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
         }
 

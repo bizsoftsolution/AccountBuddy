@@ -83,7 +83,7 @@ namespace AccountBuddy.SL.Hubs
 
             }
 
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -127,7 +127,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 return Sales_Save(S);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return true;
         }
 
@@ -162,7 +162,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return SO;
         }
 
@@ -185,7 +185,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -297,7 +297,7 @@ namespace AccountBuddy.SL.Hubs
                     SalesOrder_Delete(d.Id);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
         #endregion
@@ -331,7 +331,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return lstSalesOrder;
         }
 

@@ -65,13 +65,13 @@ namespace AccountBuddy.Common
                         var pTo = objDestination.GetType().GetProperties().Where(x => x.Name == pFrom.Name).FirstOrDefault();
                         pTo.SetValue(objDestination, pFrom.GetValue(objSource));
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
                 }
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
             return objDestination;
         }
@@ -129,7 +129,7 @@ namespace AccountBuddy.Common
 
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
             return words;
         }
@@ -150,7 +150,7 @@ namespace AccountBuddy.Common
             {
                 return string.Format("{0}{1}{2}", Number>=0? CurrencyPositiveSymbolPrefix : CurrencyNegativeSymbolPrefix, Math.Abs(Number), Number>=0? CurrencyPositiveSymbolSuffix:CurrencyNegativeSymbolSuffix);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return "";
         }
 
@@ -231,7 +231,7 @@ namespace AccountBuddy.Common
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
             return words.ToUpper();
         }

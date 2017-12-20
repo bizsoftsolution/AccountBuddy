@@ -20,7 +20,6 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmSalesSearch : MetroWindow
     {
-        string Customer = null, paymode = null;
         decimal amtfrom = 0, amtTo = 99999999;
         public frmSalesSearch()
         {
@@ -75,7 +74,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 lblTotal.Content = string.Format("Total :{0:N2}", d.Sum(x => x.TotalAmount));
             }
             catch(Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
         }
 
         private void cmbTransactionType_Loaded(object sender, RoutedEventArgs e)

@@ -42,7 +42,7 @@ namespace AccountBuddy.SL.Hubs
                 return ProductsTo;
             }
             catch(Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
             return ProductsTo;
         }
 
@@ -144,6 +144,7 @@ namespace AccountBuddy.SL.Hubs
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 rv = false;
             }
             return rv;

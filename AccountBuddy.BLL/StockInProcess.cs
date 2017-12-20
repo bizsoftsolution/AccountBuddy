@@ -12,8 +12,7 @@ namespace AccountBuddy.BLL
     public class StockInProcess : INotifyPropertyChanged
     {
         #region Field
-        private static ObservableCollection<StockInProcess> _STInPendingList;
-
+  
         private long _Id;
         private DateTime? _SPDate;
         private string _RefNo;
@@ -422,7 +421,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
 
         }
@@ -445,7 +444,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
 
@@ -473,7 +472,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
 
@@ -485,7 +484,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         public bool FindById(int Id)
@@ -501,7 +500,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
             }
         }
         #endregion
@@ -575,7 +574,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                rv = true;
+                Common.AppLib.WriteLog(ex); rv = true;
             }
             return rv;
         }

@@ -19,7 +19,6 @@ namespace AccountBuddy.BLL
         private decimal? _M5;
         private decimal? _M6;
         private decimal? _M7;
-        private decimal? _M8;
         private decimal? _M9;
         private decimal? _M10;
         private decimal? _M11;

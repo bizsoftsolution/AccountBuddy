@@ -181,7 +181,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 BLL.PaymentDetail pod = dgvDetails.SelectedItem as BLL.PaymentDetail;
                 pod.toCopy<BLL.PaymentDetail>(data.PDetail);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
 
@@ -203,7 +203,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 Button btn = (Button)sender;
                 data.FindDetail((int)btn.Tag);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
         private void btnDeleteDetail_Click(object sender, RoutedEventArgs e)
@@ -216,7 +216,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     data.DeleteDetail((int)btn.Tag);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
         private void btnDClear_Click(object sender, RoutedEventArgs e)
@@ -306,7 +306,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 BLL.PaymentDetail pod = dgvDetails.SelectedItem as BLL.PaymentDetail;
                 pod.toCopy<BLL.PaymentDetail>(data.PDetail);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
     }
 }

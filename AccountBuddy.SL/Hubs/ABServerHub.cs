@@ -247,7 +247,7 @@ namespace AccountBuddy.SL.Hubs
                 d.AppConnectionReConnecteds.Add(new DAL.AppConnectionReConnected() { ReConnectedAt = DateTime.Now });
                 DB.SaveChanges();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             
             return base.OnReconnected();
         }
@@ -384,7 +384,7 @@ namespace AccountBuddy.SL.Hubs
                 ld.LogDetailTypeId = LogDetailTypeId(Type);
                 DB.SaveChanges();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
        

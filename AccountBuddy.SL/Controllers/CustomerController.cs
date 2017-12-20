@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AccountBuddy.BLL;
 
 namespace AccountBuddy.SL.Controllers
 {
@@ -16,30 +17,13 @@ namespace AccountBuddy.SL.Controllers
         }
         public JsonResult toList(int CompanyId)
         {
-          
-            var l1 =DB.Customers.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId)
+
+            var l1 = DB.Customers.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId)
                                        .ToList();
-            //var l2 = l1.Select(x => new BLL.Ledger()
-            //{
-            //    Id = x.LedgerId,
-            //    LedgerName = x.Ledger.LedgerName,
-            //    AddressLine1 = x.Ledger.AddressLine1,
-            //    AddressLine2 = x.Ledger.AddressLine2,
-            //    CityName = x.Ledger.CityName,
-            //    MobileNo = x.Ledger.MobileNo,
-            //    TelephoneNo = x.Ledger.TelephoneNo,
-            //    CreditLimitTypeName = x.Ledger.CreditLimitType.LimitType,
-            //    CreditLimit = x.Ledger.CreditLimit == null ? (short)0 : x.Ledger.CreditLimit.Value,
-            //    CreditAmount = x.Ledger.CreditAmount == null ? 0 : x.Ledger.CreditAmount.Value,
-            //    EMailId = x.Ledger.EMailId,
-            //    PersonIncharge = x.Ledger.PersonIncharge,
-            //    GSTNo = x.Ledger.GSTNo,
-            //    OPBal=AccountBuddy.SL.Hubs.ABServerHub.GetLedgerBalance(x.Ledger)
-            //});
 
             BLL.Ledger led = new BLL.Ledger();
             List<BLL.Ledger> CustomerList = new List<BLL.Ledger>();
-            foreach(var x in l1)
+            foreach (var x in l1)
             {
                 led = new BLL.Ledger();
                 led.Id = x.LedgerId;
@@ -49,7 +33,7 @@ namespace AccountBuddy.SL.Controllers
                 led.CityName = x.Ledger.CityName;
                 led.MobileNo = x.Ledger.MobileNo;
                 led.TelephoneNo = x.Ledger.TelephoneNo;
-                led.CreditLimitTypeName = x.Ledger.CreditLimitType==null?null:x.Ledger.CreditLimitType.LimitType;
+                led.CreditLimitTypeName = x.Ledger.CreditLimitType == null ? null : x.Ledger.CreditLimitType.LimitType;
                 led.CreditLimit = x.Ledger.CreditLimit == null ? (short)0 : x.Ledger.CreditLimit.Value;
                 led.CreditAmount = x.Ledger.CreditAmount == null ? 0 : x.Ledger.CreditAmount.Value;
                 led.EMailId = x.Ledger.EMailId;
@@ -63,11 +47,11 @@ namespace AccountBuddy.SL.Controllers
 
         }
 
-        public JsonResult Save(int DealerId,String LedgerName,String PersonIncharge, String AddressLine1, String AddressLine2, String CityName, String MobileNo,String GSTNo)
+        public JsonResult Save(int DealerId, String LedgerName, String PersonIncharge, String AddressLine1, String AddressLine2, String CityName, String MobileNo, String GSTNo)
         {
             try
             {
-                int AGId =DB.DataKeyValues.Where(x => x.CompanyId == DealerId && x.DataKey == BLL.DataKeyValue.SundryDebtors_Key).FirstOrDefault().DataValue;
+                int AGId = DB.DataKeyValues.Where(x => x.CompanyId == DealerId && x.DataKey == BLL.DataKeyValue.SundryDebtors_Key).FirstOrDefault().DataValue;
                 DAL.Customer cus = new DAL.Customer();
                 DAL.Ledger led = new DAL.Ledger()
                 {
@@ -80,19 +64,21 @@ namespace AccountBuddy.SL.Controllers
                     AccountGroupId = AGId,
                     GSTNo = GSTNo
                 };
-                 DB.Ledgers.Add(led);
+                DB.Ledgers.Add(led);
                 DB.SaveChanges();
                 cus.LedgerId = led.Id;
-               DB.Customers.Add(cus);
+                DB.Customers.Add(cus);
                 DB.SaveChanges();
+
                 return Json(new { Id = cus.LedgerId, HasError = false }, JsonRequestBehavior.AllowGet);
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return Json(new { Id = 0, HasError = true,ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = 0, HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
             }
-            
-            
+
+
         }
     }
 }

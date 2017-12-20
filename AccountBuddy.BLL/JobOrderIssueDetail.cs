@@ -27,7 +27,6 @@ namespace AccountBuddy.BLL
         private string _ItemCode;
         private string _ProductName;
         private string _UOMName;
-        private static UserTypeDetail _UserPermission;
         private int _SNo;
         #endregion
 

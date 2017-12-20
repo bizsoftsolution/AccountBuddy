@@ -20,7 +20,6 @@ namespace AccountBuddy.PL.frm.Transaction
     /// </summary>
     public partial class frmReceiptSearch : MetroWindow
     {
-        string ReceivedFrom = null;
         decimal amtFrom = 0, amtTo = 99999999;
         public frmReceiptSearch()
         {

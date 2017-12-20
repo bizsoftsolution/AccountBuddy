@@ -86,7 +86,7 @@ namespace AccountBuddy.SL.Hubs
                 return true;
             }
 
-            catch (Exception ex) { return false; }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); return false; }
             
         }
 
@@ -151,7 +151,7 @@ namespace AccountBuddy.SL.Hubs
 
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -186,7 +186,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return P;
         }
 
@@ -210,7 +210,7 @@ namespace AccountBuddy.SL.Hubs
                 Clients.Clients(OtherLoginClients).Purchase_RefNoRefresh(Purchase_NewRefNo());
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
         public BLL.Purchase Purchase_DALtoBLL(DAL.Purchase d)
@@ -261,7 +261,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return P;
         }
 
@@ -301,7 +301,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return lstPurchase;
         }
 

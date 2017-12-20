@@ -60,7 +60,7 @@ namespace AccountBuddy.SL.Hubs
 
                 return s;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return new BLL.Supplier();
         }
 
@@ -87,6 +87,7 @@ namespace AccountBuddy.SL.Hubs
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 rv = false;
             }
             return rv;

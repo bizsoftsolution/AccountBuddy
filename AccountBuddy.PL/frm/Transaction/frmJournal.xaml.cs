@@ -224,7 +224,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 BLL.JournalDetail pod = dgvDetails.SelectedItem as BLL.JournalDetail;
                 pod.toCopy<BLL.JournalDetail>(data.JDetail);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
 
@@ -247,7 +247,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 Button btn = (Button)sender;
                 data.FindDetail((int)btn.Tag);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
 
@@ -262,7 +262,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     FindDiff();
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
         }
 

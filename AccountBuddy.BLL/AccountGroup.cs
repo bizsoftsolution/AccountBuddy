@@ -82,7 +82,7 @@ namespace AccountBuddy.BLL
                 }
                 catch (Exception ex)
                 {
-
+                    Common.AppLib.WriteLog(ex);
                 }
 
                 return _toList;
@@ -104,7 +104,7 @@ namespace AccountBuddy.BLL
                 }
                 return RV;
             }
-            catch(Exception ex) { }
+            catch(Exception ex) { Common.AppLib.WriteLog(ex); }
             return RV;
         }
         public int Id
@@ -355,6 +355,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 return false;
 
             }
@@ -372,6 +373,7 @@ namespace AccountBuddy.BLL
             }
            catch(Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
 
             }
         }

@@ -99,7 +99,7 @@ namespace AccountBuddy.PL.frm.Master
                 dgvWarehouse.ItemsSource = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
 
             }
-            catch (Exception ex) { };
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); };
 
         }
 
@@ -358,7 +358,7 @@ namespace AccountBuddy.PL.frm.Master
                 f.Title = string.Format("Login Users - {0}", cm.CompanyName);
                 f.ShowDialog();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
 
@@ -388,7 +388,7 @@ namespace AccountBuddy.PL.frm.Master
                 }
             }
             catch (Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
 
         }
         #endregion
@@ -457,7 +457,7 @@ namespace AccountBuddy.PL.frm.Master
                 f.Title = string.Format("Login Users - {0}", cm.CompanyName);
                 f.ShowDialog();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         private void btnUser_Click(object sender, RoutedEventArgs e)
@@ -470,7 +470,7 @@ namespace AccountBuddy.PL.frm.Master
                 f.Title = string.Format("Login Users - {0}", BLL.UserAccount.User.UserType.Company.CompanyName);
                 f.ShowDialog();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         private void btnSetting_Click(object sender, RoutedEventArgs e)
@@ -481,7 +481,7 @@ namespace AccountBuddy.PL.frm.Master
                 f.LoadWindow();
                 f.ShowDialog();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -65,7 +65,7 @@ namespace AccountBuddy.SL.Hubs
 
                 return agp.Id;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return 0;
         }
 
@@ -93,6 +93,7 @@ namespace AccountBuddy.SL.Hubs
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
                 rv = false;
             }
             return rv;

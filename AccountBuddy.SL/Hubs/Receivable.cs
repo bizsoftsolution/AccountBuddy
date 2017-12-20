@@ -21,7 +21,6 @@ namespace AccountBuddy.SL.Hubs
                 tb = new BLL.Receivable();
                 tb.Ledger = LedgerDAL_BLL(l);
 
-                decimal OP = 0, Dr = 0;
                 // LedgerBalance(l, dt, ref OPDr, ref OPCr, ref Dr, ref Cr);
 
                 tb.Amount = l.OPDr != 0 || l.OPDr != null ? 0 : l.OPDr.Value;

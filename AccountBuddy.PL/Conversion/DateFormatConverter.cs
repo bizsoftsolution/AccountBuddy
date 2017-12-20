@@ -17,7 +17,7 @@ namespace AccountBuddy.PL.Conversion
                 var n = value as DateTime?;
                 return n.ToDateFormat();
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return "";
         }
 

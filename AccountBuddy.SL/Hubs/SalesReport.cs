@@ -1001,7 +1001,7 @@ namespace AccountBuddy.SL.Hubs
 
             }
 
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
 
             return rv;
@@ -1014,7 +1014,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 rv = DB.SalesDetails.Where(x => x.ProductId == ProductId && x.Sale.Ledger.AccountGroup.CompanyId == CompanyId && x.Sale.SalesDate.Month == dt.Month && x.Sale.SalesDate.Year == dt.Year).Sum(x => x.Amount);
-            }catch(Exception ex) { }
+            }catch(Exception ex) { Common.AppLib.WriteLog(ex); }
             return rv;
         }
     }

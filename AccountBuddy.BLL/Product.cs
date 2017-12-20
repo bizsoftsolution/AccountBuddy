@@ -322,8 +322,7 @@ namespace AccountBuddy.BLL
         private decimal _MaxSellingRate;
         private decimal _MinSellingRate;
         private decimal _MRP;
-        private decimal _Discount;
-        private double _OpeningStock;
+       private double _OpeningStock;
         private double _ReOrderLevel;
 
         private byte[] _ProductImage;
@@ -422,7 +421,7 @@ namespace AccountBuddy.BLL
                    
                 }
                 catch(Exception ex)
-                { }
+                { Common.AppLib.WriteLog(ex); }
                 return _toList;
             }
             set
@@ -772,7 +771,7 @@ namespace AccountBuddy.BLL
                     this.toCopy<Product>(d1);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 

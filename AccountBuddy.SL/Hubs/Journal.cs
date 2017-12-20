@@ -88,7 +88,7 @@ namespace AccountBuddy.SL.Hubs
                 Clients.Clients(OtherLoginClients).Journal_RefNoRefresh(Journal_NewRefNo());
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -116,7 +116,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return PO;
         }
         public BLL.Journal Journal_FindById(int id)
@@ -141,7 +141,7 @@ namespace AccountBuddy.SL.Hubs
 
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return PO;
         }
 
@@ -162,7 +162,7 @@ namespace AccountBuddy.SL.Hubs
 
                 return true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
 
@@ -1324,7 +1324,7 @@ namespace AccountBuddy.SL.Hubs
                 }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return lstJournal;
         }
 

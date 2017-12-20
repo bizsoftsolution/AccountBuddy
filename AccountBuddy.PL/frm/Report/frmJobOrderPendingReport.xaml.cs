@@ -76,12 +76,12 @@ namespace AccountBuddy.PL.frm.Report
                 }
                 catch (Exception ex)
                 {
-
+                    Common.AppLib.WriteLog(ex);
                 }
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
 
@@ -109,7 +109,7 @@ namespace AccountBuddy.PL.frm.Report
                 btnPrint.IsEnabled = true;
                    
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
         #region Button Events
         private Stream CreateStream(string name,
@@ -148,6 +148,7 @@ namespace AccountBuddy.PL.frm.Report
             }
             catch (Exception ex)
             {
+                Common.AppLib.WriteLog(ex);
             }
 
         }
@@ -180,7 +181,7 @@ namespace AccountBuddy.PL.frm.Report
                     stream.Position = 0;
             }
             catch (Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
         }
 
         private void Print()
@@ -204,7 +205,7 @@ namespace AccountBuddy.PL.frm.Report
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
 
         }

@@ -14,9 +14,7 @@ namespace AccountBuddy.BLL
         #region Fields
 
         private static ObservableCollection<Ledger> _toList;
-        private static ObservableCollection<Ledger> _Sd_toList;
-        private static ObservableCollection<Ledger> _Sc_toList;
-        private static List<string> _ACTypeList;
+       private static List<string> _ACTypeList;
 
         private int _Id;
         private string _LedgerName;
@@ -600,7 +598,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-                return false;
+                Common.AppLib.WriteLog(ex); return false;
 
             }
 
@@ -660,8 +658,7 @@ namespace AccountBuddy.BLL
         public static void Init()
         {
             _toList = null;
-            _Sd_toList = null;
-            _Sc_toList = null;
+         
         }
 
         private void SetAccountName()
@@ -672,7 +669,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
         }
         public void SetLedger()
@@ -683,7 +680,7 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-
+                Common.AppLib.WriteLog(ex);
             }
         }
 
