@@ -9,7 +9,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Account Buddy</title>
-
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     
     <script src="~/Scripts/jquery-1.9.1.min.js"></script>
@@ -17,19 +17,187 @@
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/angular-route.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
-    <script src="~/SignalR/Hubs"></script>
+    <script src="~/SignalR/Hubs"></script>   
+    
 </head>
 <body>
     <div ng-app="WebAdmin" >        
-        <div ng-include="'/Home/Login'"></div>
-        <div ng-include="'/Home/Main'"></div>        
-    </div>
 
-    <script src="~/Scripts/ng/Main.js"></script>
+        <div class="container-fluid" ng-show="IsWebAdminLogined==true">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="javascript:void(0)" ng-click="Menu_Click('Dashboard')">Web Admin</a>
+                        <button class="navbar-toggle" data-toggle="collapse" data-target="#myNavBar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavBar">
+                        <ul class="nav navbar-nav">
+                            <li><a href="javascript:void(0)" ng-click="Menu_Click('AppMaster')">App Master</a></li>
+                            <li><a href="javascript:void(0)" ng-click="Menu_Click('Connection')">Connection</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid" style="margin-top:50px">
+                                
+                <div class="container" ng-controller="Dashboard" ng-show="MenuName=='Dashboard'" style="margin-top:100px;width:800px">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><h2>Dashboard</h2></div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container" ng-controller="AppMaster" ng-show="MenuName=='AppMaster'" style="margin-top:100px;width:800px">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><h2>App Master</h2></div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-responsive table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Computer Name</th>
+                                        <th>App Id</th>
+                                        <th>Approval</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="x in AppMasterDatas | orderBy:'x.IsApproved'" class="{{x.IsApproved?'success':'warning'}}">
+                                        <td ng-bind="x.ComputerName"></td>
+                                        <td ng-bind="x.AppId"></td>
+                                        <td><input type="checkbox" ng-model="x.IsApproved" ng-change="Approved_Change(x)" /></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3">Total Apps: {{datas.length}}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container" ng-controller="Connection" ng-show="MenuName=='Connection'" style="margin-top:100px;width:800px">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><h2>Connection</h2></div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+        <div class="container" ng-hide="IsWebAdminLogined==true" style="margin-top:100px;width:500px" ng-controller="Login">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h2>Web Admin Login</h2></div>
+                <div class="panel-body">
+                    <div class="input-group input-group-lg" style="margin-top:10px">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" class="form-control" ng-model="LoginId" placeholder="Login Id" />
+                    </div>
+                    <div class="input-group input-group-lg" style="margin-top:10px">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" class="form-control" ng-model="Password" placeholder="Password" />
+                    </div>
+                    <div class="pull-right" style="margin-top:10px">
+                        <button class="btn btn-info text-uppercase" ng-click="Login()">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+               
+    </div>
+    <script>
+        var appWA = angular.module("WebAdmin", ['ngRoute']);
+        appWA.run(function ($rootScope) {
+            $rootScope.hub = $.connection.aBServerHub;
+            
+            $rootScope.hub.client.ConsoleLog = function (log) {
+                console.log(log);
+            };
+
+            $rootScope.IsWebAdminLogined = false;
+            $rootScope.MenuName = 'Dashboard';
+            $rootScope.Menu_Click = function (MenuName) {
+                $rootScope.MenuName = MenuName;
+            };
+            $.connection.hub.start().done(function () {
+                console.log('SignalR Started');
+                $rootScope.hub.server.appMaster_List().done(function ($r) {
+                    console.log('AppMaster_List');
+                    console.log($r);
+                    $rootScope.AppMasterDatas = $r;
+                    $rootScope.$digest();
+                });
+            });
+        });
+
+        //appWA.config(function ($routeProvider) {
+        //    $routeProvider
+        //        .when('/', { templateUrl: 'Home/Dashboard', controller: 'Dashboard' })
+        //        .when('/AppMaster', { templateUrl: 'Home/AppMaster', controller: 'AppMaster' })
+        //        .when('/Connection', { templateUrl: 'Home/Connection', controller: 'Connection' })
+        //        .otherwise({ template: 'Request Not Valid' })
+        //    ;
+        //});
+
+        appWA.controller('Login', function ($scope, $rootScope, $http) {
+
+            $scope.Login = function () {
+                if (!$scope.LoginId || $scope.LoginId == '') {
+                    alert('Please Enter the Login Id');
+                } else if (!$scope.Password || $scope.Password == '') {
+                    alert('Please Enter the Password');
+                } else {
+                    $rootScope.hub.server.webLogin($scope.LoginId, $scope.Password).done(function ($r) {
+                        if ($r == true) {
+                            $rootScope.IsWebAdminLogined = true;
+                            $rootScope.$digest();
+                        } else {
+                            alert('Invalid user');
+                        }
+                    });
+
+                }
+            };
+        });
+
+        appWA.controller('Dashboard', function ($scope) {
+
+        });
+
+        appWA.controller('AppMaster', function ($scope, $rootScope) {
+            $scope.datas = [];
+            $scope.Approved_Change = function (x) {
+                console.log("Approved_Change");
+                console.log(x);
+                $rootScope.hub.server.appApproved_Changed(x.AppId, x.IsApproved).done(function ($r) {
+                    console.log("Approved_Changed");
+                    console.log($r);
+                });
+            };
+            
+        });
+
+        appWA.controller('Connection', function ($scope) {
+           
+        });
+    </script>
+    @*<script src="~/Scripts/ng/Main.js"></script>
     <script src="~/Scripts/ng/Config.js"></script>
     <script src="~/Scripts/ng/Login.js"></script>
     <script src="~/Scripts/ng/Dashboard.js"></script>
     <script src="~/Scripts/ng/AppMaster.js"></script>
-    <script src="~/Scripts/ng/Connection.js"></script>
+    <script src="~/Scripts/ng/Connection.js"></script>*@
 </body>
 </html>

@@ -116,42 +116,56 @@ namespace AccountBuddy.PL
                         {
                             try
                             {
-                                Common.AppLib.AppIdValue = BLL.FMCGHubClient.HubCaller.Invoke<string>("GetNewAppId").Result;
-                                Environment.SetEnvironmentVariable(Common.AppLib.AppIdKey, Common.AppLib.AppIdValue, EnvironmentVariableTarget.Machine);
+                                Environment.SetEnvironmentVariable(Common.AppLib.AppIdKey, "GetNewAppId", EnvironmentVariableTarget.Machine);
+                                Common.AppLib.AppIdValue = Environment.GetEnvironmentVariable(Common.AppLib.AppIdKey, EnvironmentVariableTarget.Machine);
                             }
                             catch (Exception ex)
                             {
-                                var str = ex.Message;
+                                Common.AppLib.WriteLog(ex);
                             }
-
                         }
-                        bool r = BLL.FMCGHubClient.HubCaller.Invoke<bool>("SetReceiverConnectionIdToCaller", HubConReceiver.ConnectionId).Result;
-                        if (!r)
+
+                        if (Common.AppLib.AppIdValue == null)
                         {
-                            string str = "SetReceiverConnectionIdToCaller_Failed";
-                            MessageBox.Show(str);
-                            Common.AppLib.WriteLog(str);
+                            MessageBox.Show("Please Run as Administrator when First Time is open");
                             frmInit.Close();
                         }
                         else
                         {
-                            Common.AppLib.IsAppApproved = BLL.FMCGHubClient.HubCaller.Invoke<bool>("LoginHubCaller", Common.AppLib.AppIdValue, Environment.MachineName, Environment.UserName, Environment.UserDomainName).Result;
-
-                            if (Common.AppLib.IsAppApproved)
+                            if (Common.AppLib.AppIdValue == "GetNewAppId")
                             {
-                                frmInit.Hide();
-                                frmLogin.Show();
+                                Common.AppLib.AppIdValue = BLL.FMCGHubClient.HubCaller.Invoke<string>("GetNewAppId").Result;
+                            }
+
+
+                            bool r = BLL.FMCGHubClient.HubCaller.Invoke<bool>("SetReceiverConnectionIdToCaller", HubConReceiver.ConnectionId).Result;
+                            if (!r)
+                            {
+                                string str = "SetReceiverConnectionIdToCaller_Failed";
+                                MessageBox.Show(str);
+                                Common.AppLib.WriteLog(str);
+                                frmInit.Close();
                             }
                             else
-                            {                                
-                                frmInit.Title = "Waiting for approval";
-                                frmLogin.Hide();
-                                System.Windows.Forms.Application.DoEvents();
-                            }
+                            {
+                                Common.AppLib.IsAppApproved = BLL.FMCGHubClient.HubCaller.Invoke<bool>("LoginHubCaller", Common.AppLib.AppIdValue, Environment.MachineName, Environment.UserName, Environment.UserDomainName).Result;
 
-                            ClientEvents();
-                        }
-                        
+                                if (Common.AppLib.IsAppApproved)
+                                {
+                                    frmInit.Hide();
+                                    frmLogin.Show();
+                                    frmLogin.ClearForm();
+                                }
+                                else
+                                {
+                                    frmInit.Title = "Waiting for approval";
+                                    frmLogin.Hide();
+                                    System.Windows.Forms.Application.DoEvents();
+                                }
+
+                                ClientEvents();
+                            }
+                        }                        
                     }                    
                 }
                 
@@ -382,13 +396,13 @@ namespace AccountBuddy.PL
                             }
                             else
                             {
-                                App.frmHome.ShowDialog();
-                                if (Common.AppLib.IsAppApproved)
-                                {
-                                    BLL.UserAccount.User = new BLL.UserAccount();
-                                    frmLogin.ClearForm();
-                                    frmLogin.Show();
-                                }
+                                App.frmHome.Show();
+                                //if (Common.AppLib.IsAppApproved)
+                                //{
+                                //    BLL.UserAccount.User = new BLL.UserAccount();
+                                //    frmLogin.ClearForm();
+                                //    frmLogin.Show();
+                                //}
                             }
                         }
                         else
