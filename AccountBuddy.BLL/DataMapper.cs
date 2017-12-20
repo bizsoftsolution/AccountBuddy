@@ -32,7 +32,6 @@ namespace AccountBuddy.BLL
 
             return D;   
         }
-
         public static UserType ToMap(this UserType S,UserType D)
         {
 
@@ -74,7 +73,6 @@ namespace AccountBuddy.BLL
             D.IsUpdate = S.IsUpdate;            
             return D;
         }
-
         public static UserAccount ToMap(this UserAccount S, UserAccount D)
         {
             D.Id = S.Id;
@@ -85,6 +83,25 @@ namespace AccountBuddy.BLL
             D.UserName = S.UserName;
             D.UserType = S.UserType;
             D.UserTypeId = D.UserTypeId;
+
+            return D;
+        }
+        public static StockGroup ToMap(this StockGroup S, StockGroup D)
+        {
+            D.Company = S.Company;
+            D.CompanyId = S.CompanyId;
+            D.GroupCode = S.GroupCode;
+            D.Id = S.Id;
+            D.IsEnabled = S.IsEnabled;
+            D.IsPurchase = S.IsPurchase;
+            D.IsReadOnly = S.IsReadOnly;
+            D.IsSale = S.IsSale;
+            D.StockGroupName = S.StockGroupName;
+            D.StockGroupNameWithCode = S.StockGroupNameWithCode;
+            D.SubStockGroup = S.SubStockGroup;
+            D.UnderGroupId = S.UnderGroupId;
+            D.UnderStockGroup = S.UnderStockGroup;
+            D.underStockGroupName = S.underStockGroupName;
 
             return D;
         }

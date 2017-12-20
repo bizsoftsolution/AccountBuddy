@@ -140,5 +140,29 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
+
+        public static BLL.StockGroup ToMap(this DAL.StockGroup S, BLL.StockGroup D)
+        {
+            D.CompanyId = S.CompanyId;
+            D.GroupCode = S.GroupCode;
+            D.Id = S.Id;
+            D.IsPurchase = S.IsPurchase??false;
+            D.IsSale = S.IsSale ?? false;
+            D.StockGroupName = S.StockGroupName;
+            D.UnderGroupId = S.UnderGroupId;
+            return D;
+        }
+
+        public static DAL.StockGroup ToMap(this BLL.StockGroup S, DAL.StockGroup D)
+        {
+            D.CompanyId = S.CompanyId;
+            D.GroupCode = S.GroupCode;
+            D.Id = S.Id;
+            D.IsPurchase = S.IsPurchase;
+            D.IsSale = S.IsSale;
+            D.StockGroupName = S.StockGroupName;
+            D.UnderGroupId = S.UnderGroupId;
+            return D;
+        }
     }
 }

@@ -101,33 +101,7 @@ namespace AccountBuddy.BLL
             return RV;
 
         }
-        public static ObservableCollection<StockGroup> StocktoList
-        {
-            get
-            {
-                try
-                {
-                    if (_StocktoList == null)
-                    {
-                        _StocktoList = new ObservableCollection<StockGroup>();
-                        var l1 = FMCGHubClient.HubCaller.Invoke<List<StockGroup>>("StockGroup_PrimaryList").Result;
-                        _StocktoList = new ObservableCollection<StockGroup>(l1.OrderBy(x => x.StockGroupNameWithCode));
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Common.AppLib.WriteLog(ex);
-                }
-
-                return _toList;
-            }
-            set
-            {
-                _toList = value;
-            }
-        }
-
-
+        
         public int Id
         {
             get
@@ -377,7 +351,7 @@ namespace AccountBuddy.BLL
             {
                 StockGroup d = toList.Where(x => x.Id == Id).FirstOrDefault();
 
-                if (d == null)
+                if (d==null || Id==0)
                 {
                     d = new StockGroup() { StockGroupName = this.StockGroupName, UnderGroupId = this.UnderGroupId, GroupCode = this.GroupCode, IsPurchase=this.IsPurchase, IsSale=this.IsSale };
                     toList.Add(d);
@@ -392,11 +366,13 @@ namespace AccountBuddy.BLL
                     d.IsSale = this.IsSale;
                 }
 
-                this.toCopy<StockGroup>(d);
+                this.ToMap(d);
                 if (isServerCall == false)
                 {
-                  //  StockGroup sg = new StockGroup() { StockGroupName = this.StockGroupName, UnderGroupId = this.UnderGroupId, GroupCode = this.GroupCode, IsPurchase=this.IsPurchase, IsSale=this.IsSale };
-                    var i = FMCGHubClient.HubCaller.Invoke<int>("StockGroup_Save", d).Result;
+                    StockGroup sg = new StockGroup() {Id=this.Id, StockGroupName = this.StockGroupName, UnderGroupId = this.UnderGroupId, GroupCode = this.GroupCode, IsPurchase=this.IsPurchase, IsSale=this.IsSale };
+                    var i = FMCGHubClient.HubCaller.Invoke<int>("StockGroup_Save", sg).Result;
+                    if (i == 0 && toList.Count>=1) toList.RemoveAt(toList.Count - 1);
+                    if (i == 0) return false;
                     d.Id = i;
                 }
 
@@ -414,7 +390,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                new StockGroup().toCopy<StockGroup>(this);
+                new StockGroup().ToMap(this);
                 IsReadOnly = !UserPermission.AllowInsert;
 
                 NotifyAllPropertyChanged();
@@ -430,7 +406,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<StockGroup>(this);
+                d.ToMap(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }
