@@ -164,8 +164,9 @@ namespace AccountBuddy.PL.frm.Report
                         f.data.SearchText = gl.EntryNo;
                         f.data.RefNo = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find();
+                       // f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                      
                         f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
                         {
@@ -180,7 +181,7 @@ namespace AccountBuddy.PL.frm.Report
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo;
                         f.data.RefNo = gl.EntryNo; System.Windows.Forms.Application.DoEvents();
-                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                       // f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find(); f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
                         {
@@ -195,7 +196,7 @@ namespace AccountBuddy.PL.frm.Report
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo; f.data.RefNo = gl.EntryNo;
                          System.Windows.Forms.Application.DoEvents();
-                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                       // f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find(); f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
                         {
@@ -210,7 +211,7 @@ namespace AccountBuddy.PL.frm.Report
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo; f.data.RefNo = gl.EntryNo;
                          System.Windows.Forms.Application.DoEvents();
-                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        ///f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find(); f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
                         {
@@ -225,7 +226,7 @@ namespace AccountBuddy.PL.frm.Report
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo; f.data.RefNo = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                       // f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find(); f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
                         {
@@ -240,7 +241,7 @@ namespace AccountBuddy.PL.frm.Report
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.EntryNo; f.data.RefNo = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        ///f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find(); f.btnPrint.IsEnabled = true;
                         if (f.data.RefCode != null)
                         {
@@ -255,7 +256,7 @@ namespace AccountBuddy.PL.frm.Report
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.RefEntryNo; f.data.RefNo = gl.EntryNo;
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        //f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.data.Find();
                         f.btnPrint.IsEnabled = true;
                        f.btnJobReceived.IsEnabled = f.data.Status == "Pending" ? true : false;
@@ -269,7 +270,8 @@ namespace AccountBuddy.PL.frm.Report
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.RefEntryNo;
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.Find(); f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.data.Find();
+                        //f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         f.btnPrint.IsEnabled = true;
 
                     }
@@ -280,7 +282,8 @@ namespace AccountBuddy.PL.frm.Report
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.RefEntryNo;
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.Find(); f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.data.Find();
+                        ///f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                        // f.btnPrint.IsEnabled = true;
 
                     }
@@ -291,7 +294,7 @@ namespace AccountBuddy.PL.frm.Report
                         System.Windows.Forms.Application.DoEvents();
                         f.data.SearchText = gl.RefEntryNo;
                         f.data.Find(); System.Windows.Forms.Application.DoEvents();
-                        f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        //f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
                         //f.btnPrint.IsEnabled = true;
 
                     }

@@ -644,7 +644,8 @@ namespace AccountBuddy.SL.Hubs
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, PR.Id);
             string Mode, status = null;
-            var CId = PR.Ledger.AccountGroup.CompanyId;
+
+            var CId = DB.Ledgers.Where(x => x.Id == PR.LedgerId).FirstOrDefault().AccountGroup.CompanyId ;
             if (PR.TransactionTypeId == 1)
             {
                 Mode = "Cash";

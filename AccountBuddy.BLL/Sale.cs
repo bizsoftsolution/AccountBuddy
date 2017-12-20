@@ -526,13 +526,20 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Sale().toCopy<Sale>(this);
-            _SDetail = new SalesDetail();
-            _SDetails = new ObservableCollection<SalesDetail>();
+            try
+            {
+                new Sale().toCopy<Sale>(this);
+                _SDetail = new SalesDetail();
+                _SDetails = new ObservableCollection<SalesDetail>();
 
-            SalesDate = DateTime.Now;
-            RefNo = FMCGHubClient.HubCaller.Invoke<string>("Sales_NewRefNo").Result;
-            NotifyAllPropertyChanged();
+                SalesDate = DateTime.Now;
+                RefNo = FMCGHubClient.HubCaller.Invoke<string>("Sales_NewRefNo").Result;
+                NotifyAllPropertyChanged();
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
         public void setLabel()
         {
