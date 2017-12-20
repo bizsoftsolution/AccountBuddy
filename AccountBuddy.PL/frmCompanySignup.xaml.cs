@@ -35,24 +35,24 @@ namespace AccountBuddy.PL
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            Common.AppLib.WriteLog("btnBack_Click_Start");
+            Common.AppLib.WriteLog("frmCompanySignup_btnBack_Click_Start");
             this.Close();
-            Common.AppLib.WriteLog("btnBack_Click_End");
+            Common.AppLib.WriteLog("frmCompanySignup_btnBack_Click_End");
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            Common.AppLib.WriteLog("btnClear_Click_Start");
+            Common.AppLib.WriteLog("frmCompanySignup_btnClear_Click_Start");
             data.Clear();
             txtPassword.Password = "";
             iLogoImage.Tag = "";
-            Common.AppLib.WriteLog("btnClear_Click_End");
+            Common.AppLib.WriteLog("frmCompanySignup_btnClear_Click_End");
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
 
-            Common.AppLib.WriteLog("btnSave_Click_Start");
+            Common.AppLib.WriteLog("frmCompanySignup_btnSave_Click_Start");
             if (data.Save() == true)
             {
                 MessageBox.Show(Message.PL.Saved_Alert, this.Title.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
@@ -65,7 +65,7 @@ namespace AccountBuddy.PL
             {
                 MessageBox.Show(string.Join("\n", data.lstValidation.Select(x => x.Message).ToList()));
             }
-            Common.AppLib.WriteLog("btnSave_Click_End");
+            Common.AppLib.WriteLog("frmCompanySignup_btnSave_Click_End");
         }
         private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
@@ -130,7 +130,7 @@ namespace AccountBuddy.PL
 
         private void btnImage_Click(object sender, RoutedEventArgs e)
         {
-            Common.AppLib.WriteLog("btnImage_Click_Start");
+            Common.AppLib.WriteLog("frmCompanySignup_btnImage_Click_Start");
             try
             {
                 OpenFileDialog OpenDialogBox = new OpenFileDialog();
@@ -156,7 +156,7 @@ namespace AccountBuddy.PL
             catch (Exception ex)
             { Common.AppLib.WriteLog(ex); }
 
-            Common.AppLib.WriteLog("btnImage_Click_End");
+            Common.AppLib.WriteLog("frmCompanySignup_btnImage_Click_End");
 
         }
 

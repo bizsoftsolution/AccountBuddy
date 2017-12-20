@@ -228,7 +228,7 @@ namespace AccountBuddy.BLL
                     toList.Add(d);
                 }
 
-                this.toCopy<UserType>(d);
+                this.ToMap(d);
                 if (isServerCall == false)
                 {
                     var i = FMCGHubClient.HubCaller.Invoke<int>("userType_Save", this).Result;
@@ -247,12 +247,12 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new UserType().toCopy<UserType>(this);
+            new UserType().ToMap(this);
             this.UserTypeDetails = new ObservableCollection<UserTypeDetail>();
             foreach (var d in UserTypeFormDetail.toList)
             {
                 UserTypeDetail utd = new UserTypeDetail();
-                utd.UserTypeFormDetail = d.toCopy<BLL.UserTypeFormDetail>(new UserTypeFormDetail());
+                utd.UserTypeFormDetail = d.ToMap(new UserTypeFormDetail());
                 utd.UserTypeFormDetailId = utd.UserTypeFormDetail.Id;
                 UserTypeDetails.Add(utd);
             }
@@ -265,7 +265,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<UserType>(this);
+                d.ToMap(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }

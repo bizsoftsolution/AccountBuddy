@@ -71,9 +71,10 @@ namespace AccountBuddy.PL
                 Common.AppLib.SLPath= ConfigurationManager.AppSettings["SLPath"];
                 Common.AppLib.SLTransport = ConfigurationManager.AppSettings["SLTransport"];
                 Common.AppLib.AppIdKey = ConfigurationManager.AppSettings["DSAppKey"];
+                Common.AppLib.WriteLogState = ConfigurationManager.AppSettings["WriteLogState"];
 
 
-                if(string.IsNullOrWhiteSpace(Common.AppLib.SLPath))
+                if (string.IsNullOrWhiteSpace(Common.AppLib.SLPath))
                 {
                     string str = "SLPath is Empty on Config";
                     Common.AppLib.WriteLog(str);
@@ -135,6 +136,7 @@ namespace AccountBuddy.PL
                             if (Common.AppLib.AppIdValue == "GetNewAppId")
                             {
                                 Common.AppLib.AppIdValue = BLL.FMCGHubClient.HubCaller.Invoke<string>("GetNewAppId").Result;
+                                Environment.SetEnvironmentVariable(Common.AppLib.AppIdKey, Common.AppLib.AppIdValue, EnvironmentVariableTarget.Machine);
                             }
 
 

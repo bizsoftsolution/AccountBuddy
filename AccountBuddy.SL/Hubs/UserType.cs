@@ -14,13 +14,12 @@ namespace AccountBuddy.SL.Hubs
 
         private BLL.UserType UserTypeDAL_BLL(DAL.UserType d)
         {
-            BLL.UserType b = d.toCopy<BLL.UserType>(new BLL.UserType());
+            BLL.UserType b = d.ToMap(new BLL.UserType());
 
             if (d!=null)
             {
                 b.UserTypeDetails = new ObservableCollection<BLL.UserTypeDetail>(d.UserTypeDetails.Select(x => UserTypeDetailDAL_BLL(x)).ToList());
-                b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
-               
+                b.Company = d.CompanyDetail.ToMap(new BLL.CompanyDetail());               
             }
             return b;
         }
@@ -43,20 +42,20 @@ namespace AccountBuddy.SL.Hubs
 
                     d = new DAL.UserType();
                     c.UserTypes.Add(d);
-                    ut.toCopy<DAL.UserType>(d);
+                    ut.ToMap(d);
 
                     foreach(var utd in ut.UserTypeDetails)
                     {                        
-                        d.UserTypeDetails.Add(utd.toCopy<DAL.UserTypeDetail>(new DAL.UserTypeDetail()));
+                        d.UserTypeDetails.Add(utd.ToMap(new DAL.UserTypeDetail()));
                     }
                     DB.SaveChanges();
                     ut.Id = d.Id;
-                    ut.Company = c.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+                    ut.Company = c.ToMap(new BLL.CompanyDetail());
                     LogDetailStore(ut, LogDetailType.INSERT);
                 }
                 else
                 {
-                    ut.toCopy<DAL.UserType>(d);
+                    ut.ToMap(d);
 
                     foreach (var utd in ut.UserTypeDetails)
                     {
@@ -66,7 +65,7 @@ namespace AccountBuddy.SL.Hubs
                             dd = new DAL.UserTypeDetail();
                             d.UserTypeDetails.Add(dd);
                         }
-                        utd.toCopy<DAL.UserTypeDetail>(dd);                        
+                        utd.ToMap(dd);                        
                     }
 
                     DB.SaveChanges();

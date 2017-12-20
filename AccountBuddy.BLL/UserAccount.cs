@@ -330,7 +330,7 @@ namespace AccountBuddy.BLL
                     toList.Add(d);
                 }
 
-                this.toCopy<UserAccount>(d);
+                this.ToMap(d);
                 if (isServerCall == false)
                 {
 
@@ -366,7 +366,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<UserAccount>(this);
+                d.ToMap(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }
