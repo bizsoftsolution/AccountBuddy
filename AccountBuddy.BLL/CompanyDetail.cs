@@ -11,6 +11,7 @@ namespace AccountBuddy.BLL
 {
     public class CompanyDetail : INotifyPropertyChanged
     {
+     
         #region Field
         bool isServerCall = false;
 
@@ -454,7 +455,7 @@ namespace AccountBuddy.BLL
                     toList.Add(d);
                 }
 
-                this.toCopy<CompanyDetail>(d);
+                this.ToMap(d);
                 if (isServerCall == false)
                 {
                     i = FMCGHubClient.HubCaller.Invoke<int>("CompanyDetail_Save", this).Result;
@@ -474,7 +475,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new CompanyDetail().toCopy<CompanyDetail>(this);
+            new CompanyDetail().ToMap(this);
             IsReadOnly = !UserPermission.AllowInsert;
             IsActive = true;
             NotifyAllPropertyChanged();
@@ -485,7 +486,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<CompanyDetail>(this);
+                d.ToMap(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }

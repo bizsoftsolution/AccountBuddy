@@ -15,7 +15,7 @@ namespace AccountBuddy.SL.Hubs
 
         BLL.CompanyDetail CompanyDetailDAL_BLL(DAL.CompanyDetail d)
         {
-            return d.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+            return d.ToMap(new BLL.CompanyDetail());
         }
 
         public List<string> CompanyDetail_AcYearList()
@@ -87,7 +87,7 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.CompanyDetail();
                     DB.CompanyDetails.Add(d);
 
-                    cm.toCopy<DAL.CompanyDetail>(d);
+                    cm.ToMap(d);
 
                     DB.SaveChanges();
                     cm.Id = d.Id;
@@ -137,7 +137,7 @@ namespace AccountBuddy.SL.Hubs
                 else
                 {
                     var CName = d.CompanyName;
-                    cm.toCopy<DAL.CompanyDetail>(d);
+                    cm.ToMap(d);
                     DB.SaveChanges();
 
                     var LName = string.Format("{0}-{1}", cm.CompanyType == "Company" ? "CM" : (cm.CompanyType == "Warehouse" ? "WH" : "DL"), CName);
@@ -204,7 +204,7 @@ namespace AccountBuddy.SL.Hubs
                     d.IsActive = false;
 
                     DB.SaveChanges();
-                    LogDetailStore(d.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail()), LogDetailType.DELETE);
+                    LogDetailStore(d.ToMap(new BLL.CompanyDetail()), LogDetailType.DELETE);
                 }
 
                 var uac = DB.UserAccounts.Where(x => x.UserType.CompanyId == d.Id);

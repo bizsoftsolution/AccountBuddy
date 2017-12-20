@@ -53,6 +53,7 @@ namespace AccountBuddy.Common
 
         public static T toCopy<T>(this object objSource, T objDestination)
         {
+            
             try
             {
 
@@ -65,7 +66,10 @@ namespace AccountBuddy.Common
                         var pTo = objDestination.GetType().GetProperties().Where(x => x.Name == pFrom.Name).FirstOrDefault();
                         pTo.SetValue(objDestination, pFrom.GetValue(objSource));
                     }
-                    catch (Exception ex) { Common.AppLib.WriteLog(ex); }
+                    catch (Exception ex)
+                    {
+                        Common.AppLib.WriteLog(ex);
+                    }
 
                 }
             }
@@ -75,6 +79,7 @@ namespace AccountBuddy.Common
             }
             return objDestination;
         }
+        
 
         public static void MutateVerbose<TField>(this INotifyPropertyChanged instance, ref TField field, TField newValue, Action<PropertyChangedEventArgs> raise, [CallerMemberName] string propertyName = null)
         {
@@ -328,5 +333,5 @@ namespace AccountBuddy.Common
         {
             WriteLog(string.Format("Error=> ExMessage:{0},StackTrace:{1}", ex.Message,ex.StackTrace));            
         }
-    }
+    }   
 }
