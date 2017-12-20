@@ -279,12 +279,14 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         private void cmbJobWorker_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbJobWorker.ItemsSource = BLL.JobWorker.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
-
-            cmbJobWorker.DisplayMemberPath = "Ledger.LedgerName";
-            cmbJobWorker.SelectedValuePath = "Id";
-
-
+            try
+            {
+                cmbJobWorker.ItemsSource = BLL.JobWorker.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
+                cmbJobWorker.DisplayMemberPath = "Ledger.LedgerName";
+                cmbJobWorker.SelectedValuePath = "Id";
+            }
+            catch(Exception ex)
+            { }
         }
         #endregion
 

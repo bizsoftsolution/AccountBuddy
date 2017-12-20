@@ -95,7 +95,10 @@ namespace AccountBuddy.SL.Hubs
         void StockOut_SaveByStockIn(DAL.StockIn P)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, P.Id);
-
+            if (P.Ledger == null)
+            {
+                P.Ledger = DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault();
+            }
             DAL.StockOut s = DB.StockOuts.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (P.Ledger.LedgerName.StartsWith("CM-") || P.Ledger.LedgerName.StartsWith("WH-") || P.Ledger.LedgerName.StartsWith("DL-"))
             {

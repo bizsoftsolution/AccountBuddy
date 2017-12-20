@@ -29,10 +29,11 @@ namespace AccountBuddy.SL.Hubs
                     rp = new BLL.ReceiptAndPayment();
                     rp.Ledger = new BLL.Ledger();
                     // pd.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
-
+                    rp.AccountName = string.Format("{0}-{1}", pd.Ledger.AccountGroup.GroupCode, pd.Ledger.LedgerName);
                     rp.Ledger = LedgerDAL_BLL(pd.Payment.Ledger);
                     rp.EId = pd.Payment.Id;
                     rp.EType = 'P';
+                    rp.TType = pd.Payment.PaymentMode;
                     rp.EDate = pd.Payment.PaymentDate;
                     rp.RefNo = pd.Payment.PaymentMode == "Cheque" ? pd.Payment.ChequeNo : pd.Payment.RefNo;
                     rp.EntryNo = pd.Payment.EntryNo;
@@ -53,10 +54,12 @@ namespace AccountBuddy.SL.Hubs
                         rp = new BLL.ReceiptAndPayment();
                         rp.Ledger = new BLL.Ledger();
                         //p.Ledger.toCopy<BLL.Ledger>(rp.Ledger);
-
+                        rp.AccountName = string.Format("{0}-{1}", pd.Ledger.AccountGroup.GroupCode, pd.Ledger.LedgerName);
+                        rp.PayTo = p.PayTo;
                         rp.Ledger = LedgerDAL_BLL(pd.Ledger);
                         rp.EId = p.Id;
                         rp.EType = 'P';
+                        rp.TType = pd.Payment.PaymentMode;
                         rp.EDate = p.PaymentDate;
                         rp.RefNo = p.PaymentMode == "Cheque" ? p.ChequeNo : p.RefNo;
                         rp.EntryNo = p.EntryNo;
@@ -78,14 +81,15 @@ namespace AccountBuddy.SL.Hubs
                         rp = new BLL.ReceiptAndPayment();
                         rp.Ledger = new BLL.Ledger();
                         rp.Ledger = LedgerDAL_BLL(rd.Ledger);
-                        rp.EId = r.Id;
+                        rp.AccountName = string.Format("{0}-{1}", r.Ledger.AccountGroup.GroupCode, r.Ledger.LedgerName);
+                        rp.PayTo = rd.Receipt.ReceivedFrom;
                         rp.EType = 'R';
+                        rp.TType = r.ReceiptMode;
                         rp.EDate = r.ReceiptDate;
                         rp.RefNo = r.ReceiptMode == "Cheque" ? r.ChequeNo : r.RefNo;
                         rp.EntryNo = r.EntryNo;
                         rp.Amount = rd.Amount;
                         rp.Status = rd.Receipt.Status;
-                        rp.PayTo = rd.Receipt.ReceivedFrom;
                         rp.Particular = rd.Particulars;
                         lstReceiptAndPayment.Add(rp);
                     }
@@ -99,15 +103,17 @@ namespace AccountBuddy.SL.Hubs
                     rp = new BLL.ReceiptAndPayment();
                     rp.Ledger = new BLL.Ledger();
                     rp.Ledger = LedgerDAL_BLL(rd.Receipt.Ledger);
+                    rp.AccountName = string.Format("{0}-{1}", rd.Ledger.AccountGroup.GroupCode, rd.Ledger.LedgerName);
+                    rp.PayTo = rd.Receipt.ReceivedFrom;
 
                     rp.EId = rd.Receipt.Id;
                     rp.EType = 'R';
+                    rp.TType = rd.Receipt.ReceiptMode;
                     rp.EDate = rd.Receipt.ReceiptDate;
                     rp.RefNo = rd.Receipt.ReceiptMode == "Cheque" ? rd.Receipt.ChequeNo : rd.Receipt.RefNo;
                     rp.EntryNo = rd.Receipt.EntryNo;
                     rp.Amount = rd.Amount;
                     rp.Status = rd.Receipt.Status;
-                    rp.PayTo = rd.Receipt.ReceivedFrom;
                     rp.Particular = rd.Particulars;
                     lstReceiptAndPayment.Add(rp);
                 }

@@ -64,10 +64,13 @@ namespace AccountBuddy.PL.frm.Report
                 rptViewer.LocalReport.DataSources.Add(data1);
                 rptViewer.LocalReport.ReportPath = @"rpt\Report\rptSOPendingReport.rdlc";
 
-                ReportParameter[] par = new ReportParameter[2];
+                ReportParameter[] par = new ReportParameter[3];
                 par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
                 par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
+                par[2] = new ReportParameter("AmtPrefix",Common.AppLib.CurrencyPositiveSymbolPrefix.ToString());
                 rptViewer.LocalReport.SetParameters(par);
+
+                rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                 rptViewer.RefreshReport();
 
@@ -79,7 +82,10 @@ namespace AccountBuddy.PL.frm.Report
 
 
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
@@ -95,7 +101,7 @@ namespace AccountBuddy.PL.frm.Report
                 Transaction.frmSalesOrder f = App.frmHome.ShowForm(Common.Forms.frmSalesOrder) as Transaction.frmSalesOrder;
 
                 System.Windows.Forms.Application.DoEvents();
-                f.data.SearchText = po.EntryNo;
+                f.data.RefNo = po.EntryNo;
                 System.Windows.Forms.Application.DoEvents();
                 f.data.Find();
                 f.btnMakesales.IsEnabled = f.data.Status == "Pending" ? true : false;
@@ -164,12 +170,12 @@ namespace AccountBuddy.PL.frm.Report
                 string deviceInfo =
              @"<DeviceInfo>
                 <OutputFormat>EMF</OutputFormat>
-                <PageWidth>11.6in</PageWidth>
-                <PageHeight>8.2</PageHeight>
-                <MarginTop>0.7in</MarginTop>
-                <MarginLeft>0.7in</MarginLeft>
-                <MarginRight>0.7in</MarginRight>
-                <MarginBottom>0.7in</MarginBottom>
+                <PageWidth>8.2in</PageWidth>
+                <PageHeight>11.6</PageHeight>
+                <MarginTop>1cm</MarginTop>
+                <MarginLeft>1cm</MarginLeft>
+                <MarginRight>0in</MarginRight>
+                <MarginBottom>0in</MarginBottom>
             </DeviceInfo>";
                 Warning[] warnings;
                 m_streams = new List<Stream>();

@@ -49,7 +49,7 @@ namespace AccountBuddy.PL.frm.Report
                 {
                     list = BLL.Product.toList.ToList();
                 }
-               
+
                 try
                 {
                     RptViewer.Reset();
@@ -58,9 +58,7 @@ namespace AccountBuddy.PL.frm.Report
                     RptViewer.LocalReport.DataSources.Add(data);
                     RptViewer.LocalReport.DataSources.Add(data1);
                     RptViewer.LocalReport.ReportPath = @"rpt\Report\rptStockReport.rdlc";
-
-                   
-
+                    RptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
                     RptViewer.RefreshReport();
 
                 }
@@ -74,6 +72,10 @@ namespace AccountBuddy.PL.frm.Report
                 Common.AppLib.WriteLog(ex);
             }
 
+        }
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
     }
 }

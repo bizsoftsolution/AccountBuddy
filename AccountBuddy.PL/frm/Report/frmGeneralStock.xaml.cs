@@ -86,6 +86,8 @@ namespace AccountBuddy.PL.frm.Report
                     par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
                     rptViewer.LocalReport.SetParameters(par);
 
+                    rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
                     rptViewer.RefreshReport();
 
                 }
@@ -100,8 +102,11 @@ namespace AccountBuddy.PL.frm.Report
             }
 
         }
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
 
-      
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
@@ -263,9 +268,9 @@ namespace AccountBuddy.PL.frm.Report
                 <OutputFormat>EMF</OutputFormat>
                 <PageWidth>11.6in</PageWidth>
                 <PageHeight>8.2</PageHeight>
-                <MarginTop>0.7in</MarginTop>
-                <MarginLeft>0.7in</MarginLeft>
-                <MarginRight>0.7in</MarginRight>
+                <MarginTop>1cm</MarginTop>
+                <MarginLeft>1cmn</MarginLeft>
+                <MarginRight>0in</MarginRight>
                 <MarginBottom>0.7in</MarginBottom>
             </DeviceInfo>";
                 Warning[] warnings;

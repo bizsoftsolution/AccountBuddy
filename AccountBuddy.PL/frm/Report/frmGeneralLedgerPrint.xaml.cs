@@ -33,7 +33,7 @@ namespace AccountBuddy.PL.frm.Report
 
           
         }
-        public void LoadReport(int LID, DateTime dtFrom, DateTime dtTo)
+        public void LoadReport(int? LID, DateTime dtFrom, DateTime dtTo)
         {
             try
             {

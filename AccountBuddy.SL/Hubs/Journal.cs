@@ -363,6 +363,10 @@ namespace AccountBuddy.SL.Hubs
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
             string Mode, status = null;
+            if (SR.Ledger == null)
+            {
+                SR.Ledger = DB.Ledgers.Where(x => x.Id == SR.LedgerId).FirstOrDefault();
+            }
             var CId = SR.Ledger.AccountGroup.CompanyId;
             if (SR.TransactionTypeId == 1)
             {
@@ -915,6 +919,10 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByStockOut(DAL.StockOut STout)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, STout.Id);
+            if (STout.Ledger == null)
+            {
+                STout.Ledger = DB.Ledgers.Where(x => x.Id == STout.LedgerId).FirstOrDefault();
+            }
             var CId = STout.Ledger.AccountGroup.CompanyId;
 
             DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
@@ -975,6 +983,10 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByStockIn(DAL.StockIn STIn)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, STIn.Id);
+            if (STIn.Ledger == null)
+            {
+                STIn.Ledger = DB.Ledgers.Where(x => x.Id == STIn.LedgerId).FirstOrDefault();
+            }
             var CId = STIn.Ledger.AccountGroup.CompanyId;
 
 
@@ -1036,8 +1048,11 @@ namespace AccountBuddy.SL.Hubs
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.JobOrderIssue, P.Id);
 
-            var LId = DB.JobWorkers.Where(x => x.Id == P.JobWorkerId).FirstOrDefault().Ledger;
-             var CId = LId.AccountGroup.CompanyId;
+            if (P.JobWorker == null)
+            {
+                P.JobWorker = DB.JobWorkers.Where(x => x.Id == P.JobWorkerId).FirstOrDefault();
+            }
+            var CId = P.JobWorker.Ledger.AccountGroup.CompanyId;
 
             DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
@@ -1102,7 +1117,10 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByJobOrderReceived(DAL.JobOrderReceived S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.JobOrderReceived, S.Id);
-
+            if (S.JobWorker == null)
+            {
+                S.JobWorker = DB.JobWorkers.Where(x => x.Id == S.JobWorkerId).FirstOrDefault();
+            }
             var CId = S.JobWorker.Ledger.AccountGroup.CompanyId;
 
             DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
@@ -1167,7 +1185,10 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByStockInProcess(DAL.StockInProcess S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockInProcess, S.Id);
-
+            if (S.Staff == null)
+            {
+                S.Staff = DB.Staffs.Where(x => x.Id == S.StaffId).FirstOrDefault();
+            }
             var CId = S.Staff.Ledger.AccountGroup.CompanyId;
 
             DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
@@ -1231,7 +1252,10 @@ namespace AccountBuddy.SL.Hubs
         void Journal_SaveByStockSeparated(DAL.StockSeparated S)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockSeparated, S.Id);
-
+            if (S.Staff == null)
+            {
+                S.Staff = DB.Staffs.Where(x => x.Id == S.StaffId).FirstOrDefault();
+            }
             var CId = S.Staff.Ledger.AccountGroup.CompanyId;
 
             DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();

@@ -69,6 +69,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.Particular = pd.Particular;
                     gl.EId = pd.Payment.Id;
                     gl.EType = BLL.FormPrefix.Payment;
+                    gl.TType = pd.Payment.PaymentMode;
                     gl.EDate = pd.Payment.PaymentDate;
                     gl.RefNo = pd.Payment.PaymentMode == "Cheque" ? pd.Payment.ChequeNo : pd.Payment.RefNo;
                     gl.EntryNo = pd.Payment.EntryNo;
@@ -90,6 +91,7 @@ namespace AccountBuddy.SL.Hubs
                         gl.Particular = pd.Particular;
                         gl.EId = p.Id;
                         gl.EType = BLL.FormPrefix.Payment;
+                        gl.TType = p.PaymentMode;
                         gl.EDate = p.PaymentDate;
                         gl.RefNo = p.PaymentMode == "Cheque" ? p.ChequeNo : p.RefNo;
                         gl.EntryNo = p.EntryNo;
@@ -111,6 +113,7 @@ namespace AccountBuddy.SL.Hubs
                         gl.Particular = rd.Particulars;
                         gl.EId = r.Id;
                         gl.EType = BLL.FormPrefix.Receipt;
+                        gl.TType = r.ReceiptMode;
                         gl.EDate = r.ReceiptDate;
                         gl.RefNo = r.ReceiptMode == "Cheque" ? r.ChequeNo : r.RefNo;
                         gl.EntryNo = r.EntryNo;
@@ -250,6 +253,7 @@ namespace AccountBuddy.SL.Hubs
                         gl.EntryNo = jd.Journal.EntryNo;
                         gl.DrAmt = jd.DrAmt;
                         gl.CrAmt = jd.CrAmt;
+                        gl.TType = jd.TransactionMode;
                         BalAmt += (gl.DrAmt - gl.CrAmt);
                         gl.BalAmt = Math.Abs(BalAmt);
                         lstGeneralLedger.Add(gl);
