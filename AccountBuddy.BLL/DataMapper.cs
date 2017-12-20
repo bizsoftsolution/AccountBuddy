@@ -105,5 +105,23 @@ namespace AccountBuddy.BLL
 
             return D;
         }
+        public static AccountGroup ToMap(this AccountGroup S, AccountGroup D)
+        {
+            D.Company = S.Company;
+            D.CompanyId = S.CompanyId;
+            D.GroupCode = S.GroupCode;
+            D.GroupName = S.GroupName;
+            D.GroupNameWithCode = S.GroupNameWithCode;
+            D.Id = S.Id;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.SubAccountGroup = S.SubAccountGroup;
+            D.UnderAccountGroup = S.UnderAccountGroup;
+            D.UnderGroupId = S.UnderGroupId;
+            D.underGroupName = S.underGroupName;
+
+            return D;
+        }
+
     }
 }

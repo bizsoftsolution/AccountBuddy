@@ -326,12 +326,11 @@ namespace AccountBuddy.BLL
             try
             {
                 AccountGroup d = toList.Where(x => x.Id == Id).Select(x => new BLL.AccountGroup() { GroupCode= x.GroupCode, GroupName=x.GroupName, UnderGroupId= x.UnderGroupId }).FirstOrDefault();
-                if (d == null)
+                if (d == null || Id ==0)
                 {
                     d = new AccountGroup() { GroupName = this.GroupName, UnderGroupId = this.UnderGroupId, GroupCode = this.GroupCode };
-                   
-                }
-              
+                    toList.Add(d);
+                }              
                 else
                 {
                     d.GroupName = this.GroupName;
@@ -341,14 +340,17 @@ namespace AccountBuddy.BLL
 
 
 
-                this.toCopy<AccountGroup>(d);
+                this.ToMap(d);
                 if (isServerCall == false)
                 {
-                  // AccountGroup ag = new AccountGroup() {GroupName=this.GroupName,UnderGroupId=this.UnderGroupId, GroupCode = this.GroupCode };
-                    var i = FMCGHubClient.HubCaller.Invoke<int>("AccountGroup_Save",d).Result;
-                    d.Id = i;
-                    toList.Add(d);
-                   
+                    var ag = new AccountGroup() {Id=Id,GroupCode=GroupCode, GroupName=GroupName, UnderGroupId=UnderGroupId };
+                    var i = FMCGHubClient.HubCaller.Invoke<int>("AccountGroup_Save",ag).Result;
+                    if (i == 0)
+                    {
+                        if (toList.Count() >= 1) toList.RemoveAt(toList.Count - 1);
+                        return false;
+                    }
+                    d.Id = i;                   
                 }
             
                 return true;
@@ -366,7 +368,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                new AccountGroup().toCopy<AccountGroup>(this);
+                new AccountGroup().ToMap(this);
                 IsReadOnly = !UserPermission.AllowInsert;
 
                 NotifyAllPropertyChanged();
@@ -383,7 +385,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<AccountGroup>(this);
+                d.ToMap(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }

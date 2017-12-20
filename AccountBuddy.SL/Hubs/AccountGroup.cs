@@ -15,8 +15,8 @@ namespace AccountBuddy.SL.Hubs
         #region Account Group
         BLL.AccountGroup AccountGroupDAL_BLL(DAL.AccountGroup d)
         {
-            BLL.AccountGroup b = d.toCopy<BLL.AccountGroup>(new BLL.AccountGroup());
-            b.Company = d.CompanyDetail == null ? new BLL.CompanyDetail(): d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+            BLL.AccountGroup b = d.ToMap(new BLL.AccountGroup());
+            b.Company = d.CompanyDetail == null ? new BLL.CompanyDetail(): d.CompanyDetail.ToMap(new BLL.CompanyDetail());
             b.UnderAccountGroup = d.AccountGroup2 == null ? new BLL.AccountGroup() : AccountGroupDAL_BLL(d.AccountGroup2);
             return b;
         }
@@ -24,11 +24,8 @@ namespace AccountBuddy.SL.Hubs
         {
             var l= DB.AccountGroups.Where(x => x.CompanyId == Caller.CompanyId && x.GroupName != "Primary").ToList()
                               .Select(x => AccountGroupDAL_BLL(x)).ToList();
-            //var l = DB.AccountGroups.Where(x => x.CompanyId == Caller.CompanyId).ToList()
-            //                   .Select(x => AccountGroupDAL_BLL(x)).ToList();
             return l;
         }
-        protected DbContext DbContext { get; set; }
      
         public int AccountGroup_Save(BLL.AccountGroup agp)
         {
@@ -43,7 +40,7 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.AccountGroup();
                     DB.AccountGroups.Add(d);
 
-                    agp.toCopy<DAL.AccountGroup>(d);
+                    agp.ToMap(d);
                     DB.SaveChanges();
 
                     agp.Id = d.Id;
@@ -51,7 +48,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    agp.toCopy<DAL.AccountGroup>(d);
+                    agp.ToMap(d);
                     DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
@@ -76,7 +73,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         DB.AccountGroups.Remove(d);
                         DB.SaveChanges();
-                        LogDetailStore(d.toCopy<BLL.AccountGroup>(new BLL.AccountGroup()), LogDetailType.DELETE);
+                        LogDetailStore(d.ToMap(new BLL.AccountGroup()), LogDetailType.DELETE);
                     }
                     
                     if(OtherClientsOnGroup.Count>0)Clients.Clients(OtherClientsOnGroup).AccountGroup_Save(d);

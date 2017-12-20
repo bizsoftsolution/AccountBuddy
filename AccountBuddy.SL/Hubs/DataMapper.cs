@@ -164,5 +164,25 @@ namespace AccountBuddy.SL.Hubs
             D.UnderGroupId = S.UnderGroupId;
             return D;
         }
+
+        public static BLL.AccountGroup ToMap(this DAL.AccountGroup S, BLL.AccountGroup D)
+        {
+            D.CompanyId = S.CompanyId;
+            D.GroupCode = S.GroupCode;
+            D.GroupName = S.GroupName;
+            D.Id = S.Id;
+            D.UnderGroupId = S.UnderGroupId;      
+            return D;
+        }
+
+        public static DAL.AccountGroup ToMap(this BLL.AccountGroup S, DAL.AccountGroup D)
+        {
+            D.CompanyId = S.CompanyId;
+            D.GroupCode = S.GroupCode;
+            D.GroupName = S.GroupName;
+            D.Id = S.Id;
+            D.UnderGroupId = S.UnderGroupId;
+            return D;
+        }
     }
 }
