@@ -30,8 +30,6 @@ namespace AccountBuddy.PL
         private void Window_Activated(object sender, EventArgs e)
         {
             Common.AppLib.WriteLog("frmInit_Activated");
-            mediaElement.Position = TimeSpan.FromMilliseconds(1);
-            mediaElement.Play();
         }
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -46,8 +44,7 @@ namespace AccountBuddy.PL
 
         private void MetroWindow_Deactivated(object sender, EventArgs e)
         {
-            Common.AppLib.WriteLog("frmInit_Deactivated");
-            mediaElement.Stop();
+            Common.AppLib.WriteLog("frmInit_Deactivated");            
         }
     }
 }
