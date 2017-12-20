@@ -286,6 +286,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
+                BLL.Staff.Init();
                 cmbStaff.ItemsSource = BLL.Staff.toList.Where(x => x.Ledger.AccountGroup.CompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
                 cmbStaff.DisplayMemberPath = "Ledger.LedgerName";
                 cmbStaff.SelectedValuePath = "Id";

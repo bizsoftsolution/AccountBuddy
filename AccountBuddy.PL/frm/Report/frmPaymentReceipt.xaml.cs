@@ -56,23 +56,26 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                List<BLL.ReceiptAndPayment> list = BLL.ReceiptAndPayment.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, cmbstatus.Text);
-                list = list.Select(x => new BLL.ReceiptAndPayment()
-                { AccountName = x.Ledger.AccountName, Amount = x.Amount, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
+                List<BLL.ReceiptAndPayment> list = dgvReceiptAndPayment.ItemsSource as List<BLL.ReceiptAndPayment>;
+                    list = list.Select(x => new BLL.ReceiptAndPayment()
+                { AccountName = x.AccountName, PayTo=x.PayTo, TType = x.TType, Particular =x.Particular, Amount = x.Amount, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
 
                 try
                 {
                     rptViewer.Reset();
-                    ReportDataSource data = new ReportDataSource("PaymentAndReceipt", list);
+                    ReportDataSource data = new ReportDataSource("ReceiptAndPayment", list);
                     ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                     rptViewer.LocalReport.DataSources.Add(data);
                     rptViewer.LocalReport.DataSources.Add(data1);
                     rptViewer.LocalReport.ReportPath = @"rpt\Report\rptPaymentReceipt.rdlc";
 
-                    ReportParameter[] par = new ReportParameter[2];
+                    ReportParameter[] par = new ReportParameter[3];
                     par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
                     par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
+                    par[2] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix.ToString());
                     rptViewer.LocalReport.SetParameters(par);
+
+                    rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                     rptViewer.RefreshReport();
 
@@ -88,7 +91,11 @@ namespace AccountBuddy.PL.frm.Report
             }
 
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
+     
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
@@ -150,12 +157,12 @@ namespace AccountBuddy.PL.frm.Report
                 string deviceInfo =
              @"<DeviceInfo>
                 <OutputFormat>EMF</OutputFormat>
-                <PageWidth>11.6in</PageWidth>
-                <PageHeight>8.2</PageHeight>
-                <MarginTop>0.7in</MarginTop>
-                <MarginLeft>0.7in</MarginLeft>
-                <MarginRight>0.7in</MarginRight>
-                <MarginBottom>0.7in</MarginBottom>
+                <PageWidth>8.2in</PageWidth>
+                <PageHeight>11.6in</PageHeight>
+                <MarginTop>1cm</MarginTop>
+                <MarginLeft>1cm</MarginLeft>
+                <MarginRight>1cm</MarginRight>
+                <MarginBottom>1cm</MarginBottom>
             </DeviceInfo>";
                 Warning[] warnings;
                 m_streams = new List<Stream>();
@@ -224,8 +231,7 @@ namespace AccountBuddy.PL.frm.Report
                 {
 
                     frmPaymentReceiptPrint f = new frmPaymentReceiptPrint();
-
-                    f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, cmbstatus.Text);
+                    f.LoadReport(dgvReceiptAndPayment.ItemsSource as List<BLL.ReceiptAndPayment>, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
                     f.ShowDialog();
                 }
                 else
@@ -254,7 +260,7 @@ namespace AccountBuddy.PL.frm.Report
                     Transaction.frmPayment f = App.frmHome.ShowForm(Common.Forms.frmPayment) as Transaction.frmPayment;
 
                     System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = rp.EntryNo;
+                    f.data.EntryNo = rp.EntryNo;
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
@@ -263,19 +269,11 @@ namespace AccountBuddy.PL.frm.Report
                     Transaction.frmReceipt f = App.frmHome.ShowForm(Common.Forms.frmReceipt) as Transaction.frmReceipt;
 
                     System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = rp.EntryNo;
+                    f.data.EntryNo = rp.EntryNo;
                     System.Windows.Forms.Application.DoEvents();
                     f.data.Find();
                 }
-                else if (rp.EType == 'J')
-                {
-                    Transaction.frmJournal f = App.frmHome.ShowForm(Common.Forms.frmJournal) as Transaction.frmJournal;
-
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.SearchText = rp.EntryNo;
-                    System.Windows.Forms.Application.DoEvents();
-                    f.data.Find();
-                }
+                
             }
         }
     }

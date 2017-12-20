@@ -66,11 +66,13 @@ namespace AccountBuddy.PL.frm.Report
                 rptBalanceSheet.LocalReport.DataSources.Add(data1);
                 rptBalanceSheet.LocalReport.ReportPath = @"rpt\Report\rptBalanceSheet.rdlc";
 
-                ReportParameter[] par = new ReportParameter[2];
+                ReportParameter[] par = new ReportParameter[3];
                 par[0] = new ReportParameter("DateFrom", dtpDateFrom.Text);
                 par[1] = new ReportParameter("DateTo", dtpDateTo.Text);
+                par[2] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix.ToString());
                 rptBalanceSheet.LocalReport.SetParameters(par);
 
+                rptBalanceSheet.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                 rptBalanceSheet.RefreshReport();
 
@@ -82,7 +84,10 @@ namespace AccountBuddy.PL.frm.Report
 
 
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
 
 
 
@@ -149,12 +154,12 @@ namespace AccountBuddy.PL.frm.Report
                 string deviceInfo =
              @"<DeviceInfo>
                 <OutputFormat>EMF</OutputFormat>
-                <PageWidth>11.6in</PageWidth>
-                <PageHeight>8.2</PageHeight>
-                <MarginTop>0.7in</MarginTop>
-                <MarginLeft>0.7in</MarginLeft>
-                <MarginRight>0.7in</MarginRight>
-                <MarginBottom>0.7in</MarginBottom>
+                <PageWidth>8.2in</PageWidth>
+                <PageHeight>11.6in</PageHeight>
+              <MarginTop>1cm</MarginTop>
+                <MarginLeft>1cm</MarginLeft>
+                <MarginRight>0cm</MarginRight>
+                <MarginBottom>0cm</MarginBottom>
             </DeviceInfo>";
                 Warning[] warnings;
                 m_streams = new List<Stream>();

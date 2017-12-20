@@ -441,15 +441,22 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
-            if (dgvGeneralLedger.Items.Count != 0)
+            try
             {
-                frmGeneralLedgerPrint f = new frmGeneralLedgerPrint();
-                f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-                f.ShowDialog();
+                if (dgvGeneralLedger.Items.Count != 0)
+                {
+                    frmGeneralLedgerPrint f = new frmGeneralLedgerPrint();
+                    f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                    f.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Enter AccountName");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("Enter AccountName");
+                Common.AppLib.WriteLog(ex);
             }
 
         }

@@ -39,27 +39,29 @@ namespace AccountBuddy.PL.frm.Report
             
 
         }
-        public void LoadReport(int LID,DateTime dtFrom, DateTime dtTo, String EntryNo, String status)
+        public void LoadReport(List<BLL.ReceiptAndPayment> l, DateTime dtFrom, DateTime dtTo)
         {
             try
             {
-                List<BLL.ReceiptAndPayment> list = BLL.ReceiptAndPayment.ToList((int?)LID, dtFrom, dtTo, EntryNo, status);
-                list = list.Select(x => new BLL.ReceiptAndPayment()
-                { AccountName = x.Ledger.AccountName, Amount = x.Amount, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
+                l = l.Select(x => new BLL.ReceiptAndPayment()
+                { AccountName = x.AccountName,PayTo=x.PayTo,TType=x.TType,  Particular = x.Particular, Amount = x.Amount, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
 
                 try
                 {
                     RptViewer.Reset();
-                    ReportDataSource data = new ReportDataSource("PaymentAndReceipt", list);
+                    ReportDataSource data = new ReportDataSource("ReceiptAndPayment", l);
                     ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                     RptViewer.LocalReport.DataSources.Add(data);
                     RptViewer.LocalReport.DataSources.Add(data1);
                     RptViewer.LocalReport.ReportPath = @"rpt\Report\rptPaymentReceipt.rdlc";
 
-                    ReportParameter[] par = new ReportParameter[2];
+                    ReportParameter[] par = new ReportParameter[3];
                     par[0] = new ReportParameter("DateFrom", dtFrom.ToString());
                     par[1] = new ReportParameter("DateTo", dtTo.ToString());
+                    par[2] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix.ToString());
+
                     RptViewer.LocalReport.SetParameters(par);
+                    RptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                     RptViewer.RefreshReport();
 
@@ -75,6 +77,9 @@ namespace AccountBuddy.PL.frm.Report
             }
 
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
     }
 }

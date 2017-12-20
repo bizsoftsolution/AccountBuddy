@@ -79,6 +79,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+       
         public string TType
         {
             get

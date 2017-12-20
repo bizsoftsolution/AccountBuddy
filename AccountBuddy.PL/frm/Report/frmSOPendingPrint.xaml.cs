@@ -43,9 +43,9 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                List<BLL.SOPending> list = BLL.SOPending.ToList( dtFrom, dtTo);
+                List<BLL.SOPending> list = BLL.SOPending.ToList(dtFrom, dtTo);
                 list = list.Select(x => new BLL.SOPending()
-                { AccountName = x.Ledger.AccountName, Amount = x.Amount, EntryNo = x.EntryNo, Ledger = x.Ledger, SODate=x.SODate, Status=x.Status }).ToList();
+                { AccountName = x.Ledger.AccountName, Amount = x.Amount, EntryNo = x.EntryNo, Ledger = x.Ledger, SODate = x.SODate, Status = x.Status }).ToList();
 
                 try
                 {
@@ -56,10 +56,13 @@ namespace AccountBuddy.PL.frm.Report
                     RptViewer.LocalReport.DataSources.Add(data1);
                     RptViewer.LocalReport.ReportPath = @"rpt\Report\rptSOPendingReport.rdlc";
 
-                    ReportParameter[] par = new ReportParameter[2];
+                    ReportParameter[] par = new ReportParameter[3];
                     par[0] = new ReportParameter("DateFrom", dtFrom.ToString());
                     par[1] = new ReportParameter("DateTo", dtTo.ToString());
+                    par[2] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix.ToString());
                     RptViewer.LocalReport.SetParameters(par);
+
+                    RptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                     RptViewer.RefreshReport();
 
@@ -68,13 +71,16 @@ namespace AccountBuddy.PL.frm.Report
                 {
                     Common.AppLib.WriteLog(ex);
                 }
+
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Common.AppLib.WriteLog(ex);
             }
-
+            }
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
-
     }
 }

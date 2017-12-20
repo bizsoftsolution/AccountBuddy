@@ -92,7 +92,10 @@ namespace AccountBuddy.SL.Hubs
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
 
             DAL.PurchaseReturn p = DB.PurchaseReturns.Where(x => x.RefCode == RefCode).FirstOrDefault();
-
+            if (SR.Ledger == null)
+            {
+                SR.Ledger = DB.Ledgers.Where(x => x.Id == SR.LedgerId).FirstOrDefault();
+            }
             if (SR.Ledger.LedgerName.StartsWith("CM-") || SR.Ledger.LedgerName.StartsWith("WH-") || SR.Ledger.LedgerName.StartsWith("DL-"))
             {
                 var LName = LedgerNameByCompanyId(Caller.CompanyId);

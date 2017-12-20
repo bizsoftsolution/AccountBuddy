@@ -51,7 +51,7 @@ namespace AccountBuddy.PL.frm.Report
 
         public void LoadReport()
         {
-            List<BLL.ProfitLoss> list = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            List<BLL.ProfitLoss> list = dgvIncomeExpenditure.ItemsSource as List<BLL.ProfitLoss>;
             list = list.Select(x => new BLL.ProfitLoss ()
             {  AccountName= x.Ledger.AccountName,CrAmt=x.CrAmt, CrAmtOP=x.CrAmtOP, DrAmt=x.DrAmt, DrAmtOP=x.DrAmtOP}).ToList();
 
@@ -64,10 +64,13 @@ namespace AccountBuddy.PL.frm.Report
                 rptViewer.LocalReport.DataSources.Add(data1);
                 rptViewer.LocalReport.ReportPath = @"rpt\Report\rptIncomeAndExpenditure.rdlc";
 
-                ReportParameter[] par = new ReportParameter[2];
+                ReportParameter[] par = new ReportParameter[3];
                 par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.Value.ToString());
                 par[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.Value.ToString());
+                par[2] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix.ToString());
                 rptViewer.LocalReport.SetParameters(par);
+
+                rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
 
                 rptViewer.RefreshReport();
@@ -81,8 +84,11 @@ namespace AccountBuddy.PL.frm.Report
 
         }
 
-      
 
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             dgvIncomeExpenditure.ItemsSource = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
@@ -144,12 +150,12 @@ namespace AccountBuddy.PL.frm.Report
                 string deviceInfo =
              @"<DeviceInfo>
                 <OutputFormat>EMF</OutputFormat>
-                <PageWidth>11.6in</PageWidth>
-                <PageHeight>8.2</PageHeight>
-                <MarginTop>0.7in</MarginTop>
-                <MarginLeft>0.7in</MarginLeft>
-                <MarginRight>0.7in</MarginRight>
-                <MarginBottom>0.7in</MarginBottom>
+                <PageWidth>8.2in</PageWidth>
+                <PageHeight>11.6in</PageHeight>
+                <MarginTop>1cm</MarginTop>
+                <MarginLeft>1cm</MarginLeft>
+                <MarginRight>0cm</MarginRight>
+                <MarginBottom>0cm</MarginBottom>
             </DeviceInfo>";
                 Warning[] warnings;
                 m_streams = new List<Stream>();
@@ -213,7 +219,7 @@ namespace AccountBuddy.PL.frm.Report
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
             frmIncomeAndExpenditurePrint f = new frmIncomeAndExpenditurePrint();
-            f.LoadReport(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            f.LoadReport(dgvIncomeExpenditure.ItemsSource as List<BLL.ProfitLoss> ,dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             f.ShowDialog();
         }
 

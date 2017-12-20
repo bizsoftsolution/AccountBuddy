@@ -31,18 +31,16 @@ namespace AccountBuddy.PL.frm.Report
             InitializeComponent();
             rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
 
-            LoadReport(Convert.ToDateTime(dtFrom), Convert.ToDateTime(dtTo)); ;
-        }
+            }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadReport(Convert.ToDateTime(dtFrom), Convert.ToDateTime(dtTo)); ;
 
         }
 
-        public void LoadReport(DateTime dtFrom, DateTime dtTo)
+        public void LoadReport(List<BLL.ProfitLoss> list, DateTime dtFrom, DateTime dtTo)
         {
-            List<BLL.ProfitLoss> list = BLL.ProfitLoss.ToList(dtFrom,dtTo);
+           
             list = list.Select(x => new BLL.ProfitLoss()
             { AccountName = x.Ledger.AccountName, CrAmt=x.CrAmt, DrAmt=x.DrAmt, DrAmtOP=x.DrAmtOP, CrAmtOP=x.CrAmtOP }).ToList();
 
@@ -55,10 +53,13 @@ namespace AccountBuddy.PL.frm.Report
                 rptViewer.LocalReport.DataSources.Add(data1);
                 rptViewer.LocalReport.ReportPath = @"rpt\Report\rptIncomeAndExpenditure.rdlc";
 
-                ReportParameter[] par = new ReportParameter[2];
+                ReportParameter[] par = new ReportParameter[3];
                 par[0] = new ReportParameter("DateFrom", dtFrom.ToString());
                 par[1] = new ReportParameter("DateTo", dtTo.ToString());
+                par[2] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix.ToString());
                 rptViewer.LocalReport.SetParameters(par);
+
+                rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
 
                 rptViewer.RefreshReport();
@@ -71,6 +72,9 @@ namespace AccountBuddy.PL.frm.Report
 
 
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
     }
 }

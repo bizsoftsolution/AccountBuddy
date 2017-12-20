@@ -76,7 +76,7 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         public DataTable GetDetails(BLL.StockOut data)
         {
-            int NoRecPerPage = 20;
+            int NoRecPerPage = 22;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);

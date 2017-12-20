@@ -81,7 +81,7 @@ namespace AccountBuddy.PL.frm.Print
         }
         public DataTable GetDetails(BLL.StockIn data)
         {
-            int NoRecPerPage = 20;
+            int NoRecPerPage = 22;
             var dataSet = new DataSet();
             DataTable dt = new DataTable();
             dataSet.Tables.Add(dt);
@@ -116,7 +116,7 @@ namespace AccountBuddy.PL.frm.Print
             if (NoRecPerPage < data.STInDetails.Count)
             {
 
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < 33; i++)
                 {
                     newRow = dt.NewRow();
 

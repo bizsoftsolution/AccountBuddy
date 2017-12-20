@@ -31,18 +31,17 @@ namespace AccountBuddy.PL.frm.Report
             InitializeComponent();
             rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
 
-            LoadReport(Convert.ToDateTime(dtFrom), Convert.ToDateTime(dtTo)); ;
+            
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadReport(Convert.ToDateTime(dtFrom), Convert.ToDateTime(dtTo)); ;
-
+         
         }
 
-        public void LoadReport(DateTime dtFrom, DateTime dtTo)
+        public void LoadReport(List<BLL.TrialBalance> l,   DateTime dtFrom, DateTime dtTo)
         {
-            List<BLL.TrialBalance> list = BLL.TrialBalance.ToList(dtFrom, dtTo);
+            List<BLL.TrialBalance> list = l;
             list = list.Select(x => new BLL.TrialBalance()
             { AccountName = x.Ledger.AccountName, CrAmt = x.CrAmt, DrAmt = x.DrAmt, CrAmtOP = x.CrAmtOP, DrAmtOP = x.DrAmtOP }).ToList();
 
@@ -55,10 +54,13 @@ namespace AccountBuddy.PL.frm.Report
                 rptViewer.LocalReport.DataSources.Add(data1);
                 rptViewer.LocalReport.ReportPath = @"rpt\Report\rptTrialBalance.rdlc";
 
-                ReportParameter[] par = new ReportParameter[2];
+                ReportParameter[] par = new ReportParameter[3];
                 par[0] = new ReportParameter("DateFrom", dtFrom.ToString());
                 par[1] = new ReportParameter("DateTo", dtTo.ToString());
+                par[2] = new ReportParameter("AmtPrefix", Common.AppLib.CurrencyPositiveSymbolPrefix.ToString());
                 rptViewer.LocalReport.SetParameters(par);
+
+                rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
 
                 rptViewer.RefreshReport();
 
@@ -70,6 +72,9 @@ namespace AccountBuddy.PL.frm.Report
 
 
         }
-
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+        }
     }
 }

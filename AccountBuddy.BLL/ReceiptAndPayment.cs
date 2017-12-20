@@ -22,6 +22,7 @@ namespace AccountBuddy.BLL
         public string _PayTo;
         public string _Status;
         public string _Particulars;
+        private string _TType;
 
         #endregion
 
@@ -54,6 +55,21 @@ namespace AccountBuddy.BLL
                 {
                     _EType = value;
                     NotifyPropertyChanged(nameof(EType));
+                }
+            }
+        }
+        public string TType
+        {
+            get
+            {
+                return _TType;
+            }
+            set
+            {
+                if (_TType != value)
+                {
+                    _TType = value;
+                    NotifyPropertyChanged(nameof(TType));
                 }
             }
         }
