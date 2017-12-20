@@ -95,81 +95,26 @@ namespace AccountBuddy.SL.Hubs
                 return CallerById(Context.ConnectionId);
             }
         }
-
-        private List<string> AllClients
-        {
-            get
-            {
-                return UserList.Select(x => x.CallerConnectionId.ToString()).ToList();
-            }
-        }
-
-        private List<string> AllLoginClients
-        {
-            get
-            {
-                return UserList.Where(x => x.UserId != 0)
-                               .Select(x => x.CallerConnectionId.ToString())
-                               .ToList();
-            }
-        }
+        
 
         private List<string> OtherClients
         {
             get
             {
-                return UserList.Where(x => x.CallerConnectionId != Context.ConnectionId)
-                               .Select(x => x.CallerConnectionId.ToString())
-                               .ToList();
-            }
-        }
-
-        private List<string> OtherLoginClients
-        {
-            get
-            {
-                return UserList.Where(x => x.CallerConnectionId != Context.ConnectionId && x.UserId != 0)
+                return UserList.Where(x => x.CallerConnectionId != Context.ConnectionId && !string.IsNullOrWhiteSpace(x.ReceiverConnectionId))
                                .Select(x => x.ReceiverConnectionId.ToString())
                                .ToList();
             }
         }
-
-        private List<string> AllClientsOnGroup
-        {
-            get
-            {
-                return UserList.Where(x => x.CompanyId == Caller.CompanyId)
-                               .Select(x => x.CallerConnectionId.ToString())
-                               .ToList();
-            }
-        }
-
-        private List<string> AllLoginClientsOnGroup
-        {
-            get
-            {
-                return UserList.Where(x => x.CompanyId == Caller.CompanyId && x.UserId != 0)
-                               .Select(x => x.CallerConnectionId.ToString())
-                               .ToList();
-            }
-        }
-
+                
+                
         private List<string> OtherClientsOnGroup
         {
             get
             {
-                return UserList.Where(x => x.CompanyId == Caller.CompanyId && x.UserId != Caller.UserId)
-                               .Select(x => x.CallerConnectionId.ToString())
-                               .ToList();
-            }
-        }
-
-        private List<string> OtherLoginClientsOnGroup
-        {
-            get
-            {
-                return UserList.Where(x => x.CompanyId == Caller.CompanyId && x.UserId != 0 && x.UserId != Caller.UserId)
-                               .Select(x => x.CallerConnectionId.ToString())
+                return UserList.Where(x => x.CallerConnectionId != Context.ConnectionId && !string.IsNullOrWhiteSpace(x.ReceiverConnectionId) && 
+                                           x.CompanyId == Caller.CompanyId && Caller.CompanyId!=0 )
+                               .Select(x => x.ReceiverConnectionId.ToString())
                                .ToList();
             }
         }

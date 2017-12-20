@@ -67,8 +67,8 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
-                
-                Clients.Clients(OtherLoginClients).Sales_RefNoRefresh(Sales_NewRefNo());
+
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).Sales_RefNoRefresh(Sales_NewRefNo());
                 Journal_SaveBySales(d);
                 Purchase_SaveBySales(d);
                 return true;
@@ -214,7 +214,7 @@ namespace AccountBuddy.SL.Hubs
                     Purchase_DeleteBySales(d);
                     Journal_DeleteBySales(P);
 
-                    Clients.Clients(OtherLoginClients).Sales_RefNoRefresh(Sales_NewRefNo());
+                    if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).Sales_RefNoRefresh(Sales_NewRefNo());
 
 
                 }

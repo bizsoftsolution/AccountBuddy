@@ -53,7 +53,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 var b = Customer_DALtoBLL(d);
 
-                Clients.Clients(OtherLoginClients).Customer_Save(b);
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).Customer_Save(b);
               
                 
                 //Clients.All.Customer_Save(b);
@@ -83,8 +83,8 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(b, LogDetailType.DELETE);
                 }
 
-                Clients.Clients(OtherLoginClients).Customer_Delete(pk);
-                Clients.All.delete(pk);
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).Customer_Delete(pk);
+                
 
                 rv = true;
 

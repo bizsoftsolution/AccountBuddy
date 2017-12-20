@@ -78,7 +78,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
                 }
-                Clients.Clients(OtherLoginClients).StockSeperated_RefNoRefresh(StockSeperated_NewRefNo());
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).StockSeperated_RefNoRefresh(StockSeperated_NewRefNo());
                 Journal_SaveByStockSeparated(d);
                 return true;
 

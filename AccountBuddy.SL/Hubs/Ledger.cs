@@ -70,7 +70,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(led, LogDetailType.UPDATE);
                 }
                 DB.SaveChanges();
-                Clients.Clients(OtherLoginClients).Ledger_Save(led);
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).Ledger_Save(led);
 
                 return led.Id = d.Id;
 
@@ -91,8 +91,7 @@ namespace AccountBuddy.SL.Hubs
 
                     DB.Ledgers.Remove(d);
                     DB.SaveChanges();
-                    Clients.Clients(OtherLoginClients).Ledger_Delete(pk);
-                    Clients.All.delete(pk);
+                    if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).Ledger_Delete(pk);
                     rv = true;
 
                 }

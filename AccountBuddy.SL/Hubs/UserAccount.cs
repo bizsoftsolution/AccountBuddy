@@ -215,7 +215,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(ua, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClients).UserAccount_Save(ua);
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).UserAccount_Save(ua);
 
                 return ua.Id;
             }
@@ -241,7 +241,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(d.ToMap(new BLL.UserAccount()), LogDetailType.DELETE);
                 }
-                Clients.Clients(OtherLoginClients).UserAccount_Delete(pk);
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).UserAccount_Delete(pk);
                 Clients.All.delete(pk);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }

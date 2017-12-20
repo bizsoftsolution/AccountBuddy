@@ -78,7 +78,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
                 }
-                Clients.Clients(OtherLoginClients).JobOrderIssue_RefNoRefresh(JobOrderIssue_NewRefNo());
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).JobOrderIssue_RefNoRefresh(JobOrderIssue_NewRefNo());
                 Journal_SaveByJobOrderIssue(d);
                 return true;
 

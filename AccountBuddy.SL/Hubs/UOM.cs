@@ -59,8 +59,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClients).UOM_Save(agp);
-                // Clients.Others.UOM_Save(agp);
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).UOM_Save(agp);
                 return agp.Id;
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
@@ -83,9 +82,7 @@ namespace AccountBuddy.SL.Hubs
                         LogDetailStore(d.toCopy<BLL.UOM>(new BLL.UOM()), LogDetailType.DELETE);
                     }
 
-                    // Clients.Clients(OtherLoginClientsOnGroup).UOM_Delete(pk);
-
-                    Clients.Clients(OtherLoginClients).UOM_Delete(pk);
+                    if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).UOM_Delete(pk);
 
 
                     rv = true;

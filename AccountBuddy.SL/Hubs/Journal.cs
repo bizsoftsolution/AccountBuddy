@@ -85,7 +85,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(PO, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClients).Journal_RefNoRefresh(Journal_NewRefNo());
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).Journal_RefNoRefresh(Journal_NewRefNo());
                 return true;
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
@@ -158,7 +158,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(Journal_DALtoBLL(d), LogDetailType.DELETE);
                 }
-                Clients.Clients(OtherLoginClients).Journal_RefNoRefresh(Journal_NewRefNo());
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).Journal_RefNoRefresh(Journal_NewRefNo());
 
                 return true;
             }

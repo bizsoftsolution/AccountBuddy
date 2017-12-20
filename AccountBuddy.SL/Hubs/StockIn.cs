@@ -75,7 +75,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
-                Clients.Clients(OtherLoginClients).StockIn_RefNoRefresh(StockIn_NewRefNo());
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).StockIn_RefNoRefresh(StockIn_NewRefNo());
                 Journal_SaveByStockIn(d);
                 StockOut_SaveByStockIn(d);
                 return true;

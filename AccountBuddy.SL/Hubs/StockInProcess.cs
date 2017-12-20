@@ -77,7 +77,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
                 }
-                Clients.Clients(OtherLoginClients).StockInProcess_RefNoRefresh(StockInProcess_NewRefNo());
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).StockInProcess_RefNoRefresh(StockInProcess_NewRefNo());
                 Journal_SaveByStockInProcess(d);
                 return true;
 
@@ -134,7 +134,7 @@ namespace AccountBuddy.SL.Hubs
 
                     LogDetailStore(s, LogDetailType.DELETE);
                     Journal_DeleteByStockInProcess(s);
-                    Clients.Clients(OtherLoginClients).StockInProcess_RefNoRefresh(StockInProcess_NewRefNo());
+                    if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).StockInProcess_RefNoRefresh(StockInProcess_NewRefNo());
 
                 }
                 return true;

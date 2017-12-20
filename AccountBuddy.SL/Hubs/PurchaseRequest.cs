@@ -134,7 +134,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(PR, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClients).PurchaseRequest_RefNoRefresh(PurchaseRequest_NewRefNo());
+                if(OtherClientsOnGroup.Count>0) Clients.Clients(OtherClientsOnGroup).PurchaseRequest_RefNoRefresh(PurchaseRequest_NewRefNo());
 
                 //   SalesOrder_SaveByPurchaseRequest(d);
                 return true;
@@ -252,8 +252,8 @@ namespace AccountBuddy.SL.Hubs
                     DB.PurchaseRequests.Remove(d);
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
-                    Clients.Clients(OtherLoginClients).PurchaseRequest_RefNoRefresh(PurchaseRequest_NewRefNo());
-                    //  SalesOrder_DeleteByPurchaseRequest(d);
+                    if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).PurchaseRequest_RefNoRefresh(PurchaseRequest_NewRefNo());
+                    
                 }
 
                 return true;

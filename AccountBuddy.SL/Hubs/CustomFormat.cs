@@ -46,7 +46,7 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
 
-                Clients.Clients(OtherLoginClientsOnGroup).CustomFormat_Save(agp);
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).CustomFormat_Save(agp);
 
                 return agp.Id;
             }
@@ -71,7 +71,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     rv = false;
                 }
-                Clients.Clients(OtherLoginClients).CustomFormat_Delete(pk);
+                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).CustomFormat_Delete(pk);
                
                 rv = true;
 
