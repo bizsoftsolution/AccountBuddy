@@ -105,7 +105,11 @@ namespace AccountBuddy.PL
         {
             var n = lstActiveForms.Count();
             var f = lstActiveForms.LastOrDefault();
-            if (n == 1)
+            if (n == 0)
+            {
+                return true;
+            }
+            else if (n == 1)
             {
                 if (f.FormName == Common.Forms.frmWelcome)
                 {
