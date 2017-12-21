@@ -24,7 +24,7 @@
     <div ng-app="WebAdmin" >        
 
         <div class="container-fluid" ng-show="IsWebAdminLogined==true">
-            <nav class="navbar navbar-default navbar-fixed-top">
+            <nav class="navbar navbar-default navbar-fixed-top" style="display:none">
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <a class="navbar-brand" href="javascript:void(0)" ng-click="Menu_Click('Dashboard')">Web Admin</a>
@@ -60,7 +60,7 @@
                             <table class="table table-bordered table-responsive table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Computer Name</th>
+                                        <th>Device Name</th>
                                         <th>App Id</th>
                                         <th>Approval</th>
                                     </tr>
@@ -74,7 +74,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="3">Total Apps: {{datas.length}}</td>
+                                        <td colspan="3">Total Apps: {{AppMasterDatas.length}}</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -127,18 +127,12 @@
             };
 
             $rootScope.IsWebAdminLogined = false;
-            $rootScope.MenuName = 'Dashboard';
+            $rootScope.MenuName = 'AppMaster';
             $rootScope.Menu_Click = function (MenuName) {
                 $rootScope.MenuName = MenuName;
             };
             $.connection.hub.start().done(function () {
-                console.log('SignalR Started');
-                $rootScope.hub.server.appMaster_List().done(function ($r) {
-                    console.log('AppMaster_List');
-                    console.log($r);
-                    $rootScope.AppMasterDatas = $r;
-                    $rootScope.$digest();
-                });
+                console.log('SignalR Started');                
             });
         });
 
@@ -163,6 +157,12 @@
                         if ($r == true) {
                             $rootScope.IsWebAdminLogined = true;
                             $rootScope.$digest();
+                            $rootScope.hub.server.appMaster_List().done(function ($r) {
+                                console.log('AppMaster_List');
+                                console.log($r);
+                                $rootScope.AppMasterDatas = $r;
+                                $rootScope.$digest();
+                            });
                         } else {
                             alert('Invalid user');
                         }
