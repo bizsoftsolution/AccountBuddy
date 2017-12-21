@@ -128,52 +128,56 @@ namespace AccountBuddy.SL.Hubs
 
         void PurchaseOrder_SaveBySalesOrder(DAL.SalesOrder S)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesOrder, S.Id);
-
-            DAL.PurchaseOrder p = DB.PurchaseOrders.Where(x => x.RefCode == RefCode).FirstOrDefault();
-            if (S.Ledger == null)
+            try
             {
-                S.Ledger = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault();
-            }
-            if (S.Ledger.LedgerName.StartsWith("CM-") || S.Ledger.LedgerName.StartsWith("WH-") || S.Ledger.LedgerName.StartsWith("DL-"))
-            {
-                var LName = LedgerNameByCompanyId(Caller.CompanyId);
-                var CId = CompanyIdByLedgerName(S.Ledger.LedgerName);
-                var LId = LedgerIdByCompany(LName, CId);
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesOrder, S.Id);
 
-                if (LId != 0)
+                DAL.PurchaseOrder p = DB.PurchaseOrders.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (S.Ledger == null)
                 {
-                    if (p == null)
-                    {
-                        p = new DAL.PurchaseOrder();
-                        p.RefNo = PurchaseOrder_NewRefNoByCompanyId(CId);
-                        p.RefCode = RefCode;
-                        DB.PurchaseOrders.Add(p);
-                    }
-                    else
-                    {
-                        DB.PurchaseOrderDetails.RemoveRange(p.PurchaseOrderDetails);
-                    }
-
-                    p.PODate = S.SODate;
-                    p.DiscountAmount = S.DiscountAmount;
-                    p.Extras = S.ExtraAmount;
-                    p.GSTAmount = S.GSTAmount;
-                    p.ItemAmount = S.ItemAmount;
-                    p.TotalAmount = S.TotalAmount;
-                    p.LedgerId = LId;
-                    foreach (var b_pod in S.SalesOrderDetails)
-                    {
-                        DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
-                        b_pod.toCopy<DAL.PurchaseOrderDetail>(d_pod);
-                        p.PurchaseOrderDetails.Add(d_pod);
-                    }
-                    DB.SaveChanges();
-
+                    S.Ledger = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault();
                 }
+                if (S.Ledger.LedgerName.StartsWith("CM-") || S.Ledger.LedgerName.StartsWith("WH-") || S.Ledger.LedgerName.StartsWith("DL-"))
+                {
+                    var LName = LedgerNameByCompanyId(Caller.CompanyId);
+                    var CId = CompanyIdByLedgerName(S.Ledger.LedgerName);
+                    var LId = LedgerIdByCompany(LName, CId);
+
+                    if (LId != 0)
+                    {
+                        if (p == null)
+                        {
+                            p = new DAL.PurchaseOrder();
+                            p.RefNo = PurchaseOrder_NewRefNoByCompanyId(CId);
+                            p.RefCode = RefCode;
+                            DB.PurchaseOrders.Add(p);
+                        }
+                        else
+                        {
+                            DB.PurchaseOrderDetails.RemoveRange(p.PurchaseOrderDetails);
+                        }
+
+                        p.PODate = S.SODate;
+                        p.DiscountAmount = S.DiscountAmount;
+                        p.Extras = S.ExtraAmount;
+                        p.GSTAmount = S.GSTAmount;
+                        p.ItemAmount = S.ItemAmount;
+                        p.TotalAmount = S.TotalAmount;
+                        p.LedgerId = LId;
+                        foreach (var b_pod in S.SalesOrderDetails)
+                        {
+                            DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
+                            b_pod.toCopy<DAL.PurchaseOrderDetail>(d_pod);
+                            p.PurchaseOrderDetails.Add(d_pod);
+                        }
+                        DB.SaveChanges();
+
+                    }
+                }
+
             }
-
-
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
+            
         }
         public bool PurchaseOrder_DeleteBySalesOrder(DAL.SalesOrder s)
         {
