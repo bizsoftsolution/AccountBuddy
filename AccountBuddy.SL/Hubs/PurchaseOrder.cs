@@ -31,8 +31,7 @@ namespace AccountBuddy.SL.Hubs
         public bool PurchaseOrder_Save(BLL.PurchaseOrder PO)
         {
             try
-            {
-                
+            {                
 
                 DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.Id == PO.Id).FirstOrDefault();
 
