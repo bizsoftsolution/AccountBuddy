@@ -24,9 +24,10 @@ delete from Receipt
 delete from JournalDetail
 delete from Journal
 
+delete from Staff
+
 delete from Department
 delete from JobWorker
-delete from Staff
 delete from Supplier
 delete from Customer
 delete from Bank
