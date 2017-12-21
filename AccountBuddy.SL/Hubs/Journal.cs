@@ -1190,6 +1190,7 @@ namespace AccountBuddy.SL.Hubs
 
         void Journal_SaveByStockInProcess(DAL.StockInProcess S)
         {
+            try { 
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockInProcess, S.Id);
             if (S.Staff == null)
             {
@@ -1244,6 +1245,11 @@ namespace AccountBuddy.SL.Hubs
             }
             j.JournalDate = S.SPDate;
             DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
         void Journal_DeleteByStockInProcess(BLL.StockInProcess S)
         {
@@ -1257,7 +1263,9 @@ namespace AccountBuddy.SL.Hubs
 
         void Journal_SaveByStockSeparated(DAL.StockSeparated S)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockSeparated, S.Id);
+           try
+            {
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockSeparated, S.Id);
             if (S.Staff == null)
             {
                 S.Staff = DB.Staffs.Where(x => x.Id == S.StaffId).FirstOrDefault();
@@ -1311,13 +1319,26 @@ namespace AccountBuddy.SL.Hubs
             }
             j.JournalDate = S.Date;
             DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
         void Journal_DeleteByStockSeparated(BLL.StockSeperated S)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockSeparated, S.Id);
+
+            try
+            {
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockSeparated, S.Id);
 
             DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
         #endregion
 
