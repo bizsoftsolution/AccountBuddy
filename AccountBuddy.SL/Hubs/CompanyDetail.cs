@@ -98,8 +98,7 @@ namespace AccountBuddy.SL.Hubs
                         if (d.UnderCompanyId != null)
                         {
                             var lstCompany = DB.CompanyDetails.Where(x => x.Id == d.UnderCompanyId || (x.Id != d.Id && x.UnderCompanyId == d.UnderCompanyId)).ToList();                            
-                            int AGId = DB.DataKeyValues.Where(x => x.CompanyId == cm.Id && x.DataKey == BLL.DataKeyValue.BranchDivisions_Key).FirstOrDefault().DataValue;
-
+                           int AGId = DB.DataKeyValues.Where(x => x.CompanyId == cm.Id && x.DataKey == BLL.DataKeyValue.BranchDivisions_Key).FirstOrDefault().DataValue;
                             foreach (var c in lstCompany)
                             {
                                 DAL.Ledger dl1 = new DAL.Ledger();

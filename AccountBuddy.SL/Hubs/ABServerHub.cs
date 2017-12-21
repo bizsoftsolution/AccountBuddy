@@ -175,15 +175,24 @@ namespace AccountBuddy.SL.Hubs
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            SLUser u = UserList.Where(x => x.CallerConnectionId == Context.ConnectionId).FirstOrDefault();
-            if (u != null)
+            try
             {
-                UserList.Remove(u);
+                SLUser u = UserList.Where(x => x.CallerConnectionId == Context.ConnectionId).FirstOrDefault();
+                if (u != null)
+                {
+                    UserList.Remove(u);
+                }
+                var d = DB.AppConnections.Where(x => x.ConnectionId == Context.ConnectionId).ToList().LastOrDefault();
+                d.DisconnectedAt = DateTime.Now;
+                DB.SaveChanges();
+                return base.OnDisconnected(stopCalled);
             }
-            var d = DB.AppConnections.Where(x => x.ConnectionId == Context.ConnectionId).ToList().LastOrDefault();
-            d.DisconnectedAt = DateTime.Now;
-            DB.SaveChanges();
-            return base.OnDisconnected(stopCalled);
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(string.Format("{0}-{1}", ex, "OnConnected"));
+                return base.OnDisconnected(stopCalled);
+
+            }
         }
         public override Task OnReconnected()
         {

@@ -462,7 +462,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return "Branch /Divisions";
+                return "Branch/Divisons";
             }
 
         }
@@ -830,7 +830,15 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null) _toList = FMCGHubClient.HubCaller.Invoke<List<DataKeyValue>>("DataKeyValue_List").Result;
+                try
+                {
+                    if (_toList == null) _toList = FMCGHubClient.HubCaller.Invoke<List<DataKeyValue>>("DataKeyValue_List").Result;
+                    return _toList;
+                }
+                catch(Exception ex)
+                {
+                    Common.AppLib.WriteLog(ex);
+                }
                 return _toList;
             }
             set
