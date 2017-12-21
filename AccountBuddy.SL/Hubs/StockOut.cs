@@ -94,47 +94,54 @@ namespace AccountBuddy.SL.Hubs
         #region Stock In
         void StockOut_SaveByStockIn(DAL.StockIn P)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, P.Id);
-            if (P.Ledger == null)
+            try
             {
-                P.Ledger = DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault();
-            }
-            DAL.StockOut s = DB.StockOuts.Where(x => x.RefCode == RefCode).FirstOrDefault();
-            if (P.Ledger.LedgerName.StartsWith("CM-") || P.Ledger.LedgerName.StartsWith("WH-") || P.Ledger.LedgerName.StartsWith("DL-"))
-            {
-                var LName = LedgerNameByCompanyId(Caller.CompanyId);
-                var CId = CompanyIdByLedgerName(P.Ledger.LedgerName);
-                var LId = LedgerIdByCompany(LName, CId);
-
-                if (LId != 0)
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, P.Id);
+                if (P.Ledger == null)
                 {
-                    if (s == null)
-                    {
-                        s = new DAL.StockOut();
-                        s.RefNo = StockOut_NewRefNoByCompanyId(CId);
-                        s.RefCode = RefCode;
-                        DB.StockOuts.Add(s);
-                    }
-                    else
-                    {
-                        DB.StockOutDetails.RemoveRange(s.StockOutDetails);
-                    }
+                    P.Ledger = DB.Ledgers.Where(x => x.Id == P.LedgerId).FirstOrDefault();
+                }
+                DAL.StockOut s = DB.StockOuts.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (P.Ledger.LedgerName.StartsWith("CM-") || P.Ledger.LedgerName.StartsWith("WH-") || P.Ledger.LedgerName.StartsWith("DL-"))
+                {
+                    var LName = LedgerNameByCompanyId(Caller.CompanyId);
+                    var CId = CompanyIdByLedgerName(P.Ledger.LedgerName);
+                    var LId = LedgerIdByCompany(LName, CId);
 
-                    s.Date = P.Date;
-                    s.ItemAmount = P.ItemAmount;
-                    s.LedgerId = LId;
-                    s.Type = "Outwards";
-                    foreach (var b_pod in P.StockInDetails)
+                    if (LId != 0)
                     {
-                        DAL.StockOutDetail d_pod = new DAL.StockOutDetail();
-                        b_pod.toCopy<DAL.StockOutDetail>(d_pod);
-                        s.StockOutDetails.Add(d_pod);
+                        if (s == null)
+                        {
+                            s = new DAL.StockOut();
+                            s.RefNo = StockOut_NewRefNoByCompanyId(CId);
+                            s.RefCode = RefCode;
+                            DB.StockOuts.Add(s);
+                        }
+                        else
+                        {
+                            DB.StockOutDetails.RemoveRange(s.StockOutDetails);
+                        }
+
+                        s.Date = P.Date;
+                        s.ItemAmount = P.ItemAmount;
+                        s.LedgerId = LId;
+                        s.Type = "Outwards";
+                        foreach (var b_pod in P.StockInDetails)
+                        {
+                            DAL.StockOutDetail d_pod = new DAL.StockOutDetail();
+                            b_pod.toCopy<DAL.StockOutDetail>(d_pod);
+                            s.StockOutDetails.Add(d_pod);
+                        }
+                        DB.SaveChanges();
+                        Journal_SaveByStockOut(s);
                     }
-                    DB.SaveChanges();
-                    Journal_SaveByStockOut(s);
                 }
             }
-        }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
+}
         public bool StockOut_DeleteByStockIn(DAL.StockIn s)
         {
             try

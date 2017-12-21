@@ -86,6 +86,7 @@ namespace AccountBuddy.SL.Hubs
         #region stock In
         void StockIn_SaveByStockOut(DAL.StockOut S)
         {
+            try { 
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, S.Id);
             if (S.Ledger == null)
             {
@@ -129,7 +130,11 @@ namespace AccountBuddy.SL.Hubs
                     Journal_SaveByStockIn(p);
                 }
             }
-
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
 
         }
 
