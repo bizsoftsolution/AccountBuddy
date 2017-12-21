@@ -23,7 +23,7 @@ namespace AccountBuddy.SL.Hubs
             var rv = new BLL.UserAccount();
             try
             {
-                DAL.UserAccount ua = DB.UserAccounts
+               DAL.UserAccount ua = DB.UserAccounts
                                   .Where(x => x.UserType.CompanyDetail.CompanyName == CompanyName
                                     && x.LoginId == LoginId
                                     && x.Password == Password && x.UserType.CompanyDetail.IsActive != false)

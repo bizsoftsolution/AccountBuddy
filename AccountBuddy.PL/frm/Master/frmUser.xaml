@@ -59,7 +59,7 @@
                         </materialDesign:HintAssist.Hint>
                     </TextBox>
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox x:Name="cmbUserType" Text="{Binding UserType.TypeOfUser}" SelectedValue="{Binding UserTypeId}" SelectedItem="{Binding UserType, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="240">
+                        <ComboBox x:Name="cmbUserType" Text="{Binding UserType.TypeOfUser}" SelectedValue="{Binding UserTypeId}" SelectedItem="{Binding UserType, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="240" Loaded="cmbUserType_Loaded">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="FormatListBulletedType" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />

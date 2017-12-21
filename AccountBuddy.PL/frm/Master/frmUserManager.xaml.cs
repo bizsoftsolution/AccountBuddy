@@ -99,7 +99,14 @@ namespace AccountBuddy.PL.frm.Master
 
         public void LoadWindow(int CompanyId)
         {
-            dgvUsers.ItemsSource = BLL.UserAccount.toList.Where(x => x.UserType.CompanyId == CompanyId).ToList();
+            try
+            {
+                dgvUsers.ItemsSource = BLL.UserAccount.toList.Where(x => x.UserType.CompanyId == CompanyId).ToList();
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
 
     }

@@ -47,23 +47,27 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            BLL.Customer.Init();
-            dgvCustomer.ItemsSource = BLL.Customer.toList;
+            try
+            {
+                BLL.Customer.Init();
+                dgvCustomer.ItemsSource = BLL.Customer.toList;
 
-            CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).Filter = Customer_Filter;
-            CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.LedgerName), System.ComponentModel.ListSortDirection.Ascending));
+                CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).Filter = Customer_Filter;
+                CollectionViewSource.GetDefaultView(dgvCustomer.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Ledger.LedgerName), System.ComponentModel.ListSortDirection.Ascending));
 
-            rptContain.IsChecked = true;
+                rptContain.IsChecked = true;
 
-            cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
-            cmbCreditLimitTypeId.SelectedValuePath = "Id";
-            cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
+                cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
+                cmbCreditLimitTypeId.SelectedValuePath = "Id";
+                cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
 
-            cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
+                cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
 
-            btnSave.Visibility = (BLL.Ledger.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.Ledger.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-
+                btnSave.Visibility = (BLL.Ledger.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+                btnDelete.Visibility = BLL.Ledger.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            }
+            catch(Exception ex)
+            { }
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {

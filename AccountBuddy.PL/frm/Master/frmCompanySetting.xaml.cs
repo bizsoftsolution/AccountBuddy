@@ -152,7 +152,6 @@ namespace AccountBuddy.PL.frm.Master
                 f.Title = "New Warehouse";
                 f.ShowDialog();
                 List<BLL.CompanyDetail> lstCompany = new List<BLL.CompanyDetail>();
-
                 lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
                 dgvWarehouse.ItemsSource = lstCompany;
             }
@@ -179,6 +178,7 @@ namespace AccountBuddy.PL.frm.Master
                 lstCompany = BLL.CompanyDetail.toList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
 
                 dgvDealer.ItemsSource = lstCompany;
+                Grid_Refresh();
             }
         }
 
@@ -334,10 +334,6 @@ namespace AccountBuddy.PL.frm.Master
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
-
-
-
-
 
         private void btnImage_Click(object sender, RoutedEventArgs e)
         {

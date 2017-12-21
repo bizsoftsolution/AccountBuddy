@@ -30,9 +30,7 @@ namespace AccountBuddy.PL.frm.Master
         public void LoadWindow(int CompanyId)
         {
             btnUserTypeSetting.Visibility = BLL.UserType.UserPermission.IsViewForm ? Visibility.Visible : Visibility.Collapsed;
-            cmbUserType.ItemsSource = BLL.UserType.toList.Where(x => x.CompanyId == UnderCompanyId).ToList();
-            cmbUserType.DisplayMemberPath = "TypeOfUser";
-            cmbUserType.SelectedValuePath = "Id";
+           
         }
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
@@ -84,7 +82,7 @@ namespace AccountBuddy.PL.frm.Master
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             btnSave.Visibility = (BLL.UserAccount.UserPermission.AllowInsert || BLL.UserAccount.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-
+       
             //if (BLL.UserAccount.AllowInsert(Common.Forms.frmUserType)|| BLL.UserAccount.AllowUpdate(Common.Forms.frmUserType))
             //{
             //    btnUserTypeSetting.Visibility = Visibility.Visible;
@@ -94,6 +92,21 @@ namespace AccountBuddy.PL.frm.Master
             //    btnUserTypeSetting.Visibility = Visibility.Collapsed;
             //}
 
+        }
+
+        private void cmbUserType_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BLL.UserType.Init();
+                cmbUserType.ItemsSource = BLL.UserType.toList.Where(x => x.CompanyId == UnderCompanyId).ToList();
+                cmbUserType.DisplayMemberPath = "TypeOfUser";
+                cmbUserType.SelectedValuePath = "Id";
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
     }
 }

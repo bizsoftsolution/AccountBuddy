@@ -131,7 +131,8 @@ namespace AccountBuddy.SL.Hubs
             D.LoginId = S.LoginId;
             D.Password = S.Password;
             D.UserName = S.UserName;
-            D.UserTypeId = D.UserTypeId;
+           
+            D.UserTypeId = S.UserTypeId;
 
             return D;
         }
