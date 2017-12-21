@@ -220,7 +220,8 @@ namespace AccountBuddy.SL.Hubs
         #region Purchase
         void Journal_SaveByPurchase(DAL.Purchase P)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
+            try
+            { string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Purchase, P.Id);
             var CId = DB.Ledgers.Where(X => X.Id == P.LedgerId).FirstOrDefault().AccountGroup.CompanyId;
             string Mode = null, status = null;
             if (P.TransactionTypeId == 1)
@@ -348,6 +349,11 @@ namespace AccountBuddy.SL.Hubs
 
             j.JournalDate = P.PurchaseDate;
             DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
         void Journal_DeleteByPurchase(BLL.Purchase P)
         {

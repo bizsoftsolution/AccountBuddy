@@ -93,49 +93,55 @@ namespace AccountBuddy.SL.Hubs
         #region Sales
         void Purchase_SaveBySales(DAL.Sale S)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
-
-            DAL.Purchase p = DB.Purchases.Where(x => x.RefCode == RefCode).FirstOrDefault();
-
-            if (S.Ledger.LedgerName.StartsWith("CM-") || S.Ledger.LedgerName.StartsWith("WH-") || S.Ledger.LedgerName.StartsWith("DL-"))
+            try
             {
-                var LName = LedgerNameByCompanyId(Caller.CompanyId);
-                var CId = CompanyIdByLedgerName(S.Ledger.LedgerName);
-                var LId = LedgerIdByCompany(LName, CId);
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
 
-                if (LId != 0)
+                DAL.Purchase p = DB.Purchases.Where(x => x.RefCode == RefCode).FirstOrDefault();
+
+                if (S.Ledger.LedgerName.StartsWith("CM-") || S.Ledger.LedgerName.StartsWith("WH-") || S.Ledger.LedgerName.StartsWith("DL-"))
                 {
-                    if (p == null)
-                    {
-                        p = new DAL.Purchase();
-                        p.RefNo = Purchase_NewRefNoByCompanyId(CId);
-                        p.RefCode = RefCode;
-                        DB.Purchases.Add(p);
-                    }
-                    else
-                    {
-                        DB.PurchaseDetails.RemoveRange(p.PurchaseDetails);
-                    }
+                    var LName = LedgerNameByCompanyId(Caller.CompanyId);
+                    var CId = CompanyIdByLedgerName(S.Ledger.LedgerName);
+                    var LId = LedgerIdByCompany(LName, CId);
 
-                    p.PurchaseDate = S.SalesDate;
-                    p.DiscountAmount = S.DiscountAmount;
-                    p.ExtraAmount = S.ExtraAmount;
-                    p.GSTAmount = S.GSTAmount;
-                    p.ItemAmount = S.ItemAmount;
-                    p.TotalAmount = S.TotalAmount;
-                    p.LedgerId = LId;
-                    p.TransactionTypeId = S.TransactionTypeId;
-                    foreach (var b_pod in S.SalesDetails)
+                    if (LId != 0)
                     {
-                        DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
-                        b_pod.toCopy<DAL.PurchaseDetail>(d_pod);
-                        p.PurchaseDetails.Add(d_pod);
+                        if (p == null)
+                        {
+                            p = new DAL.Purchase();
+                            p.RefNo = Purchase_NewRefNoByCompanyId(CId);
+                            p.RefCode = RefCode;
+                            DB.Purchases.Add(p);
+                        }
+                        else
+                        {
+                            DB.PurchaseDetails.RemoveRange(p.PurchaseDetails);
+                        }
+
+                        p.PurchaseDate = S.SalesDate;
+                        p.DiscountAmount = S.DiscountAmount;
+                        p.ExtraAmount = S.ExtraAmount;
+                        p.GSTAmount = S.GSTAmount;
+                        p.ItemAmount = S.ItemAmount;
+                        p.TotalAmount = S.TotalAmount;
+                        p.LedgerId = LId;
+                        p.TransactionTypeId = S.TransactionTypeId;
+                        foreach (var b_pod in S.SalesDetails)
+                        {
+                            DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
+                            b_pod.toCopy<DAL.PurchaseDetail>(d_pod);
+                            p.PurchaseDetails.Add(d_pod);
+                        }
+                        DB.SaveChanges();
+                        Journal_SaveByPurchase(p);
                     }
-                    DB.SaveChanges();
-                    Journal_SaveByPurchase(p);
                 }
             }
-
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
 
         }
         public bool Purchase_DeleteBySales(DAL.Sale s)

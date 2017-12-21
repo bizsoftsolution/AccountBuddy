@@ -462,7 +462,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return "Branch/Divisons";
+                return "Branch/Divisions";
             }
 
         }
