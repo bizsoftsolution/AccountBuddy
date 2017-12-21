@@ -400,7 +400,7 @@ namespace AccountBuddy.BLL
             {
                 try
                 {
-                    if (_toList == null || _toList.Count==0) _toList = new ObservableCollection<Product>(FMCGHubClient.HubCaller.Invoke<List<Product>>("Product_List").Result);
+                    if (_toList == null ) _toList = new ObservableCollection<Product>(FMCGHubClient.HubCaller.Invoke<List<Product>>("Product_List").Result);
                    
                 }
                 catch(Exception ex)

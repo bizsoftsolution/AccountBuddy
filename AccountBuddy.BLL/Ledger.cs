@@ -647,9 +647,17 @@ namespace AccountBuddy.BLL
         public bool isValid()
         {
             bool RValue = true;
-            if (toList.Where(x => x.LedgerName.ToLower() == LedgerName.ToLower() && x.Id != Id).Count() > 0)
+            try
             {
-                RValue = false;
+                if (toList.Where(x => x.LedgerName.ToLower() == LedgerName.ToLower() && x.Id != Id).Count() > 0)
+                {
+                    RValue = false;
+                }
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+                return RValue;
             }
             return RValue;
 

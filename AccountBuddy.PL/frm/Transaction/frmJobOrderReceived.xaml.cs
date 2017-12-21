@@ -276,7 +276,9 @@ namespace AccountBuddy.PL.frm.Transaction
                 cmbJobWorker.SelectedValuePath = "Id";
             }
             catch(Exception ex)
-            { }
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
         #endregion
 

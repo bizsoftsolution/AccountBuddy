@@ -130,7 +130,7 @@ namespace AccountBuddy.BLL
             {
                 try
                 {
-                    if (_toList == null ||_toList.Count()==0) _toList = new ObservableCollection<Bank>(FMCGHubClient.HubCaller.Invoke<List<Bank>>("Bank_List").Result);
+                    if (_toList == null) _toList = new ObservableCollection<Bank>(FMCGHubClient.HubCaller.Invoke<List<Bank>>("Bank_List").Result);
 
                   
                 }
@@ -249,8 +249,8 @@ namespace AccountBuddy.BLL
         public void Clear()
         {
             new Bank().toCopy<Bank>(this);
-            this.Ledger.Clear();
-            this.Ledger.AccountGroupId = DataKeyValue.BankAccounts_Value;
+            Ledger.Clear();
+            Ledger.AccountGroupId = BLL.DataKeyValue.BankAccounts_Value;
             IsReadOnly = !UserPermission.AllowInsert;
             NotifyAllPropertyChanged();
         }
@@ -272,32 +272,40 @@ namespace AccountBuddy.BLL
         public bool Delete(bool isServerCall = false)
         {
             var rv = false;
-            var d = toList.Where(x => x.Id == Id).FirstOrDefault();
-            var b = FMCGHubClient.HubCaller.Invoke<bool>("Ledger_CanDeleteById", this.LedgerId).Result;
-            if (d != null && b == true)
-            {
-
-                if (isServerCall == false)
+            try
+            {             
+                var d = toList.Where(x => x.Id == Id).FirstOrDefault();
+                var b = FMCGHubClient.HubCaller.Invoke<bool>("Ledger_CanDeleteById", this.LedgerId).Result;
+                if (d != null && b == true)
                 {
-                    rv = FMCGHubClient.HubCaller.Invoke<bool>("Bank_Delete", this.Id).Result;
-                    if (rv == true)
+
+                    if (isServerCall == false)
+                    {
+                        rv = FMCGHubClient.HubCaller.Invoke<bool>("Bank_Delete", this.Id).Result;
+                        if (rv == true)
+                        {
+                            toList.Remove(d);
+                            var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
+                            Ledger.toList.Remove(l1);
+                        }
+
+                    }
+                    else
                     {
                         toList.Remove(d);
                         var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
                         Ledger.toList.Remove(l1);
                     }
-
-                }
-                else
-                {
-                    toList.Remove(d);
-                    var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
-                    Ledger.toList.Remove(l1);
+                   
                 }
                 return rv;
             }
-
-            return rv;
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+                return rv;
+            }
+            
         }
 
         public bool isValid()
