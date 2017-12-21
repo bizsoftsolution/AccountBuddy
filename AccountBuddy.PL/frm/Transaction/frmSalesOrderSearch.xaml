@@ -101,7 +101,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Date" FontWeight="Bold" Width="100" Binding="{Binding SODate,StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header="Bill No" FontWeight="Bold" Width="150" Binding="{Binding RefNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                    <DataGridTextColumn Header="Supplier Name" FontWeight="Bold" Width="350" Binding="{Binding LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    <DataGridTextColumn Header="Customer Name" FontWeight="Bold" Width="350" Binding="{Binding LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                                     <DataGridTextColumn Header="Bill Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="150" Binding="{Binding TotalAmount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="Status"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="150" Binding="{Binding Status, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
