@@ -89,6 +89,8 @@ namespace AccountBuddy.SL.Hubs
         #region Salesreturn 
         void PurchaseReturn_SaveBySalesReturn(DAL.SalesReturn SR)
         {
+            try
+            { 
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
 
             DAL.PurchaseReturn p = DB.PurchaseReturns.Where(x => x.RefCode == RefCode).FirstOrDefault();
@@ -133,6 +135,11 @@ namespace AccountBuddy.SL.Hubs
                     DB.SaveChanges();
                     Journal_SaveByPurchaseReturn(p);
                 }
+            }
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
             }
         }
         public bool PurchaseReturn_DeleteBySalesReturn(DAL.SalesReturn sr)
