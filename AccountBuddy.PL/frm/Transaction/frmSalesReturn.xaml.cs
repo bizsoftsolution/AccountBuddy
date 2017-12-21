@@ -32,7 +32,6 @@ namespace AccountBuddy.PL.frm.Transaction
 
             data.setLabel();
             data.Clear();
-            onClientEvents();
 
             LoadWindow();
         }
@@ -46,18 +45,7 @@ namespace AccountBuddy.PL.frm.Transaction
             data.setLabel();
             btnSave.Visibility = (BLL.SalesReturn.UserPermission.AllowInsert || BLL.SalesReturn.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.SalesReturn.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<String>("SalesReturn_RefNoRefresh", (RefNo) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (data.Id == 0) data.RefNo = RefNo;
-                });
-            });
-        }
+        }      
 
         #region Button Events
 

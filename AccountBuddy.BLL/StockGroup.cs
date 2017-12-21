@@ -13,8 +13,6 @@ namespace AccountBuddy.BLL
     {
         #region Fields
         private static ObservableCollection<StockGroup> _toList;
-        private static ObservableCollection<StockGroup> _StocktoList;
-
         private int _id;
         private string _StockGroupName;
         private string _StockGroupNameWithCode;

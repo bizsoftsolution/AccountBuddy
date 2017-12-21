@@ -206,8 +206,7 @@ namespace AccountBuddy.BLL
             {
                 if (_ItemCode != value)
                 {
-                    _ItemCode = value;
-                    if (value != null) SetProductbyItemCode(new Product(_ItemCode.ToLower()));
+                    _ItemCode = value;                    
                     NotifyPropertyChanged(nameof(ItemCode));
                 }
             }

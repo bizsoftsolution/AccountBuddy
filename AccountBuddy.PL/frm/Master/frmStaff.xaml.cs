@@ -38,9 +38,6 @@ namespace AccountBuddy.PL.frm.Master
             this.DataContext = data;
             data.Clear();
             rptStaff.SetDisplayMode(DisplayMode.PrintLayout);
-            onClientEvents();
-            
-
         }
 
         #endregion
@@ -315,30 +312,7 @@ namespace AccountBuddy.PL.frm.Master
      
         }
 
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<BLL.Staff>("Staff_Save", (Cus) =>
-            {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    Cus.Save(true);
-                });
-
-            });
-
-            BLL.FMCGHubClient.HubCaller.On("Staff_Delete", (Action<int>)((pk) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    BLL.Staff led = new BLL.Staff();
-                    led.Find((int)pk);
-                    led.Delete((bool)true);
-                });
-
-            }));
-        }
-
+        
         #endregion
     
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)

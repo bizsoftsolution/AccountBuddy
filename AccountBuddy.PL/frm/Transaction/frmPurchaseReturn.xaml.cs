@@ -34,21 +34,9 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbPType.SelectedValuePath = "Id";
 
             data.Clear();
-            data.setLabel();
-       
-            onClientEvents();
-
+            data.setLabel();                   
         }
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<String>("PurchaseReturn_RefNoRefresh", (RefNo) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (data.Id == 0) data.RefNo = RefNo;
-                });
-            });
-        }
+        
         #region Button Events
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)

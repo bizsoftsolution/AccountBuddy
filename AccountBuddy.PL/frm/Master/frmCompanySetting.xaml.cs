@@ -28,35 +28,9 @@ namespace AccountBuddy.PL.frm.Master
         public frmCompanySetting()
         {
             InitializeComponent();
-            this.DataContext = data;
-
-            onClientEvents();
+            this.DataContext = data;        
         }
-
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<BLL.CompanyDetail>("CompanyDetail_Save", (cs) =>
-            {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    cs.Save(true);
-                });
-
-            });
-
-            BLL.FMCGHubClient.HubCaller.On<BLL.UserAccount>("UserAccount_Save", (ua) =>
-            {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    BLL.UserAccount u = new BLL.UserAccount();
-                    ua.toCopy<BLL.UserAccount>(u);
-                    BLL.UserAccount.toList.Add(u);
-                });
-
-            });
-        }
+        
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             BLL.CompanyDetail.Init();

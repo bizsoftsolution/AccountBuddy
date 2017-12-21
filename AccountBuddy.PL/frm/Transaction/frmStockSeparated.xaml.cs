@@ -31,18 +31,9 @@ namespace AccountBuddy.PL.frm.Transaction
             this.DataContext = data;
             data.setLabel();
             data.Clear();
-            onClientEvents();
+        
         }
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<string>("StockSeperated_RefNoRefresh", (RefNo) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (data.Id == 0) data.RefNo = RefNo;
-                });
-            });
-        }
+        
 
         #region Button Events
 

@@ -36,8 +36,7 @@ namespace AccountBuddy.PL.frm.Master
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-            rptJobWorker.SetDisplayMode(DisplayMode.PrintLayout);
-            onClientEvents();
+            rptJobWorker.SetDisplayMode(DisplayMode.PrintLayout);            
         }
 
         #endregion
@@ -279,30 +278,6 @@ namespace AccountBuddy.PL.frm.Master
         {
             e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<BLL.JobWorker>("JobWorker_Save", (Cus) =>
-            {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    Cus.Save(true);
-                });
-
-            });
-
-            BLL.FMCGHubClient.HubCaller.On("JobWorker_Delete", (Action<int>)((pk) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    BLL.JobWorker led = new BLL.JobWorker();
-                    led.Find((int)pk);
-                    led.Delete((bool)true);
-                });
-
-            }));
-        }
-
         #endregion
 
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)

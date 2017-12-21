@@ -39,22 +39,11 @@ namespace AccountBuddy.PL.frm.Transaction
             DateTimeFormatInfo dateInfo = new DateTimeFormatInfo();
             dateInfo.ShortDatePattern = "MM/yyyy";
             cultureInfo.DateTimeFormat = dateInfo;
-            onClientEvents();
-
-
+       
             lblDiscountAmount.Text = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtraAmount.Text = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
                  }
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<String>("PurchaseRequest_RefNoRefresh", (RefNo) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (data.Id == 0) data.RefNo = RefNo;
-                });
-            });
-        }
+       
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {

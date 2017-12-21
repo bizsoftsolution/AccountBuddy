@@ -26,7 +26,6 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-
         public static BLL.CompanyDetail ToMap(this DAL.CompanyDetail S, BLL.CompanyDetail D)
         {
             D.Id = S.Id;
@@ -55,7 +54,6 @@ namespace AccountBuddy.SL.Hubs
             D.TypeOfUser = S.TypeOfUser;
             return D;
         }
-
         public static DAL.UserType ToMap(this BLL.UserType S, DAL.UserType D)
         {
             D.CompanyId = S.CompanyId;
@@ -77,7 +75,6 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-
         public static DAL.UserTypeDetail ToMap(this BLL.UserTypeDetail S, DAL.UserTypeDetail D)
         {
             D.AllowDelete = S.AllowDelete;
@@ -104,7 +101,6 @@ namespace AccountBuddy.SL.Hubs
             D.IsUpdate = S.IsUpdate;
             return D;
         }
-
         public static DAL.UserTypeFormDetail ToMap(this BLL.UserTypeFormDetail S, DAL.UserTypeFormDetail D)
         {
             D.Description = S.Description;
@@ -129,7 +125,6 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-
         public static DAL.UserAccount ToMap(this BLL.UserAccount S, DAL.UserAccount D)
         {
             D.Id = S.Id;
@@ -152,7 +147,6 @@ namespace AccountBuddy.SL.Hubs
             D.UnderGroupId = S.UnderGroupId;
             return D;
         }
-
         public static DAL.StockGroup ToMap(this BLL.StockGroup S, DAL.StockGroup D)
         {
             D.CompanyId = S.CompanyId;
@@ -174,7 +168,6 @@ namespace AccountBuddy.SL.Hubs
             D.UnderGroupId = S.UnderGroupId;      
             return D;
         }
-
         public static DAL.AccountGroup ToMap(this BLL.AccountGroup S, DAL.AccountGroup D)
         {
             D.CompanyId = S.CompanyId;
@@ -195,7 +188,6 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-
         public static DAL.UOM ToMap(this BLL.UOM S, DAL.UOM D)
         {
 
@@ -206,5 +198,38 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
+
+        public static BLL.Product ToMap(this DAL.Product S, BLL.Product D)
+        {            
+            D.Id = S.Id;
+            D.ItemCode = S.ItemCode;
+            D.MaxSellingRate = S.MaxSellingRate;
+            D.MinSellingRate = S.MinSellingRate;
+            D.MRP = S.MRP;
+            D.ProductImage = S.ProductImage;
+            D.ProductName = S.ProductName;
+            D.PurchaseRate = S.PurchaseRate;
+            D.SellingRate = S.SellingRate;
+            D.StockGroupId = S.StockGroupId;
+            D.UOMId = S.UOMId;         
+            return D;
+        }
+        public static DAL.Product ToMap(this BLL.Product S, DAL.Product D)
+        {
+            D.Id = S.Id;
+            D.ItemCode = S.ItemCode;
+            D.MaxSellingRate = S.MaxSellingRate;
+            D.MinSellingRate = S.MinSellingRate;
+            D.MRP = S.MRP;
+            D.ProductImage = S.ProductImage;
+            D.ProductName = S.ProductName;
+            D.PurchaseRate = S.PurchaseRate;
+            D.SellingRate = S.SellingRate;
+            D.StockGroupId = S.StockGroupId;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+
+
     }
 }

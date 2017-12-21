@@ -32,20 +32,11 @@ namespace AccountBuddy.PL.frm.Transaction
             this.DataContext = data;
 
             data.Clear();
-            data.setLabel(); onClientEvents();
+            data.setLabel(); 
 
 
         }
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<String>("Sales_RefNoRefresh", (RefNo) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (data.Id == 0) data.RefNo = RefNo;
-                });
-            });
-        }
+        
 
         #region Button Events
 

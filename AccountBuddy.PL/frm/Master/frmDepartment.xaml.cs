@@ -37,8 +37,7 @@ namespace AccountBuddy.PL.frm.Master
             this.DataContext = data;
             data.Clear();
             rptUOM.SetDisplayMode(DisplayMode.PrintLayout);
-
-            onClientEvents();
+            
 
         }
 
@@ -271,30 +270,7 @@ namespace AccountBuddy.PL.frm.Master
         {            
             e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
-
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<BLL.Department>("Department_Save", (uom) =>
-            {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    uom.Save(true);
-                });
-
-            });
-
-            BLL.FMCGHubClient.HubCaller.On("Department_Delete", (Action<int>)((pk) =>
-            {
-                this.Dispatcher.Invoke((Action)(() =>
-                {
-                    BLL.Department agp = new BLL.Department();
-                    agp.Find((int)pk);
-                    agp.Delete((bool)true);
-                }));
-
-            }));
-        }
+        
 
         #endregion
 

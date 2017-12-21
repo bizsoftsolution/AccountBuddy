@@ -11,26 +11,9 @@ namespace AccountBuddy.BLL
 {
     public class Product : INotifyPropertyChanged
     {
-        #region Constructor
+        #region Constructor       
 
-        public Product()
-        {
-
-        }
-
-        //public Product(int ProductId)
-        //{
-        //    Product p = toList.Where(x => x.Id == ProductId).FirstOrDefault();
-        //    if (p == null) p = new Product();
-        //    p.toCopy<Product>(this);
-        //}
-
-        public Product(string ProductCode)
-        {
-            Product p = toList.Where(x => x.ItemCode.ToLower() == ProductCode.ToLower()).FirstOrDefault();
-            if (p == null) p = new Product();
-            p.toCopy<Product>(this);
-        }
+        
         public double? POQty
         {
             get
@@ -755,7 +738,7 @@ namespace AccountBuddy.BLL
                         else
                         {
                             var d1 = toList.Where(x => x.Id == d.Id).FirstOrDefault();
-                            d.toCopy<Product>(d1);
+                            d.ToMap(d1);
                         }
                         return true;
                     }
@@ -768,7 +751,7 @@ namespace AccountBuddy.BLL
                         d1 = new Product();
                         toList.Add(d1);
                     }
-                    this.toCopy<Product>(d1);
+                    this.ToMap(d1);
                 }
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
@@ -777,7 +760,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Product().toCopy<Product>(this);
+            new Product().ToMap(this);
             NotifyAllPropertyChanged();
             IsReadOnly = !UserPermission.AllowInsert;
         }
@@ -787,7 +770,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<Product>(this);
+                d.ToMap(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
 
                 return true;
@@ -830,10 +813,6 @@ namespace AccountBuddy.BLL
             {
                 RValue = false;
             }
-            //else if (toList.Where(x => x.ItemCode.ToLower() == ItemCode.ToLower() && x.Id != Id).Count() > 0)
-            //{
-            //    RValue = false;
-            //}
             return RValue;
 
         }

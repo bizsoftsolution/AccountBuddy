@@ -86,19 +86,24 @@ namespace AccountBuddy.PL
         {
             ccContent.Content = new frm.Master.frmBank();
         }
-        public object ShowForm(String Formname)
+
+        public NavMenuItem GetForm(String FormName)
         {
-            var f = lstActiveForms.Where(x => x.FormName == Formname).FirstOrDefault();
+            return lstActiveForms.Where(x => x.FormName == FormName).FirstOrDefault(); 
+        }
+        public object ShowForm(String FormName)
+        {
+            var f = GetForm(FormName);
             if (f == null)
             {
                 f = new NavMenuItem();
-                f.FormName = Formname;
-                f.Content = Activator.CreateInstance(Type.GetType(Formname));
+                f.FormName = FormName;
+                f.Content = Activator.CreateInstance(Type.GetType(FormName));
                 lstActiveForms.Add(f);
             }
 
             ccContent.Content = f.Content;
-            Common.AppLib.WriteLog(string.Format("frmHome_ShowForm_{0}",Formname));
+            Common.AppLib.WriteLog(string.Format("frmHome_ShowForm_{0}", FormName));
             return f.Content;
         }
         public bool CloseForm()

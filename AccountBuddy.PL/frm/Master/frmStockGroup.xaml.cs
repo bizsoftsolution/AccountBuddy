@@ -37,9 +37,6 @@ namespace AccountBuddy.PL.frm.Master
             this.DataContext = data;
             data.Clear();
             rptStockGroup.SetDisplayMode(DisplayMode.PrintLayout);
-
-            onClientEvents();
-
         }
 
         #endregion
@@ -276,30 +273,6 @@ namespace AccountBuddy.PL.frm.Master
         {
             e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<BLL.StockGroup>("StockGroup_Save", (sgp) =>
-            {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    sgp.Save(true);
-                });
-
-            });
-
-            BLL.FMCGHubClient.HubCaller.On("StockGroup_Delete", (Action<int>)((pk) =>
-            {
-                this.Dispatcher.Invoke((Action)(() =>
-                {
-                    BLL.StockGroup agp = new BLL.StockGroup();
-                    agp.Find((int)pk);
-                    agp.Delete((bool)true);
-                }));
-
-            }));
-        }
-
         #endregion
 
         private void dgvStock_MouseDoubleClick(object sender, MouseButtonEventArgs e)

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.AspNet.SignalR.Client.Transports;
+using AccountBuddy.BLL;
+using AccountBuddy.Common;
 
 namespace AccountBuddy.PL
 {
@@ -65,36 +67,36 @@ namespace AccountBuddy.PL
         {
             try
             {
-                
-                Common.AppLib.WriteLog("Application Startup");
 
-                Common.AppLib.SLPath= ConfigurationManager.AppSettings["SLPath"];
-                Common.AppLib.SLTransport = ConfigurationManager.AppSettings["SLTransport"];
-                Common.AppLib.AppIdKey = ConfigurationManager.AppSettings["DSAppKey"];
-                Common.AppLib.WriteLogState = ConfigurationManager.AppSettings["WriteLogState"];
+                AppLib.WriteLog("Application Startup");
+
+                AppLib.SLPath= ConfigurationManager.AppSettings["SLPath"];
+                AppLib.SLTransport = ConfigurationManager.AppSettings["SLTransport"];
+                AppLib.AppIdKey = ConfigurationManager.AppSettings["DSAppKey"];
+                AppLib.WriteLogState = ConfigurationManager.AppSettings["WriteLogState"];
 
 
-                if (string.IsNullOrWhiteSpace(Common.AppLib.SLPath))
+                if (string.IsNullOrWhiteSpace(AppLib.SLPath))
                 {
                     string str = "SLPath is Empty on Config";
-                    Common.AppLib.WriteLog(str);
+                    AppLib.WriteLog(str);
                     MessageBox.Show(str);
                 }
-                else if (string.IsNullOrWhiteSpace(Common.AppLib.SLTransport))
+                else if (string.IsNullOrWhiteSpace(AppLib.SLTransport))
                 {
                     string str = "SLTransport is Empty on Config";
-                    Common.AppLib.WriteLog(str);
+                    AppLib.WriteLog(str);
                     MessageBox.Show(str);
                 }
-                else if (string.IsNullOrWhiteSpace(Common.AppLib.AppIdKey))
+                else if (string.IsNullOrWhiteSpace(AppLib.AppIdKey))
                 {
                     string str = "AppKey is Empty on Config";
-                    Common.AppLib.WriteLog(str);
+                    AppLib.WriteLog(str);
                     MessageBox.Show(str);
                 }
                 else
                 {
-                    Common.AppLib.WriteLog(string.Format("SLPath: {0},SLTransport: {1}, AppKey: {2}", Common.AppLib.SLPath,Common.AppLib.SLTransport, Common.AppLib.AppIdKey));
+                    AppLib.WriteLog(string.Format("SLPath: {0},SLTransport: {1}, AppKey: {2}", AppLib.SLPath,AppLib.SLTransport, AppLib.AppIdKey));
 
                     frmInit.Show();                    
                     System.Windows.Forms.Application.DoEvents();
@@ -112,47 +114,47 @@ namespace AccountBuddy.PL
                     else
                     {
                                                 
-                        Common.AppLib.AppIdValue = Environment.GetEnvironmentVariable(Common.AppLib.AppIdKey, EnvironmentVariableTarget.Machine);
-                        if (Common.AppLib.AppIdValue == null)
+                        AppLib.AppIdValue = Environment.GetEnvironmentVariable(AppLib.AppIdKey, EnvironmentVariableTarget.Machine);
+                        if (AppLib.AppIdValue == null)
                         {
                             try
                             {
-                                Environment.SetEnvironmentVariable(Common.AppLib.AppIdKey, "GetNewAppId", EnvironmentVariableTarget.Machine);
-                                Common.AppLib.AppIdValue = Environment.GetEnvironmentVariable(Common.AppLib.AppIdKey, EnvironmentVariableTarget.Machine);
+                                Environment.SetEnvironmentVariable(AppLib.AppIdKey, "GetNewAppId", EnvironmentVariableTarget.Machine);
+                                AppLib.AppIdValue = Environment.GetEnvironmentVariable(AppLib.AppIdKey, EnvironmentVariableTarget.Machine);
                             }
                             catch (Exception ex)
                             {
-                                Common.AppLib.WriteLog(ex);
+                                AppLib.WriteLog(ex);
                             }
                         }
 
-                        if (Common.AppLib.AppIdValue == null)
+                        if (AppLib.AppIdValue == null)
                         {
                             MessageBox.Show("Please Run as Administrator when First Time is open");
                             Application.Current.Shutdown();
                         }
                         else
                         {
-                            if (Common.AppLib.AppIdValue == "GetNewAppId")
+                            if (AppLib.AppIdValue == "GetNewAppId")
                             {
-                                Common.AppLib.AppIdValue = BLL.FMCGHubClient.HubCaller.Invoke<string>("GetNewAppId").Result;
-                                Environment.SetEnvironmentVariable(Common.AppLib.AppIdKey, Common.AppLib.AppIdValue, EnvironmentVariableTarget.Machine);
+                                AppLib.AppIdValue = FMCGHubClient.HubCaller.Invoke<string>("GetNewAppId").Result;
+                                Environment.SetEnvironmentVariable(AppLib.AppIdKey, AppLib.AppIdValue, EnvironmentVariableTarget.Machine);
                             }
 
 
-                            bool r = BLL.FMCGHubClient.HubCaller.Invoke<bool>("SetReceiverConnectionIdToCaller", HubConReceiver.ConnectionId).Result;
+                            bool r = FMCGHubClient.HubCaller.Invoke<bool>("SetReceiverConnectionIdToCaller", HubConReceiver.ConnectionId).Result;
                             if (!r)
                             {
                                 string str = "SetReceiverConnectionIdToCaller_Failed";
                                 MessageBox.Show(str);
-                                Common.AppLib.WriteLog(str);
+                                AppLib.WriteLog(str);
                                 Application.Current.Shutdown();
                             }
                             else
                             {
-                                Common.AppLib.IsAppApproved = BLL.FMCGHubClient.HubCaller.Invoke<bool>("LoginHubCaller", Common.AppLib.AppIdValue, Environment.MachineName, Environment.UserName, Environment.UserDomainName).Result;
+                                AppLib.IsAppApproved = FMCGHubClient.HubCaller.Invoke<bool>("LoginHubCaller", AppLib.AppIdValue, Environment.MachineName, Environment.UserName, Environment.UserDomainName).Result;
 
-                                if (Common.AppLib.IsAppApproved)
+                                if (AppLib.IsAppApproved)
                                 {
                                     frmInit.Hide();
                                     frmLogin.Show();
@@ -174,7 +176,7 @@ namespace AccountBuddy.PL
             }
            catch (Exception ex)
             {
-                Common.AppLib.WriteLog(ex.Message);
+                AppLib.WriteLog(ex.Message);
             }
 
         }
@@ -184,37 +186,37 @@ namespace AccountBuddy.PL
         #region HubConCallerEvents
         private static void HubConCaller_StateChanged(StateChange obj)
         {
-            Common.AppLib.WriteLog(string.Format("HubConCaller_StateChanged=>NewState:{0}, OldState:{1}", obj.NewState, obj.OldState));
+            AppLib.WriteLog(string.Format("HubConCaller_StateChanged=>NewState:{0}, OldState:{1}", obj.NewState, obj.OldState));
         }
 
         private static void HubConCaller_Reconnecting()
         {
-            Common.AppLib.WriteLog("HubConCaller_Reconnecting");
+            AppLib.WriteLog("HubConCaller_Reconnecting");
         }
 
         private static void HubConCaller_Reconnected()
         {
-            Common.AppLib.WriteLog("HubConCaller_Reconnected");
+            AppLib.WriteLog("HubConCaller_Reconnected");
         }
 
         private static void HubConCaller_Received(string obj)
         {
-            Common.AppLib.WriteLog(string.Format("HubConCaller_Received=>{0}", obj));
+            AppLib.WriteLog(string.Format("HubConCaller_Received=>{0}", obj));
         }
 
         private static void HubConCaller_Error(Exception obj)
         {
-            Common.AppLib.WriteLog(string.Format("HubConCaller_Error=>Message:{0}, StackTrace:{1}", obj.Message, obj.StackTrace));
+            AppLib.WriteLog(string.Format("HubConCaller_Error=>Message:{0}, StackTrace:{1}", obj.Message, obj.StackTrace));
         }
 
         private static void HubConCaller_ConnectionSlow()
         {
-            Common.AppLib.WriteLog("HubConCaller_ConnectionSlow");
+            AppLib.WriteLog("HubConCaller_ConnectionSlow");
         }
 
         private static void HubConCaller_Closed()
         {
-            Common.AppLib.WriteLog("HubConCaller_Closed");
+            AppLib.WriteLog("HubConCaller_Closed");
         }
         #endregion
 
@@ -223,11 +225,11 @@ namespace AccountBuddy.PL
             try
             {
                 
-                HubConCaller = new HubConnection(Common.AppLib.SLPath);
-                Common.AppLib.WriteLog("HubConCallerConnect_HubConnectionInit");
+                HubConCaller = new HubConnection(AppLib.SLPath);
+                AppLib.WriteLog("HubConCallerConnect_HubConnectionInit");
 
-                BLL.FMCGHubClient.HubCaller = HubConCaller.CreateHubProxy("ABServerHub");
-                Common.AppLib.WriteLog("HubConCallerConnect_CreateHubProxy");
+                FMCGHubClient.HubCaller = HubConCaller.CreateHubProxy("ABServerHub");
+                AppLib.WriteLog("HubConCallerConnect_CreateHubProxy");
 
                 #region Events
                 HubConCaller.Closed += HubConCaller_Closed;
@@ -243,15 +245,15 @@ namespace AccountBuddy.PL
 
                 IClientTransport tp;
 
-                if (Common.AppLib.SLTransport == "LongPollingTransport")
+                if (AppLib.SLTransport == "LongPollingTransport")
                 {
                     tp = new LongPollingTransport();
                 }
-                else if (Common.AppLib.SLTransport == "WebSocketTransport")
+                else if (AppLib.SLTransport == "WebSocketTransport")
                 {
                     tp = new WebSocketTransport();
                 }
-                else if (Common.AppLib.SLTransport == "ServerSentEventsTransport")
+                else if (AppLib.SLTransport == "ServerSentEventsTransport")
                 {
                     tp = new ServerSentEventsTransport();
                 }
@@ -262,12 +264,12 @@ namespace AccountBuddy.PL
                 #endregion
 
                 HubConCaller.Start(tp).Wait();                
-                Common.AppLib.WriteLog("HubConCallerConnect_Started");
+                AppLib.WriteLog("HubConCallerConnect_Started");
                 return HubConCaller.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected;
             }
             catch (Exception ex)
             {
-                Common.AppLib.WriteLog(ex);
+                AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -275,43 +277,43 @@ namespace AccountBuddy.PL
         public static void HubConCallerDisconnect()
         {
             HubConCaller.Stop();
-            Common.AppLib.WriteLog("HubConCallerDisconnect_Stoped");
+            AppLib.WriteLog("HubConCallerDisconnect_Stoped");
         }
 
         #region HubConReceiverEvents
         private static void HubConReceiver_StateChanged(StateChange obj)
         {
-            Common.AppLib.WriteLog(string.Format("HubConReceiver_StateChanged=>NewState:{0}, OldState:{1}", obj.NewState, obj.OldState));
+            AppLib.WriteLog(string.Format("HubConReceiver_StateChanged=>NewState:{0}, OldState:{1}", obj.NewState, obj.OldState));
         }
 
         private static void HubConReceiver_Reconnecting()
         {
-            Common.AppLib.WriteLog("HubConReceiver_Reconnecting");
+            AppLib.WriteLog("HubConReceiver_Reconnecting");
         }
 
         private static void HubConReceiver_Reconnected()
         {
-            Common.AppLib.WriteLog("HubConReceiver_Reconnected");
+            AppLib.WriteLog("HubConReceiver_Reconnected");
         }
 
         private static void HubConReceiver_Received(string obj)
         {
-            Common.AppLib.WriteLog(string.Format("HubConReceiver_Received=>{0}", obj));
+            AppLib.WriteLog(string.Format("HubConReceiver_Received=>{0}", obj));
         }
 
         private static void HubConReceiver_Error(Exception obj)
         {
-            Common.AppLib.WriteLog(string.Format("HubConReceiver_Error=>Message:{0}, StackTrace:{1}", obj.Message, obj.StackTrace));
+            AppLib.WriteLog(string.Format("HubConReceiver_Error=>Message:{0}, StackTrace:{1}", obj.Message, obj.StackTrace));
         }
 
         private static void HubConReceiver_ConnectionSlow()
         {
-            Common.AppLib.WriteLog("HubConReceiver_ConnectionSlow");
+            AppLib.WriteLog("HubConReceiver_ConnectionSlow");
         }
 
         private static void HubConReceiver_Closed()
         {
-            Common.AppLib.WriteLog("HubConReceiver_Closed");
+            AppLib.WriteLog("HubConReceiver_Closed");
         }
         #endregion
 
@@ -320,11 +322,11 @@ namespace AccountBuddy.PL
             try
             {
 
-                HubConReceiver = new HubConnection(Common.AppLib.SLPath);
-                Common.AppLib.WriteLog("HubConReceiverConnect_HubConnectionInit");
+                HubConReceiver = new HubConnection(AppLib.SLPath);
+                AppLib.WriteLog("HubConReceiverConnect_HubConnectionInit");
 
                 HubReceiver = HubConReceiver.CreateHubProxy("ABServerHub");
-                Common.AppLib.WriteLog("HubConReceiverConnect_CreateHubProxy");
+                AppLib.WriteLog("HubConReceiverConnect_CreateHubProxy");
 
                 #region Events
                 HubConReceiver.Closed += HubConReceiver_Closed;
@@ -340,15 +342,15 @@ namespace AccountBuddy.PL
 
                 IClientTransport tp;
 
-                if (Common.AppLib.SLTransport == "LongPollingTransport")
+                if (AppLib.SLTransport == "LongPollingTransport")
                 {
                     tp = new LongPollingTransport();
                 }
-                else if (Common.AppLib.SLTransport == "WebSocketTransport")
+                else if (AppLib.SLTransport == "WebSocketTransport")
                 {
                     tp = new WebSocketTransport();
                 }
-                else if (Common.AppLib.SLTransport == "ServerSentEventsTransport")
+                else if (AppLib.SLTransport == "ServerSentEventsTransport")
                 {
                     tp = new ServerSentEventsTransport();
                 }
@@ -360,12 +362,12 @@ namespace AccountBuddy.PL
 
                 HubConReceiver.Start(tp).Wait();
 
-                Common.AppLib.WriteLog("HubConReceiverConnect_Started");
+                AppLib.WriteLog("HubConReceiverConnect_Started");
                 return HubConReceiver.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected;
             }
             catch (Exception ex)
             {
-                Common.AppLib.WriteLog(ex);
+                AppLib.WriteLog(ex);
                 return false;
             }
         }
@@ -373,7 +375,7 @@ namespace AccountBuddy.PL
         public static void HubConReceiverDisconnect()
         {
             HubConReceiver.Stop();
-            Common.AppLib.WriteLog("HubConReceiverDisconnect_Stoped");
+            AppLib.WriteLog("HubConReceiverDisconnect_Stoped");
         }
         #endregion
 
@@ -386,12 +388,12 @@ namespace AccountBuddy.PL
 
                     this.Dispatcher.Invoke(() =>
                     {                        
-                        Common.AppLib.IsAppApproved = IsApproved;
+                        AppLib.IsAppApproved = IsApproved;
 
                         if (IsApproved)
                         {
                             frmInit.Hide();
-                            if (BLL.UserAccount.User.Id == 0)
+                            if (UserAccount.User.Id == 0)
                             {
                                 App.frmLogin.Show();
                             }
@@ -403,7 +405,7 @@ namespace AccountBuddy.PL
                         else
                         {
                             frmInit.Show();
-                            if (BLL.UserAccount.User.Id == 0)
+                            if (UserAccount.User.Id == 0)
                             {
                                 App.frmLogin.Hide();
                             }
@@ -423,7 +425,7 @@ namespace AccountBuddy.PL
 
             });
 
-            HubReceiver.On<BLL.CompanyDetail>("CompanyDetail_Save", (cs) =>
+            HubReceiver.On<CompanyDetail>("CompanyDetail_Save", (cs) =>
             {
 
                 this.Dispatcher.Invoke(() =>
@@ -435,7 +437,7 @@ namespace AccountBuddy.PL
             });
 
             #region Account Group
-            HubReceiver.On<BLL.AccountGroup>("AccountGroup_Save", (Account) =>
+            HubReceiver.On<AccountGroup>("AccountGroup_Save", (Account) =>
             {
 
                 this.Dispatcher.Invoke(() =>
@@ -448,7 +450,7 @@ namespace AccountBuddy.PL
             {
                 this.Dispatcher.Invoke((Action)(() =>
                 {
-                    BLL.AccountGroup agp = new BLL.AccountGroup();
+                    AccountGroup agp = new AccountGroup();
                     agp.Find((int)pk);
                     agp.Delete((bool)true);
                 }));
@@ -457,7 +459,7 @@ namespace AccountBuddy.PL
             #endregion
 
             #region Bank
-            HubReceiver.On<BLL.Bank>("Bank_Save", (Cus) => {
+            HubReceiver.On<Bank>("Bank_Save", (Cus) => {
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -465,17 +467,10 @@ namespace AccountBuddy.PL
                 });
 
             });
-            HubReceiver.On<BLL.Ledger>("Ledger_Save", (Cus) => {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    Cus.Save(true);
-                });
-
-            });
+          
             HubReceiver.On("Bank_Delete", (Action<int>)((pk) => {
                 this.Dispatcher.Invoke((Action)(() => {
-                    BLL.Bank led = new BLL.Bank();
+                    Bank led = new Bank();
                     led.Find((int)pk);
                     led.Delete((bool)true);
                 }));
@@ -484,7 +479,7 @@ namespace AccountBuddy.PL
             #endregion
 
             #region Customer
-            HubReceiver.On<BLL.Customer>("Customer_Save", (Cus) => {
+            HubReceiver.On<Customer>("Customer_Save", (Cus) => {
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -494,7 +489,7 @@ namespace AccountBuddy.PL
             });
             HubReceiver.On("Customer_Delete", (Action<int>)((pk) => {
                 this.Dispatcher.Invoke((Action)(() => {
-                    BLL.Customer led = new BLL.Customer();
+                    Customer led = new Customer();
                     led.Find((int)pk);
                     led.Delete((bool)true);
                 }));
@@ -503,7 +498,7 @@ namespace AccountBuddy.PL
             #endregion
 
             #region Custom Setting
-            HubReceiver.On<BLL.CustomFormat>("CustomFormat_Save", (cs) =>
+            HubReceiver.On<CustomFormat>("CustomFormat_Save", (cs) =>
             {
 
                 this.Dispatcher.Invoke(() =>
@@ -515,8 +510,20 @@ namespace AccountBuddy.PL
 
             #endregion
 
+            HubReceiver.On<UserAccount>("UserAccount_Save", (ua) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    UserAccount u = new UserAccount();
+                    ua.ToMap(u);
+                    UserAccount.toList.Add(u);
+                });
+
+            });
+            
             #region Department
-            HubReceiver.On<BLL.Department>("Department_Save", (uom) =>
+            HubReceiver.On<Department>("Department_Save", (uom) =>
             {
 
                 this.Dispatcher.Invoke(() =>
@@ -530,13 +537,422 @@ namespace AccountBuddy.PL
             {
                 this.Dispatcher.Invoke((Action)(() =>
                 {
-                    BLL.Department agp = new BLL.Department();
+                    Department agp = new Department();
                     agp.Find((int)pk);
                     agp.Delete((bool)true);
                 }));
 
             }));
 
+
+
+            HubReceiver.On<BLL.JobWorker>("JobWorker_Save", (Cus) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Cus.Save(true);
+                });
+
+            });
+
+            HubReceiver.On("JobWorker_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    BLL.JobWorker led = new BLL.JobWorker();
+                    led.Find((int)pk);
+                    led.Delete((bool)true);
+                });
+
+            }));
+
+            HubReceiver.On<BLL.Ledger>("Ledger_Save", (led) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    led.Save(true);
+                });
+
+            });
+
+            HubReceiver.On("Ledger_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    BLL.Ledger led = new BLL.Ledger();
+                    led.Find((int)pk);
+                    led.Delete((bool)true);
+                }));
+
+            }));
+
+            HubReceiver.On<BLL.Product>("Product_Save", (led) => {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    led.Save(true);
+                });
+
+            });
+
+            HubReceiver.On("Product_Delete", (Action<int>)((pk) => {
+                this.Dispatcher.Invoke((Action)(() => {
+                    BLL.Product led = new BLL.Product();
+                    led.Find((int)pk);
+                    led.Delete((bool)true);
+                }));
+
+            }));
+
+            HubReceiver.On<BLL.Staff>("Staff_Save", (Cus) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Cus.Save(true);
+                });
+
+            });
+
+            HubReceiver.On("Staff_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    BLL.Staff led = new BLL.Staff();
+                    led.Find((int)pk);
+                    led.Delete((bool)true);
+                });
+
+            }));
+
+            HubReceiver.On<BLL.StockGroup>("StockGroup_Save", (sgp) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    sgp.Save(true);
+                });
+
+            });
+
+            HubReceiver.On("StockGroup_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    BLL.StockGroup agp = new BLL.StockGroup();
+                    agp.Find((int)pk);
+                    agp.Delete((bool)true);
+                }));
+
+            }));
+
+            HubReceiver.On<BLL.Supplier>("Supplier_Save", (Cus) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Cus.Save(true);
+                });
+
+            });
+
+            HubReceiver.On("Supplier_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    BLL.Supplier led = new BLL.Supplier();
+                    led.Find((int)pk);
+                    led.Delete((bool)true);
+                }));
+
+            }));
+            HubReceiver.On<BLL.UOM>("UOM_Save", (uom) =>
+            {
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    uom.Save(true);
+                });
+
+            });
+
+            HubReceiver.On("UOM_Delete", (Action<int>)((pk) =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    BLL.UOM agp = new BLL.UOM();
+                    agp.Find((int)pk);
+                    agp.Delete((bool)true);
+                }));
+
+            }));
+            #endregion
+
+            #region Transaction
+            HubReceiver.On<string>("StockSeperated_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmStockSeparated);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmStockSeparated;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch(Exception ex) { AppLib.WriteLog(ex); }                    
+                });
+            });
+            HubReceiver.On<String>("StockOut_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmStockOut);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmStockOut;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+            HubReceiver.On<string>("StockInProcess_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmStockInProcess);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmStockInProcess;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+            HubReceiver.On<String>("StockIn_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmStockInProcess);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmStockInProcess;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+            HubReceiver.On<String>("SalesReturn_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmSalesReturn);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmSalesReturn;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+            HubReceiver.On<String>("SalesOrder_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmSalesOrder);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmSalesOrder;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+
+            HubReceiver.On<String>("Sales_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmSales);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmSale;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+
+            HubReceiver.On<String>("Receipt_RefNoRefresh", (EntryNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmReceipt);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmReceipt;
+                            if (frm.data.Id == 0) frm.data.RefNo = EntryNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+
+            HubReceiver.On<String>("PurchaseReturn_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmPurchaseReturn);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmPurchaseReturn;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+            HubReceiver.On<String>("PurchaseRequest_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmPurchaseRequest);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmPurchaseRequest;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+            HubReceiver.On<String>("PurchaseOrder_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmPurchaseOrder);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmPurchaseOrder;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+            HubReceiver.On<String>("Purchase_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmPurchase);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmPurchase;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+
+            HubReceiver.On<String>("Payment_RefNoRefresh", (EntryNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmPayment);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmPayment;
+                            if (frm.data.Id == 0) frm.data.RefNo = EntryNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+
+            HubReceiver.On<String>("Journal_RefNoRefresh", (EntryNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmJournal);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmJournal;
+                            if (frm.data.Id == 0) frm.data.EntryNo = EntryNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+            HubReceiver.On<string>("JobOrderReceived _RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmJobOrderReceived);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmJobOrderReceived;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
+
+            HubReceiver.On<string>("JobOrderIssue_RefNoRefresh", (RefNo) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        var f = frmHome.GetForm(Forms.frmJobOrderIssue);
+                        if (f != null)
+                        {
+                            var frm = f.Content as frm.Transaction.frmJobOrderIssue;
+                            if (frm.data.Id == 0) frm.data.RefNo = RefNo;
+                        }
+                    }
+                    catch (Exception ex) { AppLib.WriteLog(ex); }
+                });
+            });
             #endregion
 
         }
@@ -544,7 +960,7 @@ namespace AccountBuddy.PL
         {
             if (HubConCaller.State==Microsoft.AspNet.SignalR.Client.ConnectionState.Connected) HubConCallerDisconnect();
             if (HubConReceiver.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected) HubConReceiverDisconnect();
-            Common.AppLib.WriteLog("Application Exit");
+            AppLib.WriteLog("Application Exit");
         }
     }
 }

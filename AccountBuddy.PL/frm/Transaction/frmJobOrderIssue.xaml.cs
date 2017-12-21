@@ -30,24 +30,12 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
 
-            data.Clear();
-            onClientEvents();
-
+            data.Clear();       
             data.setLabel();
             LoadWindow();
 
         }
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<string>("JobOrderIssue_RefNoRefresh", (RefNo) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (data.Id == 0) data.RefNo = RefNo;
-                });
-            });
-        }
-
+        
         #region Button Events
 
 

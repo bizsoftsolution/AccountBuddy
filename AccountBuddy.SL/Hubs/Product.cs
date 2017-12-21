@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.Product Product_DALtoBLL(DAL.Product ProductsFrom)
         {
-            BLL.Product ProductsTo = ProductsFrom.toCopy<BLL.Product>(new BLL.Product());
+            BLL.Product ProductsTo = ProductsFrom.ToMap(new BLL.Product());
             try
             {            
                 ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
@@ -73,7 +73,7 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.Product();
                     DB.Products.Add(d);
 
-                    pro.toCopy<DAL.Product>(d);
+                    pro.ToMap(d);
 
                     DAL.ProductDetail pd = new DAL.ProductDetail();
 
@@ -89,8 +89,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    pro.toCopy<DAL.Product>(d);
-                    //Ledger_Save(pro.Ledger);
+                    pro.ToMap(d);
                     var pd = d.ProductDetails.Where(x => x.CompanyId == Caller.CompanyId).FirstOrDefault();
                     if (pd == null)
                     {

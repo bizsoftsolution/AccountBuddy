@@ -27,24 +27,9 @@ namespace AccountBuddy.PL.frm.Master
         public frmUserManager()
         {
             InitializeComponent();
-            onClientEvents();
-
         }
 
 
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<BLL.UserAccount>("UserAccount_Save", (ua) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    BLL.UserAccount u = new BLL.UserAccount();
-                    ua.toCopy<BLL.UserAccount>(u);
-                    BLL.UserAccount.toList.Add(u);
-                });
-
-            });
-        }
         private void btnNewUser_Click(object sender, RoutedEventArgs e)
         {
            

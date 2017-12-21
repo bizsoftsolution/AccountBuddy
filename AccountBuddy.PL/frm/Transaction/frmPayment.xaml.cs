@@ -29,8 +29,6 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-            onClientEvents();
-
             LoadWindow();
         }
 
@@ -44,19 +42,7 @@ namespace AccountBuddy.PL.frm.Transaction
             btnPrint.IsEnabled = false;
 
 
-        }
-
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<String>("Payment_RefNoRefresh", (EntryNo) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                            {
-                                if (data.Id == 0) data.EntryNo = EntryNo;
-                            });
-            });
-        }
-
+        }        
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {

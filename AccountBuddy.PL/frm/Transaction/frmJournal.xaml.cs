@@ -30,8 +30,6 @@ namespace AccountBuddy.PL.frm.Transaction
             InitializeComponent();
             this.DataContext = data;
             data.Clear();
-            onClientEvents();
-
           
         }
 
@@ -43,18 +41,7 @@ namespace AccountBuddy.PL.frm.Transaction
             btnDelete.Visibility = BLL.Journal.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
         }
-
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<String>("Journal_RefNoRefresh", (EntryNo) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (data.Id == 0) data.EntryNo = EntryNo;
-                });
-            });
-        }
-
+        
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             if (data.JDetail.LedgerId == 0)

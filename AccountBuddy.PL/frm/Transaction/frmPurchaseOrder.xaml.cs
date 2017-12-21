@@ -40,21 +40,10 @@ namespace AccountBuddy.PL.frm.Transaction
             DateTimeFormatInfo dateInfo = new DateTimeFormatInfo();
             dateInfo.ShortDatePattern = "MM/yyyy";
             cultureInfo.DateTimeFormat = dateInfo;
-            onClientEvents();
             data.setLabel();
         }
 
-        private void onClientEvents()                 
-        {
-            BLL.FMCGHubClient.HubCaller.On<String>("PurchaseOrder_RefNoRefresh", (RefNo) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (data.Id == 0) data.RefNo = RefNo;
-                });
-            });
-        }
-
+       
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             if (data.PODetail.ProductId == 0)

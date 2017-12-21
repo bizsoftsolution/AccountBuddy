@@ -134,6 +134,43 @@ namespace AccountBuddy.BLL
             D.Symbol = S.Symbol;            
             return D;
         }
-
+        public static Product ToMap(this Product S, Product D)
+        {
+            D.DiscountAmount = S.DiscountAmount;
+            D.Id = S.Id;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.ItemCode = S.ItemCode;
+            D.JOQty = S.JOQty;
+            D.JRQty = S.JRQty;
+            D.MaxSellingRate = S.MaxSellingRate;
+            D.MinSellingRate = S.MinSellingRate;
+            D.MRP = S.MRP;
+            D.OpeningStock = S.OpeningStock;
+            D.POQty = S.POQty;
+            D.PQty = S.PQty;
+            D.ProductImage = S.ProductImage;
+            D.ProductName = S.ProductName;
+            D.PRQty = S.PRQty;
+            D.PurchaseRate = S.PurchaseRate;
+            D.ReOrderLevel = S.ReOrderLevel;
+            D.SellingRate = S.SellingRate;
+            D.SInQty = S.SInQty;
+            D.SOQty = S.SOQty;
+            D.SOutQty = S.SOutQty;
+            D.SPQty = S.SPQty;
+            D.SQty = S.SQty;
+            D.SRQty = S.SRQty;
+            D.SRQtyForSales = S.SRQtyForSales;
+            D.SRQtyNotForSales = S.SRQtyNotForSales;
+            D.SSQty = S.SSQty;
+            D.StockGroup = S.StockGroup;
+            D.StockGroupId = S.StockGroupId;
+            D.UOM = S.UOM;
+            D.UOMId = S.UOMId;
+            D.UOMName = S.UOMName;
+            
+            return D;
+        }
     }
 }

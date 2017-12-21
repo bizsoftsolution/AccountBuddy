@@ -33,9 +33,7 @@ namespace AccountBuddy.PL.frm.Master
         public frmUserType()
         {
             InitializeComponent();
-            this.DataContext = data;
-
-            onClientEvents();
+            this.DataContext = data;            
         }
 
         #endregion
@@ -116,27 +114,7 @@ namespace AccountBuddy.PL.frm.Master
             ckbAllAllowInsert.IsChecked = false;
             ckbAllAllowUpdate.IsChecked = false;
             ckbAllAllowDelete.IsChecked = false;
-        }
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<BLL.UserType>("userType_Save", (rv) => {
-
-                this.Dispatcher.Invoke(() =>
-                {
-                    rv.Save(true);
-                });
-
-            });
-
-            BLL.FMCGHubClient.HubCaller.On("userType_Delete", (Action<int>)((pk) => {
-                this.Dispatcher.Invoke((Action)(() => {
-                    BLL.UserType d = new BLL.UserType();
-                    d.Find((int)pk);
-                    d.Delete((bool)true);
-                }));
-
-            }));
-        }
+        }        
 
         #endregion
 

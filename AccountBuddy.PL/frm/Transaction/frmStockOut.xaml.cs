@@ -30,18 +30,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             InitializeComponent();
             this.DataContext = data;
-            data.Clear();
-           onClientEvents();
-        }
-        private void onClientEvents()
-        {
-            BLL.FMCGHubClient.HubCaller.On<String>("StockOut_RefNoRefresh", (RefNo) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (data.Id == 0) data.RefNo = RefNo;
-                });
-            });
+            data.Clear();           
         }
 
         #region Events
