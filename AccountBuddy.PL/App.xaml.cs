@@ -431,6 +431,12 @@ namespace AccountBuddy.PL
                 this.Dispatcher.Invoke(() =>
                 {
                     cs.Save(true);
+                    var f = frmHome.GetForm(Forms.frmCompanySetting);
+                    if (f != null)
+                    {
+                        var frm = f.Content as frm.Master.frmCompanySetting;
+                        frm.Grid_Refresh();
+                    }
 
                 });
 
