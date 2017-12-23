@@ -154,7 +154,7 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
                 }
-                if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).CompanyDetail_Save(cm);
+                if (OtherClients.Count > 0) Clients.Clients(OtherClients).CompanyDetail_Save(cm);
                
 
                 return cm.Id;

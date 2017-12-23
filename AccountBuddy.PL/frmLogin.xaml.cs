@@ -206,6 +206,7 @@ namespace AccountBuddy.PL
         private void MetroWindow_Activated(object sender, EventArgs e)
         {
             Common.AppLib.WriteLog("frmLogin_Activated");
+            ClearForm();
         }
 
         private void MetroWindow_Deactivated(object sender, EventArgs e)
