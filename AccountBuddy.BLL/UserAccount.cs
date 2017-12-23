@@ -240,6 +240,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
+               
                 var rv = FMCGHubClient.HubCaller.Invoke<UserAccount>("UserAccount_ReLogin", UserAccount.LoginedACYear, UserAccount.User.UserType.Company.CompanyName, UserAccount.User.LoginId, UserAccount.User.Password).Result;
                 try
                 {
@@ -291,7 +292,6 @@ namespace AccountBuddy.BLL
             return rv;
         }
 
- 
         public static bool AllowInsert(string FormName)
         {
             bool rv = true;

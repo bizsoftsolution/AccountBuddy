@@ -36,13 +36,9 @@ namespace AccountBuddy.SL.Hubs
 
                 if (d == null)
                 {
-
                     d = new DAL.Purchase();
                     DB.Purchases.Add(d);
-
-
                     P.toCopy<DAL.Purchase>(d);
-
                     foreach (var b_pod in P.PDetails)
                     {
                         DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
@@ -51,12 +47,10 @@ namespace AccountBuddy.SL.Hubs
                     }
                     DB.SaveChanges();
                     P.Id = d.Id;
-
                     LogDetailStore(P, LogDetailType.INSERT);
                 }
                 else
                 {
-
                     //foreach (var d_Pd in d.PurchaseDetails.ToList())
                     //{
                     //    BLL.PurchaseDetail b_Pd = P.PDetails.Where(x => x.Id == d_Pd.Id).FirstOrDefault();

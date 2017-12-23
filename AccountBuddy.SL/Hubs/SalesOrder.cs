@@ -313,7 +313,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.SalesOrder> SalesOrder_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
-            List<BLL.SalesOrder> lstSalesOrder = new List<BLL.SalesOrder>();
+           List<BLL.SalesOrder> lstSalesOrder = new List<BLL.SalesOrder>();
             
             BLL.SalesOrder rp = new BLL.SalesOrder();
             try
@@ -334,6 +334,7 @@ namespace AccountBuddy.SL.Hubs
                     rp.LedgerName = string.Format("{0}-{1}", l.Ledger.AccountGroup.GroupCode, l.Ledger.LedgerName);
                     rp.RefCode = l.RefCode;
                     rp.RefNo = l.RefNo;
+                    rp.Status = l.SalesOrderDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
                     lstSalesOrder.Add(rp);
                     lstSalesOrder = lstSalesOrder.OrderBy(x => x.SODate).ToList();
                 }

@@ -39,9 +39,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
             data.Clear();
             data.setLabel();
-            
+
         }
-        
+
         #region  button Events
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -67,10 +67,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
             data.setLabel();
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
+            btnPrint.IsEnabled = false;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

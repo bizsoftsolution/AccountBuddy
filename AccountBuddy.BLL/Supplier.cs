@@ -289,10 +289,7 @@ namespace AccountBuddy.BLL
         {
             _toList = null;
         }
-
-       
-
-
+      
         #endregion
     }
 }

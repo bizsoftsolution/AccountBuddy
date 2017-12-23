@@ -440,15 +440,19 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new PurchaseOrder().toCopy<PurchaseOrder>(this);
-            _PODetail = new PurchaseOrderDetail();
-            _PODetails = new ObservableCollection<PurchaseOrderDetail>();
-
-            PODate = DateTime.Now;
-            RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseOrder_NewRefNo").Result;
-
-
-            NotifyAllPropertyChanged();
+            try
+            {
+                new PurchaseOrder().toCopy<PurchaseOrder>(this);
+                _PODetail = new PurchaseOrderDetail();
+                _PODetails = new ObservableCollection<PurchaseOrderDetail>();
+                PODate = DateTime.Now;
+                RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseOrder_NewRefNo").Result;
+                NotifyAllPropertyChanged();
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
         public void setLabel()
         {
