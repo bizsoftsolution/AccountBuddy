@@ -529,13 +529,20 @@ namespace AccountBuddy.BLL
         }
         public void Clear()
         {
-            new PurchaseReturn().toCopy<PurchaseReturn>(this);
-            this.PRDetail = new PurchaseReturnDetail();
-            this.PRDetails = new ObservableCollection<PurchaseReturnDetail>();
+            try
+            {
+                new PurchaseReturn().toCopy<PurchaseReturn>(this);
+                this.PRDetail = new PurchaseReturnDetail();
+                this.PRDetails = new ObservableCollection<PurchaseReturnDetail>();
 
-            PRDate = DateTime.Now;
-            RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseReturn_NewRefNo").Result;
-            NotifyAllPropertyChanged();
+                PRDate = DateTime.Now;
+                RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseReturn_NewRefNo").Result;
+                NotifyAllPropertyChanged();
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
 
         public bool Find()

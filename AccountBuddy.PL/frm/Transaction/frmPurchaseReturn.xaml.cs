@@ -74,23 +74,24 @@ namespace AccountBuddy.PL.frm.Transaction
             data.setLabel();
 
             data.Clear();
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
-            btnSave.IsEnabled = true;
+              btnPrint.IsEnabled = true;
+             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (data.Id != 0)
             {
-                var rv = data.Delete();
-                if (rv == true)
+                if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    data.Clear();
+                    var rv = data.Delete();
+                    if (rv == true)
+                    {
+                        MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
+                        data.Clear();
+                        btnPrint.IsEnabled = true;
+                    }
                 }
             }
         }

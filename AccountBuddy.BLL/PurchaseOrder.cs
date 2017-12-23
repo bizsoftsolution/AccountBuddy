@@ -469,7 +469,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                PurchaseOrder po = FMCGHubClient.HubCaller.Invoke<PurchaseOrder>("PurchaseOrder_Find", SearchText).Result;
+                PurchaseOrder po = FMCGHubClient.HubCaller.Invoke<PurchaseOrder>("PurchaseOrder_Find", RefNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<PurchaseOrder>(this);
                 this.PODetails = po.PODetails;

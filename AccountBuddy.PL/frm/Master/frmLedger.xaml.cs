@@ -47,29 +47,37 @@ namespace AccountBuddy.PL.frm.Master
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            BLL.Ledger.Init();
-            dgvLedger.ItemsSource = BLL.Ledger.toList;
 
-            CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).Filter = Ledger_Filter;
-            CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.AccountName), System.ComponentModel.ListSortDirection.Ascending));
+            try
+            {
 
-            var AUGIds = BLL.AccountGroup.toList.Select(x => x.UnderGroupId).ToList();
+                BLL.Ledger.Init();
+                dgvLedger.ItemsSource = BLL.Ledger.toList;
 
-            cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.Where(x => !AUGIds.Contains(x.Id)).ToList();
-            cmbAccountGroupId.DisplayMemberPath = "GroupName";
-            cmbAccountGroupId.SelectedValuePath = "Id";
+                CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).Filter = Ledger_Filter;
+                CollectionViewSource.GetDefaultView(dgvLedger.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.AccountName), System.ComponentModel.ListSortDirection.Ascending));
+
+                var AUGIds = BLL.AccountGroup.toList.Select(x => x.UnderGroupId).ToList();
+
+                cmbAccountGroupId.ItemsSource = BLL.AccountGroup.toList.Where(x => !AUGIds.Contains(x.Id)).ToList();
+                cmbAccountGroupId.DisplayMemberPath = "GroupName";
+                cmbAccountGroupId.SelectedValuePath = "Id";
 
 
 
-            cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
-            cmbCreditLimitTypeId.SelectedValuePath = "Id";
-            cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
+                cmbCreditLimitTypeId.ItemsSource = BLL.CreditLimitType.toList;
+                cmbCreditLimitTypeId.SelectedValuePath = "Id";
+                cmbCreditLimitTypeId.DisplayMemberPath = "LimitType";
 
-            cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
+                cmbAccountType.ItemsSource = BLL.Ledger.ACTypeList;
 
-            btnSave.Visibility = (BLL.Ledger.UserPermission.AllowInsert || BLL.Ledger.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.Ledger.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-
+                btnSave.Visibility = (BLL.Ledger.UserPermission.AllowInsert || BLL.Ledger.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+                btnDelete.Visibility = BLL.Ledger.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            }
+            catch(Exception EX)
+            {
+                Common.AppLib.WriteLog(EX);
+            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

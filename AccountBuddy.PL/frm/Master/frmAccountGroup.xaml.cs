@@ -243,7 +243,7 @@ namespace AccountBuddy.PL.frm.Master
             return RValue;
         }
 
-        private void Grid_Refresh()
+        public void Grid_Refresh()
         {
             try
             {

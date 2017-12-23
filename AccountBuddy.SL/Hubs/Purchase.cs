@@ -121,6 +121,7 @@ namespace AccountBuddy.SL.Hubs
                         p.TotalAmount = S.TotalAmount;
                         p.LedgerId = LId;
                         p.TransactionTypeId = S.TransactionTypeId;
+                        p.Narration = S.Narration;
                         foreach (var b_pod in S.SalesDetails)
                         {
                             DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
