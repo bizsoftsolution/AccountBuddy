@@ -298,7 +298,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new StockOut().toCopy<StockOut>(this);
+            new StockOut().ToMap<StockOut>(this);
             this.STOutDetail = new StockOutDetail();
             this.STOutDetails = new ObservableCollection<StockOutDetail>();
 
@@ -313,7 +313,7 @@ namespace AccountBuddy.BLL
             {
                 StockOut po = FMCGHubClient.HubCaller.Invoke<StockOut>("StockOut_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<StockOut>(this);
+                po.ToMap<StockOut>(this);
                 this.STOutDetails = po.STOutDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -329,7 +329,7 @@ namespace AccountBuddy.BLL
             {
                 StockOut po = FMCGHubClient.HubCaller.Invoke<StockOut>("StockOut_FindById", id).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<StockOut>(this);
+                po.ToMap<StockOut>(this);
                 this.STOutDetails = po.STOutDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -369,7 +369,7 @@ namespace AccountBuddy.BLL
                 {
                     STOutDetail.Quantity += pod.Quantity;
                 }
-                STOutDetail.toCopy<StockOutDetail>(pod);
+                STOutDetail.ToMap<StockOutDetail>(pod);
                 ClearDetail();
                 ItemAmount = STOutDetails.Sum(x => x.Amount);
                
@@ -381,7 +381,7 @@ namespace AccountBuddy.BLL
         {
             StockOutDetail pod = new StockOutDetail();
             pod.SNo = STOutDetails.Count == 0 ? 1 : STOutDetails.Max(x => x.SNo) + 1;
-            pod.toCopy<StockOutDetail>(STOutDetail);
+            pod.ToMap<StockOutDetail>(STOutDetail);
         }
 
         public void DeleteDetail(int SNo)

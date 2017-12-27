@@ -209,7 +209,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.JournalDetail pod = dgvDetails.SelectedItem as BLL.JournalDetail;
-                pod.toCopy<BLL.JournalDetail>(data.JDetail);
+                pod.ToMap<BLL.JournalDetail>(data.JDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 

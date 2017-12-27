@@ -246,7 +246,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 rptUOM.Reset();
                 ReportDataSource data = new ReportDataSource("UOM", BLL.UOM.toList.Where(x => UOM_Filter(x)).Select(x => new { x.Symbol, x.FormalName }).OrderBy(x => x.Symbol).ToList());
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptUOM.LocalReport.DataSources.Add(data);
                 rptUOM.LocalReport.DataSources.Add(data1);
                 rptUOM.LocalReport.ReportPath = @"rpt\master\rptUOM.rdlc";
@@ -266,7 +266,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
-            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
 
         #endregion

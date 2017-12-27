@@ -12,7 +12,7 @@ namespace AccountBuddy.SL.Hubs
 
         public  BLL.Customer Customer_DALtoBLL(DAL.Customer customerFrom)
         {
-            BLL.Customer CustomerTo = customerFrom.toCopy<BLL.Customer>(new BLL.Customer());
+            BLL.Customer CustomerTo = customerFrom.ToMap<BLL.Customer>(new BLL.Customer());
 
             CustomerTo.Ledger = LedgerDAL_BLL(customerFrom.Ledger);
 
@@ -46,7 +46,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    cus.toCopy<DAL.Customer>(d);
+                    cus.ToMap<DAL.Customer>(d);
                     Ledger_Save(cus.Ledger);
                     DB.SaveChanges();
                     LogDetailStore(cus, LogDetailType.UPDATE);

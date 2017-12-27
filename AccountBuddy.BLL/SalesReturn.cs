@@ -524,7 +524,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new SalesReturn().toCopy<SalesReturn>(this);
+            new SalesReturn().ToMap<SalesReturn>(this);
             this.SRDetail = new SalesReturnDetail();
             this.SRDetails = new ObservableCollection<SalesReturnDetail>();
 
@@ -539,7 +539,7 @@ namespace AccountBuddy.BLL
             {
                 SalesReturn po = FMCGHubClient.HubCaller.Invoke<SalesReturn>("SalesReturn_Find", RefNo).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<SalesReturn>(this);
+                po.ToMap<SalesReturn>(this);
                 this.SRDetails = po.SRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -556,7 +556,7 @@ namespace AccountBuddy.BLL
             {
                 SalesReturn po = FMCGHubClient.HubCaller.Invoke<SalesReturn>("SalesReturn_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<SalesReturn>(this);
+                po.ToMap<SalesReturn>(this);
                 this.SRDetails = po.SRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -597,7 +597,7 @@ namespace AccountBuddy.BLL
                 {
                     SRDetail.Quantity += pod.Quantity;
                 }
-                SRDetail.toCopy<SalesReturnDetail>(pod);
+                SRDetail.ToMap<SalesReturnDetail>(pod);
                 ClearDetail();
                 ItemAmount = SRDetails.Sum(x => x.Amount);
                 SetAmount();
@@ -609,7 +609,7 @@ namespace AccountBuddy.BLL
         {
             SalesReturnDetail pod = new SalesReturnDetail();
             pod.SNo = SRDetails.Count == 0 ? 1 : SRDetails.Max(x => x.SNo) + 1;
-            pod.toCopy<SalesReturnDetail>(SRDetail);
+            pod.ToMap<SalesReturnDetail>(SRDetail);
         }
 
         public void DeleteDetail(int SNo)

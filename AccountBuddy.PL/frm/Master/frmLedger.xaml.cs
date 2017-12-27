@@ -288,7 +288,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 RptLedger.Reset();
                 ReportDataSource data = new ReportDataSource("Ledger", BLL.Ledger.toList.Where(x => Ledger_Filter(x)).Select(x => new { LedgerName = x.AccountName, x.PersonIncharge, x.AddressLine1, x.AddressLine2, x.CityName, x.CreditAmount, CreditLimitTypeName = x.CreditLimitType==null ? "" : x.CreditLimitType.LimitType,x.TelephoneNo, x.OPCr, x.OPDr }).OrderBy(x => x.LedgerName).ToList());
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);
                 RptLedger.LocalReport.ReportPath = @"rpt\master\RptLedger.rdlc";
@@ -314,7 +314,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
-            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
 
         #endregion

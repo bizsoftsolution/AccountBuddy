@@ -61,7 +61,7 @@ namespace AccountBuddy.PL.frm.Report
                 {
                     rptViewer.Reset();
                     ReportDataSource data = new ReportDataSource("JOPending", list);
-                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
+                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                     rptViewer.LocalReport.DataSources.Add(data);
                     rptViewer.LocalReport.DataSources.Add(data1);
                     rptViewer.LocalReport.ReportPath = @"rpt\Report\rptJOPendingReport.rdlc";
@@ -90,7 +90,7 @@ namespace AccountBuddy.PL.frm.Report
         }
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
-            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)

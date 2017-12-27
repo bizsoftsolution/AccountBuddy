@@ -11,7 +11,7 @@ namespace AccountBuddy.SL.Hubs
 
         private BLL.Bank Bank_DALtoBLL(DAL.Bank BankFrom)
         {
-            BLL.Bank BankTo = BankFrom.toCopy<BLL.Bank>(new BLL.Bank());
+            BLL.Bank BankTo = BankFrom.ToMap<BLL.Bank>(new BLL.Bank());
 
             BankTo.Ledger = LedgerDAL_BLL(BankFrom.Ledger);
 
@@ -34,7 +34,7 @@ namespace AccountBuddy.SL.Hubs
                 {
 
                     d = new DAL.Bank();
-                    cus.toCopy<DAL.Bank>(d);
+                    cus.ToMap<DAL.Bank>(d);
                     d.LedgerId = Ledger_Save(cus.Ledger);
                     if (d.LedgerId != 0)
                     {
@@ -46,7 +46,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    cus.toCopy<DAL.Bank>(d);
+                    cus.ToMap<DAL.Bank>(d);
                     Ledger_Save(cus.Ledger);
                     DB.SaveChanges();
                     LogDetailStore(cus, LogDetailType.UPDATE);

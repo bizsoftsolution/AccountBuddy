@@ -321,7 +321,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.SalesDetail pod = dgvDetails.SelectedItem as BLL.SalesDetail;
-                pod.toCopy<BLL.SalesDetail>(data.SDetail);
+                pod.ToMap<BLL.SalesDetail>(data.SDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
@@ -475,7 +475,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.SalesDetail pod = dgvDetails.SelectedItem as BLL.SalesDetail;
-                pod.toCopy<BLL.SalesDetail>(data.SDetail);
+                pod.ToMap<BLL.SalesDetail>(data.SDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }

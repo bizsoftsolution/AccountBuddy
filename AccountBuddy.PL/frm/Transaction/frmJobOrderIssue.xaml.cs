@@ -172,7 +172,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.JobOrderIssueDetail pod = dgvDetails.SelectedItem as BLL.JobOrderIssueDetail;
-                pod.toCopy<BLL.JobOrderIssueDetail>(data.JODetail);
+                pod.ToMap<BLL.JobOrderIssueDetail>(data.JODetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
@@ -310,7 +310,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.JobOrderIssueDetail pod = dgvDetails.SelectedItem as BLL.JobOrderIssueDetail;
-                pod.toCopy<BLL.JobOrderIssueDetail>(data.JODetail);
+                pod.ToMap<BLL.JobOrderIssueDetail>(data.JODetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }

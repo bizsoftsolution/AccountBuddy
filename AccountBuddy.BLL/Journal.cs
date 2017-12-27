@@ -325,7 +325,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Journal().toCopy<Journal>(this);
+            new Journal().ToMap<Journal>(this);
             ClearDetail();
             _JDetails = new ObservableCollection<JournalDetail>();
 
@@ -341,7 +341,7 @@ namespace AccountBuddy.BLL
             {
                 Journal po = FMCGHubClient.HubCaller.Invoke<Journal>("Journal_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<Journal>(this);
+                po.ToMap<Journal>(this);
                 this.JDetails = po.JDetails;
                 IsReadOnly = !UserPermission.AllowInsert;
 
@@ -360,7 +360,7 @@ namespace AccountBuddy.BLL
             {
                 Journal po = FMCGHubClient.HubCaller.Invoke<Journal>("Journal_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<Journal>(this);
+                po.ToMap<Journal>(this);
                 this.JDetails = po.JDetails;
                 IsReadOnly = !UserPermission.AllowInsert;
 
@@ -412,7 +412,7 @@ namespace AccountBuddy.BLL
                 JDetails.Add(pod);
             }
 
-            JDetail.toCopy<JournalDetail>(pod);
+            JDetail.ToMap<JournalDetail>(pod);
             ClearDetail();
             Amount = JDetails.Sum(x => x.DrAmt) - JDetails.Sum(x => x.CrAmt);
         }
@@ -421,7 +421,7 @@ namespace AccountBuddy.BLL
         {
             JournalDetail pod = new JournalDetail();
             pod.SNo = JDetails.Count == 0 ? 1 : JDetails.Max(x => x.SNo) + 1;
-            pod.toCopy<JournalDetail>(JDetail);
+            pod.ToMap<JournalDetail>(JDetail);
         }
 
         public void DeleteDetail(int SNo)
@@ -442,7 +442,7 @@ namespace AccountBuddy.BLL
 
             if (pod != null)
             {
-                pod.toCopy<JournalDetail>(JDetail);
+                pod.ToMap<JournalDetail>(JDetail);
             }
         }
         public static List<Journal> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)

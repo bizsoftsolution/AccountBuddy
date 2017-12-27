@@ -32,7 +32,7 @@ namespace AccountBuddy.PL.frm.Report
         {
             InitializeComponent();
             rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
-            var l1 = BLL.CompanyDetail.toList.Where(x => x.Id==BLL.UserAccount.User.UserType.CompanyId || x.UnderCompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
+            var l1 = BLL.CompanyDetail.ToList.Where(x => x.Id==BLL.UserAccount.User.UserType.CompanyId || x.UnderCompanyId == BLL.UserAccount.User.UserType.CompanyId).ToList();
             if (l1.Count() > 0)
             {
                 cmbCompany.Visibility = Visibility.Visible;
@@ -76,7 +76,7 @@ namespace AccountBuddy.PL.frm.Report
                 {
                     rptViewer.Reset();
                     ReportDataSource data = new ReportDataSource("GeneralStock", list);
-                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
+                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                     rptViewer.LocalReport.DataSources.Add(data);
                     rptViewer.LocalReport.DataSources.Add(data1);
                     rptViewer.LocalReport.ReportPath = @"rpt\Report\rptGeneralStock.rdlc";
@@ -104,7 +104,7 @@ namespace AccountBuddy.PL.frm.Report
         }
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
-            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
 
 

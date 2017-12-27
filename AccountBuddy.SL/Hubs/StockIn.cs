@@ -41,12 +41,12 @@ namespace AccountBuddy.SL.Hubs
                     DB.StockIns.Add(d);
 
 
-                    P.toCopy<DAL.StockIn>(d);
+                    P.ToMap<DAL.StockIn>(d);
 
                     foreach (var b_pod in P.STInDetails)
                     {
                         DAL.StockInDetail d_pod = new DAL.StockInDetail();
-                        b_pod.toCopy<DAL.StockInDetail>(d_pod);
+                        b_pod.ToMap<DAL.StockInDetail>(d_pod);
                         d.StockInDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -61,7 +61,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal pd = P.STInDetails.Select(X => X.StockInId).FirstOrDefault();
                     DB.StockInDetails.RemoveRange(d.StockInDetails.Where(x => x.StockInId == pd).ToList());
 
-                    P.toCopy<DAL.StockIn>(d);
+                    P.ToMap<DAL.StockIn>(d);
                     foreach (var b_Pd in P.STInDetails)
                     {
                         //DAL.StockInDetail d_Pd = d.StockInDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
@@ -70,7 +70,7 @@ namespace AccountBuddy.SL.Hubs
                             DAL.StockInDetail d_Pd = new DAL.StockInDetail();
                             d.StockInDetails.Add(d_Pd);
                        // }
-                        b_Pd.toCopy<DAL.StockInDetail>(d_Pd);
+                        b_Pd.ToMap<DAL.StockInDetail>(d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -123,7 +123,7 @@ namespace AccountBuddy.SL.Hubs
                     foreach (var b_pod in S.StockOutDetails)
                     {
                         DAL.StockInDetail d_pod = new DAL.StockInDetail();
-                        b_pod.toCopy<DAL.StockInDetail>(d_pod);
+                        b_pod.ToMap<DAL.StockInDetail>(d_pod);
                         p.StockInDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -168,13 +168,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.toCopy<BLL.StockIn>(P);
+                    d.ToMap<BLL.StockIn>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
                     foreach (var d_pod in d.StockInDetails)
                     {
                         BLL.StockInDetail b_pod = new BLL.StockInDetail();
-                        d_pod.toCopy<BLL.StockInDetail>(b_pod);
+                        d_pod.ToMap<BLL.StockInDetail>(b_pod);
                         P.STInDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -197,13 +197,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.toCopy<BLL.StockIn>(P);
+                    d.ToMap<BLL.StockIn>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
 
                     foreach (var d_pod in d.StockInDetails)
                     {
                         BLL.StockInDetail b_pod = new BLL.StockInDetail();
-                        d_pod.toCopy<BLL.StockInDetail>(b_pod);
+                        d_pod.ToMap<BLL.StockInDetail>(b_pod);
                         P.STInDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
@@ -239,10 +239,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.StockIn StockIn_DALtoBLL(DAL.StockIn d)
         {
-            BLL.StockIn P = d.toCopy<BLL.StockIn>(new BLL.StockIn());
+            BLL.StockIn P = d.ToMap<BLL.StockIn>(new BLL.StockIn());
             foreach (var d_Pd in d.StockInDetails)
             {
-                P.STInDetails.Add(d_Pd.toCopy<BLL.StockInDetail>(new BLL.StockInDetail()));
+                P.STInDetails.Add(d_Pd.ToMap<BLL.StockInDetail>(new BLL.StockInDetail()));
             }
             return P;
         }

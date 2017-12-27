@@ -238,7 +238,7 @@ namespace AccountBuddy.BLL
                     toList.Add(d);
                 }
 
-                this.toCopy<Department>(d);
+                this.ToMap<Department>(d);
                 if (isServerCall == false)
                 {
                     var i = FMCGHubClient.HubCaller.Invoke<int>("Department_Save", this).Result;
@@ -260,7 +260,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                new Department().toCopy<Department>(this);
+                new Department().ToMap<Department>(this);
                 IsReadOnly = !UserPermission.AllowInsert;
 
                 NotifyAllPropertyChanged();
@@ -276,7 +276,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<Department>(this);
+                d.ToMap<Department>(this);
                // IsReadOnly = !UserPermission.AllowUpdate;
                 return true;
             }

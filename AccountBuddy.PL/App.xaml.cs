@@ -69,7 +69,7 @@ namespace AccountBuddy.PL
             {
 
                 AppLib.WriteLog("Application Startup");
-
+                
                 AppLib.SLPath= ConfigurationManager.AppSettings["SLPath"];
                 AppLib.SLTransport = ConfigurationManager.AppSettings["SLTransport"];
                 AppLib.AppIdKey = ConfigurationManager.AppSettings["DSAppKey"];

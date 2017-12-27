@@ -40,7 +40,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 RptLedger.Reset();
                // l = l.Select(x => new BLL.Ledger { AccountName = x.AccountName, OPDr = x.OPDr, OPCr = x.OPCr }).ToList();
                 ReportDataSource data = new ReportDataSource("Ledger",l);
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 RptLedger.LocalReport.DataSources.Add(data);
                 RptLedger.LocalReport.DataSources.Add(data1);
                 RptLedger.LocalReport.ReportPath = @"rpt\Transaction\rptLedgerOpening.rdlc";
@@ -67,7 +67,7 @@ namespace AccountBuddy.PL.frm.Transaction
         }
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
-            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
     }
 }

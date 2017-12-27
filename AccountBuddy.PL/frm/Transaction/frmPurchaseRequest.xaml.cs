@@ -195,7 +195,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.PurchaseRequestDetail pod = dgvDetails.SelectedItem as BLL.PurchaseRequestDetail;
-                pod.toCopy<BLL.PurchaseRequestDetail>(data.PRDetail);
+                pod.ToMap<BLL.PurchaseRequestDetail>(data.PRDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 

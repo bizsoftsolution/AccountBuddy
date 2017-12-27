@@ -170,7 +170,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.StockInProcessDetail pod = dgvDetails.SelectedItem as BLL.StockInProcessDetail;
-                pod.toCopy<BLL.StockInProcessDetail>(data.STPDetail);
+                pod.ToMap<BLL.StockInProcessDetail>(data.STPDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
@@ -298,7 +298,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.StockInProcessDetail pod = dgvDetails.SelectedItem as BLL.StockInProcessDetail;
-                pod.toCopy<BLL.StockInProcessDetail>(data.STPDetail);
+                pod.ToMap<BLL.StockInProcessDetail>(data.STPDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }

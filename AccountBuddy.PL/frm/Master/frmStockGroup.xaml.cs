@@ -252,7 +252,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 rptStockGroup.Reset();
                 ReportDataSource data = new ReportDataSource("StockGroup", BLL.StockGroup.toList.Where(x => StockGroup_Filter(x)).Select(x => new { StockGroupCode = x.GroupCode, StockGroupName = x.StockGroupName, underGroupName = x.UnderStockGroup==null?"":x.UnderStockGroup.StockGroupName }).OrderBy(x => x.StockGroupCode).ToList());
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptStockGroup.LocalReport.DataSources.Add(data);
                 rptStockGroup.LocalReport.DataSources.Add(data1);
                 rptStockGroup.LocalReport.ReportPath = @"rpt\master\rptStockGroup.rdlc";
@@ -271,7 +271,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
-            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
         #endregion
 

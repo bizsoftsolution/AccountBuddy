@@ -61,7 +61,7 @@ namespace AccountBuddy.PL.frm.Report
             {
                 rptBalanceSheet.Reset();
                 ReportDataSource data = new ReportDataSource("BalanceSheet", list);
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptBalanceSheet.LocalReport.DataSources.Add(data);
                 rptBalanceSheet.LocalReport.DataSources.Add(data1);
                 rptBalanceSheet.LocalReport.ReportPath = @"rpt\Report\rptBalanceSheet.rdlc";
@@ -86,7 +86,7 @@ namespace AccountBuddy.PL.frm.Report
         }
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
-            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
 
 

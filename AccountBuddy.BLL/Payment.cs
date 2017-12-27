@@ -633,7 +633,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Payment().toCopy<Payment>(this);
+            new Payment().ToMap<Payment>(this);
             ClearDetail();
             _PDetails = new ObservableCollection<PaymentDetail>();
 
@@ -649,7 +649,7 @@ namespace AccountBuddy.BLL
             {
                 Payment po = FMCGHubClient.HubCaller.Invoke<Payment>("Payment_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<Payment>(this);
+                po.ToMap<Payment>(this);
                 this.PDetails = po.PDetails;
                 IsReadOnly = !UserPermission.AllowInsert;
 
@@ -688,7 +688,7 @@ namespace AccountBuddy.BLL
                 PDetails.Add(pod);
             }
 
-            PDetail.toCopy<PaymentDetail>(pod);
+            PDetail.ToMap<PaymentDetail>(pod);
             ClearDetail();
             Amount = PDetails.Sum(x => x.Amount);
         }
@@ -697,7 +697,7 @@ namespace AccountBuddy.BLL
         {
             PaymentDetail pod = new PaymentDetail();
             pod.SNo = PDetails.Count == 0 ? 1 : PDetails.Max(x => x.SNo) + 1;
-            pod.toCopy<PaymentDetail>(PDetail);
+            pod.ToMap<PaymentDetail>(PDetail);
         }
 
         public void DeleteDetail(int SNo)
@@ -718,7 +718,7 @@ namespace AccountBuddy.BLL
 
             if (pod != null)
             {
-                pod.toCopy<PaymentDetail>(PDetail);
+                pod.ToMap<PaymentDetail>(PDetail);
             }
         }
 

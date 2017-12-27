@@ -44,12 +44,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.Journal();
                     DB.Journals.Add(d);
 
-                    PO.toCopy<DAL.Journal>(d);
+                    PO.ToMap<DAL.Journal>(d);
 
                     foreach (var b_pod in PO.JDetails)
                     {
                         DAL.JournalDetail d_pod = new DAL.JournalDetail();
-                        b_pod.toCopy<DAL.JournalDetail>(d_pod);
+                        b_pod.ToMap<DAL.JournalDetail>(d_pod);
                         d.JournalDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -69,7 +69,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.JournalDetails.RemoveRange(d.JournalDetails.Where(x => x.JournalId == pd).ToList());
 
 
-                    PO.toCopy<DAL.Journal>(d);
+                    PO.ToMap<DAL.Journal>(d);
 
                     foreach (var b_pod in PO.JDetails)
                     {
@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.JournalDetail d_pod = new DAL.JournalDetail();
                         d.JournalDetails.Add(d_pod);
                         //}
-                        b_pod.toCopy<DAL.JournalDetail>(d_pod);
+                        b_pod.ToMap<DAL.JournalDetail>(d_pod);
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
@@ -103,12 +103,12 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.toCopy<BLL.Journal>(PO);
+                    d.ToMap<BLL.Journal>(PO);
                     int i = 0;
                     foreach (var d_pod in d.JournalDetails)
                     {
                         BLL.JournalDetail b_pod = new BLL.JournalDetail();
-                        d_pod.toCopy<BLL.JournalDetail>(b_pod);
+                        d_pod.ToMap<BLL.JournalDetail>(b_pod);
                         PO.JDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
@@ -130,11 +130,11 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.toCopy<BLL.Journal>(PO);
+                    d.ToMap<BLL.Journal>(PO);
                     foreach (var d_pod in d.JournalDetails)
                     {
                         BLL.JournalDetail b_pod = new BLL.JournalDetail();
-                        d_pod.toCopy<BLL.JournalDetail>(b_pod);
+                        d_pod.ToMap<BLL.JournalDetail>(b_pod);
                         PO.JDetails.Add(b_pod);
                         b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
@@ -168,10 +168,10 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.Journal Journal_DALtoBLL(DAL.Journal d)
         {
-            BLL.Journal J = d.toCopy<BLL.Journal>(new BLL.Journal());
+            BLL.Journal J = d.ToMap<BLL.Journal>(new BLL.Journal());
             foreach (var d_Jd in d.JournalDetails)
             {
-                J.JDetails.Add(d_Jd.toCopy<BLL.JournalDetail>(new BLL.JournalDetail()));
+                J.JDetails.Add(d_Jd.ToMap<BLL.JournalDetail>(new BLL.JournalDetail()));
             }
             return J;
         }

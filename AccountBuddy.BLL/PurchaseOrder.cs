@@ -442,7 +442,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                new PurchaseOrder().toCopy<PurchaseOrder>(this);
+                new PurchaseOrder().ToMap<PurchaseOrder>(this);
                 _PODetail = new PurchaseOrderDetail();
                 _PODetails = new ObservableCollection<PurchaseOrderDetail>();
                 PODate = DateTime.Now;
@@ -471,7 +471,7 @@ namespace AccountBuddy.BLL
             {
                 PurchaseOrder po = FMCGHubClient.HubCaller.Invoke<PurchaseOrder>("PurchaseOrder_Find", RefNo).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<PurchaseOrder>(this);
+                po.ToMap<PurchaseOrder>(this);
                 this.PODetails = po.PODetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -514,7 +514,7 @@ namespace AccountBuddy.BLL
 
                 }
 
-                PODetail.toCopy<PurchaseOrderDetail>(pod);
+                PODetail.ToMap<PurchaseOrderDetail>(pod);
                 ItemAmount = PODetails.Sum(x => x.Amount);
                 SetAmount();
                 ClearDetail();
@@ -530,7 +530,7 @@ namespace AccountBuddy.BLL
         {
             PurchaseOrderDetail pod = new PurchaseOrderDetail();
             pod.SNo = PODetails.Count == 0 ? 1 : PODetails.Max(x => x.SNo) + 1;
-            pod.toCopy<PurchaseOrderDetail>(PODetail);
+            pod.ToMap<PurchaseOrderDetail>(PODetail);
 
         }
 

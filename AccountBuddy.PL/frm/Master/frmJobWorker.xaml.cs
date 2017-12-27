@@ -256,7 +256,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 rptJobWorker.Reset();
                 ReportDataSource data = new ReportDataSource("Ledger", BLL.JobWorker.toList.Where(x => JobWorker_Filter(x)).Select(x => new { x.Ledger.LedgerName, AccountName = x.Role, x.Ledger.AddressLine1, x.Ledger.AddressLine2, x.Ledger.CityName, x.Ledger.TelephoneNo, x.Ledger.MobileNo, OPCr = x.Salary, x.Ledger.EMailId, }).OrderBy(x => x.LedgerName).ToList());
-                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
+                ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptJobWorker.LocalReport.DataSources.Add(data);
                 rptJobWorker.LocalReport.DataSources.Add(data1);
 
@@ -276,7 +276,7 @@ namespace AccountBuddy.PL.frm.Master
         }
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
-            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
+            e.DataSources.Add(new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList())); ;
         }
         #endregion
 

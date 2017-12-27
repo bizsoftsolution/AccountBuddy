@@ -462,7 +462,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new JobOrderReceived().toCopy<JobOrderReceived>(this);
+            new JobOrderReceived().ToMap<JobOrderReceived>(this);
             _JRDetail = new JobOrderReceivedDetail();
             _JRDetails = new ObservableCollection<JobOrderReceivedDetail>();
 
@@ -477,7 +477,7 @@ namespace AccountBuddy.BLL
             {
                 JobOrderReceived po = FMCGHubClient.HubCaller.Invoke<JobOrderReceived>("JobOrderReceived_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<JobOrderReceived>(this);
+                po.ToMap<JobOrderReceived>(this);
                 this.JRDetails = po.JRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -507,7 +507,7 @@ namespace AccountBuddy.BLL
             {
                 JobOrderReceived po = FMCGHubClient.HubCaller.Invoke<JobOrderReceived>("JobOrderReceived_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<JobOrderReceived>(this);
+                po.ToMap<JobOrderReceived>(this);
                 this.JRDetails = po.JRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -537,7 +537,7 @@ namespace AccountBuddy.BLL
                 {
                     JRDetail.Quantity += pod.Quantity;
                 }
-                JRDetail.toCopy<JobOrderReceivedDetail>(pod);
+                JRDetail.ToMap<JobOrderReceivedDetail>(pod);
                 ClearDetail();
                 ItemAmount = JRDetails.Sum(x => x.Amount);
 
@@ -549,7 +549,7 @@ namespace AccountBuddy.BLL
         {
             JobOrderReceivedDetail pod = new JobOrderReceivedDetail();
             pod.SNo = JRDetails.Count == 0 ? 1 : JRDetails.Max(x => x.SNo) + 1;
-            pod.toCopy<JobOrderReceivedDetail>(JRDetail);
+            pod.ToMap<JobOrderReceivedDetail>(JRDetail);
         }
 
         public void DeleteDetail(int SNo)

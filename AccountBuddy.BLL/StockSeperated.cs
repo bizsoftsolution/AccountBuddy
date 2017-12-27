@@ -441,7 +441,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new StockSeperated().toCopy<StockSeperated>(this);
+            new StockSeperated().ToMap<StockSeperated>(this);
             _SSDetail = new StockSeperatedDetail();
             _SSDetails = new ObservableCollection<StockSeperatedDetail>();
 
@@ -456,7 +456,7 @@ namespace AccountBuddy.BLL
             {
                 StockSeperated po = FMCGHubClient.HubCaller.Invoke<StockSeperated>("StockSeperated_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<StockSeperated>(this);
+                po.ToMap<StockSeperated>(this);
                 this.SSDetails = po.SSDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -485,7 +485,7 @@ namespace AccountBuddy.BLL
             {
                 StockSeperated po = FMCGHubClient.HubCaller.Invoke<StockSeperated>("StockSeperated_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<StockSeperated>(this);
+                po.ToMap<StockSeperated>(this);
                 this.SSDetails = po.SSDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -514,7 +514,7 @@ namespace AccountBuddy.BLL
                 {
                     SSDetail.Quantity += pod.Quantity;
                 }
-                SSDetail.toCopy<StockSeperatedDetail>(pod);
+                SSDetail.ToMap<StockSeperatedDetail>(pod);
                 ClearDetail();
                 ItemAmount = SSDetails.Sum(x => x.Amount);
                 SetAmount();
@@ -526,7 +526,7 @@ namespace AccountBuddy.BLL
         {
             StockSeperatedDetail pod = new StockSeperatedDetail();
             pod.SNo = SSDetails.Count == 0 ? 1 : SSDetails.Max(x => x.SNo) + 1;
-            pod.toCopy<StockSeperatedDetail>(SSDetail);
+            pod.ToMap<StockSeperatedDetail>(SSDetail);
         }
 
         public void DeleteDetail(int SNo)

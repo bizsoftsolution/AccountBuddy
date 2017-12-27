@@ -16,7 +16,7 @@ namespace AccountBuddy.SL.Controllers
         }
         public BLL.Product Product_DALtoBLL(DAL.Product ProductsFrom, int CompanyId)
         {
-            BLL.Product ProductsTo = ProductsFrom.toCopy<BLL.Product>(new BLL.Product());
+            BLL.Product ProductsTo = ProductsFrom.ToMap<BLL.Product>(new BLL.Product());
             var pd = ProductsFrom.ProductDetails.Where(x => x.CompanyId == CompanyId).FirstOrDefault();
             if (pd == null) pd = new DAL.ProductDetail();
             ProductsTo.OpeningStock = pd.OpeningStock;

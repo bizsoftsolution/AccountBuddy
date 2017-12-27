@@ -38,11 +38,11 @@ namespace AccountBuddy.SL.Hubs
                 {
                     d = new DAL.Purchase();
                     DB.Purchases.Add(d);
-                    P.toCopy<DAL.Purchase>(d);
+                    P.ToMap<DAL.Purchase>(d);
                     foreach (var b_pod in P.PDetails)
                     {
                         DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
-                        b_pod.toCopy<DAL.PurchaseDetail>(d_pod);
+                        b_pod.ToMap<DAL.PurchaseDetail>(d_pod);
                         d.PurchaseDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -60,7 +60,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = P.PDetails.Select(X => X.PurchaseId).FirstOrDefault();
                     DB.PurchaseDetails.RemoveRange(d.PurchaseDetails.Where(x => x.PurchaseId == rd).ToList());
 
-                    P.toCopy<DAL.Purchase>(d);
+                    P.ToMap<DAL.Purchase>(d);
                     foreach (var b_Pd in P.PDetails)
                     {
                         // DAL.PurchaseDetail d_Pd = d.PurchaseDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
@@ -69,7 +69,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.PurchaseDetail d_Pd = new DAL.PurchaseDetail();
                             d.PurchaseDetails.Add(d_Pd);
                       //  }
-                        b_Pd.toCopy<DAL.PurchaseDetail>(d_Pd);
+                        b_Pd.ToMap<DAL.PurchaseDetail>(d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -125,7 +125,7 @@ namespace AccountBuddy.SL.Hubs
                         foreach (var b_pod in S.SalesDetails)
                         {
                             DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
-                            b_pod.toCopy<DAL.PurchaseDetail>(d_pod);
+                            b_pod.ToMap<DAL.PurchaseDetail>(d_pod);
                             p.PurchaseDetails.Add(d_pod);
                         }
                         DB.SaveChanges();
@@ -170,7 +170,7 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.toCopy<BLL.Purchase>(P);
+                    d.ToMap<BLL.Purchase>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
 
@@ -178,7 +178,7 @@ namespace AccountBuddy.SL.Hubs
                     foreach (var d_pod in d.PurchaseDetails)
                     {
                         BLL.PurchaseDetail b_pod = new BLL.PurchaseDetail();
-                        d_pod.toCopy<BLL.PurchaseDetail>(b_pod);
+                        d_pod.ToMap<BLL.PurchaseDetail>(b_pod);
                         P.PDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -216,10 +216,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.Purchase Purchase_DALtoBLL(DAL.Purchase d)
         {
-            BLL.Purchase P = d.toCopy<BLL.Purchase>(new BLL.Purchase());
+            BLL.Purchase P = d.ToMap<BLL.Purchase>(new BLL.Purchase());
             foreach (var d_Pd in d.PurchaseDetails)
             {
-                P.PDetails.Add(d_Pd.toCopy<BLL.PurchaseDetail>(new BLL.PurchaseDetail()));
+                P.PDetails.Add(d_Pd.ToMap<BLL.PurchaseDetail>(new BLL.PurchaseDetail()));
             }
             return P;
         }
@@ -248,13 +248,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.toCopy<BLL.Purchase>(P);
+                    d.ToMap<BLL.Purchase>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     foreach (var d_pod in d.PurchaseDetails)
                     {
                         BLL.PurchaseDetail b_pod = new BLL.PurchaseDetail();
-                        d_pod.toCopy<BLL.PurchaseDetail>(b_pod);
+                        d_pod.ToMap<BLL.PurchaseDetail>(b_pod);
                         P.PDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;

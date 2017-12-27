@@ -11,7 +11,7 @@ namespace AccountBuddy.SL.Hubs
 
         private BLL.JobWorker JobWorker_DALtoBLL(DAL.JobWorker JobWorkerFrom)
         {
-            BLL.JobWorker JobWorkerTo = JobWorkerFrom.toCopy<BLL.JobWorker>(new BLL.JobWorker());
+            BLL.JobWorker JobWorkerTo = JobWorkerFrom.ToMap<BLL.JobWorker>(new BLL.JobWorker());
 
             JobWorkerTo.Ledger = LedgerDAL_BLL(JobWorkerFrom.Ledger);
 
@@ -33,7 +33,7 @@ namespace AccountBuddy.SL.Hubs
                 {
 
                     d = new DAL.JobWorker();
-                    cus.toCopy<DAL.JobWorker>(d);
+                    cus.ToMap<DAL.JobWorker>(d);
                     d.LedgerId = Ledger_Save(cus.Ledger);
                     if (d.LedgerId != 0)
                     {
@@ -46,7 +46,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    cus.toCopy<DAL.JobWorker>(d);
+                    cus.ToMap<DAL.JobWorker>(d);
                     Ledger_Save(cus.Ledger);
                     DB.SaveChanges();
                     LogDetailStore(cus, LogDetailType.UPDATE);

@@ -607,7 +607,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Receipt().toCopy<Receipt>(this);
+            new Receipt().ToMap<Receipt>(this);
             ClearDetail();
             _RDetails = new ObservableCollection<ReceiptDetail>();
 
@@ -623,7 +623,7 @@ namespace AccountBuddy.BLL
             {
                 Receipt po = FMCGHubClient.HubCaller.Invoke<Receipt>("Receipt_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
-                po.toCopy<Receipt>(this);
+                po.ToMap<Receipt>(this);
                 this.RDetails = po.RDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -660,7 +660,7 @@ namespace AccountBuddy.BLL
                 RDetails.Add(pod);
             }
 
-            RDetail.toCopy<ReceiptDetail>(pod);
+            RDetail.ToMap<ReceiptDetail>(pod);
             ClearDetail();
             Amount = RDetails.Sum(x => x.Amount);
         }
@@ -669,7 +669,7 @@ namespace AccountBuddy.BLL
         {
             ReceiptDetail pod = new ReceiptDetail();
             pod.SNo = RDetails.Count == 0 ? 1 : RDetails.Max(x => x.SNo) + 1;
-            pod.toCopy<ReceiptDetail>(RDetail);
+            pod.ToMap<ReceiptDetail>(RDetail);
         }
 
         public void DeleteDetail(int SNo)
@@ -690,7 +690,7 @@ namespace AccountBuddy.BLL
 
             if (pod != null)
             {
-                pod.toCopy<ReceiptDetail>(RDetail);
+                pod.ToMap<ReceiptDetail>(RDetail);
             }
         }
 

@@ -19,12 +19,12 @@ namespace AccountBuddy.SL.Hubs
             BLL.Ledger ledgerTo = new BLL.Ledger();
             try
             {
-                ledgerTo = ledgerFrom.toCopy<BLL.Ledger>(new BLL.Ledger());
+                ledgerTo = ledgerFrom.ToMap<BLL.Ledger>(new BLL.Ledger());
 
                 ledgerTo.AccountGroup = AccountGroupDAL_BLL(ledgerFrom.AccountGroup);
 
                 ledgerTo.CreditLimitType = new BLL.CreditLimitType();
-                ledgerFrom.CreditLimitType.toCopy<BLL.CreditLimitType>(ledgerTo.CreditLimitType);
+                ledgerFrom.CreditLimitType.ToMap<BLL.CreditLimitType>(ledgerTo.CreditLimitType);
                 ledgerTo.OPBal = GetLedgerBalance(ledgerFrom);
                 ledgerTo.OPCr = ledgerFrom.OPCr;
                 ledgerTo.OPDr = ledgerFrom.OPDr;
@@ -60,13 +60,13 @@ namespace AccountBuddy.SL.Hubs
                 {
                     d = new DAL.Ledger(); 
                     DB.Ledgers.Add(d);
-                    led.toCopy<DAL.Ledger>(d);                  
+                    led.ToMap<DAL.Ledger>(d);                  
                     led.Id = d.Id;
                     LogDetailStore(led, LogDetailType.INSERT);
                 }
                 else
                 {
-                    led.toCopy<DAL.Ledger>(d);                   
+                    led.ToMap<DAL.Ledger>(d);                   
                     LogDetailStore(led, LogDetailType.UPDATE);
                 }
                 DB.SaveChanges();

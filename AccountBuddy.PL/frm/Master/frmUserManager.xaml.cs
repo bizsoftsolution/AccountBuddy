@@ -53,7 +53,7 @@ namespace AccountBuddy.PL.frm.Master
                 frmUser f = new frmUser();
                 f.UnderCompanyId = CompanyId;
                 f.LoadWindow(CompanyId);
-                u.toCopy<BLL.UserAccount>(f.data);
+                u.ToMap<BLL.UserAccount>(f.data);
                 f.ShowDialog();
                 LoadWindow(CompanyId);
             }

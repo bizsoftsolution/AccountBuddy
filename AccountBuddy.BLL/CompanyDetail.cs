@@ -65,7 +65,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public static ObservableCollection<CompanyDetail> toList
+        public static ObservableCollection<CompanyDetail> ToList
         {
             get
             {
@@ -447,12 +447,12 @@ namespace AccountBuddy.BLL
             if (!isValid()) return false;
             try
             {
-                CompanyDetail d = toList.Where(x => x.Id == Id).FirstOrDefault();
+                CompanyDetail d = ToList.Where(x => x.Id == Id).FirstOrDefault();
                 int i = 0;
                 if (d == null)
                 {
                     d = new CompanyDetail();
-                    toList.Add(d);
+                    ToList.Add(d);
                 }
 
                 this.ToMap(d);
@@ -483,7 +483,7 @@ namespace AccountBuddy.BLL
 
         public bool Find(int pk)
         {
-            var d = toList.Where(x => x.Id == pk).FirstOrDefault();
+            var d = ToList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
                 d.ToMap(this);
@@ -502,7 +502,7 @@ namespace AccountBuddy.BLL
             {
                
                 lstValidation.Clear();
-                var cm = toList.Where(x => x.CompanyName == CompanyName && x.CompanyType == CompanyType && x.UnderCompanyId == UnderCompanyId).FirstOrDefault();
+                var cm = ToList.Where(x => x.CompanyName == CompanyName && x.CompanyType == CompanyType && x.UnderCompanyId == UnderCompanyId).FirstOrDefault();
 
                 var user = BLL.UserAccount.toList.Where(x => x.UserType.Company.UnderCompanyId == (UnderCompanyId == null ? null : UnderCompanyId) && x.UserName == UserId && x.UserType.Company.CompanyName == CompanyName).FirstOrDefault();
 
@@ -565,10 +565,10 @@ namespace AccountBuddy.BLL
 
         public bool Delete(bool isServerCall = false)
         {
-            var d = toList.Where(x => x.Id == Id).FirstOrDefault();
+            var d = ToList.Where(x => x.Id == Id).FirstOrDefault();
             if (d != null)
             {
-                toList.Remove(d);
+                ToList.Remove(d);
                 if (isServerCall == false)
                 {
                     FMCGHubClient.HubCaller.Invoke<int>("CompanyDetail_Delete", this.Id);
@@ -576,7 +576,7 @@ namespace AccountBuddy.BLL
                 }
                 else
                 {
-                    toList.Remove(d);
+                    ToList.Remove(d);
                 }
             }
            
@@ -585,11 +585,11 @@ namespace AccountBuddy.BLL
         }
         public bool DeleteWareHouse(int Id)
         {
-            var c = toList.Where(x => x.Id == Id).FirstOrDefault();
+            var c = ToList.Where(x => x.Id == Id).FirstOrDefault();
 
             if (c != null)
             {
-                toList.Remove(c);
+                ToList.Remove(c);
                 if (isServerCall == false)
                 {
                     FMCGHubClient.HubCaller.Invoke<int>("CompanyDetail_Delete", c.Id);
@@ -597,7 +597,7 @@ namespace AccountBuddy.BLL
                 }
                 else
                 {
-                    toList.Remove(c);
+                    ToList.Remove(c);
                 }
             }
             return false;

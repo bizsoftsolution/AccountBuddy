@@ -169,7 +169,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.StockOutDetail pod = dgvDetails.SelectedItem as BLL.StockOutDetail;
-                pod.toCopy<BLL.StockOutDetail>(data.STOutDetail);
+                pod.ToMap<BLL.StockOutDetail>(data.STOutDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
@@ -271,7 +271,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.StockOutDetail pod = dgvDetails.SelectedItem as BLL.StockOutDetail;
-                pod.toCopy<BLL.StockOutDetail>(data.STOutDetail);
+                pod.ToMap<BLL.StockOutDetail>(data.STOutDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }

@@ -153,7 +153,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.ReceiptDetail pod = dgvDetails.SelectedItem as BLL.ReceiptDetail;
-                pod.toCopy<BLL.ReceiptDetail>(data.RDetail);
+                pod.ToMap<BLL.ReceiptDetail>(data.RDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 

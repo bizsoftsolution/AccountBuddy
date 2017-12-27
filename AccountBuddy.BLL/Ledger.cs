@@ -587,7 +587,7 @@ namespace AccountBuddy.BLL
                     toList.Add(d);
                 }
 
-                this.toCopy<Ledger>(d);
+                this.ToMap<Ledger>(d);
                 if (isServerCall == false)
                 {
                     var i = FMCGHubClient.HubCaller.Invoke<int>("Ledger_Save", this).Result;
@@ -606,7 +606,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Ledger().toCopy<Ledger>(this);
+            new Ledger().ToMap<Ledger>(this);
             IsReadOnly = !UserPermission.AllowInsert;
             NotifyAllPropertyChanged();
         }
@@ -616,7 +616,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.toCopy<Ledger>(this);
+                d.ToMap<Ledger>(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
 
                 return true;

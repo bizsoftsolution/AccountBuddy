@@ -11,8 +11,8 @@ namespace AccountBuddy.SL.Hubs
         #region Department
         BLL.Department Department_DALtoBLL(DAL.Department d)
         {
-            BLL.Department b = d.toCopy<BLL.Department>(new BLL.Department());
-            b.Company = d.CompanyDetail.toCopy<BLL.CompanyDetail>(new BLL.CompanyDetail());
+            BLL.Department b = d.ToMap<BLL.Department>(new BLL.Department());
+            b.Company = d.CompanyDetail.ToMap<BLL.CompanyDetail>(new BLL.CompanyDetail());
             return b;
         }
         public List<BLL.Department> Department_List()
@@ -48,7 +48,7 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.Department();
                     DB.Departments.Add(d);
 
-                    agp.toCopy<DAL.Department>(d);
+                    agp.ToMap<DAL.Department>(d);
                     DB.SaveChanges();
 
                     agp.Id = d.Id;
@@ -56,7 +56,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    agp.toCopy<DAL.Department>(d);
+                    agp.ToMap<DAL.Department>(d);
                     DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     DB.Departments.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(d.toCopy<BLL.Department>(new BLL.Department()), LogDetailType.DELETE);
+                    LogDetailStore(d.ToMap<BLL.Department>(new BLL.Department()), LogDetailType.DELETE);
 
                     if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).SDepartment_Delete(pk);
                 

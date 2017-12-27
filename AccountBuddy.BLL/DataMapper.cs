@@ -8,7 +8,7 @@ namespace AccountBuddy.BLL
 {
     public static class DataMapper
     {
-        public static CompanyDetail ToMap(this CompanyDetail S,CompanyDetail D)
+        public static CompanyDetail ToMap(this CompanyDetail S, CompanyDetail D)
         {
             D.Id = S.Id;
             D.AddressLine1 = S.AddressLine1;
@@ -28,11 +28,12 @@ namespace AccountBuddy.BLL
             D.PostalCode = S.PostalCode;
             D.TelephoneNo = S.TelephoneNo;
             D.UnderCompanyId = S.UnderCompanyId;
-            D.UserId = S.UserId;           
+            D.UserId = S.UserId;
 
-            return D;   
+            return D;
         }
-        public static UserType ToMap(this UserType S,UserType D)
+
+        public static UserType ToMap(this UserType S, UserType D)
         {
 
             D.Company = S.Company;
@@ -47,6 +48,7 @@ namespace AccountBuddy.BLL
 
             return D;
         }
+
         public static UserTypeDetail ToMap(this UserTypeDetail S, UserTypeDetail D)
         {
             D.AllowDelete = S.AllowDelete;
@@ -60,6 +62,7 @@ namespace AccountBuddy.BLL
 
             return D;
         }
+
         public static UserTypeFormDetail ToMap(this UserTypeFormDetail S, UserTypeFormDetail D)
         {
             D.Description = S.Description;
@@ -70,9 +73,10 @@ namespace AccountBuddy.BLL
             D.IsDelete = S.IsDelete;
             D.IsInsert = S.IsInsert;
             D.IsMenu = S.IsMenu;
-            D.IsUpdate = S.IsUpdate;            
+            D.IsUpdate = S.IsUpdate;
             return D;
         }
+
         public static UserAccount ToMap(this UserAccount S, UserAccount D)
         {
             D.Id = S.Id;
@@ -86,6 +90,7 @@ namespace AccountBuddy.BLL
 
             return D;
         }
+
         public static StockGroup ToMap(this StockGroup S, StockGroup D)
         {
             D.Company = S.Company;
@@ -105,6 +110,7 @@ namespace AccountBuddy.BLL
 
             return D;
         }
+
         public static AccountGroup ToMap(this AccountGroup S, AccountGroup D)
         {
             D.Company = S.Company;
@@ -131,9 +137,10 @@ namespace AccountBuddy.BLL
             D.Id = S.Id;
             D.IsEnabled = S.IsEnabled;
             D.IsReadOnly = S.IsReadOnly;
-            D.Symbol = S.Symbol;            
+            D.Symbol = S.Symbol;
             return D;
         }
+
         public static Product ToMap(this Product S, Product D)
         {
             D.DiscountAmount = S.DiscountAmount;
@@ -169,8 +176,116 @@ namespace AccountBuddy.BLL
             D.UOM = S.UOM;
             D.UOMId = S.UOMId;
             D.UOMName = S.UOMName;
-            
+
             return D;
         }
+
+        public static Ledger ToMap(this Ledger S, Ledger D)
+        {
+            D.Id = S.Id;
+            D.AccountGroup = S.AccountGroup;
+            D.AccountGroupId = S.AccountGroupId;
+            D.AccountName = S.AccountName;
+            D.ACType = S.ACType;
+            D.AddressLine1 = S.AddressLine1;
+            D.AddressLine2 = S.AddressLine2;
+            D.CityName = S.CityName;
+            D.CreditAmount = S.CreditAmount;
+            D.CreditLimit = S.CreditLimit;
+            D.CreditLimitType = S.CreditLimitType;
+            D.CreditLimitTypeId = S.CreditLimitTypeId;
+            D.CreditLimitTypeName = S.CreditLimitTypeName;
+            D.EMailId = S.EMailId;
+            D.GroupCode = S.GroupCode;
+            D.GSTNo = S.GSTNo;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.LedgerCode = S.LedgerCode;
+            D.LedgerName = S.LedgerName;
+            D.MobileNo = S.MobileNo;
+            D.OPBal = S.OPBal;
+            D.OPCr = S.OPCr;
+            D.OPDr = S.OPDr;
+            D.PersonIncharge = S.PersonIncharge;
+            D.TelephoneNo = S.TelephoneNo;
+
+
+            return D;
+        }
+
+        public static Bank ToMap(this Bank S, Bank D)
+        {
+            D.Id = S.Id;
+            D.AccountNo = S.AccountNo;
+            D.BankAccountName = S.BankAccountName;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.Ledger = S.Ledger;
+            D.LedgerId = S.LedgerId;
+            return D;
+        }
+
+        public static Staff ToMap(this Staff S, Staff D)
+        {
+            D.Id = S.Id;
+            D.DepartmentId = S.DepartmentId;
+            D.Designation = S.Designation;
+            D.DOB = S.DOB;
+            D.DOJ = S.DOJ;
+            D.LoginId = S.LoginId;
+            D.Salary = S.Salary;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.Ledger = S.Ledger;
+            D.LedgerId = S.LedgerId;
+            return D;
+        }
+
+        public static Supplier ToMap(this Supplier S, Supplier D)
+        {
+            D.Id = S.Id;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.Ledger = S.Ledger;
+            D.LedgerId = S.LedgerId;
+            return D;
+        }
+
+        public static Customer ToMap(this Customer S, Customer D)
+        {
+            D.Id = S.Id;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.Ledger = S.Ledger;
+            D.LedgerId = S.LedgerId;
+            return D;
+        }
+
+        public static JobWorker ToMap(this JobWorker S, JobWorker D)
+        {
+            D.Id = S.Id;
+            D.Role = S.Role;
+            D.Salary = S.Salary;         
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.Ledger = S.Ledger;
+            D.LedgerId = S.LedgerId;
+            return D;
+        }
+
+        public static Department ToMap(this Department S, Department D)
+        {
+            D.Id = S.Id;
+            D.Budget = S.Budget;
+            D.Company = S.Company;
+            D.CompanyId = S.CompanyId;
+            D.DepartmentName = S.DepartmentName;
+            D.Description = S.Description;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            return D;
+        }
+
+
     }
 }
