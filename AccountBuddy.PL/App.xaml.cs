@@ -421,19 +421,20 @@ namespace AccountBuddy.PL
                 {
                     var str = ex.Message;
                 }
-
-
             });
 
             HubReceiver.On<CompanyDetail>("CompanyDetail_Save", (cs) =>
             {
-
                 this.Dispatcher.Invoke(() =>
                 {
-                    cs.Save(true);
-
+                    cs.Save(true);                   
+                    var f = frmHome.GetForm(Forms.frmCompanySetting);                   
+                    if (f != null)
+                    {
+                        var frm = f.Content as frm.Master.frmCompanySetting;
+                        frm.Grid_Refresh();
+                    }
                 });
-
             });
 
             #region Account Group
@@ -442,6 +443,12 @@ namespace AccountBuddy.PL
                 this.Dispatcher.Invoke(() =>
                 {
                     Account.Save(true);
+                    var f = frmHome.GetForm(Forms.frmAccountGroup);
+                    if (f != null)
+                    {
+                        var frm = f.Content as frm.Master.frmAccountGroup;
+                        frm.Grid_Refresh();
+                    }
                 });
             });
             HubReceiver.On("AccountGroup_Delete", (Action<int>)((pk) =>

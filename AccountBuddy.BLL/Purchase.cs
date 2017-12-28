@@ -537,14 +537,21 @@ namespace AccountBuddy.BLL
         }
         public void Clear()
         {
-            new Purchase().toCopy<Purchase>(this);
-            this.PDetail = new PurchaseDetail();
-            this.PDetails = new ObservableCollection<PurchaseDetail>();
+            try
+            {
+                new Purchase().toCopy<Purchase>(this);
+                this.PDetail = new PurchaseDetail();
+                this.PDetails = new ObservableCollection<PurchaseDetail>();
 
-            PurchaseDate = DateTime.Now;
-            RefNo = FMCGHubClient.HubCaller.Invoke<string>("Purchase_NewRefNo").Result;
-            NotifyAllPropertyChanged();
-        }
+                PurchaseDate = DateTime.Now;
+                RefNo = FMCGHubClient.HubCaller.Invoke<string>("Purchase_NewRefNo").Result;
+                NotifyAllPropertyChanged();
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
+                }
         public void setLabel()
         {
             lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
