@@ -11,6 +11,7 @@ namespace AccountBuddy.SL.Hubs
     {
         #region UserAccount
 
+        
         private BLL.UserAccount UserAccountDAL_BLL(DAL.UserAccount d)
         {
             BLL.UserAccount b = d.ToMap(new BLL.UserAccount());

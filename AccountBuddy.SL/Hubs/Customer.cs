@@ -30,6 +30,7 @@ namespace AccountBuddy.SL.Hubs
         {
             try
             {
+                Common.AppLib.WriteLog(string.Format("server=>{0}", cus));
                 DAL.Customer d = DB.Customers.Where(x => x.Id == cus.Id).FirstOrDefault();
                 if (d == null)
                 {
@@ -65,6 +66,7 @@ namespace AccountBuddy.SL.Hubs
             {
                 WriteErrorLog("Customer", "Customer_Save", BLL.UserAccount.User.Id, Caller.CompanyId, ex.Message);
             }
+            Common.AppLib.WriteLog(string.Format("return server=>{0}", cus));
             return new BLL.Customer();
         }
 
