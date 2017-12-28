@@ -15,6 +15,7 @@ namespace AccountBuddy.SL.Hubs
             b.Company = d.CompanyDetail.ToMap(new BLL.CompanyDetail());
             return b;
         }
+
         public List<BLL.UOM> UOM_List()
         {
             
@@ -33,14 +34,11 @@ namespace AccountBuddy.SL.Hubs
         }
 
         public int UOM_Save(BLL.UOM b)
-        {
-
-            
+        {            
             try
             {
                 b.CompanyId = Caller.CompanyId;
                 DAL.UOM d = DB.UOMs.Where(x => x.Id == b.Id).FirstOrDefault();
-
                 if (d == null)
                 {
                     d = new DAL.UOM();
@@ -100,7 +98,6 @@ namespace AccountBuddy.SL.Hubs
             }
             return rv;
         }
-
 
         #endregion
     }

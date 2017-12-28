@@ -265,12 +265,20 @@ namespace AccountBuddy.SL.Hubs
         public BLL.PurchaseOrder PurchaseOrder_DALtoBLL(DAL.PurchaseOrder d)
         {
             BLL.PurchaseOrder PO = d.toCopy<BLL.PurchaseOrder>(new BLL.PurchaseOrder());
-            foreach (var d_pod in d.PurchaseOrderDetails)
+            try
             {
-                PO.PODetails.Add(d_pod.toCopy<BLL.PurchaseOrderDetail>(new BLL.PurchaseOrderDetail()));
+                foreach (var d_pod in d.PurchaseOrderDetails)
+                {
+                    PO.PODetails.Add(d_pod.toCopy<BLL.PurchaseOrderDetail>(new BLL.PurchaseOrderDetail()));
+                }
+                PO.Status = d.PurchaseOrderDetails.FirstOrDefault().PurchaseDetails.Count() > 0 ? "Purchased" : "Pending";
+                return PO;
             }
-            PO.Status = d.PurchaseOrderDetails.FirstOrDefault().PurchaseDetails.Count() > 0 ? "Purchased" : "Pending";
-            return PO;
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+                return PO;
+            }
         }
         public bool Find_PORef(string RefNo, BLL.PurchaseOrder PO)
 

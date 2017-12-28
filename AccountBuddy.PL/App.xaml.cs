@@ -439,12 +439,10 @@ namespace AccountBuddy.PL
             #region Account Group
             HubReceiver.On<AccountGroup>("AccountGroup_Save", (Account) =>
             {
-
                 this.Dispatcher.Invoke(() =>
                 {
                     Account.Save(true);
                 });
-
             });
             HubReceiver.On("AccountGroup_Delete", (Action<int>)((pk) =>
             {
@@ -523,12 +521,11 @@ namespace AccountBuddy.PL
             });
             
             #region Department
-            HubReceiver.On<Department>("Department_Save", (uom) =>
+            HubReceiver.On<Department>("Department_Save", (dept) =>
             {
-
                 this.Dispatcher.Invoke(() =>
                 {
-                    uom.Save(true);
+                    dept.Save(true);
                 });
 
             });
@@ -543,8 +540,6 @@ namespace AccountBuddy.PL
                 }));
 
             }));
-
-
 
             HubReceiver.On<BLL.JobWorker>("JobWorker_Save", (Cus) =>
             {
@@ -626,7 +621,6 @@ namespace AccountBuddy.PL
                 });
 
             }));
-
             HubReceiver.On<BLL.StockGroup>("StockGroup_Save", (sgp) =>
             {
 
@@ -636,7 +630,6 @@ namespace AccountBuddy.PL
                 });
 
             });
-
             HubReceiver.On("StockGroup_Delete", (Action<int>)((pk) =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
@@ -647,17 +640,14 @@ namespace AccountBuddy.PL
                 }));
 
             }));
-
             HubReceiver.On<BLL.Supplier>("Supplier_Save", (Cus) =>
             {
-
                 this.Dispatcher.Invoke(() =>
                 {
                     Cus.Save(true);
                 });
 
             });
-
             HubReceiver.On("Supplier_Delete", (Action<int>)((pk) =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
@@ -670,14 +660,11 @@ namespace AccountBuddy.PL
             }));
             HubReceiver.On<BLL.UOM>("UOM_Save", (uom) =>
             {
-
                 this.Dispatcher.Invoke(() =>
                 {
                     uom.Save(true);
                 });
-
             });
-
             HubReceiver.On("UOM_Delete", (Action<int>)((pk) =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
@@ -688,6 +675,7 @@ namespace AccountBuddy.PL
                 }));
 
             }));
+          
             #endregion
 
             #region Transaction
