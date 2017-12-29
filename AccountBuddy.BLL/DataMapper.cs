@@ -265,7 +265,7 @@ namespace AccountBuddy.BLL
         {
             D.Id = S.Id;
             D.Role = S.Role;
-            D.Salary = S.Salary;         
+            D.Salary = S.Salary;
             D.IsEnabled = S.IsEnabled;
             D.IsReadOnly = S.IsReadOnly;
             D.Ledger = S.Ledger;
@@ -286,6 +286,668 @@ namespace AccountBuddy.BLL
             return D;
         }
 
+
+        #region Transaction 
+
+        #region PurchaseOrder
+        public static PurchaseOrder ToMap(this PurchaseOrder S, PurchaseOrder D)
+        {
+            D.Id = S.Id;
+            D.AmountInwords = S.AmountInwords;
+            D.DiscountAmount = S.DiscountAmount;
+            D.Extras = S.Extras;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.lblDiscount = S.lblDiscount;
+            D.lblExtra = S.lblExtra;
+            D.LedgerId = S.LedgerId;
+            D.LedgerName = S.LedgerName;
+            D.Narration = S.Narration;
+            D.PODate = S.PODate;
+            D.PODetail = S.PODetail;
+            D.PODetails = S.PODetails;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static PurchaseOrderDetail ToMap(this PurchaseOrderDetail S, PurchaseOrderDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemCode = S.ItemCode;
+            D.POId = S.POId;
+            D.Product = S.Product;
+            D.ProductId = S.ProductId;
+            D.ProductName = S.ProductName;
+            D.Quantity = S.Quantity;
+            D.SNo = S.SNo;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.UOMName = S.UOMName;
+
+
+            return D;
+        }
+        #endregion
+
+        #region Purchase
+        public static BLL.Purchase ToMap(this Purchase S, Purchase D)
+        {
+            D.Id = S.Id;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.PurchaseDate = S.PurchaseDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TransactionType = S.TransactionType;
+            D.TransactionTypeId = S.TransactionTypeId;
+
+            D.Narration = S.Narration;
+            D.AmountInwords = S.AmountInwords;
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.TotalAmount = S.TotalAmount;
+
+            D.IsShowChequeDetail = S.IsShowChequeDetail;
+            D.lblDiscount = S.lblDiscount;
+            D.lblExtra = S.lblExtra;
+            D.PaidAmount = S.PaidAmount;
+            D.PayAmount = S.PayAmount;
+            D.PaymentLedgerId = S.PaymentLedgerId;
+
+            return D;
+        }
+        public static BLL.PurchaseDetail ToMap(this PurchaseDetail S, PurchaseDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.PODId = S.PODId;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.UOMName = S.UOMName;
+            return D;
+        }
+        #endregion
+
+        #region PurchaseReturn
+        public static PurchaseReturn ToMap(this PurchaseReturn S, PurchaseReturn D)
+        {
+            D.Id = S.Id;
+            D.LedgerId = S.LedgerId;
+            D.PRDate = S.PRDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TransactionType = S.TransactionType;
+            D.TransactionTypeId = S.TransactionTypeId;
+
+            D.Narration = S.Narration;
+            D.AmountInwords = S.AmountInwords;
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.TotalAmount = S.TotalAmount;
+
+            D.IsShowChequeDetail = S.IsShowChequeDetail;
+            D.lblDiscount = S.lblDiscount;
+            D.lblExtra = S.lblExtra;
+            D.PaidAmount = S.PaidAmount;
+            D.PayAmount = S.PayAmount;
+
+            return D;
+        }
+        public static PurchaseReturnDetail ToMap(this PurchaseReturnDetail S, BLL.PurchaseReturnDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.IsResale = S.IsResale;
+            D.Particulars = S.Particulars;
+            D.PDId = S.PDId;
+            D.PRId = S.PRId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.UOMName = S.UOMName;
+            return D;
+        }
+        #endregion
+
+        #region Sales Order
+        public static SalesOrder ToMap(this SalesOrder S, SalesOrder D)
+        {
+            D.Id = S.Id;
+            D.LedgerId = S.LedgerId;
+            D.SODate = S.SODate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.TotalAmount = S.TotalAmount;
+
+            D.Narration = S.Narration;
+            D.lblDiscount = S.lblDiscount;
+            D.lblExtra = S.lblExtra;
+            return D;
+        }
+        public static SalesOrderDetail ToMap(this SalesOrderDetail S, SalesOrderDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.UOMName = S.UOMName;
+
+            return D;
+        }
+        #endregion
+
+
+        #region Sales
+        public static Sale ToMap(this Sale S, Sale D)
+        {
+            D.Id = S.Id;
+            D.LedgerId = S.LedgerId;
+            D.SalesDate = S.SalesDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TransactionType = S.TransactionType;
+            D.TransactionTypeId = S.TransactionTypeId;
+
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.TotalAmount = S.TotalAmount;
+
+
+            D.Narration = S.Narration;
+            D.AmountInwords = S.AmountInwords;
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+
+            D.IsShowChequeDetail = S.IsShowChequeDetail;
+            D.lblDiscount = S.lblDiscount;
+            D.lblExtra = S.lblExtra;
+            D.PaidAmount = S.PaidAmount;
+            D.PayAmount = S.PayAmount;
+            return D;
+        }
+        public static SalesDetail ToMap(this SalesDetail S, SalesDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.UOMName = S.UOMName; return D;
+        }
+        #endregion
+
+        #region Sales Return
+        public static SalesReturn ToMap(this SalesReturn S, SalesReturn D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.SRDate = S.SRDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static SalesReturnDetail ToMap(this SalesReturnDetail S, SalesReturnDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = (decimal)S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.IsResale = S.IsResale;
+            D.Particulars = S.Particulars;
+            D.UOMName = S.UOMName; return D;
+        }
+        #endregion
+
+        #region JobOrder Issue
+        public static JobOrderIssue ToMap(this JobOrderIssue S, JobOrderIssue D)
+        {
+            D.Id = S.Id;
+            D.JobWorkerId = S.JobWorkerId;
+            D.JODate = S.JODate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+
+            D.DiscountAmount = S.DiscountAmount;
+            D.Extras = S.Extras;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.TotalAmount = S.TotalAmount;
+
+            D.Narration = S.Narration;
+            D.AmountInwords = S.AmountInwords;
+
+            D.lblDiscount = S.lblDiscount;
+            D.lblExtra = S.lblExtra;
+
+            return D;
+        }
+        public static JobOrderIssueDetail ToMap(this JobOrderIssueDetail S, JobOrderIssueDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount??0;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.UOMName = S.UOMName; return D;
+        }
+        #endregion
+
+        #region JobOrderReceived
+        public static JobOrderReceived ToMap(this JobOrderReceived S, JobOrderReceived D)
+        {
+            D.Id = S.Id;
+            D.JobWorkerId = S.JobWorkerId;
+            D.JRDate = S.JRDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.TotalAmount = S.TotalAmount;
+
+            D.Narration = S.Narration;
+            D.AmountInwords = S.AmountInwords;
+
+            D.lblDiscount = S.lblDiscount;
+            D.lblExtra = S.lblExtra;
+
+            return D;
+        }
+        public static JobOrderReceivedDetail ToMap(this JobOrderReceivedDetail S, JobOrderReceivedDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = (decimal)S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.UOMName = S.UOMName; return D;
+        }
+        #endregion
+
+        #region StockIn
+        public static StockIn ToMap(this StockIn S, StockIn D)
+        {
+            D.Id = S.Id;
+            D.LedgerId = S.LedgerId;
+            D.Date = S.Date;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+
+            D.ItemAmount = S.ItemAmount;
+
+            D.Narration = S.Narration;
+            D.AmountInwords = S.AmountInwords;
+
+            return D;
+        }
+        public static StockInDetail ToMap(this StockInDetail S, StockInDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.UOMName = S.UOMName;
+            return D;
+        }
+        #endregion
+
+        #region StockOut
+        public static StockOut ToMap(this StockOut S, StockOut D)
+        {
+            D.Id = S.Id;
+            D.LedgerId = S.LedgerId;
+            D.Date = S.Date;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+
+            D.ItemAmount = S.ItemAmount;
+
+            D.Narration = S.Narration;
+
+            D.AmountInwords = S.AmountInwords;
+            return D;
+        }
+        public static StockOutDetail ToMap(this StockOutDetail S, StockOutDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.UOMName = S.UOMName;
+            return D;
+        }
+        #endregion
+
+        #region StockInProcess
+        public static StockInProcess ToMap(this StockInProcess S, StockInProcess D)
+        {
+            D.Id = S.Id;
+            D.StaffId = S.StaffId;
+            D.SPDate = S.SPDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.TotalAmount = S.TotalAmount;
+
+            D.Narration = S.Narration;
+            D.AmountInwords = S.AmountInwords;
+
+            D.lblDiscount = S.lblDiscount;
+            D.lblExtra = S.lblExtra;
+            return D;
+
+        }
+        public static StockInProcessDetail ToMap(this StockInProcessDetail S, StockInProcessDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.UOMName = S.UOMName;
+            return D;
+        }
+        #endregion
+
+        #region StockSeperated
+        public static StockSeperated ToMap(this StockSeperated S, StockSeperated D)
+        {
+            D.Id = S.Id;
+            D.StaffId = S.StaffId;
+            D.Date = S.Date;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.TotalAmount = S.TotalAmount;
+
+            D.Narration = S.Narration;
+            D.AmountInwords = S.AmountInwords;
+
+            D.lblDiscount = S.lblDiscount;
+            D.lblExtra = S.lblExtra;
+
+            return D;
+        }
+        public static StockSeperatedDetail ToMap(this StockSeperatedDetail S, StockSeperatedDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.Product = S.Product;
+            D.ProductName = S.ProductName;
+            D.SNo = S.SNo;
+            D.UOMName = S.UOMName;
+
+            return D;
+        }
+        #endregion
+
+
+        #region Payment
+        public static Payment ToMap(this Payment S, Payment D)
+        {
+            D.Id = S.Id;
+            D.EntryNo = S.EntryNo;
+            D.Amount = S.Amount;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+            D.ClearDate = S.ClearDate;
+            D.ExtraCharge = S.ExtraCharge;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.PaymentDate = S.PaymentDate;
+            D.PaymentMode = S.PaymentMode;
+            D.PayTo = S.PayTo;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.VoucherNo = S.VoucherNo;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.AmountInwords = S.AmountInwords;
+
+            D.PDetail = S.PDetail;
+            D.PDetails = S.PDetails;
+            D.PLedger = S.PLedger;
+        
+
+            D.IsEnabled = S.IsEnabled;
+            D.IsLedgerEditable = S.IsLedgerEditable;
+            D.IsReadOnly = S.IsReadOnly;
+            D.IsShowComplete = S.IsShowComplete;
+            D.IsShowOnlineDetail = S.IsShowOnlineDetail;
+            D.IsShowChequeDetail = S.IsShowChequeDetail;
+            D.IsShowTTDetail = S.IsShowTTDetail;
+            D.IsShowReturn = S.IsShowReturn;
+
+            return D;
+        }
+        public static PaymentDetail ToMap(this PaymentDetail S, PaymentDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.LedgerId = S.LedgerId;
+            D.Particular = S.Particular;
+            D.PaymentId = S.PaymentId;
+            D.LedgerName = S.LedgerName;
+            D.SNo = S.SNo;
+           
+            return D;
+        }
+        #endregion
+
+        #region Receipt
+        public static Receipt ToMap(this Receipt S, Receipt D)
+        {
+            D.Id = S.Id;
+            D.EntryNo = S.EntryNo;
+            D.Amount = S.Amount;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+            D.CleareDate = S.CleareDate;
+            D.ExtraCharge = S.ExtraCharge;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.ReceiptDate = S.ReceiptDate;
+            D.ReceiptMode = S.ReceiptMode;
+            D.ReceivedFrom = S.ReceivedFrom;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.VoucherNo = S.VoucherNo;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.AmountInwords = S.AmountInwords;
+            D.RDetail = S.RDetail;
+            D.RDetails = S.RDetails;
+            D.RLedger = S.RLedger;
+
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.IsShowComplete = S.IsShowComplete;
+            D.IsShowOnlineDetail = S.IsShowOnlineDetail;
+            D.IsShowChequeDetail = S.IsShowChequeDetail;
+            D.IsShowTTDetail = S.IsShowTTDetail;
+            D.IsShowReturn = S.IsShowReturn;
+
+            return D;
+        }
+        public static ReceiptDetail ToMap(this ReceiptDetail S, BLL.ReceiptDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.ReceiptId = S.ReceiptId;
+            D.LedgerName = S.LedgerName;
+            D.SNo = S.SNo;
+            return D;
+        }
+        #endregion
+
+        #region Journal
+        public static Journal ToMap(this Journal S, Journal D)
+        {
+            D.Id = S.Id;
+            D.EntryNo = S.EntryNo;
+            D.Amount = S.Amount;
+            D.JournalDate = S.JournalDate;
+            D.HQNo = S.HQNo;
+            D.Particular = S.Particular;
+            D.RefCode = S.RefCode;
+            D.VoucherNo = S.VoucherNo;
+
+            D.JDetail = S.JDetail;
+            D.JDetails = S.JDetails;
+          
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+
+            return D;
+        }
+        public static JournalDetail ToMap(this JournalDetail S, JournalDetail D)
+        {
+            D.Id = S.Id;
+            D.CrAmt = S.CrAmt;
+            D.DrAmt = S.DrAmt;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+            D.ClearDate = S.ClearDate;
+            D.ExtraCharge = S.ExtraCharge;
+            D.JournalId = S.JournalId;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.JournalId = S.JournalId;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.TransactionMode = S.TransactionMode;
+
+           
+            D.IsShowComplete = S.IsShowComplete;
+            D.IsShowOnlineDetail = S.IsShowOnlineDetail;
+            D.IsShowChequeDetail = S.IsShowChequeDetail;
+            D.IsShowTTDetail = S.IsShowTTDetail;
+            D.IsShowReturn = S.IsShowReturn;
+            D.LedgerName = S.LedgerName;
+            D.SNo = S.SNo;
+            return D;
+        }
+        #endregion
+
+
+        #endregion
 
     }
 }

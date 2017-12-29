@@ -273,7 +273,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptProduct.Reset();
-                ReportDataSource data = new ReportDataSource("Products", BLL.Product.toList.Where(x => Product_Filter(x)).Select(x => new { x.ProductName, x.StockGroup.StockGroupName, UOMName=x.UOM.Symbol, x.ItemCode, x.PurchaseRate, x.SellingRate,  x.MRP, x.OpeningStock, x.ReOrderLevel }).OrderBy(x => x.ProductName).ToList());
+                ReportDataSource data = new ReportDataSource("Products", BLL.Product.toList.Where(x => Product_Filter(x)).Select(x => new { x.ProductName, StockGroupName=x.StockGroup.StockGroupName??null, UOMName=x.UOM.Symbol??null, x.ItemCode, x.PurchaseRate, x.SellingRate,  x.MRP, x.OpeningStock, x.ReOrderLevel }).OrderBy(x => x.ProductName).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptProduct.LocalReport.DataSources.Add(data);
                 rptProduct.LocalReport.DataSources.Add(data1);

@@ -32,11 +32,11 @@ namespace AccountBuddy.PL.frm.Transaction
             this.DataContext = data;
 
             data.Clear();
-            data.setLabel(); 
+            data.setLabel();
 
 
         }
-        
+
 
         #region Button Events
 
@@ -78,10 +78,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
             data.setLabel();
-            if (data.Id != 0)
-            {
-                btnPrint.IsEnabled = true;
-            }
+            btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
         }
@@ -193,7 +190,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            
+
 
             frmSalesSearch f = new frmSalesSearch();
             f.ShowDialog();
@@ -362,7 +359,7 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbPType.SelectedValuePath = "Id";
         }
 
-     
+
 
         private void LoadCustomer()
         {
@@ -379,7 +376,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
         }
 
-       
+
 
 
 
@@ -442,7 +439,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-           
+
             data.setLabel();
             btnSave.Visibility = (BLL.Sale.UserPermission.AllowInsert || BLL.Sale.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.Sale.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;

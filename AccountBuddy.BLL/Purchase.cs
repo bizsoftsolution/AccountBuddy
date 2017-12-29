@@ -539,7 +539,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                new Purchase().ToMap<Purchase>(this);
+                new Purchase().ToMap(this);
                 this.PDetail = new PurchaseDetail();
                 this.PDetails = new ObservableCollection<PurchaseDetail>();
 
@@ -564,7 +564,7 @@ namespace AccountBuddy.BLL
             {
                 Purchase po = FMCGHubClient.HubCaller.Invoke<Purchase>("Purchase_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<Purchase>(this);
+                po.ToMap(this);
                 this.PDetails = po.PDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -581,7 +581,7 @@ namespace AccountBuddy.BLL
             {
                 Purchase po = FMCGHubClient.HubCaller.Invoke<Purchase>("Purchase_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<Purchase>(this);
+                po.ToMap(this);
                 this.PDetails = po.PDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -621,7 +621,7 @@ namespace AccountBuddy.BLL
                 {
                     PDetail.Quantity += pod.Quantity;
                 }
-                PDetail.ToMap<PurchaseDetail>(pod);
+                PDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = PDetails.Sum(x => x.Amount);
                 SetAmount();
@@ -633,7 +633,7 @@ namespace AccountBuddy.BLL
         {
             PurchaseDetail pod = new PurchaseDetail();
             pod.SNo = PDetails.Count == 0 ? 1 : PDetails.Max(x => x.SNo) + 1;
-            pod.ToMap<PurchaseDetail>(PDetail);
+            pod.ToMap(PDetail);
         }
 
         public void DeleteDetail(int SNo)

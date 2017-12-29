@@ -19,10 +19,10 @@ namespace AccountBuddy.BLL
         private string _Particular;
         private string _HQNo;
         private string _VoucherNo;
-      
+
         private string _AmountInwords;
         private JournalDetail _JDetail;
-        
+
         private string _SearchText;
 
         private ObservableCollection<JournalDetail> _JDetails;
@@ -142,7 +142,7 @@ namespace AccountBuddy.BLL
                     NotifyPropertyChanged(nameof(Particular));
                 }
             }
-        }    
+        }
         public string HQNo
         {
             get
@@ -173,7 +173,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-     
+
         public JournalDetail JDetail
         {
             get
@@ -226,7 +226,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+
         public string AmountInwords
         {
             get
@@ -325,7 +325,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Journal().ToMap<Journal>(this);
+            new Journal().ToMap(this);
             ClearDetail();
             _JDetails = new ObservableCollection<JournalDetail>();
 
@@ -341,7 +341,7 @@ namespace AccountBuddy.BLL
             {
                 Journal po = FMCGHubClient.HubCaller.Invoke<Journal>("Journal_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<Journal>(this);
+                po.ToMap(this);
                 this.JDetails = po.JDetails;
                 IsReadOnly = !UserPermission.AllowInsert;
 
@@ -360,7 +360,7 @@ namespace AccountBuddy.BLL
             {
                 Journal po = FMCGHubClient.HubCaller.Invoke<Journal>("Journal_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<Journal>(this);
+                po.ToMap(this);
                 this.JDetails = po.JDetails;
                 IsReadOnly = !UserPermission.AllowInsert;
 
@@ -412,7 +412,7 @@ namespace AccountBuddy.BLL
                 JDetails.Add(pod);
             }
 
-            JDetail.ToMap<JournalDetail>(pod);
+            JDetail.ToMap(pod);
             ClearDetail();
             Amount = JDetails.Sum(x => x.DrAmt) - JDetails.Sum(x => x.CrAmt);
         }
@@ -421,7 +421,7 @@ namespace AccountBuddy.BLL
         {
             JournalDetail pod = new JournalDetail();
             pod.SNo = JDetails.Count == 0 ? 1 : JDetails.Max(x => x.SNo) + 1;
-            pod.ToMap<JournalDetail>(JDetail);
+            pod.ToMap(JDetail);
         }
 
         public void DeleteDetail(int SNo)
@@ -442,7 +442,7 @@ namespace AccountBuddy.BLL
 
             if (pod != null)
             {
-                pod.ToMap<JournalDetail>(JDetail);
+                pod.ToMap(JDetail);
             }
         }
         public static List<Journal> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)

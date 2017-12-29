@@ -528,7 +528,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                new Sale().ToMap<Sale>(this);
+                new Sale().ToMap(this);
                 _SDetail = new SalesDetail();
                 _SDetails = new ObservableCollection<SalesDetail>();
 
@@ -553,7 +553,7 @@ namespace AccountBuddy.BLL
             {
                 Sale S = FMCGHubClient.HubCaller.Invoke<Sale>("Sales_Find", SearchText).Result;
                 if (S.Id == 0) return false;
-                S.ToMap<Sale>(this);
+                S.ToMap(this);
                 this.SDetails = S.SDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -570,7 +570,7 @@ namespace AccountBuddy.BLL
             {
                 Sale S = FMCGHubClient.HubCaller.Invoke<Sale>("Sales_FindById", Id).Result;
                 if (S.Id == 0) return false;
-                S.ToMap<Sale>(this);
+                S.ToMap(this);
                 this.SDetails = S.SDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -611,7 +611,7 @@ namespace AccountBuddy.BLL
                 {
                     SDetail.Quantity += sod.Quantity;
                 }
-                SDetail.ToMap<SalesDetail>(sod);
+                SDetail.ToMap(sod);
                 ClearDetail();
                 ItemAmount = SDetails.Sum(x => x.Amount);
                 SetAmount();
@@ -623,7 +623,7 @@ namespace AccountBuddy.BLL
         {
             SalesDetail sod = new SalesDetail();
             sod.SNo = SDetails.Count == 0 ? 1 : SDetails.Max(x => x.SNo) + 1;
-            sod.ToMap<SalesDetail>(SDetail);
+            sod.ToMap(SDetail);
         }
 
         public void DeleteDetail(int SNo)

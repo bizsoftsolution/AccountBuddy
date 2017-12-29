@@ -48,7 +48,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_JRPendingList== null)
+                if (_JRPendingList == null)
                 {
                     try
                     {
@@ -56,7 +56,7 @@ namespace AccountBuddy.BLL
                         var l1 = FMCGHubClient.HubCaller.Invoke<List<JobOrderReceived>>("JobOrderReceived_JRPendingList").Result;
                         _JRPendingList = new ObservableCollection<JobOrderReceived>(l1);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Common.AppLib.WriteLog(string.Format("JRPending List_{0}_{1}", ex.Message, ex.InnerException));
                     }
@@ -184,8 +184,8 @@ namespace AccountBuddy.BLL
         {
             get
             {
-               if (_ItemAmount == null) _ItemAmount = 0;
-                 return _ItemAmount;
+                if (_ItemAmount == null) _ItemAmount = 0;
+                return _ItemAmount;
             }
             set
             {
@@ -210,7 +210,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                     SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -243,7 +243,7 @@ namespace AccountBuddy.BLL
                 {
                     _ExtraAmount = value;
                     NotifyPropertyChanged(nameof(ExtraAmount));
-                     SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -381,7 +381,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                
+
                 if (_JRDetails == null) _JRDetails = new ObservableCollection<JobOrderReceivedDetail>();
                 return _JRDetails;
             }
@@ -458,11 +458,11 @@ namespace AccountBuddy.BLL
             }
         }
 
-        
+
 
         public void Clear()
         {
-            new JobOrderReceived().ToMap<JobOrderReceived>(this);
+            new JobOrderReceived().ToMap(this);
             _JRDetail = new JobOrderReceivedDetail();
             _JRDetails = new ObservableCollection<JobOrderReceivedDetail>();
 
@@ -477,7 +477,7 @@ namespace AccountBuddy.BLL
             {
                 JobOrderReceived po = FMCGHubClient.HubCaller.Invoke<JobOrderReceived>("JobOrderReceived_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<JobOrderReceived>(this);
+                po.ToMap(this);
                 this.JRDetails = po.JRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -507,7 +507,7 @@ namespace AccountBuddy.BLL
             {
                 JobOrderReceived po = FMCGHubClient.HubCaller.Invoke<JobOrderReceived>("JobOrderReceived_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<JobOrderReceived>(this);
+                po.ToMap(this);
                 this.JRDetails = po.JRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -537,7 +537,7 @@ namespace AccountBuddy.BLL
                 {
                     JRDetail.Quantity += pod.Quantity;
                 }
-                JRDetail.ToMap<JobOrderReceivedDetail>(pod);
+                JRDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = JRDetails.Sum(x => x.Amount);
 
@@ -549,7 +549,7 @@ namespace AccountBuddy.BLL
         {
             JobOrderReceivedDetail pod = new JobOrderReceivedDetail();
             pod.SNo = JRDetails.Count == 0 ? 1 : JRDetails.Max(x => x.SNo) + 1;
-            pod.ToMap<JobOrderReceivedDetail>(JRDetail);
+            pod.ToMap(JRDetail);
         }
 
         public void DeleteDetail(int SNo)

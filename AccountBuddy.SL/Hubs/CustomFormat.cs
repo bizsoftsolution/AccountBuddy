@@ -11,8 +11,8 @@ namespace AccountBuddy.SL.Hubs
         #region Account Group
         BLL.CustomFormat CustomFormatDAL_BLL(DAL.CustomFormat d)
         {
-            BLL.CustomFormat b = d.ToMap<BLL.CustomFormat>(new BLL.CustomFormat());
-            b.Company = d.CompanyDetail == null ? new BLL.CompanyDetail() : d.CompanyDetail.ToMap<BLL.CompanyDetail>(new BLL.CompanyDetail());
+            BLL.CustomFormat b = d.ToMap(new BLL.CustomFormat());
+            b.Company = d.CompanyDetail == null ? new BLL.CompanyDetail() : d.CompanyDetail.ToMap(new BLL.CompanyDetail());
             return b;
         }
         public List<BLL.CustomFormat> CustomFormat_List()
@@ -33,7 +33,7 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.CustomFormat();
                     DB.CustomFormats.Add(d);
 
-                    agp.ToMap<DAL.CustomFormat>(d);
+                    agp.ToMap(d);
                     DB.SaveChanges();
 
                     agp.Id = d.Id;
@@ -41,7 +41,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    agp.ToMap<DAL.CustomFormat>(d);
+                    agp.ToMap(d);
                     DB.SaveChanges();
                     LogDetailStore(agp, LogDetailType.UPDATE);
                 }
@@ -65,7 +65,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     DB.CustomFormats.Remove(d);
                     DB.SaveChanges();
-                    LogDetailStore(d.ToMap<BLL.CustomFormat>(new BLL.CustomFormat()), LogDetailType.DELETE);
+                    LogDetailStore(d.ToMap(new BLL.CustomFormat()), LogDetailType.DELETE);
                 }
                 else
                 {

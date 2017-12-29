@@ -474,14 +474,21 @@ namespace AccountBuddy.BLL
         }
 
         public void Clear()
-        {
-            new JobOrderIssue().ToMap<JobOrderIssue>(this);
-            _JODetail = new JobOrderIssueDetail();
-            _JODetails = new ObservableCollection<JobOrderIssueDetail>();
+        {try
+            {
+                new JobOrderIssue().ToMap(this);
+                _JODetail = new JobOrderIssueDetail();
+                _JODetails = new ObservableCollection<JobOrderIssueDetail>();
 
-            JODate = DateTime.Now;
-            RefNo = FMCGHubClient.HubCaller.Invoke<string>("JobOrderIssue_NewRefNo").Result;
-            NotifyAllPropertyChanged();
+                JODate = DateTime.Now;
+                RefNo = FMCGHubClient.HubCaller.Invoke<string>("JobOrderIssue_NewRefNo").Result;
+                NotifyAllPropertyChanged();
+
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
 
         public bool Find()
@@ -490,7 +497,7 @@ namespace AccountBuddy.BLL
             {
                 JobOrderIssue po = FMCGHubClient.HubCaller.Invoke<JobOrderIssue>("JobOrderIssue_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<JobOrderIssue>(this);
+                po.ToMap(this);
                 this.JODetails = po.JODetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -521,7 +528,7 @@ namespace AccountBuddy.BLL
             {
                 JobOrderIssue po = FMCGHubClient.HubCaller.Invoke<JobOrderIssue>("JobOrderIssue_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<JobOrderIssue>(this);
+                po.ToMap(this);
                 this.JODetails = po.JODetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -551,7 +558,7 @@ namespace AccountBuddy.BLL
                 {
                     JODetail.Quantity += pod.Quantity;
                 }
-                JODetail.ToMap<JobOrderIssueDetail>(pod);
+                JODetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = JODetails.Sum(x => x.Amount);
 
@@ -563,7 +570,7 @@ namespace AccountBuddy.BLL
         {
             JobOrderIssueDetail pod = new JobOrderIssueDetail();
             pod.SNo = JODetails.Count == 0 ? 1 : JODetails.Max(x => x.SNo) + 1;
-            pod.ToMap<JobOrderIssueDetail>(JODetail);
+            pod.ToMap(JODetail);
         }
 
         public void DeleteDetail(int SNo)

@@ -472,7 +472,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                new SalesOrder().ToMap<SalesOrder>(this);
+                new SalesOrder().ToMap(this);
                 _SODetail = new SalesOrderDetail();
                 _SODetails = new ObservableCollection<SalesOrderDetail>();
 
@@ -492,7 +492,7 @@ namespace AccountBuddy.BLL
             {
                 SalesOrder po = FMCGHubClient.HubCaller.Invoke<SalesOrder>("SalesOrder_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<SalesOrder>(this);
+                po.ToMap(this);
                 this.SODetails = po.SODetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -534,7 +534,7 @@ namespace AccountBuddy.BLL
                 {
                     SODetail.Quantity += pod.Quantity;
                 }
-                SODetail.ToMap<SalesOrderDetail>(pod);               
+                SODetail.ToMap(pod);               
                 ItemAmount = SODetails.Sum(x => x.Amount);
                 SetAmount();
                 ClearDetail();
@@ -546,7 +546,7 @@ namespace AccountBuddy.BLL
         {
             SalesOrderDetail pod = new SalesOrderDetail();
             pod.SNo = SODetails.Count == 0 ? 1 : SODetails.Max(x => x.SNo) + 1;
-            pod.ToMap<SalesOrderDetail>(SODetail);
+            pod.ToMap(SODetail);
         }
 
         public void DeleteDetail(int sno)

@@ -7,6 +7,8 @@ namespace AccountBuddy.SL.Hubs
 {
     public static class DataMapper
     {
+        #region Master
+
         #region CompanyDetails
         public static DAL.CompanyDetail ToMap(this BLL.CompanyDetail S, DAL.CompanyDetail D)
         {
@@ -255,8 +257,8 @@ namespace AccountBuddy.SL.Hubs
             D.AddressLine1 = S.AddressLine1;
             D.AddressLine2 = S.AddressLine2;
             D.CityName = S.CityName;
-            D.CreditAmount = S.CreditAmount.Value;
-            D.CreditLimit = S.CreditLimit.Value;
+            D.CreditAmount = S.CreditAmount ?? 0;
+            D.CreditLimit = S.CreditLimit ?? 0;
             D.CreditLimitTypeId = S.CreditLimitTypeId;
             D.EMailId = S.EMailId;
             D.LedgerCode = S.LedgerCode;
@@ -407,5 +409,925 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
         #endregion
+
+        #endregion
+
+        #region Transaction 
+
+        #region PurchaseOrder
+        public static BLL.PurchaseOrder ToMap(DAL.PurchaseOrder S, BLL.PurchaseOrder D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.Extras = S.Extras;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.PODate = S.PODate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static DAL.PurchaseOrder ToMap(BLL.PurchaseOrder S, DAL.PurchaseOrder D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount ?? 0;
+            D.Extras = S.Extras ?? 0;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ItemAmount = S.ItemAmount ?? 0;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.PODate = (DateTime)S.PODate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount ?? 0;
+
+            return D;
+        }
+
+        public static BLL.PurchaseOrderDetail ToMap(DAL.PurchaseOrderDetail S, BLL.PurchaseOrderDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.POId = S.POId;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.PurchaseOrderDetail ToMap(BLL.PurchaseOrderDetail S, DAL.PurchaseOrderDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.POId = S.POId;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        #endregion
+
+        #region Purchase
+        public static BLL.Purchase ToMap(DAL.Purchase S, BLL.Purchase D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.PurchaseDate = S.PurchaseDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static DAL.Purchase ToMap(BLL.Purchase S, DAL.Purchase D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.PurchaseDate = (DateTime)S.PurchaseDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+
+        public static BLL.PurchaseDetail ToMap(DAL.PurchaseDetail S, BLL.PurchaseDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.PODId = S.PODId;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.PurchaseDetail ToMap(BLL.PurchaseDetail S, DAL.PurchaseDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.PODId = S.PODId;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        #endregion
+
+        #region PurchaseReturn
+        public static BLL.PurchaseReturn ToMap(DAL.PurchaseReturn S, BLL.PurchaseReturn D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.PRDate = S.PRDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static DAL.PurchaseReturn ToMap(BLL.PurchaseReturn S, DAL.PurchaseReturn D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.PRDate = (DateTime)S.PRDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+
+        public static BLL.PurchaseReturnDetail ToMap(DAL.PurchaseReturnDetail S, BLL.PurchaseReturnDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.PurchaseReturnDetail ToMap(BLL.PurchaseReturnDetail S, DAL.PurchaseReturnDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        #endregion
+
+        #region Sales Order
+        public static BLL.SalesOrder ToMap(DAL.SalesOrder S, BLL.SalesOrder D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.SODate = S.SODate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static DAL.SalesOrder ToMap(BLL.SalesOrder S, DAL.SalesOrder D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount ?? 0;
+            D.ExtraAmount = S.ExtraAmount ?? 0;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ItemAmount = S.ItemAmount ?? 0;
+            D.LedgerId = S.LedgerId ?? 0;
+            D.Narration = S.Narration;
+            D.SODate = (DateTime)S.SODate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount ?? 0;
+
+            return D;
+        }
+
+        public static BLL.SalesOrderDetail ToMap(DAL.SalesOrderDetail S, BLL.SalesOrderDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.SalesOrderDetail ToMap(BLL.SalesOrderDetail S, DAL.SalesOrderDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount ?? 0;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ProductId = S.ProductId ?? 0;
+            D.Quantity = S.Quantity ?? 0;
+            D.UnitPrice = S.UnitPrice ?? 0;
+            D.UOMId = S.UOMId ?? 0;
+            return D;
+        }
+        #endregion
+
+        #region Sales
+        public static BLL.Sale ToMap(DAL.Sale S, BLL.Sale D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.SalesDate = S.SalesDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static DAL.Sale ToMap(BLL.Sale S, DAL.Sale D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.SalesDate = (DateTime)S.SalesDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+
+        public static BLL.SalesDetail ToMap(DAL.SalesDetail S, BLL.SalesDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.SalesDetail ToMap(BLL.SalesDetail S, DAL.SalesDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        #endregion
+
+        #region Sales Return
+        public static BLL.SalesReturn ToMap(DAL.SalesReturn S, BLL.SalesReturn D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.SRDate = S.SRDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static DAL.SalesReturn ToMap(BLL.SalesReturn S, DAL.SalesReturn D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.SRDate = (DateTime)S.SRDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+
+        public static BLL.SalesReturnDetail ToMap(DAL.SalesReturnDetail S, BLL.SalesReturnDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = (decimal)S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.SalesReturnDetail ToMap(BLL.SalesReturnDetail S, DAL.SalesReturnDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        #endregion
+
+        #region JobOrder Issue
+        public static BLL.JobOrderIssue ToMap(DAL.JobOrderIssue S, BLL.JobOrderIssue D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.Extras = S.Extras;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.JobWorkerId = S.JobWorkerId;
+            D.Narration = S.Narration;
+            D.JODate = S.JODate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+
+            return D;
+        }
+        public static DAL.JobOrderIssue ToMap(BLL.JobOrderIssue S, DAL.JobOrderIssue D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.Extras = S.Extras ?? 0;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ItemAmount = S.ItemAmount ?? 0;
+            D.JobWorkerId = S.JobWorkerId ?? 0;
+            D.Narration = S.Narration;
+            D.JODate = (DateTime)S.JODate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount ?? 0;
+
+            return D;
+        }
+
+        public static BLL.JobOrderIssueDetail ToMap(DAL.JobOrderIssueDetail S, BLL.JobOrderIssueDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = (decimal)S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.JobOrderIssueDetail ToMap(BLL.JobOrderIssueDetail S, DAL.JobOrderIssueDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount ?? 0;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ProductId = S.ProductId ?? 0;
+            D.Quantity = S.Quantity ?? 0;
+            D.UnitPrice = S.UnitPrice ?? 0;
+            D.UOMId = S.UOMId ?? 0;
+            return D;
+        }
+        #endregion
+
+        #region JobOrderReceived
+        public static BLL.JobOrderReceived ToMap(DAL.JobOrderReceived S, BLL.JobOrderReceived D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.JobWorkerId = S.JobWorkerId;
+            D.Narration = S.Narration;
+            D.JRDate = S.JRDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static DAL.JobOrderReceived ToMap(BLL.JobOrderReceived S, DAL.JobOrderReceived D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount ?? 0;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ExtraAmount = S.ExtraAmount ?? 0;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ItemAmount = S.ItemAmount ?? 0;
+            D.JobWorkerId = S.JobWorkerId ?? 0;
+            D.Narration = S.Narration;
+            D.JRDate = (DateTime)S.JRDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount ?? 0;
+
+            return D;
+        }
+
+        public static BLL.JobOrderReceivedDetail ToMap(DAL.JobOrderReceivedDetail S, BLL.JobOrderReceivedDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = (decimal)S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.JobOrderReceivedDetail ToMap(BLL.JobOrderReceivedDetail S, DAL.JobOrderReceivedDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount ?? 0;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ProductId = S.ProductId ?? 0;
+            D.Quantity = S.Quantity ?? 0;
+            D.UnitPrice = S.UnitPrice ?? 0;
+            D.UOMId = S.UOMId ?? 0;
+            return D;
+        }
+        #endregion
+
+        #region StockIn
+        public static BLL.StockIn ToMap(DAL.StockIn S, BLL.StockIn D)
+        {
+            D.Id = S.Id;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.Date = S.Date;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.ItemAmount = S.ItemAmount;
+
+            return D;
+        }
+        public static DAL.StockIn ToMap(BLL.StockIn S, DAL.StockIn D)
+        {
+            D.Id = S.Id;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.Date = (DateTime)S.Date;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.ItemAmount = S.ItemAmount;
+
+            return D;
+        }
+
+        public static BLL.StockInDetail ToMap(DAL.StockInDetail S, BLL.StockInDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.StockInDetail ToMap(BLL.StockInDetail S, DAL.StockInDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        #endregion
+
+        #region StockOut
+        public static BLL.StockOut ToMap(DAL.StockOut S, BLL.StockOut D)
+        {
+            D.Id = S.Id;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.Date = S.Date;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.ItemAmount = S.ItemAmount;
+
+            return D;
+        }
+        public static DAL.StockOut ToMap(BLL.StockOut S, DAL.StockOut D)
+        {
+            D.Id = S.Id;
+            D.ItemAmount = S.ItemAmount;
+            D.LedgerId = S.LedgerId;
+            D.Narration = S.Narration;
+            D.Date = (DateTime)S.Date;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.ItemAmount = S.ItemAmount;
+
+            return D;
+        }
+
+        public static BLL.StockOutDetail ToMap(DAL.StockOutDetail S, BLL.StockOutDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.StockOutDetail ToMap(BLL.StockOutDetail S, DAL.StockOutDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        #endregion
+
+        #region StockInProcess
+        public static BLL.StockInProcess ToMap(DAL.StockInProcess S, BLL.StockInProcess D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.Extras;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.StaffId = S.StaffId;
+            D.Narration = S.Narration;
+            D.SPDate = S.SPDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static DAL.StockInProcess ToMap(BLL.StockInProcess S, DAL.StockInProcess D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount ?? 0;
+            D.Extras = S.ExtraAmount ?? 0;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ItemAmount = S.ItemAmount ?? 0;
+            D.StaffId = S.StaffId ?? 0;
+            D.Narration = S.Narration;
+            D.SPDate = (DateTime)S.SPDate;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount ?? 0;
+
+            return D;
+        }
+
+        public static BLL.StockInProcessDetail ToMap(DAL.StockInProcessDetail S, BLL.StockInProcessDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.StockInProcessDetail ToMap(BLL.StockInProcessDetail S, DAL.StockInProcessDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount ?? 0;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ProductId = S.ProductId ?? 0;
+            D.Quantity = S.Quantity ?? 0;
+            D.UnitPrice = S.UnitPrice ?? 0;
+            D.UOMId = S.UOMId ?? 0;
+            return D;
+        }
+        #endregion
+
+        #region StockSeperated
+        public static BLL.StockSeperated ToMap(DAL.StockSeparated S, BLL.StockSeperated D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount;
+            D.ExtraAmount = S.ExtraAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+            D.StaffId = S.StaffId;
+            D.Narration = S.Narration;
+            D.Date = S.Date;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static DAL.StockSeparated ToMap(BLL.StockSeperated S, DAL.StockSeparated D)
+        {
+            D.Id = S.Id;
+            D.DiscountAmount = S.DiscountAmount ?? 0;
+            D.ExtraAmount = S.ExtraAmount ?? 0;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ItemAmount = S.ItemAmount ?? 0;
+            D.StaffId = S.StaffId ?? 0;
+            D.Narration = S.Narration;
+            D.Date = (DateTime)S.Date;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.TotalAmount = S.TotalAmount ?? 0;
+
+            return D;
+        }
+
+        public static BLL.StockSeperatedDetail ToMap(DAL.StockSeperatedDetail S, BLL.StockSeperatedDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+        public static DAL.StockSeperatedDetail ToMap(BLL.StockSeperatedDetail S, DAL.StockSeperatedDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount ?? 0;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount ?? 0;
+            D.ProductId = S.ProductId ?? 0;
+            D.Quantity = S.Quantity ?? 0;
+            D.UnitPrice = S.UnitPrice ?? 0;
+            D.UOMId = S.UOMId ?? 0;
+            return D;
+        }
+        #endregion
+
+        #region Payment
+        public static BLL.Payment ToMap(DAL.Payment S, BLL.Payment D)
+        {
+            D.Id = S.Id;
+            D.EntryNo = S.EntryNo;
+            D.Amount = S.Amount;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+            D.ClearDate = S.ClearDate;
+            D.ExtraCharge = S.ExtraCharge;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.PaymentDate = S.PaymentDate;
+            D.PaymentMode = S.PaymentMode;
+            D.PayTo = S.PayTo;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.VoucherNo = S.VoucherNo;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            return D;
+        }
+        public static DAL.Payment ToMap(BLL.Payment S, DAL.Payment D)
+        {
+            D.Id = S.Id;
+            D.EntryNo = S.EntryNo;
+            D.Amount = S.Amount;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+            D.ClearDate = S.ClearDate;
+            D.ExtraCharge = S.ExtraCharge;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.PaymentDate = S.PaymentDate;
+            D.PaymentMode = S.PaymentMode;
+            D.PayTo = S.PayTo;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.VoucherNo = S.VoucherNo;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            return D;
+        }
+
+        public static BLL.PaymentDetail ToMap(DAL.PaymentDetail S, BLL.PaymentDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.LedgerId = S.LedgerId;
+            D.Particular = S.Particular;
+            D.PaymentId = S.PaymentId;
+            return D;
+        }
+        public static DAL.PaymentDetail ToMap(BLL.PaymentDetail S, DAL.PaymentDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.LedgerId = S.LedgerId;
+            D.Particular = S.Particular;
+            D.PaymentId = S.PaymentId;
+            return D;
+        }
+        #endregion
+
+        #region Receipt
+        public static BLL.Receipt ToMap(DAL.Receipt S, BLL.Receipt D)
+        {
+            D.Id = S.Id;
+            D.EntryNo = S.EntryNo;
+            D.Amount = S.Amount;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+            D.CleareDate = S.CleareDate;
+            D.ExtraCharge = S.Extracharge;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.ReceiptDate = S.ReceiptDate;
+            D.ReceiptMode = S.ReceiptMode;
+            D.ReceivedFrom = S.ReceivedFrom;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.VoucherNo = S.VoucherNo;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            return D;
+        }
+        public static DAL.Receipt ToMap(BLL.Receipt S, DAL.Receipt D)
+        {
+            D.Id = S.Id;
+            D.EntryNo = S.EntryNo;
+            D.Amount = S.Amount;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+            D.CleareDate = S.CleareDate;
+            D.Extracharge = S.ExtraCharge;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.ReceiptDate = S.ReceiptDate;
+            D.ReceiptMode = S.ReceiptMode;
+            D.ReceivedFrom = S.ReceivedFrom;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.VoucherNo = S.VoucherNo;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            return D;
+        }
+
+        public static BLL.ReceiptDetail ToMap(DAL.ReceiptDetail S, BLL.ReceiptDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.ReceiptId = S.ReceiptId;
+            return D;
+        }
+        public static DAL.ReceiptDetail ToMap(BLL.ReceiptDetail S, DAL.ReceiptDetail D)
+        {
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.ReceiptId = S.ReceiptId;
+            return D;
+        }
+        #endregion
+
+        #region Journal
+        public static BLL.Journal ToMap(DAL.Journal S, BLL.Journal D)
+        {
+            D.Id = S.Id;
+            D.EntryNo = S.EntryNo;
+            D.Amount = S.Amount;
+            D.JournalDate = S.JournalDate;
+            D.HQNo = S.HQNo;
+            D.Particular = S.Particular;
+            D.RefCode = S.RefCode;
+            D.VoucherNo = S.VoucherNo;
+            
+            return D;
+        }
+        public static DAL.Journal ToMap(BLL.Journal S, DAL.Journal D)
+        {
+            D.Id = S.Id;
+            D.EntryNo = S.EntryNo;
+            D.Amount = S.Amount;
+            D.JournalDate = S.JournalDate;
+            D.HQNo = S.HQNo;
+            D.Particular = S.Particular;
+            D.RefCode = S.RefCode;
+            D.VoucherNo = S.VoucherNo;
+            return D;
+        }
+
+        public static BLL.JournalDetail ToMap(DAL.JournalDetail S, BLL.JournalDetail D)
+        {
+            D.Id = S.Id;
+            D.CrAmt = S.CrAmt;
+            D.DrAmt = S.DrAmt;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+            D.ClearDate = S.ClearDate;
+            D.ExtraCharge = S.ExtraCharge;
+            D.JournalId = S.JournalId;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.JournalId = S.JournalId;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.TransactionMode = S.TransactionMode;
+            
+            return D;
+        }
+        public static DAL.JournalDetail ToMap(BLL.JournalDetail S, DAL.JournalDetail D)
+        {
+            D.Id = S.Id;
+            D.CrAmt = S.CrAmt;
+            D.DrAmt = S.DrAmt;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
+            D.ClearDate = S.ClearDate;
+            D.ExtraCharge = S.ExtraCharge;
+            D.JournalId = S.JournalId;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.LedgerId = S.LedgerId;
+            D.Particulars = S.Particulars;
+            D.JournalId = S.JournalId;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.TransactionMode = S.TransactionMode;
+            return D;
+        }
+        #endregion
+
+        #endregion
+
+
     }
 }

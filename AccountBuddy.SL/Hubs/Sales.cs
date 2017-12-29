@@ -38,11 +38,11 @@ namespace AccountBuddy.SL.Hubs
                 {
                     d = new DAL.Sale();
                     DB.Sales.Add(d);
-                    P.ToMap<DAL.Sale>(d);
+                    P.ToMap(d);
                     foreach (var b_pod in P.SDetails)
                     {
                         DAL.SalesDetail d_pod = new DAL.SalesDetail();
-                        b_pod.ToMap<DAL.SalesDetail>(d_pod);
+                        b_pod.ToMap(d_pod);
                         d.SalesDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -55,14 +55,14 @@ namespace AccountBuddy.SL.Hubs
                     decimal pd = P.SDetails.Select(X => X.SalesId).FirstOrDefault();
                     DB.SalesDetails.RemoveRange(d.SalesDetails.Where(x => x.SalesId == pd).ToList());
 
-                    P.ToMap<DAL.Sale>(d);
+                    P.ToMap(d);
                     foreach (var b_Sd in P.SDetails)
                     {
 
                         DAL.SalesDetail d_Sd = new DAL.SalesDetail();
                         d.SalesDetails.Add(d_Sd);
 
-                        b_Sd.ToMap<DAL.SalesDetail>(d_Sd);
+                        b_Sd.ToMap(d_Sd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -117,7 +117,7 @@ namespace AccountBuddy.SL.Hubs
                         foreach (var b_pod in P.PurchaseDetails)
                         {
                             DAL.SalesDetail d_pod = new DAL.SalesDetail();
-                            b_pod.ToMap<DAL.SalesDetail>(d_pod);
+                            b_pod.ToMap(d_pod);
                             s.SalesDetails.Add(d_pod);
                         }
                         DB.SaveChanges();
@@ -158,14 +158,14 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.Sale>(P);
+                    d.ToMap(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     int i = 0;
                     foreach (var d_pod in d.SalesDetails)
                     {
                         BLL.SalesDetail b_pod = new BLL.SalesDetail();
-                        d_pod.ToMap<BLL.SalesDetail>(b_pod);
+                        d_pod.ToMap(b_pod);
                         P.SDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                             
@@ -189,13 +189,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.Sale>(P);
+                    d.ToMap(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     foreach (var d_pod in d.SalesDetails)
                     {
                         BLL.SalesDetail b_pod = new BLL.SalesDetail();
-                        d_pod.ToMap<BLL.SalesDetail>(b_pod);
+                        d_pod.ToMap(b_pod);
                         P.SDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
@@ -234,10 +234,10 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.Sale Sales_DALtoBLL(DAL.Sale d)
         {
-            BLL.Sale S = d.ToMap<BLL.Sale>(new BLL.Sale());
+            BLL.Sale S = d.ToMap(new BLL.Sale());
             foreach (var d_Sd in d.SalesDetails)
             {
-                S.SDetails.Add(d_Sd.ToMap<BLL.SalesDetail>(new BLL.SalesDetail()));
+                S.SDetails.Add(d_Sd.ToMap(new BLL.SalesDetail()));
             }
             return S;
         }

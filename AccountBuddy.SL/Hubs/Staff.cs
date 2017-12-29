@@ -11,7 +11,7 @@ namespace AccountBuddy.SL.Hubs
 
         private BLL.Staff Staff_DALtoBLL(DAL.Staff StaffFrom)
         {
-            BLL.Staff StaffTo = StaffFrom.ToMap<BLL.Staff>(new BLL.Staff());
+            BLL.Staff StaffTo = StaffFrom.ToMap(new BLL.Staff());
 
             StaffTo.Ledger = LedgerDAL_BLL(StaffFrom.Ledger);
             
@@ -47,7 +47,7 @@ namespace AccountBuddy.SL.Hubs
                 {
 
                     d = new DAL.Staff();
-                    cus.ToMap<DAL.Staff>(d);
+                    cus.ToMap(d);
                     d.LedgerId = Ledger_Save(cus.Ledger);
                     if (d.LedgerId != 0)
                     {
@@ -60,7 +60,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    cus.ToMap<DAL.Staff>(d);
+                    cus.ToMap(d);
                     Ledger_Save(cus.Ledger);
                     DB.SaveChanges();
                     LogDetailStore(cus, LogDetailType.UPDATE);

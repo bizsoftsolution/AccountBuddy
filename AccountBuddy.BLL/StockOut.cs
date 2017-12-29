@@ -297,14 +297,22 @@ namespace AccountBuddy.BLL
         }
 
         public void Clear()
-        {
-            new StockOut().ToMap<StockOut>(this);
-            this.STOutDetail = new StockOutDetail();
-            this.STOutDetails = new ObservableCollection<StockOutDetail>();
+        {try
+            {
+                new StockOut().ToMap(this);
+                this.STOutDetail = new StockOutDetail();
+                this.STOutDetails = new ObservableCollection<StockOutDetail>();
 
-            Date = DateTime.Now;
-            RefNo = FMCGHubClient.HubCaller.Invoke<string>("StockOut_NewRefNo").Result;
-            NotifyAllPropertyChanged();
+                Date = DateTime.Now;
+                RefNo = FMCGHubClient.HubCaller.Invoke<string>("StockOut_NewRefNo").Result;
+                NotifyAllPropertyChanged();
+
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
+
         }
 
         public bool Find()
@@ -313,7 +321,7 @@ namespace AccountBuddy.BLL
             {
                 StockOut po = FMCGHubClient.HubCaller.Invoke<StockOut>("StockOut_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<StockOut>(this);
+                po.ToMap(this);
                 this.STOutDetails = po.STOutDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -329,7 +337,7 @@ namespace AccountBuddy.BLL
             {
                 StockOut po = FMCGHubClient.HubCaller.Invoke<StockOut>("StockOut_FindById", id).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<StockOut>(this);
+                po.ToMap(this);
                 this.STOutDetails = po.STOutDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -369,7 +377,7 @@ namespace AccountBuddy.BLL
                 {
                     STOutDetail.Quantity += pod.Quantity;
                 }
-                STOutDetail.ToMap<StockOutDetail>(pod);
+                STOutDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = STOutDetails.Sum(x => x.Amount);
                
@@ -381,7 +389,7 @@ namespace AccountBuddy.BLL
         {
             StockOutDetail pod = new StockOutDetail();
             pod.SNo = STOutDetails.Count == 0 ? 1 : STOutDetails.Max(x => x.SNo) + 1;
-            pod.ToMap<StockOutDetail>(STOutDetail);
+            pod.ToMap(STOutDetail);
         }
 
         public void DeleteDetail(int SNo)

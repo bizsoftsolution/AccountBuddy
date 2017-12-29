@@ -10,7 +10,7 @@ namespace AccountBuddy.SL.Hubs
     {
         private BLL.DataKeyValue DataKeyValueDAL_BLL(DAL.DataKeyValue DataKeyValueFrom)
         {
-            BLL.DataKeyValue DataKeyValueTo = DataKeyValueFrom.ToMap<BLL.DataKeyValue>(new BLL.DataKeyValue());            
+            BLL.DataKeyValue DataKeyValueTo = DataKeyValueFrom.ToMap(new BLL.DataKeyValue());            
             return DataKeyValueTo;
         }
 

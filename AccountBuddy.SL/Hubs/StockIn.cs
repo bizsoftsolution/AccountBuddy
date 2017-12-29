@@ -41,12 +41,12 @@ namespace AccountBuddy.SL.Hubs
                     DB.StockIns.Add(d);
 
 
-                    P.ToMap<DAL.StockIn>(d);
+                    P.ToMap(d);
 
                     foreach (var b_pod in P.STInDetails)
                     {
                         DAL.StockInDetail d_pod = new DAL.StockInDetail();
-                        b_pod.ToMap<DAL.StockInDetail>(d_pod);
+                        b_pod.ToMap(d_pod);
                         d.StockInDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -61,16 +61,12 @@ namespace AccountBuddy.SL.Hubs
                     decimal pd = P.STInDetails.Select(X => X.StockInId).FirstOrDefault();
                     DB.StockInDetails.RemoveRange(d.StockInDetails.Where(x => x.StockInId == pd).ToList());
 
-                    P.ToMap<DAL.StockIn>(d);
+                    P.ToMap(d);
                     foreach (var b_Pd in P.STInDetails)
                     {
-                        //DAL.StockInDetail d_Pd = d.StockInDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
-                       // if (d_Pd == null)
-                        //{
-                            DAL.StockInDetail d_Pd = new DAL.StockInDetail();
-                            d.StockInDetails.Add(d_Pd);
-                       // }
-                        b_Pd.ToMap<DAL.StockInDetail>(d_Pd);
+                        DAL.StockInDetail d_Pd = new DAL.StockInDetail();
+                        d.StockInDetails.Add(d_Pd);
+                        b_Pd.ToMap(d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -86,50 +82,51 @@ namespace AccountBuddy.SL.Hubs
         #region stock In
         void StockIn_SaveByStockOut(DAL.StockOut S)
         {
-            try { 
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, S.Id);
-            if (S.Ledger == null)
+            try
             {
-                S.Ledger = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault();
-            }
-            DAL.StockIn p = DB.StockIns.Where(x => x.RefCode == RefCode).FirstOrDefault();
-
-            if (S.Ledger.LedgerName.StartsWith("CM-") || S.Ledger.LedgerName.StartsWith("WH-") || S.Ledger.LedgerName.StartsWith("DL-"))
-            {
-                var LName = LedgerNameByCompanyId(Caller.CompanyId);
-                var CId = CompanyIdByLedgerName(S.Ledger.LedgerName);
-                var LId = LedgerIdByCompany(LName, CId);
-
-                if (LId != 0)
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, S.Id);
+                if (S.Ledger == null)
                 {
-                    if (p == null)
-                    {
-                        p = new DAL.StockIn();
-                        p.RefNo = StockIn_NewRefNoByCompanyId(CId);
-                        p.RefCode = RefCode;
-                        DB.StockIns.Add(p);
-                    }
-                    else
-                    {
-                        DB.StockInDetails.RemoveRange(p.StockInDetails);
-                    }
-
-                    p.Date = S.Date;
-
-                    p.ItemAmount = S.ItemAmount;
-
-                    p.LedgerId = LId;
-                    p.Type = "Inwards";
-                    foreach (var b_pod in S.StockOutDetails)
-                    {
-                        DAL.StockInDetail d_pod = new DAL.StockInDetail();
-                        b_pod.ToMap<DAL.StockInDetail>(d_pod);
-                        p.StockInDetails.Add(d_pod);
-                    }
-                    DB.SaveChanges();
-                    Journal_SaveByStockIn(p);
+                    S.Ledger = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault();
                 }
-            }
+                DAL.StockIn p = DB.StockIns.Where(x => x.RefCode == RefCode).FirstOrDefault();
+
+                if (S.Ledger.LedgerName.StartsWith("CM-") || S.Ledger.LedgerName.StartsWith("WH-") || S.Ledger.LedgerName.StartsWith("DL-"))
+                {
+                    var LName = LedgerNameByCompanyId(Caller.CompanyId);
+                    var CId = CompanyIdByLedgerName(S.Ledger.LedgerName);
+                    var LId = LedgerIdByCompany(LName, CId);
+
+                    if (LId != 0)
+                    {
+                        if (p == null)
+                        {
+                            p = new DAL.StockIn();
+                            p.RefNo = StockIn_NewRefNoByCompanyId(CId);
+                            p.RefCode = RefCode;
+                            DB.StockIns.Add(p);
+                        }
+                        else
+                        {
+                            DB.StockInDetails.RemoveRange(p.StockInDetails);
+                        }
+
+                        p.Date = S.Date;
+
+                        p.ItemAmount = S.ItemAmount;
+
+                        p.LedgerId = LId;
+                        p.Type = "Inwards";
+                        foreach (var b_pod in S.StockOutDetails)
+                        {
+                            DAL.StockInDetail d_pod = new DAL.StockInDetail();
+                            b_pod.ToMap(d_pod);
+                            p.StockInDetails.Add(d_pod);
+                        }
+                        DB.SaveChanges();
+                        Journal_SaveByStockIn(p);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -168,13 +165,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.StockIn>(P);
+                    d.ToMap(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
                     foreach (var d_pod in d.StockInDetails)
                     {
                         BLL.StockInDetail b_pod = new BLL.StockInDetail();
-                        d_pod.ToMap<BLL.StockInDetail>(b_pod);
+                        d_pod.ToMap(b_pod);
                         P.STInDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -197,13 +194,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.StockIn>(P);
+                    d.ToMap(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
 
                     foreach (var d_pod in d.StockInDetails)
                     {
                         BLL.StockInDetail b_pod = new BLL.StockInDetail();
-                        d_pod.ToMap<BLL.StockInDetail>(b_pod);
+                        d_pod.ToMap(b_pod);
                         P.STInDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
@@ -239,10 +236,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.StockIn StockIn_DALtoBLL(DAL.StockIn d)
         {
-            BLL.StockIn P = d.ToMap<BLL.StockIn>(new BLL.StockIn());
+            BLL.StockIn P = d.ToMap(new BLL.StockIn());
             foreach (var d_Pd in d.StockInDetails)
             {
-                P.STInDetails.Add(d_Pd.ToMap<BLL.StockInDetail>(new BLL.StockInDetail()));
+                P.STInDetails.Add(d_Pd.ToMap(new BLL.StockInDetail()));
             }
             return P;
         }
@@ -263,7 +260,7 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.StockIn> StockIn_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<BLL.StockIn> lstStockIn = new List<BLL.StockIn>();
-            
+
             BLL.StockIn rp = new BLL.StockIn();
             try
             {

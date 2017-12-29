@@ -41,12 +41,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.JobOrderIssue();
                     DB.JobOrderIssues.Add(d);
 
-                    SO.ToMap<DAL.JobOrderIssue>(d);
+                    SO.ToMap(d);
 
                     foreach (var b_pod in SO.JODetails)
                     {
                         DAL.JobOrderIssueDetail d_pod = new DAL.JobOrderIssueDetail();
-                        b_pod.ToMap<DAL.JobOrderIssueDetail>(d_pod);
+                        b_pod.ToMap(d_pod);
                         d.JobOrderIssueDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -63,7 +63,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = SO.JODetails.Select(X => X.JOId).FirstOrDefault().Value;
                     DB.JobOrderIssueDetails.RemoveRange(d.JobOrderIssueDetails.Where(x => x.JOId == rd).ToList());
 
-                    SO.ToMap<DAL.JobOrderIssue>(d);
+                    SO.ToMap(d);
                     foreach (var b_SOd in SO.JODetails)
                     {
                         //DAL.JobOrderIssueDetail d_SOd = d.JobOrderIssueDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
@@ -72,7 +72,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.JobOrderIssueDetail d_SOd = new DAL.JobOrderIssueDetail();
                         d.JobOrderIssueDetails.Add(d_SOd);
                         //}
-                        b_SOd.ToMap<DAL.JobOrderIssueDetail>(d_SOd);
+                        b_SOd.ToMap(d_SOd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(SO, LogDetailType.UPDATE);
@@ -98,14 +98,14 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.JobOrderIssue>(SO);
+                    d.ToMap(SO);
                     SO.JobWorkerName = (d.JobWorker ?? DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
 
                     int i = 0;
                     foreach (var d_pod in d.JobOrderIssueDetails)
                     {
                         BLL.JobOrderIssueDetail b_pod = new BLL.JobOrderIssueDetail();
-                        d_pod.ToMap<BLL.JobOrderIssueDetail>(b_pod);
+                        d_pod.ToMap(b_pod);
                         SO.JODetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -153,10 +153,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.JobOrderIssue JobOrderIssue_DALtoBLL(DAL.JobOrderIssue d)
         {
-            BLL.JobOrderIssue SO = d.ToMap<BLL.JobOrderIssue>(new BLL.JobOrderIssue());
+            BLL.JobOrderIssue SO = d.ToMap(new BLL.JobOrderIssue());
             foreach (var d_SOd in d.JobOrderIssueDetails)
             {
-                SO.JODetails.Add(d_SOd.ToMap<BLL.JobOrderIssueDetail>(new BLL.JobOrderIssueDetail()));
+                SO.JODetails.Add(d_SOd.ToMap(new BLL.JobOrderIssueDetail()));
             }
             //SO.Status = d.JobOrderIssueDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
             return SO;
@@ -230,12 +230,12 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.JobOrderIssue>(P);
+                    d.ToMap(P);
                     P.JobWorkerName = (d.JobWorker ?? DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
                     foreach (var d_pod in d.JobOrderIssueDetails)
                     {
                         BLL.JobOrderIssueDetail b_pod = new BLL.JobOrderIssueDetail();
-                        d_pod.ToMap<BLL.JobOrderIssueDetail>(b_pod);
+                        d_pod.ToMap(b_pod);
                         P.JODetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;

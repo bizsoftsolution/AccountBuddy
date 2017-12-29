@@ -524,7 +524,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new SalesReturn().ToMap<SalesReturn>(this);
+            new SalesReturn().ToMap(this);
             this.SRDetail = new SalesReturnDetail();
             this.SRDetails = new ObservableCollection<SalesReturnDetail>();
 
@@ -539,7 +539,7 @@ namespace AccountBuddy.BLL
             {
                 SalesReturn po = FMCGHubClient.HubCaller.Invoke<SalesReturn>("SalesReturn_Find", RefNo).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<SalesReturn>(this);
+                po.ToMap(this);
                 this.SRDetails = po.SRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -556,7 +556,7 @@ namespace AccountBuddy.BLL
             {
                 SalesReturn po = FMCGHubClient.HubCaller.Invoke<SalesReturn>("SalesReturn_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<SalesReturn>(this);
+                po.ToMap(this);
                 this.SRDetails = po.SRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -597,7 +597,7 @@ namespace AccountBuddy.BLL
                 {
                     SRDetail.Quantity += pod.Quantity;
                 }
-                SRDetail.ToMap<SalesReturnDetail>(pod);
+                SRDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = SRDetails.Sum(x => x.Amount);
                 SetAmount();
@@ -609,7 +609,7 @@ namespace AccountBuddy.BLL
         {
             SalesReturnDetail pod = new SalesReturnDetail();
             pod.SNo = SRDetails.Count == 0 ? 1 : SRDetails.Max(x => x.SNo) + 1;
-            pod.ToMap<SalesReturnDetail>(SRDetail);
+            pod.ToMap(SRDetail);
         }
 
         public void DeleteDetail(int SNo)
@@ -621,6 +621,7 @@ namespace AccountBuddy.BLL
                 SRDetails.Remove(pod);
                 ItemAmount = SRDetails.Sum(x => x.Amount);
                 SetAmount();
+                ClearDetail();
             }
         }
 

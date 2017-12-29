@@ -297,7 +297,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new StockIn().ToMap<StockIn>(this);
+            new StockIn().ToMap(this);
             this.STInDetail = new StockInDetail();
             this.STInDetails = new ObservableCollection<StockInDetail>();
 
@@ -312,7 +312,7 @@ namespace AccountBuddy.BLL
             {
                 StockIn po = FMCGHubClient.HubCaller.Invoke<StockIn>("StockIn_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<StockIn>(this);
+                po.ToMap(this);
                 this.STInDetails = po.STInDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -328,7 +328,7 @@ namespace AccountBuddy.BLL
             {
                 StockIn po = FMCGHubClient.HubCaller.Invoke<StockIn>("StockIn_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<StockIn>(this);
+                po.ToMap(this);
                 this.STInDetails = po.STInDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -369,7 +369,7 @@ namespace AccountBuddy.BLL
                 {
                     STInDetail.Quantity += pod.Quantity;
                 }
-                STInDetail.ToMap<StockInDetail>(pod);
+                STInDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = STInDetails.Sum(x => x.Amount);
             }
@@ -380,7 +380,7 @@ namespace AccountBuddy.BLL
         {
             StockInDetail pod = new StockInDetail();
             pod.SNo = STInDetails.Count == 0 ? 1 : STInDetails.Max(x => x.SNo) + 1;
-            pod.ToMap<StockInDetail>(STInDetail);
+            pod.ToMap(STInDetail);
         }
 
         public void DeleteDetail(int SNo)

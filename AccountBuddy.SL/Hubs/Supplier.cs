@@ -11,7 +11,7 @@ namespace AccountBuddy.SL.Hubs
 
         private BLL.Supplier Supplier_DALtoBLL(DAL.Supplier SupplierFrom)
         {
-            BLL.Supplier SupplierTo = SupplierFrom.ToMap<BLL.Supplier>(new BLL.Supplier());
+            BLL.Supplier SupplierTo = SupplierFrom.ToMap(new BLL.Supplier());
 
             SupplierTo.Ledger = LedgerDAL_BLL(SupplierFrom.Ledger);
 
@@ -50,7 +50,7 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    sup.ToMap<DAL.Supplier>(d);
+                    sup.ToMap(d);
                     Ledger_Save(sup.Ledger);
                     DB.SaveChanges();
                     LogDetailStore(sup, LogDetailType.UPDATE);

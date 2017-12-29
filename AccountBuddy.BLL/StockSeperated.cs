@@ -12,7 +12,7 @@ namespace AccountBuddy.BLL
     public class StockSeperated : INotifyPropertyChanged
     {
         #region Field
-            private long _Id;
+        private long _Id;
         private DateTime? _Date;
         private string _RefNo;
         private string _SSNo;
@@ -441,7 +441,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new StockSeperated().ToMap<StockSeperated>(this);
+            new StockSeperated().ToMap(this);
             _SSDetail = new StockSeperatedDetail();
             _SSDetails = new ObservableCollection<StockSeperatedDetail>();
 
@@ -456,7 +456,7 @@ namespace AccountBuddy.BLL
             {
                 StockSeperated po = FMCGHubClient.HubCaller.Invoke<StockSeperated>("StockSeperated_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<StockSeperated>(this);
+                po.ToMap(this);
                 this.SSDetails = po.SSDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -485,7 +485,7 @@ namespace AccountBuddy.BLL
             {
                 StockSeperated po = FMCGHubClient.HubCaller.Invoke<StockSeperated>("StockSeperated_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<StockSeperated>(this);
+                po.ToMap(this);
                 this.SSDetails = po.SSDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -514,7 +514,7 @@ namespace AccountBuddy.BLL
                 {
                     SSDetail.Quantity += pod.Quantity;
                 }
-                SSDetail.ToMap<StockSeperatedDetail>(pod);
+                SSDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = SSDetails.Sum(x => x.Amount);
                 SetAmount();
@@ -526,7 +526,7 @@ namespace AccountBuddy.BLL
         {
             StockSeperatedDetail pod = new StockSeperatedDetail();
             pod.SNo = SSDetails.Count == 0 ? 1 : SSDetails.Max(x => x.SNo) + 1;
-            pod.ToMap<StockSeperatedDetail>(SSDetail);
+            pod.ToMap(SSDetail);
         }
 
         public void DeleteDetail(int SNo)
@@ -585,9 +585,7 @@ namespace AccountBuddy.BLL
             return rv;
 
         }
-
-
-
+        
         #endregion
     }
 }

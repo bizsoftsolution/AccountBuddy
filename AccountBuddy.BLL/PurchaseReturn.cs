@@ -531,7 +531,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                new PurchaseReturn().ToMap<PurchaseReturn>(this);
+                new PurchaseReturn().ToMap(this);
                 this.PRDetail = new PurchaseReturnDetail();
                 this.PRDetails = new ObservableCollection<PurchaseReturnDetail>();
 
@@ -551,7 +551,7 @@ namespace AccountBuddy.BLL
             {
                 PurchaseReturn po = FMCGHubClient.HubCaller.Invoke<PurchaseReturn>("PurchaseReturn_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<PurchaseReturn>(this);
+                po.ToMap(this);
                 this.PRDetails = po.PRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -567,7 +567,7 @@ namespace AccountBuddy.BLL
             {
                 PurchaseReturn po = FMCGHubClient.HubCaller.Invoke<PurchaseReturn>("PurchaseReturn_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<PurchaseReturn>(this);
+                po.ToMap(this);
                 this.PRDetails = po.PRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -607,7 +607,7 @@ namespace AccountBuddy.BLL
                 {
                     PRDetail.Quantity += pod.Quantity;
                 }
-                PRDetail.ToMap<PurchaseReturnDetail>(pod);
+                PRDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = PRDetails.Sum(x => x.Amount);
                 SetAmount();
@@ -619,7 +619,7 @@ namespace AccountBuddy.BLL
         {
             PurchaseReturnDetail pod = new PurchaseReturnDetail();
             pod.SNo = PRDetails.Count == 0 ? 1 : PRDetails.Max(x => x.SNo) + 1;
-            pod.ToMap<PurchaseReturnDetail>(PRDetail);
+            pod.ToMap(PRDetail);
         }
 
         public void DeleteDetail(int SNo)

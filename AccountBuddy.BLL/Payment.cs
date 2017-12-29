@@ -633,14 +633,21 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Payment().ToMap<Payment>(this);
-            ClearDetail();
-            _PDetails = new ObservableCollection<PaymentDetail>();
+            try
+            {
+                new Payment().ToMap(this);
+                ClearDetail();
+                _PDetails = new ObservableCollection<PaymentDetail>();
 
-            PaymentDate = DateTime.Now;
-            IsReadOnly = !UserPermission.AllowInsert;
-            EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Payment_NewRefNo").Result;
-            NotifyAllPropertyChanged();
+                PaymentDate = DateTime.Now;
+                IsReadOnly = !UserPermission.AllowInsert;
+                EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Payment_NewRefNo").Result;
+                NotifyAllPropertyChanged();
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
 
         public bool Find()
@@ -649,7 +656,7 @@ namespace AccountBuddy.BLL
             {
                 Payment po = FMCGHubClient.HubCaller.Invoke<Payment>("Payment_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<Payment>(this);
+                po.ToMap(this);
                 this.PDetails = po.PDetails;
                 IsReadOnly = !UserPermission.AllowInsert;
 
@@ -688,7 +695,7 @@ namespace AccountBuddy.BLL
                 PDetails.Add(pod);
             }
 
-            PDetail.ToMap<PaymentDetail>(pod);
+            PDetail.ToMap(pod);
             ClearDetail();
             Amount = PDetails.Sum(x => x.Amount);
         }
@@ -697,7 +704,7 @@ namespace AccountBuddy.BLL
         {
             PaymentDetail pod = new PaymentDetail();
             pod.SNo = PDetails.Count == 0 ? 1 : PDetails.Max(x => x.SNo) + 1;
-            pod.ToMap<PaymentDetail>(PDetail);
+            pod.ToMap(PDetail);
         }
 
         public void DeleteDetail(int SNo)
@@ -718,7 +725,7 @@ namespace AccountBuddy.BLL
 
             if (pod != null)
             {
-                pod.ToMap<PaymentDetail>(PDetail);
+                pod.ToMap(PDetail);
             }
         }
 

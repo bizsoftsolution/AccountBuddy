@@ -40,12 +40,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.StockInProcess();
                     DB.StockInProcesses.Add(d);
 
-                    SO.ToMap<DAL.StockInProcess>(d);
+                    SO.ToMap(d);
 
                     foreach (var b_pod in SO.STPDetails)
                     {
                         DAL.StockInProcessDetail d_pod = new DAL.StockInProcessDetail();
-                        b_pod.ToMap<DAL.StockInProcessDetail>(d_pod);
+                        b_pod.ToMap(d_pod);
                         d.StockInProcessDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -62,7 +62,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = SO.STPDetails.Select(X => X.SPId).FirstOrDefault().Value;
                     DB.StockInProcessDetails.RemoveRange(d.StockInProcessDetails.Where(x => x.SPId == rd).ToList());
 
-                    SO.ToMap<DAL.StockInProcess>(d);
+                    SO.ToMap(d);
                     foreach (var b_SOd in SO.STPDetails)
                     {
                         //DAL.StockInProcessDetail d_SOd = d.StockInProcessDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
@@ -71,7 +71,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.StockInProcessDetail d_SOd = new DAL.StockInProcessDetail();
                         d.StockInProcessDetails.Add(d_SOd);
                         // }
-                        b_SOd.ToMap<DAL.StockInProcessDetail>(d_SOd);
+                        b_SOd.ToMap(d_SOd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(SO, LogDetailType.UPDATE);
@@ -98,14 +98,14 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.StockInProcess>(SO);
+                    d.ToMap(SO);
                     SO.StaffName = (d.Staff ?? DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
                     int i = 0;
 
                     foreach (var d_pod in d.StockInProcessDetails)
                     {
                         BLL.StockInProcessDetail b_pod = new BLL.StockInProcessDetail();
-                        d_pod.ToMap<BLL.StockInProcessDetail>(b_pod);
+                        d_pod.ToMap(b_pod);
                         SO.STPDetails.Add(b_pod);
                         b_pod.SNo = i++;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -152,10 +152,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.StockInProcess StockInProcess_DALtoBLL(DAL.StockInProcess d)
         {
-            BLL.StockInProcess SO = d.ToMap<BLL.StockInProcess>(new BLL.StockInProcess());
+            BLL.StockInProcess SO = d.ToMap(new BLL.StockInProcess());
             foreach (var d_SOd in d.StockInProcessDetails)
             {
-                SO.STPDetails.Add(d_SOd.ToMap<BLL.StockInProcessDetail>(new BLL.StockInProcessDetail()));
+                SO.STPDetails.Add(d_SOd.ToMap(new BLL.StockInProcessDetail()));
             }
             //SO.Status = d.StockInProcessDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
             return SO;
@@ -185,12 +185,12 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.StockInProcess>(P);
+                    d.ToMap(P);
                     P.StaffName = (d.Staff ?? DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
                     foreach (var d_pod in d.StockInProcessDetails)
                     {
                         BLL.StockInProcessDetail b_pod = new BLL.StockInProcessDetail();
-                        d_pod.ToMap<BLL.StockInProcessDetail>(b_pod);
+                        d_pod.ToMap(b_pod);
                         P.STPDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;

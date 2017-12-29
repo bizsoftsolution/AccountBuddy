@@ -44,12 +44,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.Journal();
                     DB.Journals.Add(d);
 
-                    PO.ToMap<DAL.Journal>(d);
+                    PO.ToMap(d);
 
                     foreach (var b_pod in PO.JDetails)
                     {
                         DAL.JournalDetail d_pod = new DAL.JournalDetail();
-                        b_pod.ToMap<DAL.JournalDetail>(d_pod);
+                        b_pod.ToMap(d_pod);
                         d.JournalDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -69,7 +69,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.JournalDetails.RemoveRange(d.JournalDetails.Where(x => x.JournalId == pd).ToList());
 
 
-                    PO.ToMap<DAL.Journal>(d);
+                    PO.ToMap(d);
 
                     foreach (var b_pod in PO.JDetails)
                     {
@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.JournalDetail d_pod = new DAL.JournalDetail();
                         d.JournalDetails.Add(d_pod);
                         //}
-                        b_pod.ToMap<DAL.JournalDetail>(d_pod);
+                        b_pod.ToMap(d_pod);
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
@@ -103,12 +103,12 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.Journal>(PO);
+                    d.ToMap(PO);
                     int i = 0;
                     foreach (var d_pod in d.JournalDetails)
                     {
                         BLL.JournalDetail b_pod = new BLL.JournalDetail();
-                        d_pod.ToMap<BLL.JournalDetail>(b_pod);
+                        d_pod.ToMap(b_pod);
                         PO.JDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
@@ -130,11 +130,11 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.Journal>(PO);
+                    d.ToMap(PO);
                     foreach (var d_pod in d.JournalDetails)
                     {
                         BLL.JournalDetail b_pod = new BLL.JournalDetail();
-                        d_pod.ToMap<BLL.JournalDetail>(b_pod);
+                        d_pod.ToMap(b_pod);
                         PO.JDetails.Add(b_pod);
                         b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
@@ -168,10 +168,10 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.Journal Journal_DALtoBLL(DAL.Journal d)
         {
-            BLL.Journal J = d.ToMap<BLL.Journal>(new BLL.Journal());
+            BLL.Journal J = d.ToMap(new BLL.Journal());
             foreach (var d_Jd in d.JournalDetails)
             {
-                J.JDetails.Add(d_Jd.ToMap<BLL.JournalDetail>(new BLL.JournalDetail()));
+                J.JDetails.Add(d_Jd.ToMap(new BLL.JournalDetail()));
             }
             return J;
         }
@@ -198,7 +198,7 @@ namespace AccountBuddy.SL.Hubs
 
         public int LedgerIdByKeyAndCompany(string key, int CompanyId)
         {
-            return DB.DataKeyValues.Where(x => x.CompanyId == CompanyId && x.DataKey == key).FirstOrDefault().DataValue;
+           return DB.DataKeyValues.Where(x => x.CompanyId == CompanyId && x.DataKey == key).FirstOrDefault().DataValue;
         }
         int LedgerIdByCompany(string LName, int CompanyId)
         {
@@ -925,57 +925,65 @@ namespace AccountBuddy.SL.Hubs
 
         void Journal_SaveByStockOut(DAL.StockOut STout)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, STout.Id);
-            if (STout.Ledger == null)
+            try
             {
-                STout.Ledger = DB.Ledgers.Where(x => x.Id == STout.LedgerId).FirstOrDefault();
-            }
-            var CId = STout.Ledger.AccountGroup.CompanyId;
-
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
-            if (j == null)
-            {
-                j = new DAL.Journal();
-                j.EntryNo = STout.RefNo;// Journal_NewRefNoByCompanyId(CId);
-                j.RefCode = RefCode;
-
-
-                j.JournalDetails.Add(new DAL.JournalDetail()
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockOut, STout.Id);
+                if (STout.Ledger == null)
                 {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Stock_Outward_Ledger_Key, CId),
-                    CrAmt = STout.ItemAmount,
-                    Particulars = STout.Narration
-                });
+                    STout.Ledger = DB.Ledgers.Where(x => x.Id == STout.LedgerId).FirstOrDefault();
+                }
+                var CId = STout.Ledger.AccountGroup.CompanyId;
 
-                j.JournalDetails.Add(new DAL.JournalDetail()
+                DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (j == null)
                 {
-                    LedgerId = STout.LedgerId,
-                    DrAmt = STout.ItemAmount,
-                    Particulars = STout.Narration
-                });
+                    j = new DAL.Journal();
+                    j.EntryNo = STout.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
 
-                DB.Journals.Add(j);
-            }
-            else
-            {
-                foreach (var jd in j.JournalDetails)
-                {
-                    jd.Particulars = STout.Narration;
-                    if (jd.CrAmt != 0)
+
+                    j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        jd.LedgerId = STout.LedgerId;
-                        jd.CrAmt = STout.ItemAmount;
-                    }
-                    else
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Stock_Outward_Ledger_Key, CId),
+                        CrAmt = STout.ItemAmount,
+                        Particulars = STout.Narration
+                    });
+
+                    j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        jd.DrAmt = STout.ItemAmount;
+                        LedgerId = STout.LedgerId,
+                        DrAmt = STout.ItemAmount,
+                        Particulars = STout.Narration
+                    });
+
+                    DB.Journals.Add(j);
+                }
+                else
+                {
+                    foreach (var jd in j.JournalDetails)
+                    {
+                        jd.Particulars = STout.Narration;
+                        if (jd.CrAmt != 0)
+                        {
+                            jd.LedgerId = STout.LedgerId;
+                            jd.CrAmt = STout.ItemAmount;
+                        }
+                        else
+                        {
+                            jd.DrAmt = STout.ItemAmount;
+                        }
                     }
                 }
-            }
 
-            j.JournalDate = STout.Date;
-            DB.SaveChanges();
-        }
+                j.JournalDate = STout.Date;
+                DB.SaveChanges();
+
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
+            }
         void Journal_DeleteByStockOut(BLL.StockOut P)
         {
 
@@ -989,57 +997,65 @@ namespace AccountBuddy.SL.Hubs
         #region Stock In
         void Journal_SaveByStockIn(DAL.StockIn STIn)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, STIn.Id);
-            if (STIn.Ledger == null)
+
+            try
             {
-                STIn.Ledger = DB.Ledgers.Where(x => x.Id == STIn.LedgerId).FirstOrDefault();
-            }
-            var CId = STIn.Ledger.AccountGroup.CompanyId;
-
-
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
-            if (j == null)
-            {
-                j = new DAL.Journal();
-                j.EntryNo = STIn.RefNo;// Journal_NewRefNoByCompanyId(CId);
-                j.RefCode = RefCode;
-
-
-                j.JournalDetails.Add(new DAL.JournalDetail()
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.StockIn, STIn.Id);
+                if (STIn.Ledger == null)
                 {
-                    LedgerId = STIn.LedgerId,
-                    CrAmt = STIn.ItemAmount,
-                    Particulars = STIn.Narration
-                });
+                    STIn.Ledger = DB.Ledgers.Where(x => x.Id == STIn.LedgerId).FirstOrDefault();
+                }
+                var CId = STIn.Ledger.AccountGroup.CompanyId;
 
-                j.JournalDetails.Add(new DAL.JournalDetail()
-                {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Stock_Inward_Ledger_Key, CId),
-                    DrAmt = STIn.ItemAmount,
-                    Particulars = STIn.Narration
-                });
 
-                DB.Journals.Add(j);
-            }
-            else
-            {
-                foreach (var jd in j.JournalDetails)
+                DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (j == null)
                 {
-                    jd.Particulars = STIn.Narration;
-                    if (jd.CrAmt != 0)
+                    j = new DAL.Journal();
+                    j.EntryNo = STIn.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
+
+
+                    j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        jd.LedgerId = STIn.LedgerId;
-                        jd.CrAmt = STIn.ItemAmount;
-                    }
-                    else
+                        LedgerId = STIn.LedgerId,
+                        CrAmt = STIn.ItemAmount,
+                        Particulars = STIn.Narration
+                    });
+
+                    j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        jd.DrAmt = STIn.ItemAmount;
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Stock_Inward_Ledger_Key, CId),
+                        DrAmt = STIn.ItemAmount,
+                        Particulars = STIn.Narration
+                    });
+
+                    DB.Journals.Add(j);
+                }
+                else
+                {
+                    foreach (var jd in j.JournalDetails)
+                    {
+                        jd.Particulars = STIn.Narration;
+                        if (jd.CrAmt != 0)
+                        {
+                            jd.LedgerId = STIn.LedgerId;
+                            jd.CrAmt = STIn.ItemAmount;
+                        }
+                        else
+                        {
+                            jd.DrAmt = STIn.ItemAmount;
+                        }
                     }
                 }
-            }
 
-            j.JournalDate = STIn.Date;
-            DB.SaveChanges();
+                j.JournalDate = STIn.Date;
+                DB.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
         void Journal_DeleteByStockIn(BLL.StockIn P)
         {

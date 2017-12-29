@@ -237,8 +237,8 @@ namespace AccountBuddy.BLL
                         l1 = new Ledger();
                         Ledger.toList.Add(l1);
                     }
-                    this.ToMap<Bank>(d1);
-                    this.Ledger.ToMap<Ledger>(l1);
+                    this.ToMap(d1);
+                    this.Ledger.ToMap(l1);
                 }
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }

@@ -450,7 +450,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new StockInProcess().ToMap<StockInProcess>(this);
+            new StockInProcess().ToMap(this);
             STPDetail = new StockInProcessDetail();
             STPDetails = new ObservableCollection<StockInProcessDetail>();
 
@@ -465,7 +465,7 @@ namespace AccountBuddy.BLL
             {
                 StockInProcess po = FMCGHubClient.HubCaller.Invoke<StockInProcess>("StockInProcess_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<StockInProcess>(this);
+                po.ToMap(this);
                 this.STPDetails = po.STPDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -493,7 +493,7 @@ namespace AccountBuddy.BLL
             {
                 StockInProcess po = FMCGHubClient.HubCaller.Invoke<StockInProcess>("StockInProcess_FindById", Id).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<StockInProcess>(this);
+                po.ToMap(this);
                 this.STPDetails = po.STPDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -522,7 +522,7 @@ namespace AccountBuddy.BLL
                 {
                     STPDetail.Quantity += pod.Quantity;
                 }
-                STPDetail.ToMap<StockInProcessDetail>(pod);
+                STPDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = STPDetails.Sum(x => x.Amount);
                 SetAmount();
@@ -534,7 +534,7 @@ namespace AccountBuddy.BLL
         {
             StockInProcessDetail pod = new StockInProcessDetail();
             pod.SNo = STPDetails.Count == 0 ? 1 : STPDetails.Max(x => x.SNo) + 1;
-            pod.ToMap<StockInProcessDetail>(STPDetail);
+            pod.ToMap(STPDetail);
         }
 
         public void DeleteDetail(int SNo)
