@@ -31,6 +31,7 @@ namespace AccountBuddy.BLL
         private string _TransactionType;
         private string _AmountInwords;
 
+        private bool _IsGST=true;
         private string _SearchText;
 
         private SalesDetail _SDetail;
@@ -173,6 +174,7 @@ namespace AccountBuddy.BLL
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
                     SetAmount();
+                    if (_IsGST == true) SetGST();
                 }
             }
         }
@@ -189,6 +191,7 @@ namespace AccountBuddy.BLL
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
                     SetAmount();
+                    if (_IsGST == true) SetGST();
                 }
             }
         }
@@ -221,6 +224,7 @@ namespace AccountBuddy.BLL
                     _ExtraAmount = value;
                     NotifyPropertyChanged(nameof(ExtraAmount));
                     SetAmount();
+                    if (_IsGST == true) SetGST();
                 }
             }
         }
@@ -493,6 +497,22 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public bool IsGST
+        {
+            get
+            {
+                return _IsGST;
+            }
+            set
+            {
+                if (_IsGST != value)
+                {
+                    _IsGST = value;
+                    NotifyPropertyChanged(nameof(lblExtra));
+
+                }
+            }
+        }
         #endregion
 
         #region Property Changed
@@ -615,6 +635,7 @@ namespace AccountBuddy.BLL
                 ClearDetail();
                 ItemAmount = SDetails.Sum(x => x.Amount);
                 SetAmount();
+                if (_IsGST == true) SetGST();
             }
 
         }
@@ -636,6 +657,7 @@ namespace AccountBuddy.BLL
                 ClearDetail();
                 ItemAmount = SDetails.Sum(x => x.Amount);
                 SetAmount();
+                if (_IsGST == true) SetGST();
             }
         }
 
@@ -643,9 +665,13 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
+
             TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;
             setLabel();
+        }
+       private void SetGST()
+        {
+            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
         }
         public bool FindRefNo()
         {
