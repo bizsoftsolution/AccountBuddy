@@ -602,11 +602,7 @@ namespace AccountBuddy.BLL
                 {
                     pod = new PurchaseReturnDetail();
                     PRDetails.Add(pod);
-                }
-                else
-                {
-                    PRDetail.Quantity += pod.Quantity;
-                }
+                }                
                 PRDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = PRDetails.Sum(x => x.Amount);

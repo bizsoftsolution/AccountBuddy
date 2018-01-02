@@ -369,6 +369,7 @@ namespace AccountBuddy.BLL
         }
         public static BLL.PurchaseDetail ToMap(this PurchaseDetail S, PurchaseDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
@@ -377,8 +378,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;
-            D.Product = S.Product;
+            D.UOMId = S.UOMId;            
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -419,6 +419,7 @@ namespace AccountBuddy.BLL
         }
         public static PurchaseReturnDetail ToMap(this PurchaseReturnDetail S, BLL.PurchaseReturnDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
@@ -430,8 +431,7 @@ namespace AccountBuddy.BLL
             D.IsResale = S.IsResale;
             D.Particulars = S.Particulars;
             D.PDId = S.PDId;
-            D.PRId = S.PRId;
-            D.Product = S.Product;
+            D.PRId = S.PRId;            
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -512,6 +512,7 @@ namespace AccountBuddy.BLL
         }
         public static SalesDetail ToMap(this SalesDetail S, SalesDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
@@ -520,7 +521,7 @@ namespace AccountBuddy.BLL
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
-            D.Product = S.Product;
+            
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName; return D;
@@ -546,6 +547,7 @@ namespace AccountBuddy.BLL
         }
         public static SalesReturnDetail ToMap(this SalesReturnDetail S, SalesReturnDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = (decimal)S.Amount;
             D.DiscountAmount = S.DiscountAmount;
@@ -553,8 +555,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;
-            D.Product = S.Product;
+            D.UOMId = S.UOMId;            
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.IsResale = S.IsResale;
