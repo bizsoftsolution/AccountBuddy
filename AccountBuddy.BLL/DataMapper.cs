@@ -589,6 +589,7 @@ namespace AccountBuddy.BLL
         }
         public static JobOrderIssueDetail ToMap(this JobOrderIssueDetail S, JobOrderIssueDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = S.Amount??0;
             D.DiscountAmount = S.DiscountAmount;
@@ -596,8 +597,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;
-            D.Product = S.Product;
+            D.UOMId = S.UOMId;            
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName; return D;
@@ -629,6 +629,7 @@ namespace AccountBuddy.BLL
         }
         public static JobOrderReceivedDetail ToMap(this JobOrderReceivedDetail S, JobOrderReceivedDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = (decimal)S.Amount;
             D.DiscountAmount = S.DiscountAmount;
@@ -636,8 +637,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;
-            D.Product = S.Product;
+            D.UOMId = S.UOMId;            
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName; return D;
@@ -662,6 +662,7 @@ namespace AccountBuddy.BLL
         }
         public static StockInDetail ToMap(this StockInDetail S, StockInDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
@@ -670,7 +671,7 @@ namespace AccountBuddy.BLL
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
-            D.Product = S.Product;
+            
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -696,6 +697,7 @@ namespace AccountBuddy.BLL
         }
         public static StockOutDetail ToMap(this StockOutDetail S, StockOutDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
@@ -703,8 +705,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;
-            D.Product = S.Product;
+            D.UOMId = S.UOMId;            
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -737,6 +738,7 @@ namespace AccountBuddy.BLL
         }
         public static StockInProcessDetail ToMap(this StockInProcessDetail S, StockInProcessDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
@@ -745,7 +747,7 @@ namespace AccountBuddy.BLL
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
-            D.Product = S.Product;
+            
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -778,6 +780,7 @@ namespace AccountBuddy.BLL
         }
         public static StockSeperatedDetail ToMap(this StockSeperatedDetail S, StockSeperatedDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
@@ -786,7 +789,7 @@ namespace AccountBuddy.BLL
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
-            D.Product = S.Product;
+
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;

@@ -554,10 +554,6 @@ namespace AccountBuddy.BLL
                     pod = new JobOrderIssueDetail();
                     JODetails.Add(pod);
                 }
-                else
-                {
-                    JODetail.Quantity += pod.Quantity;
-                }
                 JODetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = JODetails.Sum(x => x.Amount);

@@ -373,10 +373,6 @@ namespace AccountBuddy.BLL
                     pod = new StockOutDetail();
                     STOutDetails.Add(pod);
                 }
-                else
-                {
-                    STOutDetail.Quantity += pod.Quantity;
-                }
                 STOutDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = STOutDetails.Sum(x => x.Amount);
