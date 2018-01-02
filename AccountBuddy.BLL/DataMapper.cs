@@ -308,6 +308,7 @@ namespace AccountBuddy.BLL
             D.PODetails = S.PODetails;
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
+            D.Status = S.Status;
             D.TotalAmount = S.TotalAmount;
 
             return D;
@@ -458,6 +459,7 @@ namespace AccountBuddy.BLL
             D.Narration = S.Narration;
             D.lblDiscount = S.lblDiscount;
             D.lblExtra = S.lblExtra;
+            D.Status = S.Status;
             return D;
         }
         public static SalesOrderDetail ToMap(this SalesOrderDetail S, SalesOrderDetail D)
