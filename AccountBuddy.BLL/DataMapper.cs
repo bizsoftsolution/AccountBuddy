@@ -314,13 +314,14 @@ namespace AccountBuddy.BLL
         }
         public static PurchaseOrderDetail ToMap(this PurchaseOrderDetail S, PurchaseOrderDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
             D.GSTAmount = S.GSTAmount;
             D.ItemCode = S.ItemCode;
             D.POId = S.POId;
-            D.Product = S.Product;
+            
             D.ProductId = S.ProductId;
             D.ProductName = S.ProductName;
             D.Quantity = S.Quantity;
@@ -461,6 +462,7 @@ namespace AccountBuddy.BLL
         }
         public static SalesOrderDetail ToMap(this SalesOrderDetail S, SalesOrderDetail D)
         {
+            D.Product = S.Product;
             D.Id = S.Id;
             D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
@@ -468,8 +470,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;
-            D.Product = S.Product;
+            D.UOMId = S.UOMId;            
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;

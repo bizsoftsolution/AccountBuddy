@@ -530,10 +530,6 @@ namespace AccountBuddy.BLL
                     pod = new SalesOrderDetail();
                     SODetails.Add(pod);
                 }
-                else
-                {
-                    SODetail.Quantity += pod.Quantity;
-                }
                 SODetail.ToMap(pod);               
                 ItemAmount = SODetails.Sum(x => x.Amount);
                 SetAmount();
