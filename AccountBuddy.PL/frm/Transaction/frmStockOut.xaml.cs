@@ -120,7 +120,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 var rv = data.Save();
                 if (rv == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert, FormName, MessageBoxButton.YesNo, MessageBoxImage.Information);
+                    MessageBox.Show(Message.PL.Saved_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     if (ckbAutoPrint.IsChecked==true)
                     {
                         Print();
