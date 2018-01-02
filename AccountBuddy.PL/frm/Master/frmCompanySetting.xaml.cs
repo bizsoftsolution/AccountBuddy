@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using AccountBuddy.BLL;
 
 namespace AccountBuddy.PL.frm.Master
 {
@@ -192,7 +193,7 @@ namespace AccountBuddy.PL.frm.Master
             {
                 var cm = dgvWarehouse.SelectedItem as BLL.CompanyDetail;
                 frmCompanySignup f = new frmCompanySignup();
-                cm.ToMap<BLL.CompanyDetail>(f.data);
+                cm.ToMap(f.data);
                 f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
                 f.data.CompanyType = "Warehouse";
                 f.iLogoImage.Source = AppLib.ViewImage(cm.Logo);
@@ -262,7 +263,7 @@ namespace AccountBuddy.PL.frm.Master
                 var cm = dgvDealer.SelectedItem as BLL.CompanyDetail;
 
                 frmCompanySignup f = new frmCompanySignup();
-                cm.ToMap<BLL.CompanyDetail>(f.data);
+                cm.ToMap(f.data);
                 f.data.UnderCompanyId = BLL.UserAccount.User.UserType.Company.Id;
                 f.data.CompanyType = "Dealer";
                 f.iLogoImage.Source = AppLib.ViewImage(cm.Logo);

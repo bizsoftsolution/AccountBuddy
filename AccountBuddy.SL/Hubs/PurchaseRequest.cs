@@ -74,12 +74,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.PurchaseRequest();
                     DB.PurchaseRequests.Add(d);
 
-                    PR.ToMap<DAL.PurchaseRequest>(d);
+                    PR.ToCopy<DAL.PurchaseRequest>(d);
 
                     foreach (var b_prd in PR.PRDetails)
                     {
                         DAL.PurchaseRequestDetail d_prd = new DAL.PurchaseRequestDetail();
-                        b_prd.ToMap<DAL.PurchaseRequestDetail>(d_prd);
+                        b_prd.ToCopy<DAL.PurchaseRequestDetail>(d_prd);
                         d.PurchaseRequestDetails.Add(d_prd);
                     }
                     d.PurchaseRequestStatusDetails.Add(new DAL.PurchaseRequestStatusDetail()
@@ -119,7 +119,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = PR.PRDetails.Select(X => X.POId).FirstOrDefault();
                     DB.PurchaseRequestDetails.RemoveRange(d.PurchaseRequestDetails.Where(x => x.PRId == rd).ToList());
 
-                    PR.ToMap<DAL.PurchaseRequest>(d);
+                    PR.ToCopy<DAL.PurchaseRequest>(d);
                     foreach (var b_prd in PR.PRDetails)
                     {
                         //DAL.PurchaseRequestDetail d_prd = d.PurchaseRequestDetails.Where(x => x.Id == b_prd.Id).FirstOrDefault();
@@ -128,7 +128,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.PurchaseRequestDetail d_prd = new DAL.PurchaseRequestDetail();
                         d.PurchaseRequestDetails.Add(d_prd);
                         // }
-                        b_prd.ToMap<DAL.PurchaseRequestDetail>(d_prd);
+                        b_prd.ToCopy<DAL.PurchaseRequestDetail>(d_prd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(PR, LogDetailType.UPDATE);
@@ -182,7 +182,7 @@ namespace AccountBuddy.SL.Hubs
                     foreach (var b_prd in S.SalesOrderDetails)
                     {
                         DAL.PurchaseRequestDetail d_prd = new DAL.PurchaseRequestDetail();
-                        b_prd.ToMap<DAL.PurchaseRequestDetail>(d_prd);
+                        b_prd.ToCopy<DAL.PurchaseRequestDetail>(d_prd);
                         p.PurchaseRequestDetails.Add(d_prd);
                     }
                     DB.SaveChanges();
@@ -222,12 +222,12 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap<BLL.PurchaseRequest>(PR);
+                    d.ToCopy<BLL.PurchaseRequest>(PR);
                     PR.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     foreach (var d_prd in d.PurchaseRequestDetails)
                     {
                         BLL.PurchaseRequestDetail b_prd = new BLL.PurchaseRequestDetail();
-                        d_prd.ToMap<BLL.PurchaseRequestDetail>(b_prd);
+                        d_prd.ToCopy<BLL.PurchaseRequestDetail>(b_prd);
                         PR.PRDetails.Add(b_prd);
                         b_prd.ProductName = (d_prd.Product ?? DB.Products.Find(d_prd.ProductId) ?? new DAL.Product()).ProductName;
                         b_prd.UOMName = (d_prd.UOM ?? DB.UOMs.Find(d_prd.UOMId) ?? new DAL.UOM()).Symbol;
@@ -272,10 +272,10 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.PurchaseRequest PurchaseRequest_DALtoBLL(DAL.PurchaseRequest d)
         {
-            BLL.PurchaseRequest PR = d.ToMap<BLL.PurchaseRequest>(new BLL.PurchaseRequest());
+            BLL.PurchaseRequest PR = d.ToCopy<BLL.PurchaseRequest>(new BLL.PurchaseRequest());
             foreach (var d_prd in d.PurchaseRequestDetails)
             {
-                PR.PRDetails.Add(d_prd.ToMap<BLL.PurchaseRequestDetail>(new BLL.PurchaseRequestDetail()));
+                PR.PRDetails.Add(d_prd.ToCopy<BLL.PurchaseRequestDetail>(new BLL.PurchaseRequestDetail()));
             }
             return PR;
         }

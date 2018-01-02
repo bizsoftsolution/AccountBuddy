@@ -1,4 +1,5 @@
-﻿using AccountBuddy.Common;
+﻿using AccountBuddy.BLL;
+using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Reporting.WinForms;
 using System;
@@ -184,7 +185,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.PurchaseOrderDetail pod = dgvDetails.SelectedItem as BLL.PurchaseOrderDetail;
-                pod.ToMap<BLL.PurchaseOrderDetail>(data.PODetail);
+                pod.ToMap(data.PODetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
@@ -319,7 +320,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.PurchaseOrderDetail pod = dgvDetails.SelectedItem as BLL.PurchaseOrderDetail;
-                pod.ToMap<BLL.PurchaseOrderDetail>(data.PODetail);
+                pod.ToMap(data.PODetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 

@@ -404,7 +404,7 @@ namespace AccountBuddy.BLL
         
         public void Clear()
         {
-            new PurchaseRequest().ToMap<PurchaseRequest>(this);
+            new PurchaseRequest().ToMap(this);
             _PRDetail = new PurchaseRequestDetail();
             _PRDetails = new ObservableCollection<PurchaseRequestDetail>();
 
@@ -424,7 +424,7 @@ namespace AccountBuddy.BLL
             {
                 PurchaseRequest po = FMCGHubClient.HubCaller.Invoke<PurchaseRequest>("PurchaseRequest_Find", SearchText).Result;
                 if (po.Id == 0) return false;
-                po.ToMap<PurchaseRequest>(this);
+                po.ToMap(this);
                 this.PRDetails = po.PRDetails;
                 NotifyAllPropertyChanged();
                 return true;
@@ -464,7 +464,7 @@ namespace AccountBuddy.BLL
             {
                 PRDetail.Quantity += pod.Quantity;
             }
-            PRDetail.ToMap<PurchaseRequestDetail>(pod);
+            PRDetail.ToMap(pod);
             ClearDetail();
             ItemAmount = PRDetails.Sum(x => x.Amount);
 
@@ -474,7 +474,7 @@ namespace AccountBuddy.BLL
         public void ClearDetail()
         {
             PurchaseRequestDetail pod = new PurchaseRequestDetail();
-            pod.ToMap<PurchaseRequestDetail>(PRDetail);
+            pod.ToMap(PRDetail);
         }
 
         public void DeleteDetail(string PName)

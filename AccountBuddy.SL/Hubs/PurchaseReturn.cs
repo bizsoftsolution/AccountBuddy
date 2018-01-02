@@ -40,12 +40,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.PurchaseReturn();
                     DB.PurchaseReturns.Add(d);
 
-                    P.ToMap(d);
+                    P.ToCopy(d);
 
                     foreach (var b_pod in P.PRDetails)
                     {
                         DAL.PurchaseReturnDetail d_pod = new DAL.PurchaseReturnDetail();
-                        b_pod.ToMap(d_pod);
+                        b_pod.ToCopy(d_pod);
                         d.PurchaseReturnDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -63,7 +63,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = P.PRDetails.Select(X => X.PRId).FirstOrDefault();
                     DB.PurchaseReturnDetails.RemoveRange(d.PurchaseReturnDetails.Where(x => x.PRId == rd).ToList());
 
-                    P.ToMap(d);
+                    P.ToCopy(d);
                     foreach (var b_Pd in P.PRDetails)
                     {
                         // DAL.PurchaseReturnDetail d_Pd = d.PurchaseReturnDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
@@ -72,7 +72,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.PurchaseReturnDetail d_Pd = new DAL.PurchaseReturnDetail();
                             d.PurchaseReturnDetails.Add(d_Pd);
                        // }
-                        b_Pd.ToMap(d_Pd);
+                        b_Pd.ToCopy(d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -129,7 +129,7 @@ namespace AccountBuddy.SL.Hubs
                     foreach (var b_pod in SR.SalesReturnDetails)
                     {
                         DAL.PurchaseReturnDetail d_pod = new DAL.PurchaseReturnDetail();
-                        b_pod.ToMap(d_pod);
+                        b_pod.ToCopy(d_pod);
                         p.PurchaseReturnDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -172,14 +172,14 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(P);
+                    d.ToCopy(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     int i = 0;
                         foreach (var d_pod in d.PurchaseReturnDetails)
                     {
                         BLL.PurchaseReturnDetail b_pod = new BLL.PurchaseReturnDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         P.PRDetails.Add(b_pod);
                         b_pod.SNo = ++i; 
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -215,10 +215,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.PurchaseReturn PurchaseReturn_DALtoBLL(DAL.PurchaseReturn d)
         {
-            BLL.PurchaseReturn PR = d.ToMap(new BLL.PurchaseReturn());
+            BLL.PurchaseReturn PR = d.ToCopy(new BLL.PurchaseReturn());
             foreach (var d_PRd in d.PurchaseReturnDetails)
             {
-                PR.PRDetails.Add(d_PRd.ToMap(new BLL.PurchaseReturnDetail()));
+                PR.PRDetails.Add(d_PRd.ToCopy(new BLL.PurchaseReturnDetail()));
             }
             return PR;
         }
@@ -247,13 +247,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(P);
+                    d.ToCopy(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     foreach (var d_pod in d.PurchaseReturnDetails)
                     {
                         BLL.PurchaseReturnDetail b_pod = new BLL.PurchaseReturnDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         P.PRDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;

@@ -41,12 +41,12 @@ namespace AccountBuddy.SL.Hubs
                     DB.StockIns.Add(d);
 
 
-                    P.ToMap(d);
+                    P.ToCopy(d);
 
                     foreach (var b_pod in P.STInDetails)
                     {
                         DAL.StockInDetail d_pod = new DAL.StockInDetail();
-                        b_pod.ToMap(d_pod);
+                        b_pod.ToCopy(d_pod);
                         d.StockInDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -61,12 +61,12 @@ namespace AccountBuddy.SL.Hubs
                     decimal pd = P.STInDetails.Select(X => X.StockInId).FirstOrDefault();
                     DB.StockInDetails.RemoveRange(d.StockInDetails.Where(x => x.StockInId == pd).ToList());
 
-                    P.ToMap(d);
+                    P.ToCopy(d);
                     foreach (var b_Pd in P.STInDetails)
                     {
                         DAL.StockInDetail d_Pd = new DAL.StockInDetail();
                         d.StockInDetails.Add(d_Pd);
-                        b_Pd.ToMap(d_Pd);
+                        b_Pd.ToCopy(d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -120,7 +120,7 @@ namespace AccountBuddy.SL.Hubs
                         foreach (var b_pod in S.StockOutDetails)
                         {
                             DAL.StockInDetail d_pod = new DAL.StockInDetail();
-                            b_pod.ToMap(d_pod);
+                            b_pod.ToCopy(d_pod);
                             p.StockInDetails.Add(d_pod);
                         }
                         DB.SaveChanges();
@@ -165,13 +165,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(P);
+                    d.ToCopy(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
                     foreach (var d_pod in d.StockInDetails)
                     {
                         BLL.StockInDetail b_pod = new BLL.StockInDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         P.STInDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -194,13 +194,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(P);
+                    d.ToCopy(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
 
                     foreach (var d_pod in d.StockInDetails)
                     {
                         BLL.StockInDetail b_pod = new BLL.StockInDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         P.STInDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
@@ -236,10 +236,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.StockIn StockIn_DALtoBLL(DAL.StockIn d)
         {
-            BLL.StockIn P = d.ToMap(new BLL.StockIn());
+            BLL.StockIn P = d.ToCopy(new BLL.StockIn());
             foreach (var d_Pd in d.StockInDetails)
             {
-                P.STInDetails.Add(d_Pd.ToMap(new BLL.StockInDetail()));
+                P.STInDetails.Add(d_Pd.ToCopy(new BLL.StockInDetail()));
             }
             return P;
         }

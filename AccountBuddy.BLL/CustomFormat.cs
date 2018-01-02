@@ -537,7 +537,7 @@ namespace AccountBuddy.BLL
                     toList.Add(d);
                 }
 
-                this.ToMap<CustomFormat>(d);
+                this.ToMap(d);
                 if (isServerCall == false)
                 {
                     var i = FMCGHubClient.HubCaller.Invoke<int>("CustomFormat_Save", this).Result;
@@ -553,7 +553,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new CustomFormat().ToMap<CustomFormat>(this);
+            new CustomFormat().ToMap(this);
            
             NotifyAllPropertyChanged();
         }
@@ -575,7 +575,7 @@ namespace AccountBuddy.BLL
             }
             if (d != null)
             {
-                d.ToMap<CustomFormat>(this);
+                d.ToMap(this);
                 //IsReadOnly = !UserPermission.AllowUpdate;
 
                 return true;

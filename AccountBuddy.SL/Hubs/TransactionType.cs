@@ -23,7 +23,7 @@ namespace AccountBuddy.SL.Hubs
                     foreach (var d1 in DB.TransactionTypes.ToList())
                     {
                         BLL.TransactionType d2 = new BLL.TransactionType();
-                        d1.ToMap<BLL.TransactionType>(d2);
+                        d1.ToCopy<BLL.TransactionType>(d2);
                         _transactionType_List.Add(d2);
                     }
 

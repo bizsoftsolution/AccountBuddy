@@ -38,12 +38,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.Receipt();
                     DB.Receipts.Add(d);
 
-                    PO.ToMap(d);
+                    PO.ToCopy(d);
 
                     foreach (var b_pod in PO.RDetails)
                     {
                         DAL.ReceiptDetail d_pod = new DAL.ReceiptDetail();
-                        b_pod.ToMap(d_pod);
+                        b_pod.ToCopy(d_pod);
                         d.ReceiptDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -61,7 +61,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = PO.RDetails.Select(X => X.ReceiptId).FirstOrDefault();
                     DB.ReceiptDetails.RemoveRange(d.ReceiptDetails.Where(x => x.ReceiptId == rd).ToList());
 
-                    PO.ToMap(d);
+                    PO.ToCopy(d);
 
                     foreach (var b_pod in PO.RDetails)
                     {
@@ -71,7 +71,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.ReceiptDetail d_pod = new DAL.ReceiptDetail();
                             d.ReceiptDetails.Add(d_pod);
                       //  }
-                        b_pod.ToMap(d_pod);
+                        b_pod.ToCopy(d_pod);
                     }
                     DB.SaveChanges();
                    
@@ -97,13 +97,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(PO);
+                    d.ToCopy(PO);
                     PO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
                     foreach (var d_pod in d.ReceiptDetails)
                     {
                         BLL.ReceiptDetail b_pod = new BLL.ReceiptDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         PO.RDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                        
@@ -142,10 +142,10 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.Receipt Receipt_DALtoBLL(DAL.Receipt d)
         {
-            BLL.Receipt R = d.ToMap(new BLL.Receipt());
+            BLL.Receipt R = d.ToCopy(new BLL.Receipt());
             foreach (var d_Pd in d.ReceiptDetails)
             {
-                R.RDetails.Add(d_Pd.ToMap(new BLL.ReceiptDetail()));
+                R.RDetails.Add(d_Pd.ToCopy(new BLL.ReceiptDetail()));
             }
             return R;
         }

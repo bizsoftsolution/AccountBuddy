@@ -1,4 +1,5 @@
-﻿using AccountBuddy.Common;
+﻿using AccountBuddy.BLL;
+using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;
@@ -188,7 +189,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.PurchaseReturnDetail pod = dgvDetails.SelectedItem as BLL.PurchaseReturnDetail;
-                pod.ToMap<BLL.PurchaseReturnDetail>(data.PRDetail);
+                pod.ToMap(data.PRDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
@@ -323,7 +324,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.PurchaseReturnDetail pod = dgvDetails.SelectedItem as BLL.PurchaseReturnDetail;
-                pod.ToMap<BLL.PurchaseReturnDetail>(data.PRDetail);
+                pod.ToMap(data.PRDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }

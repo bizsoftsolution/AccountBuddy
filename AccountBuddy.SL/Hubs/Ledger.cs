@@ -24,7 +24,7 @@ namespace AccountBuddy.SL.Hubs
                 ledgerTo.AccountGroup = AccountGroupDAL_BLL(ledgerFrom.AccountGroup);
 
                 ledgerTo.CreditLimitType = new BLL.CreditLimitType();
-                ledgerFrom.CreditLimitType.ToMap(ledgerTo.CreditLimitType);
+                ledgerFrom.CreditLimitType.ToCopy(ledgerTo.CreditLimitType);
                 ledgerTo.OPBal = GetLedgerBalance(ledgerFrom);
                 ledgerTo.OPCr = ledgerFrom.OPCr;
                 ledgerTo.OPDr = ledgerFrom.OPDr;

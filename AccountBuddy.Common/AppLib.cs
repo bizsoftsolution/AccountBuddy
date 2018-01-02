@@ -51,9 +51,9 @@ namespace AccountBuddy.Common
         public static int DigitGroupingBy;
         public static int CurrencyCaseSensitive;
 
-        public static T ToMap<T>(this object objSource, T objDestination)
+        public static T ToCopy<T>(this object objSource, T objDestination)
         {
-            
+
             try
             {
 
@@ -79,7 +79,7 @@ namespace AccountBuddy.Common
             }
             return objDestination;
         }
-        
+
         public static void MutateVerbose<TField>(this INotifyPropertyChanged instance, ref TField field, TField newValue, Action<PropertyChangedEventArgs> raise, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<TField>.Default.Equals(field, newValue)) return;

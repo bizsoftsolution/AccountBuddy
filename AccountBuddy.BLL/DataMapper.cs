@@ -33,6 +33,34 @@ namespace AccountBuddy.BLL
             return D;
         }
 
+        public static CustomFormat ToMap(this CustomFormat S, CustomFormat D)
+        {
+            D.Company = S.Company;
+            D.CompanyId = S.CompanyId;
+            D.CurrencyCaseSensitive = S.CurrencyCaseSensitive;
+            D.CurrencyNegativeSymbolPrefix = S.CurrencyNegativeSymbolPrefix;
+            D.CurrencyNegativeSymbolSuffix = S.CurrencyNegativeSymbolSuffix;
+            D.CurrencyPositiveSymbolPrefix = S.CurrencyPositiveSymbolPrefix;
+            D.CurrencyPositiveSymbolSuffix = S.CurrencyPositiveSymbolSuffix;
+            D.CurrencyToWordPrefix = S.CurrencyToWordPrefix;
+            D.CurrencyToWordSuffix = S.CurrencyToWordSuffix;
+            D.DecimalSymbol = S.DecimalSymbol;
+            D.DecimalToWordPrefix = S.DecimalToWordPrefix;
+            D.DecimalToWordSuffix = S.DecimalToWordSuffix;
+            D.DigitGroupingBy = S.DigitGroupingBy;
+            D.DigitGroupingSymbol = S.DigitGroupingSymbol;
+            D.Id = S.Id;
+            D.IsDisplayWithOnlyOnSuffix = S.IsDisplayWithOnlyOnSuffix;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            D.NoOfDigitAfterDecimal = S.NoOfDigitAfterDecimal;
+            D.SampleCurrency = S.SampleCurrency;
+            D.SampleCurrencyNegative = S.SampleCurrencyNegative;
+            D.SampleCurrencyPositive = S.SampleCurrencyPositive;           
+
+            return D;
+        }
+
         public static UserType ToMap(this UserType S, UserType D)
         {
 
@@ -288,6 +316,50 @@ namespace AccountBuddy.BLL
 
 
         #region Transaction 
+
+
+        #region PurchaseRequesting
+        public static PurchaseRequest ToMap(this PurchaseRequest S, PurchaseRequest D)
+        {
+            D.Id = S.Id;
+            D.AmountInwords = S.AmountInwords;
+            D.DiscountAmount = S.DiscountAmount;
+            D.Extras = S.Extras;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemAmount = S.ItemAmount;
+
+            D.LedgerId = S.LedgerId;
+            D.LedgerName = S.LedgerName;
+            D.Narration = S.Narration;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.TotalAmount = S.TotalAmount;
+
+            return D;
+        }
+        public static PurchaseRequestDetail ToMap(this PurchaseRequestDetail S, PurchaseRequestDetail D)
+        {
+            D.Product = S.Product;
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
+            D.ItemCode = S.ItemCode;
+            D.POId = S.POId;
+
+            D.ProductId = S.ProductId;
+            D.ProductName = S.ProductName;
+            D.Quantity = S.Quantity;
+            
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            D.UOMName = S.UOMName;
+
+
+            return D;
+        }
+        #endregion
 
         #region PurchaseOrder
         public static PurchaseOrder ToMap(this PurchaseOrder S, PurchaseOrder D)

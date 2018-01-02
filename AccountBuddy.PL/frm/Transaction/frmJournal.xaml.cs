@@ -1,4 +1,5 @@
-﻿using AccountBuddy.Common;
+﻿using AccountBuddy.BLL;
+using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;
@@ -209,7 +210,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.JournalDetail pod = dgvDetails.SelectedItem as BLL.JournalDetail;
-                pod.ToMap<BLL.JournalDetail>(data.JDetail);
+                pod.ToMap(data.JDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 

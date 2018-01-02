@@ -41,12 +41,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.PurchaseOrder();
                     DB.PurchaseOrders.Add(d);
 
-                    PO.ToMap(d);
+                    PO.ToCopy(d);
 
                     foreach (var b_pod in PO.PODetails)
                     {
                         DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
-                        b_pod.ToMap(d_pod);
+                        b_pod.ToCopy(d_pod);
                         d.PurchaseOrderDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -59,11 +59,11 @@ namespace AccountBuddy.SL.Hubs
                     DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails.Where(x => x.POId == rd).ToList());
 
 
-                    PO.ToMap(d);
+                    PO.ToCopy(d);
                     foreach (var b_pod in PO.PODetails)
                     {
                         DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
-                        b_pod.ToMap(d_pod);
+                        b_pod.ToCopy(d_pod);
                        
                         d.PurchaseOrderDetails.Add(d_pod);
                     }
@@ -167,7 +167,7 @@ namespace AccountBuddy.SL.Hubs
                         foreach (var b_pod in S.SalesOrderDetails)
                         {
                             DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
-                            b_pod.ToMap(d_pod);
+                            b_pod.ToCopy(d_pod);
                             p.PurchaseOrderDetails.Add(d_pod);
                         }
                         DB.SaveChanges();
@@ -209,13 +209,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(PO);
+                    d.ToCopy(PO);
                     PO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
                     foreach (var d_pod in DB.PurchaseOrderDetails.Where(x=>x.POId==d.Id).ToList())
                     {
                         BLL.PurchaseOrderDetail b_pod = new BLL.PurchaseOrderDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         b_pod.SNo = ++i;
                         PO.PODetails.Add(b_pod);
                         
@@ -264,12 +264,12 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.PurchaseOrder PurchaseOrder_DALtoBLL(DAL.PurchaseOrder d)
         {
-            BLL.PurchaseOrder PO = d.ToMap(new BLL.PurchaseOrder());
+            BLL.PurchaseOrder PO = d.ToCopy(new BLL.PurchaseOrder());
             try
             {
                 foreach (var d_pod in d.PurchaseOrderDetails)
                 {
-                    PO.PODetails.Add(d_pod.ToMap(new BLL.PurchaseOrderDetail()));
+                    PO.PODetails.Add(d_pod.ToCopy(new BLL.PurchaseOrderDetail()));
                 }
                 PO.Status = d.PurchaseOrderDetails.FirstOrDefault().PurchaseDetails.Count() > 0 ? "Purchased" : "Pending";
                 return PO;

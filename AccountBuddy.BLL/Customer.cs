@@ -193,8 +193,8 @@ namespace AccountBuddy.BLL
                         {
                             var d1 = toList.Where(x => x.Id == d.Id).FirstOrDefault();
                             var l1 = Ledger.toList.Where(x => x.Id == d.LedgerId).FirstOrDefault();
-                            d.ToMap<Customer>(d1);
-                            d.Ledger.ToMap<Ledger>(l1);
+                            d.ToMap(d1);
+                            d.Ledger.ToMap(l1);
                         }
                         return true;
                     }
@@ -209,8 +209,8 @@ namespace AccountBuddy.BLL
                         l1 = new Ledger();
                         Ledger.toList.Add(l1);
                     }
-                    this.ToMap<Customer>(d1);
-                    this.Ledger.ToMap<Ledger>(l1);                    
+                    this.ToMap(d1);
+                    this.Ledger.ToMap(l1);                    
                 }                            
             }
             catch (Exception ex){ Common.AppLib.WriteLog(ex); }
@@ -219,7 +219,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Customer().ToMap<Customer>(this);            
+            new Customer().ToMap(this);            
             Ledger.Clear();
             Ledger.AccountGroupId = BLL.DataKeyValue.SundryDebtors;
             IsReadOnly = !UserPermission.AllowInsert;
@@ -231,7 +231,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.ToMap<Customer>(this);
+                d.ToMap(this);
                 IsReadOnly = !UserPermission.AllowUpdate;
 
                 return true;

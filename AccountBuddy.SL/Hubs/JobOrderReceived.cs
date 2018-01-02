@@ -48,12 +48,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.JobOrderReceived();
                     DB.JobOrderReceiveds.Add(d);
 
-                    SO.ToMap(d);
+                    SO.ToCopy(d);
 
                     foreach (var b_pod in SO.JRDetails)
                     {
                         DAL.JobOrderReceivedDetail d_pod = new DAL.JobOrderReceivedDetail();
-                        b_pod.ToMap(d_pod);
+                        b_pod.ToCopy(d_pod);
                         d.JobOrderReceivedDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -71,7 +71,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = SO.JRDetails.Select(X => X.JRId).FirstOrDefault().Value;
                     DB.JobOrderReceivedDetails.RemoveRange(d.JobOrderReceivedDetails.Where(x => x.JRId == rd).ToList());
 
-                    SO.ToMap(d);
+                    SO.ToCopy(d);
                     foreach (var b_SOd in SO.JRDetails)
                     {
                         //DAL.JobOrderReceivedDetail d_SOd = d.JobOrderReceivedDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
@@ -80,7 +80,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.JobOrderReceivedDetail d_SOd = new DAL.JobOrderReceivedDetail();
                         d.JobOrderReceivedDetails.Add(d_SOd);
                         //}
-                        b_SOd.ToMap(d_SOd);
+                        b_SOd.ToCopy(d_SOd);
                     }
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
@@ -106,14 +106,14 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(SO);
+                    d.ToCopy(SO);
                     SO.JobWorkerName = (d.JobWorker ?? DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
                     int i = 0;
 
                     foreach (var d_pod in d.JobOrderReceivedDetails)
                     {
                         BLL.JobOrderReceivedDetail b_pod = new BLL.JobOrderReceivedDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         SO.JRDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -158,10 +158,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.JobOrderReceived JobOrderReceived_DALtoBLL(DAL.JobOrderReceived d)
         {
-            BLL.JobOrderReceived SO = d.ToMap(new BLL.JobOrderReceived());
+            BLL.JobOrderReceived SO = d.ToCopy(new BLL.JobOrderReceived());
             foreach (var d_SOd in d.JobOrderReceivedDetails)
             {
-                SO.JRDetails.Add(d_SOd.ToMap(new BLL.JobOrderReceivedDetail()));
+                SO.JRDetails.Add(d_SOd.ToCopy(new BLL.JobOrderReceivedDetail()));
             }
             //SO.Status = d.JobOrderReceivedDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
             return SO;
@@ -192,12 +192,12 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(P);
+                    d.ToCopy(P);
                     P.JobWorkerName = (d.JobWorker ?? DB.JobWorkers.Find(d.JobWorkerId) ?? new DAL.JobWorker()).Ledger.LedgerName;
                     foreach (var d_pod in d.JobOrderReceivedDetails)
                     {
                         BLL.JobOrderReceivedDetail b_pod = new BLL.JobOrderReceivedDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         P.JRDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;

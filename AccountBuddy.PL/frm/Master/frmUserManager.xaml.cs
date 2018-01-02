@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
 using MahApps.Metro.Controls;
+using AccountBuddy.BLL;
 
 namespace AccountBuddy.PL.frm.Master
 {
@@ -53,7 +54,7 @@ namespace AccountBuddy.PL.frm.Master
                 frmUser f = new frmUser();
                 f.UnderCompanyId = CompanyId;
                 f.LoadWindow(CompanyId);
-                u.ToMap<BLL.UserAccount>(f.data);
+                u.ToMap(f.data);
                 f.ShowDialog();
                 LoadWindow(CompanyId);
             }
