@@ -49,6 +49,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
         #endregion
+
         #region CustomFormat
         public static DAL.CustomFormat ToMap(this BLL.CustomFormat S, DAL.CustomFormat D)
         {            
@@ -71,7 +72,6 @@ namespace AccountBuddy.SL.Hubs
          
             return D;
         }
-
         public static BLL.CustomFormat ToMap(this DAL.CustomFormat S, BLL.CustomFormat D)
         {
             D.CompanyId = S.CompanyId??0;
@@ -93,8 +93,44 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
+        #endregion
+
+        #region CreditLimitType
+        public static DAL.CreditLimitType ToMap(this BLL.CreditLimitType S, DAL.CreditLimitType D)
+        {
+            D.Id = S.Id;
+            D.LimitType = S.LimitType;
+            return D;
+        }
+        public static BLL.CreditLimitType ToMap(this DAL.CreditLimitType S, BLL.CreditLimitType D)
+        {
+            D.Id = S.Id;
+            D.LimitType = S.LimitType;            
+            return D;
+        }
+        #endregion
+        #region DataKeyValue
+
+        public static DAL.DataKeyValue ToMap(this BLL.DataKeyValue S, DAL.DataKeyValue D)
+        {
+            D.CompanyId = S.CompanyId;
+            D.DataKey = S.DataKey;
+            D.DataValue = S.DataValue;
+            D.Id = S.Id;          
+            return D;
+        }
+
+        public static BLL.DataKeyValue ToMap(this DAL.DataKeyValue S, BLL.DataKeyValue D)
+        {
+            D.CompanyId = S.CompanyId;
+            D.DataKey = S.DataKey;
+            D.DataValue = S.DataValue;
+            D.Id = S.Id;
+            return D;
+        }
 
         #endregion
+
         #region UserType
         public static BLL.UserType ToMap(this DAL.UserType S, BLL.UserType D)
         {

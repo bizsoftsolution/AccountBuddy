@@ -673,7 +673,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                AccountName = string.Format("{0}{1}{2}{3}{4}", AccountGroup.GroupCode, string.IsNullOrWhiteSpace(AccountGroup.GroupCode) ? "" : "-", LedgerCode,string.IsNullOrWhiteSpace(LedgerCode)?"":"-",LedgerName);
+                AccountName = AccountGroup==null?"": string.Format("{0}{1}{2}{3}{4}", AccountGroup.GroupCode, string.IsNullOrWhiteSpace(AccountGroup.GroupCode) ? "" : "-", LedgerCode,string.IsNullOrWhiteSpace(LedgerCode)?"":"-",LedgerName);
             }
             catch (Exception ex)
             {
