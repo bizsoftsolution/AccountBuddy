@@ -50,7 +50,7 @@ namespace AccountBuddy.PL.frm.Master
 
             CollectionViewSource.GetDefaultView(dgvUOM.ItemsSource).Filter = UOM_Filter;
             CollectionViewSource.GetDefaultView(dgvUOM.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.Symbol), System.ComponentModel.ListSortDirection.Ascending));
-           
+
 
             btnSave.Visibility = (BLL.UOM.UserPermission.AllowInsert || BLL.UOM.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.UOM.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
@@ -199,7 +199,7 @@ namespace AccountBuddy.PL.frm.Master
 
                 foreach (var p in d.GetType().GetProperties())
                 {
-                    if (p.Name.ToLower().Contains("id") 
+                    if (p.Name.ToLower().Contains("id")
                         || p.GetValue(d) == null) continue;
                     strValue = p.GetValue(d).ToString();
                     if (cbxCase.IsChecked == false)
@@ -234,9 +234,12 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                CollectionViewSource.GetDefaultView(dgvUOM.ItemsSource).Refresh();
+                if (dgvUOM != null) CollectionViewSource.GetDefaultView(dgvUOM.ItemsSource).Refresh();
             }
-            catch (Exception ex) { Common.AppLib.WriteLog(ex); };
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            };
 
         }
 
