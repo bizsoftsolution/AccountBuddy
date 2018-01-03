@@ -12,6 +12,7 @@ namespace AccountBuddy.SL.Hubs
         #region CompanyDetails
         public static DAL.CompanyDetail ToMap(this BLL.CompanyDetail S, DAL.CompanyDetail D)
         {
+            if (S == null) return D;
             D.Id = S.Id;
             D.AddressLine1 = S.AddressLine1;
             D.AddressLine2 = S.AddressLine2;
@@ -31,6 +32,7 @@ namespace AccountBuddy.SL.Hubs
         }
         public static BLL.CompanyDetail ToMap(this DAL.CompanyDetail S, BLL.CompanyDetail D)
         {
+            if (S == null) return D;
             D.Id = S.Id;
             D.AddressLine1 = S.AddressLine1;
             D.AddressLine2 = S.AddressLine2;
@@ -233,6 +235,7 @@ namespace AccountBuddy.SL.Hubs
         #region StockGroup
         public static BLL.StockGroup ToMap(this DAL.StockGroup S, BLL.StockGroup D)
         {
+            if (S == null) return D;
             D.CompanyId = S.CompanyId;
             D.GroupCode = S.GroupCode;
             D.Id = S.Id;

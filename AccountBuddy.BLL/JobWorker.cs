@@ -132,7 +132,7 @@ namespace AccountBuddy.BLL
                 {
                     _LedgerId = value;
                     NotifyPropertyChanged(nameof(LedgerId));
-                    SetAccountName();
+                   // SetAccountName();
                 }
             }
         }

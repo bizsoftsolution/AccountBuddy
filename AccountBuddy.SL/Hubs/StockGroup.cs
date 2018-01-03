@@ -11,8 +11,10 @@ namespace AccountBuddy.SL.Hubs
         #region Account Group
         BLL.StockGroup StockGroup_DALtoBLL(DAL.StockGroup d)
         {
-            BLL.StockGroup b = d.ToMap(new BLL.StockGroup());
-            b.Company = d.CompanyDetail.ToMap(new BLL.CompanyDetail());
+            BLL.StockGroup b = new BLL.StockGroup();
+            if (d == null) return b;
+            b= d.ToMap(new BLL.StockGroup()); 
+            if (d.CompanyDetail!=null)   b.Company = d.CompanyDetail.ToMap(new BLL.CompanyDetail());
             b.UnderStockGroup = d.StockGroup2 == null ? new BLL.StockGroup() : StockGroup_DALtoBLL(d.StockGroup2);
             return b;
         }

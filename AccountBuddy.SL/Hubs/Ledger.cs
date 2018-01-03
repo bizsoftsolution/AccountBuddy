@@ -20,8 +20,8 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 ledgerTo = ledgerFrom.ToMap(new BLL.Ledger());
-
-                ledgerTo.AccountGroup = AccountGroupDAL_BLL(ledgerFrom.AccountGroup);
+                DAL.AccountGroup D = DB.AccountGroups.Where(X => X.Id == ledgerFrom.AccountGroupId).FirstOrDefault();
+                ledgerTo.AccountGroup = AccountGroupDAL_BLL(D);
               
                 ledgerTo.CreditLimitType = new BLL.CreditLimitType();
                 //ledgerFrom.CreditLimitType.ToMap(ledgerTo.CreditLimitType);

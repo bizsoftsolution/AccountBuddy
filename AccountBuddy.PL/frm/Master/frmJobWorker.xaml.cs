@@ -244,7 +244,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                CollectionViewSource.GetDefaultView(dgvJobWorker.ItemsSource).Refresh();
+              if(dgvJobWorker!=null)  CollectionViewSource.GetDefaultView(dgvJobWorker.ItemsSource).Refresh();
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); };
 
@@ -294,8 +294,6 @@ namespace AccountBuddy.PL.frm.Master
         {
             Grid_Refresh();
         }
-
-
 
         private void dgvJobWorker_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
