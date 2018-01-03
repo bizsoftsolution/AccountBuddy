@@ -382,7 +382,7 @@ namespace AccountBuddy.BLL
             D.RefNo = S.RefNo;
             D.Status = S.Status;
             D.TotalAmount = S.TotalAmount;
-            D.Status = S.Status;
+           
             
             return D;
         }
@@ -657,6 +657,7 @@ namespace AccountBuddy.BLL
 
             D.Narration = S.Narration;
             D.AmountInwords = S.AmountInwords;
+            D.Status = S.Status;
 
             D.lblDiscount = S.lblDiscount;
             D.lblExtra = S.lblExtra;

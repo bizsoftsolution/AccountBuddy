@@ -54,6 +54,10 @@ namespace AccountBuddy.PL.frm.Transaction
                 }
                 f.btnPrint.IsEnabled = true;
 
+                f.btnJobReceived.IsEnabled = f.data.Status == "Pending" ? true : false;
+                f.btnJobReceived.Visibility = (BLL.JobOrderReceived.UserPermission.AllowInsert || BLL.JobOrderReceived.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+
+
                 System.Windows.Forms.Application.DoEvents();
                 this.Close();
             }

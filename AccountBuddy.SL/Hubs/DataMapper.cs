@@ -873,7 +873,7 @@ namespace AccountBuddy.SL.Hubs
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
-
+            
 
             return D;
         }
@@ -890,7 +890,7 @@ namespace AccountBuddy.SL.Hubs
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount ?? 0;
-
+            
             return D;
         }
 
