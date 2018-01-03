@@ -248,7 +248,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                // CollectionViewSource.GetDefaultView(dgvAccount.ItemsSource).Refresh();
-                CollectionViewSource.GetDefaultView(trvAccount.ItemsSource).Refresh();
+               if(trvAccount!=null) CollectionViewSource.GetDefaultView(trvAccount.ItemsSource).Refresh();
             }
             catch (Exception ex)
             {

@@ -259,10 +259,10 @@ namespace AccountBuddy.PL.frm.Master
         }
 
         private void Grid_Refresh()
-        {
+       {
             try
             {
-                CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).Refresh();
+               if(dgvProduct!=null) CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).Refresh();
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); };
 

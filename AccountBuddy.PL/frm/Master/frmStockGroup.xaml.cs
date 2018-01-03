@@ -51,7 +51,7 @@ namespace AccountBuddy.PL.frm.Master
             CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Filter = StockGroup_Filter;
             CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.GroupCode), System.ComponentModel.ListSortDirection.Ascending));
 
-            
+
             btnSave.Visibility = (BLL.StockGroup.UserPermission.AllowInsert || BLL.StockGroup.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.StockGroup.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
@@ -106,7 +106,7 @@ namespace AccountBuddy.PL.frm.Master
                             MessageBox.Show(Message.PL.Delete_Alert, FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                             Clear();
                             Grid_Refresh();
-                            
+
                         }
                         else
                         {
@@ -240,7 +240,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Refresh();
+                if (dgvStock != null) CollectionViewSource.GetDefaultView(dgvStock.ItemsSource).Refresh();
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); };
 
@@ -251,7 +251,7 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 rptStockGroup.Reset();
-                ReportDataSource data = new ReportDataSource("StockGroup", BLL.StockGroup.toList.Where(x => StockGroup_Filter(x)).Select(x => new { StockGroupCode = x.GroupCode, StockGroupName = x.StockGroupName, underGroupName = x.UnderStockGroup==null?"":x.UnderStockGroup.StockGroupName }).OrderBy(x => x.StockGroupCode).ToList());
+                ReportDataSource data = new ReportDataSource("StockGroup", BLL.StockGroup.toList.Where(x => StockGroup_Filter(x)).Select(x => new { StockGroupCode = x.GroupCode, StockGroupName = x.StockGroupName, underGroupName = x.UnderStockGroup == null ? "" : x.UnderStockGroup.StockGroupName }).OrderBy(x => x.StockGroupCode).ToList());
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptStockGroup.LocalReport.DataSources.Add(data);
                 rptStockGroup.LocalReport.DataSources.Add(data1);
@@ -286,7 +286,7 @@ namespace AccountBuddy.PL.frm.Master
 
         private void cmbUnder_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void cmbUnder_GotFocus(object sender, RoutedEventArgs e)
