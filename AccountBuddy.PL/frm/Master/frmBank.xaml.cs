@@ -285,7 +285,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).Refresh();
+             if(dgvBank!=null)   CollectionViewSource.GetDefaultView(dgvBank.ItemsSource).Refresh();
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); };
 
