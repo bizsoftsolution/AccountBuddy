@@ -708,7 +708,7 @@ namespace AccountBuddy.BLL
         {
             D.Product = S.Product;
             D.Id = S.Id;
-            D.Amount = (decimal)S.Amount;
+            D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
             D.GSTAmount = S.GSTAmount;
             D.ProductId = S.ProductId;
