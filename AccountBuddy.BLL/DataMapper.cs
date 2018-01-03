@@ -309,7 +309,8 @@ namespace AccountBuddy.BLL
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
-
+            D.Status = S.Status;
+            
             return D;
         }
         public static PurchaseOrderDetail ToMap(this PurchaseOrderDetail S, PurchaseOrderDetail D)
