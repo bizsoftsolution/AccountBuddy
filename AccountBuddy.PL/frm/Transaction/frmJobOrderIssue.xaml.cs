@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
+using AccountBuddy.BLL;
 
 namespace AccountBuddy.PL.frm.Transaction
 {
@@ -172,7 +173,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.JobOrderIssueDetail pod = dgvDetails.SelectedItem as BLL.JobOrderIssueDetail;
-                pod.ToMap<BLL.JobOrderIssueDetail>(data.JODetail);
+                pod.ToMap(data.JODetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
@@ -310,7 +311,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.JobOrderIssueDetail pod = dgvDetails.SelectedItem as BLL.JobOrderIssueDetail;
-                pod.ToMap<BLL.JobOrderIssueDetail>(data.JODetail);
+                pod.ToMap(data.JODetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }

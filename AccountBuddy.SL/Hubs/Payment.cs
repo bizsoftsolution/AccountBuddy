@@ -34,12 +34,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.Payment();
                     DB.Payments.Add(d);
 
-                    PO.ToMap(d);
+                    PO.ToCopy(d);
 
                     foreach (var b_pod in PO.PDetails)
                     {
                         DAL.PaymentDetail d_pod = new DAL.PaymentDetail();
-                        b_pod.ToMap(d_pod);
+                        b_pod.ToCopy(d_pod);
                         d.PaymentDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -58,7 +58,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal pd = PO.PDetails.Select(X => X.PaymentId).FirstOrDefault();
                     DB.PaymentDetails.RemoveRange(d.PaymentDetails.Where(x => x.PaymentId == pd).ToList());
 
-                    PO.ToMap(d);
+                    PO.ToCopy(d);
 
                     foreach (var b_pod in PO.PDetails)
                     {
@@ -68,7 +68,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.PaymentDetail d_pod = new DAL.PaymentDetail();
                             d.PaymentDetails.Add(d_pod);
                        // }
-                        b_pod.ToMap(d_pod);                        
+                        b_pod.ToCopy(d_pod);                        
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
@@ -92,13 +92,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(PO);
+                    d.ToCopy(PO);
                     PO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
                     foreach (var d_pod in d.PaymentDetails)
                     {
                         BLL.PaymentDetail b_pod = new BLL.PaymentDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         PO.PDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
@@ -135,10 +135,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.Payment Payment_DALtoBLL(DAL.Payment d)
         {
-            BLL.Payment P = d.ToMap(new BLL.Payment());
+            BLL.Payment P = d.ToCopy(new BLL.Payment());
             foreach (var d_Pd in d.PaymentDetails)
             {
-                P.PDetails.Add(d_Pd.ToMap(new BLL.PaymentDetail()));
+                P.PDetails.Add(d_Pd.ToCopy(new BLL.PaymentDetail()));
             }
             return P;
         }

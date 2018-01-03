@@ -533,10 +533,6 @@ namespace AccountBuddy.BLL
                     pod = new JobOrderReceivedDetail();
                     JRDetails.Add(pod);
                 }
-                else
-                {
-                    JRDetail.Quantity += pod.Quantity;
-                }
                 JRDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = JRDetails.Sum(x => x.Amount);

@@ -50,6 +50,87 @@ namespace AccountBuddy.SL.Hubs
         }
         #endregion
 
+        #region CustomFormat
+        public static DAL.CustomFormat ToMap(this BLL.CustomFormat S, DAL.CustomFormat D)
+        {            
+            D.CompanyId = S.CompanyId;
+            D.CurrencyCaseSensitive = S.CurrencyCaseSensitive;
+            D.CurrencyNegativeSymbolPrefix = S.CurrencyNegativeSymbolPrefix;
+            D.CurrencyNegativeSymbolSuffix = S.CurrencyNegativeSymbolSuffix;
+            D.CurrencyPositiveSymbolPrefix = S.CurrencyPositiveSymbolPrefix;
+            D.CurrencyPositiveSymbolSuffix = S.CurrencyPositiveSymbolSuffix;
+            D.CurrencyToWordPrefix = S.CurrencyToWordPrefix;
+            D.CurrencyToWordSuffix = S.CurrencyToWordSuffix;
+            D.DecimalSymbol = S.DecimalSymbol;
+            D.DecimalToWordPrefix = S.DecimalToWordPrefix;
+            D.DecimalToWordSuffix = S.DecimalToWordSuffix;
+            D.DigitGroupingBy = S.DigitGroupingBy;
+            D.DigitGroupingSymbol = S.DigitGroupingSymbol;
+            D.Id = S.Id;
+            D.IsDisplayWithOnlyOnSuffix = S.IsDisplayWithOnlyOnSuffix;
+            D.NoOfDigitAfterDecimal = S.NoOfDigitAfterDecimal;
+         
+            return D;
+        }
+        public static BLL.CustomFormat ToMap(this DAL.CustomFormat S, BLL.CustomFormat D)
+        {
+            D.CompanyId = S.CompanyId??0;
+            D.CurrencyCaseSensitive = S.CurrencyCaseSensitive??0;
+            D.CurrencyNegativeSymbolPrefix = S.CurrencyNegativeSymbolPrefix;
+            D.CurrencyNegativeSymbolSuffix = S.CurrencyNegativeSymbolSuffix;
+            D.CurrencyPositiveSymbolPrefix = S.CurrencyPositiveSymbolPrefix;
+            D.CurrencyPositiveSymbolSuffix = S.CurrencyPositiveSymbolSuffix;
+            D.CurrencyToWordPrefix = S.CurrencyToWordPrefix;
+            D.CurrencyToWordSuffix = S.CurrencyToWordSuffix;
+            D.DecimalSymbol = S.DecimalSymbol;
+            D.DecimalToWordPrefix = S.DecimalToWordPrefix;
+            D.DecimalToWordSuffix = S.DecimalToWordSuffix;
+            D.DigitGroupingBy = S.DigitGroupingBy??0;
+            D.DigitGroupingSymbol = S.DigitGroupingSymbol;
+            D.Id = S.Id;
+            D.IsDisplayWithOnlyOnSuffix = S.IsDisplayWithOnlyOnSuffix??false;
+            D.NoOfDigitAfterDecimal = S.NoOfDigitAfterDecimal??0;
+
+            return D;
+        }
+        #endregion
+
+        #region CreditLimitType
+        public static DAL.CreditLimitType ToMap(this BLL.CreditLimitType S, DAL.CreditLimitType D)
+        {
+            D.Id = S.Id;
+            D.LimitType = S.LimitType;
+            return D;
+        }
+        public static BLL.CreditLimitType ToMap(this DAL.CreditLimitType S, BLL.CreditLimitType D)
+        {
+            D.Id = S.Id;
+            D.LimitType = S.LimitType;            
+            return D;
+        }
+        #endregion
+        #region DataKeyValue
+
+        public static DAL.DataKeyValue ToMap(this BLL.DataKeyValue S, DAL.DataKeyValue D)
+        {
+            D.CompanyId = S.CompanyId;
+            D.DataKey = S.DataKey;
+            D.DataValue = S.DataValue;
+            D.Id = S.Id;          
+            return D;
+        }
+
+        public static BLL.DataKeyValue ToMap(this DAL.DataKeyValue S, BLL.DataKeyValue D)
+        {
+            D.CompanyId = S.CompanyId;
+            D.DataKey = S.DataKey;
+            D.DataValue = S.DataValue;
+            D.Id = S.Id;
+            return D;
+        }
+
+        #endregion
+
         #region UserType
         public static BLL.UserType ToMap(this DAL.UserType S, BLL.UserType D)
         {

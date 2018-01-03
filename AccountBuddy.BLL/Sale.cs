@@ -627,10 +627,7 @@ namespace AccountBuddy.BLL
                     sod = new SalesDetail();
                     SDetails.Add(sod);
                 }
-                else
-                {
-                    SDetail.Quantity += sod.Quantity;
-                }
+                
                 SDetail.ToMap(sod);
                 ClearDetail();
                 ItemAmount = SDetails.Sum(x => x.Amount);

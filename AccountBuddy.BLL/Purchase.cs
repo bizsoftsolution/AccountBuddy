@@ -617,10 +617,7 @@ namespace AccountBuddy.BLL
                     pod = new PurchaseDetail();
                     PDetails.Add(pod);
                 }
-                else
-                {
-                    PDetail.Quantity += pod.Quantity;
-                }
+                
                 PDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = PDetails.Sum(x => x.Amount);

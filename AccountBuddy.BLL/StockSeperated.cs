@@ -510,10 +510,6 @@ namespace AccountBuddy.BLL
                     pod = new StockSeperatedDetail();
                     SSDetails.Add(pod);
                 }
-                else
-                {
-                    SSDetail.Quantity += pod.Quantity;
-                }
                 SSDetail.ToMap(pod);
                 ClearDetail();
                 ItemAmount = SSDetails.Sum(x => x.Amount);

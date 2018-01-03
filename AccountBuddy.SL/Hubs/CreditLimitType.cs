@@ -24,7 +24,7 @@ namespace AccountBuddy.SL.Hubs
                     foreach (var d1 in DB.CreditLimitTypes.ToList())
                     {
                         BLL.CreditLimitType d2 = new BLL.CreditLimitType();
-                        d1.ToMap<BLL.CreditLimitType>(d2);
+                        d1.ToMap(d2);
                         _creditLimitList.Add(d2);
                     }
 

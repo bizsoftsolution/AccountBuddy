@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
+using AccountBuddy.BLL;
 
 namespace AccountBuddy.PL.frm.Transaction
 {
@@ -206,7 +207,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.SalesReturnDetail pod = dgvDetails.SelectedItem as BLL.SalesReturnDetail;
-                pod.ToMap<BLL.SalesReturnDetail>(data.SRDetail);
+                pod.ToMap(data.SRDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
@@ -357,7 +358,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 BLL.SalesReturnDetail pod = dgvDetails.SelectedItem as BLL.SalesReturnDetail;
-                pod.ToMap<BLL.SalesReturnDetail>(data.SRDetail);
+                pod.ToMap(data.SRDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }

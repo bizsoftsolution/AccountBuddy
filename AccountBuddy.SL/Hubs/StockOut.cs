@@ -39,11 +39,11 @@ namespace AccountBuddy.SL.Hubs
 
                     d = new DAL.StockOut();
                     DB.StockOuts.Add(d);                   
-                    P.ToMap(d);
+                    P.ToCopy(d);
                     foreach (var b_pod in P.STOutDetails)
                     {
                         DAL.StockOutDetail d_pod = new DAL.StockOutDetail();
-                        b_pod.ToMap(d_pod);
+                        b_pod.ToCopy(d_pod);
                         d.StockOutDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -64,7 +64,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.StockOutDetails.RemoveRange(d.StockOutDetails.Where(x => x.StockOutId == rd).ToList());
 
 
-                    P.ToMap(d);
+                    P.ToCopy(d);
                     foreach (var b_Pd in P.STOutDetails)
                     {
                         //DAL.StockOutDetail d_Pd = d.StockOutDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
@@ -73,7 +73,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.StockOutDetail d_Pd = new DAL.StockOutDetail();
                             d.StockOutDetails.Add(d_Pd);
                       //  }
-                        b_Pd.ToMap(d_Pd);
+                        b_Pd.ToCopy(d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -126,7 +126,7 @@ namespace AccountBuddy.SL.Hubs
                         foreach (var b_pod in P.StockInDetails)
                         {
                             DAL.StockOutDetail d_pod = new DAL.StockOutDetail();
-                            b_pod.ToMap(d_pod);
+                            b_pod.ToCopy(d_pod);
                             s.StockOutDetails.Add(d_pod);
                         }
                         DB.SaveChanges();
@@ -167,13 +167,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(P);
+                    d.ToCopy(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
                     foreach (var d_pod in d.StockOutDetails)
                     {
                         BLL.StockOutDetail b_pod = new BLL.StockOutDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         P.STOutDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -196,13 +196,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap(P);
+                    d.ToCopy(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
 
                     foreach (var d_pod in d.StockOutDetails)
                     {
                         BLL.StockOutDetail b_pod = new BLL.StockOutDetail();
-                        d_pod.ToMap(b_pod);
+                        d_pod.ToCopy(b_pod);
                         P.STOutDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
@@ -239,10 +239,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.StockOut StockOut_DALtoBLL(DAL.StockOut d)
         {
-            BLL.StockOut P = d.ToMap(new BLL.StockOut());
+            BLL.StockOut P = d.ToCopy(new BLL.StockOut());
             foreach (var d_Pd in d.StockOutDetails)
             {
-                P.STOutDetails.Add(d_Pd.ToMap(new BLL.StockOutDetail()));
+                P.STOutDetails.Add(d_Pd.ToCopy(new BLL.StockOutDetail()));
             }
             return P;
         }

@@ -248,7 +248,7 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Bank().ToMap<Bank>(this);
+            new Bank().ToMap(this);
             Ledger.Clear();
             Ledger.AccountGroupId = BLL.DataKeyValue.BankAccounts_Value;
             IsReadOnly = !UserPermission.AllowInsert;
@@ -260,7 +260,7 @@ namespace AccountBuddy.BLL
             var d = toList.Where(x => x.Id == pk).FirstOrDefault();
             if (d != null)
             {
-                d.ToMap<Bank>(this);
+                d.ToMap(this);
                // IsReadOnly = !UserPermission.AllowUpdate;
 
                 return true;
