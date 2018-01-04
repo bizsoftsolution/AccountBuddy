@@ -88,6 +88,46 @@ namespace AccountBuddy.SL.Controllers
             }
 
         }
+        public JsonResult ProductReport(int DealerId, DateTime DateFrom, DateTime DateTo)
+        {
+            try
+            {
+                DAL.DBFMCGEntities DB = new DAL.DBFMCGEntities();
+
+                var lst1 = from s in DB.SalesReturns
+                           join sd in DB.SalesReturnDetails on s.Id equals sd.SRId
+                           where s.Ledger.AccountGroup.CompanyId == DealerId && s.SRDate >= DateFrom && s.SRDate <= DateTo
+                           select new { sd.Product.ProductName, sd.Amount };
+                var lst2 = lst1.GroupBy(x => x.ProductName).Select(x => new { ProductName = x.Key, Amount = x.Sum(y => y.Amount) }).ToList();
+
+
+                return Json(new { HasError = false, Datas = lst2 }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult CustomerReport(int DealerId, DateTime DateFrom, DateTime DateTo)
+        {
+            try
+            {
+                DAL.DBFMCGEntities DB = new DAL.DBFMCGEntities();
+
+                var lst1 = from s in DB.SalesReturns
+                           where s.Ledger.AccountGroup.CompanyId == DealerId && s.SRDate >= DateFrom && s.SRDate <= DateTo
+                           select new { s.Ledger.LedgerName, s.TotalAmount };
+                var lst2 = lst1.GroupBy(x => x.LedgerName).Select(x => new { LedgerName = x.Key, Amount = x.Sum(y => y.TotalAmount) }).ToList();
+
+
+                return Json(new { HasError = false, Datas = lst2 }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
     }
 }
