@@ -254,12 +254,14 @@ namespace AccountBuddy.PL.frm.Report
                         Transaction.frmJobOrderIssue f = App.frmHome.ShowForm(Common.Forms.frmJobOrderIssue) as Transaction.frmJobOrderIssue;
 
                         System.Windows.Forms.Application.DoEvents();
-                        f.data.SearchText = gl.RefEntryNo; f.data.RefNo = gl.EntryNo;
-                        System.Windows.Forms.Application.DoEvents();
-                        //f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        f.data.SearchText = gl.RefEntryNo;
+                        f.data.RefNo = gl.EntryNo;
                         f.data.Find();
+                        System.Windows.Forms.Application.DoEvents();
                         f.btnPrint.IsEnabled = true;
-                       f.btnJobReceived.IsEnabled = f.data.Status == "Pending" ? true : false;
+                        //f.data.FindById(Convert.ToInt32(gl.RefEntryNo.ToString()));
+                        
+                        f.btnJobReceived.IsEnabled = f.data.Status == "Pending" ? true : false;
 
 
                     }

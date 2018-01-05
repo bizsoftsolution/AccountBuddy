@@ -468,9 +468,9 @@ namespace AccountBuddy.PL.frm.Master
         {
             if (BLL.Bank.toList.Count != 0)
             {
-                var b = cmbBank.SelectedItem as BLL.Ledger;
-                AppLib.BankId = b.Id;
-                AppLib.BankName = b.LedgerName;
+                var b = cmbBank.SelectedItem as BLL.Bank;
+                AppLib.BankId = b.LedgerId;
+                AppLib.BankName = b.Ledger.LedgerName;
             }
 
         }

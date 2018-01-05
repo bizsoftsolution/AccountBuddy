@@ -54,14 +54,11 @@ namespace AccountBuddy.SL.Hubs
 
                     decimal pd = P.SDetails.Select(X => X.SalesId).FirstOrDefault();
                     DB.SalesDetails.RemoveRange(d.SalesDetails.Where(x => x.SalesId == pd).ToList());
-
                     P.ToMap(d);
                     foreach (var b_Sd in P.SDetails)
                     {
-
                         DAL.SalesDetail d_Sd = new DAL.SalesDetail();
                         d.SalesDetails.Add(d_Sd);
-
                         b_Sd.ToMap(d_Sd);
                     }
                     DB.SaveChanges();
@@ -73,7 +70,10 @@ namespace AccountBuddy.SL.Hubs
                 Purchase_SaveBySales(d);
                 return true;
             }
-            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
             return false;
         }
 

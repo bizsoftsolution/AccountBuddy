@@ -495,7 +495,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                JobOrderIssue po = FMCGHubClient.HubCaller.Invoke<JobOrderIssue>("JobOrderIssue_Find", SearchText).Result;
+                JobOrderIssue po = FMCGHubClient.HubCaller.Invoke<JobOrderIssue>("JobOrderIssue_Find", RefNo).Result;
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.JODetails = po.JODetails;

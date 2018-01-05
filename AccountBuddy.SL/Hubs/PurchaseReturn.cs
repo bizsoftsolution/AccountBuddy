@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
         {
             return PurchaseReturn_NewRefNoByCompanyId(Caller.CompanyId);
         }
-        public  string PurchaseReturn_NewRefNoByCompanyId(int CompanyId)
+        public string PurchaseReturn_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
             string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.PurchaseReturn, dt, dt.Month);
@@ -70,8 +70,8 @@ namespace AccountBuddy.SL.Hubs
                         //if (d_Pd == null)
                         //{
                         DAL.PurchaseReturnDetail d_Pd = new DAL.PurchaseReturnDetail();
-                            d.PurchaseReturnDetails.Add(d_Pd);
-                       // }
+                        d.PurchaseReturnDetails.Add(d_Pd);
+                        // }
                         b_Pd.ToCopy(d_Pd);
                     }
                     DB.SaveChanges();
@@ -90,52 +90,52 @@ namespace AccountBuddy.SL.Hubs
         void PurchaseReturn_SaveBySalesReturn(DAL.SalesReturn SR)
         {
             try
-            { 
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
-
-            DAL.PurchaseReturn p = DB.PurchaseReturns.Where(x => x.RefCode == RefCode).FirstOrDefault();
-            if (SR.Ledger == null)
             {
-                SR.Ledger = DB.Ledgers.Where(x => x.Id == SR.LedgerId).FirstOrDefault();
-            }
-            if (SR.Ledger.LedgerName.StartsWith("CM-") || SR.Ledger.LedgerName.StartsWith("WH-") || SR.Ledger.LedgerName.StartsWith("DL-"))
-            {
-                var LName = LedgerNameByCompanyId(Caller.CompanyId);
-                var CId = CompanyIdByLedgerName(SR.Ledger.LedgerName);
-                var LId = LedgerIdByCompany(LName, CId);
+                string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
 
-                if (LId != 0)
+                DAL.PurchaseReturn p = DB.PurchaseReturns.Where(x => x.RefCode == RefCode).FirstOrDefault();
+                if (SR.Ledger == null)
                 {
-                    if (p == null)
-                    {
-                        p = new DAL.PurchaseReturn();
-                        p.RefNo = PurchaseReturn_NewRefNoByCompanyId(CId);
-                        p.RefCode = RefCode;
-                        DB.PurchaseReturns.Add(p);
-                    }
-                    else
-                    {
-                        DB.PurchaseReturnDetails.RemoveRange(p.PurchaseReturnDetails);
-                    }
-
-                    p.PRDate = SR.SRDate;
-                    p.DiscountAmount = SR.DiscountAmount;
-                    p.ExtraAmount = SR.ExtraAmount;
-                    p.GSTAmount = SR.GSTAmount;
-                    p.ItemAmount = SR.ItemAmount;
-                    p.TotalAmount = SR.TotalAmount;
-                    p.LedgerId = LId;
-                    p.TransactionTypeId = SR.TransactionTypeId;
-                    foreach (var b_pod in SR.SalesReturnDetails)
-                    {
-                        DAL.PurchaseReturnDetail d_pod = new DAL.PurchaseReturnDetail();
-                        b_pod.ToCopy(d_pod);
-                        p.PurchaseReturnDetails.Add(d_pod);
-                    }
-                    DB.SaveChanges();
-                    Journal_SaveByPurchaseReturn(p);
+                    SR.Ledger = DB.Ledgers.Where(x => x.Id == SR.LedgerId).FirstOrDefault();
                 }
-            }
+                if (SR.Ledger.LedgerName.StartsWith("CM-") || SR.Ledger.LedgerName.StartsWith("WH-") || SR.Ledger.LedgerName.StartsWith("DL-"))
+                {
+                    var LName = LedgerNameByCompanyId(Caller.CompanyId);
+                    var CId = CompanyIdByLedgerName(SR.Ledger.LedgerName);
+                    var LId = LedgerIdByCompany(LName, CId);
+
+                    if (LId != 0)
+                    {
+                        if (p == null)
+                        {
+                            p = new DAL.PurchaseReturn();
+                            p.RefNo = PurchaseReturn_NewRefNoByCompanyId(CId);
+                            p.RefCode = RefCode;
+                             DB.PurchaseReturns.Add(p);
+                        }
+                        else
+                        {
+                            DB.PurchaseReturnDetails.RemoveRange(p.PurchaseReturnDetails);
+                        }
+
+                        p.PRDate = SR.SRDate;
+                        p.DiscountAmount = SR.DiscountAmount;
+                        p.ExtraAmount = SR.ExtraAmount;
+                        p.GSTAmount = SR.GSTAmount;
+                        p.ItemAmount = SR.ItemAmount;
+                        p.TotalAmount = SR.TotalAmount;
+                        p.LedgerId = LId;
+                        p.TransactionTypeId = SR.TransactionTypeId;
+                        foreach (var b_pod in SR.SalesReturnDetails)
+                        {
+                            DAL.PurchaseReturnDetail d_pod = new DAL.PurchaseReturnDetail();
+                            b_pod.ToCopy(d_pod);
+                            p.PurchaseReturnDetails.Add(d_pod);
+                        }
+                        DB.SaveChanges();
+                        Journal_SaveByPurchaseReturn(p);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -176,12 +176,12 @@ namespace AccountBuddy.SL.Hubs
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     int i = 0;
-                        foreach (var d_pod in d.PurchaseReturnDetails)
+                    foreach (var d_pod in d.PurchaseReturnDetails)
                     {
                         BLL.PurchaseReturnDetail b_pod = new BLL.PurchaseReturnDetail();
                         d_pod.ToCopy(b_pod);
                         P.PRDetails.Add(b_pod);
-                        b_pod.SNo = ++i; 
+                        b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }
@@ -269,14 +269,14 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.PurchaseReturn> PurchaseReturn_List(int? LedgerId, int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<BLL.PurchaseReturn> lstPurchaseReturn = new List<BLL.PurchaseReturn>();
-            
+
             BLL.PurchaseReturn rp = new BLL.PurchaseReturn();
             try
             {
                 foreach (var l in DB.PurchaseReturns.
                       Where(x => x.PRDate >= dtFrom && x.PRDate <= dtTo
                       && (x.LedgerId == LedgerId || LedgerId == null)
-                      && (TType ==null|| x.TransactionTypeId == TType)
+                      && (TType == null || x.TransactionTypeId == TType)
                       && (BillNo == "" || x.RefNo == BillNo)
                       && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
                       x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())

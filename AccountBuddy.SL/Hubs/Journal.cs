@@ -168,7 +168,7 @@ namespace AccountBuddy.SL.Hubs
 
         public BLL.Journal Journal_DALtoBLL(DAL.Journal d)
         {
-            BLL.Journal J = d.ToCopy(new BLL.Journal());
+            BLL.Journal J = d.ToMap(new BLL.Journal());
             foreach (var d_Jd in d.JournalDetails)
             {
                 J.JDetails.Add(d_Jd.ToCopy(new BLL.JournalDetail()));
@@ -395,7 +395,8 @@ namespace AccountBuddy.SL.Hubs
                 j = new DAL.Journal();
                 j.EntryNo = SR.RefNo;//Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
-
+                j.Particular = SR.Narration;
+               
                 if (SR.TransactionTypeId == 1)
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
@@ -677,6 +678,7 @@ namespace AccountBuddy.SL.Hubs
                 j = new DAL.Journal();
                 j.EntryNo = PR.RefNo;//Journal_NewRefNoByCompanyId(CId);
                 j.RefCode = RefCode;
+                j.Particular = PR.Narration;
                 if (PR.TransactionTypeId == 1)
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
@@ -806,11 +808,11 @@ namespace AccountBuddy.SL.Hubs
 
                 if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
                 {
-                    j = new DAL.Journal();
-                    j.EntryNo = P.EntryNo;
-                    j.JournalDate = P.PaymentDate;
-
                     var CId = CompanyIdByLedgerName(ld.LedgerName);
+                    j = new DAL.Journal();
+                    j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                    j.JournalDate = P.PaymentDate;
+                    j.RefCode = P.EntryNo;
                     if (CId != 0)
                     {
                         var LName = LedgerNameByCompanyId(Caller.CompanyId);
@@ -819,13 +821,15 @@ namespace AccountBuddy.SL.Hubs
                         {
                             LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
                             DrAmt = P.Amount,
+                            TransactionMode="Cash",
                             Particulars = P.Particulars
                         });
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
 
                             LedgerId = LedgerIdByCompany(LName, CId),
-                           CrAmt = P.Amount,
+                            CrAmt = P.Amount,
+                            TransactionMode = "Cash",
                             Particulars = P.Particulars
                         });
                         DB.Journals.Add(j);
@@ -851,13 +855,14 @@ namespace AccountBuddy.SL.Hubs
         void Journal_DeleteByPayment(BLL.Payment P)
         {
             var EntryNo = string.Format("PMT-{0}", P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == P.EntryNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
 
         #endregion
 
         #region Receipt
+
         void Journal_SaveByReceipt(BLL.Receipt R)
         {
             var EntryNo = string.Format("RPT-{0}", R.Id);
@@ -870,11 +875,11 @@ namespace AccountBuddy.SL.Hubs
 
                 if (ld.LedgerName.StartsWith("CM-") || ld.LedgerName.StartsWith("WH-") || ld.LedgerName.StartsWith("DL-"))
                 {
-                    j = new DAL.Journal();
-                    j.EntryNo = R.EntryNo;
-                    j.JournalDate = R.ReceiptDate;
-
                     var CId = CompanyIdByLedgerName(ld.LedgerName);
+                    j = new DAL.Journal();
+                    j.EntryNo = Journal_NewRefNoByCompanyId(CId);
+                    j.JournalDate = R.ReceiptDate;
+                    j.RefCode = R.EntryNo;
                     if (CId != 0)
                     {
                         var LName = LedgerNameByCompanyId(Caller.CompanyId);
@@ -883,13 +888,15 @@ namespace AccountBuddy.SL.Hubs
                         {
                             LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
                             CrAmt = R.Amount,
+                            TransactionMode="Cash",
                             Particulars = R.Particulars
                         });
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
 
                             LedgerId = LedgerIdByCompany(LName, CId),
-                            DrAmt = R.Amount,
+                           DrAmt = R.Amount,
+                            TransactionMode = "Cash",
                             Particulars = R.Particulars
                         });
                         DB.Journals.Add(j);
@@ -913,10 +920,11 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+
         void Journal_DeleteByReceipt(BLL.Receipt P)
         {
             var EntryNo = string.Format("RPT-{0}", P.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == EntryNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == P.EntryNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
@@ -1086,6 +1094,7 @@ namespace AccountBuddy.SL.Hubs
                     j = new DAL.Journal();
                     j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
                     j.RefCode = RefCode;
+
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = P.JobWorker.Ledger.Id,
@@ -1308,6 +1317,7 @@ namespace AccountBuddy.SL.Hubs
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
+
         #region StockSeparated
 
         void Journal_SaveByStockSeparated(DAL.StockSeparated S)
