@@ -198,7 +198,7 @@ namespace AccountBuddy.SL.Hubs
 
         public int LedgerIdByKeyAndCompany(string key, int CompanyId)
         {
-           return DB.DataKeyValues.Where(x => x.CompanyId == CompanyId && x.DataKey == key).FirstOrDefault().DataValue;
+            return DB.DataKeyValues.Where(x => x.CompanyId == CompanyId && x.DataKey == key).FirstOrDefault().DataValue;
         }
         int LedgerIdByCompany(string LName, int CompanyId)
         {
@@ -825,7 +825,7 @@ namespace AccountBuddy.SL.Hubs
                         {
 
                             LedgerId = LedgerIdByCompany(LName, CId),
-                            CrAmt = P.Amount,
+                           CrAmt = P.Amount,
                             Particulars = P.Particulars
                         });
                         DB.Journals.Add(j);
@@ -882,14 +882,14 @@ namespace AccountBuddy.SL.Hubs
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
                             LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
-                            DrAmt = R.Amount,
+                            CrAmt = R.Amount,
                             Particulars = R.Particulars
                         });
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
 
                             LedgerId = LedgerIdByCompany(LName, CId),
-                            CrAmt = R.Amount,
+                            DrAmt = R.Amount,
                             Particulars = R.Particulars
                         });
                         DB.Journals.Add(j);
@@ -979,11 +979,11 @@ namespace AccountBuddy.SL.Hubs
                 DB.SaveChanges();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.AppLib.WriteLog(ex);
             }
-            }
+        }
         void Journal_DeleteByStockOut(BLL.StockOut P)
         {
 
@@ -1052,7 +1052,7 @@ namespace AccountBuddy.SL.Hubs
                 j.JournalDate = STIn.Date;
                 DB.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.AppLib.WriteLog(ex);
             }

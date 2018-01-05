@@ -54,7 +54,7 @@ namespace AccountBuddy.SL.Hubs
 
         #region CustomFormat
         public static DAL.CustomFormat ToMap(this BLL.CustomFormat S, DAL.CustomFormat D)
-        {            
+        {
             D.CompanyId = S.CompanyId;
             D.CurrencyCaseSensitive = S.CurrencyCaseSensitive;
             D.CurrencyNegativeSymbolPrefix = S.CurrencyNegativeSymbolPrefix;
@@ -71,13 +71,13 @@ namespace AccountBuddy.SL.Hubs
             D.Id = S.Id;
             D.IsDisplayWithOnlyOnSuffix = S.IsDisplayWithOnlyOnSuffix;
             D.NoOfDigitAfterDecimal = S.NoOfDigitAfterDecimal;
-         
+
             return D;
         }
         public static BLL.CustomFormat ToMap(this DAL.CustomFormat S, BLL.CustomFormat D)
         {
-            D.CompanyId = S.CompanyId??0;
-            D.CurrencyCaseSensitive = S.CurrencyCaseSensitive??0;
+            D.CompanyId = S.CompanyId ?? 0;
+            D.CurrencyCaseSensitive = S.CurrencyCaseSensitive ?? 0;
             D.CurrencyNegativeSymbolPrefix = S.CurrencyNegativeSymbolPrefix;
             D.CurrencyNegativeSymbolSuffix = S.CurrencyNegativeSymbolSuffix;
             D.CurrencyPositiveSymbolPrefix = S.CurrencyPositiveSymbolPrefix;
@@ -87,11 +87,11 @@ namespace AccountBuddy.SL.Hubs
             D.DecimalSymbol = S.DecimalSymbol;
             D.DecimalToWordPrefix = S.DecimalToWordPrefix;
             D.DecimalToWordSuffix = S.DecimalToWordSuffix;
-            D.DigitGroupingBy = S.DigitGroupingBy??0;
+            D.DigitGroupingBy = S.DigitGroupingBy ?? 0;
             D.DigitGroupingSymbol = S.DigitGroupingSymbol;
             D.Id = S.Id;
-            D.IsDisplayWithOnlyOnSuffix = S.IsDisplayWithOnlyOnSuffix??false;
-            D.NoOfDigitAfterDecimal = S.NoOfDigitAfterDecimal??0;
+            D.IsDisplayWithOnlyOnSuffix = S.IsDisplayWithOnlyOnSuffix ?? false;
+            D.NoOfDigitAfterDecimal = S.NoOfDigitAfterDecimal ?? 0;
 
             return D;
         }
@@ -107,7 +107,7 @@ namespace AccountBuddy.SL.Hubs
         public static BLL.CreditLimitType ToMap(this DAL.CreditLimitType S, BLL.CreditLimitType D)
         {
             D.Id = S.Id;
-            D.LimitType = S.LimitType;            
+            D.LimitType = S.LimitType;
             return D;
         }
         #endregion
@@ -118,7 +118,7 @@ namespace AccountBuddy.SL.Hubs
             D.CompanyId = S.CompanyId;
             D.DataKey = S.DataKey;
             D.DataValue = S.DataValue;
-            D.Id = S.Id;          
+            D.Id = S.Id;
             return D;
         }
 
@@ -499,7 +499,7 @@ namespace AccountBuddy.SL.Hubs
         #region Transaction 
 
         #region PurchaseOrder
-        public static BLL.PurchaseOrder ToMap(DAL.PurchaseOrder S, BLL.PurchaseOrder D)
+        public static BLL.PurchaseOrder ToMap(this DAL.PurchaseOrder S, BLL.PurchaseOrder D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -515,7 +515,7 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        public static DAL.PurchaseOrder ToMap(BLL.PurchaseOrder S, DAL.PurchaseOrder D)
+        public static DAL.PurchaseOrder ToMap(this BLL.PurchaseOrder S, DAL.PurchaseOrder D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount ?? 0;
@@ -532,7 +532,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.PurchaseOrderDetail ToMap(DAL.PurchaseOrderDetail S, BLL.PurchaseOrderDetail D)
+        public static BLL.PurchaseOrderDetail ToMap(this DAL.PurchaseOrderDetail S, BLL.PurchaseOrderDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -545,7 +545,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.PurchaseOrderDetail ToMap(BLL.PurchaseOrderDetail S, DAL.PurchaseOrderDetail D)
+        public static DAL.PurchaseOrderDetail ToMap(this BLL.PurchaseOrderDetail S, DAL.PurchaseOrderDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -561,7 +561,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region Purchase
-        public static BLL.Purchase ToMap(DAL.Purchase S, BLL.Purchase D)
+        public static BLL.Purchase ToMap(this DAL.Purchase S, BLL.Purchase D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -577,7 +577,7 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        public static DAL.Purchase ToMap(BLL.Purchase S, DAL.Purchase D)
+        public static DAL.Purchase ToMap(this BLL.Purchase S, DAL.Purchase D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -594,7 +594,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.PurchaseDetail ToMap(DAL.PurchaseDetail S, BLL.PurchaseDetail D)
+        public static BLL.PurchaseDetail ToMap(this DAL.PurchaseDetail S, BLL.PurchaseDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -607,13 +607,27 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.PurchaseDetail ToMap(BLL.PurchaseDetail S, DAL.PurchaseDetail D)
+        public static DAL.PurchaseDetail ToMap(this BLL.PurchaseDetail S, DAL.PurchaseDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
             D.DiscountAmount = S.DiscountAmount;
             D.GSTAmount = S.GSTAmount;
             D.PODId = S.PODId;
+            D.ProductId = S.ProductId;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
+            D.UOMId = S.UOMId;
+            return D;
+        }
+
+        public static DAL.SalesDetail ToMap(this DAL.PurchaseDetail S, DAL.SalesDetail D)
+        {
+            D.Product = S.Product;
+            D.Id = S.Id;
+            D.Amount = S.Amount;
+            D.DiscountAmount = S.DiscountAmount;
+            D.GSTAmount = S.GSTAmount;
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
@@ -623,7 +637,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region PurchaseReturn
-        public static BLL.PurchaseReturn ToMap(DAL.PurchaseReturn S, BLL.PurchaseReturn D)
+        public static BLL.PurchaseReturn ToMap(this DAL.PurchaseReturn S, BLL.PurchaseReturn D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -639,7 +653,7 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        public static DAL.PurchaseReturn ToMap(BLL.PurchaseReturn S, DAL.PurchaseReturn D)
+        public static DAL.PurchaseReturn ToMap(this BLL.PurchaseReturn S, DAL.PurchaseReturn D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -656,7 +670,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.PurchaseReturnDetail ToMap(DAL.PurchaseReturnDetail S, BLL.PurchaseReturnDetail D)
+        public static BLL.PurchaseReturnDetail ToMap(this DAL.PurchaseReturnDetail S, BLL.PurchaseReturnDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -668,7 +682,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.PurchaseReturnDetail ToMap(BLL.PurchaseReturnDetail S, DAL.PurchaseReturnDetail D)
+        public static DAL.PurchaseReturnDetail ToMap(this BLL.PurchaseReturnDetail S, DAL.PurchaseReturnDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -683,7 +697,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region Sales Order
-        public static BLL.SalesOrder ToMap(DAL.SalesOrder S, BLL.SalesOrder D)
+        public static BLL.SalesOrder ToMap(this DAL.SalesOrder S, BLL.SalesOrder D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -699,7 +713,7 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        public static DAL.SalesOrder ToMap(BLL.SalesOrder S, DAL.SalesOrder D)
+        public static DAL.SalesOrder ToMap(this BLL.SalesOrder S, DAL.SalesOrder D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount ?? 0;
@@ -716,7 +730,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.SalesOrderDetail ToMap(DAL.SalesOrderDetail S, BLL.SalesOrderDetail D)
+        public static BLL.SalesOrderDetail ToMap(this DAL.SalesOrderDetail S, BLL.SalesOrderDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -728,7 +742,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.SalesOrderDetail ToMap(BLL.SalesOrderDetail S, DAL.SalesOrderDetail D)
+        public static DAL.SalesOrderDetail ToMap(this BLL.SalesOrderDetail S, DAL.SalesOrderDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount ?? 0;
@@ -743,9 +757,10 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region Sales
-        public static BLL.Sale ToMap(DAL.Sale S, BLL.Sale D)
+        public static BLL.Sale ToMap(this DAL.Sale S, BLL.Sale D)
         {
             D.Id = S.Id;
+            D.TransactionTypeId = S.TransactionTypeId;
             D.DiscountAmount = S.DiscountAmount;
             D.ExtraAmount = S.ExtraAmount;
             D.GSTAmount = S.GSTAmount;
@@ -759,9 +774,10 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        public static DAL.Sale ToMap(BLL.Sale S, DAL.Sale D)
+        public static DAL.Sale ToMap(this BLL.Sale S, DAL.Sale D)
         {
             D.Id = S.Id;
+            D.TransactionTypeId = S.TransactionTypeId;
             D.DiscountAmount = S.DiscountAmount;
             D.ExtraAmount = S.ExtraAmount;
             D.GSTAmount = S.GSTAmount;
@@ -776,7 +792,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.SalesDetail ToMap(DAL.SalesDetail S, BLL.SalesDetail D)
+        public static BLL.SalesDetail ToMap(this DAL.SalesDetail S, BLL.SalesDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -788,7 +804,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.SalesDetail ToMap(BLL.SalesDetail S, DAL.SalesDetail D)
+        public static DAL.SalesDetail ToMap(this BLL.SalesDetail S, DAL.SalesDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -803,7 +819,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region Sales Return
-        public static BLL.SalesReturn ToMap(DAL.SalesReturn S, BLL.SalesReturn D)
+        public static BLL.SalesReturn ToMap(this DAL.SalesReturn S, BLL.SalesReturn D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -819,7 +835,7 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        public static DAL.SalesReturn ToMap(BLL.SalesReturn S, DAL.SalesReturn D)
+        public static DAL.SalesReturn ToMap(this BLL.SalesReturn S, DAL.SalesReturn D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -836,7 +852,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.SalesReturnDetail ToMap(DAL.SalesReturnDetail S, BLL.SalesReturnDetail D)
+        public static BLL.SalesReturnDetail ToMap(this DAL.SalesReturnDetail S, BLL.SalesReturnDetail D)
         {
             D.Id = S.Id;
             D.Amount = (decimal)S.Amount;
@@ -848,7 +864,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.SalesReturnDetail ToMap(BLL.SalesReturnDetail S, DAL.SalesReturnDetail D)
+        public static DAL.SalesReturnDetail ToMap(this BLL.SalesReturnDetail S, DAL.SalesReturnDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -863,7 +879,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region JobOrder Issue
-        public static BLL.JobOrderIssue ToMap(DAL.JobOrderIssue S, BLL.JobOrderIssue D)
+        public static BLL.JobOrderIssue ToMap(this DAL.JobOrderIssue S, BLL.JobOrderIssue D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -876,11 +892,11 @@ namespace AccountBuddy.SL.Hubs
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
-            
+
 
             return D;
         }
-        public static DAL.JobOrderIssue ToMap(BLL.JobOrderIssue S, DAL.JobOrderIssue D)
+        public static DAL.JobOrderIssue ToMap(this BLL.JobOrderIssue S, DAL.JobOrderIssue D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -893,11 +909,11 @@ namespace AccountBuddy.SL.Hubs
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount ?? 0;
-            
+
             return D;
         }
 
-        public static BLL.JobOrderIssueDetail ToMap(DAL.JobOrderIssueDetail S, BLL.JobOrderIssueDetail D)
+        public static BLL.JobOrderIssueDetail ToMap(this DAL.JobOrderIssueDetail S, BLL.JobOrderIssueDetail D)
         {
             D.Id = S.Id;
             D.Amount = (decimal)S.Amount;
@@ -909,7 +925,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.JobOrderIssueDetail ToMap(BLL.JobOrderIssueDetail S, DAL.JobOrderIssueDetail D)
+        public static DAL.JobOrderIssueDetail ToMap(this BLL.JobOrderIssueDetail S, DAL.JobOrderIssueDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount ?? 0;
@@ -924,7 +940,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region JobOrderReceived
-        public static BLL.JobOrderReceived ToMap(DAL.JobOrderReceived S, BLL.JobOrderReceived D)
+        public static BLL.JobOrderReceived ToMap(this DAL.JobOrderReceived S, BLL.JobOrderReceived D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -940,7 +956,7 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        public static DAL.JobOrderReceived ToMap(BLL.JobOrderReceived S, DAL.JobOrderReceived D)
+        public static DAL.JobOrderReceived ToMap(this BLL.JobOrderReceived S, DAL.JobOrderReceived D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount ?? 0;
@@ -958,7 +974,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.JobOrderReceivedDetail ToMap(DAL.JobOrderReceivedDetail S, BLL.JobOrderReceivedDetail D)
+        public static BLL.JobOrderReceivedDetail ToMap(this DAL.JobOrderReceivedDetail S, BLL.JobOrderReceivedDetail D)
         {
             D.Id = S.Id;
             D.Amount = (decimal)S.Amount;
@@ -970,7 +986,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.JobOrderReceivedDetail ToMap(BLL.JobOrderReceivedDetail S, DAL.JobOrderReceivedDetail D)
+        public static DAL.JobOrderReceivedDetail ToMap(this BLL.JobOrderReceivedDetail S, DAL.JobOrderReceivedDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount ?? 0;
@@ -985,7 +1001,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region StockIn
-        public static BLL.StockIn ToMap(DAL.StockIn S, BLL.StockIn D)
+        public static BLL.StockIn ToMap(this DAL.StockIn S, BLL.StockIn D)
         {
             D.Id = S.Id;
             D.ItemAmount = S.ItemAmount;
@@ -1012,7 +1028,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.StockInDetail ToMap(DAL.StockInDetail S, BLL.StockInDetail D)
+        public static BLL.StockInDetail ToMap(this DAL.StockInDetail S, BLL.StockInDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -1024,7 +1040,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.StockInDetail ToMap(BLL.StockInDetail S, DAL.StockInDetail D)
+        public static DAL.StockInDetail ToMap(this BLL.StockInDetail S, DAL.StockInDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -1039,7 +1055,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region StockOut
-        public static BLL.StockOut ToMap(DAL.StockOut S, BLL.StockOut D)
+        public static BLL.StockOut ToMap(this DAL.StockOut S, BLL.StockOut D)
         {
             D.Id = S.Id;
             D.ItemAmount = S.ItemAmount;
@@ -1052,7 +1068,7 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        public static DAL.StockOut ToMap(BLL.StockOut S, DAL.StockOut D)
+        public static DAL.StockOut ToMap(this BLL.StockOut S, DAL.StockOut D)
         {
             D.Id = S.Id;
             D.ItemAmount = S.ItemAmount;
@@ -1066,7 +1082,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.StockOutDetail ToMap(DAL.StockOutDetail S, BLL.StockOutDetail D)
+        public static BLL.StockOutDetail ToMap(this DAL.StockOutDetail S, BLL.StockOutDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -1078,7 +1094,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.StockOutDetail ToMap(BLL.StockOutDetail S, DAL.StockOutDetail D)
+        public static DAL.StockOutDetail ToMap(this BLL.StockOutDetail S, DAL.StockOutDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -1093,7 +1109,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region StockInProcess
-        public static BLL.StockInProcess ToMap(DAL.StockInProcess S, BLL.StockInProcess D)
+        public static BLL.StockInProcess ToMap(this DAL.StockInProcess S, BLL.StockInProcess D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -1109,7 +1125,7 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        public static DAL.StockInProcess ToMap(BLL.StockInProcess S, DAL.StockInProcess D)
+        public static DAL.StockInProcess ToMap(this BLL.StockInProcess S, DAL.StockInProcess D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount ?? 0;
@@ -1126,7 +1142,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.StockInProcessDetail ToMap(DAL.StockInProcessDetail S, BLL.StockInProcessDetail D)
+        public static BLL.StockInProcessDetail ToMap(this DAL.StockInProcessDetail S, BLL.StockInProcessDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -1138,7 +1154,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.StockInProcessDetail ToMap(BLL.StockInProcessDetail S, DAL.StockInProcessDetail D)
+        public static DAL.StockInProcessDetail ToMap(this BLL.StockInProcessDetail S, DAL.StockInProcessDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount ?? 0;
@@ -1153,7 +1169,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region StockSeperated
-        public static BLL.StockSeperated ToMap(DAL.StockSeparated S, BLL.StockSeperated D)
+        public static BLL.StockSeperated ToMap(this DAL.StockSeparated S, BLL.StockSeperated D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount;
@@ -1169,7 +1185,7 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        public static DAL.StockSeparated ToMap(BLL.StockSeperated S, DAL.StockSeparated D)
+        public static DAL.StockSeparated ToMap(this BLL.StockSeperated S, DAL.StockSeparated D)
         {
             D.Id = S.Id;
             D.DiscountAmount = S.DiscountAmount ?? 0;
@@ -1186,7 +1202,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.StockSeperatedDetail ToMap(DAL.StockSeperatedDetail S, BLL.StockSeperatedDetail D)
+        public static BLL.StockSeperatedDetail ToMap(this DAL.StockSeperatedDetail S, BLL.StockSeperatedDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -1198,7 +1214,7 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
-        public static DAL.StockSeperatedDetail ToMap(BLL.StockSeperatedDetail S, DAL.StockSeperatedDetail D)
+        public static DAL.StockSeperatedDetail ToMap(this BLL.StockSeperatedDetail S, DAL.StockSeperatedDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount ?? 0;
@@ -1213,7 +1229,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region Payment
-        public static BLL.Payment ToMap(DAL.Payment S, BLL.Payment D)
+        public static BLL.Payment ToMap(this DAL.Payment S, BLL.Payment D)
         {
             D.Id = S.Id;
             D.EntryNo = S.EntryNo;
@@ -1234,7 +1250,7 @@ namespace AccountBuddy.SL.Hubs
             D.RefNo = S.RefNo;
             return D;
         }
-        public static DAL.Payment ToMap(BLL.Payment S, DAL.Payment D)
+        public static DAL.Payment ToMap(this BLL.Payment S, DAL.Payment D)
         {
             D.Id = S.Id;
             D.EntryNo = S.EntryNo;
@@ -1256,7 +1272,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.PaymentDetail ToMap(DAL.PaymentDetail S, BLL.PaymentDetail D)
+        public static BLL.PaymentDetail ToMap(this DAL.PaymentDetail S, BLL.PaymentDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -1265,7 +1281,7 @@ namespace AccountBuddy.SL.Hubs
             D.PaymentId = S.PaymentId;
             return D;
         }
-        public static DAL.PaymentDetail ToMap(BLL.PaymentDetail S, DAL.PaymentDetail D)
+        public static DAL.PaymentDetail ToMap(this BLL.PaymentDetail S, DAL.PaymentDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -1277,7 +1293,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region Receipt
-        public static BLL.Receipt ToMap(DAL.Receipt S, BLL.Receipt D)
+        public static BLL.Receipt ToMap(this DAL.Receipt S, BLL.Receipt D)
         {
             D.Id = S.Id;
             D.EntryNo = S.EntryNo;
@@ -1298,7 +1314,7 @@ namespace AccountBuddy.SL.Hubs
             D.RefNo = S.RefNo;
             return D;
         }
-        public static DAL.Receipt ToMap(BLL.Receipt S, DAL.Receipt D)
+        public static DAL.Receipt ToMap(this BLL.Receipt S, DAL.Receipt D)
         {
             D.Id = S.Id;
             D.EntryNo = S.EntryNo;
@@ -1320,7 +1336,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.ReceiptDetail ToMap(DAL.ReceiptDetail S, BLL.ReceiptDetail D)
+        public static BLL.ReceiptDetail ToMap(this DAL.ReceiptDetail S, BLL.ReceiptDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -1329,7 +1345,7 @@ namespace AccountBuddy.SL.Hubs
             D.ReceiptId = S.ReceiptId;
             return D;
         }
-        public static DAL.ReceiptDetail ToMap(BLL.ReceiptDetail S, DAL.ReceiptDetail D)
+        public static DAL.ReceiptDetail ToMap(this BLL.ReceiptDetail S, DAL.ReceiptDetail D)
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
@@ -1341,7 +1357,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region Journal
-        public static BLL.Journal ToMap(DAL.Journal S, BLL.Journal D)
+        public static BLL.Journal ToMap(this DAL.Journal S, BLL.Journal D)
         {
             D.Id = S.Id;
             D.EntryNo = S.EntryNo;
@@ -1351,10 +1367,10 @@ namespace AccountBuddy.SL.Hubs
             D.Particular = S.Particular;
             D.RefCode = S.RefCode;
             D.VoucherNo = S.VoucherNo;
-            
+
             return D;
         }
-        public static DAL.Journal ToMap(BLL.Journal S, DAL.Journal D)
+        public static DAL.Journal ToMap(this BLL.Journal S, DAL.Journal D)
         {
             D.Id = S.Id;
             D.EntryNo = S.EntryNo;
@@ -1367,7 +1383,7 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-        public static BLL.JournalDetail ToMap(DAL.JournalDetail S, BLL.JournalDetail D)
+        public static BLL.JournalDetail ToMap(this DAL.JournalDetail S, BLL.JournalDetail D)
         {
             D.Id = S.Id;
             D.CrAmt = S.CrAmt;
@@ -1385,10 +1401,10 @@ namespace AccountBuddy.SL.Hubs
             D.RefNo = S.RefNo;
             D.Status = S.Status;
             D.TransactionMode = S.TransactionMode;
-            
+
             return D;
         }
-        public static DAL.JournalDetail ToMap(BLL.JournalDetail S, DAL.JournalDetail D)
+        public static DAL.JournalDetail ToMap(this BLL.JournalDetail S, DAL.JournalDetail D)
         {
             D.Id = S.Id;
             D.CrAmt = S.CrAmt;
