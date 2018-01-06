@@ -67,7 +67,9 @@ namespace AccountBuddy.PL.frm.Master
                 btnDelete.Visibility = BLL.Ledger.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
             }
             catch(Exception ex)
-            { }
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {

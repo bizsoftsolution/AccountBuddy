@@ -67,7 +67,7 @@ namespace AccountBuddy.PL.frm.Report
             if (rdbProductWise.IsChecked == true) ReportType = "ProductWise";
             if (rdbProductSummary.IsChecked == true) ReportType = "ProductSummary";
 
-            dgvDetails.ItemsSource = BLL.SalesReport.ToListCustomerWise(dtpDateFrom.SelectedDate.Value,dtpDateTo.SelectedDate.Value,isMonthly,ReportType);
+            dgvDetails.ItemsSource = BLL.SalesReport.ToList(dtpDateFrom.SelectedDate.Value,dtpDateTo.SelectedDate.Value,isMonthly,ReportType);
             
         }
     }

@@ -142,7 +142,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return ReOrderLevel > AvailableStock;
+                return ReOrderLevel >= AvailableStock;
             }
         }
 

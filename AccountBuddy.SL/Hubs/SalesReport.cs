@@ -13,8 +13,8 @@ namespace AccountBuddy.SL.Hubs
 
             List<BLL.SalesReport> rv = new List<BLL.SalesReport>();
             
-            var l1 = DB.SalesDetails.Where(x => x.Sale.Ledger.AccountGroup.CompanyDetail.CompanyType == "Dealer" && 
-                                                x.Sale.Ledger.AccountGroup.CompanyDetail.UnderCompanyId==Caller.CompanyId && 
+            var l1 = DB.SalesDetails.Where(x => x.Sale.Ledger.LedgerName.StartsWith("DL-") && 
+                                                x.Sale.Ledger.AccountGroup.CompanyDetail.Id==Caller.CompanyId && 
                                                 x.Sale.SalesDate >= dtFrom && 
                                                 x.Sale.SalesDate <= dtTo)
                                     .Select(x=> new {
@@ -22,6 +22,7 @@ namespace AccountBuddy.SL.Hubs
                                                         x.Product.ProductName,
                                                         x.Sale.Ledger.AccountGroup.CompanyId,
                                                         x.Sale.Ledger.AccountGroup.CompanyDetail.CompanyName,
+                                                        x.Sale.Ledger.LedgerName,
                                                         x.Sale.SalesDate,
                                                         x.Amount
                                                     })
@@ -36,7 +37,7 @@ namespace AccountBuddy.SL.Hubs
                 #region DealerWise
                 if (ReportType == "DealerWise")
                 {
-                    var l2 = l1.GroupBy(x => x.CompanyName).ToList();
+                    var l2 = l1.GroupBy(x => x.LedgerName).ToList();
 
                     decimal[] gtamt = new decimal[12];
 
@@ -166,7 +167,7 @@ namespace AccountBuddy.SL.Hubs
 
                     foreach (var d1 in l2)
                     {
-                        var l3 = d1.GroupBy(x => x.CompanyName).ToList();
+                        var l3 = d1.GroupBy(x => x.LedgerName).ToList();
                         decimal[] tamt = new decimal[12];
 
 
@@ -284,7 +285,7 @@ namespace AccountBuddy.SL.Hubs
                 #region DealerSummary
                 if (ReportType == "DealerSummary")
                 {
-                    var l2 = l1.GroupBy(x => x.CompanyName).ToList();
+                    var l2 = l1.GroupBy(x => x.LedgerName).ToList();
 
                     decimal[] gtamt = new decimal[12];
 

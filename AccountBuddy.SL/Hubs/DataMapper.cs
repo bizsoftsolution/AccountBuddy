@@ -899,7 +899,7 @@ namespace AccountBuddy.SL.Hubs
         public static DAL.JobOrderIssue ToMap(this BLL.JobOrderIssue S, DAL.JobOrderIssue D)
         {
             D.Id = S.Id;
-            D.DiscountAmount = S.DiscountAmount;
+            D.DiscountAmount = S.DiscountAmount??0;
             D.Extras = S.Extras ?? 0;
             D.GSTAmount = S.GSTAmount ?? 0;
             D.ItemAmount = S.ItemAmount ?? 0;

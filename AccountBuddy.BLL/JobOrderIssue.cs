@@ -20,7 +20,7 @@ namespace AccountBuddy.BLL
         private string _JONo;
         private int? _JobWorkerId;
         private decimal? _ItemAmount;
-        private decimal _DiscountAmount;
+        private decimal? _DiscountAmount;
         private decimal? _GSTAmount;
         private decimal? _Extras;
         private decimal? _TotalAmount;
@@ -197,11 +197,11 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal DiscountAmount
+        public decimal? DiscountAmount
         {
             get
             {
-                 _DiscountAmount = 0;
+                if (_DiscountAmount == null) _DiscountAmount = 0; 
                 return _DiscountAmount;
             }
             set
@@ -251,7 +251,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_TotalAmount == null) _Extras = 0;
+                if (_TotalAmount == null) _TotalAmount = 0;
                 return _TotalAmount;
             }
             set
