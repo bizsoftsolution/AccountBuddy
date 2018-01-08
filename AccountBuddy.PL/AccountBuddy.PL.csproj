@@ -334,6 +334,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmSalesReportCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Report\frmSalesReportPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmStockReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -556,6 +564,12 @@
     </Compile>
     <Compile Include="frm\Report\frmSalesReport.xaml.cs">
       <DependentUpon>frmSalesReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmSalesReportCustomer.xaml.cs">
+      <DependentUpon>frmSalesReportCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmSalesReportPrint.xaml.cs">
+      <DependentUpon>frmSalesReportPrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmStockReport.xaml.cs">
       <DependentUpon>frmStockReport.xaml</DependentUpon>

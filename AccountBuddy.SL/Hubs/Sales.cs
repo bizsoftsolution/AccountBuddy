@@ -260,7 +260,7 @@ namespace AccountBuddy.SL.Hubs
             return true;
         }
 
-        public List<BLL.Sale> Sale_List(int? SID, DateTime dtFrom, DateTime dtTo, String InvoiceNo)
+        public List<BLL.Sale> Sale_List(int? SID, DateTime dtFrom, DateTime dtTo, string InvoiceNo)
         {
             BLL.Sale P = new BLL.Sale();
             List<BLL.Sale> lstPurchase = new List<BLL.Sale>();

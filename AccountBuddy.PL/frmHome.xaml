@@ -216,7 +216,7 @@
                                         </Menu:NavMenuItem>
                                         <Menu:NavMenuItem MenuName="Sales Report" FormName="Sales Report">
                                             <Menu:NavMenuItem.Content>
-                                                <Report:frmCustomerSalesReport/>
+                                                <Report:frmSalesReportCustomer/>
                                             </Menu:NavMenuItem.Content>
                                         </Menu:NavMenuItem>
                                         <Menu:NavMenuItem MenuName="Tax Report" FormName="Tax Report">
