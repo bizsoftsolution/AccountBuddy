@@ -232,68 +232,30 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnExcel_Click(object sender, RoutedEventArgs e)
         {
-            //Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
-            //Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
-            //Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
+            ExportToExcel();
+        }
 
-            //try
-            //{
+        public void ExportToExcel()
+        {
+            if (dgvReceiptAndPayment.Items.Count != 0)
+            {
+                dgvReceiptAndPayment.SelectAllCells();
+                dgvReceiptAndPayment.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+                ApplicationCommands.Copy.Execute(null, dgvReceiptAndPayment);
+                String resultat = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+                String result = (string)Clipboard.GetData(DataFormats.Text);
+                dgvReceiptAndPayment.UnselectAllCells();
+                SaveFileDialog SaveFileDialog1 = new SaveFileDialog();
+                SaveFileDialog1.ShowDialog();
+                string file = SaveFileDialog1.FileName;
+                System.IO.StreamWriter file1 = new System.IO.StreamWriter(string.Format(@"{0}.xls", file));
+                file1.WriteLine(result.Replace(',', ' '));
+                file1.Close();
 
-            //    worksheet = workbook.ActiveSheet;
+                MessageBox.Show(" Exporting DataGrid data to Excel file created.xls");
+            }
 
-            //    worksheet.Name = "ExportedFromDatGrid";
 
-            //    int cellRowIndex = 1;
-            //    int cellColumnIndex = 1;
-            //    DataTable dt = new DataTable();
-            //    var r = dgvReceiptAndPayment.ItemsSource;
-            //    foreach(var d in r)
-            //    {
-            //        dt = new DataTable();
-            //        dt.Ite
-            //    }
-
-            //    //Loop through each row and read value from each column. 
-            //    for (int i = 0; i < dgvReceiptAndPayment.Items.Count - 1; i++)
-            //    {
-            //        for (int j = 0; j < dgvReceiptAndPayment.Columns.Count; j++)
-            //        {
-            //            // Excel index starts from 1,1. As first Row would have the Column headers, adding a condition check. 
-            //            if (cellRowIndex == 1)
-            //            {
-            //                worksheet.Cells[cellRowIndex, cellColumnIndex] = dgvReceiptAndPayment.Columns[j].Header;
-            //            }
-            //            else
-            //            {
-            //                worksheet.Cells[cellRowIndex, cellColumnIndex] = dgvReceiptAndPayment.Rows[i].Cells[j].Value.ToString();
-            //            }
-            //            cellColumnIndex++;
-            //        }
-            //        cellColumnIndex = 1;
-            //        cellRowIndex++;
-            //    }
-
-            //    //Getting the location and file name of the excel to save from user. 
-            //    SaveFileDialog saveDialog = new SaveFileDialog();
-            //    saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
-            //    saveDialog.FilterIndex = 2;
-
-            //    if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //    {
-            //        workbook.SaveAs(saveDialog.FileName);
-            //        MessageBox.Show("Export Successful");
-            //    }
-            //}
-            //catch (System.Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-            //finally
-            //{
-            //    excel.Quit();
-            //    workbook = null;
-            //    excel = null;
-            //}
         }
 
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

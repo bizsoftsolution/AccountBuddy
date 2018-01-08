@@ -66,7 +66,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Dr Amt</Value>
+                              <Value>Debit</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -100,7 +100,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Cr Amt</Value>
+                              <Value>Credit</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>

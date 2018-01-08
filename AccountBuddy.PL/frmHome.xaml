@@ -190,7 +190,7 @@
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
 
-                                            <Menu:NavMenuItem MenuName="General Ledger" FormName="General Ledger">
+                                        <Menu:NavMenuItem MenuName="Individual Account" FormName="Individual Account">
                                                 <Menu:NavMenuItem.Content>
                                                     <Report:frmGeneralLedger/>
                                                 </Menu:NavMenuItem.Content>
@@ -216,7 +216,12 @@
                                         </Menu:NavMenuItem>
                                         <Menu:NavMenuItem MenuName="Sales Report" FormName="Sales Report">
                                             <Menu:NavMenuItem.Content>
-                                                <Report:frmCustomerSalesReport/>
+                                                <Report:frmSalesReportCustomer/>
+                                            </Menu:NavMenuItem.Content>
+                                        </Menu:NavMenuItem>
+                                        <Menu:NavMenuItem MenuName="Tax Report" FormName="Tax Report">
+                                            <Menu:NavMenuItem.Content>
+                                                <Report:frmTaxReport/>
                                             </Menu:NavMenuItem.Content>
                                         </Menu:NavMenuItem>
                                     </ListBox>

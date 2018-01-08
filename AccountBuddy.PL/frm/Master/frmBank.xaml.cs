@@ -215,7 +215,7 @@ namespace AccountBuddy.PL.frm.Master
                 string strValue = "";
 
                 var d1 = obj as BLL.Bank;
-
+              
                 foreach (var p in d1.GetType().GetProperties())
                 {
                     if (p.Name.ToLower().Contains("id") ||

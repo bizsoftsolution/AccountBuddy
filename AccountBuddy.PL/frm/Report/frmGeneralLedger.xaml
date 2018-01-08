@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-              d:DesignHeight="600" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
+              d:DesignHeight="600" d:DesignWidth="1200" Background="White" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -23,17 +23,17 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-                    <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="General Account"/></TextBlock>
+                    <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Individual Account"/></TextBlock>
                 </Grid>
                 <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
 
                 <Grid Grid.Row="1" >
 
-                    <Grid>
+                    <Grid >
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="80"/>
-                            <RowDefinition Height="100*"/>
-                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="90*"/>
+                            <RowDefinition Height="16*"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"  >
@@ -69,10 +69,8 @@
 
                         </Grid>
                         <Grid Grid.Row="1">
-
-                            <Grid Grid.Row="0"  >
-
-                                <DataGrid x:Name="dgvGeneralLedger" BorderBrush="Black" BorderThickness="1" MouseDoubleClick="dgvGeneralLedger_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False"  Background="White" Foreground="Black" Margin="20,20,20,40" >
+                            <StackPanel Margin="0,0,10,20" Width="1000">
+                                <DataGrid x:Name="dgvGeneralLedger" Height="350"  HorizontalAlignment="Center"  BorderBrush="Black" BorderThickness="1" MouseDoubleClick="dgvGeneralLedger_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False"  Background="White" Foreground="Black" Margin="20" >
 
                                     <DataGrid.ColumnHeaderStyle>
                                         <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -94,16 +92,14 @@
                                     </DataGrid.Columns>
                                 </DataGrid>
 
-                            </Grid>
-
-
-
+                            </StackPanel>
+         
                             <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
                                 <rv:ReportViewer x:Name="rptViewer"/>
                             </WindowsFormsHost>
                         </Grid>
                         <Grid Grid.Row="2">
-                            <StackPanel Orientation="Horizontal" Margin="350,24,300,23" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Margin="350,10,300,23" VerticalAlignment="Center">
 
                                 <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
                                     PDF
@@ -115,7 +111,6 @@
                                     PRINT PREVIEW
                                 </Button>
                             </StackPanel>
-
                         </Grid>
                     </Grid>
                 </Grid>

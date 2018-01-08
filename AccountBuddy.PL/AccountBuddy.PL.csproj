@@ -334,11 +334,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmSalesReportCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Report\frmSalesReportPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmStockReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="frm\Report\frmStockReportPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Report\frmTaxReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -553,11 +565,20 @@
     <Compile Include="frm\Report\frmSalesReport.xaml.cs">
       <DependentUpon>frmSalesReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Report\frmSalesReportCustomer.xaml.cs">
+      <DependentUpon>frmSalesReportCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmSalesReportPrint.xaml.cs">
+      <DependentUpon>frmSalesReportPrint.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Report\frmStockReport.xaml.cs">
       <DependentUpon>frmStockReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmStockReportPrint.xaml.cs">
       <DependentUpon>frmStockReportPrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmTaxReport.xaml.cs">
+      <DependentUpon>frmTaxReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmTrialBalance.xaml.cs">
       <DependentUpon>frmTrialBalance.xaml</DependentUpon>

@@ -71,6 +71,9 @@
     <EmbeddedResource Include="rpt\Master\rptUOM.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rpCustomerSalesReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Report\rptBalanceSheet.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -99,6 +102,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Report\rptSOPendingReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptTaxReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptJobOrderIssue.rdlc">
@@ -177,9 +183,16 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.ABClientHub.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.AccountGroup.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.BalanceSheet.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Bank.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.BankReconcilation.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.CompanyDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.CreditLimitType.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Customer1.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.CustomerWiseReport.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.CustomFormat.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.DataKeyValue.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.FMCGHubClient1.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.FormPrefix.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralLedger.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralStock.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.JobOrderIssue.datasource" />
@@ -191,6 +204,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.Journal.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.JournalDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Ledger.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Payable.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Payment.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.PaymentDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.POPending.datasource" />
@@ -206,6 +220,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.Receipt.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptAndPayment.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.ReceiptDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Receivable.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Sale.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesOrder.datasource" />
@@ -215,11 +230,19 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.SalesReturnDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.SOPending.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.Staff.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StateDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockGroup1.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockIn.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockInDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockInProcess.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockInProcessDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockOut.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockOutDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockSeperated.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockSeperatedDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.Supplier.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.TaxReport.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.TransactionType.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.TrialBalance.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UOM.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UserAccount.datasource" />

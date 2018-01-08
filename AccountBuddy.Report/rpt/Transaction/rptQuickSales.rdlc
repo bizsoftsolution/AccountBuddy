@@ -619,7 +619,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Total Value after discount   </Value>
+                              <Value>Total Value After Discount   </Value>
                               <Style>
                                 <FontFamily>Cambria</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -1432,7 +1432,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Transaportation Mode        </Value>
+                    <Value>Transportation Mode        </Value>
                     <Style>
                       <FontFamily>Cambria</FontFamily>
                       <FontSize>8pt</FontSize>
@@ -1572,7 +1572,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Details Of Receiver/Name Of  Addres Billed To</Value>
+                    <Value>Details Of Receiver/Name Of  Address Billed To</Value>
                     <Style>
                       <FontFamily>Cambria</FontFamily>
                       <FontWeight>Bold</FontWeight>
@@ -2166,7 +2166,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Certified  the particular given abouve are true and correct</Value>
+                    <Value>Certified  the particular given above are true and correct </Value>
                     <Style>
                       <FontFamily>Cambria</FontFamily>
                       <Color>DarkBlue</Color>
@@ -2180,7 +2180,21 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value> For  </Value>
+                    <Value />
+                    <Style>
+                      <FontFamily>Cambria</FontFamily>
+                      <Color>DarkBlue</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>For  </Value>
                     <Style>
                       <FontFamily>Cambria</FontFamily>
                       <Color>DarkBlue</Color>
@@ -2210,7 +2224,7 @@
             <rd:DefaultName>Textbox149</rd:DefaultName>
             <Left>3.63195in</Left>
             <Height>0.53471in</Height>
-            <Width>3.24454in</Width>
+            <Width>3.48201in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -2264,7 +2278,7 @@
             <Sizing>FitProportional</Sizing>
             <Top>0.10417in</Top>
             <Left>0.06772in</Left>
-            <Height>0.88602in</Height>
+            <Height>0.99305in</Height>
             <Width>3.08681in</Width>
             <ZIndex>3</ZIndex>
             <Style>
@@ -2352,7 +2366,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Duplicate for Transaporter</Value>
+                    <Value>Duplicate for Transporter</Value>
                     <Style>
                       <FontFamily>Cambria</FontFamily>
                       <FontSize>8pt</FontSize>
@@ -2720,8 +2734,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>PostalCode</rd:DefaultName>
-        <Top>1.69784in</Top>
-        <Left>2.11633in</Left>
+        <Top>1.67699in</Top>
+        <Left>2.08856in</Left>
         <Height>0.20079in</Height>
         <Width>1.45603in</Width>
         <ZIndex>26</ZIndex>

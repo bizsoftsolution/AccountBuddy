@@ -77,7 +77,10 @@ namespace AccountBuddy.SL.Hubs
                     var b = Staff_DALtoBLL(d);
                     DB.Staffs.Remove(d);
                     DB.SaveChanges();
-                    Ledger_Delete(d.LedgerId.Value);
+                    if (d.LedgerId != 0 & d.LedgerId != null)
+                    {
+                        Ledger_Delete(d.LedgerId.Value);
+                    }
                     LogDetailStore(b, LogDetailType.DELETE);
                 }
 

@@ -237,6 +237,9 @@ namespace AccountBuddy.SL.Hubs
                     d.toCopy<BLL.PurchaseReturn>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    P.CGSTPer = (decimal)(d.CGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
+                    P.SGSTPer = (decimal)(d.SGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
+                    P.IGSTPer = (decimal)(d.IGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
                     foreach (var d_pod in d.PurchaseReturnDetails)
                     {
                         BLL.PurchaseReturnDetail b_pod = new BLL.PurchaseReturnDetail();
@@ -261,7 +264,7 @@ namespace AccountBuddy.SL.Hubs
                 var d = DB.PurchaseReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId &&
                 (SID == null || x.LedgerId == SID) && x.PRDate >= dtFrom &&
                 x.PRDate <= dtTo &&
-                (InvoiceNo == "" || x.RefNo == InvoiceNo)).ToList();
+                (InvoiceNo == "" || x.RefNo.Contains(InvoiceNo))).ToList();
                 foreach (var l in d)
                 {
                     P = new BLL.PurchaseReturn();

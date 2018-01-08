@@ -169,7 +169,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                    if (value != 0) SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -233,7 +233,7 @@ namespace AccountBuddy.BLL
                 {
                     _CGSTPer = value;
                     NotifyPropertyChanged(nameof(CGSTPer));
-                    if (value != 0) SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -249,7 +249,7 @@ namespace AccountBuddy.BLL
                 {
                     _SGSTPer = value;
                     NotifyPropertyChanged(nameof(SGSTPer));
-                    if (value != 0) SetAmount();
+                    SetAmount();
                 }
             }
         }
@@ -265,7 +265,7 @@ namespace AccountBuddy.BLL
                 {
                     _IGSTPer = value;
                     NotifyPropertyChanged(nameof(IGSTPer));
-                    if (value != 0) SetAmount();
+                   SetAmount();
                 }
             }
         }

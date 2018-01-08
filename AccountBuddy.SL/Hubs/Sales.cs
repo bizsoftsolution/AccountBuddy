@@ -192,6 +192,9 @@ namespace AccountBuddy.SL.Hubs
                     d.toCopy<BLL.Sale>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    P.CGSTPer = (decimal)(d.CGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
+                    P.SGSTPer = (decimal)(d.SGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
+                    P.IGSTPer = (decimal)(d.IGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
                     foreach (var d_pod in d.SalesDetails)
                     {
                         BLL.SalesDetail b_pod = new BLL.SalesDetail();
@@ -257,7 +260,7 @@ namespace AccountBuddy.SL.Hubs
             return true;
         }
 
-        public List<BLL.Sale> Sale_List(int? SID, DateTime dtFrom, DateTime dtTo, String InvoiceNo)
+        public List<BLL.Sale> Sale_List(int? SID, DateTime dtFrom, DateTime dtTo, string InvoiceNo)
         {
             BLL.Sale P = new BLL.Sale();
             List<BLL.Sale> lstPurchase = new List<BLL.Sale>();
@@ -267,7 +270,7 @@ namespace AccountBuddy.SL.Hubs
                 var d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId &&
                 (SID == null || x.LedgerId == SID) && x.SalesDate >= dtFrom &&
                 x.SalesDate <= dtTo &&
-                (InvoiceNo == "" || x.RefNo == InvoiceNo)).ToList();
+                (InvoiceNo == "" || x.RefNo .Contains(InvoiceNo))).ToList();
                 foreach (var l in d)
                 {
                     P = new BLL.Sale();

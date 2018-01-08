@@ -219,17 +219,7 @@ namespace AccountBuddy.PL.frm.Master
                         if (p.Name.ToLower().Contains("id") ||
                          p.GetValue(d.Ledger) == null ||                          
                          p.PropertyType.Namespace != "System"
-                            //||
-                            //(p.Name != nameof(d.Ledger.LedgerName) &&
-                            //    p.Name != nameof(d.Ledger.PersonIncharge) &&
-                            //    p.Name != nameof(d.Ledger.AddressLine1) &&
-                            //    p.Name != nameof(d.Ledger.AddressLine2) &&
-                            //    p.Name != nameof(d.Ledger.OPCr) &&
-                            //    p.Name != nameof(d.Ledger.OPDr)
-
-
-                            // 
-                            ) continue;
+                          ) continue;
                         strValue = p.GetValue(d.Ledger).ToString();
                         if (cbxCase.IsChecked == false)
                         {
@@ -252,8 +242,9 @@ namespace AccountBuddy.PL.frm.Master
                         }
                     }
                     catch(Exception ex) { }
-                    
+
                 }
+              
             }
             else
             {

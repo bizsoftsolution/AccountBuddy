@@ -34,9 +34,9 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="400"/>
-                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="90*"/>
+                        <RowDefinition Height="16*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Height="77">
@@ -87,7 +87,7 @@
                         </DataGrid>
                     </Grid>
                     <Grid Grid.Row="2" Margin="0,0,10,110">
-                        <StackPanel Orientation="Horizontal" Margin="350,30,255,28" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Margin="350,10,255,-60" VerticalAlignment="Center" >
 
                             <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
                                 PDF

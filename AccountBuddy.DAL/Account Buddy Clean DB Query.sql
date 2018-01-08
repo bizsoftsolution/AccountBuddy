@@ -21,9 +21,9 @@ delete from Payment
 
 delete from ReceiptDetail
 delete from Receipt
-
 delete from JournalDetail
 delete from Journal
+
 
 delete from JobWorker
 delete from Staff

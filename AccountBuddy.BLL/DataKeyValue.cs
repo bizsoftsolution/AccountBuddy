@@ -53,7 +53,7 @@ namespace AccountBuddy.BLL
                 return toList.Where(x => x.DataKey == Primary_Key).FirstOrDefault().DataValue;
             }
         }
-     
+
         public static string CashLedger_Key
         {
             get
@@ -69,7 +69,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-       
+
         #region Sales A/C Ledger
         public static string SalesAccount_Ledger_Key
         {
@@ -89,7 +89,7 @@ namespace AccountBuddy.BLL
 
         #endregion
 
- public static string SundryDebtors_Key
+        public static string SundryDebtors_Key
         {
             get
             {
@@ -124,7 +124,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return "Input Tax";
+                return "Input_Tax";
             }
 
         }
@@ -142,7 +142,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return "Output Tax";
+                return "Output_Tax";
             }
 
         }
@@ -172,7 +172,6 @@ namespace AccountBuddy.BLL
             }
         }
         #endregion
-
 
         #region Stock Group
         public static string StockGroup_Primary_Key
@@ -208,7 +207,7 @@ namespace AccountBuddy.BLL
         }
 
         #endregion
-         public static string Cash_in_Hand_Key
+        public static string Cash_in_Hand_Key
         {
             get
             {
@@ -310,7 +309,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return toList.Where(x => x.DataKey ==CGST_Key).FirstOrDefault().DataValue;
+                return toList.Where(x => x.DataKey == CGST_Key).FirstOrDefault().DataValue;
             }
         }
         #endregion

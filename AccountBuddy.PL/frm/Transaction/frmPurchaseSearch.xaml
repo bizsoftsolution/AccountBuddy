@@ -77,6 +77,7 @@
                                     </materialDesign:HintAssist.Hint>
                                 </TextBox>
                                 <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" HorizontalAlignment="Center" Click="btnSearch_Click" Margin="5 5" />
+                          
                             </StackPanel>
 
                         </Grid>
@@ -150,13 +151,16 @@
 
                     </Grid>
                     <Grid Grid.Row="2">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="57" Margin="458,-9,24,-27">
-                            <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="57" Margin="400,-9,24,-27">
+                            <!--<Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
                                 PDF
+                            </Button>-->
+                            <Button  Grid.Column="1" Name="btnExcel" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,12,25,10"  Click="btnExcel_Click" ToolTip="Export to EXCEL" Width="137" Height="35">
+                                EXCEL
                             </Button>
-                            <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                            <!--<Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
                                 PRINT
-                            </Button>
+                            </Button>-->
                         </StackPanel>
 
                     </Grid>

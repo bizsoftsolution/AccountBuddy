@@ -128,7 +128,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.SalesReturns.Remove(d);
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.DELETE);
-                   // Journal_DeleteBySalesReturn(P);
+                    Journal_DeleteBySalesReturn(P);
 //PurchaseReturn_DeleteBySalesReturn(d);
                 }
                 return true;
@@ -236,6 +236,9 @@ namespace AccountBuddy.SL.Hubs
                     d.toCopy<BLL.SalesReturn>(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
+                    P.CGSTPer = (decimal)(d.CGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
+                    P.SGSTPer = (decimal)(d.SGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
+                    P.IGSTPer = (decimal)(d.IGSTAmount * 100) / (d.ItemAmount - d.DiscountAmount);
                     foreach (var d_pod in d.SalesReturnDetails)
                     {
                         BLL.SalesReturnDetail b_pod = new BLL.SalesReturnDetail();
@@ -259,7 +262,7 @@ namespace AccountBuddy.SL.Hubs
                 var d = DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId &&
                 (SID == null || x.LedgerId == SID) && x.SRDate >= dtFrom &&
                 x.SRDate <= dtTo &&
-                (InvoiceNo == "" || x.RefNo == InvoiceNo)).ToList();
+                (InvoiceNo == "" || x.RefNo.Contains(InvoiceNo))).ToList();
                 foreach (var l in d)
                 {
                     P = new BLL.SalesReturn();

@@ -52,6 +52,7 @@ namespace AccountBuddy.BLL
         private StateDetail _State;
         private string _StateCode;
         private string _StateName;
+        private string _PostalCode;
 
         #endregion
 
@@ -406,6 +407,23 @@ namespace AccountBuddy.BLL
                 {
                     _StateName = value;
                     NotifyPropertyChanged(nameof(StateName));
+
+                }
+
+            }
+        }
+        public string PostalCode
+        {
+            get
+            {
+                return _PostalCode;
+            }
+            set
+            {
+                if (_PostalCode != value)
+                {
+                    _PostalCode = value;
+                    NotifyPropertyChanged(nameof(PostalCode));
 
                 }
 
