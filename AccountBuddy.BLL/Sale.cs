@@ -653,9 +653,9 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
-        public static List<BLL.Sale> tolist(int? SID, DateTime dtFrom, DateTime dtTo, string InvoiceNo)
+        public static List<BLL.Sale> tolist(int? SID, DateTime dtFrom, DateTime dtTo, string InvoiceNo, int? TID)
         {
-            return FMCGHubClient.FMCGHub.Invoke<List<BLL.Sale>>("Sale_List", SID, dtFrom, dtTo, InvoiceNo).Result;
+            return FMCGHubClient.FMCGHub.Invoke<List<BLL.Sale>>("Sale_List", SID, dtFrom, dtTo, InvoiceNo, TID).Result;
         }
         #endregion
     }
