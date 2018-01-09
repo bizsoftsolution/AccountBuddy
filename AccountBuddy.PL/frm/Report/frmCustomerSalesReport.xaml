@@ -58,14 +58,14 @@
                                 </materialDesign:HintAssist.Hint>
                             </DatePicker>
                             <StackPanel Orientation="Horizontal" Margin="10">
-                                <RadioButton x:Name="rdbMonthlyWise" Content="Month Wise" VerticalAlignment="Bottom" FontSize="14" IsChecked="True"></RadioButton>
-                                <RadioButton x:Name="rdbYearWise" Content="Year wise" VerticalAlignment="Bottom" FontSize="14"></RadioButton>
+                                <RadioButton x:Name="rdbMonthlyWise" Content="By Month" VerticalAlignment="Bottom" FontSize="14" IsChecked="True"></RadioButton>
+                                <RadioButton x:Name="rdbYearWise" Content="By Year" VerticalAlignment="Bottom" FontSize="14"></RadioButton>
                             </StackPanel>
                             <Button Width="98" Height="30" x:Name="btnSearch" VerticalAlignment="Bottom" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top"  Width="545" Margin="300,0,255,0">
-                            <RadioButton x:Name="rdbCustomerWise" Content="Customer Wise" FontSize="14" Margin="0,5,10,0" IsChecked="True"></RadioButton>
-                            <RadioButton x:Name="rdbProductWise" Content="Product Wise" FontSize="14" Margin="0,5,10,0"></RadioButton>
+                            <RadioButton x:Name="rdbCustomerWise" Content="By Customer" FontSize="14" Margin="0,5,10,0" IsChecked="True"></RadioButton>
+                            <RadioButton x:Name="rdbProductWise" Content="By Product" FontSize="14" Margin="0,5,10,0"></RadioButton>
                             <RadioButton x:Name="rdbCustomerSummary" Content="Customer Summary" FontSize="14" Margin="0,5,10,0"></RadioButton>
                             <RadioButton x:Name="rdbProductSummary" Content="Product Summary" FontSize="14" Margin="0,5,10,0"></RadioButton>
                         </StackPanel>
