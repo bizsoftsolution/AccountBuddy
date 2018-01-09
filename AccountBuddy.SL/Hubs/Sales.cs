@@ -260,7 +260,7 @@ namespace AccountBuddy.SL.Hubs
             return true;
         }
 
-        public List<BLL.Sale> Sale_List(int? SID, DateTime dtFrom, DateTime dtTo, string InvoiceNo)
+        public List<BLL.Sale> Sale_List(int? SID, DateTime dtFrom, DateTime dtTo, string InvoiceNo, int? TID)
         {
             BLL.Sale P = new BLL.Sale();
             List<BLL.Sale> lstPurchase = new List<BLL.Sale>();
@@ -269,6 +269,7 @@ namespace AccountBuddy.SL.Hubs
 
                 var d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId &&
                 (SID == null || x.LedgerId == SID) && x.SalesDate >= dtFrom &&
+                (TID == null || x.TransactionTypeId == TID)&&
                 x.SalesDate <= dtTo &&
                 (InvoiceNo == "" || x.RefNo .Contains(InvoiceNo))).ToList();
                 foreach (var l in d)
@@ -280,7 +281,7 @@ namespace AccountBuddy.SL.Hubs
                     P.SalesDate = l.SalesDate;
                     P.TotalAmount = l.TotalAmount;
                     P.RefNo = l.RefNo;
-
+                    P.TransactionType = l.TransactionType.Type;
                     lstPurchase.Add(P);
 
                 }

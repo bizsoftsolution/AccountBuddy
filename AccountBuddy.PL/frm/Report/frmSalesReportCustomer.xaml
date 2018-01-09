@@ -34,8 +34,16 @@
                         <RowDefinition Height="70"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="311,10,311,0" Height="59" Width="478" >
-                        <DatePicker x:Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="115,20,5,5" Width="183" >
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"  >
+                        <ComboBox x:Name="cmbCustomer" Loaded="cmbCustomer_Loaded" HorizontalAlignment="Center" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" >
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon  Kind="Account" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                    <TextBlock Text="Account Name" FontWeight="Bold"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </ComboBox>
+                        <DatePicker x:Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,20,5,5" Width="183" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal" >
                                     <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
@@ -43,7 +51,7 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </DatePicker>
-                        <DatePicker x:Name="dtpDateTo"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="15,20,5,5" Width="155" >
+                        <DatePicker x:Name="dtpDateTo"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10,20,5,5" Width="155" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal" >
                                     <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
@@ -53,14 +61,7 @@
                         </DatePicker>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top"  Margin="182,10,182,0" Height="60" Width="736" >
-                        <ComboBox x:Name="cmbCustomer" Loaded="cmbCustomer_Loaded" HorizontalAlignment="Center" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" >
-                            <materialDesign:HintAssist.Hint>
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                    <TextBlock Text="Account Name" FontWeight="Bold"/>
-                                </StackPanel>
-                            </materialDesign:HintAssist.Hint>
-                        </ComboBox>
+                      
                         <TextBox Name="txtEntryNo"  Margin="10,15,10,5" FontWeight="Bold" FontSize="14"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="184"   >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
@@ -68,6 +69,14 @@
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                         </TextBox>
+                        <ComboBox x:Name="cmbMode" Loaded="cmbMode_Loaded" HorizontalAlignment="Center" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="185" Margin="0,6" >
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon  Kind="CreditCard" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                    <TextBlock Text="Mode of Payment" FontWeight="Bold"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </ComboBox>
                         <Button Width="171" Height="30" x:Name="btnSearch" VerticalAlignment="Bottom" Content="SEARCH" Click="btnSearch_Click" Margin="5,0,5,5" />
                     </StackPanel>
                     <DataGrid Grid.Row="2" x:Name="dgvDetails" BorderBrush="Black" BorderThickness="1"  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False"  Background="White" Foreground="Black" Margin="20,20,20,80" MouseDoubleClick="dgvDetails_MouseDoubleClick" >
@@ -82,17 +91,18 @@
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Invoice No" FontWeight="Bold" Width="150" Binding="{Binding RefNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                            <DataGridTextColumn Header="Date" TextBlock.TextAlignment="Right" FontWeight="Bold" Width="150" Binding="{Binding SalesDate}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                            <DataGridTextColumn Header="Date" TextBlock.TextAlignment="Right" FontWeight="Bold" Width="150" Binding="{Binding SalesDate, StringFormat={}{0:dd-MM-yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                             <DataGridTextColumn Header="Customer Name" TextBlock.TextAlignment="Right" FontWeight="Bold" Width="350" Binding="{Binding LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                            <DataGridTextColumn Header="Pay Mode" TextBlock.TextAlignment="Right" FontWeight="Bold" Width="200" Binding="{Binding TransactionType}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                             <DataGridTextColumn Header="Bill Amount" TextBlock.TextAlignment="Right" FontWeight="Bold" Width="350" Binding="{Binding TotalAmount, StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
                         <rv:ReportViewer x:Name="rptViewer"/>
                     </WindowsFormsHost>
-                
-                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10" VerticalAlignment="Bottom" HorizontalAlignment="Center">
- <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                        <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
                             PDF
                         </Button>
                         <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
@@ -104,7 +114,7 @@
                     </StackPanel>
 
                 </Grid>
-       
+
             </Grid>
         </Grid>
     </Grid>

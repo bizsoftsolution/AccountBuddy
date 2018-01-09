@@ -47,47 +47,47 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbCustomerName.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList();
             cmbCustomerName.DisplayMemberPath = "LedgerName";
             cmbCustomerName.SelectedValuePath = "Id";
-            dgvReceiptAndPayment.ItemsSource = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
-            LoadReport();
+            //   dgvReceiptAndPayment.ItemsSource = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
+            // LoadReport();
         }
 
-        private void LoadReport()
-        {
-            try
-            {
-                List<BLL.Sale> list = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
-                list = list.Select(x => new BLL.Sale()
-                { LedgerName = x.LedgerName, TotalAmount = x.TotalAmount, SalesDate = x.SalesDate, RefNo = x.RefNo }).ToList();
+        //private void LoadReport()
+        //{
+        //    try
+        //    {
+        //        List<BLL.Sale> list = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
+        //        list = list.Select(x => new BLL.Sale()
+        //        { LedgerName = x.LedgerName, TotalAmount = x.TotalAmount, SalesDate = x.SalesDate, RefNo = x.RefNo }).ToList();
 
-                try
-                {
-                    rptViewer.Reset();
-                    ReportDataSource data = new ReportDataSource("Sales", list);
-                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
-                    rptViewer.LocalReport.DataSources.Add(data);
-                    rptViewer.LocalReport.DataSources.Add(data1);
-                    rptViewer.LocalReport.ReportPath = @"rpt\Transaction\rptSalesReport.rdlc";
+        //        try
+        //        {
+        //            rptViewer.Reset();
+        //            ReportDataSource data = new ReportDataSource("Sales", list);
+        //            ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
+        //            rptViewer.LocalReport.DataSources.Add(data);
+        //            rptViewer.LocalReport.DataSources.Add(data1);
+        //            rptViewer.LocalReport.ReportPath = @"rpt\Transaction\rptSalesReport.rdlc";
 
 
-                    rptViewer.RefreshReport();
+        //            rptViewer.RefreshReport();
 
-                }
-                catch (Exception ex)
-                {
+        //        }
+        //        catch (Exception ex)
+        //        {
 
-                }
-            }
-            catch (Exception ex)
-            {
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
+        //    }
 
-        }
+        //}
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            dgvReceiptAndPayment.ItemsSource = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
-            LoadReport();
+          //  dgvReceiptAndPayment.ItemsSource = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
+          //  LoadReport();
         }
 
         #region Button Events
@@ -221,20 +221,20 @@ namespace AccountBuddy.PL.frm.Transaction
                 App.frmHome.ShowForm(f);
                 System.Windows.Forms.Application.DoEvents();
                 f.data.RefNo = rp.RefNo;
-               
+
                 System.Windows.Forms.Application.DoEvents();
                 f.data.Find();
-               
+
                 f.data.SetAmount();
                 f.btnPrint.IsEnabled = true;
                 this.Close();
 
             }
         }
-  
+
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            LoadReport();
+            //LoadReport();
         }
 
         private void btnExcel_Click(object sender, RoutedEventArgs e)

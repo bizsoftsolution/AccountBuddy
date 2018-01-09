@@ -50,7 +50,7 @@ namespace AccountBuddy.PL.frm.Report
             int? s = null;
             if (cmbCustomer.SelectedValue != null) s = (int)cmbCustomer.SelectedValue;
 
-            dgvDetails.ItemsSource = BLL.Sale.tolist(s, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
+            dgvDetails.ItemsSource = BLL.Sale.tolist(s, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, (int)cmbMode.SelectedValue);
 
 
             LoadReport(dgvDetails.ItemsSource as List<BLL.Sale>, dtpDateFrom.SelectedDate, dtpDateTo.SelectedDate);
@@ -242,7 +242,11 @@ namespace AccountBuddy.PL.frm.Report
             ev.HasMorePages = (m_currentPageIndex < m_streams.Count);
         }
 
-
-
+        private void cmbMode_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbMode.ItemsSource = BLL.TransactionType.toList;
+            cmbMode.DisplayMemberPath = "Type";
+            cmbMode.SelectedValuePath = "Id";
+        }
     }
 }

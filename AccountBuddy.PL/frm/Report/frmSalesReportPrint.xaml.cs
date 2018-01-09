@@ -24,6 +24,7 @@ namespace AccountBuddy.PL.frm.Report
         public frmSalesReportPrint()
         {
             InitializeComponent();
+            RptViewer.SetDisplayMode(DisplayMode.PrintLayout);
         }
         public void LoadReport(List<BLL.Sale> s, DateTime dtFrom, DateTime dtTo)
         {
