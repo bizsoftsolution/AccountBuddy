@@ -66,7 +66,7 @@ namespace AccountBuddy.PL.frm.Report
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
                 rptViewer.LocalReport.DataSources.Add(data);
                 rptViewer.LocalReport.DataSources.Add(data1);
-                rptViewer.LocalReport.ReportPath = @"rpt\Report\rpCustomerSalesReport.rdlc";
+                rptViewer.LocalReport.ReportPath = @"rpt\Report\rptSalesReportNew.rdlc";
 
                 ReportParameter[] par = new ReportParameter[2];
                 par[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.ToString());

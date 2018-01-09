@@ -219,11 +219,7 @@
                                                 <Report:frmSalesReportCustomer/>
                                             </Menu:NavMenuItem.Content>
                                         </Menu:NavMenuItem>
-                                        <Menu:NavMenuItem MenuName="Tax Report" FormName="Tax Report">
-                                            <Menu:NavMenuItem.Content>
-                                                <Report:frmTaxReport/>
-                                            </Menu:NavMenuItem.Content>
-                                        </Menu:NavMenuItem>
+                                        
                                     </ListBox>
                                     </Expander>
                                 </StackPanel>
