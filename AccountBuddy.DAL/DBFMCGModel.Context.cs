@@ -94,5 +94,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<AppMaster> AppMasters { get; set; }
         public virtual DbSet<AppConnectionLoginSystem> AppConnectionLoginSystems { get; set; }
         public virtual DbSet<AppConnectionType> AppConnectionTypes { get; set; }
+        public virtual DbSet<Product_Spec_Detail> Product_Spec_Detail { get; set; }
+        public virtual DbSet<Product_Spec_Master> Product_Spec_Master { get; set; }
     }
 }

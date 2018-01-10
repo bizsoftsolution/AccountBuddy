@@ -188,6 +188,11 @@
         <AssociationConnector Association="DBFMCGModel.FK_AppConnectionLoginSystem_AppMaster" />
         <EntityTypeShape EntityType="DBFMCGModel.AppConnectionType" Width="1.5" PointX="0.75" PointY="8.75" />
         <AssociationConnector Association="DBFMCGModel.FK_AppConnection_AppConnectionType" />
+        <EntityTypeShape EntityType="DBFMCGModel.Product_Spec_Detail" Width="1.5" PointX="16" PointY="33.25" />
+        <EntityTypeShape EntityType="DBFMCGModel.Product_Spec_Master" Width="1.5" PointX="12.75" PointY="34.625" />
+        <AssociationConnector Association="DBFMCGModel.FK_Product_Spec_Detail_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_Product_Spec_Master_Product" />
+        <AssociationConnector Association="DBFMCGModel.FK_Product_Spec_Detail_Product_Spec_Master" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

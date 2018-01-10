@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DBFMCGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBFMCGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccountGroup">
           <Key>
             <PropertyRef Name="Id" />
@@ -404,6 +404,22 @@
           <Property Name="MaxSellingRate" Type="money" Nullable="false" />
           <Property Name="MRP" Type="money" Nullable="false" />
           <Property Name="ProductImage" Type="image" />
+        </EntityType>
+        <EntityType Name="Product_Spec_Detail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_Spec_Id" Type="bigint" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="Qty" Type="int" />
+        </EntityType>
+        <EntityType Name="Product_Spec_Master">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductDetail">
           <Key>
@@ -1391,6 +1407,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_Spec_Detail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Product_Spec_Detail" Type="Self.Product_Spec_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Detail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Spec_Detail_Product_Spec_Master">
+          <End Role="Product_Spec_Master" Type="Self.Product_Spec_Master" Multiplicity="0..1" />
+          <End Role="Product_Spec_Detail" Type="Self.Product_Spec_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Spec_Master">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Detail">
+              <PropertyRef Name="Product_Spec_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Spec_Master_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product_Spec_Master" Type="Self.Product_Spec_Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Master">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Product_StockGroup">
           <End Role="StockGroup" Type="Self.StockGroup" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -2313,6 +2365,8 @@
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentDetail" EntityType="Self.PaymentDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Spec_Detail" EntityType="Self.Product_Spec_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Spec_Master" EntityType="Self.Product_Spec_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductDetail" EntityType="Self.ProductDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
@@ -2508,6 +2562,18 @@
           <AssociationSet Name="FK_PaymentDetail_Payment" Association="Self.FK_PaymentDetail_Payment">
             <End Role="Payment" EntitySet="Payment" />
             <End Role="PaymentDetail" EntitySet="PaymentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Spec_Detail_Product" Association="Self.FK_Product_Spec_Detail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Spec_Detail" EntitySet="Product_Spec_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Spec_Detail_Product_Spec_Master" Association="Self.FK_Product_Spec_Detail_Product_Spec_Master">
+            <End Role="Product_Spec_Master" EntitySet="Product_Spec_Master" />
+            <End Role="Product_Spec_Detail" EntitySet="Product_Spec_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Spec_Master_Product" Association="Self.FK_Product_Spec_Master_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Spec_Master" EntitySet="Product_Spec_Master" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_StockGroup" Association="Self.FK_Product_StockGroup">
             <End Role="StockGroup" EntitySet="StockGroup" />
@@ -3336,6 +3402,20 @@
             <End Role="AppConnectionType" EntitySet="AppConnectionTypes" />
             <End Role="AppConnection" EntitySet="AppConnections" />
           </AssociationSet>
+          <EntitySet Name="Product_Spec_Detail" EntityType="DBFMCGModel.Product_Spec_Detail" />
+          <EntitySet Name="Product_Spec_Master" EntityType="DBFMCGModel.Product_Spec_Master" />
+          <AssociationSet Name="FK_Product_Spec_Detail_Product" Association="DBFMCGModel.FK_Product_Spec_Detail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Spec_Detail" EntitySet="Product_Spec_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Spec_Master_Product" Association="DBFMCGModel.FK_Product_Spec_Master_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Spec_Master" EntitySet="Product_Spec_Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Spec_Detail_Product_Spec_Master" Association="DBFMCGModel.FK_Product_Spec_Detail_Product_Spec_Master">
+            <End Role="Product_Spec_Master" EntitySet="Product_Spec_Master" />
+            <End Role="Product_Spec_Detail" EntitySet="Product_Spec_Detail" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -3725,6 +3805,8 @@
           <NavigationProperty Name="StockOutDetails" Relationship="DBFMCGModel.FK_StockOutDetail_Product" FromRole="Product" ToRole="StockOutDetail" />
           <NavigationProperty Name="StockSeperatedDetails" Relationship="DBFMCGModel.FK_StockSeperatedDetail_Product" FromRole="Product" ToRole="StockSeperatedDetail" />
           <NavigationProperty Name="PurchaseRequestDetails" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_Product" FromRole="Product" ToRole="PurchaseRequestDetail" />
+          <NavigationProperty Name="Product_Spec_Detail" Relationship="DBFMCGModel.FK_Product_Spec_Detail_Product" FromRole="Product" ToRole="Product_Spec_Detail" />
+          <NavigationProperty Name="Product_Spec_Master" Relationship="DBFMCGModel.FK_Product_Spec_Master_Product" FromRole="Product" ToRole="Product_Spec_Master" />
         </EntityType>
         <EntityType Name="ProductDetail">
           <Key>
@@ -5839,6 +5921,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Product_Spec_Detail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Spec_Id" Type="Int64" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Qty" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_Product_Spec_Detail_Product" FromRole="Product_Spec_Detail" ToRole="Product" />
+          <NavigationProperty Name="Product_Spec_Master" Relationship="DBFMCGModel.FK_Product_Spec_Detail_Product_Spec_Master" FromRole="Product_Spec_Detail" ToRole="Product_Spec_Master" />
+        </EntityType>
+        <EntityType Name="Product_Spec_Master">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_Product_Spec_Master_Product" FromRole="Product_Spec_Master" ToRole="Product" />
+          <NavigationProperty Name="Product_Spec_Detail" Relationship="DBFMCGModel.FK_Product_Spec_Detail_Product_Spec_Master" FromRole="Product_Spec_Master" ToRole="Product_Spec_Detail" />
+        </EntityType>
+        <Association Name="FK_Product_Spec_Detail_Product">
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Product_Spec_Detail" Role="Product_Spec_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Detail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Spec_Master_Product">
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DBFMCGModel.Product_Spec_Master" Role="Product_Spec_Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Master">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Spec_Detail_Product_Spec_Master">
+          <End Type="DBFMCGModel.Product_Spec_Master" Role="Product_Spec_Master" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Product_Spec_Detail" Role="Product_Spec_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Spec_Master">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Detail">
+              <PropertyRef Name="Product_Spec_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6816,6 +6954,24 @@
             <EntityTypeMapping TypeName="DBFMCGModel.AppConnectionType">
               <MappingFragment StoreEntitySet="AppConnectionType">
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Spec_Detail">
+            <EntityTypeMapping TypeName="DBFMCGModel.Product_Spec_Detail">
+              <MappingFragment StoreEntitySet="Product_Spec_Detail">
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Product_Spec_Id" ColumnName="Product_Spec_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Spec_Master">
+            <EntityTypeMapping TypeName="DBFMCGModel.Product_Spec_Master">
+              <MappingFragment StoreEntitySet="Product_Spec_Master">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

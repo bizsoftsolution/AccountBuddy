@@ -361,6 +361,27 @@ namespace AccountBuddy.BLL
         }
         #endregion
 
+        #region Product_Spec_master
+        public static Product_Spec_master ToMap(this Product_Spec_master S, Product_Spec_master D)
+        {
+            D.Id = S.Id;
+            D.ProductId = S.ProductId;
+
+            return D;
+        }
+        public static Product_Spec_Detail ToMap(this Product_Spec_Detail S, Product_Spec_Detail D)
+        {
+            D.Product = S.Product;
+            D.Id = S.Id;
+          
+            D.ProductId = S.ProductId;
+            D.ProductName = S.ProductName;
+            D.Qty = S.Qty;
+            D.Product_Spec_Id = S.Product_Spec_Id;
+            D.SNo = S.SNo;
+            return D;
+        }
+        #endregion
         #region PurchaseOrder
         public static PurchaseOrder ToMap(this PurchaseOrder S, PurchaseOrder D)
         {

@@ -214,6 +214,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Master\frmProductSpecification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Master\frmStaff.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -617,6 +621,9 @@
     </Compile>
     <Compile Include="frm\Master\frmProducts.xaml.cs">
       <DependentUpon>frmProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmProductSpecification.xaml.cs">
+      <DependentUpon>frmProductSpecification.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmStaff.xaml.cs">
       <DependentUpon>frmStaff.xaml</DependentUpon>

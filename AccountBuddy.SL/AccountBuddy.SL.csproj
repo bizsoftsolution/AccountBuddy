@@ -988,6 +988,7 @@
     <Compile Include="Hubs\Payment.cs" />
     <Compile Include="Hubs\POPending.cs" />
     <Compile Include="Hubs\Product.cs" />
+    <Compile Include="Hubs\Product_Spec_master.cs" />
     <Compile Include="Hubs\ProfitLoss.cs" />
     <Compile Include="Hubs\Purchase.cs" />
     <Compile Include="Hubs\PurchaseOrder.cs" />

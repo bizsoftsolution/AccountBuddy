@@ -31,6 +31,8 @@ namespace AccountBuddy.DAL
             this.StockOutDetails = new HashSet<StockOutDetail>();
             this.StockSeperatedDetails = new HashSet<StockSeperatedDetail>();
             this.PurchaseRequestDetails = new HashSet<PurchaseRequestDetail>();
+            this.Product_Spec_Detail = new HashSet<Product_Spec_Detail>();
+            this.Product_Spec_Master = new HashSet<Product_Spec_Master>();
         }
     
         public int Id { get; set; }
@@ -75,5 +77,9 @@ namespace AccountBuddy.DAL
         public virtual ICollection<StockSeperatedDetail> StockSeperatedDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product_Spec_Detail> Product_Spec_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product_Spec_Master> Product_Spec_Master { get; set; }
     }
 }

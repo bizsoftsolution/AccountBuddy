@@ -153,7 +153,7 @@ namespace AccountBuddy.SL.Hubs
                 u = new SLUser() { CallerConnectionId = Context.ConnectionId, UserId = 0, CompanyId = 0 };
                 UserList.Add(u);
             }
-                     
+                      
             DAL.AppConnection d = new DAL.AppConnection() {
                 ConnectionId = Context.ConnectionId,
                 ConnectedAt =  DateTime.Now                
