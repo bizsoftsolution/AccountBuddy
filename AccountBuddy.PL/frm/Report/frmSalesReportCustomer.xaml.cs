@@ -47,14 +47,20 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            int? s = null;
-            if (cmbCustomer.SelectedValue != null) s = (int)cmbCustomer.SelectedValue;
+            try
+            {
+                int? s = null;
+                int? m = null;
+                if (cmbCustomer.SelectedValue != null) s = (int)cmbCustomer.SelectedValue;
+                if (cmbMode.SelectedValue != null) s = (int)cmbMode.SelectedValue;
 
-            dgvDetails.ItemsSource = BLL.Sale.tolist(s, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, (int)cmbMode.SelectedValue);
+                dgvDetails.ItemsSource = BLL.Sale.tolist(s, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, m);
 
 
-            LoadReport(dgvDetails.ItemsSource as List<BLL.Sale>, dtpDateFrom.SelectedDate, dtpDateTo.SelectedDate);
-
+                LoadReport(dgvDetails.ItemsSource as List<BLL.Sale>, dtpDateFrom.SelectedDate, dtpDateTo.SelectedDate);
+            }
+            catch(Exception ex)
+            { }
         }
 
         private void LoadReport(List<Sale> list, DateTime? selectedDate1, DateTime? selectedDate2)

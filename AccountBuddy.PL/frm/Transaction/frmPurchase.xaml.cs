@@ -231,9 +231,17 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbSupplier_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key).ToList();
-            cmbSupplier.DisplayMemberPath = "LedgerName";
-            cmbSupplier.SelectedValuePath = "Id";
+            try
+            {
+                cmbSupplier.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key).ToList();
+                cmbSupplier.DisplayMemberPath = "LedgerName";
+                cmbSupplier.SelectedValuePath = "Id";
+            }
+            catch(Exception ex)
+            {
+                
+            }
+            
         }
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
