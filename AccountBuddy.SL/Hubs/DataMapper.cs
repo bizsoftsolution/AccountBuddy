@@ -802,6 +802,7 @@ namespace AccountBuddy.SL.Hubs
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
+            D.SalesId = S.SalesId;
             return D;
         }
         public static DAL.SalesDetail ToMap(this BLL.SalesDetail S, DAL.SalesDetail D)
@@ -814,6 +815,7 @@ namespace AccountBuddy.SL.Hubs
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
+            D.SalesId = S.SalesId;
             return D;
         }
         #endregion

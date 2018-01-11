@@ -161,11 +161,11 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                if (_toList == null)
+                if (_toList == null||_toList.Count()==0)
                 {
                     try
                     {
-                        _toList = new ObservableCollection<Product_Spec_master>(FMCGHubClient.HubCaller.Invoke<List<Product_Spec_master>>("Product_Spec_master_List").Result);
+                        _toList = new ObservableCollection<Product_Spec_master>(FMCGHubClient.HubCaller.Invoke<List<Product_Spec_master>>("List").Result);
                        
                     }
                     catch (Exception ex)
@@ -319,24 +319,13 @@ namespace AccountBuddy.BLL
              
             }
         }
-
-        #endregion
-        
-        public static List<Product_Spec_master> ToList()
+        public static void Init()
         {
-            List<Product_Spec_master> rv = new List<Product_Spec_master>();
-            try
-            {
-                rv = FMCGHubClient.HubCaller.Invoke<List<Product_Spec_master>>("Product_Spec_master_List").Result;
-            }
-            catch (Exception ex)
-            {
-                Common.AppLib.WriteLog(string.Format("Product_Spec_master_List List= {0}-{1}", ex.Message, ex.InnerException));
-            }
-            return rv;
-
+            _toList = null;
         }
+        #endregion
 
+       
         private void SetProduct()
         {
             var p = Product ?? new Product();

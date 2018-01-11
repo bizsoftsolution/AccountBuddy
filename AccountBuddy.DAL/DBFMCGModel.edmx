@@ -410,9 +410,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Product_Spec_Id" Type="bigint" />
-          <Property Name="ProductId" Type="int" />
-          <Property Name="Qty" Type="int" />
+          <Property Name="Product_Spec_Id" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Product_Spec_Master">
           <Key>
@@ -420,6 +420,24 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_Spec_Process">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Qty" Type="int" />
+        </EntityType>
+        <EntityType Name="Product_Spec_Process_Detail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PSId" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductDetail">
           <Key>
@@ -1408,7 +1426,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_Spec_Detail_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Product_Spec_Detail" Type="Self.Product_Spec_Detail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -1420,7 +1438,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_Spec_Detail_Product_Spec_Master">
-          <End Role="Product_Spec_Master" Type="Self.Product_Spec_Master" Multiplicity="0..1" />
+          <End Role="Product_Spec_Master" Type="Self.Product_Spec_Master" Multiplicity="1" />
           <End Role="Product_Spec_Detail" Type="Self.Product_Spec_Detail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product_Spec_Master">
@@ -1439,6 +1457,42 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Product_Spec_Master">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Spec_Process_Detail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product_Spec_Process_Detail" Type="Self.Product_Spec_Process_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Process_Detail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Spec_Process_Detail_Product_Spec_Process">
+          <End Role="Product_Spec_Process" Type="Self.Product_Spec_Process" Multiplicity="1" />
+          <End Role="Product_Spec_Process_Detail" Type="Self.Product_Spec_Process_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Spec_Process">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Process_Detail">
+              <PropertyRef Name="PSId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Spec_Process_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product_Spec_Process" Type="Self.Product_Spec_Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Process">
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2367,6 +2421,8 @@
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product_Spec_Detail" EntityType="Self.Product_Spec_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product_Spec_Master" EntityType="Self.Product_Spec_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Spec_Process" EntityType="Self.Product_Spec_Process" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Spec_Process_Detail" EntityType="Self.Product_Spec_Process_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductDetail" EntityType="Self.ProductDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
@@ -2574,6 +2630,18 @@
           <AssociationSet Name="FK_Product_Spec_Master_Product" Association="Self.FK_Product_Spec_Master_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="Product_Spec_Master" EntitySet="Product_Spec_Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Spec_Process_Detail_Product" Association="Self.FK_Product_Spec_Process_Detail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Spec_Process_Detail" EntitySet="Product_Spec_Process_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Spec_Process_Detail_Product_Spec_Process" Association="Self.FK_Product_Spec_Process_Detail_Product_Spec_Process">
+            <End Role="Product_Spec_Process" EntitySet="Product_Spec_Process" />
+            <End Role="Product_Spec_Process_Detail" EntitySet="Product_Spec_Process_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Spec_Process_Product" Association="Self.FK_Product_Spec_Process_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Spec_Process" EntitySet="Product_Spec_Process" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_StockGroup" Association="Self.FK_Product_StockGroup">
             <End Role="StockGroup" EntitySet="StockGroup" />
@@ -3404,6 +3472,8 @@
           </AssociationSet>
           <EntitySet Name="Product_Spec_Detail" EntityType="DBFMCGModel.Product_Spec_Detail" />
           <EntitySet Name="Product_Spec_Master" EntityType="DBFMCGModel.Product_Spec_Master" />
+          <EntitySet Name="Product_Spec_Process" EntityType="DBFMCGModel.Product_Spec_Process" />
+          <EntitySet Name="Product_Spec_Process_Detail" EntityType="DBFMCGModel.Product_Spec_Process_Detail" />
           <AssociationSet Name="FK_Product_Spec_Detail_Product" Association="DBFMCGModel.FK_Product_Spec_Detail_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="Product_Spec_Detail" EntitySet="Product_Spec_Detail" />
@@ -3412,11 +3482,23 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Product_Spec_Master" EntitySet="Product_Spec_Master" />
           </AssociationSet>
+          <AssociationSet Name="FK_Product_Spec_Process_Detail_Product" Association="DBFMCGModel.FK_Product_Spec_Process_Detail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Spec_Process_Detail" EntitySet="Product_Spec_Process_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Spec_Process_Product" Association="DBFMCGModel.FK_Product_Spec_Process_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Spec_Process" EntitySet="Product_Spec_Process" />
+          </AssociationSet>
           <AssociationSet Name="FK_Product_Spec_Detail_Product_Spec_Master" Association="DBFMCGModel.FK_Product_Spec_Detail_Product_Spec_Master">
             <End Role="Product_Spec_Master" EntitySet="Product_Spec_Master" />
             <End Role="Product_Spec_Detail" EntitySet="Product_Spec_Detail" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="FK_Product_Spec_Process_Detail_Product_Spec_Process" Association="DBFMCGModel.FK_Product_Spec_Process_Detail_Product_Spec_Process">
+            <End Role="Product_Spec_Process" EntitySet="Product_Spec_Process" />
+            <End Role="Product_Spec_Process_Detail" EntitySet="Product_Spec_Process_Detail" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
             <PropertyRef Name="Id" />
@@ -3807,7 +3889,9 @@
           <NavigationProperty Name="PurchaseRequestDetails" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_Product" FromRole="Product" ToRole="PurchaseRequestDetail" />
           <NavigationProperty Name="Product_Spec_Detail" Relationship="DBFMCGModel.FK_Product_Spec_Detail_Product" FromRole="Product" ToRole="Product_Spec_Detail" />
           <NavigationProperty Name="Product_Spec_Master" Relationship="DBFMCGModel.FK_Product_Spec_Master_Product" FromRole="Product" ToRole="Product_Spec_Master" />
-        </EntityType>
+          <NavigationProperty Name="Product_Spec_Process_Detail" Relationship="DBFMCGModel.FK_Product_Spec_Process_Detail_Product" FromRole="Product" ToRole="Product_Spec_Process_Detail" />
+          <NavigationProperty Name="Product_Spec_Process" Relationship="DBFMCGModel.FK_Product_Spec_Process_Product" FromRole="Product" ToRole="Product_Spec_Process" />
+          </EntityType>
         <EntityType Name="ProductDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -5926,9 +6010,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Product_Spec_Id" Type="Int64" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="Qty" Type="Int32" />
+          <Property Name="Product_Spec_Id" Type="Int64" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_Product_Spec_Detail_Product" FromRole="Product_Spec_Detail" ToRole="Product" />
           <NavigationProperty Name="Product_Spec_Master" Relationship="DBFMCGModel.FK_Product_Spec_Detail_Product_Spec_Master" FromRole="Product_Spec_Detail" ToRole="Product_Spec_Master" />
         </EntityType>
@@ -5941,8 +6025,30 @@
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_Product_Spec_Master_Product" FromRole="Product_Spec_Master" ToRole="Product" />
           <NavigationProperty Name="Product_Spec_Detail" Relationship="DBFMCGModel.FK_Product_Spec_Detail_Product_Spec_Master" FromRole="Product_Spec_Master" ToRole="Product_Spec_Detail" />
         </EntityType>
+        <EntityType Name="Product_Spec_Process">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_Product_Spec_Process_Product" FromRole="Product_Spec_Process" ToRole="Product" />
+          <NavigationProperty Name="Product_Spec_Process_Detail" Relationship="DBFMCGModel.FK_Product_Spec_Process_Detail_Product_Spec_Process" FromRole="Product_Spec_Process" ToRole="Product_Spec_Process_Detail" />
+        </EntityType>
+        <EntityType Name="Product_Spec_Process_Detail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PSId" Type="Int64" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_Product_Spec_Process_Detail_Product" FromRole="Product_Spec_Process_Detail" ToRole="Product" />
+          <NavigationProperty Name="Product_Spec_Process" Relationship="DBFMCGModel.FK_Product_Spec_Process_Detail_Product_Spec_Process" FromRole="Product_Spec_Process_Detail" ToRole="Product_Spec_Process" />
+        </EntityType>
         <Association Name="FK_Product_Spec_Detail_Product">
-          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
           <End Type="DBFMCGModel.Product_Spec_Detail" Role="Product_Spec_Detail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -5965,8 +6071,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_Spec_Process_Detail_Product">
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DBFMCGModel.Product_Spec_Process_Detail" Role="Product_Spec_Process_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Process_Detail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Spec_Process_Product">
+          <End Type="DBFMCGModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DBFMCGModel.Product_Spec_Process" Role="Product_Spec_Process" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Process">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Product_Spec_Detail_Product_Spec_Master">
-          <End Type="DBFMCGModel.Product_Spec_Master" Role="Product_Spec_Master" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Product_Spec_Master" Role="Product_Spec_Master" Multiplicity="1" />
           <End Type="DBFMCGModel.Product_Spec_Detail" Role="Product_Spec_Detail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product_Spec_Master">
@@ -5974,6 +6104,18 @@
             </Principal>
             <Dependent Role="Product_Spec_Detail">
               <PropertyRef Name="Product_Spec_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Spec_Process_Detail_Product_Spec_Process">
+          <End Type="DBFMCGModel.Product_Spec_Process" Role="Product_Spec_Process" Multiplicity="1" />
+          <End Type="DBFMCGModel.Product_Spec_Process_Detail" Role="Product_Spec_Process_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Spec_Process">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product_Spec_Process_Detail">
+              <PropertyRef Name="PSId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6972,6 +7114,26 @@
             <EntityTypeMapping TypeName="DBFMCGModel.Product_Spec_Master">
               <MappingFragment StoreEntitySet="Product_Spec_Master">
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Spec_Process">
+            <EntityTypeMapping TypeName="DBFMCGModel.Product_Spec_Process">
+              <MappingFragment StoreEntitySet="Product_Spec_Process">
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Spec_Process_Detail">
+            <EntityTypeMapping TypeName="DBFMCGModel.Product_Spec_Process_Detail">
+              <MappingFragment StoreEntitySet="Product_Spec_Process_Detail">
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="PSId" ColumnName="PSId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

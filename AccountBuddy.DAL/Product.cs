@@ -33,6 +33,8 @@ namespace AccountBuddy.DAL
             this.PurchaseRequestDetails = new HashSet<PurchaseRequestDetail>();
             this.Product_Spec_Detail = new HashSet<Product_Spec_Detail>();
             this.Product_Spec_Master = new HashSet<Product_Spec_Master>();
+            this.Product_Spec_Process_Detail = new HashSet<Product_Spec_Process_Detail>();
+            this.Product_Spec_Process = new HashSet<Product_Spec_Process>();
         }
     
         public int Id { get; set; }
@@ -81,5 +83,9 @@ namespace AccountBuddy.DAL
         public virtual ICollection<Product_Spec_Detail> Product_Spec_Detail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product_Spec_Master> Product_Spec_Master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product_Spec_Process_Detail> Product_Spec_Process_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product_Spec_Process> Product_Spec_Process { get; set; }
     }
 }

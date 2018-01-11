@@ -313,11 +313,9 @@ namespace AccountBuddy.BLL
             D.IsReadOnly = S.IsReadOnly;
             return D;
         }
-
-
+       
         #region Transaction 
-
-
+        
         #region PurchaseRequesting
         public static PurchaseRequest ToMap(this PurchaseRequest S, PurchaseRequest D)
         {
@@ -366,12 +364,13 @@ namespace AccountBuddy.BLL
         {
             D.Id = S.Id;
             D.ProductId = S.ProductId;
-
+            D.PDetail = S.PDetail;
+            D.PDetails = S.PDetails;
             return D;
         }
         public static Product_Spec_Detail ToMap(this Product_Spec_Detail S, Product_Spec_Detail D)
         {
-            D.Product = S.Product;
+            //D.Product = S.Product;
             D.Id = S.Id;
           
             D.ProductId = S.ProductId;
@@ -382,6 +381,31 @@ namespace AccountBuddy.BLL
             return D;
         }
         #endregion
+
+        #region Product_Spec_Process
+        public static Product_Spec_Process ToMap(this Product_Spec_Process S, Product_Spec_Process D)
+        {
+            D.Id = S.Id;
+            D.ProductId = S.ProductId;
+            D.PDetail = S.PDetail;
+            D.PDetails = S.PDetails;
+            D.Date = S.Date;
+            D.Qty = S.Qty;
+            return D;
+        }
+        public static Product_Spec_Process_Detail ToMap(this Product_Spec_Process_Detail S, Product_Spec_Process_Detail D)
+        {
+            D.Id = S.Id;
+
+            D.ProductId = S.ProductId;
+            D.ProductName = S.ProductName;
+            D.Qty = S.Qty;
+            D.PSId = S.PSId;
+            D.SNo = S.SNo;
+            return D;
+        }
+        #endregion
+
         #region PurchaseOrder
         public static PurchaseOrder ToMap(this PurchaseOrder S, PurchaseOrder D)
         {
@@ -574,8 +598,7 @@ namespace AccountBuddy.BLL
             return D;
         }
         #endregion
-
-
+        
         #region Sales
         public static Sale ToMap(this Sale S, Sale D)
         {

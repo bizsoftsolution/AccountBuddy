@@ -43,7 +43,8 @@ namespace AccountBuddy.SL.Hubs
                     //}
 
                     decimal rd = P.PDetails.Select(X => X.Product_Spec_Id).FirstOrDefault();
-                    DB.Product_Spec_Detail.RemoveRange(d.Product_Spec_Detail.Where(x => x.Product_Spec_Id == rd).ToList());
+                    var de = d.Product_Spec_Detail.Where(x => x.Product_Spec_Id == rd).ToList();
+                    DB.Product_Spec_Detail.RemoveRange(de);
 
                     P.ToCopy(d);
                     foreach (var b_Pd in P.PDetails)
@@ -136,7 +137,7 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.Product_Spec_master> List()
         {
-            return DB.Product_Spec_Master.Where(x => x.Product.StockGroup.CompanyDetail.Id == Caller.UnderCompanyId).ToList()
+            return DB.Product_Spec_Master.Where(x => x.Product.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                                       .Select(x => Product_Spec_master_DALtoBLL(x)).ToList();
 
         }

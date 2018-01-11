@@ -12,14 +12,14 @@ namespace AccountBuddy.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Product_Spec_Detail
+    public partial class Product_Spec_Process_Detail
     {
-        public long Id { get; set; }
-        public long Product_Spec_Id { get; set; }
+        public int Id { get; set; }
+        public long PSId { get; set; }
         public int ProductId { get; set; }
         public int Qty { get; set; }
     
         public virtual Product Product { get; set; }
-        public virtual Product_Spec_Master Product_Spec_Master { get; set; }
+        public virtual Product_Spec_Process Product_Spec_Process { get; set; }
     }
 }

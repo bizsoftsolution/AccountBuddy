@@ -167,7 +167,6 @@ namespace AccountBuddy.SL.Hubs
                         d_pod.ToMap(b_pod);
                         P.SDetails.Add(b_pod);
                         b_pod.SNo = ++i;
-
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }

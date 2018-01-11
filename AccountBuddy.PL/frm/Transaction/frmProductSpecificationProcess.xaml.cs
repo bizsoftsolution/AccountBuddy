@@ -15,25 +15,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AccountBuddy.PL.frm.Master
+namespace AccountBuddy.PL.frm.Transaction
 {
     /// <summary>
-    /// Interaction logic for frmProductSpecification.xaml
+    /// Interaction logic for frmProductSpecificationProcess.xaml
     /// </summary>
-    public partial class frmProductSpecification : UserControl
+    public partial class frmProductSpecificationProcess : UserControl
     {
-        public AccountBuddy.BLL.Product_Spec_master data = new BLL.Product_Spec_master();
 
-        public string FormName = "Product Specification";
+        public AccountBuddy.BLL.Product_Spec_Process data = new BLL.Product_Spec_Process();
 
-        public frmProductSpecification()
+        public string FormName = "Product Specification Process";
+
+        public frmProductSpecificationProcess()
         {
             InitializeComponent();
             this.DataContext = data;
 
-
             data.Clear();
-         
         }
 
         #region  button Events
@@ -60,7 +59,7 @@ namespace AccountBuddy.PL.frm.Master
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             data.Clear();
-         
+
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -74,7 +73,6 @@ namespace AccountBuddy.PL.frm.Master
                     {
                         MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                         data.Clear();
-                        Grid_Refresh();
                     }
                 }
             }
@@ -83,11 +81,11 @@ namespace AccountBuddy.PL.frm.Master
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmPurchase))
+            if (data.Id == 0 && !BLL.UserAccount.AllowInsert(Forms.frmProductSpecificationProcess))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyInsert, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmPurchase))
+            else if (data.Id != 0 && !BLL.UserAccount.AllowUpdate(Forms.frmProductSpecificationProcess))
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -109,16 +107,15 @@ namespace AccountBuddy.PL.frm.Master
                 {
                     MessageBox.Show(string.Format(Message.PL.Saved_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
-                    Grid_Refresh();
                 }
                 else
                 {
                     MessageBox.Show("Could Not Save Record", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    Grid_Refresh();
+
                 }
             }
-            
-            
+
+
         }
 
         private void OnDelete(object sender, RoutedEventArgs e)
@@ -132,16 +129,13 @@ namespace AccountBuddy.PL.frm.Master
 
         }
 
-        private void btnPrint_Click(object sender, RoutedEventArgs e)
-        {
-            print();
-        }
+
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-           // frmPurchaseSearch f = new frmPurchaseSearch();
-           // f.ShowDialog();
-           // f.Close();
+            // frmPurchaseSearch f = new frmPurchaseSearch();
+            // f.ShowDialog();
+            // f.Close();
         }
 
         #endregion
@@ -152,7 +146,7 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                BLL.Product_Spec_Detail pod = dgvDetails.SelectedItem as BLL.Product_Spec_Detail;
+                BLL.Product_Spec_Process_Detail pod = dgvDetails.SelectedItem as BLL.Product_Spec_Process_Detail;
                 pod.ToMap(data.PDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
@@ -180,42 +174,48 @@ namespace AccountBuddy.PL.frm.Master
         #endregion
 
         #region Methods
-        void print()
-        {
-            frm.Print.frmQuickPurchase f = new Print.frmQuickPurchase();
-           // f.LoadReport(data);
-            f.ShowDialog();
-        }
 
         void Clear()
         {
             data.Clear();
-            btnSave.IsEnabled = true;
-            btnDelete.IsEnabled = true;
+            Button_Visibility();
         }
         #endregion
 
         #region Combo Box Load
 
-
-      
-
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbItem.ItemsSource = Product.toList.ToList();
-            cmbItem.DisplayMemberPath = "ProductName";
-            cmbItem.SelectedValuePath = "Id";
+            try
+            {
+                var p = Product_Spec_master.toList.Select(x => x.Product).ToList();
+                List<Product> s = new List<Product>();
+                foreach (var p1 in p)
+                {
+                    BLL.Product s1 = new Product();
+                    s1.ProductName = p1.ProductName;
+                    s1.Id = p1.Id;
+                    s.Add(s1);
+                }
+                cmbItem.ItemsSource = s;
+                cmbItem.DisplayMemberPath = "ProductName";
+                cmbItemMaster.SelectedValuePath = "Id";
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
 
-       
+
         #endregion
 
         #region textchanged
 
-       
 
-    
-        
+
+
+
         private void txtQty_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -226,7 +226,7 @@ namespace AccountBuddy.PL.frm.Master
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
-        
+
         #endregion
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -234,12 +234,8 @@ namespace AccountBuddy.PL.frm.Master
             try
             {
                 LoadWindow();
-                dgvProduct.ItemsSource = BLL.Product_Spec_master.toList;
-                
-                CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).Filter = Product_Filter;
-                CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).SortDescriptions.Add(new System.ComponentModel.SortDescription(nameof(data.ProductName), System.ComponentModel.ListSortDirection.Ascending));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.AppLib.WriteLog(ex);
             }
@@ -247,6 +243,11 @@ namespace AccountBuddy.PL.frm.Master
         }
 
         private void LoadWindow()
+        {
+            Button_Visibility();
+        }
+
+        private void Button_Visibility()
         {
             btnSave.Visibility = (BLL.Product_Spec_master.UserPermission.AllowInsert || BLL.Product_Spec_master.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.Product_Spec_master.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
@@ -257,139 +258,35 @@ namespace AccountBuddy.PL.frm.Master
         {
             try
             {
-                BLL.Product_Spec_Detail pod = dgvDetails.SelectedItem as BLL.Product_Spec_Detail;
+                BLL.Product_Spec_Process_Detail pod = dgvDetails.SelectedItem as BLL.Product_Spec_Process_Detail;
                 pod.ToMap(data.PDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
 
+
         private void cmbItemMaster_Loaded(object sender, RoutedEventArgs e)
-        {
-            cmbItemMaster.ItemsSource = Product.toList.ToList();
-            cmbItemMaster.DisplayMemberPath = "ProductName";
-            cmbItemMaster.SelectedValuePath = "Id";
-        }
-
-        private void dgvProduct_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-          
-                try
-                {
-                    var d = dgvProduct.SelectedItem as BLL.Product_Spec_master;
-                    if (d != null)
-                    {
-                        data.Find(d.Id);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Common.AppLib.WriteLog(ex);
-                }
-            
-
-        }
-        private bool Product_Filter(object obj)
-        {
-            bool RValue = false;
-         
-            if (!string.IsNullOrEmpty(txtSearch.Text))
-            {
-                string strSearch = cbxCase.IsChecked == true ? txtSearch.Text : txtSearch.Text.ToLower();
-                string strValue = "";
-
-                var d1 = obj as BLL.Product_Spec_master;
-
-                foreach (var p in d1.GetType().GetProperties())
-                {
-                    if (p.Name.ToLower().Contains("id") ||
-                        p.GetValue(d1) == null ||
-                        p.PropertyType.Namespace != "System"
-                            ) continue;
-                    strValue = p.GetValue(d1).ToString();
-                    if (cbxCase.IsChecked == false)
-                    {
-                        strValue = strValue.ToLower();
-                    }
-                    if (rptStartWith.IsChecked == true && strValue.StartsWith(strSearch))
-                    {
-                        RValue = true;
-                        break;
-                    }
-                    else if (rptContain.IsChecked == true && strValue.Contains(strSearch))
-                    {
-                        RValue = true;
-                        break;
-                    }
-                    else if (rptEndWith.IsChecked == true && strValue.EndsWith(strSearch))
-                    {
-                        RValue = true;
-                        break;
-                    }
-                }
-
-           
-            }
-            else
-            {
-                RValue = true;
-            }
-            return RValue;
-        }
-        private void Grid_Refresh()
         {
             try
             {
-                if (dgvProduct != null) CollectionViewSource.GetDefaultView(dgvProduct.ItemsSource).Refresh();
-
-                
+                var p = Product_Spec_master.toList.Select(x => x.PDetails).ToList();
+                List<Product> s = new List<Product>();
+                foreach (var p1 in p)
+                {
+                    BLL.Product s1 = new Product();
+                    s1.ProductName = p1.FirstOrDefault().ProductName;
+                    s1.Id = p1.FirstOrDefault().ProductId;
+                    s.Add(s1);
+                }
+                cmbItemMaster.ItemsSource = s;
+                cmbItemMaster.DisplayMemberPath = "ProductName";
+                cmbItemMaster.SelectedValuePath = "Id";
             }
-            catch (Exception ex) { Common.AppLib.WriteLog(ex); };
-
-        }
-
-        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Grid_Refresh();
-        }
-
-        private void cbxCase_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Grid_Refresh();
-        }
-
-        private void cbxCase_Checked(object sender, RoutedEventArgs e)
-        {
-            Grid_Refresh();
-        }
-
-        private void rptStartWith_Checked(object sender, RoutedEventArgs e)
-        {
-            Grid_Refresh();
-        }
-
-        private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Grid_Refresh();
-        }
-
-        private void rptContain_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Grid_Refresh();
-        }
-
-        private void rptContain_Checked(object sender, RoutedEventArgs e)
-        {
-            Grid_Refresh();
-        }
-
-        private void rptEndWith_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Grid_Refresh();
-        }
-
-        private void rptEndWith_Checked(object sender, RoutedEventArgs e)
-        {
-            Grid_Refresh();
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
     }
 }
+

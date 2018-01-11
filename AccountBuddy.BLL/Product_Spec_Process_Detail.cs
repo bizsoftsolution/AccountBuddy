@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AccountBuddy.BLL
 {
-    public class Product_Spec_Detail : INotifyPropertyChanged
+    public class Product_Spec_Process_Detail : INotifyPropertyChanged
     {
 
         #region Field
         private long _Id;
         private int _ProductId;
-        private long _Product_Spec_Id;
+        private long _PSId;
         private int _Qty;
         private int _SNo;
         private string _ProductName;
@@ -51,18 +51,18 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public long Product_Spec_Id
+        public long PSId
         {
             get
             {
-                return _Product_Spec_Id;
+                return _PSId;
             }
             set
             {
-                if (_Product_Spec_Id != value)
+                if (_PSId != value)
                 {
-                    _Product_Spec_Id = value;
-                    NotifyPropertyChanged(nameof(Product_Spec_Id));
+                    _PSId = value;
+                    NotifyPropertyChanged(nameof(PSId));
                 }
             }
         }
@@ -152,5 +152,4 @@ namespace AccountBuddy.BLL
             //  DiscountAmount = p.DiscountAmount;
         }
     }
-
 }
