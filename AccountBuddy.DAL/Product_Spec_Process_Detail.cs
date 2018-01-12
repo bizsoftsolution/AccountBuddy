@@ -14,7 +14,7 @@ namespace AccountBuddy.DAL
     
     public partial class Product_Spec_Process_Detail
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public long PSId { get; set; }
         public int ProductId { get; set; }
         public int Qty { get; set; }

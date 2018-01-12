@@ -23,11 +23,11 @@ namespace AccountBuddy.SL.Hubs
                 {
                     d = new DAL.Product_Spec_Process();
                     DB.Product_Spec_Process.Add(d);
-                    P.ToCopy(d);
+                    P.ToMap(d);
                     foreach (var b_pod in P.PDetails)
                     {
                         DAL.Product_Spec_Process_Detail d_pod = new DAL.Product_Spec_Process_Detail();
-                        b_pod.ToCopy(d_pod);
+                        b_pod.ToMap(d_pod);
                         d.Product_Spec_Process_Detail.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -45,7 +45,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = P.PDetails.Select(X => X.PSId).FirstOrDefault();
                     DB.Product_Spec_Process_Detail.RemoveRange(d.Product_Spec_Process_Detail.Where(x => x.PSId == rd).ToList());
 
-                    P.ToCopy(d);
+                    P.ToMap(d);
                     foreach (var b_Pd in P.PDetails)
                     {
                         // DAL.PurchaseDetail d_Pd = d.PurchaseDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
@@ -54,7 +54,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.Product_Spec_Process_Detail d_Pd = new DAL.Product_Spec_Process_Detail();
                         d.Product_Spec_Process_Detail.Add(d_Pd);
                         //  }
-                        b_Pd.ToCopy(d_Pd);
+                        b_Pd.ToMap(d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -79,14 +79,14 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToCopy(P);
+                    d.ToMap(P);
                     P.ProductName = (d.Product ?? DB.Products.Find(d.ProductId) ?? new DAL.Product()).ProductName;
                
                     int i = 0;
                     foreach (var d_pod in d.Product_Spec_Process_Detail)
                     {
                         BLL.Product_Spec_Process_Detail b_pod = new BLL.Product_Spec_Process_Detail();
-                        d_pod.ToCopy(b_pod);
+                        d_pod.ToMap(b_pod);
                         P.PDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -122,10 +122,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.Product_Spec_Process Product_Spec_Process_DALtoBLL(DAL.Product_Spec_Process d)
         {
-            BLL.Product_Spec_Process P = d.ToCopy(new BLL.Product_Spec_Process());
+            BLL.Product_Spec_Process P = d.ToMap(new BLL.Product_Spec_Process());
             foreach (var d_Pd in d.Product_Spec_Process_Detail)
             {
-                P.PDetails.Add(d_Pd.ToCopy(new Product_Spec_Process_Detail()));
+                P.PDetails.Add(d_Pd.ToMap(new Product_Spec_Process_Detail()));
             }
             return P;
         }
@@ -140,12 +140,12 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToCopy(P);
+                    d.ToMap(P);
                     P.ProductName = (d.Product ?? DB.Products.Find(d.ProductId) ?? new DAL.Product()).ProductName;
                     foreach (var d_pod in d.Product_Spec_Process_Detail)
                     {
                         BLL.Product_Spec_Process_Detail b_pod = new BLL.Product_Spec_Process_Detail();
-                        d_pod.ToCopy(b_pod);
+                        d_pod.ToMap(b_pod);
                         P.PDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                           }

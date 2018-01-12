@@ -901,7 +901,7 @@ namespace AccountBuddy.SL.Hubs
         public static DAL.JobOrderIssue ToMap(this BLL.JobOrderIssue S, DAL.JobOrderIssue D)
         {
             D.Id = S.Id;
-            D.DiscountAmount = S.DiscountAmount??0;
+            D.DiscountAmount = S.DiscountAmount ?? 0;
             D.Extras = S.Extras ?? 0;
             D.GSTAmount = S.GSTAmount ?? 0;
             D.ItemAmount = S.ItemAmount ?? 0;
@@ -1427,6 +1427,81 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
         #endregion
+
+        #region Product_Spec_master
+        public static BLL.Product_Spec_master ToMap(this DAL.Product_Spec_Master S, BLL.Product_Spec_master D)
+        {
+            D.Id = S.Id;
+            D.ProductId = S.ProductId;
+
+            return D;
+        }
+        public static DAL.Product_Spec_Master ToMap(this BLL.Product_Spec_master S, DAL.Product_Spec_Master D)
+        {
+            D.Id = S.Id;
+            D.ProductId = S.ProductId;
+            
+            return D;
+        }
+
+        public static BLL.Product_Spec_Detail ToMap(this DAL.Product_Spec_Detail S, BLL.Product_Spec_Detail D)
+        {
+            D.Id = S.Id;
+            D.ProductId = S.ProductId;
+            D.Product_Spec_Id = S.Product_Spec_Id;
+            D.Qty = S.Qty;
+            return D;
+        }
+        public static DAL.Product_Spec_Detail ToMap(this BLL.Product_Spec_Detail S, DAL.Product_Spec_Detail D)
+        {
+            D.Id = S.Id;
+            D.ProductId = S.ProductId;
+            D.Product_Spec_Id = S.Product_Spec_Id;
+            D.Qty = S.Qty;
+            return D;
+        }
+
+        #endregion
+
+        #region Product_Spec_Process
+        public static BLL.Product_Spec_Process ToMap(this DAL.Product_Spec_Process S, BLL.Product_Spec_Process D)
+        {
+            D.Id = S.Id;
+            D.ProductId = S.ProductId;
+            D.Date = S.Date;
+            D.Qty = S.Qty.Value;
+            return D;
+        }
+        public static DAL.Product_Spec_Process ToMap(this BLL.Product_Spec_Process S, DAL.Product_Spec_Process D)
+        {
+            D.Id = S.Id;
+            D.ProductId = S.ProductId;
+            S.Qty = S.Qty;
+            S.Date = S.Date;
+            return D;
+        }
+
+        public static BLL.Product_Spec_Process_Detail ToMap(this DAL.Product_Spec_Process_Detail S, BLL.Product_Spec_Process_Detail D)
+        {
+            D.Id = S.Id;
+            D.ProductId = S.ProductId;
+            D.PSId = S.PSId;
+            D.Qty = S.Qty;
+           
+            return D;
+        }
+        public static DAL.Product_Spec_Process_Detail ToMap(this BLL.Product_Spec_Process_Detail S, DAL.Product_Spec_Process_Detail D)
+        {
+            D.Id = S.Id;
+            D.ProductId = S.ProductId;
+            D.PSId = S.PSId;
+            D.Qty = S.Qty;
+
+            return D;
+        }
+
+        #endregion
+
 
         #endregion
 

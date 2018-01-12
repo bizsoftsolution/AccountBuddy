@@ -40,12 +40,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.SalesOrder();
                     DB.SalesOrders.Add(d);
 
-                    SO.ToCopy(d);
+                    AppLib.ToMap(SO, d);
 
                     foreach (var b_pod in SO.SODetails)
                     {
                         DAL.SalesOrderDetail d_pod = new DAL.SalesOrderDetail();
-                        b_pod.ToCopy(d_pod);
+                        AppLib.ToMap(b_pod, d_pod);
                         d.SalesOrderDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -62,7 +62,7 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = SO.SODetails.Select(X => X.SOId).FirstOrDefault().Value;
                     DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails.Where(x => x.SOId == rd).ToList());
 
-                    SO.ToCopy(d);
+                    AppLib.ToMap(SO, d);
                     foreach (var b_SOd in SO.SODetails)
                     {
                         //  DAL.SalesOrderDetail d_SOd = d.SalesOrderDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
@@ -71,7 +71,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.SalesOrderDetail d_SOd = new DAL.SalesOrderDetail();
                         d.SalesOrderDetails.Add(d_SOd);
                         //  }
-                        b_SOd.ToCopy(d_SOd);
+                        AppLib.ToMap(b_SOd, d_SOd);
                     }
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
@@ -145,14 +145,14 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToCopy(SO);
+                    AppLib.ToMap(d, SO);
                     SO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
 
                     foreach (var d_pod in d.SalesOrderDetails)
                     {
                         BLL.SalesOrderDetail b_pod = new BLL.SalesOrderDetail();
-                        d_pod.ToCopy(b_pod);
+                        AppLib.ToMap(d_pod, b_pod);
                         b_pod.SNo = ++i;
                         SO.SODetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -198,10 +198,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.SalesOrder SalesOrder_DALtoBLL(DAL.SalesOrder d)
         {
-            BLL.SalesOrder SO = d.ToCopy(new BLL.SalesOrder());
+            BLL.SalesOrder SO = AppLib.ToMap(d, new BLL.SalesOrder());
             foreach (var d_SOd in d.SalesOrderDetails)
             {
-                SO.SODetails.Add(d_SOd.ToCopy(new BLL.SalesOrderDetail()));
+                SO.SODetails.Add(AppLib.ToMap(d_SOd, new BLL.SalesOrderDetail()));
             }
             SO.Status = d.SalesOrderDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
             return SO;
@@ -283,7 +283,7 @@ namespace AccountBuddy.SL.Hubs
                         foreach (var b_pod in P.PurchaseOrderDetails)
                         {
                             DAL.SalesOrderDetail d_pod = new DAL.SalesOrderDetail();
-                            b_pod.ToCopy(d_pod);
+                            b_pod.ToMap(d_pod);
                             s.SalesOrderDetails.Add(d_pod);
                         }
                         DB.SaveChanges();

@@ -23,11 +23,11 @@ namespace AccountBuddy.SL.Hubs
                 {
                     d = new DAL.Product_Spec_Master();
                     DB.Product_Spec_Master.Add(d);
-                    P.ToCopy(d);
+                    AppLib.ToMap(P, d);
                     foreach (var b_pod in P.PDetails)
                     {
                         DAL.Product_Spec_Detail d_pod = new DAL.Product_Spec_Detail();
-                        b_pod.ToCopy(d_pod);
+                        AppLib.ToMap(b_pod, d_pod);
                         d.Product_Spec_Detail.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -46,7 +46,7 @@ namespace AccountBuddy.SL.Hubs
                     var de = d.Product_Spec_Detail.Where(x => x.Product_Spec_Id == rd).ToList();
                     DB.Product_Spec_Detail.RemoveRange(de);
 
-                    P.ToCopy(d);
+                    AppLib.ToMap(P, d);
                     foreach (var b_Pd in P.PDetails)
                     {
                         // DAL.PurchaseDetail d_Pd = d.PurchaseDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
@@ -55,7 +55,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.Product_Spec_Detail d_Pd = new DAL.Product_Spec_Detail();
                         d.Product_Spec_Detail.Add(d_Pd);
                         //  }
-                        b_Pd.ToCopy(d_Pd);
+                        AppLib.ToMap(b_Pd, d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -83,14 +83,14 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToCopy(P);
+                    AppLib.ToMap(d, P);
                     P.ProductName = (d.Product ?? DB.Products.Find(d.ProductId) ?? new DAL.Product()).ProductName;
 
                     int i = 0;
                     foreach (var d_pod in d.Product_Spec_Detail)
                     {
                         BLL.Product_Spec_Detail b_pod = new BLL.Product_Spec_Detail();
-                        d_pod.ToCopy(b_pod);
+                        AppLib.ToMap(d_pod, b_pod);
                         P.PDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -125,13 +125,13 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.Product_Spec_master Product_Spec_master_DALtoBLL(DAL.Product_Spec_Master d)
         {
-            BLL.Product_Spec_master P = d.ToCopy(new BLL.Product_Spec_master());
+            BLL.Product_Spec_master P = AppLib.ToMap(d, new BLL.Product_Spec_master());
             DAL.Product t= DB.Products.Where(x => x.Id == d.ProductId).FirstOrDefault();
             P.ProductName =t.ProductName;
-       
+            P.Product = Product_DALtoBLL(t);
             foreach (var d_Pd in d.Product_Spec_Detail)
-            {
-                P.PDetails.Add(d_Pd.ToCopy(new BLL.Product_Spec_Detail()));
+            { 
+                P.PDetails.Add(d_Pd.ToMap(new BLL.Product_Spec_Detail()));
             }
             return P;
         }

@@ -40,12 +40,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.StockSeparated();
                     DB.StockSeparateds.Add(d);
 
-                    SO.ToCopy(d);
+                    AppLib.ToMap(SO, d);
 
                     foreach (var b_pod in SO.SSDetails)
                     {
                         DAL.StockSeperatedDetail d_pod = new DAL.StockSeperatedDetail();
-                        b_pod.ToCopy(d_pod);
+                        AppLib.ToMap(b_pod, d_pod);
                         d.StockSeperatedDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -64,7 +64,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.StockSeperatedDetails.RemoveRange(d.StockSeperatedDetails.Where(x => x.SSId == rd).ToList());
 
 
-                    SO.ToCopy(d);
+                    AppLib.ToMap(SO, d);
                     foreach (var b_SOd in SO.SSDetails)
                     {
                         //DAL.StockSeperatedDetail d_SOd = d.StockSeperatedDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
@@ -73,7 +73,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.StockSeperatedDetail d_SOd = new DAL.StockSeperatedDetail();
                         d.StockSeperatedDetails.Add(d_SOd);
                         //}
-                        b_SOd.ToCopy(d_SOd);
+                        AppLib.ToMap(b_SOd, d_SOd);
                     }
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
@@ -99,13 +99,13 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToCopy(SO);
+                    AppLib.ToMap(d, SO);
                     SO.StaffName = (d.Staff ?? DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
                     int i = 0;
                     foreach (var d_pod in d.StockSeperatedDetails)
                     {
                         BLL.StockSeperatedDetail b_pod = new BLL.StockSeperatedDetail();
-                        d_pod.ToCopy(b_pod);
+                        AppLib.ToMap(d_pod, b_pod);
                         SO.SSDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
@@ -150,10 +150,10 @@ namespace AccountBuddy.SL.Hubs
         }
         public BLL.StockSeperated StockSeperated_DALtoBLL(DAL.StockSeparated d)
         {
-            BLL.StockSeperated SO = d.ToCopy(new BLL.StockSeperated());
+            BLL.StockSeperated SO = AppLib.ToMap(d, new BLL.StockSeperated());
             foreach (var d_SOd in d.StockSeperatedDetails)
             {
-                SO.SSDetails.Add(d_SOd.ToCopy(new BLL.StockSeperatedDetail()));
+                SO.SSDetails.Add(AppLib.ToMap(d_SOd, new BLL.StockSeperatedDetail()));
             }
             //SO.Status = d.StockSeperatedDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
             return SO;
@@ -183,12 +183,12 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToCopy(P);
+                    AppLib.ToMap(d, P);
                     P.StaffName = (d.Staff ?? DB.Staffs.Find(d.StaffId) ?? new DAL.Staff()).Ledger.LedgerName;
                     foreach (var d_pod in d.StockSeperatedDetails)
                     {
                         BLL.StockSeperatedDetail b_pod = new BLL.StockSeperatedDetail();
-                        d_pod.ToCopy(b_pod);
+                        AppLib.ToMap(d_pod, b_pod);
                         P.SSDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
