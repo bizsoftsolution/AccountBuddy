@@ -387,16 +387,15 @@ namespace AccountBuddy.BLL
         {
             D.Id = S.Id;
             D.ProductId = S.ProductId;
-            D.PDetail = S.PDetail;
-            D.PDetails = S.PDetails;
             D.Date = S.Date;
             D.Qty = S.Qty;
+            D.PDetail = S.PDetail;
+            D.PDetails = S.PDetails;
             return D;
         }
         public static Product_Spec_Process_Detail ToMap(this Product_Spec_Process_Detail S, Product_Spec_Process_Detail D)
         {
             D.Id = S.Id;
-
             D.ProductId = S.ProductId;
             D.ProductName = S.ProductName;
             D.Qty = S.Qty;
@@ -662,7 +661,8 @@ namespace AccountBuddy.BLL
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
-
+            D.TransactionTypeId = S.TransactionTypeId;
+            D.TransactionType = S.TransactionType;
             return D;
         }
         public static SalesReturnDetail ToMap(this SalesReturnDetail S, SalesReturnDetail D)
@@ -844,7 +844,7 @@ namespace AccountBuddy.BLL
             D.RefNo = S.RefNo;
 
             D.DiscountAmount = S.DiscountAmount;
-            D.ExtraAmount = S.ExtraAmount;
+            D.Extras = S.Extras;
             D.GSTAmount = S.GSTAmount;
             D.ItemAmount = S.ItemAmount;
             D.TotalAmount = S.TotalAmount;

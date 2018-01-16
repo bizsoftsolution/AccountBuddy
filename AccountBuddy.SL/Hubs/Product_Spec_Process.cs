@@ -142,10 +142,12 @@ namespace AccountBuddy.SL.Hubs
 
                     d.ToMap(P);
                     P.ProductName = (d.Product ?? DB.Products.Find(d.ProductId) ?? new DAL.Product()).ProductName;
+                    int i = 0;
                     foreach (var d_pod in d.Product_Spec_Process_Detail)
                     {
                         BLL.Product_Spec_Process_Detail b_pod = new BLL.Product_Spec_Process_Detail();
                         d_pod.ToMap(b_pod);
+                        b_pod.SNo = ++i;
                         P.PDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                           }
@@ -157,7 +159,7 @@ namespace AccountBuddy.SL.Hubs
         }
         public List<BLL.Product_Spec_Process> PSList()
         {
-            return DB.Product_Spec_Process.Where(x => x.Product.StockGroup.CompanyDetail.Id == Caller.UnderCompanyId).ToList()
+            return DB.Product_Spec_Process.Where(x => x.Product.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                                       .Select(x => Product_Spec_Process_DALtoBLL(x)).ToList();
         }
 
@@ -180,7 +182,7 @@ namespace AccountBuddy.SL.Hubs
                     rp.Id = l.Id;
                     rp.ProductId = (int)l.ProductId;
                     rp.ProductName = string.Format("{0}", l.Product.ProductName);
-
+                    rp.Qty = l.Qty;
                     lstPurchase.Add(rp);
                     lstPurchase = lstPurchase.OrderBy(x => x.Date).ToList();
                 }

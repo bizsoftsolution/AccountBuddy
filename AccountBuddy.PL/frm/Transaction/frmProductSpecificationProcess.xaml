@@ -48,9 +48,9 @@
                 </Grid.RowDefinitions>
                 <!--#region  Master -->
                 <Grid Grid.Row="0">
-                    <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" VerticalAlignment="Top"  Margin="10,10,0,0">
+                    <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0">
 
-                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding Date}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,18,0,0"  FontWeight="Bold" Height="29" Width="100" />
+                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding Date,Mode=TwoWay}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="5,18,0,0"  FontWeight="Bold" Height="28" Width="117" />
                         <ComboBox x:Name="cmbItemMaster" Loaded="cmbItemMaster_Loaded" Margin="20,10,10,10" Text="{Binding ProductName}" SelectedValue="{Binding ProductId, Mode=TwoWay}" SelectedItem="{Binding Product, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="371" Height="46" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
@@ -64,16 +64,16 @@
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <TextBox x:Name="txtQtyMaster"  FontSize="16" Text="{Binding Qty, Mode=TwoWay}" Width="120" materialDesign:HintAssist.Hint="Quantity" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10" FontWeight="Bold"  IsReadOnly="True" MaxLength="10"/>
+                        <TextBox x:Name="txtQtyMaster"  FontSize="16" Text="{Binding Qty, Mode=TwoWay}" Width="114" materialDesign:HintAssist.Hint="Quantity" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10" FontWeight="Bold"  IsReadOnly="False" MaxLength="10"/>
 
                     </StackPanel>
 
                 </Grid>
                 <!--#endregion-->
                 <!--#region  Details-->
-                <Grid Grid.Row="1" Margin="0,0,0,15">
-                    <StackPanel  x:Name="stkPurchaseDetails" Orientation="Horizontal" VerticalAlignment="Top" Margin="100,0,0,0">
-                        <ComboBox x:Name="cmbItem" Loaded="cmbItem_Loaded" Margin="50,0,10,0" Text="{Binding PDetail.ProductName}" SelectedValue="{Binding PDetail.ProductId, Mode=TwoWay}" SelectedItem="{Binding PDetail.Product, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="368" >
+                <Grid Grid.Row="1" >
+                    <StackPanel  x:Name="stkPurchaseDetails" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <ComboBox x:Name="cmbItem" Loaded="cmbItem_Loaded" Margin="5,0,10,0" Text="{Binding PDetail.ProductName}" SelectedValue="{Binding PDetail.ProductId, Mode=TwoWay}" SelectedItem="{Binding PDetail.Product, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="368" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
@@ -114,7 +114,7 @@
                         <RowDefinition Height="200"></RowDefinition>
                         <RowDefinition Height="150"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="dgvDetails" Grid.Column="0"   FontSize="16" Grid.Row="0"  MouseDoubleClick="dgvDetails_MouseDoubleClick" ItemsSource="{Binding PDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" HorizontalAlignment="Center" Width="750" >
+                    <DataGrid x:Name="dgvDetails" Grid.Column="0"   FontSize="16" Grid.Row="0"  MouseDoubleClick="dgvDetails_MouseDoubleClick" ItemsSource="{Binding PDetails}"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" HorizontalAlignment="Center" Width="650" >
 
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">

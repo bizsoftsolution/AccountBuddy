@@ -23,7 +23,7 @@ namespace AccountBuddy.DAL
         public long Id { get; set; }
         public System.DateTime Date { get; set; }
         public int ProductId { get; set; }
-        public Nullable<int> Qty { get; set; }
+        public int Qty { get; set; }
     
         public virtual Product Product { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -133,9 +133,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-            // frmPurchaseSearch f = new frmPurchaseSearch();
-            // f.ShowDialog();
-            // f.Close();
+             frmPSSearch f = new frmPSSearch();
+             f.ShowDialog();
+             f.Close();
         }
 
         #endregion
@@ -199,7 +199,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 }
                 cmbItem.ItemsSource = s;
                 cmbItem.DisplayMemberPath = "ProductName";
-                cmbItemMaster.SelectedValuePath = "Id";
+                cmbItem.SelectedValuePath = "Id";
             }
             catch (Exception ex)
             {
@@ -267,15 +267,34 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbItemMaster_Loaded(object sender, RoutedEventArgs e)
         {
+            //    try
+            //    {
+            //        var p = Product_Spec_master.toList.Select(x => x.PDetails).ToList();
+            //        List<Product> s = new List<Product>();
+            //        foreach (var p1 in p)
+            //        {
+            //            BLL.Product s1 = new Product();
+            //            s1.ProductName = p1.FirstOrDefault().ProductName;
+            //            s1.Id = p1.FirstOrDefault().ProductId;
+            //            s.Add(s1);
+            //        }
+            //        cmbItemMaster.ItemsSource = s;
+            //        cmbItemMaster.DisplayMemberPath = "ProductName";
+            //        cmbItemMaster.SelectedValuePath = "Id";
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Common.AppLib.WriteLog(ex);
+            //    }
             try
             {
-                var p = Product_Spec_master.toList.Select(x => x.PDetails).ToList();
+                var p = Product_Spec_master.toList.Select(x => x.Product).ToList();
                 List<Product> s = new List<Product>();
                 foreach (var p1 in p)
                 {
                     BLL.Product s1 = new Product();
-                    s1.ProductName = p1.FirstOrDefault().ProductName;
-                    s1.Id = p1.FirstOrDefault().ProductId;
+                    s1.ProductName = p1.ProductName;
+                    s1.Id = p1.Id;
                     s.Add(s1);
                 }
                 cmbItemMaster.ItemsSource = s;
@@ -286,6 +305,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 Common.AppLib.WriteLog(ex);
             }
+
         }
     }
 }

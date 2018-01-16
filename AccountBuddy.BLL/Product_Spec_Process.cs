@@ -204,7 +204,9 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                return FMCGHubClient.HubCaller.Invoke<bool>("Product_Spec_Process_Save", this).Result;
+                BLL.Product_Spec_Process s = new Product_Spec_Process();
+                this.ToMap(s);
+                return FMCGHubClient.HubCaller.Invoke<bool>("Product_Spec_Process_Save", s).Result;
             }
             catch (Exception ex)
             {
@@ -233,7 +235,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Product_Spec_Process po = FMCGHubClient.HubCaller.Invoke<Product_Spec_Process>("Purchase_Find", Id).Result;
+                Product_Spec_Process po = FMCGHubClient.HubCaller.Invoke<Product_Spec_Process>("Product_Spec_Process_FindById", Id).Result;
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.PDetails = po.PDetails;
@@ -288,7 +290,7 @@ namespace AccountBuddy.BLL
                     pod = new Product_Spec_Process_Detail();
                     PDetails.Add(pod);
                 }
-                PDetail.Qty = pod.Qty * Qty;
+                PDetail.Qty = PDetail.Qty * Qty;
                 PDetail.ToMap(pod);
                 ClearDetail();
 
@@ -367,6 +369,7 @@ namespace AccountBuddy.BLL
 
             ProductName = p.ProductName;
             Qty = p.Id != 0 ? 1 : 0;
+            
         }
 
         #endregion

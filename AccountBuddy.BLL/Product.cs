@@ -121,7 +121,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return (OpeningStock + (PQty ?? 0) + (SRQty ?? 0) + (SInQty ?? 0) + (JRQty ?? 0) + (SSQty ?? 0)) - ((SQty ?? 0) + (PRQty ?? 0) + (SOutQty ?? 0) + (JOQty ?? 0) + (SPQty ?? 0));
+                return (OpeningStock + (PQty ?? 0) + (SRQty ?? 0) + (SInQty ?? 0) + (JRQty ?? 0) + (SSQty ?? 0)+(PSpecP??0)) - ((SQty ?? 0) + (PRQty ?? 0) + (SOutQty ?? 0) + (JOQty ?? 0) + (SPQty ?? 0)+(PSpec??0));
             }
         }
         public double StockLeftForSales
@@ -334,6 +334,8 @@ namespace AccountBuddy.BLL
        
         private double? _SRQtyForSales;
         private double? _SRQtyNotForSales;
+        private double? _PSpec;
+        private double? _PSpecP;
 
         #endregion
 
@@ -700,6 +702,35 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public double? PSpec {
+            get
+            {
+                return _PSpec;
+            }
+            set
+            {
+                if(_PSpec!=value)
+                {
+                    _PSpec = value;
+                    NotifyPropertyChanged(nameof(PSpec));
+                }
+            }
+        }
+        public double? PSpecP
+        {
+            get
+            {
+                return _PSpecP;
+            }
+            set
+            {
+                if (_PSpecP != value)
+                {
+                    _PSpecP = value;
+                    NotifyPropertyChanged(nameof(PSpecP));
+                }
+            }
+        }
         #endregion
 
         #region Property  Changed Event
