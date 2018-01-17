@@ -68,7 +68,7 @@ namespace AccountBuddy.SL.Hubs
                     //    if (b_SOd == null) d.JobOrderReceivedDetails.Remove(d_SOd);
                     //}
 
-                    decimal rd = SO.JRDetails.Select(X => X.JRId).FirstOrDefault().Value;
+                    decimal rd = SO.JRDetails.Select(X => X.JRId).FirstOrDefault();
                     DB.JobOrderReceivedDetails.RemoveRange(d.JobOrderReceivedDetails.Where(x => x.JRId == rd).ToList());
 
                     SO.ToMap( d);

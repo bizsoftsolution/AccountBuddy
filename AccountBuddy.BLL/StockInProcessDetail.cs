@@ -12,7 +12,7 @@ namespace AccountBuddy.BLL
 
         #region Field
         private long _Id;
-        private long? _SPId;
+        private long _SPId;
         private int? _ProductId;
         private int? _UOMId;
         private double? _Quantity;
@@ -78,7 +78,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public long? SPId
+        public long SPId
         {
             get
             {

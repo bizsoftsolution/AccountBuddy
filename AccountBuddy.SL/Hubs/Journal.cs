@@ -44,12 +44,12 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.Journal();
                     DB.Journals.Add(d);
 
-                    AppLib.ToMap(PO, d);
+                    PO.ToMap(d);
 
                     foreach (var b_pod in PO.JDetails)
                     {
                         DAL.JournalDetail d_pod = new DAL.JournalDetail();
-                        AppLib.ToMap(b_pod, d_pod);
+                        b_pod.ToMap(d_pod);
                         d.JournalDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -69,7 +69,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.JournalDetails.RemoveRange(d.JournalDetails.Where(x => x.JournalId == pd).ToList());
 
 
-                    AppLib.ToMap(PO, d);
+                    PO.ToMap(d);
 
                     foreach (var b_pod in PO.JDetails)
                     {
@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.JournalDetail d_pod = new DAL.JournalDetail();
                         d.JournalDetails.Add(d_pod);
                         //}
-                        AppLib.ToMap(b_pod, d_pod);
+                        b_pod.ToMap(d_pod);
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
@@ -103,12 +103,12 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    AppLib.ToMap(d, PO);
+                    d.ToMap(PO);
                     int i = 0;
                     foreach (var d_pod in d.JournalDetails)
                     {
                         BLL.JournalDetail b_pod = new BLL.JournalDetail();
-                        AppLib.ToMap(d_pod, b_pod);
+                        d_pod.ToMap(b_pod);
                         PO.JDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
@@ -130,11 +130,11 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    AppLib.ToMap(d, PO);
+                    d.ToMap(PO);
                     foreach (var d_pod in d.JournalDetails)
                     {
                         BLL.JournalDetail b_pod = new BLL.JournalDetail();
-                        AppLib.ToMap(d_pod, b_pod);
+                        d_pod.ToMap(b_pod);
                         PO.JDetails.Add(b_pod);
                         b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
@@ -171,7 +171,7 @@ namespace AccountBuddy.SL.Hubs
             BLL.Journal J = d.ToMap(new BLL.Journal());
             foreach (var d_Jd in d.JournalDetails)
             {
-                J.JDetails.Add(AppLib.ToMap(d_Jd, new BLL.JournalDetail()));
+                J.JDetails.Add(d_Jd.ToMap( new BLL.JournalDetail()));
             }
             return J;
         }

@@ -20,7 +20,7 @@ namespace AccountBuddy.SL.Hubs
                                      .OrderByDescending(x => x.EntryNo)
                                      .FirstOrDefault();
 
-            if (d != null) No = Convert.ToInt64(d.EntryNo.Substring(Prefix.Length ), 16);
+            if (d != null) No = Convert.ToInt64(d.EntryNo.Substring(Prefix.Length), 16);
 
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
@@ -37,13 +37,11 @@ namespace AccountBuddy.SL.Hubs
 
                     d = new DAL.Receipt();
                     DB.Receipts.Add(d);
-
                     PO.ToMap(d);
-
                     foreach (var b_pod in PO.RDetails)
                     {
                         DAL.ReceiptDetail d_pod = new DAL.ReceiptDetail();
-                        b_pod.ToMap( d_pod);
+                        b_pod.ToMap(d_pod);
                         d.ReceiptDetails.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -69,14 +67,14 @@ namespace AccountBuddy.SL.Hubs
                         //if (d_pod == null)
                         // {
                         DAL.ReceiptDetail d_pod = new DAL.ReceiptDetail();
-                            d.ReceiptDetails.Add(d_pod);
+                        d.ReceiptDetails.Add(d_pod);
                         //  }
-                        b_pod.ToMap( d_pod);
+                        b_pod.ToMap(d_pod);
                     }
                     DB.SaveChanges();
-                   
+
                     LogDetailStore(PO, LogDetailType.UPDATE);
-                    
+
                 }
                 if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).Receipt_RefNoRefresh(Receipt_NewRefNo());
                 Journal_SaveByReceipt(PO);
@@ -97,7 +95,7 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap( PO);
+                    d.ToMap(PO);
                     PO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
                     foreach (var d_pod in d.ReceiptDetails)
@@ -106,7 +104,7 @@ namespace AccountBuddy.SL.Hubs
                         d_pod.ToMap(b_pod);
                         PO.RDetails.Add(b_pod);
                         b_pod.SNo = ++i;
-                       
+
                         b_pod.LedgerId = d_pod.LedgerId;
                         b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     }
@@ -145,7 +143,7 @@ namespace AccountBuddy.SL.Hubs
             BLL.Receipt R = d.ToMap(new BLL.Receipt());
             foreach (var d_Pd in d.ReceiptDetails)
             {
-                R.RDetails.Add(d.ToMap( new BLL.ReceiptDetail()));
+                R.RDetails.Add(d.ToMap(new BLL.ReceiptDetail()));
             }
             return R;
         }
@@ -167,7 +165,7 @@ namespace AccountBuddy.SL.Hubs
 
         public List<BLL.Receipt> Receipt_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
         {
-            
+
             List<BLL.Receipt> lstReceipt = new List<BLL.Receipt>();
             BLL.Receipt rp = new BLL.Receipt();
             try

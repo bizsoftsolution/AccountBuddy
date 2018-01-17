@@ -674,7 +674,7 @@ namespace AccountBuddy.BLL
 
         public void DeleteDetail(int SNo)
         {
-            ReceiptDetail pod = RDetails.Where(x => x.LedgerId == SNo).FirstOrDefault();
+            ReceiptDetail pod = RDetails.Where(x => x.SNo == SNo).FirstOrDefault();
 
             if (pod != null)
             {

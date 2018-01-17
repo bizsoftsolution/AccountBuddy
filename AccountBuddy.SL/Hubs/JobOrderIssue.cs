@@ -60,7 +60,7 @@ namespace AccountBuddy.SL.Hubs
                     //        BLL.JobOrderIssueDetail b_SOd = SO.JODetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
                     //        if (b_SOd == null) d.JobOrderIssueDetails.Remove(d_SOd);
                     //    }
-                    decimal rd = SO.JODetails.Select(X => X.JOId).FirstOrDefault().Value;
+                    decimal rd = SO.JODetails.Select(X => X.JOId).FirstOrDefault();
                     DB.JobOrderIssueDetails.RemoveRange(d.JobOrderIssueDetails.Where(x => x.JOId == rd).ToList());
 
                     SO.ToMap(d);

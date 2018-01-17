@@ -13,7 +13,7 @@ namespace AccountBuddy.BLL
         #region Field
         private long _Id;
         private long? _SPDId;
-        private long? _SSId;
+        private long _SSId;
         private int? _ProductId;
         private int? _UOMId;
         private double? _Quantity;
@@ -94,7 +94,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public long? SSId
+        public long SSId
         {
             get
             {

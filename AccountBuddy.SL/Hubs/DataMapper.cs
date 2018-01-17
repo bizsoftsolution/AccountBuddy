@@ -862,6 +862,8 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             D.SRId = S.SRId;
             D.SDId = S.SDId;
+            D.IsResale = S.IsResale.Value;
+            D.Particulars = S.Particulars;
             return D;
         }
         public static DAL.SalesReturnDetail ToMap(this BLL.SalesReturnDetail S, DAL.SalesReturnDetail D)
@@ -875,7 +877,12 @@ namespace AccountBuddy.SL.Hubs
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
             D.SRId = S.SRId;
-            D.SDId = S.SDId; return D;
+            D.SDId = S.SDId;
+            D.IsResale = S.IsResale;
+            D.Particulars = S.Particulars.ToString();
+
+
+            return D;
         }
         #endregion
 
@@ -936,7 +943,7 @@ namespace AccountBuddy.SL.Hubs
             D.Quantity = S.Quantity ?? 0;
             D.UnitPrice = S.UnitPrice ?? 0;
             D.UOMId = S.UOMId ?? 0;
-            D.JOId = S.JOId.Value;
+            D.JOId = S.JOId;
             return D;
         }
         #endregion
@@ -999,7 +1006,7 @@ namespace AccountBuddy.SL.Hubs
             D.Quantity = S.Quantity ?? 0;
             D.UnitPrice = S.UnitPrice ?? 0;
             D.UOMId = S.UOMId ?? 0;
-            D.JRId = S.JRId.Value;
+            D.JRId = S.JRId;
             return D;
         }
         #endregion
@@ -1071,7 +1078,7 @@ namespace AccountBuddy.SL.Hubs
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.ItemAmount = S.ItemAmount;
-
+            D.Type = S.Type;
             return D;
         }
         public static DAL.StockOut ToMap(this BLL.StockOut S, DAL.StockOut D)
@@ -1084,7 +1091,7 @@ namespace AccountBuddy.SL.Hubs
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.ItemAmount = S.ItemAmount;
-
+            D.Type = S.Type;
             return D;
         }
 
@@ -1173,7 +1180,7 @@ namespace AccountBuddy.SL.Hubs
             D.Quantity = S.Quantity ?? 0;
             D.UnitPrice = S.UnitPrice ?? 0;
             D.UOMId = S.UOMId ?? 0;
-            D.SPId = S.SPId.Value;
+            D.SPId = S.SPId;
             return D;
         }
         #endregion
@@ -1235,7 +1242,7 @@ namespace AccountBuddy.SL.Hubs
             D.Quantity = S.Quantity ?? 0;
             D.UnitPrice = S.UnitPrice ?? 0;
             D.UOMId = S.UOMId ?? 0;
-            D.SSId = S.SSId.Value;
+            D.SSId = S.SSId;
             return D;
         }
         #endregion

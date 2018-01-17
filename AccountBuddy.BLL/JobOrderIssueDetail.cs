@@ -13,7 +13,7 @@ namespace AccountBuddy.BLL
 
         #region Field
         private long _Id;
-        private long? _JOId;
+        private long _JOId;
         private int? _ProductId;
         private int? _UOMId;
         private double? _Quantity;
@@ -81,7 +81,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public long? JOId
+        public long JOId
         {
             get
             {

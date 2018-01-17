@@ -808,12 +808,10 @@ namespace AccountBuddy.BLL
             D.Date = S.Date;
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
-
-            D.ItemAmount = S.ItemAmount;
-
-            D.Narration = S.Narration;
-
-            D.AmountInwords = S.AmountInwords;
+D.ItemAmount = S.ItemAmount;
+D.Narration = S.Narration;
+D.AmountInwords = S.AmountInwords;
+            D.Type = S.Type;
             return D;
         }
         public static StockOutDetail ToMap(this StockOutDetail S, StockOutDetail D)
