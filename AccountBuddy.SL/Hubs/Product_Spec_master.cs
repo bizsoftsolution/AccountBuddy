@@ -23,11 +23,11 @@ namespace AccountBuddy.SL.Hubs
                 {
                     d = new DAL.Product_Spec_Master();
                     DB.Product_Spec_Master.Add(d);
-                    AppLib.ToMap(P, d);
+                    P.ToMap(d);
                     foreach (var b_pod in P.PDetails)
                     {
                         DAL.Product_Spec_Detail d_pod = new DAL.Product_Spec_Detail();
-                        AppLib.ToMap(b_pod, d_pod);
+                        b_pod.ToMap(d_pod);
                         d.Product_Spec_Detail.Add(d_pod);
                     }
                     DB.SaveChanges();
@@ -46,7 +46,7 @@ namespace AccountBuddy.SL.Hubs
                     var de = d.Product_Spec_Detail.Where(x => x.Product_Spec_Id == rd).ToList();
                     DB.Product_Spec_Detail.RemoveRange(de);
 
-                    AppLib.ToMap(P, d);
+                    P.ToMap(d);
                     foreach (var b_Pd in P.PDetails)
                     {
                         // DAL.PurchaseDetail d_Pd = d.PurchaseDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
@@ -55,7 +55,7 @@ namespace AccountBuddy.SL.Hubs
                         DAL.Product_Spec_Detail d_Pd = new DAL.Product_Spec_Detail();
                         d.Product_Spec_Detail.Add(d_Pd);
                         //  }
-                        AppLib.ToMap(b_Pd, d_Pd);
+                        b_Pd.ToMap(d_Pd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(P, LogDetailType.UPDATE);
@@ -123,15 +123,27 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
+
         public BLL.Product_Spec_master Product_Spec_master_DALtoBLL(DAL.Product_Spec_Master d)
         {
-            BLL.Product_Spec_master P = AppLib.ToMap(d, new BLL.Product_Spec_master());
+            BLL.Product_Spec_master P = d.ToMap(new BLL.Product_Spec_master());
             DAL.Product t= DB.Products.Where(x => x.Id == d.ProductId).FirstOrDefault();
             P.ProductName =t.ProductName;
             P.Product = Product_DALtoBLL(t);
+            BLL.Product_Spec_Detail b_pod = new Product_Spec_Detail();
             foreach (var d_Pd in d.Product_Spec_Detail)
-            { 
-                P.PDetails.Add(d_Pd.ToMap(new BLL.Product_Spec_Detail()));
+            {
+                b_pod = new Product_Spec_Detail();
+                b_pod.Id = d_Pd.Id;
+                b_pod.Product = Product_DALtoBLL(DB.Products.Where(x => x.Id == d_Pd.ProductId).FirstOrDefault());
+                b_pod.ProductId = d_Pd.ProductId;
+                b_pod.ProductName = DB.Products.Where(x => x.Id == d_Pd.ProductId).FirstOrDefault().ProductName;
+                b_pod.Product_Spec_Id = d_Pd.Product_Spec_Id;
+                b_pod.Qty = d_Pd.Qty;
+
+                P.PDetails.Add(b_pod);
+                //b_pod.ToMap(P.PDetail);
+
             }
             return P;
         }
@@ -139,6 +151,27 @@ namespace AccountBuddy.SL.Hubs
         {
             return DB.Product_Spec_Master.Where(x => x.Product.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                                       .Select(x => Product_Spec_master_DALtoBLL(x)).ToList();
+
+        }
+
+        public BLL.Product_Spec_Detail Product_Spec_Detail_DALtoBLL(DAL.Product_Spec_Detail d)
+        {
+            BLL.Product_Spec_Detail P = d.ToMap(new BLL.Product_Spec_Detail());
+            DAL.Product t = DB.Products.Where(x => x.Id == d.ProductId).FirstOrDefault();
+            P.ProductName = t.ProductName;
+         //   P.Product = Product_DALtoBLL(t);
+            P.Qty = d.Qty;
+            P.Id = d.Id;
+            P.ProductId = d.ProductId;
+            P.Product_Spec_Id = d.Product_Spec_Id;
+          
+            return P;
+        }
+
+        public List<BLL.Product_Spec_Detail> PSD_List()
+        {
+            return DB.Product_Spec_Detail.Where(x => x.Product.StockGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
+                                      .Select(x => Product_Spec_Detail_DALtoBLL(x)).ToList();
 
         }
 

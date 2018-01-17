@@ -25,7 +25,7 @@ namespace AccountBuddy.BLL
         private Product_Spec_Process_Detail _PDetail;
         private ObservableCollection<Product_Spec_Process_Detail> _PDetails;
         private static UserTypeDetail _UserPermission;
-        private Product _Product;
+        private Product_Spec_master _Product_Spec_master;
         public static ObservableCollection<Product_Spec_Process> _toList;
 
 
@@ -128,20 +128,20 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public Product Product
+        public Product_Spec_master Product_Spec_master
         {
             get
             {
-                return _Product;
+                return _Product_Spec_master;
             }
             set
             {
-                if (_Product != value)
+                if (_Product_Spec_master != value)
                 {
-                    _Product = value;
+                    _Product_Spec_master = value;
                     SetProduct();
 
-                    NotifyPropertyChanged(nameof(Product));
+                    NotifyPropertyChanged(nameof(Product_Spec_master));
                 }
             }
         }
@@ -362,13 +362,32 @@ namespace AccountBuddy.BLL
 
         }
 
+        public void AddDetail(long Id)
+        {
+            var s = Product_Spec_master.PSD_List.Where(x => x.Product_Spec_Id== Id).ToList();
+            Product_Spec_Process_Detail psd = new Product_Spec_Process_Detail();
+            PDetails.Clear();
+            foreach(var pd in s)
+            {
+                psd = new Product_Spec_Process_Detail();
+                //psd.Product = Product.toList.Where(x=>x.Id==pd.ProductId).FirstOrDefault();
+                psd.ProductId = pd.ProductId;
+                psd.ProductName = pd.ProductName;
+                psd.Qty = pd.Qty * Qty;
+                PDetails.Add(psd);
+                psd.ToMap(PDetail);
+            }
+           
+            //ClearDetail();
+        }
+
         private void SetProduct()
         {
-            var p = Product ?? new Product();
-            ProductId = p.Id;
+            var p = Product_Spec_master ?? new Product_Spec_master();
+            ProductId = p.ProductId;
 
             ProductName = p.ProductName;
-            Qty = p.Id != 0 ? 1 : 0;
+            Qty = p.ProductId != 0 ? 1 : 0;
             
         }
 

@@ -53,10 +53,10 @@
                 <Grid Grid.Row="0">
                     <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" VerticalAlignment="Top"   Margin="80,0,0,0">
 
-                        <ComboBox x:Name="cmbItemMaster" Loaded="cmbItemMaster_Loaded" Margin="10" Text="{Binding ProductName}" SelectedValue="{Binding ProductId, Mode=TwoWay}" SelectedItem="{Binding Product, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="367" >
+                        <ComboBox x:Name="cmbItemMaster" Loaded="cmbItemMaster_Loaded" Margin="0" Text="{Binding ProductName}" SelectedValue="{Binding ProductId, Mode=TwoWay}" SelectedItem="{Binding Product, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="367" Height="43" >
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Item Name"/>
+                                    <TextBlock Text="Manufaturing Product"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                             <ComboBox.ItemsPanel>
@@ -71,7 +71,7 @@
                 </Grid>
                 <!--#endregion-->
                 <!--#region  Details-->
-                <Grid Grid.Row="1" Margin="0,0,0,15">
+                <Grid Grid.Row="1" Margin="0,0,0,10">
                     <StackPanel  x:Name="stkPurchaseDetails" Orientation="Horizontal" VerticalAlignment="Top" Margin="70,0,0,0">
                         <TextBox KeyDown="txtBarCode_KeyDown" x:Name="txtBarCode" Margin="10,0,10,0" Text="{Binding PDetail.ItemCode,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="Bold"  FontSize="14" Width="100">
                             <materialDesign:HintAssist.Hint>
@@ -86,7 +86,7 @@
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Cart" Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"  Height="25" Width="25" />
-                                    <TextBlock Text="Item Name"/>
+                                    <TextBlock Text="Raw Materials"/>
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
                             <ComboBox.ItemsPanel>

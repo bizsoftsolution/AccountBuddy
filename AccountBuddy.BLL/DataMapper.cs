@@ -397,7 +397,8 @@ namespace AccountBuddy.BLL
         {
             D.Id = S.Id;
             D.ProductId = S.ProductId;
-            D.ProductName = S.ProductName;
+            ///D.ProductName = S.ProductName;
+            //D.Product =S.Product;
             D.Qty = S.Qty;
             D.PSId = S.PSId;
             D.SNo = S.SNo;

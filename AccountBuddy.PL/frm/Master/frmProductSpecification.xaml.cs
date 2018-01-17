@@ -91,10 +91,15 @@ namespace AccountBuddy.PL.frm.Master
             {
                 MessageBox.Show(string.Format(Message.PL.DenyUpdate, FormName), FormName.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
+            
             else if (data.ProductId == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Product), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbItemMaster.Focus();
+            }
+            else if(BLL.Product_Spec_master.toList.Where(x=>x.ProductId==data.ProductId).Count()>0)
+            {
+                MessageBox.Show(string.Format("Already Existing Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbItemMaster.Focus();
             }
             else if (data.PDetails.Count == 0)

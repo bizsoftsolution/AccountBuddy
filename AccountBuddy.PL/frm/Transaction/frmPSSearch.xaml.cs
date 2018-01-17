@@ -60,13 +60,13 @@ namespace AccountBuddy.PL.frm.Transaction
         private void cmbProduct_Loaded(object sender, RoutedEventArgs e)
         {
             try {
-                var p = BLL.Product_Spec_Process.toList.Select(x => x.Product).ToList();
+                var p = BLL.Product_Spec_Process.toList.Select(x => x.Product_Spec_master).ToList();
                 List<BLL.Product> s = new List<BLL.Product>();
                 foreach (var p1 in p)
                 {
                     BLL.Product s1 = new BLL.Product();
                     s1.ProductName = p1.ProductName;
-                    s1.Id = p1.Id;
+                    s1.Id = p1.ProductId;
                     s.Add(s1);
                 }
                 cmbProduct.ItemsSource = s;

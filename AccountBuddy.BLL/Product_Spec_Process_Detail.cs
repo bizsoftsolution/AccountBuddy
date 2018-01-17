@@ -107,7 +107,7 @@ namespace AccountBuddy.BLL
                 if (_Product != value)
                 {
                     _Product = value;
-                    SetProduct();
+                   // SetProduct();
 
                     NotifyPropertyChanged(nameof(Product));
                 }

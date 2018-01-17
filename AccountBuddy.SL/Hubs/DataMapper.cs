@@ -1450,7 +1450,7 @@ namespace AccountBuddy.SL.Hubs
         {
             D.Id = S.Id;
             D.ProductId = S.ProductId;
-
+            
             return D;
         }
         public static DAL.Product_Spec_Master ToMap(this BLL.Product_Spec_master S, DAL.Product_Spec_Master D)
@@ -1467,6 +1467,8 @@ namespace AccountBuddy.SL.Hubs
             D.ProductId = S.ProductId;
             D.Product_Spec_Id = S.Product_Spec_Id;
             D.Qty = S.Qty;
+            
+           // D.ProductName = S.ProductName;
             return D;
         }
         public static DAL.Product_Spec_Detail ToMap(this BLL.Product_Spec_Detail S, DAL.Product_Spec_Detail D)

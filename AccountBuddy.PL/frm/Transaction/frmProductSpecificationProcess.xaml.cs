@@ -39,15 +39,23 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (data.PDetail.ProductId == 0)
+            if (data.ProductId == 0)
             {
                 MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                cmbItem.Focus();
+                cmbItemMaster.Focus();
             }
 
             else
             {
-                data.SaveDetail();
+                //data.SaveDetail();
+                if (data.Qty != 0)
+                {
+                    var s = cmbItemMaster.SelectedItem as BLL.Product_Spec_master;
+                    if (s != null)
+                    {
+                        data.AddDetail(s.Id);
+                    }
+                }
             }
         }
 
@@ -95,11 +103,11 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(string.Format(Message.PL.Transaction_Empty_Product), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cmbItemMaster.Focus();
             }
-            else if (data.PDetails.Count == 0)
-            {
-                MessageBox.Show(string.Format(Message.PL.Transaction_ItemDetails_Validation), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                cmbItem.Focus();
-            }
+            //else if (data.PDetails.Count == 0)
+            //{
+            //    MessageBox.Show(string.Format(Message.PL.Transaction_ItemDetails_Validation), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    cmbItem.Focus();
+            //}
             else
             {
                 var rv = data.Save();
@@ -133,9 +141,9 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnsearch_Click(object sender, RoutedEventArgs e)
         {
-             frmPSSearch f = new frmPSSearch();
-             f.ShowDialog();
-             f.Close();
+            frmPSSearch f = new frmPSSearch();
+            f.ShowDialog();
+            f.Close();
         }
 
         #endregion
@@ -153,23 +161,7 @@ namespace AccountBuddy.PL.frm.Transaction
 
         }
 
-        private void txtBarCode_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return && data.PDetail.ProductId != 0)
-            {
-                if (data.PDetail.ProductId == 0)
-                {
-                    MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    cmbItem.Focus();
-                }
 
-                else
-                {
-                    data.SaveDetail();
-                    cmbItem.Focus();
-                }
-            }
-        }
 
         #endregion
 
@@ -186,25 +178,25 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbItem_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var p = Product_Spec_master.toList.Select(x => x.Product).ToList();
-                List<Product> s = new List<Product>();
-                foreach (var p1 in p)
-                {
-                    BLL.Product s1 = new Product();
-                    s1.ProductName = p1.ProductName;
-                    s1.Id = p1.Id;
-                    s.Add(s1);
-                }
-                cmbItem.ItemsSource = s;
-                cmbItem.DisplayMemberPath = "ProductName";
-                cmbItem.SelectedValuePath = "Id";
-            }
-            catch (Exception ex)
-            {
-                Common.AppLib.WriteLog(ex);
-            }
+            //try
+            //{
+            //    var p = Product_Spec_master.toList.Select(x => x.Product).ToList();
+            //    List<Product> s = new List<Product>();
+            //    foreach (var p1 in p)
+            //    {
+            //        BLL.Product s1 = new Product();
+            //        s1.ProductName = p1.ProductName;
+            //        s1.Id = p1.Id;
+            //        s.Add(s1);
+            //    }
+            //    cmbItem.ItemsSource = s;
+            //    cmbItem.DisplayMemberPath = "ProductName";
+            //    cmbItem.SelectedValuePath = "Id";
+            //}
+            //catch (Exception ex)
+            //{
+            //    Common.AppLib.WriteLog(ex);
+            //}
         }
 
 
@@ -219,11 +211,11 @@ namespace AccountBuddy.PL.frm.Transaction
         private void txtQty_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-            TextBox textBox = sender as TextBox;
-            Int32 selectionStart = textBox.SelectionStart;
-            Int32 selectionLength = textBox.SelectionLength;
-            textBox.Text = AppLib.NumericOnly(txtQty.Text);
-            textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
+            //TextBox textBox = sender as TextBox;
+            //Int32 selectionStart = textBox.SelectionStart;
+            //Int32 selectionLength = textBox.SelectionLength;
+            //textBox.Text = AppLib.NumericOnly(txtQty.Text);
+            //textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
 
@@ -267,45 +259,74 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbItemMaster_Loaded(object sender, RoutedEventArgs e)
         {
-            //    try
+            //try
+            //{
+            //    var p = Product_Spec_master.toList.Select(x => x.PDetails).ToList();
+            //    List<Product> s = new List<Product>();
+            //    foreach (var p1 in p)
             //    {
-            //        var p = Product_Spec_master.toList.Select(x => x.PDetails).ToList();
-            //        List<Product> s = new List<Product>();
-            //        foreach (var p1 in p)
-            //        {
-            //            BLL.Product s1 = new Product();
-            //            s1.ProductName = p1.FirstOrDefault().ProductName;
-            //            s1.Id = p1.FirstOrDefault().ProductId;
-            //            s.Add(s1);
-            //        }
-            //        cmbItemMaster.ItemsSource = s;
-            //        cmbItemMaster.DisplayMemberPath = "ProductName";
-            //        cmbItemMaster.SelectedValuePath = "Id";
+            //        BLL.Product s1 = new Product();
+            //        s1.ProductName = p1.FirstOrDefault().ProductName;
+            //        s1.Id = p1.FirstOrDefault().ProductId;
+            //        s.Add(s1);
             //    }
-            //    catch (Exception ex)
-            //    {
-            //        Common.AppLib.WriteLog(ex);
-            //    }
+            //    cmbItemMaster.ItemsSource = s;
+            //    cmbItemMaster.DisplayMemberPath = "ProductName";
+            //    cmbItemMaster.SelectedValuePath = "Id";
+            //}
+            //catch (Exception ex)
+            //{
+            //    Common.AppLib.WriteLog(ex);
+            //}
             try
             {
-                var p = Product_Spec_master.toList.Select(x => x.Product).ToList();
-                List<Product> s = new List<Product>();
+                Product_Spec_master.Init();
+                var p = Product_Spec_master.toList.ToList();
+                List<BLL.Product_Spec_master> l = new List<Product_Spec_master>();
+                BLL.Product_Spec_master cp = new Product_Spec_master();
                 foreach (var p1 in p)
                 {
-                    BLL.Product s1 = new Product();
-                    s1.ProductName = p1.ProductName;
-                    s1.Id = p1.Id;
-                    s.Add(s1);
+                    cp = new Product_Spec_master();
+                    cp.ProductId = p1.ProductId;
+                    cp.ProductName = p1.ProductName;
+                    cp.Id = p1.Id;
+                    l.Add(p1);
                 }
-                cmbItemMaster.ItemsSource = s;
+                cmbItemMaster.ItemsSource = l;
                 cmbItemMaster.DisplayMemberPath = "ProductName";
-                cmbItemMaster.SelectedValuePath = "Id";
+                cmbItemMaster.SelectedValuePath = "ProductId";
             }
             catch (Exception ex)
             {
                 Common.AppLib.WriteLog(ex);
             }
 
+        }
+
+        private void txtQtyMaster_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
+        }
+
+        private void txtQtyMaster_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != System.Windows.Input.Key.Enter) return;
+            e.Handled = true;
+            if (data.Qty != 0)
+            {
+                var s = cmbItemMaster.SelectedItem as BLL.Product_Spec_master;
+                if (s != null)
+                {
+                    data.AddDetail(s.Id);
+                }
+            }
         }
     }
 }

@@ -23,6 +23,7 @@ namespace AccountBuddy.BLL
         private string _ProductName;
         private int _RNo;
         private static ObservableCollection<Product_Spec_master> _toList;
+        private static ObservableCollection<Product_Spec_Detail> _PSD_List;
 
 
         #endregion
@@ -180,6 +181,33 @@ namespace AccountBuddy.BLL
                 _toList = value;
             }
         }
+
+
+        public static ObservableCollection<Product_Spec_Detail> PSD_List
+        {
+            get
+            {
+                if (_PSD_List == null || _PSD_List.Count() == 0)
+                {
+                    try
+                    {
+                        _PSD_List= new ObservableCollection<Product_Spec_Detail>(FMCGHubClient.HubCaller.Invoke<List<Product_Spec_Detail>>("PSD_List").Result);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.AppLib.WriteLog(string.Format("Product_Spec_Detail List={0}", ex.Message));
+                    }
+                }
+                return _PSD_List;
+            }
+            set
+            {
+                _PSD_List = value;
+            }
+        }
+
+
         #endregion
 
         #region Property Changed
@@ -203,6 +231,8 @@ namespace AccountBuddy.BLL
         {
             try
             {
+                
+
                 var d = FMCGHubClient.HubCaller.Invoke<Product_Spec_master>("Product_Spec_master_Save", this).Result;
                 if (d.Id != 0)
                 {
@@ -322,6 +352,8 @@ namespace AccountBuddy.BLL
         public static void Init()
         {
             _toList = null;
+            _PSD_List = null;
+            
         }
         #endregion
 
