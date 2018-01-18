@@ -121,7 +121,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return (OpeningStock + (PQty ?? 0) + (SRQty ?? 0) + (SInQty ?? 0) + (JRQty ?? 0) + (SSQty ?? 0)+(PSpecP??0)) - ((SQty ?? 0) + (PRQty ?? 0) + (SOutQty ?? 0) + (JOQty ?? 0) + (SPQty ?? 0)+(PSpec??0));
+                return (OpeningStock + (PQty ?? 0) + (SRQty ?? 0) + (SInQty ?? 0) + (JRQty ?? 0) + (SSQty ?? 0)+(PSpecP??0)) - ((SQty ?? 0) + (PRQty ?? 0) + (SOutQty ?? 0) + (JOQty ?? 0) + (SPQty ?? 0)+(PSpec??0)+(SRQtyNotForSales??0));
             }
         }
         public double StockLeftForSales

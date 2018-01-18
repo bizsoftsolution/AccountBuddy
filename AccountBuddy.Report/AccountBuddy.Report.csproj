@@ -111,6 +111,12 @@
     <EmbeddedResource Include="rpt\Report\rptSOPendingReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptStock.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Report\rptStockReportNew.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptBankReconciliation.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -227,6 +233,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockInDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockOut.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.StockOutDetail.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.StockReport.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.TrialBalance.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UOM.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.UserAccount.datasource" />

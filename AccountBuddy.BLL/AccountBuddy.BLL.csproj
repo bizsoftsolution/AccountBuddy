@@ -116,6 +116,7 @@
     <Compile Include="StockInProcessDetail.cs" />
     <Compile Include="StockOut.cs" />
     <Compile Include="StockOutDetail.cs" />
+    <Compile Include="StockReport.cs" />
     <Compile Include="StockSeperated.cs" />
     <Compile Include="StockSeperatedDetail.cs" />
     <Compile Include="Supplier.cs" />
@@ -130,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\StockReport.datasource" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AccountBuddy.Common\AccountBuddy.Common.csproj">

@@ -8,7 +8,7 @@
         <MIMEType>image/png</MIMEType>
         <Sizing>Fit</Sizing>
         <Top>0.37001cm</Top>
-        <Left>1.9768cm</Left>
+        <Left>0.46868cm</Left>
         <Height>2.64666cm</Height>
         <Width>3.03459cm</Width>
         <Style>
@@ -39,7 +39,7 @@
         </Paragraphs>
         <rd:DefaultName>CompanyName</rd:DefaultName>
         <Top>0.37001cm</Top>
-        <Left>5.18777cm</Left>
+        <Left>3.67964cm</Left>
         <Height>0.33333in</Height>
         <Width>3.6793in</Width>
         <ZIndex>1</ZIndex>
@@ -73,7 +73,7 @@
         </Paragraphs>
         <rd:DefaultName>AddressLine1</rd:DefaultName>
         <Top>1.21667cm</Top>
-        <Left>5.18777cm</Left>
+        <Left>3.67964cm</Left>
         <Height>0.6cm</Height>
         <Width>9.34542cm</Width>
         <ZIndex>2</ZIndex>
@@ -107,7 +107,7 @@
         </Paragraphs>
         <rd:DefaultName>AddressLine2</rd:DefaultName>
         <Top>1.81667cm</Top>
-        <Left>5.18777cm</Left>
+        <Left>3.67964cm</Left>
         <Height>0.6cm</Height>
         <Width>9.34542cm</Width>
         <ZIndex>3</ZIndex>
@@ -141,7 +141,7 @@
         </Paragraphs>
         <rd:DefaultName>CityPincode</rd:DefaultName>
         <Top>2.41667cm</Top>
-        <Left>5.18777cm</Left>
+        <Left>3.67964cm</Left>
         <Height>0.6cm</Height>
         <Width>9.34542cm</Width>
         <ZIndex>4</ZIndex>

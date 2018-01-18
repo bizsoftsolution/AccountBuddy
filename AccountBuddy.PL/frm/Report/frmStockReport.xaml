@@ -7,42 +7,119 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              mc:Ignorable="d" 
                 xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-         
-             d:DesignHeight="650" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded" >
+         d:DesignHeight="650" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded" >
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
     </UserControl.Resources>
-
-
-
     <Grid>
-        <Grid >
-
-           
+        <Grid Margin="0,0,0,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2"></Border>
-            <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}" >
+            <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
                 <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Stock Report"/></TextBlock>
             </Grid>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
+
             <Grid Grid.Row="1" >
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="400"/>
-                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="100*"/>
+                        <RowDefinition Height="20*"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Height="77">
-                            <StackPanel Orientation="Horizontal">
-                                
-                            
+                    <Grid Grid.Row="0" Margin="111,0,0,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"  >
+
+                            <ComboBox x:Name="cmbProductName" Loaded="cmbProductName_Loaded" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="350" Margin="5" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                        <TextBlock Text="Product Name" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </ComboBox>
+
+                            <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="5,20,5,5" >
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                        <TextBlock Text="Date From" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </DatePicker>
+                            <DatePicker Name="dtpDateTo"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="5,20,5,5">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                        <TextBlock Text="Date To" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </DatePicker>
+                            <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
+                        </StackPanel>
+
+
+                    </Grid>
+                    <Grid Grid.Row="1">
+
+                        <Grid Grid.Row="0"  >
+                            <WindowsFormsHost  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="315,10,196,10">
+                                <rv:ReportViewer x:Name="rptViewer"/>
+                            </WindowsFormsHost>
+                        </Grid>
+
+
+
+
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <StackPanel Orientation="Horizontal" Margin="350,24,300,23" VerticalAlignment="Center">
+
+                            <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                PDF
+                            </Button>
+                            <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                                PRINT
+                            </Button>
+                            <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                PRINT PREVIEW
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
+<!--<Grid>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2"></Border>
+        <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}" >
+            <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Stock Report"/></TextBlock>
+        </Grid>
+        <Grid Grid.Row="1" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="200"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Height="77">
+                        <StackPanel Orientation="Horizontal">
+
+
                             <TextBox  Name="txtSearch" Width="350" Margin="5"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="txtSearch_TextChanged"  FontSize="16" FontWeight="Bold" Foreground="Black">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal">
@@ -52,78 +129,77 @@
                                 </materialDesign:HintAssist.Hint>
                             </TextBox>
                             <Button x:Name="btnSearch" Margin="5" Click="btnSearch_Click">Search</Button>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked"  Unchecked="cbxCase_Unchecked" FontSize="14" FontWeight="Bold"/>
-                                <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked"  FontSize="14" FontWeight="Bold"/>
-                                <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" FontSize="14" FontWeight="Bold"/>
-                                <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" FontSize="14" FontWeight="Bold" />
-                            </StackPanel>
                         </StackPanel>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <DataGrid x:Name="dgvStockReport" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="20" BorderThickness="1">
-                            <DataGrid.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform AngleX="-0.283"/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="0.745"/>
-                                </TransformGroup>
-                            </DataGrid.RenderTransform>
-                            <DataGrid.ColumnHeaderStyle>
-                                <Style TargetType="{x:Type DataGridColumnHeader}">
-                                    <Setter Property="FontWeight" Value="Bold" />
-                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                </Style>
-
-                            </DataGrid.ColumnHeaderStyle>
-
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Item Name" FontWeight="Bold" Width="250" Binding="{Binding ProductName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                <DataGridTextColumn Header="Available(Total)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding AvailableStock, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock Left(For sales)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding StockLeftForSales, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock Left(Not For sales)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding StockLeftNotForSales, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Sales Order"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SOQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Purchase Order"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding POQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-
-                                <DataGridTextColumn Header="Opening"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding OpeningStock, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Purchase"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding PQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Sale Return(Total)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SRQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Sales Return(For Sales)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SRQtyForSales, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Sales Return(Not For Sales)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SRQtyNotForSales, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock Separated"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SSQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Sales"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Purchase Return"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding PRQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock Inward"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SInQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock Outward"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SOutQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Job Order Issued"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding JOQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Job Order Received"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding JRQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock In Process"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SPQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                <DataGridTextColumn Header="Stock Separated"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SSQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                           <Grid Grid.Row="2" Margin="0,0,10,110">
-                        <StackPanel Orientation="Horizontal" Margin="350,30,255,28" VerticalAlignment="Center">
-
-                            <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
-                                PDF
-                            </Button>
-                            <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
-                                PRINT
-                            </Button>
-                            <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click" Width="142"  >
-                                PRINT PREVIEW
-                            </Button>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <CheckBox Name="cbxCase" Content="Case sensitive" Checked="cbxCase_Checked"  Unchecked="cbxCase_Unchecked" FontSize="14" FontWeight="Bold"/>
+                            <RadioButton x:Name="rptStartWith" GroupName="SearchType" Content="Start With" Checked="rptStartWith_Checked"  FontSize="14" FontWeight="Bold"/>
+                            <RadioButton x:Name="rptContain" GroupName="SearchType" Content="Contain"  IsChecked="True" Checked="rptContain_Checked" FontSize="14" FontWeight="Bold"/>
+                            <RadioButton x:Name="rptEndWith" GroupName="SearchType" Content="End With" Checked="rptEndWith_Checked" FontSize="14" FontWeight="Bold" />
                         </StackPanel>
-
-                    </Grid>
+                    </StackPanel>
                 </Grid>
-                <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
-                    <rv:ReportViewer x:Name="rptViewer"/>
-                </WindowsFormsHost>
+                <Grid Grid.Row="1">
+                    <DataGrid x:Name="dgvStockReport" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="20" BorderThickness="1">
+                        <DataGrid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="-0.283"/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0.745"/>
+                            </TransformGroup>
+                        </DataGrid.RenderTransform>
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            </Style>
+
+                        </DataGrid.ColumnHeaderStyle>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Item Name" FontWeight="Bold" Width="250" Binding="{Binding ProductName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                            <DataGridTextColumn Header="Available(Total)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding AvailableStock, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Stock Left(For sales)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding StockLeftForSales, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Stock Left(Not For sales)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding StockLeftNotForSales, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Sales Order"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SOQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Purchase Order"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding POQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+
+                            <DataGridTextColumn Header="Opening"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding OpeningStock, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Purchase"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding PQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Sale Return(Total)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SRQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Sales Return(For Sales)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SRQtyForSales, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Sales Return(Not For Sales)"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SRQtyNotForSales, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Stock Separated"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SSQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Sales"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Purchase Return"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding PRQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Stock Inward"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SInQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Stock Outward"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SOutQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Job Order Issued"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding JOQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Job Order Received"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding JRQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Stock In Process"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SPQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            <DataGridTextColumn Header="Stock Separated"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding SSQty, Mode=OneWay}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Row="2" Margin="0,0,10,110">
+                    <StackPanel Orientation="Horizontal" Margin="350,30,255,28" VerticalAlignment="Center">
+
+                        <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                            PDF
+                        </Button>
+                        <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                            PRINT
+                        </Button>
+                        <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click" Width="142"  >
+                            PRINT PREVIEW
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
             </Grid>
+            <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
+                <rv:ReportViewer x:Name="rptViewer"/>
+            </WindowsFormsHost>
         </Grid>
     </Grid>
-</UserControl>
+</Grid>-->

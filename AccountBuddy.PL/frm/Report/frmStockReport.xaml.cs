@@ -31,7 +31,8 @@ namespace AccountBuddy.PL.frm.Report
         public frmStockReport()
         {
             InitializeComponent();
-           
+            dtpDateFrom.SelectedDate = DateTime.Now;
+            dtpDateTo.SelectedDate = DateTime.Now;
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -41,8 +42,6 @@ namespace AccountBuddy.PL.frm.Report
         private void LoadWindow()
         {
             BLL.Product.Init();
-            dgvStockReport.ItemsSource = BLL.Product.toList;
-            CollectionViewSource.GetDefaultView(dgvStockReport.ItemsSource).Filter = DGV_Filter;
             LoadReport();
         }
 
@@ -79,54 +78,54 @@ namespace AccountBuddy.PL.frm.Report
 
         private bool DGV_Filter(object obj)
         {
-            bool RValue = false;
-            var d = obj as BLL.Product;
+            //bool RValue = false;
+            //var d = obj as BLL.Product;
 
-            if (!string.IsNullOrEmpty(txtSearch.Text))
-            {
-                string strSearch = cbxCase.IsChecked == true ? txtSearch.Text : txtSearch.Text.ToLower();
-                string strValue = "";
+            //if (!string.IsNullOrEmpty(txtSearch.Text))
+            //{
+            //    string strSearch = cbxCase.IsChecked == true ? txtSearch.Text : txtSearch.Text.ToLower();
+            //    string strValue = "";
 
-                foreach (var p in d.GetType().GetProperties())
-                {
-                    if (p.Name.ToLower().Contains("id") || p.GetValue(d) == null) continue;
-                    strValue = p.GetValue(d).ToString();
-                    if (cbxCase.IsChecked == false)
-                    {
-                        strValue = strValue.ToLower();
-                    }
-                    if (rptStartWith.IsChecked == true && strValue.StartsWith(strSearch))
-                    {
-                        RValue = true;
-                        break;
-                    }
-                    else if (rptContain.IsChecked == true && strValue.Contains(strSearch))
-                    {
-                        RValue = true;
-                        break;
-                    }
-                    else if (rptEndWith.IsChecked == true && strValue.EndsWith(strSearch))
-                    {
-                        RValue = true;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                RValue = true;
-            }
-            return RValue;
+            //    foreach (var p in d.GetType().GetProperties())
+            //    {
+            //        if (p.Name.ToLower().Contains("id") || p.GetValue(d) == null) continue;
+            //        strValue = p.GetValue(d).ToString();
+            //        if (cbxCase.IsChecked == false)
+            //        {
+            //            strValue = strValue.ToLower();
+            //        }
+            //        if (rptStartWith.IsChecked == true && strValue.StartsWith(strSearch))
+            //        {
+            //            RValue = true;
+            //            break;
+            //        }
+            //        else if (rptContain.IsChecked == true && strValue.Contains(strSearch))
+            //        {
+            //            RValue = true;
+            //            break;
+            //        }
+            //        else if (rptEndWith.IsChecked == true && strValue.EndsWith(strSearch))
+            //        {
+            //            RValue = true;
+            //            break;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    RValue = true;
+            //}
+            return true;
         }
 
         private void Grid_Refresh()
         {
-            try
-            {
-                CollectionViewSource.GetDefaultView(dgvStockReport.ItemsSource).Refresh();
-                LoadReport();
-            }
-            catch (Exception ex) { Common.AppLib.WriteLog(ex); };
+            //try
+            //{
+            //    CollectionViewSource.GetDefaultView(dgvStockReport.ItemsSource).Refresh();
+            //    LoadReport();
+            //}
+            //catch (Exception ex) { Common.AppLib.WriteLog(ex); };
 
         }
 
@@ -253,16 +252,21 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
-            if (dgvStockReport.Items.Count != 0)
+
+            frmStockReportPrint f = new frmStockReportPrint();
+            int? p = null;
+            if (cmbProductName.SelectedValue != null)
             {
-                frmStockReportPrint f = new frmStockReportPrint();
-                f.LoadReport(txtSearch.Text.ToString());
-                f.ShowDialog();
+                p = (int)cmbProductName.SelectedValue;
             }
             else
             {
-                MessageBox.Show("Enter AccountName");
+                p = null;
             }
+            var list = BLL.StockReport.List(p, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            f.LoadReport(list, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            f.ShowDialog();
+
 
         }
 
@@ -270,30 +274,34 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                List<BLL.Product> list = new List<BLL.Product>();
-                if (txtSearch.Text != "")
+                int? p = null;
+                if (cmbProductName.SelectedValue != null)
                 {
-                    list = BLL.Product.toList.Where(x => x.ProductName.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
-
+                    p = (int)cmbProductName.SelectedValue;
                 }
                 else
                 {
-                    list = BLL.Product.toList.ToList();
+                    p = null;
                 }
-              
+                
+                List<BLL.StockReport> list = BLL.StockReport.List(p, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
                 try
                 {
                     rptViewer.Reset();
-                    ReportDataSource data = new ReportDataSource("Product", list);
-                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
+                    ReportDataSource data = new ReportDataSource("StockReport", list);
+                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                     rptViewer.LocalReport.DataSources.Add(data);
                     rptViewer.LocalReport.DataSources.Add(data1);
-                    rptViewer.LocalReport.ReportPath = @"rpt\Report\rptStockReport.rdlc";
+                    rptViewer.LocalReport.ReportPath = @"rpt\Report\rptStock.rdlc";
 
-                    rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+                    //rptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+
+                    ReportParameter[] rp = new ReportParameter[2];
+                    rp[0] = new ReportParameter("DateFrom", dtpDateFrom.SelectedDate.ToString());
+                    rp[1] = new ReportParameter("DateTo", dtpDateTo.SelectedDate.ToString());
+                    rptViewer.LocalReport.SetParameters(rp);
 
                     rptViewer.RefreshReport();
-
                 }
                 catch (Exception ex)
                 {
@@ -316,6 +324,20 @@ namespace AccountBuddy.PL.frm.Report
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             LoadWindow();
+        }
+
+        private void cmbProductName_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                cmbProductName.ItemsSource = BLL.Product.toList.ToList();
+                cmbProductName.DisplayMemberPath = "ProductName";
+                cmbProductName.SelectedValuePath = "Id";
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
     }
 }

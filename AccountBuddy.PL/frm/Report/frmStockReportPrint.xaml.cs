@@ -35,37 +35,25 @@ namespace AccountBuddy.PL.frm.Report
 
 
         }
-        public void LoadReport(string Product)
+        public void LoadReport(List<BLL.StockReport> list, DateTime dtFrom, DateTime dtTo)
         {
             try
             {
-                List<BLL.Product> list = new List<BLL.Product>();
-                if (Product != "")
-                {
-                    list = BLL.Product.toList.Where(x => x.ProductName.ToLower().Contains(Product.ToLower())).ToList();
+                RptViewer.Reset();
+                  ReportDataSource data = new ReportDataSource("StockReport", list);
+                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
+                RptViewer.LocalReport.DataSources.Add(data);
+                RptViewer.LocalReport.DataSources.Add(data1);
+                RptViewer.LocalReport.ReportPath = @"rpt\Report\rptStock.rdlc";
 
-                }
-                else
-                {
-                    list = BLL.Product.toList.ToList();
-                }
+                ReportParameter[] rp = new ReportParameter[2];
+                rp[0] = new ReportParameter("DateFrom", dtFrom.ToString());
+                rp[1] = new ReportParameter("DateTo", dtTo.ToString());
+                RptViewer.LocalReport.SetParameters(rp);
 
-                try
-                {
-                    RptViewer.Reset();
-                    ReportDataSource data = new ReportDataSource("Product", list);
-                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
-                    RptViewer.LocalReport.DataSources.Add(data);
-                    RptViewer.LocalReport.DataSources.Add(data1);
-                    RptViewer.LocalReport.ReportPath = @"rpt\Report\rptStockReport.rdlc";
-                    RptViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
-                    RptViewer.RefreshReport();
 
-                }
-                catch (Exception ex)
-                {
-                    Common.AppLib.WriteLog(ex);
-                }
+                RptViewer.RefreshReport();
+
             }
             catch (Exception ex)
             {
