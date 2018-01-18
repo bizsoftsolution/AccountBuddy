@@ -157,6 +157,36 @@ namespace AccountBuddy.SL.Hubs
 
         }
 
+        public List<BLL.Receipt> Receipt_List(int? SID, DateTime dtFrom, DateTime dtTo, string InvoiceNo, string mode)
+        {
+            BLL.Receipt P = new BLL.Receipt();
+            List<BLL.Receipt> lstPurchase = new List<BLL.Receipt>();
+            try
+            {
+
+                var d = DB.Receipts.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId &&
+                (SID == null || x.LedgerId == SID) && x.ReceiptDate >= dtFrom &&
+                (mode == null || x.ReceiptMode == mode) &&
+                x.ReceiptDate <= dtTo &&
+                (InvoiceNo == "" || x.RefNo.Contains(InvoiceNo))).ToList();
+                foreach (var l in d)
+                {
+                    P = new BLL.Receipt();
+
+                    P.Id = l.Id;
+                    P.LedgerName = l.Ledger.LedgerName;
+                    P.ReceiptDate = l.ReceiptDate;
+                    P.Amount = l.Amount;
+                    P.EntryNo = l.EntryNo;
+                    P.ReceiptMode = l.ReceiptMode;
+                    lstPurchase.Add(P);
+
+                }
+            }
+            catch (Exception ex) { }
+            return lstPurchase;
+        }
+
 
         #endregion
     }

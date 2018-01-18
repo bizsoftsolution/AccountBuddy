@@ -101,6 +101,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 {
                     MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                     data.Clear();
+                    btnPrint.IsEnabled = false;
                 }
             }
 

@@ -149,6 +149,36 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
+        public List<BLL.Payment> Payment_List(int? SID, DateTime dtFrom, DateTime dtTo, string InvoiceNo, string mode)
+        {
+            BLL.Payment P = new BLL.Payment();
+            List<BLL.Payment> lstPurchase = new List<BLL.Payment>();
+            try
+            {
+
+                var d = DB.Payments.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId &&
+                (SID == null || x.LedgerId == SID) && x.PaymentDate >= dtFrom &&
+                (mode == null || x.PaymentMode == mode) &&
+                x.PaymentDate <= dtTo &&
+                (InvoiceNo == "" || x.RefNo.Contains(InvoiceNo))).ToList();
+                foreach (var l in d)
+                {
+                    P = new BLL.Payment();
+
+                    P.Id = l.Id;
+                    P.LedgerName = l.Ledger.LedgerName;
+                    P.PaymentDate = l.PaymentDate;
+                    P.Amount = l.Amount;
+                    P.EntryNo = l.EntryNo;
+                    P.PaymentMode = l.PaymentMode;
+                    lstPurchase.Add(P);
+
+                }
+            }
+            catch (Exception ex) { }
+            return lstPurchase;
+        }
+
 
 
         #endregion

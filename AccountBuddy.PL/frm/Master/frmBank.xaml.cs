@@ -95,14 +95,14 @@ namespace AccountBuddy.PL.frm.Master
             {
                 if (data.Save() == true)
                 {
-                    MessageBox.Show(Message.PL.Saved_Alert);
+                    MessageBox.Show(string.Format(Message.PL.Saved_Alert),FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                     data.Clear();
                     Grid_Refresh();
                 }
 
                 else
                 {
-                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.Ledger.LedgerName));
+                    MessageBox.Show(string.Format(Message.PL.Existing_Data, data.Ledger.LedgerName), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
@@ -121,13 +121,13 @@ namespace AccountBuddy.PL.frm.Master
                     {
                         if (data.Delete() == true)
                         {
-                            MessageBox.Show(Message.PL.Delete_Alert);
+                            MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
                             data.Clear();
                             Grid_Refresh();
                         }
                         else
                         {
-                            MessageBox.Show(Message.PL.Cant_Delete_Alert);
+                            MessageBox.Show(Message.PL.Cant_Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                 }
@@ -335,9 +335,7 @@ namespace AccountBuddy.PL.frm.Master
         }
 
         #endregion
-
-       
-
+        
         private void rptStartWith_Unchecked(object sender, RoutedEventArgs e)
         {
             Grid_Refresh();

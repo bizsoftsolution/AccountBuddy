@@ -47,47 +47,72 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbCustomerName.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList();
             cmbCustomerName.DisplayMemberPath = "LedgerName";
             cmbCustomerName.SelectedValuePath = "Id";
-            //   dgvReceiptAndPayment.ItemsSource = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
-            // LoadReport();
+            LoadWindow();
         }
 
-        //private void LoadReport()
-        //{
-        //    try
-        //    {
-        //        List<BLL.Sale> list = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
-        //        list = list.Select(x => new BLL.Sale()
-        //        { LedgerName = x.LedgerName, TotalAmount = x.TotalAmount, SalesDate = x.SalesDate, RefNo = x.RefNo }).ToList();
+        private void LoadReport()
+        {
+            try
+            {
+                List<BLL.Sale> list = dgvReceiptAndPayment.ItemsSource as List<BLL.Sale>;
 
-        //        try
-        //        {
-        //            rptViewer.Reset();
-        //            ReportDataSource data = new ReportDataSource("Sales", list);
-        //            ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
-        //            rptViewer.LocalReport.DataSources.Add(data);
-        //            rptViewer.LocalReport.DataSources.Add(data1);
-        //            rptViewer.LocalReport.ReportPath = @"rpt\Transaction\rptSalesReport.rdlc";
+                list = list.Select(x => new BLL.Sale()
+                { LedgerName = x.LedgerName, TotalAmount = x.TotalAmount, SalesDate = x.SalesDate, RefNo = x.RefNo, TransactionType=x.TransactionType }).ToList();
+
+                try
+                {
+                    rptViewer.Reset();
+                    ReportDataSource data = new ReportDataSource("Sales", list);
+                    ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.toList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).ToList());
+                    rptViewer.LocalReport.DataSources.Add(data);
+                    rptViewer.LocalReport.DataSources.Add(data1);
+                    rptViewer.LocalReport.ReportPath = @"rpt\Transaction\rptSalesReport.rdlc";
 
 
-        //            rptViewer.RefreshReport();
+                    rptViewer.RefreshReport();
 
-        //        }
-        //        catch (Exception ex)
-        //        {
+                }
+                catch (Exception ex)
+                {
 
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
+                }
+            }
+            catch (Exception ex)
+            {
 
-        //    }
+            }
 
-        //}
+        }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-          //  dgvReceiptAndPayment.ItemsSource = BLL.Sale.tolist((int?)cmbCustomerName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text);
-          //  LoadReport();
+            LoadWindow();
+        }
+
+        private void LoadWindow()
+        {
+            int? c = null;
+            int? p = null;
+            if (cmbCustomerName.SelectedValue != null)
+            {
+                c = (int)cmbCustomerName.SelectedValue;
+            }
+            else
+            {
+                c = null;
+            }
+            if (cmbType.SelectedValue != null)
+
+            {
+                p = (int)cmbType.SelectedValue;
+            }
+            else
+            {
+                p = null;
+            }
+            dgvReceiptAndPayment.ItemsSource = BLL.Sale.tolist(c, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, p);
+            LoadReport();
+
         }
 
         #region Button Events
@@ -259,6 +284,14 @@ namespace AccountBuddy.PL.frm.Transaction
                 MessageBox.Show(" Exporting DataGrid data to Excel file created.xls");
             }
 
+
+        }
+
+        private void cmbType_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbType.ItemsSource = BLL.TransactionType.toList;
+            cmbType.DisplayMemberPath = "Type";
+            cmbType.SelectedValuePath = "Id";
 
         }
     }

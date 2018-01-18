@@ -75,7 +75,7 @@ namespace AccountBuddy.BLL
         {
             get
             {
-                return "Sales A/C";
+                return "Sales Account";
             }
 
         }

@@ -111,10 +111,16 @@
     <EmbeddedResource Include="rpt\Transaction\rptJobOrderReceived.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptPaymentReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptPurchaseReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptPurchaseReturnReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rpt\Transaction\rptReceiptReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rpt\Transaction\rptSalesReport.rdlc">

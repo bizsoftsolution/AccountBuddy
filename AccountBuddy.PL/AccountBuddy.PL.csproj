@@ -156,6 +156,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="frm\Transaction\frmPaymentSearch.xaml.cs">
+      <DependentUpon>frmPaymentSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmReceiptSearch.xaml.cs">
+      <DependentUpon>frmReceiptSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Page Include="frmAccountBuddyHome.xaml">
       <SubType>Designer</SubType>
@@ -366,6 +372,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmPaymentSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Transaction\frmPurchase.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -383,6 +393,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Transaction\frmReceipt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Transaction\frmReceiptSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

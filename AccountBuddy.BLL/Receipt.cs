@@ -633,7 +633,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Receipt po = FMCGHubClient.FMCGHub.Invoke<Receipt>("Receipt_Find", SearchText).Result;
+                Receipt po = FMCGHubClient.FMCGHub.Invoke<Receipt>("Receipt_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Receipt>(this);
                 this.RDetails = po.RDetails;
@@ -738,5 +738,12 @@ namespace AccountBuddy.BLL
         }
 
         #endregion
+
+
+        public static List<Receipt> List(int? LID, DateTime dtFrom, DateTime dtTo, string EntryNo, string TID)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<BLL.Receipt>>("Receipt_List", LID, dtFrom, dtTo,EntryNo, TID).Result;
+        }
+
     }
 }

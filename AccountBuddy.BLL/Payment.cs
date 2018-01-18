@@ -671,7 +671,7 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                Payment po = FMCGHubClient.FMCGHub.Invoke<Payment>("Payment_Find", SearchText).Result;
+                Payment po = FMCGHubClient.FMCGHub.Invoke<Payment>("Payment_Find", EntryNo).Result;
                 if (po.Id == 0) return false;
                 po.toCopy<Payment>(this);
                 this.PDetails = po.PDetails;
@@ -745,9 +745,7 @@ namespace AccountBuddy.BLL
         }
 
         #endregion
-
-
-
+        
         public bool FindEntryNo()
         {
             var rv = false;
@@ -761,8 +759,7 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
-
-
+        
         #region Property  Changed Event
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -779,5 +776,11 @@ namespace AccountBuddy.BLL
         }
 
         #endregion
+
+        public static List<Payment> List(int? LID, DateTime dtFrom, DateTime dtTo, string EntryNo, string TID)
+        {
+            return FMCGHubClient.FMCGHub.Invoke<List<BLL.Payment>>("Payment_List", LID, dtFrom, dtTo,EntryNo, TID).Result;
+        }
+
     }
 }
