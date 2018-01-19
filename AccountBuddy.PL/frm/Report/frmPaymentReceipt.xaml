@@ -7,138 +7,132 @@
              mc:Ignorable="d" 
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-              d:DesignHeight="600" d:DesignWidth="1100" Background="White" Loaded="UserControl_Loaded">
+              d:DesignHeight="600" d:DesignWidth="1200" Background="White" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
     </UserControl.Resources>
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 
-        <Grid>
-            <Grid Margin="0,0,0,10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="35"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-                    <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Receipt And Payment"/></TextBlock>
-                </Grid>
-                <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
-                <Grid Grid.Row="1" >
+    <Grid>
+        <Grid Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
+                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Receipt And Payment"/></TextBlock>
+            </Grid>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
+            <Grid Grid.Row="1" >
 
-                    <Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="60*"/>
+                        <RowDefinition Height="10*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="10*"/>
-                            <RowDefinition Height="100*"/>
-                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"></RowDefinition>
+                            <RowDefinition Height="50*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50*"></RowDefinition>
-                                <RowDefinition Height="50*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="120,10,120,0" Height="66"  >
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"  Height="66"  >
 
-                                    <ComboBox x:Name="cmbAccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="297" Margin="10" Height="46" >
-                                        <materialDesign:HintAssist.Hint>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Account Name"/>
-                                            </StackPanel>
-                                        </materialDesign:HintAssist.Hint>
-                                    </ComboBox>
-                                    <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10" >
-                                        <materialDesign:HintAssist.Hint>
-                                            <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                                <TextBlock Text="Date From" FontWeight="Bold"/>
-                                            </StackPanel>
-                                        </materialDesign:HintAssist.Hint>
-                                    </DatePicker>
-                                    <DatePicker Name="dtpDateTo" Width="135"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10">
-                                        <materialDesign:HintAssist.Hint>
-                                            <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
-                                                <TextBlock Text="Date To" FontWeight="Bold"/>
-                                            </StackPanel>
-                                        </materialDesign:HintAssist.Hint>
-                                    </DatePicker>
+                                <ComboBox x:Name="cmbAccountName" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="297" Margin="10" Height="46" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Account Name"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <DatePicker Name="dtpDateFrom"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                            <TextBlock Text="Date From" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </DatePicker>
+                                <DatePicker Name="dtpDateTo" Width="135"  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="10">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon  Kind="FileFind" Foreground="{Binding BorderBrush}" Height="25" Width="25" />
+                                            <TextBlock Text="Date To" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </DatePicker>
 
-                                </StackPanel>
-                            </Grid>
-                            <Grid Grid.Row="1">
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="235,10,262,0" Width="615">
-
-                                    <TextBox Name="txtEntryNo" Width="100" Margin="40,10,10,10" Height="45" FontWeight="Bold" FontSize="14"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"   >
-                                        <materialDesign:HintAssist.Hint>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Entry No" FontWeight="Bold"/>
-                                            </StackPanel>
-                                        </materialDesign:HintAssist.Hint>
-                                    </TextBox>
-                                    <ComboBox x:Name="cmbstatus" Width="170" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Margin="10" Height="45" >
-                                        <materialDesign:HintAssist.Hint>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Status" FontWeight="Bold"/>
-                                            </StackPanel>
-                                        </materialDesign:HintAssist.Hint>
-                                        <ComboBoxItem Content="Process"/>
-                                        <ComboBoxItem Content="Completed"/>
-                                        <ComboBoxItem Content="Returned"/>
-
-                                    </ComboBox>
-                                    <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
-                                </StackPanel>
-
-                            </Grid>
-
+                            </StackPanel>
                         </Grid>
                         <Grid Grid.Row="1">
-                            <Grid Grid.Row="0"  >
-                                <DataGrid x:Name="dgvReceiptAndPayment" MouseDoubleClick="dgvReceiptAndPayment_MouseDoubleClick" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" Margin="40">
-                                    <DataGrid.ColumnHeaderStyle>
-                                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                                            <Setter Property="FontWeight" Value="Bold" />
-                                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                        </Style>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"  Width="615">
 
-                                    </DataGrid.ColumnHeaderStyle>
+                                <TextBox Name="txtEntryNo" Width="100" Margin="40,10,10,10" Height="45" FontWeight="Bold" FontSize="14"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"   >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Entry No" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                                <ComboBox x:Name="cmbstatus" Width="170" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Margin="10" Height="45" >
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Status" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                    <ComboBoxItem Content="Process"/>
+                                    <ComboBoxItem Content="Completed"/>
+                                    <ComboBoxItem Content="Returned"/>
 
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Date" FontWeight="Bold" Width="100" Binding="{Binding EDate,StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Entry No" FontWeight="Bold" Width="140" Binding="{Binding EntryNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Cheque/Ref No" FontWeight="Bold" Width="120" Binding="{Binding RefNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding Ledger.AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                                        <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-
-
-                            </Grid>
-                            <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
-                                <rv:ReportViewer x:Name="rptViewer"/>
-                            </WindowsFormsHost>
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="48" Margin="310,0,325,-27">
-
-                                <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
-                                    PDF
-                                </Button>
-                                <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
-                                    PRINT
-                                </Button>
-                                <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
-                                    PRINT PREVIEW
-                                </Button>
+                                </ComboBox>
+                                <Button Width="98" Height="30" x:Name="btnSearch" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
                             </StackPanel>
 
                         </Grid>
+
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <DataGrid x:Name="dgvReceiptAndPayment" MouseDoubleClick="dgvReceiptAndPayment_MouseDoubleClick" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" Background="White" Foreground="Black" Margin="200,10,208,10">
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                </Style>
+
+                            </DataGrid.ColumnHeaderStyle>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Date" FontWeight="Bold" Width="100" Binding="{Binding EDate,StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <DataGridTextColumn Header="Entry No" FontWeight="Bold" Width="140" Binding="{Binding EntryNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <DataGridTextColumn Header="Cheque/Ref No" FontWeight="Bold" Width="120" Binding="{Binding RefNo}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <DataGridTextColumn Header="Account Name" FontWeight="Bold" Width="350" Binding="{Binding Ledger.AccountName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <DataGridTextColumn Header="Amount"  ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
+                            <rv:ReportViewer x:Name="rptViewer"/>
+                        </WindowsFormsHost>
+                    </Grid>
+                    <Grid Grid.Row="2"  VerticalAlignment="Bottom">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center"  Margin="300,10,10,10">
+
+                            <Button  Grid.Column="1" Name="btnExport" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"  Click="btnExport_Click" ToolTip="Export to PDF" Width="134">
+                                PDF
+                            </Button>
+                            <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
+                                PRINT
+                            </Button>
+                            <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
+                                PRINT PREVIEW
+                            </Button>
+                        </StackPanel>
+
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
-    </ScrollViewer>
+    </Grid>
 </UserControl>

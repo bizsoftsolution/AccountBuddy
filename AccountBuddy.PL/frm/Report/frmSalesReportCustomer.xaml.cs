@@ -52,7 +52,7 @@ namespace AccountBuddy.PL.frm.Report
                 int? s = null;
                 int? m = null;
                 if (cmbCustomer.SelectedValue != null) s = (int)cmbCustomer.SelectedValue;
-                if (cmbMode.SelectedValue != null) s = (int)cmbMode.SelectedValue;
+                if (cmbMode.SelectedValue != null) m = (int)cmbMode.SelectedValue;
 
                 dgvDetails.ItemsSource = BLL.Sale.tolist(s, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, m);
 
@@ -118,7 +118,7 @@ namespace AccountBuddy.PL.frm.Report
                 Transaction.frmSale f = new Transaction.frmSale();
                 App.frmHome.ShowForm(f);
                 System.Windows.Forms.Application.DoEvents();
-                f.data.SearchText = gl.RefNo;
+                f.data.RefNo = gl.RefNo;
                 System.Windows.Forms.Application.DoEvents();
                 f.data.Find();
                 f.btnPrint.IsEnabled = true;

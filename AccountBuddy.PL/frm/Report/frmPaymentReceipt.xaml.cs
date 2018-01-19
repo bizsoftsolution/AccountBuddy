@@ -44,7 +44,7 @@ namespace AccountBuddy.PL.frm.Report
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbAccountName.ItemsSource = BLL.Ledger.toList.Where(x=>x.AccountGroup.GroupName==BLL.DataKeyValue.SundryCreditors_Key||x.AccountGroup.GroupName==BLL.DataKeyValue.SundryDebtors_Key).ToList();
+            cmbAccountName.ItemsSource = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.SundryCreditors_Key || x.AccountGroup.GroupName == BLL.DataKeyValue.SundryDebtors_Key).ToList();
             cmbAccountName.DisplayMemberPath = "AccountName";
             cmbAccountName.SelectedValuePath = "Id";
         }
@@ -54,7 +54,8 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                List<BLL.ReceiptAndPayment> list = BLL.ReceiptAndPayment.ToList((int?)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, cmbstatus.Text);
+                List<BLL.ReceiptAndPayment> list = dgvReceiptAndPayment.ItemsSource as List<BLL.ReceiptAndPayment>;
+
                 list = list.Select(x => new BLL.ReceiptAndPayment()
                 { AccountName = x.Ledger.AccountName, Amount = x.Amount, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
 
@@ -215,27 +216,16 @@ namespace AccountBuddy.PL.frm.Report
 
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbAccountName.Text != "")
+            if (dgvReceiptAndPayment.Items.Count != 0)
             {
-                if (dgvReceiptAndPayment.Items.Count != 0)
-                {
-
-                    frmPaymentReceiptPrint f = new frmPaymentReceiptPrint();
-
-                    f.LoadReport((int)cmbAccountName.SelectedValue, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, txtEntryNo.Text, cmbstatus.Text);
-                    f.ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show("No Records To Print");
-                }
-
+                frmPaymentReceiptPrint f = new frmPaymentReceiptPrint();
+                f.LoadReport(dgvReceiptAndPayment.ItemsSource as List<BLL.ReceiptAndPayment>, dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+                f.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Enter AccountName");
+                MessageBox.Show("No Records To Print");
             }
-
         }
 
         #endregion
@@ -264,7 +254,7 @@ namespace AccountBuddy.PL.frm.Report
                     f.data.Find();
                 }
             }
-            }
         }
     }
+}
 

@@ -39,11 +39,10 @@ namespace AccountBuddy.PL.frm.Report
             
 
         }
-        public void LoadReport(int LID,DateTime dtFrom, DateTime dtTo, String EntryNo, String status)
+        public void LoadReport(List<BLL.ReceiptAndPayment> list,DateTime dtFrom, DateTime dtTo)
         {
             try
             {
-                List<BLL.ReceiptAndPayment> list = BLL.ReceiptAndPayment.ToList((int?)LID, dtFrom, dtTo, EntryNo, status);
                 list = list.Select(x => new BLL.ReceiptAndPayment()
                 { AccountName = x.Ledger.AccountName, Amount = x.Amount, EDate = x.EDate, EntryNo = x.EntryNo, EType = x.EType, Ledger = x.Ledger, RefNo = x.RefNo }).ToList();
 
