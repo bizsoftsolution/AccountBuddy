@@ -198,6 +198,8 @@
         <EntityTypeShape EntityType="DBFMCGModel.Product_Spec_Process" Width="1.5" PointX="9.75" PointY="20" />
         <AssociationConnector Association="DBFMCGModel.FK_Product_Spec_Process_Product" />
         <AssociationConnector Association="DBFMCGModel.FK_Product_Spec_Process_Detail_Product_Spec_Process" />
+        <EntityTypeShape EntityType="DBFMCGModel.TaxMaster" Width="1.5" PointX="5.25" PointY="46.375" />
+        <AssociationConnector Association="DBFMCGModel.FK_TaxMaster_Ledger" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

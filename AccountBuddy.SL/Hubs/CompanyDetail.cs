@@ -98,7 +98,7 @@ namespace AccountBuddy.SL.Hubs
                         if (d.UnderCompanyId != null)
                         {
                             var lstCompany = DB.CompanyDetails.Where(x => x.Id == d.UnderCompanyId || (x.Id != d.Id && x.UnderCompanyId == d.UnderCompanyId)).ToList();                            
-                           int AGId = DB.DataKeyValues.Where(x => x.CompanyId == cm.Id && x.DataKey == BLL.DataKeyValue.BranchDivisions_Key).FirstOrDefault().DataValue;
+                            int AGId = DB.DataKeyValues.Where(x => x.CompanyId == cm.Id && x.DataKey == BLL.DataKeyValue.BranchDivisions_Key).FirstOrDefault().DataValue;
                             foreach (var c in lstCompany)
                             {
                                 DAL.Ledger dl1 = new DAL.Ledger();
@@ -499,6 +499,14 @@ namespace AccountBuddy.SL.Hubs
             DB.Ledgers.Add(OT);
             DB.SaveChanges();
             insertDataKeyValue(pr.CompanyId, OT.LedgerName, OT.Id);
+
+            DAL.Ledger GST = new DAL.Ledger();
+            GST.LedgerName = BLL.DataKeyValue.GST_Key;
+            GST.AccountGroupId = DT.Id;
+            DB.Ledgers.Add(GST);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, GST.LedgerName, GST.Id);
+
 
             DAL.AccountGroup prov = new DAL.AccountGroup();
             prov.GroupName = BLL.DataKeyValue.Provisions_Key;

@@ -494,6 +494,25 @@ namespace AccountBuddy.SL.Hubs
         }
         #endregion
 
+        #region TaxMaster
+        public static BLL.TaxMaster ToMap(this DAL.TaxMaster S, BLL.TaxMaster D)
+        {
+            D.Id = S.Id;
+            D.LedgerId = S.LedgerId;
+            D.TaxPercentage = S.TaxPercentage;
+            D.Status = S.Status;
+            return D;
+        }
+        public static DAL.TaxMaster ToMap(this BLL.TaxMaster S, DAL.TaxMaster D)
+        {
+            D.Id = S.Id;
+            D.LedgerId = S.LedgerId;
+            D.TaxPercentage = S.TaxPercentage;
+            D.Status = S.Status;
+            return D;
+        }
+        #endregion
+
         #endregion
 
         #region Transaction 
@@ -624,7 +643,7 @@ namespace AccountBuddy.SL.Hubs
             D.PurchaseId = S.PurchaseId;
             return D;
         }
-   #endregion
+        #endregion
 
         #region PurchaseReturn
         public static BLL.PurchaseReturn ToMap(this DAL.PurchaseReturn S, BLL.PurchaseReturn D)
@@ -1450,14 +1469,14 @@ namespace AccountBuddy.SL.Hubs
         {
             D.Id = S.Id;
             D.ProductId = S.ProductId;
-            
+
             return D;
         }
         public static DAL.Product_Spec_Master ToMap(this BLL.Product_Spec_master S, DAL.Product_Spec_Master D)
         {
             D.Id = S.Id;
             D.ProductId = S.ProductId;
-            
+
             return D;
         }
 
@@ -1467,8 +1486,8 @@ namespace AccountBuddy.SL.Hubs
             D.ProductId = S.ProductId;
             D.Product_Spec_Id = S.Product_Spec_Id;
             D.Qty = S.Qty;
-            
-           // D.ProductName = S.ProductName;
+
+            // D.ProductName = S.ProductName;
             return D;
         }
         public static DAL.Product_Spec_Detail ToMap(this BLL.Product_Spec_Detail S, DAL.Product_Spec_Detail D)
@@ -1506,7 +1525,7 @@ namespace AccountBuddy.SL.Hubs
             D.ProductId = S.ProductId;
             D.PSId = S.PSId;
             D.Qty = S.Qty;
-           
+
             return D;
         }
         public static DAL.Product_Spec_Process_Detail ToMap(this BLL.Product_Spec_Process_Detail S, DAL.Product_Spec_Process_Detail D)

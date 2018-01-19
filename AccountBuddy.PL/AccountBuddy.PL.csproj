@@ -153,7 +153,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="SqlServerTypes\Loader.cs" />
     <Page Include="frmAccountBuddyHome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -233,6 +232,10 @@
     <Page Include="frm\Master\frmSupplier.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="frm\Master\frmTaxMaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Master\frmUOM.xaml">
       <SubType>Designer</SubType>
@@ -645,6 +648,9 @@
     </Compile>
     <Compile Include="frm\Master\frmSupplier.xaml.cs">
       <DependentUpon>frmSupplier.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Master\frmTaxMaster.xaml.cs">
+      <DependentUpon>frmTaxMaster.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Master\frmUOM.xaml.cs">
       <DependentUpon>frmUOM.xaml</DependentUpon>
@@ -1078,13 +1084,6 @@
     <EmbeddedResource Include="Images\pleasewait.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SqlServerTypes\readme.htm" />
-    <Content Include="SqlServerTypes\x64\msvcr120.dll" />
-    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll" />
-    <Content Include="SqlServerTypes\x86\msvcr120.dll" />
-    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

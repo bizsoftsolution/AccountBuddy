@@ -56,7 +56,7 @@ namespace AccountBuddy.BLL
             D.NoOfDigitAfterDecimal = S.NoOfDigitAfterDecimal;
             D.SampleCurrency = S.SampleCurrency;
             D.SampleCurrencyNegative = S.SampleCurrencyNegative;
-            D.SampleCurrencyPositive = S.SampleCurrencyPositive;           
+            D.SampleCurrencyPositive = S.SampleCurrencyPositive;
 
             return D;
         }
@@ -313,9 +313,23 @@ namespace AccountBuddy.BLL
             D.IsReadOnly = S.IsReadOnly;
             return D;
         }
-       
+
+        public static TaxMaster ToMap(this TaxMaster S, TaxMaster D)
+        {
+            D.Id = S.Id;
+            D.TaxPercentage = S.TaxPercentage;
+            D.Ledger = S.Ledger;
+            D.LedgerId = S.LedgerId;
+            D.TaxPercentage = S.TaxPercentage;
+            D.IsEnabled = S.IsEnabled;
+            D.IsReadOnly = S.IsReadOnly;
+            return D;
+        }
+
+
+
         #region Transaction 
-        
+
         #region PurchaseRequesting
         public static PurchaseRequest ToMap(this PurchaseRequest S, PurchaseRequest D)
         {
@@ -349,7 +363,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.ProductName = S.ProductName;
             D.Quantity = S.Quantity;
-            
+
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
             D.UOMName = S.UOMName;
@@ -372,7 +386,7 @@ namespace AccountBuddy.BLL
         {
             //D.Product = S.Product;
             D.Id = S.Id;
-          
+
             D.ProductId = S.ProductId;
             D.ProductName = S.ProductName;
             D.Qty = S.Qty;
@@ -427,8 +441,8 @@ namespace AccountBuddy.BLL
             D.RefNo = S.RefNo;
             D.Status = S.Status;
             D.TotalAmount = S.TotalAmount;
-           
-            
+
+
             return D;
         }
         public static PurchaseOrderDetail ToMap(this PurchaseOrderDetail S, PurchaseOrderDetail D)
@@ -440,7 +454,7 @@ namespace AccountBuddy.BLL
             D.GSTAmount = S.GSTAmount;
             D.ItemCode = S.ItemCode;
             D.POId = S.POId;
-            
+
             D.ProductId = S.ProductId;
             D.ProductName = S.ProductName;
             D.Quantity = S.Quantity;
@@ -498,7 +512,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;            
+            D.UOMId = S.UOMId;
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -551,7 +565,7 @@ namespace AccountBuddy.BLL
             D.IsResale = S.IsResale;
             D.Particulars = S.Particulars;
             D.PDId = S.PDId;
-            D.PRId = S.PRId;            
+            D.PRId = S.PRId;
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -590,7 +604,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;            
+            D.UOMId = S.UOMId;
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -598,7 +612,7 @@ namespace AccountBuddy.BLL
             return D;
         }
         #endregion
-        
+
         #region Sales
         public static Sale ToMap(this Sale S, Sale D)
         {
@@ -641,7 +655,7 @@ namespace AccountBuddy.BLL
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
-            
+
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName; return D;
@@ -676,7 +690,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;            
+            D.UOMId = S.UOMId;
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.IsResale = S.IsResale;
@@ -713,13 +727,13 @@ namespace AccountBuddy.BLL
         {
             D.Product = S.Product;
             D.Id = S.Id;
-            D.Amount = S.Amount??0;
+            D.Amount = S.Amount ?? 0;
             D.DiscountAmount = S.DiscountAmount;
             D.GSTAmount = S.GSTAmount;
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;            
+            D.UOMId = S.UOMId;
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName; return D;
@@ -759,7 +773,7 @@ namespace AccountBuddy.BLL
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;            
+            D.UOMId = S.UOMId;
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName; return D;
@@ -793,7 +807,7 @@ namespace AccountBuddy.BLL
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
-            
+
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -809,9 +823,9 @@ namespace AccountBuddy.BLL
             D.Date = S.Date;
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
-D.ItemAmount = S.ItemAmount;
-D.Narration = S.Narration;
-D.AmountInwords = S.AmountInwords;
+            D.ItemAmount = S.ItemAmount;
+            D.Narration = S.Narration;
+            D.AmountInwords = S.AmountInwords;
             D.Type = S.Type;
             return D;
         }
@@ -825,7 +839,7 @@ D.AmountInwords = S.AmountInwords;
             D.ProductId = S.ProductId;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;            
+            D.UOMId = S.UOMId;
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -867,7 +881,7 @@ D.AmountInwords = S.AmountInwords;
             D.Quantity = S.Quantity;
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
-            
+
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
@@ -944,7 +958,7 @@ D.AmountInwords = S.AmountInwords;
             D.PDetail = S.PDetail;
             D.PDetails = S.PDetails;
             D.PLedger = S.PLedger;
-        
+
 
             D.IsEnabled = S.IsEnabled;
             D.IsLedgerEditable = S.IsLedgerEditable;
@@ -966,7 +980,7 @@ D.AmountInwords = S.AmountInwords;
             D.PaymentId = S.PaymentId;
             D.LedgerName = S.LedgerName;
             D.SNo = S.SNo;
-           
+
             return D;
         }
         #endregion
@@ -1033,7 +1047,7 @@ D.AmountInwords = S.AmountInwords;
 
             D.JDetail = S.JDetail;
             D.JDetails = S.JDetails;
-          
+
             D.IsEnabled = S.IsEnabled;
             D.IsReadOnly = S.IsReadOnly;
 
@@ -1058,7 +1072,7 @@ D.AmountInwords = S.AmountInwords;
             D.Status = S.Status;
             D.TransactionMode = S.TransactionMode;
 
-           
+
             D.IsShowComplete = S.IsShowComplete;
             D.IsShowOnlineDetail = S.IsShowOnlineDetail;
             D.IsShowChequeDetail = S.IsShowChequeDetail;

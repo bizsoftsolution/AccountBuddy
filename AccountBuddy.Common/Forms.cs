@@ -25,6 +25,7 @@ namespace AccountBuddy.Common
             frmDepartment = "AccountBuddy.PL.frm.Master.frmDepartment",
             frmProductSpecification = "AccountBuddy.PL.frm.Master.frmProductSpecification",
            frmProductSpecificationProcess= "AccountBuddy.PL.frm.Transaction.frmProductSpecificationProcess",
+               frmTaxMaster = "AccountBuddy.PL.frm.Master.frmTaxMaster",
 
 
 

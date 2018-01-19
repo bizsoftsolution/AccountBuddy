@@ -383,6 +383,22 @@ namespace AccountBuddy.BLL
                 return toList.Where(x => x.DataKey == DutiesTaxes_Key).FirstOrDefault().DataValue;
             }
         }
+        public static string GST_Key
+        {
+            get
+            {
+                return "GST";
+            }
+
+        }
+        public static int GST_Value
+        {
+            get
+            {
+                return toList.Where(x => x.DataKey == GST_Key).FirstOrDefault().DataValue;
+            }
+        }
+
         public static string Provisions_Key
         {
             get

@@ -874,6 +874,15 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LedgerId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TaxMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LedgerId" Type="int" Nullable="false" />
+          <Property Name="TaxPercentage" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
         <EntityType Name="TransactionType">
           <Key>
             <PropertyRef Name="Id" />
@@ -2325,6 +2334,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TaxMaster_Ledger">
+          <End Role="Ledger" Type="Self.Ledger" Multiplicity="1" />
+          <End Role="TaxMaster" Type="Self.TaxMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaxMaster">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UOM_CompanyDetail">
           <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="1" />
           <End Role="UOM" Type="Self.UOM" Multiplicity="*" />
@@ -2452,6 +2473,7 @@
           <EntitySet Name="StockSeparated" EntityType="Self.StockSeparated" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockSeperatedDetail" EntityType="Self.StockSeperatedDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaxMaster" EntityType="Self.TaxMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionType" EntityType="Self.TransactionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UOM" EntityType="Self.UOM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
@@ -2918,6 +2940,10 @@
           <AssociationSet Name="FK_Supplier_Ledger" Association="Self.FK_Supplier_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
             <End Role="Supplier" EntitySet="Supplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaxMaster_Ledger" Association="Self.FK_TaxMaster_Ledger">
+            <End Role="Ledger" EntitySet="Ledger" />
+            <End Role="TaxMaster" EntitySet="TaxMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_UOM_CompanyDetail" Association="Self.FK_UOM_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
@@ -3498,6 +3524,11 @@
             <End Role="Product_Spec_Process" EntitySet="Product_Spec_Process" />
             <End Role="Product_Spec_Process_Detail" EntitySet="Product_Spec_Process_Detail" />
           </AssociationSet>
+          <EntitySet Name="TaxMasters" EntityType="DBFMCGModel.TaxMaster" />
+          <AssociationSet Name="FK_TaxMaster_Ledger" Association="DBFMCGModel.FK_TaxMaster_Ledger">
+            <End Role="Ledger" EntitySet="Ledgers" />
+            <End Role="TaxMaster" EntitySet="TaxMasters" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -3781,6 +3812,7 @@
           <NavigationProperty Name="StockOuts" Relationship="DBFMCGModel.FK_StockOut_Ledger" FromRole="Ledger" ToRole="StockOut" />
           <NavigationProperty Name="Suppliers" Relationship="DBFMCGModel.FK_Supplier_Ledger" FromRole="Ledger" ToRole="Supplier" />
           <NavigationProperty Name="PurchaseRequests" Relationship="DBFMCGModel.FK_PurchaseRequest_Ledger" FromRole="Ledger" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="TaxMasters" Relationship="DBFMCGModel.FK_TaxMaster_Ledger" FromRole="Ledger" ToRole="TaxMaster" />
         </EntityType>
         <EntityType Name="LogDetail">
           <Key>
@@ -6119,6 +6151,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TaxMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LedgerId" Type="Int32" Nullable="false" />
+          <Property Name="TaxPercentage" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_TaxMaster_Ledger" FromRole="TaxMaster" ToRole="Ledger" />
+        </EntityType>
+        <Association Name="FK_TaxMaster_Ledger">
+          <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
+          <End Type="DBFMCGModel.TaxMaster" Role="TaxMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ledger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaxMaster">
+              <PropertyRef Name="LedgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7134,6 +7188,16 @@
                 <ScalarProperty Name="Qty" ColumnName="Qty" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxMasters">
+            <EntityTypeMapping TypeName="DBFMCGModel.TaxMaster">
+              <MappingFragment StoreEntitySet="TaxMaster">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TaxPercentage" ColumnName="TaxPercentage" />
+                <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

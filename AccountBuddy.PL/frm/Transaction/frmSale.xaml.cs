@@ -440,10 +440,10 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
             data.setLabel();
             btnSave.Visibility = (BLL.Sale.UserPermission.AllowInsert || BLL.Sale.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.Sale.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+            dgvTax.ItemsSource = BLL.TaxMaster.toList.Select(x => new { x.Status, TaxName = string.Format("{0}({1})", x.Ledger.LedgerName, x.TaxPercentage), Amount = 0 }).ToList();
         }
 
         private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)
@@ -457,10 +457,16 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void cmbUOM_Loaded(object sender, RoutedEventArgs e)
         {
-            BLL.UOM.toList = null;
-            cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
-            cmbUOM.DisplayMemberPath = "Symbol";
-            cmbUOM.SelectedValuePath = "Id";
+            try
+            {
+                cmbUOM.ItemsSource = BLL.UOM.toList.ToList();
+                cmbUOM.DisplayMemberPath = "Symbol";
+                cmbUOM.SelectedValuePath = "Id";
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
 
         private void cmbCustomer_Loaded(object sender, RoutedEventArgs e)
