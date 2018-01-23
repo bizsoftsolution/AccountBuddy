@@ -60,14 +60,14 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = P.PDetails.Select(X => X.PurchaseId).FirstOrDefault();
                     DB.PurchaseDetails.RemoveRange(d.PurchaseDetails.Where(x => x.PurchaseId == rd).ToList());
 
-                    P.ToMap( d);
+                    P.ToMap(d);
                     foreach (var b_Pd in P.PDetails)
                     {
                         // DAL.PurchaseDetail d_Pd = d.PurchaseDetails.Where(x => x.Id == b_Pd.Id).FirstOrDefault();
                         // if (d_Pd == null)
                         // {
                         DAL.PurchaseDetail d_Pd = new DAL.PurchaseDetail();
-                            d.PurchaseDetails.Add(d_Pd);
+                        d.PurchaseDetails.Add(d_Pd);
                         //  }
                         AppLib.ToMap(b_Pd, d_Pd);
                     }
@@ -75,17 +75,18 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).Purchase_RefNoRefresh(Purchase_NewRefNo());
-                Journal_SaveByPurchase(d);
-                Sales_SaveByPurchase(d);
+                var s = P.TaxDetails.Where(x => x.TaxAmount > 0).ToList();
+                Journal_SaveByPurchase(d,s);
+                Sales_SaveByPurchase(d, s);
                 return true;
             }
 
             catch (Exception ex) { Common.AppLib.WriteLog(ex); return false; }
-            
+
         }
 
         #region Sales
-        void Purchase_SaveBySales(DAL.Sale S)
+        void Purchase_SaveBySales(DAL.Sale S, List<BLL.TaxMaster> TaxDetails)
         {
             try
             {
@@ -129,11 +130,11 @@ namespace AccountBuddy.SL.Hubs
                             p.PurchaseDetails.Add(d_pod);
                         }
                         DB.SaveChanges();
-                        Journal_SaveByPurchase(p);
+                        Journal_SaveByPurchase(p, TaxDetails);
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.AppLib.WriteLog(ex);
             }
@@ -178,13 +179,39 @@ namespace AccountBuddy.SL.Hubs
                     foreach (var d_pod in d.PurchaseDetails)
                     {
                         BLL.PurchaseDetail b_pod = new BLL.PurchaseDetail();
-                        d_pod.ToMap( b_pod);
+                        d_pod.ToMap(b_pod);
                         P.PDetails.Add(b_pod);
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                     }
+                    DAL.Journal j = DB.Journals.Where(x => x.EntryNo == SearchText && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                    foreach (var t in j.JournalDetails.Where(x => x.Ledger.AccountGroup.GroupName == BLL.DataKeyValue.DutiesTaxes_Key).ToList())
+                    {
+                        P.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
+                            Status = true,
+                            Ledger = LedgerDAL_BLL(t.Ledger),
+                            TaxPercentage = TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
+                            TaxAmount = t.CrAmt
+                        });
 
+                    }
+                    var tl = DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+                    var t2 = tl.Where(p => !P.TaxDetails.Any(p2 => p2.Ledger.Id == p.Ledger.Id)).ToList();
+
+                    foreach (var t1 in t2)
+                    {
+                        P.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = t1.LedgerId,
+                            Status = false,
+                            Ledger = LedgerDAL_BLL(t1.Ledger),
+                            TaxPercentage = t1.TaxPercentage,
+                            TaxAmount = 0
+                        });
+                    }
                 }
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
@@ -248,7 +275,7 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    d.ToMap( P);
+                    d.ToMap(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
                     foreach (var d_pod in d.PurchaseDetails)
@@ -258,6 +285,33 @@ namespace AccountBuddy.SL.Hubs
                         P.PDetails.Add(b_pod);
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                    }
+                    DAL.Journal j = DB.Journals.Where(x => x.EntryNo == d.RefNo && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                    foreach (var t in j.JournalDetails.Where(x => x.Ledger.AccountGroup.GroupName == BLL.DataKeyValue.DutiesTaxes_Key).ToList())
+                    {
+                        P.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
+                            Status = true,
+                            Ledger = LedgerDAL_BLL(t.Ledger),
+                            TaxPercentage = TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
+                            TaxAmount = t.CrAmt
+                        });
+
+                    }
+                    var tl = DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+                    var t2 = tl.Where(p => !P.TaxDetails.Any(p2 => p2.Ledger.Id == p.Ledger.Id)).ToList();
+
+                    foreach (var t1 in t2)
+                    {
+                        P.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = t1.LedgerId,
+                            Status = false,
+                            Ledger = LedgerDAL_BLL(t1.Ledger),
+                            TaxPercentage = t1.TaxPercentage,
+                            TaxAmount = 0
+                        });
                     }
 
                 }
@@ -270,7 +324,7 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.Purchase> Purchase_List(int? LedgerId, int? TType, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<BLL.Purchase> lstPurchase = new List<BLL.Purchase>();
-            
+
             BLL.Purchase rp = new BLL.Purchase();
             try
             {

@@ -16,13 +16,14 @@ namespace AccountBuddy.BLL
 
         private int _Id;
         private int _LedgerId;
-        private decimal? _TaxPercentage;
+        private decimal _TaxPercentage;
+        private decimal _TaxAmount;
         private Ledger _Ledger;
 
         private static UserTypeDetail _UserPermission;
         private bool _IsReadOnly;
         private bool _IsEnabled;
-        private bool? _Status;
+        private bool _Status;
         #endregion
 
         #region Property
@@ -104,7 +105,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public decimal? TaxPercentage
+        public decimal TaxPercentage
         {
             get
             {
@@ -119,7 +120,23 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public bool? Status
+
+        public decimal TaxAmount
+        {
+            get
+            {
+                return _TaxAmount;
+            }
+            set
+            {
+                if (_TaxAmount != value)
+                {
+                    _TaxAmount = value;
+                    NotifyPropertyChanged(nameof(TaxAmount));
+                }
+            }
+        }
+        public bool Status
         {
             get
             {
@@ -332,6 +349,23 @@ namespace AccountBuddy.BLL
             _toList = null;
         }
 
+
+        public static decimal SetGST(ObservableCollection<TaxMaster> TDetails, decimal IAmount, decimal DAmount)
+        {            
+            foreach (var t in TDetails)
+            {
+                t.TaxAmount = t.Status == false ? 0 : GetGST(IAmount, DAmount, t.TaxPercentage);
+            }
+
+            return TDetails.Sum(x => x.TaxAmount);
+
+        }
+
+        public static decimal GetGST(decimal ItemAmount, decimal DiscountAmount, decimal TaxPercentage)
+        {
+            return (ItemAmount - DiscountAmount) * TaxPercentage / 100;
+
+        }
 
         #endregion
     }

@@ -331,5 +331,17 @@ namespace AccountBuddy.PL.frm.Transaction
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
+
+        private void btnAddGST_Click(object sender, RoutedEventArgs e)
+        {
+             frmTaxList frm = new frmTaxList();            
+
+            frm.dgvTax.ItemsSource = data.TaxDetails;
+            frm.ItemAmount = data.ItemAmount;
+            frm.DiscountAmount = data.DiscountAmount;
+            frm.ShowDialog();
+            data.SetGST();
+            frm.Close();
+        }
     }
 }

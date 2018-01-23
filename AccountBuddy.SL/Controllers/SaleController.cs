@@ -14,7 +14,7 @@ namespace AccountBuddy.SL.Controllers
         {
             return View();
         }
-        public JsonResult Save(int LedgerId, string PayMode,string RefCode, string SaleDetails, bool IsGST, string ChqNo, DateTime? ChqDate, string ChqBankName, decimal DiscountAmount)
+        public JsonResult Save(int LedgerId, string PayMode,string RefCode, string SaleDetails, bool IsGST, string ChqNo, DateTime? ChqDate, string ChqBankName, decimal DiscountAmount, List<BLL.TaxMaster> TDetails)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace AccountBuddy.SL.Controllers
                 SalRefCode = DB.Sales.Where(x => x.SalesDate.Month == DateTime.Now.Month && x.Ledger.AccountGroup.CompanyId ==l.AccountGroup.CompanyDetail.Id).Max(x => x.RefNo.Substring(x.RefNo.Length - 5, x.RefNo.Length));
 
                
-                ab.Journal_SaveBySales(sal);
+                ab.Journal_SaveBySales(sal, TDetails);
                 
                 return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);
             }

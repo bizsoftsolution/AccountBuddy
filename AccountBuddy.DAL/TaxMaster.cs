@@ -16,8 +16,8 @@ namespace AccountBuddy.DAL
     {
         public int Id { get; set; }
         public int LedgerId { get; set; }
-        public Nullable<decimal> TaxPercentage { get; set; }
-        public Nullable<bool> Status { get; set; }
+        public decimal TaxPercentage { get; set; }
+        public bool Status { get; set; }
     
         public virtual Ledger Ledger { get; set; }
     }

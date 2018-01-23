@@ -31,7 +31,7 @@ namespace AccountBuddy.BLL
         private string _TransactionType;
         private string _AmountInwords;
 
-        private bool _IsGST=true;
+        private bool _IsGST = true;
         private string _SearchText;
 
         private SalesDetail _SDetail;
@@ -45,7 +45,7 @@ namespace AccountBuddy.BLL
 
         private string _lblDiscount;
         private string _lblExtra;
-
+        private ObservableCollection<TaxMaster> _TaxDetails;
         #endregion
 
         #region Property
@@ -431,6 +431,7 @@ namespace AccountBuddy.BLL
             }
         }
 
+
         public ObservableCollection<SalesDetail> SDetails
         {
             get
@@ -444,6 +445,22 @@ namespace AccountBuddy.BLL
                 {
                     _SDetails = value;
                     NotifyPropertyChanged(nameof(SDetails));
+                }
+            }
+        }
+        public ObservableCollection<TaxMaster> TaxDetails
+        {
+            get
+            {
+                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
+                return _TaxDetails;
+            }
+            set
+            {
+                if (_TaxDetails != value)
+                {
+                    _TaxDetails = value;
+                    NotifyPropertyChanged(nameof(TaxDetails));
                 }
             }
         }
@@ -551,12 +568,27 @@ namespace AccountBuddy.BLL
                 new Sale().ToMap(this);
                 _SDetail = new SalesDetail();
                 _SDetails = new ObservableCollection<SalesDetail>();
+                _TaxDetails = new ObservableCollection<TaxMaster>();
+
+                var l1 = BLL.TaxMaster.toList;
+                foreach (var t in l1)
+                {
+                    TaxDetails.Add(new TaxMaster()
+                    {
+                        Id = t.Id,
+                        Status = t.Status,
+                        Ledger = t.Ledger,
+                        TaxPercentage = t.TaxPercentage,
+                        TaxAmount = 0
+                    });
+                }
+
 
                 SalesDate = DateTime.Now;
                 RefNo = FMCGHubClient.HubCaller.Invoke<string>("Sales_NewRefNo").Result;
                 NotifyAllPropertyChanged();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.AppLib.WriteLog(ex);
             }
@@ -575,6 +607,8 @@ namespace AccountBuddy.BLL
                 if (S.Id == 0) return false;
                 S.ToMap(this);
                 this.SDetails = S.SDetails;
+                this.TaxDetails = S.TaxDetails;
+                SetGST();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -592,6 +626,7 @@ namespace AccountBuddy.BLL
                 if (S.Id == 0) return false;
                 S.ToMap(this);
                 this.SDetails = S.SDetails;
+                SetGST();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -627,7 +662,7 @@ namespace AccountBuddy.BLL
                     sod = new SalesDetail();
                     SDetails.Add(sod);
                 }
-                
+
                 SDetail.ToMap(sod);
                 ClearDetail();
                 ItemAmount = SDetails.Sum(x => x.Amount);
@@ -666,17 +701,17 @@ namespace AccountBuddy.BLL
             TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;
             setLabel();
         }
-       private void SetGST()
+
+        public void SetGST()
         {
-            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
+            GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount, DiscountAmount);
+            SetAmount();
         }
         public bool FindRefNo()
         {
             var rv = false;
             try
             {
-
-
                 Common.AppLib.WriteLog("FindRefNo_Start");
                 rv = FMCGHubClient.HubCaller.Invoke<bool>("Find_SRef", RefNo, this).Result;
                 Common.AppLib.WriteLog("FindRefNo_End");
@@ -697,13 +732,13 @@ namespace AccountBuddy.BLL
             }
             catch (Exception ex)
             {
-               Common.AppLib.WriteLog(string.Format("Sales List= {0}-{1}", ex.Message, ex.InnerException));               
+                Common.AppLib.WriteLog(string.Format("Sales List= {0}-{1}", ex.Message, ex.InnerException));
             }
             return rv;
 
         }
 
-        
+
 
         #endregion
     }

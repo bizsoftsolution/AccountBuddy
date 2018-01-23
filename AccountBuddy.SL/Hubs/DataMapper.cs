@@ -511,6 +511,8 @@ namespace AccountBuddy.SL.Hubs
             D.Status = S.Status;
             return D;
         }
+
+       
         #endregion
 
         #endregion
@@ -819,20 +821,7 @@ namespace AccountBuddy.SL.Hubs
             D.SalesId = S.SalesId;
             return D;
         }
-        public static DAL.SalesDetail ToMap(this BLL.SalesDetail S, DAL.SalesDetail D)
-        {
-            D.Id = S.Id;
-            D.Amount = S.Amount;
-            D.DiscountAmount = S.DiscountAmount;
-            D.GSTAmount = S.GSTAmount;
-            D.ProductId = S.ProductId;
-            D.Quantity = S.Quantity;
-            D.UnitPrice = S.UnitPrice;
-            D.UOMId = S.UOMId;
-            D.SalesId = S.SalesId;
-            return D;
-        }
-        #endregion
+       #endregion
 
         #region Sales Return
         public static BLL.SalesReturn ToMap(this DAL.SalesReturn S, BLL.SalesReturn D)

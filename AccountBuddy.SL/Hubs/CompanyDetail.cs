@@ -508,6 +508,16 @@ namespace AccountBuddy.SL.Hubs
             insertDataKeyValue(pr.CompanyId, GST.LedgerName, GST.Id);
 
 
+            DAL.TaxMaster TM = new DAL.TaxMaster();
+            TM.TaxPercentage = 0;
+            TM.Status =true;
+            TM.LedgerId = GST.Id;
+            DB.TaxMasters.Add(TM);
+            DB.SaveChanges();
+            insertDataKeyValue(pr.CompanyId, TM.Ledger.LedgerName, TM.Id);
+
+
+
             DAL.AccountGroup prov = new DAL.AccountGroup();
             prov.GroupName = BLL.DataKeyValue.Provisions_Key;
             prov.GroupCode = "212";

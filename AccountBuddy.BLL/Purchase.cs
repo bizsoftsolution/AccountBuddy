@@ -45,6 +45,7 @@ namespace AccountBuddy.BLL
         private static UserTypeDetail _UserPermission;
         private string _lblDiscount;
         private string _lblExtra;
+        private ObservableCollection<TaxMaster> _TaxDetails;
 
         #endregion
 
@@ -173,7 +174,7 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                     SetAmount();
+                     SetAmount(); 
                 }
             }
         }
@@ -458,6 +459,8 @@ namespace AccountBuddy.BLL
             }
         }
 
+       
+
         public string lblDiscount
         {
             get
@@ -492,6 +495,22 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public ObservableCollection<TaxMaster> TaxDetails
+        {
+            get
+            {
+                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
+                return _TaxDetails;
+            }
+            set
+            {
+                if (_TaxDetails != value)
+                {
+                    _TaxDetails = value;
+                    NotifyPropertyChanged(nameof(TaxDetails));
+                }
+            }
+        }
 
         #endregion
 
@@ -542,6 +561,19 @@ namespace AccountBuddy.BLL
                 new Purchase().ToMap(this);
                 this.PDetail = new PurchaseDetail();
                 this.PDetails = new ObservableCollection<PurchaseDetail>();
+                this.TaxDetails = new ObservableCollection<TaxMaster>();
+                var l1 = BLL.TaxMaster.toList;
+                foreach (var t in l1)
+                {
+                    TaxDetails.Add(new TaxMaster()
+                    {
+                        Id = t.Id,
+                        Status = t.Status,
+                        Ledger = t.Ledger,
+                        TaxPercentage = t.TaxPercentage,
+                        TaxAmount = 0
+                    });
+                }
 
                 PurchaseDate = DateTime.Now;
                 RefNo = FMCGHubClient.HubCaller.Invoke<string>("Purchase_NewRefNo").Result;
@@ -566,6 +598,8 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.PDetails = po.PDetails;
+                this.TaxDetails = po.TaxDetails;
+                SetGST();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -583,6 +617,7 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.PDetails = po.PDetails;
+                SetGST();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -631,6 +666,8 @@ namespace AccountBuddy.BLL
             PurchaseDetail pod = new PurchaseDetail();
             pod.SNo = PDetails.Count == 0 ? 1 : PDetails.Max(x => x.SNo) + 1;
             pod.ToMap(PDetail);
+
+
         }
 
         public void DeleteDetail(int SNo)
@@ -650,11 +687,14 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
+            SetGST();
             TotalAmount = ItemAmount - DiscountAmount  + GSTAmount + ExtraAmount;
             setLabel();
         }
-
+        public void SetGST()
+        {
+            GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount, DiscountAmount);
+        }
         public bool FindRefNo()
         {
             var rv = false;

@@ -443,8 +443,7 @@ namespace AccountBuddy.PL.frm.Transaction
             data.setLabel();
             btnSave.Visibility = (BLL.Sale.UserPermission.AllowInsert || BLL.Sale.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.Sale.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-            dgvTax.ItemsSource = BLL.TaxMaster.toList.Select(x => new { x.Status, TaxName = string.Format("{0}({1})", x.Ledger.LedgerName, x.TaxPercentage), Amount = 0 }).ToList();
-        }
+          }
 
         private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -489,6 +488,20 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbItem.ItemsSource = BLL.Product.toList.Where(x => x.StockGroup.IsSale != false).ToList();
             cmbItem.DisplayMemberPath = "ProductName";
             cmbItem.SelectedValuePath = "Id";
+        }
+
+      
+
+        private void btnAddGST_Click(object sender, RoutedEventArgs e)
+        {
+            frmTaxList frm = new frmTaxList();            
+
+            frm.dgvTax.ItemsSource = data.TaxDetails;
+            frm.ItemAmount = data.ItemAmount;
+            frm.DiscountAmount = data.DiscountAmount;
+            frm.ShowDialog();
+            data.SetGST();
+            frm.Close();
         }
     }
 }

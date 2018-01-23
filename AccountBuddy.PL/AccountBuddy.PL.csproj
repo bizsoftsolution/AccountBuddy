@@ -562,6 +562,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Transaction\frmTaxList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Vouchers\frmQuickJournalVoucher.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -895,6 +899,9 @@
     </Compile>
     <Compile Include="frm\Transaction\frmStockSeperatedSearch.xaml.cs">
       <DependentUpon>frmStockSeperatedSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Transaction\frmTaxList.xaml.cs">
+      <DependentUpon>frmTaxList.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Vouchers\frmQuickJournalVoucher.xaml.cs">
       <DependentUpon>frmQuickJournalVoucher.xaml</DependentUpon>
