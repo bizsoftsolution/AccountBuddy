@@ -693,6 +693,8 @@ namespace AccountBuddy.SL.Hubs
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
             D.PRId = S.PRId;
+            D.IsResale = S.IsResale.Value;
+            D.Particulars = S.Particulars;
             return D;
         }
         public static DAL.PurchaseReturnDetail ToMap(this BLL.PurchaseReturnDetail S, DAL.PurchaseReturnDetail D)
@@ -706,6 +708,8 @@ namespace AccountBuddy.SL.Hubs
             D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId;
             D.PRId = S.PRId;
+            D.IsResale = S.IsResale;
+            D.Particulars = S.Particulars;
             return D;
         }
         #endregion

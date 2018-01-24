@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Controllers
                 db.SaveChanges();
 
                
-                ab.Journal_SaveBySalesReturn(sal);
+                //ab.Journal_SaveBySalesReturn(sal);
                 return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

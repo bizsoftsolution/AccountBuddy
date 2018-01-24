@@ -34,6 +34,7 @@ namespace AccountBuddy.BLL
 
         private JobOrderIssueDetail _JODetail;
         private ObservableCollection<JobOrderIssueDetail> _JODetails;
+        private ObservableCollection<TaxMaster> _TaxDetails;
         private string _Status;
         private string _RefCode;
         private static UserTypeDetail _UserPermission;
@@ -193,7 +194,7 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                     SetAmount();
+                     SetGST();
                 }
             }
         }
@@ -389,7 +390,23 @@ namespace AccountBuddy.BLL
                 if (_JODetails != value)
                 {
                     _JODetails = value;
-                    NotifyPropertyChanged(nameof(_JODetails));
+                    NotifyPropertyChanged(nameof(JODetails));
+                }
+            }
+        }
+        public ObservableCollection<TaxMaster> TaxDetails
+        {
+            get
+            {
+                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
+                return _TaxDetails;
+            }
+            set
+            {
+                if (_TaxDetails != value)
+                {
+                    _TaxDetails = value;
+                    NotifyPropertyChanged(nameof(TaxDetails));
                 }
             }
         }
@@ -479,7 +496,21 @@ namespace AccountBuddy.BLL
                 new JobOrderIssue().ToMap(this);
                 _JODetail = new JobOrderIssueDetail();
                 _JODetails = new ObservableCollection<JobOrderIssueDetail>();
-
+                this.TaxDetails = new ObservableCollection<TaxMaster>();
+                var l1 = BLL.TaxMaster.toList;
+                foreach (var t in l1)
+                {
+                    TaxDetails.Add(new TaxMaster()
+                    {
+                        Id = t.Id,
+                        Status = t.Status,
+                        Ledger = t.Ledger,
+                        LedgerId = t.LedgerId,
+                        TaxPercentage = t.TaxPercentage,
+                        TaxAmount = 0,
+                        TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, t.TaxPercentage.ToString())
+                    });
+                }
                 JODate = DateTime.Now;
                 RefNo = FMCGHubClient.HubCaller.Invoke<string>("JobOrderIssue_NewRefNo").Result;
                 NotifyAllPropertyChanged();
@@ -499,6 +530,9 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.JODetails = po.JODetails;
+                this.TaxDetails = po.TaxDetails;
+                SetGST();
+
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -530,6 +564,8 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.JODetails = po.JODetails;
+                this.TaxDetails = po.TaxDetails;
+                SetGST();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -584,10 +620,14 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            GSTAmount = (ItemAmount  - DiscountAmount ) * Common.AppLib.GSTPer;
-            TotalAmount = (ItemAmount -DiscountAmount ) + GSTAmount + (Extras ?? 0);
+             TotalAmount = (ItemAmount -DiscountAmount ) + GSTAmount + (Extras ?? 0);
             setLabel();
 
+        }
+        public void SetGST()
+        {
+            GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount ?? 0, DiscountAmount ?? 0);
+            SetAmount();
         }
         public void setLabel()
         {

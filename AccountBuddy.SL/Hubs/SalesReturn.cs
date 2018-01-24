@@ -79,8 +79,9 @@ namespace AccountBuddy.SL.Hubs
                     LogDetailStore(P, LogDetailType.UPDATE);
                 }
                 if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).SalesReturn_RefNoRefresh(SalesReturn_NewRefNo());
-                Journal_SaveBySalesReturn(d);
-                PurchaseReturn_SaveBySalesReturn(d);
+                var s = P.TaxDetails.Where(x => x.TaxAmount > 0).ToList();
+                Journal_SaveBySalesReturn(d,s);
+                PurchaseReturn_SaveBySalesReturn(d,s);
                 return true;
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
@@ -110,6 +111,38 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.SNo = ++i;
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
+                    }
+                    DAL.Journal j = DB.Journals.Where(x => x.EntryNo == SearchText && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                    foreach (var t in j.JournalDetails.Where(x => x.Ledger.AccountGroup.GroupName == BLL.DataKeyValue.DutiesTaxes_Key).ToList())
+                    {
+                        P.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
+                            Status = true,
+                            Ledger = LedgerDAL_BLL(t.Ledger),
+                            TaxPercentage = TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
+                            TaxAmount = t.CrAmt,
+                            TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId).ToString()),
+                            LedgerId = t.LedgerId
+                        });
+
+                    }
+                    var tl = DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+                    var t2 = tl.Where(p => !P.TaxDetails.Any(p2 => p2.Ledger.Id == p.Ledger.Id)).ToList();
+
+                    foreach (var t1 in t2)
+                    {
+                        P.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t1.LedgerId),
+                            LedgerId = t1.LedgerId,
+                            Status = false,
+                            Ledger = LedgerDAL_BLL(t1.Ledger),
+                            TaxPercentage = t1.TaxPercentage,
+                            TaxAmount = 0,
+                            TaxName = string.Format("{0}({1})", t1.Ledger.LedgerName, t1.TaxPercentage.ToString()),
+
+                        });
                     }
 
                 }
@@ -166,7 +199,7 @@ namespace AccountBuddy.SL.Hubs
         }
 
         #region Purchase Return 
-        void SaleReturn_SaveByPurchaseReturn(DAL.PurchaseReturn PR)
+        void SaleReturn_SaveByPurchaseReturn(DAL.PurchaseReturn PR, List<BLL.TaxMaster> TaxDetail)
         {
             try
             {
@@ -208,7 +241,7 @@ namespace AccountBuddy.SL.Hubs
                             s.SalesReturnDetails.Add(d_pod);
                         }
                         DB.SaveChanges();
-                        Journal_SaveBySalesReturn(s);
+                        Journal_SaveBySalesReturn(s, TaxDetail);
                     }
                 }
             }

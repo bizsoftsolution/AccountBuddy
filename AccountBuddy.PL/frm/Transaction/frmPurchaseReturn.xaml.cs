@@ -3,6 +3,7 @@ using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -327,6 +328,18 @@ namespace AccountBuddy.PL.frm.Transaction
                 pod.ToMap(data.PRDetail);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
+        }
+
+        private void btnAddGST_Click(object sender, RoutedEventArgs e)
+        {
+            frmTaxList frm = new frmTaxList();
+            ObservableCollection<BLL.TaxMaster> tax = new ObservableCollection<BLL.TaxMaster>();
+            frm.dgvTax.ItemsSource = data.TaxDetails;
+            frm.ItemAmount = data.ItemAmount;
+            frm.DiscountAmount = data.DiscountAmount;
+            frm.ShowDialog();
+            data.SetGST();
+            frm.Close();
         }
     }
 }

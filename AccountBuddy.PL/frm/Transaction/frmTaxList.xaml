@@ -8,7 +8,7 @@
        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
       xmlns:Conversion="clr-namespace:AccountBuddy.PL.Conversion"        
              xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-     Background="White" Title="Tax List" WindowStartupLocation="CenterScreen" Loaded="MetroWindow_Loaded" Height="500" Width="650">
+     Background="White" Title="Tax List" WindowStartupLocation="CenterScreen" Loaded="MetroWindow_Loaded" Height="300" Width="450">
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -27,44 +27,41 @@
             <RowDefinition Height="185*"></RowDefinition>
         </Grid.RowDefinitions>
         <Border BorderBrush="Black" Grid.RowSpan="2" Grid.Row="0" BorderThickness="1"></Border>
-        <DataGrid x:Name="dgvTax" Grid.Column="0" Grid.Row="0"  CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,30,10,10" >
+        <DataGrid x:Name="dgvTax" Grid.Column="0" Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False" BorderBrush="Black" BorderThickness="1" Background="White" Foreground="Black" RenderTransformOrigin="0.5,0.5" Margin="10,30,10,10" >
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="FontSize" Value="12" />
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTemplateColumn TextBlock.TextAlignment="Center"  Width="100">
-                    <DataGridTemplateColumn.Header>
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" >Status</TextBlock>
-                    </DataGridTemplateColumn.Header>
+                <DataGridTemplateColumn TextBlock.TextAlignment="Center"  Width="50">
+
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox x:Name="ckbStatus" IsChecked="{Binding Status}" Tag="{Binding}" Checked="ckbStatus_Checked" Unchecked="ckbStatus_Unchecked" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" ></CheckBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Tax Name" FontWeight="Bold" Width="230" Binding="{Binding Ledger.LedgerName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                <DataGridTextColumn Header="Percentage" FontWeight="Bold" Width="100" Binding="{Binding TaxPercentage}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
-                <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="150" Binding="{Binding TaxAmount,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                <DataGridTextColumn Header="Tax" FontWeight="Bold" Width="230" Binding="{Binding TaxName}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                <DataGridTextColumn Header="Amount" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="100" Binding="{Binding TaxAmount,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
 
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Vertical" Width="280">
-               <StackPanel Height="31" Orientation="Horizontal">
-                    <Label Content="Total GST:"  HorizontalContentAlignment="Right" Foreground="Black"   Width="150" Height="AUTO" FontSize="16" />
-                    <Label x:Name="lblGSTAmount"  HorizontalContentAlignment="Left" Foreground="Black"    Width="AUTO" Height="AUTO"  FontSize="16"/>
-                </StackPanel>
-               <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                    <Label Content="Item Amount:"  HorizontalContentAlignment="Right" Foreground="Black"   Width="150" Height="AUTO" FontSize="16" />
-                    <Label x:Name="lblItemAmount"  HorizontalContentAlignment="Left" Foreground="Black"    Width="AUTO" Height="AUTO"  FontSize="16"/>
-                </StackPanel>
-                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                    <Label Content="Discount Amount:" HorizontalContentAlignment="Right"  Foreground="Black"   Width="150" Height="AUTO" FontSize="16" />
-                    <Label x:Name="lblDiscountAmount" HorizontalContentAlignment="Left"  Foreground="Black"   Width="8" Height="AUTO"  FontSize="16"/>
-             </StackPanel>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Vertical" Margin="10,0" Width="422">
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left"  >
+                <Label Content="Total GST:"  HorizontalContentAlignment="Left" Foreground="Black" Height="AUTO" FontSize="16"  />
+                <Label x:Name="lblGSTAmount"  HorizontalContentAlignment="Left" Foreground="Black"    Width="AUTO" Height="auto"  FontSize="16"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                <Label Content="Item Amount:"  HorizontalContentAlignment="Left" Foreground="Black" Height="AUTO" FontSize="16" />
+                <Label x:Name="lblItemAmount"  HorizontalContentAlignment="Left" Foreground="Black"    Width="AUTO" Height="AUTO"  FontSize="16"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Label Content="Discount Amount:" HorizontalContentAlignment="Left"  Foreground="Black"   Width="136" Height="AUTO" FontSize="16" />
+                <Label x:Name="lblDiscountAmount" HorizontalContentAlignment="Left"  Foreground="Black"   Width="150" Height="AUTO"  FontSize="16"/>
+            </StackPanel>
         </StackPanel>
 
     </Grid>

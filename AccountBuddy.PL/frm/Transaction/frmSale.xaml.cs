@@ -3,6 +3,7 @@ using AccountBuddy.Common;
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -443,7 +444,7 @@ namespace AccountBuddy.PL.frm.Transaction
             data.setLabel();
             btnSave.Visibility = (BLL.Sale.UserPermission.AllowInsert || BLL.Sale.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
             btnDelete.Visibility = BLL.Sale.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-          }
+        }
 
         private void txtChequeNo_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -462,7 +463,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 cmbUOM.DisplayMemberPath = "Symbol";
                 cmbUOM.SelectedValuePath = "Id";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.AppLib.WriteLog(ex);
             }
@@ -490,12 +491,12 @@ namespace AccountBuddy.PL.frm.Transaction
             cmbItem.SelectedValuePath = "Id";
         }
 
-      
+
 
         private void btnAddGST_Click(object sender, RoutedEventArgs e)
         {
-            frmTaxList frm = new frmTaxList();            
-
+            frmTaxList frm = new frmTaxList();
+            ObservableCollection<BLL.TaxMaster> tax = new ObservableCollection<BLL.TaxMaster>();
             frm.dgvTax.ItemsSource = data.TaxDetails;
             frm.ItemAmount = data.ItemAmount;
             frm.DiscountAmount = data.DiscountAmount;

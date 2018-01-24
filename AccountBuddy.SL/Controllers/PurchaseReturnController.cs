@@ -76,10 +76,8 @@ namespace AccountBuddy.SL.Controllers
 
                 db.PurchaseReturns.Add(pur);
                db.SaveChanges();
-
-               
-
-                ab.Journal_SaveByPurchaseReturn(pur);
+                
+               // ab.Journal_SaveByPurchaseReturn(pur, );
                 return Json(new { Id = pur.Id, HasError = false }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

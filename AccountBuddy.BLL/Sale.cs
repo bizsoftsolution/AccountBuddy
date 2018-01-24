@@ -569,7 +569,7 @@ namespace AccountBuddy.BLL
                 _SDetail = new SalesDetail();
                 _SDetails = new ObservableCollection<SalesDetail>();
                 _TaxDetails = new ObservableCollection<TaxMaster>();
-
+                this.TaxDetails = new ObservableCollection<TaxMaster>();
                 var l1 = BLL.TaxMaster.toList;
                 foreach (var t in l1)
                 {
@@ -578,8 +578,10 @@ namespace AccountBuddy.BLL
                         Id = t.Id,
                         Status = t.Status,
                         Ledger = t.Ledger,
+                        LedgerId = t.LedgerId,
                         TaxPercentage = t.TaxPercentage,
-                        TaxAmount = 0
+                        TaxAmount = 0,
+                        TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, t.TaxPercentage.ToString())
                     });
                 }
 

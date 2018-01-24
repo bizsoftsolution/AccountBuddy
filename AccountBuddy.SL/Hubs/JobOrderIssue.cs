@@ -55,23 +55,17 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
-                    //    foreach (var d_SOd in d.JobOrderIssueDetails)
-                    //    {
-                    //        BLL.JobOrderIssueDetail b_SOd = SO.JODetails.Where(x => x.Id == d_SOd.Id).FirstOrDefault();
-                    //        if (b_SOd == null) d.JobOrderIssueDetails.Remove(d_SOd);
-                    //    }
+                    
                     decimal rd = SO.JODetails.Select(X => X.JOId).FirstOrDefault();
                     DB.JobOrderIssueDetails.RemoveRange(d.JobOrderIssueDetails.Where(x => x.JOId == rd).ToList());
 
                     SO.ToMap(d);
                     foreach (var b_SOd in SO.JODetails)
                     {
-                        //DAL.JobOrderIssueDetail d_SOd = d.JobOrderIssueDetails.Where(x => x.Id == b_SOd.Id).FirstOrDefault();
-                        //if (d_SOd == null)
-                        //{
+                        
                         DAL.JobOrderIssueDetail d_SOd = new DAL.JobOrderIssueDetail();
                         d.JobOrderIssueDetails.Add(d_SOd);
-                        //}
+                       
                         b_SOd.ToMap( d_SOd);
                     }
                     DB.SaveChanges();
@@ -79,7 +73,8 @@ namespace AccountBuddy.SL.Hubs
 
                 }
                 if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).JobOrderIssue_RefNoRefresh(JobOrderIssue_NewRefNo());
-                Journal_SaveByJobOrderIssue(d);
+                var s = SO.TaxDetails.Where(x => x.TaxAmount > 0).ToList();
+                Journal_SaveByJobOrderIssue(d,s);
                 return true;
 
             }
@@ -113,6 +108,40 @@ namespace AccountBuddy.SL.Hubs
                         SO.Status = d.JobOrderIssueDetails.FirstOrDefault().JobOrderReceivedDetails.Count() > 0 ? "Received" : "Pending";
                     }
 
+                    DAL.Journal j = DB.Journals.Where(x => x.EntryNo == SearchText && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                    foreach (var t in j.JournalDetails.Where(x => x.Ledger.AccountGroup.GroupName == BLL.DataKeyValue.DutiesTaxes_Key).ToList())
+                    {
+                        SO.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
+                            Status = true,
+                            Ledger = LedgerDAL_BLL(t.Ledger),
+                            TaxPercentage = TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
+                            TaxAmount = t.CrAmt,
+                            TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId).ToString()),
+                            LedgerId = t.LedgerId
+                        });
+
+                    }
+                    var tl = DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+                    var t2 = tl.Where(p => !SO.TaxDetails.Any(p2 => p2.Ledger.Id == p.Ledger.Id)).ToList();
+
+                    foreach (var t1 in t2)
+                    {
+                        SO.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t1.LedgerId),
+                            LedgerId = t1.LedgerId,
+                            Status = false,
+                            Ledger = LedgerDAL_BLL(t1.Ledger),
+                            TaxPercentage = t1.TaxPercentage,
+                            TaxAmount = 0,
+                            TaxName = string.Format("{0}({1})", t1.Ledger.LedgerName, t1.TaxPercentage.ToString()),
+
+                        });
+                    }
+
+
                 }
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
@@ -141,9 +170,7 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return false;
         }
-
-
-
+        
         public List<BLL.JobOrderIssue> JobOrderIssue_JOPendingList()
         {
             return DB.JobOrderIssues.Where(x => x.JobWorker.Ledger.AccountGroup.CompanyId == Caller.CompanyId)

@@ -55,11 +55,18 @@ namespace AccountBuddy.PL.frm.Transaction
 
         void ShowGSTAmount()
         {
-            var l1 = dgvTax.ItemsSource as ObservableCollection<BLL.TaxMaster>;
-            var amt = l1.Sum(x => x.TaxAmount);
-            lblGSTAmount.Content = string.Format("{0:N2}", amt);
-            lblDiscountAmount.Content= string.Format("{0:N2}", DiscountAmount);
-            lblItemAmount.Content = string.Format("{0:N2}", ItemAmount);
+           
+            try
+            {
+                var l1 = dgvTax.ItemsSource as ObservableCollection<BLL.TaxMaster>;
+                var amt = l1.Sum(x => x.TaxAmount);
+                lblGSTAmount.Content = string.Format("{0:N2}", amt);
+                lblDiscountAmount.Content = string.Format("{0:N2}", DiscountAmount);
+                lblItemAmount.Content = string.Format("{0:N2}", ItemAmount);
+            }
+
+            catch (Exception ex)
+            { }
         }
     }
 }

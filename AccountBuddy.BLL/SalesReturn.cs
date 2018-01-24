@@ -37,6 +37,7 @@ namespace AccountBuddy.BLL
 
         private SalesReturnDetail _SRDetail;
         private ObservableCollection<SalesReturnDetail> _SRDetails;
+        private ObservableCollection<TaxMaster> _TaxDetails;
         private string _RefCode;
         private string _ChequeNo;
         private DateTime? _ChequeDate;
@@ -445,7 +446,23 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        
+        public ObservableCollection<TaxMaster> TaxDetails
+        {
+            get
+            {
+                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
+                return _TaxDetails;
+            }
+            set
+            {
+                if (_TaxDetails != value)
+                {
+                    _TaxDetails = value;
+                    NotifyPropertyChanged(nameof(TaxDetails));
+                }
+            }
+        }
+
         public long PaymentLedgerId { get; set; }
         public bool IsShowChequeDetail
         {
@@ -547,6 +564,21 @@ namespace AccountBuddy.BLL
             new SalesReturn().ToMap(this);
             this.SRDetail = new SalesReturnDetail();
             this.SRDetails = new ObservableCollection<SalesReturnDetail>();
+            this.TaxDetails = new ObservableCollection<TaxMaster>();
+            var l1 = BLL.TaxMaster.toList;
+            foreach (var t in l1)
+            {
+                TaxDetails.Add(new TaxMaster()
+                {
+                    Id = t.Id,
+                    Status = t.Status,
+                    Ledger = t.Ledger,
+                    TaxPercentage = t.TaxPercentage,
+                    TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, t.TaxPercentage.ToString()),
+                    LedgerId = t.Ledger.Id,
+                    TaxAmount = 0
+                });
+            }
 
             SRDate = DateTime.Now;
             RefNo = FMCGHubClient.HubCaller.Invoke<string>("SalesReturn_NewRefNo").Result;
@@ -561,6 +593,8 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.SRDetails = po.SRDetails;
+                this.TaxDetails = po.TaxDetails;
+                SetGST();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -578,6 +612,8 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.SRDetails = po.SRDetails;
+                this.TaxDetails = po.TaxDetails;
+                SetGST();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -649,9 +685,10 @@ namespace AccountBuddy.BLL
             TotalAmount = ItemAmount  - DiscountAmount + GSTAmount + ExtraAmount ;
             setLabel();
                 }
-        private void SetGST()
+        public void SetGST()
         {
-            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
+            GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount, DiscountAmount);
+            SetAmount();
         }
         public void setLabel()
         {

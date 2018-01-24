@@ -194,7 +194,9 @@ namespace AccountBuddy.SL.Hubs
                             Status = true,
                             Ledger = LedgerDAL_BLL(t.Ledger),
                             TaxPercentage = TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
-                            TaxAmount = t.CrAmt
+                            TaxAmount = t.CrAmt,
+                            TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId).ToString()),
+                            LedgerId = t.LedgerId
                         });
 
                     }
@@ -205,11 +207,14 @@ namespace AccountBuddy.SL.Hubs
                     {
                         P.TaxDetails.Add(new BLL.TaxMaster()
                         {
-                            Id = t1.LedgerId,
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t1.LedgerId),
+                            LedgerId = t1.LedgerId,
                             Status = false,
                             Ledger = LedgerDAL_BLL(t1.Ledger),
                             TaxPercentage = t1.TaxPercentage,
-                            TaxAmount = 0
+                            TaxAmount = 0,
+                            TaxName = string.Format("{0}({1})", t1.Ledger.LedgerName, t1.TaxPercentage.ToString()),
+
                         });
                     }
                 }

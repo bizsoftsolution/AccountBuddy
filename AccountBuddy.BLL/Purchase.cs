@@ -174,7 +174,7 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                     SetAmount(); 
+                     SetGST(); 
                 }
             }
         }
@@ -570,8 +570,11 @@ namespace AccountBuddy.BLL
                         Id = t.Id,
                         Status = t.Status,
                         Ledger = t.Ledger,
+                        LedgerId = t.LedgerId,
                         TaxPercentage = t.TaxPercentage,
-                        TaxAmount = 0
+                        TaxAmount = 0,
+                        TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, t.TaxPercentage.ToString())
+
                     });
                 }
 
@@ -687,13 +690,14 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            SetGST();
+            
             TotalAmount = ItemAmount - DiscountAmount  + GSTAmount + ExtraAmount;
             setLabel();
         }
         public void SetGST()
         {
             GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount, DiscountAmount);
+            SetAmount();
         }
         public bool FindRefNo()
         {

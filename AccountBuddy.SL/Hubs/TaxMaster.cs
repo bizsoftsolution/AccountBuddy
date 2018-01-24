@@ -13,7 +13,7 @@ namespace AccountBuddy.SL.Hubs
         {
             BLL.TaxMaster TaxTo = taxFrom.ToMap(new BLL.TaxMaster());
             TaxTo.Ledger = LedgerDAL_BLL(taxFrom.Ledger);
-        
+           
             return TaxTo;
         }
 

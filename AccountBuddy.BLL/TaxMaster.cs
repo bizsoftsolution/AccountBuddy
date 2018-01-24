@@ -24,6 +24,7 @@ namespace AccountBuddy.BLL
         private bool _IsReadOnly;
         private bool _IsEnabled;
         private bool _Status;
+        private string _TaxName;
         #endregion
 
         #region Property
@@ -165,9 +166,14 @@ namespace AccountBuddy.BLL
                 {
                     _Ledger = value;
                     NotifyPropertyChanged(nameof(Ledger));
-
+                    setTaxName();
                 }
             }
+        }
+
+        private void setTaxName()
+        {
+            TaxName = string.Format("{0}({1})", Ledger.LedgerName, TaxPercentage);
         }
 
         public bool IsReadOnly
@@ -204,8 +210,24 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public string TaxName
+        {
+            get
+            {
+                return _TaxName;
+            }
 
-     
+            set
+            {
+                if (_TaxName != value)
+                {
+                    _TaxName = value;
+                    NotifyPropertyChanged(nameof(TaxName));
+                }
+            }
+        }
+
+
         #endregion
 
         #region Property  Changed Event
@@ -354,6 +376,7 @@ namespace AccountBuddy.BLL
         {            
             foreach (var t in TDetails)
             {
+                
                 t.TaxAmount = t.Status == false ? 0 : GetGST(IAmount, DAmount, t.TaxPercentage);
             }
 

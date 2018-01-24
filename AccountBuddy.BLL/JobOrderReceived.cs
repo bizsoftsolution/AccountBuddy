@@ -34,12 +34,13 @@ namespace AccountBuddy.BLL
 
         private JobOrderReceivedDetail _JRDetail;
         private ObservableCollection<JobOrderReceivedDetail> _JRDetails;
+        private ObservableCollection<TaxMaster> _TaxDetails;
         private string _Status;
         private string _RefCode;
         private static UserTypeDetail _UserPermission;
         private string _lblDiscount;
         private string _lblExtra;
-
+    
         #endregion
 
         #region Property
@@ -193,7 +194,7 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                    SetAmount();
+                    SetGST();
                 }
             }
         }
@@ -376,7 +377,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
+     
         public ObservableCollection<JobOrderReceivedDetail> JRDetails
         {
             get
@@ -391,6 +392,23 @@ namespace AccountBuddy.BLL
                 {
                     _JRDetails = value;
                     NotifyPropertyChanged(nameof(JRDetails));
+                }
+            }
+        }
+        public ObservableCollection<TaxMaster> TaxDetails
+        {
+            get
+            {
+
+                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
+                return _TaxDetails;
+            }
+            set
+            {
+                if (_TaxDetails != value)
+                {
+                    _TaxDetails = value;
+                    NotifyPropertyChanged(nameof(TaxDetails));
                 }
             }
         }
@@ -465,6 +483,21 @@ namespace AccountBuddy.BLL
             new JobOrderReceived().ToMap(this);
             _JRDetail = new JobOrderReceivedDetail();
             _JRDetails = new ObservableCollection<JobOrderReceivedDetail>();
+            this.TaxDetails = new ObservableCollection<TaxMaster>();
+            var l1 = BLL.TaxMaster.toList;
+            foreach (var t in l1)
+            {
+                TaxDetails.Add(new TaxMaster()
+                {
+                    Id = t.Id,
+                    Status = t.Status,
+                    Ledger = t.Ledger,
+                    LedgerId = t.LedgerId,
+                    TaxPercentage = t.TaxPercentage,
+                    TaxAmount = 0,
+                    TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, t.TaxPercentage.ToString())
+                });
+            }
 
             JRDate = DateTime.Now;
             RefNo = FMCGHubClient.HubCaller.Invoke<string>("JobOrderReceived_NewRefNo").Result;
@@ -479,6 +512,8 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.JRDetails = po.JRDetails;
+                this.TaxDetails = po.TaxDetails;
+                SetGST();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -509,6 +544,8 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.JRDetails = po.JRDetails;
+                this.TaxDetails = po.TaxDetails;
+                SetGST();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -566,7 +603,6 @@ namespace AccountBuddy.BLL
         {
             try
             {
-                GSTAmount = ((ItemAmount ?? 0) - (DiscountAmount ?? 0)) * Common.AppLib.GSTPer;
                 TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (ExtraAmount ?? 0);
                 setLabel();
             }
@@ -578,6 +614,11 @@ namespace AccountBuddy.BLL
             lblDiscount = string.Format("{0}({1})", "Discount Amount", AppLib.CurrencyPositiveSymbolPrefix);
             lblExtra = string.Format("{0}({1})", "Extra Amount", AppLib.CurrencyPositiveSymbolPrefix);
 
+        }
+        public void SetGST()
+        {
+            GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount??0, DiscountAmount??0);
+            SetAmount();
         }
         public bool FindRefNo()
         {

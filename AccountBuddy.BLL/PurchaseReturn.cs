@@ -35,6 +35,7 @@ namespace AccountBuddy.BLL
 
         private PurchaseReturnDetail _PRDetail;
         private ObservableCollection<PurchaseReturnDetail> _PRDetails;
+        private ObservableCollection<TaxMaster> _TaxDetails;
         private string _RefCode;
         private string _ChequeNo;
         private DateTime? _ChequeDate;
@@ -170,7 +171,7 @@ namespace AccountBuddy.BLL
                 {
                     _ItemAmount = value;
                     NotifyPropertyChanged(nameof(ItemAmount));
-                   SetAmount();
+                    SetGST();
                 }
             }
         }
@@ -439,6 +440,22 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public ObservableCollection<TaxMaster> TaxDetails
+        {
+            get
+            {
+                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
+                return _TaxDetails;
+            }
+            set
+            {
+                if (_TaxDetails != value)
+                {
+                    _TaxDetails = value;
+                    NotifyPropertyChanged(nameof(TaxDetails));
+                }
+            }
+        }
         public bool IsShowChequeDetail
         {
             get
@@ -488,9 +505,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
-
-
+        
         #endregion
 
         #region Property Changed
@@ -534,7 +549,21 @@ namespace AccountBuddy.BLL
                 new PurchaseReturn().ToMap(this);
                 this.PRDetail = new PurchaseReturnDetail();
                 this.PRDetails = new ObservableCollection<PurchaseReturnDetail>();
-
+                this.TaxDetails = new ObservableCollection<TaxMaster>();
+                 var l1 = BLL.TaxMaster.toList;
+                foreach (var t in l1)
+                {
+                    TaxDetails.Add(new TaxMaster()
+                    {
+                        Id = t.Id,
+                        Status = t.Status,
+                        Ledger = t.Ledger,
+                        LedgerId = t.LedgerId,
+                        TaxPercentage = t.TaxPercentage,
+                        TaxAmount = 0,
+                        TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, t.TaxPercentage.ToString())
+                    });
+                }
                 PRDate = DateTime.Now;
                 RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseReturn_NewRefNo").Result;
                 NotifyAllPropertyChanged();
@@ -553,6 +582,8 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.PRDetails = po.PRDetails;
+                this.TaxDetails = po.TaxDetails;
+                SetGST();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -561,6 +592,7 @@ namespace AccountBuddy.BLL
                 Common.AppLib.WriteLog(ex); return false;
             }
         }
+        
         public bool FindById(int Id)
         {
             try
@@ -569,7 +601,8 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.PRDetails = po.PRDetails;
-                NotifyAllPropertyChanged();
+                this.TaxDetails = po.TaxDetails;
+                SetGST(); NotifyAllPropertyChanged();
                 return true;
             }
             catch (Exception ex)
@@ -635,11 +668,14 @@ namespace AccountBuddy.BLL
 
         private void SetAmount()
         {
-            GSTAmount = (ItemAmount - DiscountAmount) * Common.AppLib.GSTPer;
             TotalAmount = ItemAmount - DiscountAmount + GSTAmount + ExtraAmount;
             setLabel();
         }
-       
+        public void SetGST()
+        {
+            GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount, DiscountAmount);
+            SetAmount();
+        }
         public bool FindRefNo()
         {
             var rv = false;

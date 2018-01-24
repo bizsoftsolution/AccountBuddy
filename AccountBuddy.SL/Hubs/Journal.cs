@@ -457,7 +457,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region sales return 
-        public void Journal_SaveBySalesReturn(DAL.SalesReturn SR)
+        public void Journal_SaveBySalesReturn(DAL.SalesReturn SR, List<BLL.TaxMaster> TaxDetail)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
             string Mode, status = null;
@@ -480,7 +480,7 @@ namespace AccountBuddy.SL.Hubs
                 Mode = "Cheque";
                 status = "Process";
             }
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == SR.RefNo).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -493,7 +493,7 @@ namespace AccountBuddy.SL.Hubs
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
-                        CrAmt = SR.TotalAmount,
+                        DrAmt = SR.TotalAmount,
                         Particulars = SR.Narration,
                         TransactionMode = "Cash"
                     });
@@ -503,7 +503,7 @@ namespace AccountBuddy.SL.Hubs
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = SR.LedgerId,
-                        CrAmt = SR.TotalAmount,
+                        DrAmt = SR.TotalAmount,
                         Particulars = SR.Narration,
                         TransactionMode = "Credit"
                     });
@@ -513,7 +513,7 @@ namespace AccountBuddy.SL.Hubs
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = DB.Banks.FirstOrDefault().LedgerId,
-                        CrAmt = SR.TotalAmount,
+                        DrAmt = SR.TotalAmount,
                         TransactionMode = "Cheque",
                         Particulars = SR.Narration,
                         ChequeDate = SR.ChequeDate,
@@ -525,68 +525,148 @@ namespace AccountBuddy.SL.Hubs
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
                     LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Sales_Return_Ledger_Key, CId),
-                    DrAmt = SR.ItemAmount - SR.DiscountAmount + SR.ExtraAmount,
-                    Particulars = SR.Narration,
+                    CrAmt = SR.ItemAmount - SR.DiscountAmount + SR.ExtraAmount,
                     TransactionMode = Mode,
+                    Particulars = SR.Narration,
                     ChequeDate = SR.ChequeDate,
                     ChequeNo = SR.ChequeNo,
                     Status = status
-
                 });
-
-                j.JournalDetails.Add(new DAL.JournalDetail()
+                foreach (var t in TaxDetail)
                 {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Output_Tax_Ledger_Key, CId),
-                    DrAmt = SR.GSTAmount,
-                    Particulars = SR.Narration,
-                    TransactionMode = Mode,
-                    ChequeDate = SR.ChequeDate,
-                    ChequeNo = SR.ChequeNo,
-                    Status = status
-                });
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = t.Ledger.Id,
+                        CrAmt = t.TaxAmount,
+                        TransactionMode = Mode,
+                        ChequeDate = SR.ChequeDate,
+                        ChequeNo = SR.ChequeNo,
+                        Status = status,
+                        Particulars = SR.Narration
+                    });
+                }
 
                 DB.Journals.Add(j);
             }
             else
             {
-                foreach (var jd in j.JournalDetails)
+                if (j.JournalDetails.Count != TaxDetail.Count)
                 {
-                    jd.Particulars = SR.Narration;
-                    if (jd.CrAmt != 0)
+                    foreach (var s in j.JournalDetails.ToList())
                     {
-                        if (SR.TransactionTypeId == 1)
+                        decimal pd = j.JournalDetails.Select(X => X.JournalId).FirstOrDefault();
+                        DB.JournalDetails.RemoveRange(j.JournalDetails.Where(x => x.JournalId == pd).ToList());
+                    }
+                    if (SR.TransactionTypeId == 1)
+                    {
+                        j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            jd.LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId);
-                            jd.CrAmt = SR.TotalAmount;
-                            jd.TransactionMode = "Cash";
-                            jd.Particulars = SR.Narration;
-                        }
-                        else if (SR.TransactionTypeId == 2)
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
+                            DrAmt = SR.TotalAmount,
+                            Particulars = SR.Narration,
+                            TransactionMode = "Cash"
+                        });
+                    }
+                    else if (SR.TransactionTypeId == 2)
+                    {
+                        j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            jd.LedgerId = SR.LedgerId;
-                            jd.CrAmt = SR.TotalAmount;
-                            jd.TransactionMode = "Credit";
-                            jd.Particulars = SR.Narration;
+                            LedgerId = SR.LedgerId,
+                            DrAmt = SR.TotalAmount,
+                            Particulars = SR.Narration,
+                            TransactionMode = "Credit"
+                        });
+                    }
+                    else
+                    {
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                            DrAmt = SR.TotalAmount,
+                            TransactionMode = "Cheque",
+                            Particulars = SR.Narration,
+                            ChequeDate = SR.ChequeDate,
+                            ChequeNo = SR.ChequeNo,
+                            Status = "Process"
+
+                        });
+                    }
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Sales_Return_Ledger_Key, CId),
+                        CrAmt = SR.ItemAmount - SR.DiscountAmount + SR.ExtraAmount,
+                        TransactionMode = Mode,
+                        Particulars = SR.Narration,
+                        ChequeDate = SR.ChequeDate,
+                        ChequeNo = SR.ChequeNo,
+                        Status = status
+                    });
+                    foreach (var t in TaxDetail)
+                    {
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = t.Ledger.Id,
+                            CrAmt = t.TaxAmount,
+                            TransactionMode = Mode,
+                            ChequeDate = SR.ChequeDate,
+                            ChequeNo = SR.ChequeNo,
+                            Status = status,
+                            Particulars = SR.Narration
+                        });
+                    }
+                    DB.SaveChanges();
+                }
+                else
+                {
+                    foreach (var jd in j.JournalDetails)
+                    {
+                        jd.Particulars = SR.Narration;
+                        if (jd.DrAmt != 0)
+                        {
+                            if (SR.TransactionTypeId == 1)
+                            {
+                                jd.LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId);
+                                jd.DrAmt = SR.TotalAmount;
+                                jd.TransactionMode = "Cash";
+                                jd.Particulars = SR.Narration;
+                            }
+                            else if (SR.TransactionTypeId == 2)
+                            {
+                                jd.LedgerId = SR.LedgerId;
+                                jd.DrAmt = SR.TotalAmount;
+                                jd.TransactionMode = "Credit";
+                                jd.Particulars = SR.Narration;
+                            }
+                            else
+                            {
+                                jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
+                                jd.DrAmt = SR.TotalAmount;
+                                jd.TransactionMode = "Cheque";
+                                jd.ChequeDate = SR.ChequeDate;
+                                jd.ChequeNo = SR.ChequeNo;
+                                jd.Status = status;
+                                jd.Particulars = SR.Narration;
+                            }
                         }
                         else
                         {
-                            jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
-                            jd.CrAmt = SR.TotalAmount;
-                            jd.TransactionMode = "Cheque";
+                            if (jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.Sales_Return_Ledger_Key, CId))
+                            {
+                                jd.CrAmt = SR.ItemAmount - SR.DiscountAmount + SR.ExtraAmount;
+                            }
+                            else
+                            {
+                                if (SR.LedgerId == TaxIdByCompany_LedgerId(Caller.CompanyId, jd.LedgerId))
+                                {
+                                    jd.CrAmt = TaxDetail.Where(x => x.Ledger.Id == SR.LedgerId).Select(x => x.TaxAmount).FirstOrDefault();
+                                }
+                            }
+                            jd.TransactionMode = Mode;
                             jd.ChequeDate = SR.ChequeDate;
                             jd.ChequeNo = SR.ChequeNo;
                             jd.Status = status;
                             jd.Particulars = SR.Narration;
                         }
-                    }
-                    else
-                    {
-                        jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.Sales_Return_Ledger_Key, CId) ? SR.ItemAmount - SR.DiscountAmount + SR.ExtraAmount : SR.GSTAmount;
-                        jd.TransactionMode = Mode;
-                        jd.ChequeDate = SR.ChequeDate;
-                        jd.ChequeNo = SR.ChequeNo;
-                        jd.Status = status;
-                        jd.Particulars = SR.Narration;
                     }
                 }
             }
@@ -595,8 +675,7 @@ namespace AccountBuddy.SL.Hubs
         }
         void Journal_DeleteBySalesReturn(BLL.SalesReturn SR)
         {
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.SalesReturn, SR.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == SR.RefNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
@@ -827,7 +906,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region Purchase Return
-        public void Journal_SaveByPurchaseReturn(DAL.PurchaseReturn PR)
+        public void Journal_SaveByPurchaseReturn(DAL.PurchaseReturn PR, List<BLL.TaxMaster> TaxDetails)
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, PR.Id);
             string Mode, status = null;
@@ -847,7 +926,7 @@ namespace AccountBuddy.SL.Hubs
                 Mode = "Cheque";
                 status = "Process";
             }
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == RefCode).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == PR.RefNo).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -859,7 +938,7 @@ namespace AccountBuddy.SL.Hubs
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
-                        DrAmt = PR.TotalAmount,
+                        CrAmt = PR.TotalAmount,
                         Particulars = PR.Narration,
                         TransactionMode = "Cash"
                     });
@@ -869,7 +948,7 @@ namespace AccountBuddy.SL.Hubs
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = PR.LedgerId,
-                        DrAmt = PR.TotalAmount,
+                        CrAmt = PR.TotalAmount,
                         Particulars = PR.Narration,
                         TransactionMode = "Credit"
                     });
@@ -879,7 +958,7 @@ namespace AccountBuddy.SL.Hubs
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = DB.Banks.FirstOrDefault().LedgerId,
-                        DrAmt = PR.TotalAmount,
+                        CrAmt = PR.TotalAmount,
                         TransactionMode = "Cheque",
                         Particulars = PR.Narration,
                         ChequeDate = PR.ChequeDate,
@@ -891,7 +970,7 @@ namespace AccountBuddy.SL.Hubs
                 j.JournalDetails.Add(new DAL.JournalDetail()
                 {
                     LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Purchase_Return_Ledger_Key, CId),
-                    CrAmt = PR.ItemAmount - PR.DiscountAmount + PR.ExtraAmount,
+                    DrAmt = PR.ItemAmount - PR.DiscountAmount + PR.ExtraAmount,
                     Particulars = PR.Narration,
                     TransactionMode = Mode,
                     ChequeDate = PR.ChequeDate,
@@ -900,61 +979,142 @@ namespace AccountBuddy.SL.Hubs
 
                 });
 
-                j.JournalDetails.Add(new DAL.JournalDetail()
+                foreach (var t in TaxDetails)
                 {
-                    LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Input_Tax_Ledger_Key, CId),
-                    CrAmt = PR.GSTAmount,
-                    Particulars = PR.Narration,
-                    TransactionMode = Mode,
-                    ChequeDate = PR.ChequeDate,
-                    ChequeNo = PR.ChequeNo,
-                    Status = status
-                });
-
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = t.Ledger.Id,
+                        DrAmt = t.TaxAmount,
+                        TransactionMode = Mode,
+                        ChequeDate = PR.ChequeDate,
+                        ChequeNo = PR.ChequeNo,
+                        Status = status,
+                        Particulars = PR.Narration
+                    });
+                }
 
                 DB.Journals.Add(j);
             }
             else
             {
-                foreach (var jd in j.JournalDetails)
+                if (j.JournalDetails.Count != TaxDetails.Count)
                 {
-                    jd.Particulars = PR.Narration;
-                    if (jd.DrAmt != 0)
+                    foreach (var s in j.JournalDetails.ToList())
                     {
-                        if (PR.TransactionTypeId == 1)
+                        decimal pd = j.JournalDetails.Select(X => X.JournalId).FirstOrDefault();
+                        DB.JournalDetails.RemoveRange(j.JournalDetails.Where(x => x.JournalId == pd).ToList());
+                    }
+                    if (PR.TransactionTypeId == 1)
+                    {
+                        j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            jd.LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId);
-                            jd.DrAmt = PR.TotalAmount;
-                            jd.TransactionMode = "Cash";
-                            jd.Particulars = PR.Narration;
-                        }
-                        else if (PR.TransactionTypeId == 2)
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
+                            CrAmt = PR.TotalAmount,
+                            TransactionMode = "Cash",
+                            Particulars = PR.Narration
+                        });
+                    }
+                    else if (PR.TransactionTypeId == 2)
+                    {
+                        j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            jd.LedgerId = PR.LedgerId;
-                            jd.DrAmt = PR.TotalAmount;
-                            jd.TransactionMode = "Credit";
-                            jd.Particulars = PR.Narration;
-                        }
-                        else
-                        {
-                            jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
-                            jd.DrAmt = PR.TotalAmount;
-                            jd.TransactionMode = "Cheque";
-                            jd.Particulars = PR.Narration;
-                            jd.ChequeDate = PR.ChequeDate;
-                            jd.ChequeNo = PR.ChequeNo;
-                            jd.Status = status;
-                        }
+                            LedgerId = PR.LedgerId,
+                            CrAmt = PR.TotalAmount,
+                            TransactionMode = "Credit",
+                            Particulars = PR.Narration
+                        });
                     }
                     else
                     {
-                        jd.CrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.Purchase_Return_Ledger_Key, CId) ? PR.ItemAmount - PR.DiscountAmount + PR.ExtraAmount : PR.GSTAmount;
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                            CrAmt = PR.TotalAmount,
+                            Particulars = PR.Narration,
+                            TransactionMode = "Cheque",
+                            ChequeDate = PR.ChequeDate,
+                            ChequeNo = PR.ChequeNo,
+                            Status = "Process"
+                        });
+                    }
+                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    {
+                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Purchase_Return_Ledger_Key, CId),
+                        DrAmt = PR.ItemAmount - PR.DiscountAmount + PR.ExtraAmount,
+                        TransactionMode = Mode,
+                        ChequeDate = PR.ChequeDate,
+                        ChequeNo = PR.ChequeNo,
+                        Status = status,
+                        Particulars = PR.Narration
+                    });
+                    foreach (var t in TaxDetails)
+                    {
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = t.Ledger.Id,
+                            DrAmt = t.TaxAmount,
+                            TransactionMode = Mode,
+                            ChequeDate = PR.ChequeDate,
+                            ChequeNo = PR.ChequeNo,
+                            Status = status,
+                            Particulars = PR.Narration
+                        });
 
-                        jd.TransactionMode = Mode;
-                        jd.ChequeDate = PR.ChequeDate;
-                        jd.ChequeNo = PR.ChequeNo;
-                        jd.Status = status;
+                    }
+                    DB.SaveChanges();
+                }
+                else
+                {
+                    foreach (var jd in j.JournalDetails)
+                    {
                         jd.Particulars = PR.Narration;
+                        if (jd.CrAmt != 0)
+                        {
+                            if (PR.TransactionTypeId == 1)
+                            {
+                                jd.LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId);
+                                jd.CrAmt = PR.TotalAmount;
+                                jd.TransactionMode = "Cash";
+                                jd.Particulars = PR.Narration;
+                            }
+                            else if (PR.TransactionTypeId == 2)
+                            {
+                                jd.LedgerId = PR.LedgerId;
+                                jd.CrAmt = PR.TotalAmount;
+                                jd.TransactionMode = "Credit";
+                                jd.Particulars = PR.Narration;
+                            }
+                            else
+                            {
+                                jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
+                                jd.CrAmt = PR.TotalAmount;
+                                jd.TransactionMode = "Cheque";
+                                jd.Particulars = PR.Narration;
+                                jd.ChequeDate = PR.ChequeDate;
+                                jd.ChequeNo = PR.ChequeNo;
+                                jd.Status = status;
+                            }
+                        }
+                        if (jd.DrAmt != 0)
+                        {
+                            if (jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.Purchase_Return_Ledger_Key, CId))
+                            {
+                                jd.DrAmt = PR.ItemAmount - PR.DiscountAmount + PR.ExtraAmount;
+                            }
+                            else
+                            {
+                                if (PR.LedgerId == TaxIdByCompany_LedgerId(Caller.CompanyId, jd.LedgerId))
+                                {
+                                    jd.DrAmt = TaxDetails.Where(x => x.Ledger.Id == PR.LedgerId).Select(x => x.TaxAmount).FirstOrDefault();
+                                }
+
+                            }
+                            jd.TransactionMode = Mode;
+                            jd.ChequeDate = PR.ChequeDate;
+                            jd.ChequeNo = PR.ChequeNo;
+                            jd.Status = status;
+                            jd.Particulars = PR.Narration;
+                        }
                     }
                 }
             }
@@ -964,8 +1124,7 @@ namespace AccountBuddy.SL.Hubs
         void Journal_DeleteByPurchaseReturn(BLL.PurchaseReturn PR)
         {
 
-            string RefCode = string.Format("{0}{1}", BLL.FormPrefix.PurchaseReturn, PR.Id);
-            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == PR.RefNo).FirstOrDefault();
             if (j != null) Journal_Delete(j.Id);
         }
         #endregion
@@ -1250,7 +1409,7 @@ namespace AccountBuddy.SL.Hubs
         #endregion
 
         #region JobOrderIssue
-        void Journal_SaveByJobOrderIssue(DAL.JobOrderIssue P)
+        void Journal_SaveByJobOrderIssue(DAL.JobOrderIssue P, List<BLL.TaxMaster> TaxDetail)
         {
 
             try
@@ -1284,34 +1443,84 @@ namespace AccountBuddy.SL.Hubs
                         Particulars = P.Narration
                     });
 
-                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    foreach (var t in TaxDetail)
                     {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Output_Tax_Ledger_Key, CId),
-                        DrAmt = P.GSTAmount,
-                        Particulars = P.Narration
-                    });
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = t.Ledger.Id,
+                            DrAmt = t.TaxAmount,
+                            TransactionMode = "Cash",
+                            Particulars = P.Narration
+                        });
 
+                    }
                     DB.Journals.Add(j);
+                    DB.SaveChanges();
                 }
                 else
                 {
-                    foreach (var jd in j.JournalDetails.ToList())
+                    if (j.JournalDetails.Count != TaxDetail.Count)
                     {
-                        jd.Particulars = P.Narration;
-                        if (jd.CrAmt != 0)
+                        foreach (var s in j.JournalDetails.ToList())
                         {
-                            jd.LedgerId = P.JobWorker.Ledger.Id;
-                            jd.CrAmt = P.TotalAmount;
+                            decimal pd = j.JournalDetails.Select(X => X.JournalId).FirstOrDefault();
+                            DB.JournalDetails.RemoveRange(j.JournalDetails.Where(x => x.JournalId == pd).ToList());
                         }
-                        else
+                        j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.JobOrderIssued_Ledger_Key, CId) ? P.ItemAmount - P.DiscountAmount + P.Extras : P.GSTAmount;
+                            LedgerId = P.JobWorker.Ledger.Id,
+                            CrAmt = P.TotalAmount,
+                            Particulars = P.Narration
+                        });
+
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.JobOrderIssued_Ledger_Key, CId),
+                            DrAmt = P.ItemAmount - P.DiscountAmount + P.Extras,
+                            Particulars = P.Narration
+                        });
+
+                        foreach (var t in TaxDetail)
+                        {
+                            j.JournalDetails.Add(new DAL.JournalDetail()
+                            {
+                                LedgerId = t.Ledger.Id,
+                                DrAmt = t.TaxAmount,
+                                TransactionMode = "Cash",
+                                Particulars = P.Narration
+                            });
                         }
                     }
-                }
+                    else
+                    {
+                        foreach (var jd in j.JournalDetails.ToList())
+                        {
+                            jd.Particulars = P.Narration;
+                            if (jd.CrAmt != 0)
+                            {
+                                jd.LedgerId = P.JobWorker.Ledger.Id;
+                                jd.CrAmt = P.TotalAmount;
+                            }
+                            else
+                            {
+                                if (jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.JobOrderIssued_Ledger_Key, CId))
+                                {
+                                    jd.DrAmt = P.ItemAmount - P.DiscountAmount + P.Extras;
+                                }
+                                else
+                                {
+                                    if (jd.LedgerId == TaxIdByCompany_LedgerId(Caller.CompanyId, jd.LedgerId))
+                                    {
+                                        jd.CrAmt = TaxDetail.Where(x => x.Ledger.Id == jd.LedgerId).Select(x => x.TaxAmount).FirstOrDefault();
+                                    }
 
-                j.JournalDate = P.JODate;
-                DB.SaveChanges();
+                                }
+                            }
+                        }
+                    }
+                    j.JournalDate = P.JODate;
+                    DB.SaveChanges();
+                }
             }
 
             catch (Exception ex)
@@ -1337,7 +1546,7 @@ namespace AccountBuddy.SL.Hubs
 
         #region JobOrderReceived
 
-        void Journal_SaveByJobOrderReceived(DAL.JobOrderReceived S)
+        void Journal_SaveByJobOrderReceived(DAL.JobOrderReceived S, List<BLL.TaxMaster> TaxDetail)
         {
 
             try
@@ -1369,29 +1578,76 @@ namespace AccountBuddy.SL.Hubs
                         Particulars = S.Narration
                     });
 
-                    j.JournalDetails.Add(new DAL.JournalDetail()
+                    foreach (var t in TaxDetail)
                     {
-                        LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.Output_Tax_Ledger_Key, CId),
-                        DrAmt = S.GSTAmount,
-                        Particulars = S.Narration
-                    });
-
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = t.Ledger.Id,
+                            DrAmt = t.TaxAmount,
+                            TransactionMode = "Cash",
+                            Particulars = S.Narration
+                        });
+                    }
                     DB.Journals.Add(j);
+                    DB.SaveChanges();
                 }
                 else
                 {
-                    foreach (var jd in j.JournalDetails)
+                    if (j.JournalDetails.Count != TaxDetail.Count)
                     {
-                        jd.Particulars = S.Narration;
-                        if (jd.DrAmt != 0)
+                        foreach (var s in j.JournalDetails.ToList())
                         {
-                            jd.LedgerId = S.JobWorker.Ledger.Id;
-                            jd.CrAmt = S.TotalAmount;
+                            decimal pd = j.JournalDetails.Select(X => X.JournalId).FirstOrDefault();
+                            DB.JournalDetails.RemoveRange(j.JournalDetails.Where(x => x.JournalId == pd).ToList());
                         }
-                        else
+                        j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            jd.DrAmt = jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.JobOrderReceived_Ledger_Key, CId) ? S.ItemAmount - S.DiscountAmount + S.ExtraAmount : S.GSTAmount;
+                            LedgerId = S.JobWorker.Ledger.Id,
+                            CrAmt = S.TotalAmount,
+                            Particulars = S.Narration
+                        });
+
+                        j.JournalDetails.Add(new DAL.JournalDetail()
+                        {
+                            LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.JobOrderIssued_Ledger_Key, CId),
+                            DrAmt = S.ItemAmount - S.DiscountAmount + S.ExtraAmount,
+                            Particulars = S.Narration
+                        });
+
+                        foreach (var t in TaxDetail)
+                        {
+                            j.JournalDetails.Add(new DAL.JournalDetail()
+                            {
+                                LedgerId = t.Ledger.Id,
+                                DrAmt = t.TaxAmount,
+                                TransactionMode = "Cash",
+                                Particulars = S.Narration
+                            });
                         }
+                    }
+                    else
+                    {
+                        foreach (var jd in j.JournalDetails)
+                        {
+                            jd.Particulars = S.Narration;
+                            if (jd.DrAmt != 0)
+                            {
+                                jd.LedgerId = S.JobWorker.Ledger.Id;
+                                jd.CrAmt = S.TotalAmount;
+                            }
+                            else
+                            {
+                                if (jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.JobOrderReceived_Ledger_Key, CId))
+                                {
+                                    jd.DrAmt = S.ItemAmount - S.DiscountAmount + S.ExtraAmount;
+                                }
+                                else if (jd.LedgerId == TaxIdByCompany_LedgerId(Caller.CompanyId, jd.LedgerId))
+                                {
+                                    jd.DrAmt = TaxDetail.Where(x => x.Ledger.Id == jd.LedgerId).Select(x => x.TaxAmount).FirstOrDefault();
+                                }
+                            }
+                        }
+
                     }
                 }
                 j.JournalDate = S.JRDate;

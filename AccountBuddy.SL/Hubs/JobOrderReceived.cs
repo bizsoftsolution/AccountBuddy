@@ -86,7 +86,8 @@ namespace AccountBuddy.SL.Hubs
 
                 }
                 if (OtherClientsOnGroup.Count > 0) Clients.Clients(OtherClientsOnGroup).JobOrderReceived_RefNoRefresh(JobOrderReceived_NewRefNo());
-                Journal_SaveByJobOrderReceived(d);
+                var s = SO.TaxDetails.Where(x => x.TaxAmount > 0).ToList();
+                Journal_SaveByJobOrderReceived(d,s);
                 return true;
 
             }
@@ -119,6 +120,39 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         //  SO.Status = d.JobOrderReceivedDetails.FirstOrDefault()..Count() > 0 ? "Sold" : "Pending";
+                    }
+
+                    DAL.Journal j = DB.Journals.Where(x => x.EntryNo == SearchText && x.JournalDetails.FirstOrDefault().Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
+                    foreach (var t in j.JournalDetails.Where(x => x.Ledger.AccountGroup.GroupName == BLL.DataKeyValue.DutiesTaxes_Key).ToList())
+                    {
+                        SO.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
+                            Status = true,
+                            Ledger = LedgerDAL_BLL(t.Ledger),
+                            TaxPercentage = TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
+                            TaxAmount = t.CrAmt,
+                            TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId).ToString()),
+                            LedgerId = t.LedgerId
+                        });
+
+                    }
+                    var tl = DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+                    var t2 = tl.Where(p => !SO.TaxDetails.Any(p2 => p2.Ledger.Id == p.Ledger.Id)).ToList();
+
+                    foreach (var t1 in t2)
+                    {
+                        SO.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t1.LedgerId),
+                            LedgerId = t1.LedgerId,
+                            Status = false,
+                            Ledger = LedgerDAL_BLL(t1.Ledger),
+                            TaxPercentage = t1.TaxPercentage,
+                            TaxAmount = 0,
+                            TaxName = string.Format("{0}({1})", t1.Ledger.LedgerName, t1.TaxPercentage.ToString()),
+
+                        });
                     }
 
                 }
