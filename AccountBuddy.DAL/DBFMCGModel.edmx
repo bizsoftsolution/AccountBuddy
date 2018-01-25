@@ -398,6 +398,7 @@
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="Amount" Type="money" Nullable="false" />
           <Property Name="Particular" Type="nvarchar" MaxLength="500" />
+          <Property Name="GSTStatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -644,6 +645,7 @@
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="Amount" Type="money" Nullable="false" />
           <Property Name="Particulars" Type="nvarchar" MaxLength="500" />
+          <Property Name="GSTStatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -902,6 +904,13 @@
           <Property Name="LedgerId" Type="int" Nullable="false" />
           <Property Name="TaxPercentage" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaxType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TransactionType">
           <Key>
@@ -1478,6 +1487,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PaymentDetail_TaxType">
+          <End Role="TaxType" Type="Self.TaxType" Multiplicity="1" />
+          <End Role="PaymentDetail" Type="Self.PaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentDetail">
+              <PropertyRef Name="GSTStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Product_Spec_Detail_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Product_Spec_Detail" Type="Self.Product_Spec_Detail" Multiplicity="*" />
@@ -1931,6 +1952,18 @@
             </Principal>
             <Dependent Role="ReceiptDetail">
               <PropertyRef Name="ReceiptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetail_TaxType">
+          <End Role="TaxType" Type="Self.TaxType" Multiplicity="1" />
+          <End Role="ReceiptDetail" Type="Self.ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="GSTStatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2544,6 +2577,7 @@
           <EntitySet Name="StockSeperatedDetail" EntityType="Self.StockSeperatedDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaxMaster" EntityType="Self.TaxMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaxType" EntityType="Self.TaxType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionType" EntityType="Self.TransactionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UOM" EntityType="Self.UOM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
@@ -2719,6 +2753,10 @@
             <End Role="Payment" EntitySet="Payment" />
             <End Role="PaymentDetail" EntitySet="PaymentDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_PaymentDetail_TaxType" Association="Self.FK_PaymentDetail_TaxType">
+            <End Role="TaxType" EntitySet="TaxType" />
+            <End Role="PaymentDetail" EntitySet="PaymentDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_Product_Spec_Detail_Product" Association="Self.FK_Product_Spec_Detail_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="Product_Spec_Detail" EntitySet="Product_Spec_Detail" />
@@ -2869,6 +2907,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_ReceiptDetail_Receipt" Association="Self.FK_ReceiptDetail_Receipt">
             <End Role="Receipt" EntitySet="Receipt" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetail_TaxType" Association="Self.FK_ReceiptDetail_TaxType">
+            <End Role="TaxType" EntitySet="TaxType" />
             <End Role="ReceiptDetail" EntitySet="ReceiptDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Sale_Ledger" Association="Self.FK_Sale_Ledger">
@@ -3633,6 +3675,15 @@
             <End Role="TaxMaster" EntitySet="TaxMasters" />
             <End Role="Receipt_Tax_Detail" EntitySet="Receipt_Tax_Detail" />
           </AssociationSet>
+          <EntitySet Name="TaxTypes" EntityType="DBFMCGModel.TaxType" />
+          <AssociationSet Name="FK_PaymentDetail_TaxType" Association="DBFMCGModel.FK_PaymentDetail_TaxType">
+            <End Role="TaxType" EntitySet="TaxTypes" />
+            <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptDetail_TaxType" Association="DBFMCGModel.FK_ReceiptDetail_TaxType">
+            <End Role="TaxType" EntitySet="TaxTypes" />
+            <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -3993,6 +4044,8 @@
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_PaymentDetail_Ledger" FromRole="PaymentDetail" ToRole="Ledger" />
           <NavigationProperty Name="Payment" Relationship="DBFMCGModel.FK_PaymentDetail_Payment" FromRole="PaymentDetail" ToRole="Payment" />
           <NavigationProperty Name="Payment_Tax_Detail" Relationship="DBFMCGModel.FK_Payment_Tax_Detail_PaymentDetail" FromRole="PaymentDetail" ToRole="Payment_Tax_Detail" />
+          <Property Name="GSTStatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TaxType" Relationship="DBFMCGModel.FK_PaymentDetail_TaxType" FromRole="PaymentDetail" ToRole="TaxType" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -4200,6 +4253,8 @@
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_ReceiptDetail_Ledger" FromRole="ReceiptDetail" ToRole="Ledger" />
           <NavigationProperty Name="Receipt" Relationship="DBFMCGModel.FK_ReceiptDetail_Receipt" FromRole="ReceiptDetail" ToRole="Receipt" />
           <NavigationProperty Name="Receipt_Tax_Detail" Relationship="DBFMCGModel.FK_Receipt_Tax_Detail_ReceiptDetail" FromRole="ReceiptDetail" ToRole="Receipt_Tax_Detail" />
+          <Property Name="GSTStatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TaxType" Relationship="DBFMCGModel.FK_ReceiptDetail_TaxType" FromRole="ReceiptDetail" ToRole="TaxType" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -6353,6 +6408,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TaxType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PaymentDetails" Relationship="DBFMCGModel.FK_PaymentDetail_TaxType" FromRole="TaxType" ToRole="PaymentDetail" />
+          <NavigationProperty Name="ReceiptDetails" Relationship="DBFMCGModel.FK_ReceiptDetail_TaxType" FromRole="TaxType" ToRole="ReceiptDetail" />
+        </EntityType>
+        <Association Name="FK_PaymentDetail_TaxType">
+          <End Type="DBFMCGModel.TaxType" Role="TaxType" Multiplicity="1" />
+          <End Type="DBFMCGModel.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentDetail">
+              <PropertyRef Name="GSTStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptDetail_TaxType">
+          <End Type="DBFMCGModel.TaxType" Role="TaxType" Multiplicity="1" />
+          <End Type="DBFMCGModel.ReceiptDetail" Role="ReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptDetail">
+              <PropertyRef Name="GSTStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6660,6 +6748,7 @@
           <EntitySetMapping Name="PaymentDetails">
             <EntityTypeMapping TypeName="DBFMCGModel.PaymentDetail">
               <MappingFragment StoreEntitySet="PaymentDetail">
+                <ScalarProperty Name="GSTStatusId" ColumnName="GSTStatusId" />
                 <ScalarProperty Name="Particular" ColumnName="Particular" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
@@ -6829,6 +6918,7 @@
           <EntitySetMapping Name="ReceiptDetails">
             <EntityTypeMapping TypeName="DBFMCGModel.ReceiptDetail">
               <MappingFragment StoreEntitySet="ReceiptDetail">
+                <ScalarProperty Name="GSTStatusId" ColumnName="GSTStatusId" />
                 <ScalarProperty Name="Particulars" ColumnName="Particulars" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
@@ -7400,6 +7490,14 @@
                 <ScalarProperty Name="TaxPercentage" ColumnName="TaxPercentage" />
                 <ScalarProperty Name="TaxId" ColumnName="TaxId" />
                 <ScalarProperty Name="RD_ID" ColumnName="RD_ID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxTypes">
+            <EntityTypeMapping TypeName="DBFMCGModel.TaxType">
+              <MappingFragment StoreEntitySet="TaxType">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

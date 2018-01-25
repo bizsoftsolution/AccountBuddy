@@ -18,6 +18,7 @@ namespace AccountBuddy.BLL
 
         private string _LedgerName;
         private int _SNo;
+        private int _GSTStatusId;
 
         #endregion
 
@@ -124,6 +125,21 @@ namespace AccountBuddy.BLL
                 {
                     _LedgerName = value;
                     NotifyPropertyChanged(nameof(LedgerName));
+                }
+            }
+        }
+        public int GSTStatusId
+        {
+            get
+            {
+                return _GSTStatusId;
+            }
+            set
+            {
+                if (_GSTStatusId != value)
+                {
+                    _GSTStatusId = value;
+                    NotifyPropertyChanged(nameof(GSTStatusId));
                 }
             }
         }

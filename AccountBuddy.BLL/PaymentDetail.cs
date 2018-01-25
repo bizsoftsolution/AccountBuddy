@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,46 @@ namespace AccountBuddy.BLL
         private int _LedgerId;
         private decimal _Amount;
         private string _Particular;
+        private ObservableCollection<Payment_Tax_Detail> _PaymentTaxDetails;
 
         private string _LedgerName;
         private int _SNo;
+        private int _GSTStatusId;
+        private ObservableCollection<TaxMaster> _TaxDetails;
+        private decimal _GSTAmount;
+
+        public ObservableCollection<Payment_Tax_Detail> PaymentTaxDetails
+        {
+            get
+            {
+                if (_PaymentTaxDetails == null) _PaymentTaxDetails = new ObservableCollection<Payment_Tax_Detail>();
+                return _PaymentTaxDetails;
+            }
+            set
+            {
+                if (_PaymentTaxDetails != value)
+                {
+                    _PaymentTaxDetails = value;
+                    NotifyPropertyChanged(nameof(PaymentTaxDetails));
+                }
+            }
+        }
+        public ObservableCollection<TaxMaster> TaxDetails
+        {
+            get
+            {
+                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
+                return _TaxDetails;
+            }
+            set
+            {
+                if (_TaxDetails != value)
+                {
+                    _TaxDetails = value;
+                    NotifyPropertyChanged(nameof(TaxDetails));
+                }
+            }
+        }
 
         #endregion
 
@@ -45,7 +83,7 @@ namespace AccountBuddy.BLL
             }
             set
             {
-                if(_Id!=value)
+                if (_Id != value)
                 {
                     _Id = value;
                     NotifyPropertyChanged(nameof(Id));
@@ -94,6 +132,7 @@ namespace AccountBuddy.BLL
                 {
                     _Amount = value;
                     NotifyPropertyChanged(nameof(Amount));
+                    SetGST();
                 }
             }
         }
@@ -127,6 +166,37 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public int GSTStatusId
+        {
+            get
+            {
+                return _GSTStatusId;
+            }
+            set
+            {
+                if (_GSTStatusId != value)
+                {
+                    _GSTStatusId = value;
+                    NotifyPropertyChanged(nameof(GSTStatusId));
+                }
+            }
+        }
+
+        public decimal GSTAmount
+        {
+            get
+            {
+                return _GSTAmount;
+            }
+            set
+            {
+                if (_GSTAmount != value)
+                {
+                    _GSTAmount = value;
+                    NotifyPropertyChanged(nameof(GSTAmount));
+                }
+            }
+        }
 
         #endregion
 
@@ -146,5 +216,26 @@ namespace AccountBuddy.BLL
         }
 
         #endregion
+
+        public void GSTCalculation(PaymentDetail pod, List<TaxMaster> TDetail)
+        {
+            foreach (var t in TDetail)
+            {
+                PaymentTaxDetails.Add(new Payment_Tax_Detail
+                {
+                    Ledger = t.Ledger,
+                    PD_ID = pod.Id,
+                    TaxAmount = (t.TaxPercentage / 100) * pod.Amount,
+                    TaxId = t.Ledger.Id,
+                    TaxPercentage = t.TaxPercentage
+                });
+            }
+
+
+        }
+        public void SetGST()
+        {
+            GSTAmount = TaxMaster.SetRPGST(TaxDetails, Amount);
+        }
     }
 }

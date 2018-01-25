@@ -1016,6 +1016,7 @@
     <Compile Include="Hubs\StockSeperated.cs" />
     <Compile Include="Hubs\Supplier.cs" />
     <Compile Include="Hubs\TaxMaster.cs" />
+    <Compile Include="Hubs\TaxType.cs" />
     <Compile Include="Hubs\TransactionType.cs" />
     <Compile Include="Hubs\TrialBalance.cs" />
     <Compile Include="Hubs\UOM.cs" />

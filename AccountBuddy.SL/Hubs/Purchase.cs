@@ -44,7 +44,9 @@ namespace AccountBuddy.SL.Hubs
                         DAL.PurchaseDetail d_pod = new DAL.PurchaseDetail();
                         b_pod.ToMap(d_pod);
                         d.PurchaseDetails.Add(d_pod);
+                        
                     }
+
                     DB.SaveChanges();
                     P.Id = d.Id;
                     LogDetailStore(P, LogDetailType.INSERT);

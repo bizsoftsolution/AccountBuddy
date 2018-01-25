@@ -512,9 +512,23 @@ namespace AccountBuddy.SL.Hubs
             return D;
         }
 
-       
         #endregion
+        #region TaxType
+        public static BLL.TaxType ToMap(this DAL.TaxType S, BLL.TaxType D)
+        {
+            D.Id = S.Id;
+            D.Type = S.Type;
+            return D;
+        }
+        public static DAL.TaxType ToMap(this BLL.TaxType S, DAL.TaxType D)
+        {
+            D.Id = S.Id;
+            D.Type = S.Type;
+            return D;
+           
+        }
 
+        #endregion
         #endregion
 
         #region Transaction 
@@ -825,7 +839,7 @@ namespace AccountBuddy.SL.Hubs
             D.SalesId = S.SalesId;
             return D;
         }
-       #endregion
+        #endregion
 
         #region Sales Return
         public static BLL.SalesReturn ToMap(this DAL.SalesReturn S, BLL.SalesReturn D)
@@ -1310,6 +1324,7 @@ namespace AccountBuddy.SL.Hubs
             D.LedgerId = S.LedgerId;
             D.Particular = S.Particular;
             D.PaymentId = S.PaymentId;
+            D.GSTStatusId = S.GSTStatusId;
             return D;
         }
         public static DAL.PaymentDetail ToMap(this BLL.PaymentDetail S, DAL.PaymentDetail D)
@@ -1319,8 +1334,33 @@ namespace AccountBuddy.SL.Hubs
             D.LedgerId = S.LedgerId;
             D.Particular = S.Particular;
             D.PaymentId = S.PaymentId;
+            D.GSTStatusId = S.GSTStatusId;
+            
             return D;
         }
+        public static DAL.Payment_Tax_Detail ToMap(this BLL.Payment_Tax_Detail S, DAL.Payment_Tax_Detail D)
+        {
+            D.Id = S.Id;
+            D.TaxId = S.TaxId;
+            D.PD_ID = S.PD_ID;
+            D.TaxAmount = S.TaxAmount;
+            D.TaxId = S.TaxId;
+            D.TaxPercentage = S.TaxPercentage;
+
+            return D;
+        }
+        public static BLL.Payment_Tax_Detail ToMap(this DAL.Payment_Tax_Detail S, BLL.Payment_Tax_Detail D)
+        {
+            D.Id = S.Id;
+            D.TaxId = S.TaxId;
+            D.PD_ID = S.PD_ID;
+            D.TaxAmount = S.TaxAmount;
+            D.TaxId = S.TaxId;
+            D.TaxPercentage = S.TaxPercentage;
+            return D;
+        }
+
+       
         #endregion
 
         #region Receipt

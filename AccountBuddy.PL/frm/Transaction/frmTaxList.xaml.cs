@@ -66,7 +66,7 @@ namespace AccountBuddy.PL.frm.Transaction
             }
 
             catch (Exception ex)
-            { }
+            { Common.AppLib.WriteLog(ex); }
         }
     }
 }

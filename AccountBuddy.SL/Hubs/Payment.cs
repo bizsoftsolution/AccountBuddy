@@ -27,20 +27,34 @@ namespace AccountBuddy.SL.Hubs
         public bool Payment_Save(BLL.Payment PO)
         {
             try
-            {                
+            {
                 DAL.Payment d = DB.Payments.Where(x => x.Id == PO.Id).FirstOrDefault();
                 if (d == null)
                 {
                     d = new DAL.Payment();
                     DB.Payments.Add(d);
 
-                    PO.ToMap( d);
+                    PO.ToMap(d);
 
                     foreach (var b_pod in PO.PDetails)
                     {
                         DAL.PaymentDetail d_pod = new DAL.PaymentDetail();
-                        b_pod.ToMap(d_pod);
-                        d.PaymentDetails.Add(d_pod);
+                        if (b_pod.GSTStatusId != 0)
+                        {
+                            b_pod.ToMap(d_pod);
+                            d.PaymentDetails.Add(d_pod);
+                        }
+                        DB.SaveChanges();
+                        if (b_pod.GSTStatusId == 0)
+                        {
+                            DAL.Payment_Tax_Detail pt = new DAL.Payment_Tax_Detail();
+                            pt.TaxAmount = b_pod.Amount;
+                            pt.TaxId = TaxIdByCompany_LedgerId(Caller.CompanyId, b_pod.LedgerId);
+                            pt.TaxPercentage = TaxPercentByCompany_LedgerId(Caller.CompanyId, b_pod.LedgerId);
+                            pt.PD_ID = d.PaymentDetails.Select(x=>x.Id).FirstOrDefault();
+                            DB.Payment_Tax_Detail.Add(pt);
+                            DB.SaveChanges();
+                        }
                     }
                     DB.SaveChanges();
                     PO.Id = d.Id;
@@ -48,13 +62,14 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    decimal pTd = PO.PDetail.PaymentTaxDetails.Select(X => X.PD_ID).FirstOrDefault();
+                    var s = DB.Payment_Tax_Detail.Where(x => x.PD_ID == pTd).ToList();
+                    foreach (var pt in s)
+                    {
+                        DB.Payment_Tax_Detail.Remove(pt);
+                    }
 
-                    //foreach (var d_pod in d.PaymentDetails.ToList())
-                    //{
-                    //    BLL.PaymentDetail b_pod = PO.PDetails.Where(x => x.Id == d_pod.Id).FirstOrDefault();
-                    //   if (b_pod == null) d.PaymentDetails.Remove(d_pod);
 
-                    //}
                     decimal pd = PO.PDetails.Select(X => X.PaymentId).FirstOrDefault();
                     DB.PaymentDetails.RemoveRange(d.PaymentDetails.Where(x => x.PaymentId == pd).ToList());
 
@@ -62,13 +77,10 @@ namespace AccountBuddy.SL.Hubs
 
                     foreach (var b_pod in PO.PDetails)
                     {
-                        //DAL.PaymentDetail d_pod = d.PaymentDetails.Where(x=> x.Id==b_pod.Id).FirstOrDefault();
-                        //if (d_pod == null)
-                        // {
                         DAL.PaymentDetail d_pod = new DAL.PaymentDetail();
-                            d.PaymentDetails.Add(d_pod);
-                        // }
-                        b_pod.ToMap(d_pod);                        
+                        d.PaymentDetails.Add(d_pod);
+                        b_pod.ToMap(d_pod);
+
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
@@ -87,7 +99,7 @@ namespace AccountBuddy.SL.Hubs
             try
             {
 
-                DAL.Payment d = DB.Payments.Where(x => x.EntryNo == EntryNo && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
+                DAL.Payment d = DB.Payments.Where(x => x.EntryNo == EntryNo && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
                 DB.Entry(d).Reload();
                 if (d != null)
                 {
@@ -105,7 +117,7 @@ namespace AccountBuddy.SL.Hubs
                     }
 
                 }
-         
+
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return PO;
@@ -146,7 +158,7 @@ namespace AccountBuddy.SL.Hubs
         public bool Find_EntryNo(string entryNo, BLL.Payment PO)
 
         {
-            DAL.Payment d = DB.Payments.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault();
+            DAL.Payment d = DB.Payments.Where(x => x.EntryNo == entryNo & x.Id != PO.Id && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
             if (d == null)
             {
                 return false;
@@ -157,9 +169,9 @@ namespace AccountBuddy.SL.Hubs
             }
 
         }
-        public List<BLL.Payment> Payment_List(int? LedgerId,  DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
+        public List<BLL.Payment> Payment_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
         {
-            
+
             List<BLL.Payment> lstPayment = new List<BLL.Payment>();
             BLL.Payment rp = new BLL.Payment();
             try

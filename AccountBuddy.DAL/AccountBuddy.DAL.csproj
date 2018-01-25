@@ -282,6 +282,9 @@
     <Compile Include="TaxMaster.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TaxType.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="TransactionType.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
@@ -316,6 +319,7 @@
     <None Include="DB\DBFMCG_170118.bak" />
     <None Include="DB\DBFMCG_190118.bak" />
     <None Include="DB\DBFMCG_2501.bak" />
+    <None Include="DB\DBFMCG_2501_01.bak" />
     <None Include="FMCG.xsc">
       <DependentUpon>FMCG.xsd</DependentUpon>
     </None>

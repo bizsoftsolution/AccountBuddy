@@ -29,21 +29,23 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             InitializeComponent();
             this.DataContext = data;
-            data.Clear();
+
             LoadWindow();
         }
 
         private void LoadWindow()
         {
+            try
+            {
+                btnSave.Visibility = (BLL.Payment.UserPermission.AllowInsert || BLL.Payment.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+                btnDelete.Visibility = BLL.Payment.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 
-            btnSave.Visibility = (BLL.Payment.UserPermission.AllowInsert || BLL.Payment.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-            btnDelete.Visibility = BLL.Payment.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+                data.Clear();
+                btnPrint.IsEnabled = false;
+            }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
-            data.Clear();
-            btnPrint.IsEnabled = false;
-
-
-        }        
+        }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -292,6 +294,51 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 BLL.PaymentDetail pod = dgvDetails.SelectedItem as BLL.PaymentDetail;
                 pod.ToMap(data.PDetail);
+            }
+            catch (Exception ex) { Common.AppLib.WriteLog(ex); }
+        }
+
+        private void cmbGST_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                cmbGST.ItemsSource = BLL.TaxType.toList;
+                cmbGST.SelectedValuePath = "Id";
+                cmbGST.DisplayMemberPath = "Type";
+            }
+            catch (Exception ex)
+            { Common.AppLib.WriteLog(ex); }
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                frmTaxList frm = new frmTaxList();
+                frm.dgvTax.ItemsSource = data.PDetail.TaxDetails;
+                frm.ItemAmount = data.PDetail.Amount;
+                frm.lblItemAmount.Content = "Amount";
+                frm.lblDiscountAmount.Visibility = Visibility.Hidden;
+                frm.ShowDialog();
+                data.PDetail.SetGST();
+                frm.Close();
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
+        }
+
+        private void cmbGST_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                var i = cmbGST.SelectedItem as BLL.TaxType;
+                if (i.Id == 3)
+                {
+                    btnEdit.IsEnabled = false;
+                    txtGSTAmount.IsEnabled = false;
+                }
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }

@@ -49,7 +49,6 @@ namespace AccountBuddy.BLL
         private bool _IsShowTTDetail;
 
         private ObservableCollection<PaymentDetail> _PDetails;
-        private ObservableCollection<Payment_Tax_Detail> _PaymentTaxDetails;
         private ObservableCollection<TaxMaster> _TaxDetails;
         private static List<string> _PayModeList;
         private static List<string> _StatusList;
@@ -215,6 +214,7 @@ namespace AccountBuddy.BLL
                     _Amount = value;
                     AmountInwords = value.ToCurrencyInWords();
                     NotifyPropertyChanged(nameof(Amount));
+
                 }
             }
         }
@@ -476,38 +476,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-        public ObservableCollection<Payment_Tax_Detail> PaymentTaxDetails
-        {
-            get
-            {
-                if (_PaymentTaxDetails == null) _PaymentTaxDetails = new ObservableCollection<Payment_Tax_Detail>();
-                return _PaymentTaxDetails;
-            }
-            set
-            {
-                if (_PaymentTaxDetails != value)
-                {
-                    _PaymentTaxDetails = value;
-                    NotifyPropertyChanged(nameof(PaymentTaxDetails));
-                }
-            }
-        }
-        public ObservableCollection<TaxMaster> TaxDetails
-        {
-            get
-            {
-                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
-                return _TaxDetails;
-            }
-            set
-            {
-                if (_TaxDetails != value)
-                {
-                    _TaxDetails = value;
-                    NotifyPropertyChanged(nameof(TaxDetails));
-                }
-            }
-        }
 
         public string SearchText
         {
@@ -641,6 +609,8 @@ namespace AccountBuddy.BLL
             }
         }
 
+        public decimal GSTAmount { get; private set; }
+
         #region List
 
 
@@ -723,16 +693,59 @@ namespace AccountBuddy.BLL
                 PDetails.Add(pod);
             }
             PDetail.ToMap(pod);
-            
+            if (pod.GSTStatusId != 3||pod.GSTStatusId != 0)
+            {
+                var s = pod.TaxDetails.Where(x => x.TaxAmount > 0).ToList();
+                pod.GSTCalculation(pod, s);
+                BLL.PaymentDetail pod1 = new BLL.PaymentDetail();
+                foreach (var t in pod.PaymentTaxDetails)
+                {
+                    PDetails.Add(new PaymentDetail
+                    {
+                        Id = Id,
+                        Amount = t.TaxAmount,
+                        GSTStatusId = 0,
+                        LedgerId = t.Ledger.Id,
+                        LedgerName = t.Ledger.LedgerName,
+                        Particular = "GST"
+                    });
+                }
+            }
             ClearDetail();
             Amount = PDetails.Sum(x => x.Amount);
         }
 
+
         public void ClearDetail()
         {
-            PaymentDetail pod = new PaymentDetail();
-            pod.SNo = PDetails.Count == 0 ? 1 : PDetails.Max(x => x.SNo) + 1;
-            pod.ToMap(PDetail);
+            try
+            {
+                PaymentDetail pod = new PaymentDetail();
+                pod.SNo = PDetails.Count == 0 ? 1 : PDetails.Max(x => x.SNo) + 1;
+                pod.ToMap(PDetail);
+
+                pod.PaymentTaxDetails = new ObservableCollection<Payment_Tax_Detail>();
+                var l1 = BLL.TaxMaster.toList;
+                foreach (var t in l1)
+                {
+                    pod.TaxDetails.Add(new TaxMaster()
+                    {
+                        Id = t.Id,
+                        Status = t.Status,
+                        Ledger = t.Ledger,
+                        LedgerId = t.LedgerId,
+                        TaxPercentage = t.TaxPercentage,
+                        TaxAmount = 0,
+                        TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, t.TaxPercentage.ToString())
+
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
+
         }
 
         public void DeleteDetail(int SNo)

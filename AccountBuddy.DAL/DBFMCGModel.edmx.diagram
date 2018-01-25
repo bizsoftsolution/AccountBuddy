@@ -206,6 +206,9 @@
         <AssociationConnector Association="DBFMCGModel.FK_Payment_Tax_Detail_PaymentDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_Receipt_Tax_Detail_ReceiptDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_Receipt_Tax_Detail_TaxMaster" />
+        <EntityTypeShape EntityType="DBFMCGModel.TaxType" Width="1.5" PointX="5.25" PointY="73.5" />
+        <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_TaxType" />
+        <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_TaxType" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

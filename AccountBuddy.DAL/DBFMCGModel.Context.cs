@@ -101,5 +101,6 @@ namespace AccountBuddy.DAL
         public virtual DbSet<TaxMaster> TaxMasters { get; set; }
         public virtual DbSet<Payment_Tax_Detail> Payment_Tax_Detail { get; set; }
         public virtual DbSet<Receipt_Tax_Detail> Receipt_Tax_Detail { get; set; }
+        public virtual DbSet<TaxType> TaxTypes { get; set; }
     }
 }

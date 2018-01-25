@@ -45,6 +45,8 @@ namespace AccountBuddy.BLL
         private bool _IsShowTTDetail;
    
         private ObservableCollection<ReceiptDetail> _RDetails;
+        private ObservableCollection<Receipt_Tax_Detail> _ReceiptTaxDetails;
+        private ObservableCollection<TaxMaster> _TaxDetails;
         private static List<string> _ReceiptModeList;
         private static List<string> _StatusList;
         private static UserTypeDetail _UserPermission;
@@ -450,6 +452,38 @@ namespace AccountBuddy.BLL
                 {
                     _RDetails = value;
                     NotifyPropertyChanged(nameof(_RDetails));
+                }
+            }
+        }
+        public ObservableCollection<Receipt_Tax_Detail> ReceiptTaxDetails
+        {
+            get
+            {
+                if (_ReceiptTaxDetails == null) _ReceiptTaxDetails = new ObservableCollection<Receipt_Tax_Detail>();
+                return _ReceiptTaxDetails;
+            }
+            set
+            {
+                if (_ReceiptTaxDetails != value)
+                {
+                    _ReceiptTaxDetails = value;
+                    NotifyPropertyChanged(nameof(ReceiptTaxDetails));
+                }
+            }
+        }
+        public ObservableCollection<TaxMaster> TaxDetails
+        {
+            get
+            {
+                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
+                return _TaxDetails;
+            }
+            set
+            {
+                if (_TaxDetails != value)
+                {
+                    _TaxDetails = value;
+                    NotifyPropertyChanged(nameof(TaxDetails));
                 }
             }
         }

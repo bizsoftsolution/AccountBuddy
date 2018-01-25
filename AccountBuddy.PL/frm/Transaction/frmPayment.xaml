@@ -187,6 +187,24 @@
                         <Button   Width="65" Height="30" x:Name="btnAdd" Content="ADD" Margin="10,0,0,0" Click="btnAdd_Click" />
                         <Button   Width="75" Height="30" x:Name="btnDClear" Content="CLEAR" Margin="10,0,0,0" Click="btnDClear_Click" />
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox x:Name="cmbGST" IsReadOnly="{Binding IsReadOnly}"  SelectedValue="{Binding PDetail.GSTStatusId, Mode=TwoWay}"   Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True" Loaded="cmbGST_Loaded" SelectionChanged="cmbGST_SelectionChanged" >
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="GST Option"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <Button   Width="55" Height="30" x:Name="btnEdit"  Margin="10,0,0,0" Click="btnEdit_Click" >
+                            <materialDesign:PackIcon Kind="Pencil" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
+                        </Button>
+                        <TextBox x:Name="txtGSTAmount" IsReadOnly="True" Text="{Binding PDetail.GSTAmount, Mode=TwoWay,StringFormat={}{0:N2}}"   TextAlignment="Right" Width="100" materialDesign:HintAssist.Hint="GST Amount" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
+                    </StackPanel>
                     <GroupBox Header="Detail Particulars" Margin="10,10,10,0">
                         <TextBox Text="{Binding PDetail.Particular, Mode=TwoWay}" MaxLength="500" IsReadOnly="{Binding IsReadOnly}" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
                     </GroupBox>

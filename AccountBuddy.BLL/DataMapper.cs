@@ -980,7 +980,9 @@ namespace AccountBuddy.BLL
             D.PaymentId = S.PaymentId;
             D.LedgerName = S.LedgerName;
             D.SNo = S.SNo;
-
+            D.TaxDetails = S.TaxDetails;
+            D.GSTStatusId = S.GSTStatusId;
+            D.PaymentTaxDetails = S.PaymentTaxDetails;
             return D;
         }
         public static Payment_Tax_Detail ToMap(this Payment_Tax_Detail S, Payment_Tax_Detail D)
