@@ -983,6 +983,17 @@ namespace AccountBuddy.BLL
 
             return D;
         }
+        public static Payment_Tax_Detail ToMap(this Payment_Tax_Detail S, Payment_Tax_Detail D)
+        {
+            D.Id = S.Id;
+            S.PD_ID = S.PD_ID;
+            S.TaxId = S.TaxId;
+            S.TaxName = S.TaxName;
+            S.TaxPercentage = S.TaxPercentage;
+            S.TaxAmount = S.TaxAmount;
+
+            return D;
+        }
         #endregion
 
         #region Receipt

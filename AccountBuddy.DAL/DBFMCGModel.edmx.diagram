@@ -200,6 +200,12 @@
         <AssociationConnector Association="DBFMCGModel.FK_Product_Spec_Process_Detail_Product_Spec_Process" />
         <EntityTypeShape EntityType="DBFMCGModel.TaxMaster" Width="1.5" PointX="5.25" PointY="46.375" />
         <AssociationConnector Association="DBFMCGModel.FK_TaxMaster_Ledger" />
+        <EntityTypeShape EntityType="DBFMCGModel.Payment_Tax_Detail" Width="1.5" PointX="12.75" PointY="64.5" />
+        <EntityTypeShape EntityType="DBFMCGModel.Receipt_Tax_Detail" Width="1.5" PointX="11.75" PointY="61.25" />
+        <AssociationConnector Association="DBFMCGModel.FK_Payment_Tax_Detail_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_Payment_Tax_Detail_PaymentDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_Receipt_Tax_Detail_ReceiptDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_Receipt_Tax_Detail_TaxMaster" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

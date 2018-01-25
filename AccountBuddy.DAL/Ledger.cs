@@ -37,6 +37,7 @@ namespace AccountBuddy.DAL
             this.Suppliers = new HashSet<Supplier>();
             this.PurchaseRequests = new HashSet<PurchaseRequest>();
             this.TaxMasters = new HashSet<TaxMaster>();
+            this.Payment_Tax_Detail = new HashSet<Payment_Tax_Detail>();
         }
     
         public int Id { get; set; }
@@ -99,5 +100,7 @@ namespace AccountBuddy.DAL
         public virtual ICollection<PurchaseRequest> PurchaseRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaxMaster> TaxMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Payment_Tax_Detail> Payment_Tax_Detail { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace AccountBuddy.BLL
 
         private string _RefNo;
         private string _Status;
-     
+
         private decimal? _ExtraCharge;
         private string _ChequeNo;
         private DateTime? _ChequeDate;
@@ -49,6 +49,8 @@ namespace AccountBuddy.BLL
         private bool _IsShowTTDetail;
 
         private ObservableCollection<PaymentDetail> _PDetails;
+        private ObservableCollection<Payment_Tax_Detail> _PaymentTaxDetails;
+        private ObservableCollection<TaxMaster> _TaxDetails;
         private static List<string> _PayModeList;
         private static List<string> _StatusList;
 
@@ -122,7 +124,7 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-       
+
 
         public long Id
         {
@@ -474,6 +476,38 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public ObservableCollection<Payment_Tax_Detail> PaymentTaxDetails
+        {
+            get
+            {
+                if (_PaymentTaxDetails == null) _PaymentTaxDetails = new ObservableCollection<Payment_Tax_Detail>();
+                return _PaymentTaxDetails;
+            }
+            set
+            {
+                if (_PaymentTaxDetails != value)
+                {
+                    _PaymentTaxDetails = value;
+                    NotifyPropertyChanged(nameof(PaymentTaxDetails));
+                }
+            }
+        }
+        public ObservableCollection<TaxMaster> TaxDetails
+        {
+            get
+            {
+                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
+                return _TaxDetails;
+            }
+            set
+            {
+                if (_TaxDetails != value)
+                {
+                    _TaxDetails = value;
+                    NotifyPropertyChanged(nameof(TaxDetails));
+                }
+            }
+        }
 
         public string SearchText
         {
@@ -536,7 +570,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public string AmountInwords
         {
             get
@@ -553,7 +586,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public bool IsReadOnly
         {
             get
@@ -571,7 +603,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         public bool IsEnabled
         {
             get
@@ -588,7 +619,6 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
         #endregion
 
         public Ledger PLedger
@@ -612,10 +642,10 @@ namespace AccountBuddy.BLL
         }
 
         #region List
-      
 
 
-    
+
+
         #endregion
 
         #region Master
@@ -686,16 +716,14 @@ namespace AccountBuddy.BLL
 
         public void SaveDetail()
         {
-
             PaymentDetail pod = PDetails.Where(x => x.SNo == PDetail.SNo).FirstOrDefault();
-
             if (pod == null)
             {
                 pod = new PaymentDetail();
                 PDetails.Add(pod);
             }
-
             PDetail.ToMap(pod);
+            
             ClearDetail();
             Amount = PDetails.Sum(x => x.Amount);
         }
@@ -731,8 +759,6 @@ namespace AccountBuddy.BLL
 
         #endregion
 
-
-
         public bool FindEntryNo()
         {
             var rv = false;
@@ -749,7 +775,7 @@ namespace AccountBuddy.BLL
 
         public static List<Payment> ToList(int? LedgerId, DateTime dtFrom, DateTime dtTo, string EntryNo, string Status, decimal amtFrom, decimal amtTo)
         {
-            return FMCGHubClient.HubCaller.Invoke<List<Payment>>("Payment_List", LedgerId,  dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<Payment>>("Payment_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
         }
 
         #region Property  Changed Event

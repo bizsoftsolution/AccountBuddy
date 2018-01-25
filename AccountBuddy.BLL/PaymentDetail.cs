@@ -130,7 +130,6 @@ namespace AccountBuddy.BLL
 
         #endregion
 
-
         #region Property  Changed Event
 
         public event PropertyChangedEventHandler PropertyChanged;

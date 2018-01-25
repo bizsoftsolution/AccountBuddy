@@ -78,6 +78,7 @@
     <Compile Include="Payable.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="PaymentDetail.cs" />
+    <Compile Include="Payment_Tax_Detail.cs" />
     <Compile Include="POPending.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Product_Spec_Detail.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Receipt.cs" />
     <Compile Include="ReceiptAndPayment.cs" />
     <Compile Include="ReceiptDetail.cs" />
+    <Compile Include="Receipt_Tax_Detail.cs" />
     <Compile Include="Receivable.cs" />
     <Compile Include="Sale.cs" />
     <Compile Include="SalesDetail.cs" />

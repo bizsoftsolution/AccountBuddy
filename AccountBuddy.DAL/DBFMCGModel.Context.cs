@@ -99,5 +99,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<Product_Spec_Process_Detail> Product_Spec_Process_Detail { get; set; }
         public virtual DbSet<Product_Spec_Process> Product_Spec_Process { get; set; }
         public virtual DbSet<TaxMaster> TaxMasters { get; set; }
+        public virtual DbSet<Payment_Tax_Detail> Payment_Tax_Detail { get; set; }
+        public virtual DbSet<Receipt_Tax_Detail> Receipt_Tax_Detail { get; set; }
     }
 }

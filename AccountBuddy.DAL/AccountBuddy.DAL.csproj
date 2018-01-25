@@ -170,6 +170,9 @@
     <Compile Include="PaymentDetail.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Payment_Tax_Detail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
@@ -220,6 +223,9 @@
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReceiptDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Receipt_Tax_Detail.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Sale.cs">
@@ -309,6 +315,7 @@
     </None>
     <None Include="DB\DBFMCG_170118.bak" />
     <None Include="DB\DBFMCG_190118.bak" />
+    <None Include="DB\DBFMCG_2501.bak" />
     <None Include="FMCG.xsc">
       <DependentUpon>FMCG.xsd</DependentUpon>
     </None>
