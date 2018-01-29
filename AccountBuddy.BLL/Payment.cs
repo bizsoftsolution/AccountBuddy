@@ -214,7 +214,7 @@ namespace AccountBuddy.BLL
                     _Amount = value;
                     AmountInwords = value.ToCurrencyInWords();
                     NotifyPropertyChanged(nameof(Amount));
-
+               
                 }
             }
         }
@@ -638,7 +638,7 @@ namespace AccountBuddy.BLL
                 new Payment().ToMap(this);
                 ClearDetail();
                 _PDetails = new ObservableCollection<PaymentDetail>();
-
+               
                 PaymentDate = DateTime.Now;
                 IsReadOnly = !UserPermission.AllowInsert;
                 EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Payment_NewRefNo").Result;
@@ -693,7 +693,7 @@ namespace AccountBuddy.BLL
                 PDetails.Add(pod);
             }
             PDetail.ToMap(pod);
-            if (pod.GSTStatusId != 3||pod.GSTStatusId != 0)
+            if (pod.GSTAmount>0)
             {
                 var s = pod.TaxDetails.Where(x => x.TaxAmount > 0).ToList();
                 pod.GSTCalculation(pod, s);
@@ -711,11 +711,15 @@ namespace AccountBuddy.BLL
                     });
                 }
             }
+            else
+            {
+
+            }
+
             ClearDetail();
             Amount = PDetails.Sum(x => x.Amount);
         }
-
-
+       
         public void ClearDetail()
         {
             try

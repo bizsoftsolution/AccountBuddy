@@ -222,6 +222,11 @@ namespace AccountBuddy.SL.Hubs
             var l = DB.TaxMasters.Where(x => x.LedgerId == LId && x.Ledger.AccountGroup.CompanyId == CompanyId).FirstOrDefault();
             return l == null ? 0 : l.Id;
         }
+        int LedgerIdByCompany_TaxId(int CompanyId, int TaxId)
+        {
+            var l = DB.Ledgers.Where(x => x.Id == TaxId && x.AccountGroup.CompanyId == CompanyId).FirstOrDefault();
+            return l == null ? 0 : l.Id;
+        }
 
         decimal TaxPercentByCompany_LedgerId(int CompanyId, int LId)
         {

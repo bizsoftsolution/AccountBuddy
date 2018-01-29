@@ -57,6 +57,11 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("Enter Amount", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+            else if (data.PDetail.GSTStatusId == 0)
+            {
+                MessageBox.Show("Enter GST Type", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cmbGST.Focus();
+            }
             else
             {
                 data.SaveDetail();
@@ -94,6 +99,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("Entry No Already Exist", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+           
             else
             {
                 var rv = data.Save();
@@ -145,10 +151,11 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            data.Clear();
+            data.Clear(); 
             if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
+                
             }
             else
             {
@@ -334,11 +341,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 var i = cmbGST.SelectedItem as BLL.TaxType;
-                if (i.Id == 3)
-                {
-                    btnEdit.IsEnabled = false;
-                    txtGSTAmount.IsEnabled = false;
-                }
+                
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }

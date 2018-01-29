@@ -178,9 +178,12 @@ namespace AccountBuddy.BLL
                 {
                     _GSTStatusId = value;
                     NotifyPropertyChanged(nameof(GSTStatusId));
+                    SetGST();
                 }
             }
         }
+
+
 
         public decimal GSTAmount
         {
@@ -235,7 +238,15 @@ namespace AccountBuddy.BLL
         }
         public void SetGST()
         {
-            GSTAmount = TaxMaster.SetRPGST(TaxDetails, Amount);
+            if (GSTStatusId != 3)
+            {
+                GSTAmount = TaxMaster.SetRPGST(TaxDetails, Amount);
+            }
+            else
+            {
+                GSTAmount = 0;
+
+            }
         }
     }
 }

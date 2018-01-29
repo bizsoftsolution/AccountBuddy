@@ -35,7 +35,7 @@ namespace AccountBuddy.SL.Hubs
                     DB.Payments.Add(d);
 
                     PO.ToMap(d);
-
+                    DB.SaveChanges();
                     foreach (var b_pod in PO.PDetails)
                     {
                         DAL.PaymentDetail d_pod = new DAL.PaymentDetail();
@@ -45,28 +45,35 @@ namespace AccountBuddy.SL.Hubs
                             d.PaymentDetails.Add(d_pod);
                         }
                         DB.SaveChanges();
-                        if (b_pod.GSTStatusId == 0)
+                        if (b_pod.PaymentTaxDetails.Count != 0|| b_pod.GSTStatusId == 0)
                         {
-                            DAL.Payment_Tax_Detail pt = new DAL.Payment_Tax_Detail();
-                            pt.TaxAmount = b_pod.Amount;
-                            pt.TaxId = TaxIdByCompany_LedgerId(Caller.CompanyId, b_pod.LedgerId);
-                            pt.TaxPercentage = TaxPercentByCompany_LedgerId(Caller.CompanyId, b_pod.LedgerId);
-                            pt.PD_ID = d.PaymentDetails.Select(x=>x.Id).FirstOrDefault();
-                            DB.Payment_Tax_Detail.Add(pt);
-                            DB.SaveChanges();
+                            foreach (var ptd in b_pod.PaymentTaxDetails)
+                            {
+                                DAL.Payment_Tax_Detail pt = new DAL.Payment_Tax_Detail();
+                                pt.TaxAmount = ptd.TaxAmount;
+                                pt.TaxId = ptd.TaxId;
+                                pt.TaxPercentage = ptd.TaxPercentage;
+                                pt.PD_ID = d.PaymentDetails.Select(x => x.Id).FirstOrDefault();
+                                DB.Payment_Tax_Detail.Add(pt);
+                            }
                         }
+                        DB.SaveChanges();
                     }
-                    DB.SaveChanges();
+
                     PO.Id = d.Id;
                     LogDetailStore(PO, LogDetailType.INSERT);
                 }
                 else
                 {
-                    decimal pTd = PO.PDetail.PaymentTaxDetails.Select(X => X.PD_ID).FirstOrDefault();
+                    long pTd = PO.PDetail.PaymentTaxDetails.Select(X => X.PD_ID).FirstOrDefault();
                     var s = DB.Payment_Tax_Detail.Where(x => x.PD_ID == pTd).ToList();
+                    var bptd = DB.Payment_Tax_Detail.Where(x => x.PD_ID == pTd).ToList();
                     foreach (var pt in s)
                     {
                         DB.Payment_Tax_Detail.Remove(pt);
+                        var p1 = bptd.Where(x => x.Id == pt.Id).FirstOrDefault();
+                        bptd.Remove(p1);
+
                     }
 
 
@@ -78,9 +85,24 @@ namespace AccountBuddy.SL.Hubs
                     foreach (var b_pod in PO.PDetails)
                     {
                         DAL.PaymentDetail d_pod = new DAL.PaymentDetail();
-                        d.PaymentDetails.Add(d_pod);
-                        b_pod.ToMap(d_pod);
-
+                        if (b_pod.GSTStatusId != 0)
+                        {
+                            b_pod.ToMap(d_pod);
+                            d.PaymentDetails.Add(d_pod);
+                        }
+                        DB.SaveChanges();
+                        if (b_pod.PaymentTaxDetails.Count != 0 || b_pod.GSTStatusId == 0)
+                        {
+                            foreach (var ptd in b_pod.PaymentTaxDetails)
+                            {
+                                DAL.Payment_Tax_Detail pt = new DAL.Payment_Tax_Detail();
+                                pt.TaxAmount = ptd.TaxAmount;
+                                pt.TaxId = ptd.TaxId;
+                                pt.TaxPercentage = ptd.TaxPercentage;
+                                pt.PD_ID = d.PaymentDetails.Select(x => x.Id).FirstOrDefault();
+                                DB.Payment_Tax_Detail.Add(pt);
+                            }
+                        }
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
@@ -98,12 +120,10 @@ namespace AccountBuddy.SL.Hubs
             BLL.Payment PO = new BLL.Payment();
             try
             {
-
                 DAL.Payment d = DB.Payments.Where(x => x.EntryNo == EntryNo && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
                 DB.Entry(d).Reload();
                 if (d != null)
                 {
-
                     d.ToMap(PO);
                     PO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
@@ -113,9 +133,56 @@ namespace AccountBuddy.SL.Hubs
                         d_pod.ToMap(b_pod);
                         PO.PDetails.Add(b_pod);
                         b_pod.SNo = ++i;
-                        b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
-                    }
 
+                        b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
+
+                    }
+                    var PD_id = d.PaymentDetails.FirstOrDefault().Id;
+                    var pt = DB.Payment_Tax_Detail.Where(x => x.PD_ID == PD_id).ToList();
+
+                    if (pt.Count > 0)
+                    {
+                        int sn = PO.PDetails.Max(x => x.SNo);
+                        foreach (var t in pt)
+                        {
+                            BLL.PaymentDetail pd = new BLL.PaymentDetail();
+                            pd.Id = t.Id;
+                            pd.Amount = t.TaxAmount;
+                            pd.GSTStatusId = 3;
+                            pd.LedgerId = t.Ledger.Id;
+                            pd.LedgerName = t.Ledger.LedgerName;
+                            pd.Particular = "GST";
+                            pd.PaymentId = d.Id;
+                            PO.PDetails.Add(pd);
+                            pd.SNo = ++sn;
+                             foreach (var d1 in pt)
+                            {
+                                BLL.Payment_Tax_Detail b1 = new BLL.Payment_Tax_Detail();
+                                d1.ToMap(b1);
+                                PO.PDetail.PaymentTaxDetails.Add(b1);
+                                b1.TaxName = d1.Ledger.LedgerName;
+                            }
+                        }
+
+
+                    }
+                    var tl = DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+                    var t2 = tl.Where(p => !PO.PDetail.TaxDetails.Any(p2 => p2.Ledger.Id == p.Ledger.Id)).ToList();
+
+                    foreach (var t1 in t2)
+                    {
+                        PO.PDetail.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t1.LedgerId),
+                            LedgerId = t1.LedgerId,
+                            Status = false,
+                            Ledger = LedgerDAL_BLL(t1.Ledger),
+                            TaxPercentage = t1.TaxPercentage,
+                            TaxAmount = 0,
+                            TaxName = string.Format("{0}({1})", t1.Ledger.LedgerName, t1.TaxPercentage.ToString()),
+
+                        });
+                    }
                 }
 
             }
@@ -128,10 +195,12 @@ namespace AccountBuddy.SL.Hubs
             try
             {
                 DAL.Payment d = DB.Payments.Where(x => x.Id == pk).FirstOrDefault();
-
+                var pd = d.PaymentDetails.FirstOrDefault().Id;
+                var ptd = DB.Payment_Tax_Detail.Where(x => x.PD_ID == pd).ToList();
                 if (d != null)
                 {
                     var P = Payment_DALtoBLL(d);
+                    DB.Payment_Tax_Detail.RemoveRange(ptd);
                     DB.PaymentDetails.RemoveRange(d.PaymentDetails);
                     DB.Payments.Remove(d);
                     DB.SaveChanges();
