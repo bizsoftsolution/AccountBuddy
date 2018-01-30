@@ -23,6 +23,7 @@ namespace AccountBuddy.BLL
         private int _GSTStatusId;
         private ObservableCollection<TaxMaster> _TaxDetails;
         private decimal _GSTAmount;
+        private int _GSTDRefNo;
 
         public ObservableCollection<Payment_Tax_Detail> PaymentTaxDetails
         {
@@ -200,7 +201,21 @@ namespace AccountBuddy.BLL
                 }
             }
         }
-
+        public int GSTDRefNo
+        {
+            get
+            {
+                return _GSTDRefNo;
+            }
+            set
+            {
+                if (_GSTDRefNo != value)
+                {
+                    _GSTDRefNo = value;
+                    NotifyPropertyChanged(nameof(GSTDRefNo));
+                }
+            }
+        }
         #endregion
 
         #region Property  Changed Event

@@ -214,7 +214,7 @@ namespace AccountBuddy.BLL
                     _Amount = value;
                     AmountInwords = value.ToCurrencyInWords();
                     NotifyPropertyChanged(nameof(Amount));
-               
+
                 }
             }
         }
@@ -638,7 +638,7 @@ namespace AccountBuddy.BLL
                 new Payment().ToMap(this);
                 ClearDetail();
                 _PDetails = new ObservableCollection<PaymentDetail>();
-               
+
                 PaymentDate = DateTime.Now;
                 IsReadOnly = !UserPermission.AllowInsert;
                 EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Payment_NewRefNo").Result;
@@ -658,8 +658,9 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.PDetails = po.PDetails;
-                IsReadOnly = !UserPermission.AllowInsert;
 
+                IsReadOnly = !UserPermission.AllowInsert;
+                ClearDetail();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -692,34 +693,45 @@ namespace AccountBuddy.BLL
                 pod = new PaymentDetail();
                 PDetails.Add(pod);
             }
+            var paytax = PDetails.Where(x => x.GSTDRefNo == PDetail.SNo).ToList();
             PDetail.ToMap(pod);
-            if (pod.GSTAmount>0)
+            if ((pod.TaxDetails.Count != PDetail.TaxDetails.Count) || paytax.Count != 0)
             {
-                var s = pod.TaxDetails.Where(x => x.TaxAmount > 0).ToList();
-                pod.GSTCalculation(pod, s);
-                BLL.PaymentDetail pod1 = new BLL.PaymentDetail();
-                foreach (var t in pod.PaymentTaxDetails)
+                foreach (var s in pod.PaymentTaxDetails.ToList())
                 {
-                    PDetails.Add(new PaymentDetail
-                    {
-                        Id = Id,
-                        Amount = t.TaxAmount,
-                        GSTStatusId = 0,
-                        LedgerId = t.Ledger.Id,
-                        LedgerName = t.Ledger.LedgerName,
-                        Particular = "GST"
-                    });
+                    pod.PaymentTaxDetails.Remove(s);
                 }
+
             }
-            else
+            if (pod.GSTStatusId != 3)
             {
+                if (PDetail.GSTAmount != 0)
+                {
+                    var s = pod.TaxDetails.Where(x => x.TaxAmount > 0).ToList();
+                    pod.GSTCalculation(pod, s);
+                    foreach (var t in pod.PaymentTaxDetails)
+                    {
+                        PDetails.Add(new PaymentDetail
+                        {
+                            Id = Id,
+                            Amount = t.TaxAmount,
+                            GSTStatusId = 0,
+                            LedgerId = t.Ledger.Id,
+                            LedgerName = t.Ledger.LedgerName,
+                            Particular = "GST",
+                            GSTDRefNo = pod.SNo
+
+                        });
+                    }
+
+                }
 
             }
 
             ClearDetail();
             Amount = PDetails.Sum(x => x.Amount);
         }
-       
+
         public void ClearDetail()
         {
             try
@@ -758,6 +770,11 @@ namespace AccountBuddy.BLL
 
             if (pod != null)
             {
+
+                foreach (var s in PDetails.Where(x => x.GSTDRefNo == SNo).ToList())
+                {
+                    PDetails.Remove(s);
+                }
                 PDetails.Remove(pod);
                 Amount = PDetails.Sum(x => x.Amount);
                 ClearDetail();

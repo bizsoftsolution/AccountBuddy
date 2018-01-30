@@ -1335,7 +1335,7 @@ namespace AccountBuddy.SL.Hubs
             D.Particular = S.Particular;
             D.PaymentId = S.PaymentId;
             D.GSTStatusId = S.GSTStatusId;
-            
+        
             return D;
         }
         public static DAL.Payment_Tax_Detail ToMap(this BLL.Payment_Tax_Detail S, DAL.Payment_Tax_Detail D)

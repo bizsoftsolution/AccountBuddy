@@ -99,7 +99,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("Entry No Already Exist", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-           
+
             else
             {
                 var rv = data.Save();
@@ -151,11 +151,11 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            data.Clear(); 
+            data.Clear();
             if (data.Id != 0)
             {
                 btnPrint.IsEnabled = true;
-                
+
             }
             else
             {
@@ -197,7 +197,15 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 Button btn = (Button)sender;
-                data.FindDetail((int)btn.Tag);
+
+                if ((int)btn.Tag != 0)
+                {
+                    data.FindDetail((int)btn.Tag);
+                }
+                else
+                {
+                    MessageBox.Show("Could Not Edit This Item", FormName, MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                }
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 
@@ -206,10 +214,18 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                if (MessageBox.Show("Do you want to delete this detail?", FormName, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+
+                Button btn = (Button)sender;
+                if ((int)btn.Tag != 0)
                 {
-                    Button btn = (Button)sender;
-                    data.DeleteDetail((int)btn.Tag);
+                    if (MessageBox.Show("Do you want to delete this detail?", FormName, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    {
+                        data.DeleteDetail((int)btn.Tag);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Could Not Delete This Item", FormName, MessageBoxButton.OK, MessageBoxImage.Asterisk);
                 }
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
@@ -326,11 +342,12 @@ namespace AccountBuddy.PL.frm.Transaction
                 frm.ItemAmount = data.PDetail.Amount;
                 frm.lblItemAmount.Content = "Amount";
                 frm.lblDiscountAmount.Visibility = Visibility.Hidden;
+                frm.lblHDiscountAmount.Visibility = Visibility.Hidden;
                 frm.ShowDialog();
                 data.PDetail.SetGST();
                 frm.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.AppLib.WriteLog(ex);
             }
@@ -341,7 +358,7 @@ namespace AccountBuddy.PL.frm.Transaction
             try
             {
                 var i = cmbGST.SelectedItem as BLL.TaxType;
-                
+
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
         }
