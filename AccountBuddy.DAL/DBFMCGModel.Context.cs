@@ -46,7 +46,6 @@ namespace AccountBuddy.DAL
         public virtual DbSet<LogDetailType> LogDetailTypes { get; set; }
         public virtual DbSet<LogMaster> LogMasters { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
-        public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductDetail> ProductDetails { get; set; }
         public virtual DbSet<Purchase> Purchases { get; set; }
@@ -56,7 +55,6 @@ namespace AccountBuddy.DAL
         public virtual DbSet<PurchaseReturn> PurchaseReturns { get; set; }
         public virtual DbSet<PurchaseReturnDetail> PurchaseReturnDetails { get; set; }
         public virtual DbSet<Receipt> Receipts { get; set; }
-        public virtual DbSet<ReceiptDetail> ReceiptDetails { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<SalesDetail> SalesDetails { get; set; }
         public virtual DbSet<SalesOrder> SalesOrders { get; set; }
@@ -102,5 +100,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<Payment_Tax_Detail> Payment_Tax_Detail { get; set; }
         public virtual DbSet<Receipt_Tax_Detail> Receipt_Tax_Detail { get; set; }
         public virtual DbSet<TaxType> TaxTypes { get; set; }
+        public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
+        public virtual DbSet<ReceiptDetail> ReceiptDetails { get; set; }
     }
 }

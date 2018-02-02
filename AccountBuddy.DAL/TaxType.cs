@@ -14,19 +14,7 @@ namespace AccountBuddy.DAL
     
     public partial class TaxType
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TaxType()
-        {
-            this.PaymentDetails = new HashSet<PaymentDetail>();
-            this.ReceiptDetails = new HashSet<ReceiptDetail>();
-        }
-    
         public int Id { get; set; }
         public string Type { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReceiptDetail> ReceiptDetails { get; set; }
     }
 }

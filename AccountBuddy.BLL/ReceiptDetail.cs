@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,35 @@ namespace AccountBuddy.BLL
         private string _LedgerName;
         private int _SNo;
         private int _GSTStatusId;
+        private ObservableCollection<TaxMaster> _TaxDetails;
+        private decimal _GSTAmount;
+        private int _RefLedgerId;
+        private bool _IncludingGST;
+        private bool _AllowEdit;
+
 
         #endregion
 
         #region Property
+
+        public ObservableCollection<TaxMaster> TaxDetails
+        {
+            get
+            {
+                if (_TaxDetails == null) _TaxDetails = new ObservableCollection<TaxMaster>();
+                return _TaxDetails;
+            }
+            set
+            {
+                if (_TaxDetails != value)
+                {
+                    _TaxDetails = value;
+                    NotifyPropertyChanged(nameof(TaxDetails));
+                }
+            }
+        }
+
+
         public int SNo
         {
             get
@@ -95,6 +121,8 @@ namespace AccountBuddy.BLL
                 {
                     _Amount = value;
                     NotifyPropertyChanged(nameof(Amount));
+                    SetGST();
+
                 }
             }
         }
@@ -143,10 +171,98 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public bool IncludingGST
+        {
+            get
+            {
+                return _IncludingGST;
+            }
+            set
+            {
+                if (_IncludingGST != value)
+                {
+                    _IncludingGST = value;
+                    NotifyPropertyChanged(nameof(IncludingGST));
+                    SetGST();
+                }
+            }
+        }
 
+
+        public decimal GSTAmount
+        {
+            get
+            {
+                return _GSTAmount;
+            }
+            set
+            {
+                if (_GSTAmount != value)
+                {
+                    _GSTAmount = value;
+                    NotifyPropertyChanged(nameof(GSTAmount));
+                }
+            }
+        }
+        public int RefLedgerId
+        {
+            get
+            {
+                return _RefLedgerId;
+            }
+            set
+            {
+                if (_RefLedgerId != value)
+                {
+                    _RefLedgerId = value;
+                    NotifyPropertyChanged(nameof(RefLedgerId));
+                }
+            }
+        }
+        public bool AllowEdit
+        {
+            get
+            {
+                return _AllowEdit;
+            }
+            set
+            {
+                if (_AllowEdit != value)
+                {
+                    _AllowEdit = value;
+                    NotifyPropertyChanged(nameof(AllowEdit));
+                }
+            }
+        }
         #endregion
+        public void SetGST()
+        {
+            if (IncludingGST)
+            {
+                GSTAmount = TaxMaster.SetRPGST(TaxDetails, Amount);
+            }
+            else
+            {
+                GSTAmount = 0;
+
+            }
+        }
+        //public void GSTCalculation(ReceiptDetail rod, List<TaxMaster> TDetail)
+        //{
+        //    foreach (var t in TDetail)
+        //    {
+        //        Receipt_Tax_Detail.Add(new Receipt_Tax_Detail
+        //        {
+        //            Ledger = t.Ledger,
+        //            RD_ID = rod.Id,
+        //            TaxAmount = (t.TaxPercentage / 100) * pod.Amount,
+        //            TaxId = t.Ledger.Id,
+        //            TaxPercentage = t.TaxPercentage
+        //        });
+        //    }
 
 
+        //}
         #region Property  Changed Event
 
         public event PropertyChangedEventHandler PropertyChanged;

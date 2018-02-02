@@ -14,23 +14,14 @@ namespace AccountBuddy.DAL
     
     public partial class ReceiptDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ReceiptDetail()
-        {
-            this.Receipt_Tax_Detail = new HashSet<Receipt_Tax_Detail>();
-        }
-    
         public long Id { get; set; }
         public long ReceiptId { get; set; }
         public int LedgerId { get; set; }
         public decimal Amount { get; set; }
         public string Particulars { get; set; }
-        public int GSTStatusId { get; set; }
+        public Nullable<int> RefLedgerId { get; set; }
     
         public virtual Ledger Ledger { get; set; }
         public virtual Receipt Receipt { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Receipt_Tax_Detail> Receipt_Tax_Detail { get; set; }
-        public virtual TaxType TaxType { get; set; }
     }
 }

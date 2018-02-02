@@ -978,6 +978,7 @@
     <Compile Include="Hubs\FmcgWriteLogSL.cs" />
     <Compile Include="Hubs\GeneralLedger.cs" />
     <Compile Include="Hubs\GeneralStock.cs" />
+    <Compile Include="Hubs\IncomeExpenditure.cs" />
     <Compile Include="Hubs\JobOrderIssue.cs" />
     <Compile Include="Hubs\JobOrderReceived.cs" />
     <Compile Include="Hubs\JobWorker.cs" />

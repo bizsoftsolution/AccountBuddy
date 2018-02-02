@@ -57,11 +57,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 MessageBox.Show("Enter Amount", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            else if (data.PDetail.GSTStatusId == 0)
-            {
-                MessageBox.Show("Enter GST Type", FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
-                cmbGST.Focus();
-            }
+          
             else
             {
                 data.SaveDetail();
@@ -325,9 +321,10 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                cmbGST.ItemsSource = BLL.TaxType.toList;
-                cmbGST.SelectedValuePath = "Id";
-                cmbGST.DisplayMemberPath = "Type";
+                //    cmbGST.ItemsSource = BLL.TaxType.toList;
+                //    cmbGST.SelectedValuePath = "Id";
+                //    cmbGST.DisplayMemberPath = "Type";
+                //
             }
             catch (Exception ex)
             { Common.AppLib.WriteLog(ex); }
@@ -339,10 +336,7 @@ namespace AccountBuddy.PL.frm.Transaction
             {
                 frmTaxList frm = new frmTaxList();
                 frm.dgvTax.ItemsSource = data.PDetail.TaxDetails;
-                frm.ItemAmount = data.PDetail.Amount;
-                frm.lblItemAmount.Content = "Amount";
-                frm.lblDiscountAmount.Visibility = Visibility.Hidden;
-                frm.lblHDiscountAmount.Visibility = Visibility.Hidden;
+                frm.Amount = data.PDetail.Amount;
                 frm.ShowDialog();
                 data.PDetail.SetGST();
                 frm.Close();
@@ -357,10 +351,20 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             try
             {
-                var i = cmbGST.SelectedItem as BLL.TaxType;
+               // var i = cmbGST.SelectedItem as BLL.TaxType;
 
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
+        }
+
+        private void ckbIsGST_Checked(object sender, RoutedEventArgs e)
+        {
+            data.PDetail.IncludingGST = true;
+        }
+
+        private void ckbIsGST_Unchecked(object sender, RoutedEventArgs e)
+        {
+            data.PDetail.IncludingGST = false;
         }
     }
 }

@@ -22,12 +22,10 @@ namespace AccountBuddy.DAL
             this.JobWorkers = new HashSet<JobWorker>();
             this.JournalDetails = new HashSet<JournalDetail>();
             this.Payments = new HashSet<Payment>();
-            this.PaymentDetails = new HashSet<PaymentDetail>();
             this.Purchases = new HashSet<Purchase>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.PurchaseReturns = new HashSet<PurchaseReturn>();
             this.Receipts = new HashSet<Receipt>();
-            this.ReceiptDetails = new HashSet<ReceiptDetail>();
             this.Sales = new HashSet<Sale>();
             this.SalesOrders = new HashSet<SalesOrder>();
             this.SalesReturns = new HashSet<SalesReturn>();
@@ -38,6 +36,8 @@ namespace AccountBuddy.DAL
             this.PurchaseRequests = new HashSet<PurchaseRequest>();
             this.TaxMasters = new HashSet<TaxMaster>();
             this.Payment_Tax_Detail = new HashSet<Payment_Tax_Detail>();
+            this.PaymentDetails = new HashSet<PaymentDetail>();
+            this.ReceiptDetails = new HashSet<ReceiptDetail>();
         }
     
         public int Id { get; set; }
@@ -71,8 +71,6 @@ namespace AccountBuddy.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Purchase> Purchases { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
@@ -80,8 +78,6 @@ namespace AccountBuddy.DAL
         public virtual ICollection<PurchaseReturn> PurchaseReturns { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receipt> Receipts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReceiptDetail> ReceiptDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sales { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -102,5 +98,9 @@ namespace AccountBuddy.DAL
         public virtual ICollection<TaxMaster> TaxMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment_Tax_Detail> Payment_Tax_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReceiptDetail> ReceiptDetails { get; set; }
     }
 }

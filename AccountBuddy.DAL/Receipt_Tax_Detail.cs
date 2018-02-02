@@ -20,7 +20,6 @@ namespace AccountBuddy.DAL
         public decimal TaxPercentage { get; set; }
         public decimal TaxAmount { get; set; }
     
-        public virtual ReceiptDetail ReceiptDetail { get; set; }
         public virtual TaxMaster TaxMaster { get; set; }
     }
 }

@@ -92,6 +92,7 @@ namespace AccountBuddy.SL.Hubs
 
                 DAL.Receipt d = DB.Receipts.Where(x => x.EntryNo == EntryNo && x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault();
                 DB.Entry(d).Reload();
+                var tl = DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList();
                 if (d != null)
                 {
 
@@ -107,6 +108,45 @@ namespace AccountBuddy.SL.Hubs
 
                         b_pod.LedgerId = d_pod.LedgerId;
                         b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
+                        var ptd = d.ReceiptDetails.Where(x => x.RefLedgerId == b_pod.LedgerId).ToList();
+                        if (ptd.Count != 0)
+                        {
+                            b_pod.IncludingGST = true;
+                        }
+                        if (b_pod.RefLedgerId == 0)
+                        {
+                            b_pod.AllowEdit = true;
+                            foreach (var v in ptd)
+                            {
+                                b_pod.TaxDetails.Add(new BLL.TaxMaster
+                                {
+                                    Id = TaxIdByCompany_LedgerId(Caller.CompanyId, v.LedgerId),
+                                    Ledger = LedgerDAL_BLL(v.Ledger),
+                                    LedgerId = v.LedgerId,
+                                    Status = true,
+                                    TaxAmount = v.Amount,
+                                    TaxPercentage = TaxPercentByCompany_LedgerId(Caller.CompanyId, v.LedgerId),
+                                    TaxName = string.Format("{0}({1})", v.Ledger.LedgerName, TaxPercentByCompany_LedgerId(Caller.CompanyId, v.LedgerId)),
+
+                                });
+                            }
+                            var t2 = tl.Where(p => !b_pod.TaxDetails.Any(p2 => p2.Ledger.Id == p.Ledger.Id)).ToList();
+
+                            foreach (var t1 in t2)
+                            {
+                                b_pod.TaxDetails.Add(new BLL.TaxMaster()
+                                {
+                                    Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t1.LedgerId),
+                                    LedgerId = t1.LedgerId,
+                                    Status = false,
+                                    Ledger = LedgerDAL_BLL(t1.Ledger),
+                                    TaxPercentage = t1.TaxPercentage,
+                                    TaxAmount = 0,
+                                    TaxName = string.Format("{0}({1})", t1.Ledger.LedgerName, t1.TaxPercentage.ToString()),
+
+                                });
+                            }
+                        }
                     }
 
                 }

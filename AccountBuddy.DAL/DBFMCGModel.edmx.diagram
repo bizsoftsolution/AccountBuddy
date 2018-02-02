@@ -26,7 +26,6 @@
         <EntityTypeShape EntityType="DBFMCGModel.LogDetailType" PointX="11.25" PointY="14.125" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.LogMaster" PointX="11.25" PointY="5.5" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.Payment" PointX="5.25" PointY="110.25" Width="1.5" />
-        <EntityTypeShape EntityType="DBFMCGModel.PaymentDetail" PointX="10.5" PointY="79.75" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.Product" PointX="7.5" PointY="19.625" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.ProductDetail" PointX="9.75" PointY="30.625" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.Purchase" PointX="11.25" PointY="49.125" Width="1.5" />
@@ -36,7 +35,6 @@
         <EntityTypeShape EntityType="DBFMCGModel.PurchaseReturn" PointX="8.25" PointY="49.125" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.PurchaseReturnDetail" PointX="16.5" PointY="49.25" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.Receipt" PointX="5.25" PointY="100.75" Width="1.5" />
-        <EntityTypeShape EntityType="DBFMCGModel.ReceiptDetail" PointX="7.5" PointY="72" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.Sale" PointX="8.25" PointY="55.125" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.SalesDetail" PointX="10.5" PointY="65.375" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.SalesOrder" PointX="5.25" PointY="76" Width="1.5" />
@@ -86,12 +84,10 @@
         <AssociationConnector Association="DBFMCGModel.FK_JournalDetail_Journal" />
         <AssociationConnector Association="DBFMCGModel.FK_JournalDetail_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_Payment_Ledger" />
-        <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_Purchase_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseOrder_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturn_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_Receipt_Ledger" />
-        <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_Sale_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_SalesOrder_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_SalesReturn_Ledger" />
@@ -103,7 +99,6 @@
         <AssociationConnector Association="DBFMCGModel.FK_LogDetail_LogMaster" />
         <AssociationConnector Association="DBFMCGModel.FK_LogDetail_UserAccount" />
         <AssociationConnector Association="DBFMCGModel.FK_LogMaster_UserAccount" />
-        <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Payment" />
         <AssociationConnector Association="DBFMCGModel.FK_Product_StockGroup" />
         <AssociationConnector Association="DBFMCGModel.FK_Product_UOM" />
         <AssociationConnector Association="DBFMCGModel.FK_ProductDetail_Product" />
@@ -127,7 +122,6 @@
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturn_TransactionType" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturnDetail_PurchaseReturn" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseReturnDetail_UOM" />
-        <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Receipt" />
         <AssociationConnector Association="DBFMCGModel.FK_Sale_TransactionType" />
         <AssociationConnector Association="DBFMCGModel.FK_SalesDetail_Sale" />
         <AssociationConnector Association="DBFMCGModel.FK_SalesDetail_SalesOrderDetail" />
@@ -203,12 +197,14 @@
         <EntityTypeShape EntityType="DBFMCGModel.Payment_Tax_Detail" Width="1.5" PointX="12.75" PointY="64.5" />
         <EntityTypeShape EntityType="DBFMCGModel.Receipt_Tax_Detail" Width="1.5" PointX="11.75" PointY="61.25" />
         <AssociationConnector Association="DBFMCGModel.FK_Payment_Tax_Detail_Ledger" />
-        <AssociationConnector Association="DBFMCGModel.FK_Payment_Tax_Detail_PaymentDetail" />
-        <AssociationConnector Association="DBFMCGModel.FK_Receipt_Tax_Detail_ReceiptDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_Receipt_Tax_Detail_TaxMaster" />
         <EntityTypeShape EntityType="DBFMCGModel.TaxType" Width="1.5" PointX="5.25" PointY="73.5" />
-        <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_TaxType" />
-        <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_TaxType" />
+        <EntityTypeShape EntityType="DBFMCGModel.PaymentDetail" Width="1.5" PointX="10.5" PointY="79.625" />
+        <EntityTypeShape EntityType="DBFMCGModel.ReceiptDetail" Width="1.5" PointX="7.5" PointY="71.875" />
+        <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Ledger" />
+        <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Payment" />
+        <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Receipt" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

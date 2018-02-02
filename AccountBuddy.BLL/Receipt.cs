@@ -641,14 +641,21 @@ namespace AccountBuddy.BLL
 
         public void Clear()
         {
-            new Receipt().ToMap(this);
-            ClearDetail();
-            _RDetails = new ObservableCollection<ReceiptDetail>();
+            try
+            {
+                new Receipt().ToMap(this);
+                ClearDetail();
+                _RDetails = new ObservableCollection<ReceiptDetail>();
 
-            ReceiptDate = DateTime.Now;
-            IsReadOnly = !UserPermission.AllowInsert;
-            EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Receipt_NewRefNo").Result;
-            NotifyAllPropertyChanged();
+                ReceiptDate = DateTime.Now;
+                IsReadOnly = !UserPermission.AllowInsert;
+                EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Receipt_NewRefNo").Result;
+                NotifyAllPropertyChanged();
+            }
+            catch(Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
         }
 
         public bool Find()
@@ -659,6 +666,7 @@ namespace AccountBuddy.BLL
                 if (po.Id == 0) return false;
                 po.ToMap(this);
                 this.RDetails = po.RDetails;
+                ClearDetail();
                 NotifyAllPropertyChanged();
                 return true;
             }
@@ -693,8 +701,34 @@ namespace AccountBuddy.BLL
                 pod = new ReceiptDetail();
                 RDetails.Add(pod);
             }
+            else
+            {
+                foreach (var f in RDetails.Where(x => x.RefLedgerId == pod.LedgerId).ToList())
+                {
+                    RDetails.Remove(f);
+                }
+            }
+            if (RDetail.GSTAmount > 0)
+            {
+                foreach (var t in RDetail.TaxDetails.Where(x => x.Status != false).ToList())
+                {
+                    RDetails.Add(new ReceiptDetail
+                    {
+                        Amount = t.TaxAmount,
+                        LedgerId = t.Ledger.Id,
+                        LedgerName = t.Ledger.LedgerName,
+                        Particulars = RDetail.Particulars,
+                        RefLedgerId = RDetail.LedgerId,
+                        AllowEdit = false
+                    });
+                }
+
+            }
+
 
             RDetail.ToMap(pod);
+            pod.AllowEdit = true;
+            
             ClearDetail();
             Amount = RDetails.Sum(x => x.Amount);
         }
@@ -704,6 +738,21 @@ namespace AccountBuddy.BLL
             ReceiptDetail pod = new ReceiptDetail();
             pod.SNo = RDetails.Count == 0 ? 1 : RDetails.Max(x => x.SNo) + 1;
             pod.ToMap(RDetail);
+            var l1 = BLL.TaxMaster.toList;
+            foreach (var t in l1)
+            {
+                pod.TaxDetails.Add(new TaxMaster()
+                {
+                    Id = t.Id,
+                    Status = t.Status,
+                    Ledger = t.Ledger,
+                    LedgerId = t.LedgerId,
+                    TaxPercentage = t.TaxPercentage,
+                    TaxAmount = 0,
+                    TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, t.TaxPercentage.ToString())
+
+                });
+            }
         }
 
         public void DeleteDetail(int SNo)
@@ -712,8 +761,12 @@ namespace AccountBuddy.BLL
 
             if (pod != null)
             {
+                foreach (var s in RDetails.Where(x => x.RefLedgerId == pod.LedgerId).ToList())
+                {
+                    RDetails.Remove(s);
+                }
                 RDetails.Remove(pod);
-                Amount = RDetails.Sum(x => x.Amount);
+                Amount =RDetails.Sum(x => x.Amount);
                 ClearDetail();
             }
         }

@@ -617,7 +617,7 @@ namespace AccountBuddy.BLL
         }
         public void SetGST()
         {
-            GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount??0, DiscountAmount??0);
+            GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount??0-DiscountAmount??0);
             SetAmount();
         }
         public bool FindRefNo()

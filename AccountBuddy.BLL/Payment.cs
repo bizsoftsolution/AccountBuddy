@@ -49,7 +49,6 @@ namespace AccountBuddy.BLL
         private bool _IsShowTTDetail;
 
         private ObservableCollection<PaymentDetail> _PDetails;
-        private ObservableCollection<TaxMaster> _TaxDetails;
         private static List<string> _PayModeList;
         private static List<string> _StatusList;
 
@@ -684,7 +683,7 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Detail
-
+        
         public void SaveDetail()
         {
             PaymentDetail pod = PDetails.Where(x => x.SNo == PDetail.SNo).FirstOrDefault();
@@ -693,40 +692,66 @@ namespace AccountBuddy.BLL
                 pod = new PaymentDetail();
                 PDetails.Add(pod);
             }
-            var paytax = PDetails.Where(x => x.GSTDRefNo == PDetail.SNo).ToList();
-            PDetail.ToMap(pod);
-            if ((pod.TaxDetails.Count != PDetail.TaxDetails.Count) || paytax.Count != 0)
+            else
             {
-                foreach (var s in pod.PaymentTaxDetails.ToList())
+                foreach (var f in PDetails.Where(x => x.RefLedgerId == pod.LedgerId).ToList())
                 {
-                    pod.PaymentTaxDetails.Remove(s);
+                    PDetails.Remove(f);
                 }
-
             }
-            if (pod.GSTStatusId != 3)
+            if (PDetail.GSTAmount > 0)
             {
-                if (PDetail.GSTAmount != 0)
+                foreach (var t in PDetail.TaxDetails.Where(x => x.Status != false).ToList())
                 {
-                    var s = pod.TaxDetails.Where(x => x.TaxAmount > 0).ToList();
-                    pod.GSTCalculation(pod, s);
-                    foreach (var t in pod.PaymentTaxDetails)
+                    PDetails.Add(new PaymentDetail
                     {
-                        PDetails.Add(new PaymentDetail
-                        {
-                            Id = Id,
-                            Amount = t.TaxAmount,
-                            GSTStatusId = 0,
-                            LedgerId = t.Ledger.Id,
-                            LedgerName = t.Ledger.LedgerName,
-                            Particular = "GST",
-                            GSTDRefNo = pod.SNo
-
-                        });
-                    }
-
+                        Amount = t.TaxAmount,
+                        LedgerId = t.Ledger.Id,
+                        LedgerName = t.Ledger.LedgerName,
+                        Particular = PDetail.Particular,
+                        RefLedgerId = PDetail.LedgerId,
+                        AllowEdit = false
+                    });
                 }
 
             }
+
+
+            PDetail.ToMap(pod);
+            pod.AllowEdit = true;
+            
+            //if ((PDetail.TaxDetails.Count != PDetail.TaxDetails.Count) || paytax.Count != 0)
+            //{
+            //    foreach (var s in pod.PaymentTaxDetails.ToList())
+            //    {
+            //         PDetails.Remove(PDetails.Where(x => x.GSTDRefNo == PDetail.SNo).FirstOrDefault());
+            //    }
+
+            //}
+            //if (PDetail.GSTStatusId != 3)
+            //{
+            //    if (PDetail.GSTAmount != 0)
+            //    {
+            //        var s = PDetail.TaxDetails.Where(x => x.TaxAmount > 0).ToList();
+            //        pod.GSTCalculation(pod, s);
+            //        foreach (var t in PDetail.PaymentTaxDetails)
+            //        {
+            //            PDetails.Add(new PaymentDetail
+            //            {
+            //                Id = Id,
+            //                Amount = t.TaxAmount,
+            //                GSTStatusId = 0,
+            //                LedgerId = t.Ledger.Id,
+            //                LedgerName = t.Ledger.LedgerName,
+            //                Particular = "GST",
+            //                GSTDRefNo = pod.SNo
+
+            //            });
+            //        }
+
+            //    }
+
+            //}
 
             ClearDetail();
             Amount = PDetails.Sum(x => x.Amount);
@@ -771,7 +796,7 @@ namespace AccountBuddy.BLL
             if (pod != null)
             {
 
-                foreach (var s in PDetails.Where(x => x.GSTDRefNo == SNo).ToList())
+                foreach (var s in PDetails.Where(x => x.RefLedgerId == pod.LedgerId).ToList())
                 {
                     PDetails.Remove(s);
                 }

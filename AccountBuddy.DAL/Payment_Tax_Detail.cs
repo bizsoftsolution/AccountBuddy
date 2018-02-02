@@ -21,6 +21,5 @@ namespace AccountBuddy.DAL
         public decimal TaxAmount { get; set; }
     
         public virtual Ledger Ledger { get; set; }
-        public virtual PaymentDetail PaymentDetail { get; set; }
     }
 }

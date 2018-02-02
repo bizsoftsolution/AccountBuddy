@@ -187,6 +187,28 @@
                         <Button   Width="65" Height="30" x:Name="btnAdd" Content="ADD" Margin="10,0,0,0" Click="btnAdd_Click" />
                         <Button   Width="75" Height="30" x:Name="btnDClear" Content="CLEAR" Margin="10,0,0,0" Click="btnDClear_Click" />
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <!--<ComboBox x:Name="cmbGST" IsReadOnly="{Binding IsReadOnly}"  SelectedValue="{Binding PDetail.GSTStatusId, Mode=TwoWay}"   Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="250" Margin="10,0,0,0" IsEditable="True" Loaded="cmbGST_Loaded" SelectionChanged="cmbGST_SelectionChanged" >
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="GST Option"/>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling" Height="250"/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>-->
+
+                        <CheckBox x:Name="ckbIsGST" IsChecked="{Binding RDetail.IncludingGST,Mode=TwoWay}" Checked="ckbIsGST_Checked"    Unchecked="ckbIsGST_Unchecked"   Margin="10,5,5,5">With GST</CheckBox>
+
+                        <Button   Width="55" Height="30" x:Name="btnEdit"  Margin="10,0,0,0" Click="btnEdit_Click" >
+                            <materialDesign:PackIcon Kind="Pencil" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
+                        </Button>
+                        <TextBox x:Name="txtGSTAmount" IsReadOnly="True" Text="{Binding RDetail.GSTAmount, Mode=TwoWay, StringFormat=\{0:N2\}}"   TextAlignment="Right" Width="88" materialDesign:HintAssist.Hint="GST Amount" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5" FontWeight="Bold"/>
+                    </StackPanel>
+
                     <GroupBox Header="Detail Particulars" Margin="10,10,10,0">
                         <TextBox Text="{Binding RDetail.Particulars, Mode=TwoWay}" MaxLength="500" AcceptsReturn="True" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="5,7,5,3" FontWeight="Bold"/>
                     </GroupBox>
@@ -204,7 +226,7 @@
                                 <DataGridTemplateColumn Header="Edit" TextBlock.TextAlignment="Center"  Width="75">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button   x:Name="btnEditDetail" Tag="{Binding SNo}" Click="btnEditDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                            <Button   x:Name="btnEditDetail" Tag="{Binding SNo}" Click="btnEditDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" IsEnabled="{Binding AllowEdit, Mode=TwoWay}">
                                                 <materialDesign:PackIcon Kind="Pencil" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
                                             </Button>
                                         </DataTemplate>
@@ -213,7 +235,7 @@
                                 <DataGridTemplateColumn Header="Delete"  TextBlock.TextAlignment="Center"  Width="75">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="btnDeleteDetail" Tag="{Binding SNo}" Click="btnDeleteDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" >
+                                            <Button x:Name="btnDeleteDetail" Tag="{Binding SNo}" Click="btnDeleteDetail_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" IsEnabled="{Binding AllowEdit, Mode=TwoWay}">
                                                 <materialDesign:PackIcon Kind="Delete" Width="26" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
                                             </Button>
                                         </DataTemplate>

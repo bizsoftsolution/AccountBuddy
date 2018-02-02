@@ -24,6 +24,9 @@ namespace AccountBuddy.BLL
         private ObservableCollection<TaxMaster> _TaxDetails;
         private decimal _GSTAmount;
         private int _GSTDRefNo;
+        private int _RefLedgerId;
+        private bool _IncludingGST;
+        private bool _AllowEdit;
 
         public ObservableCollection<Payment_Tax_Detail> PaymentTaxDetails
         {
@@ -179,11 +182,27 @@ namespace AccountBuddy.BLL
                 {
                     _GSTStatusId = value;
                     NotifyPropertyChanged(nameof(GSTStatusId));
-                    SetGST();
+                    //SetGST();
                 }
             }
         }
 
+        public bool IncludingGST
+        {
+            get
+            {
+                return _IncludingGST;
+            }
+            set
+            {
+                if (_IncludingGST != value)
+                {
+                    _IncludingGST = value;
+                    NotifyPropertyChanged(nameof(IncludingGST));
+                    SetGST();
+                }
+            }
+        }
 
 
         public decimal GSTAmount
@@ -216,6 +235,37 @@ namespace AccountBuddy.BLL
                 }
             }
         }
+        public int RefLedgerId
+        {
+            get
+            {
+                return _RefLedgerId;
+            }
+            set
+            {
+                if (_RefLedgerId != value)
+                {
+                    _RefLedgerId = value;
+                    NotifyPropertyChanged(nameof(RefLedgerId));
+                }
+            }
+        }
+        public bool AllowEdit
+        {
+            get
+            {
+                return _AllowEdit;
+            }
+            set
+            {
+                if (_AllowEdit != value)
+                {
+                    _AllowEdit = value;
+                    NotifyPropertyChanged(nameof(AllowEdit));
+                }
+            }
+        }
+
         #endregion
 
         #region Property  Changed Event
@@ -253,7 +303,7 @@ namespace AccountBuddy.BLL
         }
         public void SetGST()
         {
-            if (GSTStatusId != 3)
+            if (IncludingGST)
             {
                 GSTAmount = TaxMaster.SetRPGST(TaxDetails, Amount);
             }

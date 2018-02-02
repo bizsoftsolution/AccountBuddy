@@ -38,16 +38,16 @@ namespace AccountBuddy.PL.frm.Report
 
         }
 
-        public void LoadReport(List<BLL.ProfitLoss> list, DateTime dtFrom, DateTime dtTo)
+        public void LoadReport(List<BLL.IncomeExpenditure> list, DateTime dtFrom, DateTime dtTo)
         {
            
-            list = list.Select(x => new BLL.ProfitLoss()
-            { AccountName = x.Ledger.AccountName, CrAmt=x.CrAmt, DrAmt=x.DrAmt, DrAmtOP=x.DrAmtOP, CrAmtOP=x.CrAmtOP }).ToList();
+            list = list.Select(x => new BLL.IncomeExpenditure()
+            { AccountName = x.Ledger.AccountName,  Amt=x.Amt, OPAmt=x.OPAmt }).ToList();
 
             try
             {
                 rptViewer.Reset();
-                ReportDataSource data = new ReportDataSource("ProfitLoss", list);
+                ReportDataSource data = new ReportDataSource("IncomeExpenditure", list);
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptViewer.LocalReport.DataSources.Add(data);
                 rptViewer.LocalReport.DataSources.Add(data1);

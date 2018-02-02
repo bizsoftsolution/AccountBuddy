@@ -370,8 +370,7 @@ namespace AccountBuddy.PL.frm.Transaction
             ObservableCollection<BLL.TaxMaster> tax = new ObservableCollection<BLL.TaxMaster>();
             
             frm.dgvTax.ItemsSource = data.TaxDetails;
-            frm.ItemAmount = data.ItemAmount;
-            frm.DiscountAmount = data.DiscountAmount;
+            frm.Amount = data.ItemAmount-data.DiscountAmount;
             frm.ShowDialog();
             data.SetGST();
             frm.Close();

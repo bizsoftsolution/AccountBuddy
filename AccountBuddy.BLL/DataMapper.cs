@@ -975,7 +975,7 @@ namespace AccountBuddy.BLL
         {
             D.Id = S.Id;
             D.Amount = S.Amount;
-            D.LedgerId = S.LedgerId;
+           D.LedgerId = S.LedgerId;
             D.Particular = S.Particular;
             D.PaymentId = S.PaymentId;
             D.LedgerName = S.LedgerName;
@@ -983,6 +983,10 @@ namespace AccountBuddy.BLL
             D.TaxDetails = S.TaxDetails;
             D.GSTStatusId = S.GSTStatusId;
             D.PaymentTaxDetails = S.PaymentTaxDetails;
+            D.GSTDRefNo = S.GSTDRefNo;
+            D.RefLedgerId = S.RefLedgerId;
+            D.IncludingGST = S.IncludingGST;
+            D.AllowEdit = S.AllowEdit;
             return D;
         }
         public static Payment_Tax_Detail ToMap(this Payment_Tax_Detail S, Payment_Tax_Detail D)
@@ -1042,6 +1046,10 @@ namespace AccountBuddy.BLL
             D.ReceiptId = S.ReceiptId;
             D.LedgerName = S.LedgerName;
             D.SNo = S.SNo;
+            D.RefLedgerId = S.RefLedgerId;
+            D.TaxDetails = S.TaxDetails;
+            D.AllowEdit = S.AllowEdit;
+            D.IncludingGST = S.IncludingGST;
             return D;
         }
         #endregion

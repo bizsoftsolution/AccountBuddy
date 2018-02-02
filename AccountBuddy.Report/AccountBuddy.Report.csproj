@@ -195,6 +195,7 @@
     <None Include="Properties\DataSources\AccountBuddy.BLL.CreditLimitType.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralLedger.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.GeneralStock.datasource" />
+    <None Include="Properties\DataSources\AccountBuddy.BLL.IncomeExpenditure.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.JobOrderIssue.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.JobOrderIssueDetail.datasource" />
     <None Include="Properties\DataSources\AccountBuddy.BLL.JobOrderReceived.datasource" />

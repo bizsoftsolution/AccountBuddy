@@ -294,5 +294,32 @@ namespace AccountBuddy.PL.frm.Transaction
             LoadDebitAC();
 
         }
+
+        private void ckbIsGST_Unchecked(object sender, RoutedEventArgs e)
+        {
+            data.RDetail.IncludingGST = false;
+        }
+
+        private void ckbIsGST_Checked(object sender, RoutedEventArgs e)
+        {
+            data.RDetail.IncludingGST = true;
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                frmTaxList frm = new frmTaxList();
+                frm.dgvTax.ItemsSource = data.RDetail.TaxDetails;
+                frm.Amount = data.RDetail.Amount;
+                frm.ShowDialog();
+                data.RDetail.SetGST();
+                frm.Close();
+            }
+            catch (Exception ex)
+            {
+                Common.AppLib.WriteLog(ex);
+            }
+        }
     }
 }

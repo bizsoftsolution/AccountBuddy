@@ -14,23 +14,14 @@ namespace AccountBuddy.DAL
     
     public partial class PaymentDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PaymentDetail()
-        {
-            this.Payment_Tax_Detail = new HashSet<Payment_Tax_Detail>();
-        }
-    
         public long Id { get; set; }
         public long PaymentId { get; set; }
         public int LedgerId { get; set; }
         public decimal Amount { get; set; }
         public string Particular { get; set; }
-        public int GSTStatusId { get; set; }
+        public Nullable<int> RefLedgerId { get; set; }
     
         public virtual Ledger Ledger { get; set; }
         public virtual Payment Payment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Payment_Tax_Detail> Payment_Tax_Detail { get; set; }
-        public virtual TaxType TaxType { get; set; }
     }
 }

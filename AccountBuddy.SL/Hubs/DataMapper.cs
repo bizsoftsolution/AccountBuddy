@@ -1324,8 +1324,8 @@ namespace AccountBuddy.SL.Hubs
             D.LedgerId = S.LedgerId;
             D.Particular = S.Particular;
             D.PaymentId = S.PaymentId;
-            D.GSTStatusId = S.GSTStatusId;
-            return D;
+            D.RefLedgerId = S.RefLedgerId??0;
+           return D;
         }
         public static DAL.PaymentDetail ToMap(this BLL.PaymentDetail S, DAL.PaymentDetail D)
         {
@@ -1334,9 +1334,8 @@ namespace AccountBuddy.SL.Hubs
             D.LedgerId = S.LedgerId;
             D.Particular = S.Particular;
             D.PaymentId = S.PaymentId;
-            D.GSTStatusId = S.GSTStatusId;
-        
-            return D;
+            D.RefLedgerId = S.RefLedgerId;
+          return D;
         }
         public static DAL.Payment_Tax_Detail ToMap(this BLL.Payment_Tax_Detail S, DAL.Payment_Tax_Detail D)
         {
@@ -1414,6 +1413,8 @@ namespace AccountBuddy.SL.Hubs
             D.LedgerId = S.LedgerId;
             D.Particulars = S.Particulars;
             D.ReceiptId = S.ReceiptId;
+            D.RefLedgerId = S.RefLedgerId??0;
+        
             return D;
         }
         public static DAL.ReceiptDetail ToMap(this BLL.ReceiptDetail S, DAL.ReceiptDetail D)
@@ -1423,6 +1424,7 @@ namespace AccountBuddy.SL.Hubs
             D.LedgerId = S.LedgerId;
             D.Particulars = S.Particulars;
             D.ReceiptId = S.ReceiptId;
+            D.RefLedgerId = S.RefLedgerId;
             return D;
         }
         #endregion

@@ -55,13 +55,10 @@
                 <Label x:Name="lblGSTAmount"  HorizontalContentAlignment="Left" Foreground="Black"    Width="AUTO" Height="auto"  FontSize="16"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                <Label  HorizontalContentAlignment="Left" Foreground="Black" Height="AUTO" FontSize="16" />
-                <Label x:Name="lblItemAmount"  HorizontalContentAlignment="Left" Foreground="Black"    Width="AUTO" Height="AUTO"  FontSize="16"/>
+                <Label x:Name="lblHAmount" Content="Amount:" HorizontalContentAlignment="Left" Foreground="Black" Height="AUTO" FontSize="16" />
+                <Label x:Name="lblAmount"  HorizontalContentAlignment="Left" Foreground="Black"    Width="AUTO" Height="AUTO"  FontSize="16"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Label x:Name="lblHDiscountAmount" Content="Discount Amount:" HorizontalContentAlignment="Left"  Foreground="Black"   Width="136" Height="AUTO" FontSize="16" />
-                <Label x:Name="lblDiscountAmount" HorizontalContentAlignment="Left"  Foreground="Black"   Width="150" Height="AUTO"  FontSize="16"/>
-            </StackPanel>
+           
         </StackPanel>
 
     </Grid>

@@ -321,8 +321,7 @@ namespace AccountBuddy.PL.frm.Transaction
             frmTaxList frm = new frmTaxList();
 
             frm.dgvTax.ItemsSource = data.TaxDetails;
-            frm.ItemAmount = data.ItemAmount??0;
-            frm.DiscountAmount = data.DiscountAmount ?? 0;
+            frm.Amount = data.ItemAmount??0-data.DiscountAmount??0;
             frm.ShowDialog();
             data.SetGST();
             frm.Close();

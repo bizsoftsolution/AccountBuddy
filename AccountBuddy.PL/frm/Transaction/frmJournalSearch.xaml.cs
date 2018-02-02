@@ -93,6 +93,12 @@ namespace AccountBuddy.PL.frm.Transaction
                     f.btnSave.IsEnabled = true;
                     f.btnDelete.IsEnabled = true;
                 }
+                var l1 = f.data.JDetails;
+                decimal drAmt = l1.Sum(x => x.CrAmt);
+                decimal crAmt = l1.Sum(x => x.DrAmt);
+                f.lblMsg.Text = string.Format("Total Debit Balance : {0:N2}, Total Credit Balance : {1:N2}, Difference : {2:N2}", crAmt, drAmt, Math.Abs(drAmt - crAmt));
+                f.lblMsg.Foreground = drAmt == crAmt ? new SolidColorBrush(Color.FromRgb(0, 0, 255)) : new SolidColorBrush(Color.FromRgb(255, 0, 0));
+
                 System.Windows.Forms.Application.DoEvents();
                 this.Close();
             }

@@ -372,20 +372,20 @@ namespace AccountBuddy.BLL
         }
 
 
-        public static decimal SetGST(ObservableCollection<TaxMaster> TDetails, decimal IAmount, decimal DAmount)
+        public static decimal SetGST(ObservableCollection<TaxMaster> TDetails, decimal Amount)
         {            
             foreach (var t in TDetails)
             {
                 
-                t.TaxAmount = t.Status == false ? 0 : GetGST(IAmount, DAmount, t.TaxPercentage);
+                t.TaxAmount = t.Status == false ? 0 : GetGST(Amount, t.TaxPercentage);
             }
 
             return TDetails.Sum(x => x.TaxAmount);
 
         }
-        public static decimal GetGST(decimal ItemAmount, decimal DiscountAmount, decimal TaxPercentage)
+        public static decimal GetGST(decimal Amount, decimal TaxPercentage)
         {
-            return (ItemAmount - DiscountAmount) * TaxPercentage / 100;
+            return (Amount) * TaxPercentage / 100;
 
         }
         public static decimal SetRPGST(ObservableCollection<TaxMaster> TDetails, decimal Amount)

@@ -22,9 +22,8 @@ namespace AccountBuddy.PL.frm.Transaction
     public partial class frmTaxList :MetroWindow
     {
 
-        public decimal ItemAmount = 0;
-        public decimal DiscountAmount = 0;
-
+        public decimal Amount = 0;
+       
         public frmTaxList()
         {
             InitializeComponent();
@@ -40,7 +39,7 @@ namespace AccountBuddy.PL.frm.Transaction
             CheckBox cb = e.Source as CheckBox;
             var t = cb.Tag as BLL.TaxMaster;
             t.Status = true;
-            t.TaxAmount = BLL.TaxMaster.GetGST(ItemAmount, DiscountAmount, t.TaxPercentage);
+            t.TaxAmount = BLL.TaxMaster.GetGST(Amount, t.TaxPercentage);
             ShowGSTAmount();
         }
 
@@ -61,8 +60,8 @@ namespace AccountBuddy.PL.frm.Transaction
                 var l1 = dgvTax.ItemsSource as ObservableCollection<BLL.TaxMaster>;
                 var amt = l1.Sum(x => x.TaxAmount);
                 lblGSTAmount.Content = string.Format("{0:N2}", amt);
-                lblDiscountAmount.Content = string.Format("{0:N2}", DiscountAmount);
-                lblItemAmount.Content = string.Format("{0:N2}", ItemAmount);
+                
+                lblAmount.Content = string.Format("{0:N2}", Amount);
             }
 
             catch (Exception ex)

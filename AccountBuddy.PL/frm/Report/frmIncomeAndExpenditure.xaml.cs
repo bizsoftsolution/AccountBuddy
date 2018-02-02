@@ -44,21 +44,21 @@ namespace AccountBuddy.PL.frm.Report
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgvIncomeExpenditure.ItemsSource = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            dgvIncomeExpenditure.ItemsSource = BLL.IncomeExpenditure.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             LoadReport();
         }
 
 
         public void LoadReport()
         {
-            List<BLL.ProfitLoss> list = dgvIncomeExpenditure.ItemsSource as List<BLL.ProfitLoss>;
-            list = list.Select(x => new BLL.ProfitLoss ()
-            {  AccountName= x.Ledger.AccountName,CrAmt=x.CrAmt, CrAmtOP=x.CrAmtOP, DrAmt=x.DrAmt, DrAmtOP=x.DrAmtOP}).ToList();
+            List<BLL.IncomeExpenditure> list = dgvIncomeExpenditure.ItemsSource as List<BLL.IncomeExpenditure>;
+            list = list.Select(x => new BLL.IncomeExpenditure()
+            {  AccountName= x.Ledger.AccountName,Amt=x.Amt, OPAmt=x.OPAmt}).ToList();
 
             try
             {
                 rptViewer.Reset();
-                ReportDataSource data = new ReportDataSource("ProfitLoss", list);
+                ReportDataSource data = new ReportDataSource("IncomeExpenditure", list);
                 ReportDataSource data1 = new ReportDataSource("CompanyDetail", BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.Company.Id).ToList());
                 rptViewer.LocalReport.DataSources.Add(data);
                 rptViewer.LocalReport.DataSources.Add(data1);
@@ -91,7 +91,7 @@ namespace AccountBuddy.PL.frm.Report
         }
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            dgvIncomeExpenditure.ItemsSource = BLL.ProfitLoss.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            dgvIncomeExpenditure.ItemsSource = BLL.IncomeExpenditure.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             LoadReport();
         }
 
@@ -219,7 +219,7 @@ namespace AccountBuddy.PL.frm.Report
         private void btnPrintPreview_Click(object sender, RoutedEventArgs e)
         {
             frmIncomeAndExpenditurePrint f = new frmIncomeAndExpenditurePrint();
-            f.LoadReport(dgvIncomeExpenditure.ItemsSource as List<BLL.ProfitLoss> ,dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
+            f.LoadReport(dgvIncomeExpenditure.ItemsSource as List<BLL.IncomeExpenditure> ,dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
             f.ShowDialog();
         }
 
@@ -229,7 +229,7 @@ namespace AccountBuddy.PL.frm.Report
         {
             try
             {
-                var PL = dgvIncomeExpenditure.SelectedItem as BLL.ProfitLoss;
+                var PL = dgvIncomeExpenditure.SelectedItem as BLL.IncomeExpenditure;
                 if (PL != null)
                 {
                     if (PL.Ledger.Id != 0)

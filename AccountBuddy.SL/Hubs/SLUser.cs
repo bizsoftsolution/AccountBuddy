@@ -21,6 +21,6 @@ namespace AccountBuddy.SL.Hubs
         public int? UnderCompanyId { get; set; }
         public string CompanyType { get; set; }
         public string AccYear { get; set; }
-        
+        public object DB { get; internal set; }
     }
 }
