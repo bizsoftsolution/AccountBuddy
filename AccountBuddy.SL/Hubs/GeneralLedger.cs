@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.EDate = pd.Payment.PaymentDate;
                     gl.RefNo = pd.Payment.PaymentMode == "Cheque" ? pd.Payment.ChequeNo : pd.Payment.RefNo;
                     gl.EntryNo = pd.Payment.EntryNo;
-                    gl.DrAmt = pd.Amount;
+                    gl.DrAmt = pd.Payment.Amount;
                     gl.CrAmt = 0;
                     BalAmt += (gl.DrAmt - gl.CrAmt);
                     gl.BalAmt = Math.Abs(BalAmt);
@@ -142,7 +142,7 @@ namespace AccountBuddy.SL.Hubs
                     gl.RefNo = rd.Receipt.ReceiptMode == "Cheque" ? rd.Receipt.ChequeNo : rd.Receipt.RefNo;
                     gl.EntryNo = rd.Receipt.EntryNo;
                     gl.DrAmt = 0;
-                    gl.CrAmt = rd.Amount;
+                    gl.CrAmt = rd.Receipt.Amount;
                     BalAmt += (gl.DrAmt - gl.CrAmt);
                     gl.BalAmt = Math.Abs(BalAmt);
                     lstGeneralLedger.Add(gl);

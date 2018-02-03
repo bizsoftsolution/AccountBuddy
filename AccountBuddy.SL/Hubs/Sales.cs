@@ -154,12 +154,10 @@ namespace AccountBuddy.SL.Hubs
             BLL.Sale P = new BLL.Sale();
             try
             {
-
                 DAL.Sale d = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo == SearchText).FirstOrDefault();
                 DB.Entry(d).Reload();
                 if (d != null)
                 {
-
                     d.ToMap(P);
                     P.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     P.TransactionType = (d.TransactionType ?? DB.TransactionTypes.Find(d.TransactionTypeId) ?? new DAL.TransactionType()).Type;
@@ -184,13 +182,11 @@ namespace AccountBuddy.SL.Hubs
                             TaxPercentage = TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId),
                             TaxAmount = t.CrAmt,
                             TaxName = string.Format("{0}({1})", t.Ledger.LedgerName, TaxPercentByCompany_LedgerId(Caller.CompanyId, t.LedgerId).ToString()),
-                            LedgerId=t.LedgerId
+                            LedgerId = t.LedgerId
                         });
-
                     }
                     var tl = DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList();
                     var t2 = tl.Where(p => !P.TaxDetails.Any(p2 => p2.Ledger.Id == p.Ledger.Id)).ToList();
-
                     foreach (var t1 in t2)
                     {
                         P.TaxDetails.Add(new BLL.TaxMaster()
@@ -202,7 +198,7 @@ namespace AccountBuddy.SL.Hubs
                             TaxPercentage = t1.TaxPercentage,
                             TaxAmount = 0,
                             TaxName = string.Format("{0}({1})", t1.Ledger.LedgerName, t1.TaxPercentage.ToString()),
-                            
+
                         });
                     }
                 }
