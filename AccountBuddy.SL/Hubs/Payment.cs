@@ -139,7 +139,7 @@ namespace AccountBuddy.SL.Hubs
                         d_pod.ToMap(b_pod);
                         PO.PDetails.Add(b_pod);
                         b_pod.SNo = ++i;
-
+                  
                         b_pod.LedgerName = (d_pod.Ledger ?? DB.Ledgers.Find(d_pod.LedgerId) ?? new DAL.Ledger()).LedgerName;
                         var ptd = d.PaymentDetails.Where(x => x.RefLedgerId == b_pod.LedgerId).ToList();
                         if (ptd.Count != 0)

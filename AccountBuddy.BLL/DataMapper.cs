@@ -987,6 +987,7 @@ namespace AccountBuddy.BLL
             D.RefLedgerId = S.RefLedgerId;
             D.IncludingGST = S.IncludingGST;
             D.AllowEdit = S.AllowEdit;
+           
             return D;
         }
         public static Payment_Tax_Detail ToMap(this Payment_Tax_Detail S, Payment_Tax_Detail D)

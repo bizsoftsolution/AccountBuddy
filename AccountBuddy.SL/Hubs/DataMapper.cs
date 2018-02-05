@@ -1325,6 +1325,7 @@ namespace AccountBuddy.SL.Hubs
             D.Particular = S.Particular;
             D.PaymentId = S.PaymentId;
             D.RefLedgerId = S.RefLedgerId??0;
+           
            return D;
         }
         public static DAL.PaymentDetail ToMap(this BLL.PaymentDetail S, DAL.PaymentDetail D)
@@ -1337,6 +1338,7 @@ namespace AccountBuddy.SL.Hubs
             D.RefLedgerId = S.RefLedgerId;
           return D;
         }
+
         public static DAL.Payment_Tax_Detail ToMap(this BLL.Payment_Tax_Detail S, DAL.Payment_Tax_Detail D)
         {
             D.Id = S.Id;
@@ -1345,6 +1347,7 @@ namespace AccountBuddy.SL.Hubs
             D.TaxAmount = S.TaxAmount;
             D.TaxId = S.TaxId;
             D.TaxPercentage = S.TaxPercentage;
+            
 
             return D;
         }
@@ -1358,8 +1361,6 @@ namespace AccountBuddy.SL.Hubs
             D.TaxPercentage = S.TaxPercentage;
             return D;
         }
-
-       
         #endregion
 
         #region Receipt
