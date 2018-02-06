@@ -280,6 +280,7 @@ namespace AccountBuddy.BLL
 
             BLL.UOM.Init();
             BLL.Product.Init();
+            BLL.TaxMaster.Init();
             
             
         }

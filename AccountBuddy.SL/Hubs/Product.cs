@@ -238,6 +238,7 @@ namespace AccountBuddy.SL.Hubs
                 var SRQtyNotForSales = p.SalesReturnDetails.Where(x => x.SalesReturn.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.IsResale == false && x.SalesReturn.SRDate > dtFrom && x.SalesReturn.SRDate <= dtTo).Sum(x => x.Quantity);
 
                 #endregion
+
                 var avl = op + (Pur + SR + SIn + PSD + JoR + SInPro+SRQtyForSales) - (Sal + PR + SOut + PSP + JOI + SOutPro+SRQtyNotForSales);
 
                 if (op != 0)

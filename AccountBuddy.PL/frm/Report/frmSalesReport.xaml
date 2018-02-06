@@ -64,18 +64,21 @@
                             <Button Width="98" Height="30" x:Name="btnSearch" VerticalAlignment="Bottom" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top"  Width="500">
-                            <RadioButton x:Name="rdbDealerWise" Content="By Customer" FontSize="14" Margin="0,5,10,0" IsChecked="True"></RadioButton>
-                            <RadioButton x:Name="rdbProductWise" Content="By Product" FontSize="14" Margin="0,5,10,0"></RadioButton>
-                            <RadioButton x:Name="rdbDealerSummary" Content="Dealer Summary" FontSize="14" Margin="0,5,10,0"></RadioButton>
-                            <RadioButton x:Name="rdbProductSummary" Content="Product Summary" FontSize="14" Margin="0,5,10,0"></RadioButton>
+                            <RadioButton x:Name="rdbDealerWise" Content="By Customer" FontSize="14" Margin="0,5,10,0" IsChecked="True" Checked="rdbDealerWise_Checked" Unchecked="rdbDealerWise_Unchecked"></RadioButton>
+                            <RadioButton x:Name="rdbProductWise" Content="By Product" FontSize="14" Margin="0,5,10,0" Checked="rdbProductWise_Checked"  Unchecked="rdbProductWise_Unchecked" ></RadioButton>
+                            <RadioButton x:Name="rdbDealerSummary" Content="Dealer Summary" FontSize="14" Margin="0,5,10,0" Checked="rdbDealerSummary_Checked" Unchecked="rdbDealerSummary_Unchecked"  ></RadioButton>
+                            <RadioButton x:Name="rdbProductSummary" Content="Product Summary" FontSize="14" Margin="0,5,10,0"  Checked="rdbProductSummary_Checked"  Unchecked="rdbProductSummary_Unchecked"    ></RadioButton>
                         </StackPanel>
 
                     </Grid>
                     <Grid Grid.Row="1">
-
                         <Grid Grid.Row="0"  >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
-                            <DataGrid x:Name="dgvDetails" BorderBrush="Black" BorderThickness="1"  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False"  Background="White" Foreground="Black" Margin="20,20,20,40" >
+                            <DataGrid Grid.Column="0" x:Name="dgvDetails" BorderBrush="Black" BorderThickness="1"  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False"  Background="White" Foreground="Black" Margin="20,20,20,40" >
 
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -102,14 +105,10 @@
                                     <DataGridTextColumn Header="Total" TextBlock.TextAlignment="Right" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-
+                            <WindowsFormsHost Grid.Column="1"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10" >
+                                <rv:ReportViewer x:Name="rptViewer"/>
+                            </WindowsFormsHost>
                         </Grid>
-
-
-
-                        <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
-                            <rv:ReportViewer x:Name="rptViewer"/>
-                        </WindowsFormsHost>
                     </Grid>
                     <Grid Grid.Row="2">
                         <!--<StackPanel Orientation="Horizontal" Margin="350,24,300,23" VerticalAlignment="Center">

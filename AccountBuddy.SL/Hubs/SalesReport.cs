@@ -443,9 +443,7 @@ namespace AccountBuddy.SL.Hubs
                 #endregion
 
             }
-
-
-
+            
             return rv;
         }
 
@@ -998,8 +996,6 @@ namespace AccountBuddy.SL.Hubs
                 sr.M6 = GTotM6;
                 sr.Amount = GTot;
                 if (sr.Amount != 0) rv.Add(sr);
-
-
             }
 
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }

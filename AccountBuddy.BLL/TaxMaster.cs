@@ -313,6 +313,7 @@ namespace AccountBuddy.BLL
                 IsReadOnly = !UserPermission.AllowInsert;
                 Ledger.Clear();
                 Ledger.AccountGroupId = BLL.DataKeyValue.DutiesTaxes_Value;
+                
                 NotifyAllPropertyChanged();
             }
             catch (Exception ex)

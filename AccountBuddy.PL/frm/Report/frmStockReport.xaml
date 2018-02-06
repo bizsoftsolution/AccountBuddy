@@ -87,9 +87,7 @@
                             <Button  Grid.Column="1" Name="btnPrint" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0"   ToolTip="Print" Click="btnPrint_Click" Width="134">
                                 PRINT
                             </Button>
-                            <Button  Grid.Column="1" Name="btnPrintPreview" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" Click="btnPrintPreview_Click"  >
-                                PRINT PREVIEW
-                            </Button>
+                            
                         </StackPanel>
 
                     </Grid>
