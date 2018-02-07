@@ -24,7 +24,7 @@ namespace AccountBuddy.Common
            frmJobWorker = "AccountBuddy.PL.frm.Master.frmJobWorker",
             frmDepartment = "AccountBuddy.PL.frm.Master.frmDepartment",
             frmProductSpecification = "AccountBuddy.PL.frm.Master.frmProductSpecification",
-           frmProductSpecificationProcess= "AccountBuddy.PL.frm.Transaction.frmProductSpecificationProcess",
+           frmProductSpecificationProcess = "AccountBuddy.PL.frm.Transaction.frmProductSpecificationProcess",
                frmTaxMaster = "AccountBuddy.PL.frm.Master.frmTaxMaster",
 
 
@@ -65,8 +65,10 @@ namespace AccountBuddy.Common
                                            frmCustomerSalesReport = "AccountBuddy.PL.frm.Report.frmCustomerSalesReport",
                                            frmPayableReceivable = "AccountBuddy.PL.frm.Report.frmPayableReceivable",
         frmPurchaseRequestReport = "AccountBuddy.PL.frm.Report.frmPurchaseRequestReport",
-               frmWelcome = "AccountBuddy.PL.frmWelcome"
+               frmWelcome = "AccountBuddy.PL.frmWelcome",
 
+        frmPurchaseReport = "AccountBuddy.PL.frm.Report.frmPurchaseReport",
+             frmCustomerWisePurchaseReport = "AccountBuddy.PL.frm.Report.frmCustomerWisePurchaseReport"
 
             ;
     }

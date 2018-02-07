@@ -14,7 +14,6 @@
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
     </UserControl.Resources>
-
     <Grid>
         <Grid Margin="0,0,0,10">
             <Grid.RowDefinitions>
@@ -22,12 +21,10 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="{DynamicResource bgFormHead}">
-                <TextBlock Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}"><Run Text="Customer Sales Report"/></TextBlock>
+                <Label x:Name="lblHeader"   Foreground="{DynamicResource fgFormHead}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="{DynamicResource ftfFormHead}" FontSize="{DynamicResource fnsFormHead}" Content="Customer Sales Report"></Label>
             </Grid>
             <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" />
-
             <Grid Grid.Row="1" >
-
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="135"/>
@@ -58,24 +55,23 @@
                                 </materialDesign:HintAssist.Hint>
                             </DatePicker>
                             <StackPanel Orientation="Horizontal" Margin="10">
-                                <RadioButton x:Name="rdbMonthlyWise" Content="By Month" VerticalAlignment="Bottom" FontSize="14" IsChecked="True"></RadioButton>
-                                <RadioButton x:Name="rdbYearWise" Content="By Year" VerticalAlignment="Bottom" FontSize="14"></RadioButton>
+                                <RadioButton x:Name="rdbDayWise" Content="By Date" VerticalAlignment="Bottom" FontSize="14" IsChecked="True" Checked="rdbDayWise_Checked"   Unchecked="rdbDayWise_Unchecked"></RadioButton>
+                                <RadioButton x:Name="rdbMonthlyWise" Content="By Month" VerticalAlignment="Bottom" FontSize="14" IsChecked="True" Checked="rdbMonthlyWise_Checked" Unchecked="rdbMonthlyWise_Unchecked" ></RadioButton>
+                                <RadioButton x:Name="rdbYearWise" Content="By Year" VerticalAlignment="Bottom" FontSize="14" Checked="rdbYearWise_Checked" Unchecked="rdbYearWise_Unchecked" ></RadioButton>
                             </StackPanel>
                             <Button Width="98" Height="30" x:Name="btnSearch" VerticalAlignment="Bottom" Content="SEARCH" Click="btnSearch_Click" Margin="5 5" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top"  Width="545" Margin="300,0,255,0">
-                            <RadioButton x:Name="rdbCustomerWise" Content="By Customer" FontSize="14" Margin="0,5,10,0" IsChecked="True"></RadioButton>
-                            <RadioButton x:Name="rdbProductWise" Content="By Product" FontSize="14" Margin="0,5,10,0"></RadioButton>
-                            <RadioButton x:Name="rdbCustomerSummary" Content="Customer Summary" FontSize="14" Margin="0,5,10,0"></RadioButton>
-                            <RadioButton x:Name="rdbProductSummary" Content="Product Summary" FontSize="14" Margin="0,5,10,0"></RadioButton>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top"  Width="684" Margin="191,0,225,0">
+                            <RadioButton x:Name="rdbCustomerWise" Content="By Customer With Details" FontSize="14" Margin="0,5,10,0" IsChecked="True" Checked="rdbCustomerWise_Checked" Unchecked="rdbCustomerWise_Unchecked"></RadioButton>
+                            <RadioButton x:Name="rdbProductWise" Content="By Product With Details" FontSize="14" Margin="0,5,10,0" Checked="rdbProductWise_Checked" Unchecked="rdbProductWise_Unchecked" ></RadioButton>
+                            <RadioButton x:Name="rdbCustomerSummary" Content="Customer Summary" FontSize="14" Margin="0,5,10,0"  Checked="rdbCustomerSummary_Checked" Unchecked="rdbCustomerSummary_Unchecked"  ></RadioButton>
+                            <RadioButton x:Name="rdbProductSummary" Content="Product Summary" FontSize="14" Margin="0,5,10,0" Checked="rdbProductSummary_Checked" Unchecked="rdbProductSummary_Unchecked"  ></RadioButton>
                         </StackPanel>
 
                     </Grid>
                     <Grid Grid.Row="1">
-
-                        <Grid Grid.Row="0"  >
-
-                            <DataGrid x:Name="dgvDetails" BorderBrush="Black" BorderThickness="1"  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False"  Background="White" Foreground="Black" Margin="20,20,20,40" >
+                        <Grid Grid.Row="0">
+                            <!--<DataGrid x:Name="dgvDetails" BorderBrush="Black" BorderThickness="1"  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserSortColumns="True" CanUserAddRows="False"  AutoGenerateColumns="False"  Background="White" Foreground="Black" Margin="20,20,20,40" >
 
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -101,15 +97,11 @@
                                     <DataGridTextColumn Header="" TextBlock.TextAlignment="Right" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding M12, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                     <DataGridTextColumn Header="Total" TextBlock.TextAlignment="Right" ElementStyle="{StaticResource RightCell}" FontWeight="Bold" Width="120" Binding="{Binding Amount, Mode=OneWay,StringFormat={}{0:N2}}" IsReadOnly="True"  EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                                 </DataGrid.Columns>
-                            </DataGrid>
-
+                            </DataGrid>-->
+                            <WindowsFormsHost ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="307,10,227,10">
+                                <rv:ReportViewer x:Name="rptViewer"/>
+                            </WindowsFormsHost>
                         </Grid>
-
-
-
-                        <WindowsFormsHost Visibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="985,-66,20,401">
-                            <rv:ReportViewer x:Name="rptViewer"/>
-                        </WindowsFormsHost>
                     </Grid>
                     <Grid Grid.Row="2">
                         <!--<StackPanel Orientation="Horizontal" Margin="350,24,300,23" VerticalAlignment="Center">
@@ -126,7 +118,6 @@
                             </Button>-->
                         <!--
                         </StackPanel>-->
-
                     </Grid>
                 </Grid>
             </Grid>

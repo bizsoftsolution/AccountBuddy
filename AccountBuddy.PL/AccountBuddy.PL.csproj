@@ -310,6 +310,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="frm\Report\frmCustomerWisePurchaseReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frm\Report\frmCustomerWiseReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -367,6 +371,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="frm\Report\frmProductWiseSalesReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frm\Report\frmPurchaseReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -711,6 +719,9 @@
     <Compile Include="frm\Report\frmCustomerSalesReport.xaml.cs">
       <DependentUpon>frmCustomerSalesReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="frm\Report\frmCustomerWisePurchaseReport.xaml.cs">
+      <DependentUpon>frmCustomerWisePurchaseReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frm\Report\frmCustomerWiseReport.xaml.cs">
       <DependentUpon>frmCustomerWiseReport.xaml</DependentUpon>
     </Compile>
@@ -755,6 +766,9 @@
     </Compile>
     <Compile Include="frm\Report\frmProductWiseSalesReport.xaml.cs">
       <DependentUpon>frmProductWiseSalesReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frm\Report\frmPurchaseReport.xaml.cs">
+      <DependentUpon>frmPurchaseReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="frm\Report\frmReOrderLevel.xaml.cs">
       <DependentUpon>frmReOrderLevel.xaml</DependentUpon>

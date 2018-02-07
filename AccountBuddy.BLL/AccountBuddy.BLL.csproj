@@ -92,6 +92,7 @@
     <Compile Include="PurchaseDetail.cs" />
     <Compile Include="PurchaseOrder.cs" />
     <Compile Include="PurchaseOrderDetail.cs" />
+    <Compile Include="PurchaseReport.cs" />
     <Compile Include="PurchaseRequest.cs" />
     <Compile Include="PurchaseRequestDetail.cs" />
     <Compile Include="PurchaseRequestReport.cs" />
