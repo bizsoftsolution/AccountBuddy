@@ -7,7 +7,6 @@
       <Diagram DiagramId="f954c757d34644738c6bc410d7c95d79" Name="Diagram1">
         <EntityTypeShape EntityType="DBFMCGModel.AccountGroup" PointX="0.75" PointY="45" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.Bank" PointX="5.25" PointY="30.625" Width="1.5" />
-        <EntityTypeShape EntityType="DBFMCGModel.CompanyDetail" PointX="1.5" PointY="38.5" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.CreditLimitType" PointX="0.75" PointY="50.5" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.Customer" PointX="5.25" PointY="28.25" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.CustomFormat" PointX="3.75" PointY="63.5" Width="1.5" />
@@ -59,15 +58,8 @@
         <EntityTypeShape EntityType="DBFMCGModel.UserTypeDetail" PointX="9" PointY="8.125" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.UserTypeFormDetail" PointX="2.75" PointY="1" Width="1.5" />
         <AssociationConnector Association="DBFMCGModel.FK_AccountGroup_AccountGroup" />
-        <AssociationConnector Association="DBFMCGModel.FK_AccountGroup_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_Ledger_AccountGroup" />
         <AssociationConnector Association="DBFMCGModel.FK_Bank_Ledger" />
-        <AssociationConnector Association="DBFMCGModel.FK_CompanyDetail_CompanyDetail" />
-        <AssociationConnector Association="DBFMCGModel.FK_CustomFormat_CompanyDetail" />
-        <AssociationConnector Association="DBFMCGModel.FK_ProductDetail_CompanyDetail" />
-        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_CompanyDetail" />
-        <AssociationConnector Association="DBFMCGModel.FK_UOM_CompanyDetail" />
-        <AssociationConnector Association="DBFMCGModel.FK_UserType_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_Ledger_CreditLimitType" />
         <AssociationConnector Association="DBFMCGModel.FK_Customer_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_LogMaster_EntityType" />
@@ -151,7 +143,6 @@
         <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequest" PointX="5.25" PointY="80.25" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestDetail" PointX="7.5" PointY="80.5" Width="1.5" />
         <EntityTypeShape EntityType="DBFMCGModel.PurchaseRequestStatusDetail" PointX="13.5" PointY="67.625" Width="1.5" />
-        <AssociationConnector Association="DBFMCGModel.FK_Department_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_Staff_Department" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequest_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestDetail_Product" />
@@ -162,7 +153,6 @@
         <AssociationConnector Association="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff1" />
         <AssociationConnector Association="DBFMCGModel.FK_Staff_UserAccount" />
         <EntityTypeShape EntityType="DBFMCGModel.AppConnection" PointX="14" PointY="8.75" Width="1.5" />
-        <AssociationConnector Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail" />
         <EntityTypeShape EntityType="DBFMCGModel.AppConnectionHeader" PointX="16.25" PointY="13.125" Width="1.5" />
         <AssociationConnector Association="DBFMCGModel.FK_AppConnectionHeader_AppConnection" />
         <EntityTypeShape EntityType="DBFMCGModel.AppConnectionLoginFailed" PointX="16.25" PointY="15.875" Width="1.5" />
@@ -205,6 +195,18 @@
         <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Ledger" />
         <AssociationConnector Association="DBFMCGModel.FK_PaymentDetail_Payment" />
         <AssociationConnector Association="DBFMCGModel.FK_ReceiptDetail_Receipt" />
+        <EntityTypeShape EntityType="DBFMCGModel.CompanyFile" Width="1.5" PointX="3.75" PointY="34.375" />
+        <EntityTypeShape EntityType="DBFMCGModel.CompanyDetail" Width="1.5" PointX="0.75" PointY="39" />
+        <AssociationConnector Association="DBFMCGModel.FK_AccountGroup_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_CompanyDetail_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_CompanyFile_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_CustomFormat_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_Department_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_ProductDetail_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_StockGroup_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_UOM_CompanyDetail" />
+        <AssociationConnector Association="DBFMCGModel.FK_UserType_CompanyDetail" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

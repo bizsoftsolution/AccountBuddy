@@ -12,15 +12,13 @@ namespace AccountBuddy.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductDetail
+    public partial class CompanyFile
     {
         public int Id { get; set; }
-        public Nullable<int> ProductId { get; set; }
         public Nullable<int> CompanyId { get; set; }
-        public double OpeningStock { get; set; }
-        public double ReorderLevel { get; set; }
+        public string AttchmentCode { get; set; }
+        public byte[] Image { get; set; }
     
-        public virtual Product Product { get; set; }
         public virtual CompanyDetail CompanyDetail { get; set; }
     }
 }

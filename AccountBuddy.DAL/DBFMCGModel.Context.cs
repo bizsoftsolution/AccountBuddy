@@ -27,7 +27,6 @@ namespace AccountBuddy.DAL
     
         public virtual DbSet<AccountGroup> AccountGroups { get; set; }
         public virtual DbSet<Bank> Banks { get; set; }
-        public virtual DbSet<CompanyDetail> CompanyDetails { get; set; }
         public virtual DbSet<CreditLimitType> CreditLimitTypes { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomFormat> CustomFormats { get; set; }
@@ -102,5 +101,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<TaxType> TaxTypes { get; set; }
         public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
         public virtual DbSet<ReceiptDetail> ReceiptDetails { get; set; }
+        public virtual DbSet<CompanyFile> CompanyFiles { get; set; }
+        public virtual DbSet<CompanyDetail> CompanyDetails { get; set; }
     }
 }

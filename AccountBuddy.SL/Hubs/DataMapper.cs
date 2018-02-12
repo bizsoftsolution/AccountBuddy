@@ -22,7 +22,7 @@ namespace AccountBuddy.SL.Hubs
             D.EMailId = S.EMailId;
             D.GSTNo = S.GSTNo;
             D.IsActive = S.IsActive;
-            D.Logo = S.Logo;
+           // D.Logo = S.Logo;
             D.MobileNo = S.MobileNo;
             D.PostalCode = S.PostalCode;
             D.TelephoneNo = S.TelephoneNo;
@@ -42,7 +42,7 @@ namespace AccountBuddy.SL.Hubs
             D.EMailId = S.EMailId;
             D.GSTNo = S.GSTNo;
             D.IsActive = S.IsActive;
-            D.Logo = S.Logo;
+            //D.Logo = S.Logo;
             D.MobileNo = S.MobileNo;
             D.PostalCode = S.PostalCode;
             D.TelephoneNo = S.TelephoneNo;

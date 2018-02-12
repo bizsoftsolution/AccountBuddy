@@ -26,8 +26,8 @@ namespace AccountBuddy.DAL
         public Nullable<int> CompanyId { get; set; }
         public Nullable<double> Budget { get; set; }
     
-        public virtual CompanyDetail CompanyDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Staff> Staffs { get; set; }
+        public virtual CompanyDetail CompanyDetail { get; set; }
     }
 }

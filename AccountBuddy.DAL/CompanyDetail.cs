@@ -19,13 +19,14 @@ namespace AccountBuddy.DAL
         {
             this.AccountGroups = new HashSet<AccountGroup>();
             this.CompanyDetail1 = new HashSet<CompanyDetail>();
+            this.CompanyFiles = new HashSet<CompanyFile>();
             this.CustomFormats = new HashSet<CustomFormat>();
+            this.DataKeyValues = new HashSet<DataKeyValue>();
+            this.Departments = new HashSet<Department>();
             this.ProductDetails = new HashSet<ProductDetail>();
             this.StockGroups = new HashSet<StockGroup>();
             this.UOMs = new HashSet<UOM>();
             this.UserTypes = new HashSet<UserType>();
-            this.Departments = new HashSet<Department>();
-            this.DataKeyValues = new HashSet<DataKeyValue>();
         }
     
         public int Id { get; set; }
@@ -38,7 +39,6 @@ namespace AccountBuddy.DAL
         public string MobileNo { get; set; }
         public string EMailId { get; set; }
         public string GSTNo { get; set; }
-        public byte[] Logo { get; set; }
         public bool IsActive { get; set; }
         public Nullable<int> UnderCompanyId { get; set; }
         public string CompanyType { get; set; }
@@ -49,7 +49,13 @@ namespace AccountBuddy.DAL
         public virtual ICollection<CompanyDetail> CompanyDetail1 { get; set; }
         public virtual CompanyDetail CompanyDetail2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CompanyFile> CompanyFiles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomFormat> CustomFormats { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DataKeyValue> DataKeyValues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Department> Departments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductDetail> ProductDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -58,9 +64,5 @@ namespace AccountBuddy.DAL
         public virtual ICollection<UOM> UOMs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserType> UserTypes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Department> Departments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DataKeyValue> DataKeyValues { get; set; }
     }
 }

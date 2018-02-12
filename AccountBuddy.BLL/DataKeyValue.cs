@@ -929,11 +929,46 @@ namespace AccountBuddy.BLL
             }
         }
 
-        #endregion
 
-        #region Property  Changed Event
+		#region Company
+		public static string Logo_Key
+		{
+			get
+			{
+				return "Logo";
+			}
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		}
+		public static int Logo
+		{
+			get
+			{
+				return toList.Where(x => x.DataKey == Logo_Key).FirstOrDefault().DataValue;
+			}
+		}
+		public static string BackGround_Key
+		{
+			get
+			{
+				return "BackGround";
+			}
+
+		}
+		public static int BackGround
+		{
+			get
+			{
+				return toList.Where(x => x.DataKey == BackGround_Key).FirstOrDefault().DataValue;
+			}
+		}
+		#endregion
+
+
+		#endregion
+
+		#region Property  Changed Event
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(string PropertyName)
         {

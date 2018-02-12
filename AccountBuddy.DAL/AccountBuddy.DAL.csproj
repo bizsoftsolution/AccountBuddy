@@ -87,6 +87,9 @@
     <Compile Include="CompanyDetail.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CompanyFile.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CreditLimitType.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
