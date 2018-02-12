@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace AccountBuddy.BLL
 {
-    public class SalesReportNew : INotifyPropertyChanged
+    public class PurchaseReport : INotifyPropertyChanged
     {
+
         #region Fields
         private string _CustomerName;
         private string _ProductName;
@@ -99,7 +100,7 @@ namespace AccountBuddy.BLL
             {
                 if (_UserPermission == null)
                 {
-                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmSalesReport.ToString()).FirstOrDefault();
+                    _UserPermission = UserAccount.User.UserType == null ? new UserTypeDetail() : UserAccount.User.UserType.UserTypeDetails.Where(x => x.UserTypeFormDetail.FormName == Forms.frmPurchaseReport.ToString()).FirstOrDefault();
                 }
                 return _UserPermission;
             }
@@ -133,15 +134,14 @@ namespace AccountBuddy.BLL
         #endregion
 
         #region Methods
-
-        public static List<SalesReportNew> ToList(DateTime dtFrom, DateTime dtTo, bool isMonthly, bool isDate, bool isYear, string ReportType)
+        
+        public static List<PurchaseReport> PurchaseReport_ToList(DateTime dtFrom, DateTime dtTo, bool isMonthly, bool isDate, bool isYear, string ReportType)
         {
-            return FMCGHubClient.HubCaller.Invoke<List<SalesReportNew>>("SalesReportNew_ToList", dtFrom, dtTo, isMonthly, isDate, isYear, ReportType).Result;
+            return FMCGHubClient.HubCaller.Invoke<List<PurchaseReport>>("PurchaseReport_ToList", dtFrom, dtTo, isMonthly, isDate, isYear, ReportType).Result;
         }
-
-      
         #endregion
 
 
     }
 }
+

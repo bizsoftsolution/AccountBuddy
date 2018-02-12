@@ -17,13 +17,13 @@ using System.Windows.Shapes;
 namespace AccountBuddy.PL.frm.Report
 {
     /// <summary>
-    /// Interaction logic for frmSalesReport.xaml
+    /// Interaction logic for frmPurchaseReport.xaml
     /// </summary>
-    public partial class frmSalesReport : UserControl
+    public partial class frmPurchaseReport : UserControl
     {
-        public List<BLL.SalesReportNew> s = new List<BLL.SalesReportNew>();
+        public List<BLL.PurchaseReport> s = new List<BLL.PurchaseReport>();
         bool isMonthly = true, isDate = false, isYear = false;
-        public frmSalesReport()
+        public frmPurchaseReport()
         {
             InitializeComponent();
             int yy = BLL.UserAccount.User.UserType.Company.LoginAccYear;
@@ -37,9 +37,7 @@ namespace AccountBuddy.PL.frm.Report
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
-           
-            s = BLL.SalesReportNew.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, isMonthly, isDate, isYear, "Dealer").ToList();
+            s = BLL.PurchaseReport.PurchaseReport_ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, isMonthly, isDate, isYear, "Dealer").ToList();
             LoadReport();
             //  SetHeading(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
         }
@@ -127,8 +125,8 @@ namespace AccountBuddy.PL.frm.Report
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             //SetHeading(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value);
-         
-            s = BLL.SalesReportNew.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, (bool)rdbMonthlyWise.IsChecked, (bool)rdbDayWise.IsChecked, (bool)rdbYearWise.IsChecked,"Dealer").ToList();
+
+            s = BLL.PurchaseReport.PurchaseReport_ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, (bool)rdbMonthlyWise.IsChecked, (bool)rdbDayWise.IsChecked, (bool)rdbYearWise.IsChecked, "Dealer").ToList();
             LoadReport();
 
         }
@@ -182,7 +180,7 @@ namespace AccountBuddy.PL.frm.Report
         {
             if (dtpDateFrom.SelectedDate != null || dtpDateTo.SelectedDate != null)
             {
-                s = BLL.SalesReportNew.ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, isMonthly, isDate, isYear, "Dealer").ToList();
+                s = BLL.PurchaseReport.PurchaseReport_ToList(dtpDateFrom.SelectedDate.Value, dtpDateTo.SelectedDate.Value, isMonthly, isDate, isYear, "Dealer").ToList();
                 LoadReport();
             }
 
@@ -213,5 +211,6 @@ namespace AccountBuddy.PL.frm.Report
         {
             isYear = false; LoadReport1();
         }
+
     }
 }
