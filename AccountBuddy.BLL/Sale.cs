@@ -740,8 +740,14 @@ namespace AccountBuddy.BLL
 
         }
 
+		public void setEntryNo()
+		{
+				RefNo = FMCGHubClient.HubCaller.Invoke<string>("Sales_NewRefNo", SalesDate).Result;
+			
+		}
 
 
-        #endregion
-    }
+
+		#endregion
+	}
 }
