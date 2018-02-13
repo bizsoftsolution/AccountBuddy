@@ -104,16 +104,7 @@ namespace AccountBuddy.SL.Hubs
 
 					cm.ToMap(d);
 
-					foreach (var c in cm.CFiles)
-					{
-						d.CompanyFiles.Add(new DAL.CompanyFile()
-
-						{
-							AttchmentCode = c.AttchmentCode,
-							Image = c.Image
-
-						});
-					}
+					
 					DB.SaveChanges();
 
 					cm.Id = d.Id;
@@ -183,7 +174,7 @@ namespace AccountBuddy.SL.Hubs
 					var s = DB.CompanyFiles.Where(x => x.CompanyId == d.Id).ToList();
 					foreach (var f in s)
 					{
-						d.CompanyFiles.Remove(f);
+						DB.CompanyFiles.Remove(f);
 						DB.SaveChanges();
 					}
 
@@ -192,8 +183,8 @@ namespace AccountBuddy.SL.Hubs
 						d.CompanyFiles.Add(new DAL.CompanyFile()
 						{
 							AttchmentCode = c.AttchmentCode,
-							Image = c.Image
-
+							Image = c.Image,
+                          
 						});
 					}
 

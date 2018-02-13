@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.AspNet.SignalR.Client;
+using AccountBuddy.BLL;
 
 namespace AccountBuddy.PL
 {
@@ -62,11 +63,18 @@ namespace AccountBuddy.PL
                 if (RValue == "")
                 {
                     Common.AppLib.WriteLog("Login Succeed");
-                    App.frmHome = new frmHome();         
+                    App.frmHome = new frmHome();
                     App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
                     App.frmLogin.Hide();
-                    App.frmHome.Show();                                        
+                    App.frmHome.Show();
+
+                    var s = BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).FirstOrDefault();
+                    frmWelcome frm = new frmWelcome();
+                    frm.imgBackground.ImageSource = Common.AppLib.ViewImage(s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault().Image);
+
+
                 }
+
                 else
                 {
                     Common.AppLib.WriteLog("Login Failed");

@@ -173,10 +173,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="frmMenuTest.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="frmWelcome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -619,9 +615,6 @@
     </Compile>
     <Compile Include="frmLogin.xaml.cs">
       <DependentUpon>frmLogin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="frmMenuTest.xaml.cs">
-      <DependentUpon>frmMenuTest.xaml</DependentUpon>
     </Compile>
     <Compile Include="frmWelcome.xaml.cs">
       <DependentUpon>frmWelcome.xaml</DependentUpon>

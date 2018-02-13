@@ -87,6 +87,10 @@ namespace AccountBuddy.Common
             raise?.Invoke(new PropertyChangedEventArgs(propertyName));
         }
 
+
+
+
+
         #region NumberToWords
         public static string ToCurrencyInWords(this decimal Number)
         {

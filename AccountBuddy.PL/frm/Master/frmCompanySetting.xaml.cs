@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using AccountBuddy.BLL;
+using System.IO;
 
 namespace AccountBuddy.PL.frm.Master
 {
@@ -38,16 +39,24 @@ namespace AccountBuddy.PL.frm.Master
 				BLL.CompanyDetail.Init();
 
 				data.Find(BLL.UserAccount.User.UserType.Company.Id);
-
-				if (data.CFiles.Count != 0)
+                
+                if (data.CFiles.Count != 0)
 				{
-
-					Byte[] i = data.CFiles.Where(x => x.AttchmentCode == DataKeyValue.Logo_Key).FirstOrDefault().Image;
-					iLogoImage.Source = AppLib.ViewImage(i);
-					iLogoImage.Tag = i;
-					Byte[] b = data.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault().Image;
-					iLogoImage.Source = AppLib.ViewImage(b);
-					iLogoImage.Tag = b;
+                    var i=data.CFiles.Where(x => x.AttchmentCode == DataKeyValue.Logo_Key).FirstOrDefault();
+                    if (i!=null)
+                    {
+                        iLogoImage.Source = AppLib.ViewImage(i.Image);
+                        iLogoImage.Tag = i.Image;
+                        
+                    }
+                   var b = data.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault();
+                    if (b != null)
+                    {
+                        iBImage.Source = AppLib.ViewImage(b.Image);
+                        iBImage.Tag = b.Image;
+                        
+                    }
+                    
 				}
 
 				if (data.CompanyType == "Company")
@@ -77,7 +86,38 @@ namespace AccountBuddy.PL.frm.Master
 				Common.AppLib.WriteLog(ex);
 			}
 		}
-		public void Grid_Refresh()
+        public static BitmapImage BitmapImageFromBytes(byte[] bytes)
+        {
+            BitmapImage image = null;
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream(bytes);
+                stream.Seek(0, SeekOrigin.Begin);
+                System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
+                image = new BitmapImage();
+                image.BeginInit();
+                MemoryStream ms = new MemoryStream();
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                ms.Seek(0, SeekOrigin.Begin);
+                image.StreamSource = ms;
+                image.StreamSource.Seek(0, SeekOrigin.Begin);
+                image.EndInit();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                stream.Close();
+                stream.Dispose();
+            }
+            return image;
+        }
+
+
+        public void Grid_Refresh()
 		{
 			try
 			{
@@ -480,11 +520,6 @@ iLogoImage.Source = imageSource;
 			catch (Exception ex) { Common.AppLib.WriteLog(ex); }
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
-
 		private void UserControl_Unloaded(object sender, RoutedEventArgs e)
 		{
 
@@ -512,9 +547,11 @@ iLogoImage.Source = imageSource;
 		{
 			try
 			{
-				iLogoImage.Source = null;
+                data.RemoveFiles(DataKeyValue.Logo_Key);
+                iLogoImage.Source = null;
 				iLogoImage.Tag = null;
-			}
+                
+            }
 			catch (Exception ex)
 			{
 				Common.AppLib.WriteLog(ex);
@@ -524,8 +561,10 @@ iLogoImage.Source = imageSource;
 		private void btnBGClearImage_Click(object sender, RoutedEventArgs e)
 		{
 			try
-			{
-				iBImage.Source = null;
+            {
+                data.RemoveFiles(DataKeyValue.BackGround_Key);
+
+                iBImage.Source = null;
 				iBImage.Tag = null;
 			}
 			catch (Exception ex)

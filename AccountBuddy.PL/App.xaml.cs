@@ -20,6 +20,7 @@ namespace AccountBuddy.PL
         private static frmInit _frmInit;
         private static frmLogin _frmLogin;
         private static frmHome _frmHome;
+        private static Byte[] BackGroud;
         
         public static frmInit frmInit
         {
