@@ -125,10 +125,18 @@
           <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
           <Property Name="EMailId" Type="nvarchar" MaxLength="100" />
           <Property Name="GSTNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="Logo" Type="image" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="UnderCompanyId" Type="int" />
           <Property Name="CompanyType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompanyFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="AttchmentCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Image" Type="image" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -1148,6 +1156,18 @@
             </Principal>
             <Dependent Role="CompanyDetail1">
               <PropertyRef Name="UnderCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyFile_CompanyDetail">
+          <End Role="CompanyDetail" Type="Self.CompanyDetail" Multiplicity="0..1" />
+          <End Role="CompanyFile" Type="Self.CompanyFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompanyFile">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2472,6 +2492,7 @@
           <EntitySet Name="AppMaster" EntityType="Self.AppMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bank" EntityType="Self.Bank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyDetail" EntityType="Self.CompanyDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyFile" EntityType="Self.CompanyFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CreditLimitType" EntityType="Self.CreditLimitType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomFormat" EntityType="Self.CustomFormat" Schema="dbo" store:Type="Tables" />
@@ -2592,6 +2613,10 @@
           <AssociationSet Name="FK_CompanyDetail_CompanyDetail" Association="Self.FK_CompanyDetail_CompanyDetail">
             <End Role="CompanyDetail" EntitySet="CompanyDetail" />
             <End Role="CompanyDetail1" EntitySet="CompanyDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyFile_CompanyDetail" Association="Self.FK_CompanyFile_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetail" />
+            <End Role="CompanyFile" EntitySet="CompanyFile" />
           </AssociationSet>
           <AssociationSet Name="FK_Customer_Ledger" Association="Self.FK_Customer_Ledger">
             <End Role="Ledger" EntitySet="Ledger" />
@@ -3037,7 +3062,6 @@
         <EntityContainer Name="DBFMCGEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AccountGroups" EntityType="DBFMCGModel.AccountGroup" />
           <EntitySet Name="Banks" EntityType="DBFMCGModel.Bank" />
-          <EntitySet Name="CompanyDetails" EntityType="DBFMCGModel.CompanyDetail" />
           <EntitySet Name="CreditLimitTypes" EntityType="DBFMCGModel.CreditLimitType" />
           <EntitySet Name="Customers" EntityType="DBFMCGModel.Customer" />
           <EntitySet Name="CustomFormats" EntityType="DBFMCGModel.CustomFormat" />
@@ -3092,10 +3116,6 @@
             <End Role="AccountGroup" EntitySet="AccountGroups" />
             <End Role="AccountGroup1" EntitySet="AccountGroups" />
           </AssociationSet>
-          <AssociationSet Name="FK_AccountGroup_CompanyDetail" Association="DBFMCGModel.FK_AccountGroup_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="AccountGroup" EntitySet="AccountGroups" />
-          </AssociationSet>
           <AssociationSet Name="FK_Ledger_AccountGroup" Association="DBFMCGModel.FK_Ledger_AccountGroup">
             <End Role="AccountGroup" EntitySet="AccountGroups" />
             <End Role="Ledger" EntitySet="Ledgers" />
@@ -3103,30 +3123,6 @@
           <AssociationSet Name="FK_Bank_Ledger" Association="DBFMCGModel.FK_Bank_Ledger">
             <End Role="Ledger" EntitySet="Ledgers" />
             <End Role="Bank" EntitySet="Banks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CompanyDetail_CompanyDetail" Association="DBFMCGModel.FK_CompanyDetail_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="CompanyDetail1" EntitySet="CompanyDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomFormat_CompanyDetail" Association="DBFMCGModel.FK_CustomFormat_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="CustomFormat" EntitySet="CustomFormats" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductDetail_CompanyDetail" Association="DBFMCGModel.FK_ProductDetail_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="ProductDetail" EntitySet="ProductDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StockGroup_CompanyDetail" Association="DBFMCGModel.FK_StockGroup_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="StockGroup" EntitySet="StockGroups" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UOM_CompanyDetail" Association="DBFMCGModel.FK_UOM_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="UOM" EntitySet="UOMs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserType_CompanyDetail" Association="DBFMCGModel.FK_UserType_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="UserType" EntitySet="UserTypes" />
           </AssociationSet>
           <AssociationSet Name="FK_Ledger_CreditLimitType" Association="DBFMCGModel.FK_Ledger_CreditLimitType">
             <End Role="CreditLimitType" EntitySet="CreditLimitTypes" />
@@ -3448,10 +3444,6 @@
           <EntitySet Name="PurchaseRequests" EntityType="DBFMCGModel.PurchaseRequest" />
           <EntitySet Name="PurchaseRequestDetails" EntityType="DBFMCGModel.PurchaseRequestDetail" />
           <EntitySet Name="PurchaseRequestStatusDetails" EntityType="DBFMCGModel.PurchaseRequestStatusDetail" />
-          <AssociationSet Name="FK_Department_CompanyDetail" Association="DBFMCGModel.FK_Department_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="Department" EntitySet="Departments" />
-          </AssociationSet>
           <AssociationSet Name="FK_Staff_Department" Association="DBFMCGModel.FK_Staff_Department">
             <End Role="Department" EntitySet="Departments" />
             <End Role="Staff" EntitySet="Staffs" />
@@ -3489,10 +3481,6 @@
             <End Role="Staff" EntitySet="Staffs" />
           </AssociationSet>
           <EntitySet Name="AppConnections" EntityType="DBFMCGModel.AppConnection" />
-          <AssociationSet Name="FK_DataKeyValue_CompanyDetail" Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail">
-            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
-            <End Role="DataKeyValue" EntitySet="DataKeyValues" />
-          </AssociationSet>
           <EntitySet Name="AppConnectionHeaders" EntityType="DBFMCGModel.AppConnectionHeader" />
           <AssociationSet Name="FK_AppConnectionHeader_AppConnection" Association="DBFMCGModel.FK_AppConnectionHeader_AppConnection">
             <End Role="AppConnection" EntitySet="AppConnections" />
@@ -3604,6 +3592,48 @@
             <End Role="Receipt" EntitySet="Receipts" />
             <End Role="ReceiptDetail" EntitySet="ReceiptDetails" />
           </AssociationSet>
+          <EntitySet Name="CompanyFiles" EntityType="DBFMCGModel.CompanyFile" />
+          <EntitySet Name="CompanyDetails" EntityType="DBFMCGModel.CompanyDetail" />
+          <AssociationSet Name="FK_AccountGroup_CompanyDetail" Association="DBFMCGModel.FK_AccountGroup_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="AccountGroup" EntitySet="AccountGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyDetail_CompanyDetail" Association="DBFMCGModel.FK_CompanyDetail_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="CompanyDetail1" EntitySet="CompanyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyFile_CompanyDetail" Association="DBFMCGModel.FK_CompanyFile_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="CompanyFile" EntitySet="CompanyFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomFormat_CompanyDetail" Association="DBFMCGModel.FK_CustomFormat_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="CustomFormat" EntitySet="CustomFormats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataKeyValue_CompanyDetail" Association="DBFMCGModel.FK_DataKeyValue_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="DataKeyValue" EntitySet="DataKeyValues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Department_CompanyDetail" Association="DBFMCGModel.FK_Department_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductDetail_CompanyDetail" Association="DBFMCGModel.FK_ProductDetail_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="ProductDetail" EntitySet="ProductDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockGroup_CompanyDetail" Association="DBFMCGModel.FK_StockGroup_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="StockGroup" EntitySet="StockGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UOM_CompanyDetail" Association="DBFMCGModel.FK_UOM_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="UOM" EntitySet="UOMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserType_CompanyDetail" Association="DBFMCGModel.FK_UserType_CompanyDetail">
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+            <End Role="UserType" EntitySet="UserTypes" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -3616,8 +3646,8 @@
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AccountGroup1" Relationship="DBFMCGModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup" ToRole="AccountGroup1" />
           <NavigationProperty Name="AccountGroup2" Relationship="DBFMCGModel.FK_AccountGroup_AccountGroup" FromRole="AccountGroup1" ToRole="AccountGroup" />
-          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="AccountGroup" ToRole="CompanyDetail" />
           <NavigationProperty Name="Ledgers" Relationship="DBFMCGModel.FK_Ledger_AccountGroup" FromRole="AccountGroup" ToRole="Ledger" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="AccountGroup" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="Bank">
           <Key>
@@ -3628,35 +3658,6 @@
           <Property Name="BankAccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LedgerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_Bank_Ledger" FromRole="Bank" ToRole="Ledger" />
-        </EntityType>
-        <EntityType Name="CompanyDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="TelephoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="UnderCompanyId" Type="Int32" />
-          <Property Name="CompanyType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AccountGroups" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
-          <NavigationProperty Name="CompanyDetail1" Relationship="DBFMCGModel.FK_CompanyDetail_CompanyDetail" FromRole="CompanyDetail" ToRole="CompanyDetail1" />
-          <NavigationProperty Name="CompanyDetail2" Relationship="DBFMCGModel.FK_CompanyDetail_CompanyDetail" FromRole="CompanyDetail1" ToRole="CompanyDetail" />
-          <NavigationProperty Name="CustomFormats" Relationship="DBFMCGModel.FK_CustomFormat_CompanyDetail" FromRole="CompanyDetail" ToRole="CustomFormat" />
-          <NavigationProperty Name="ProductDetails" Relationship="DBFMCGModel.FK_ProductDetail_CompanyDetail" FromRole="CompanyDetail" ToRole="ProductDetail" />
-          <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
-          <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
-          <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
-          <NavigationProperty Name="Departments" Relationship="DBFMCGModel.FK_Department_CompanyDetail" FromRole="CompanyDetail" ToRole="Department" />
-          <NavigationProperty Name="DataKeyValues" Relationship="DBFMCGModel.FK_DataKeyValue_CompanyDetail" FromRole="CompanyDetail" ToRole="DataKeyValue" />
         </EntityType>
         <EntityType Name="CreditLimitType">
           <Key>
@@ -3997,8 +3998,8 @@
           <Property Name="CompanyId" Type="Int32" />
           <Property Name="OpeningStock" Type="Double" Nullable="false" />
           <Property Name="ReorderLevel" Type="Double" Nullable="false" />
-          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_ProductDetail_CompanyDetail" FromRole="ProductDetail" ToRole="CompanyDetail" />
           <NavigationProperty Name="Product" Relationship="DBFMCGModel.FK_ProductDetail_Product" FromRole="ProductDetail" ToRole="Product" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_ProductDetail_CompanyDetail" FromRole="ProductDetail" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -4300,10 +4301,10 @@
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <Property Name="IsPurchase" Type="Boolean" />
           <Property Name="IsSale" Type="Boolean" />
-          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="StockGroup" ToRole="CompanyDetail" />
           <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_StockGroup" FromRole="StockGroup" ToRole="Product" />
           <NavigationProperty Name="StockGroup1" Relationship="DBFMCGModel.FK_StockGroup_StockGroup" FromRole="StockGroup" ToRole="StockGroup1" />
           <NavigationProperty Name="StockGroup2" Relationship="DBFMCGModel.FK_StockGroup_StockGroup" FromRole="StockGroup1" ToRole="StockGroup" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="StockGroup" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="StockIn">
           <Key>
@@ -4469,7 +4470,6 @@
           <Property Name="FormalName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Symbol" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="UOM" ToRole="CompanyDetail" />
           <NavigationProperty Name="JobOrderIssueDetails" Relationship="DBFMCGModel.FK_JobOrderIssueDetail_UOM" FromRole="UOM" ToRole="JobOrderIssueDetail" />
           <NavigationProperty Name="JobOrderReceivedDetails" Relationship="DBFMCGModel.FK_JobOrderReceivedDetail_UOM" FromRole="UOM" ToRole="JobOrderReceivedDetail" />
           <NavigationProperty Name="Products" Relationship="DBFMCGModel.FK_Product_UOM" FromRole="UOM" ToRole="Product" />
@@ -4484,6 +4484,7 @@
           <NavigationProperty Name="StockOutDetails" Relationship="DBFMCGModel.FK_StockOutDetail_UOM" FromRole="UOM" ToRole="StockOutDetail" />
           <NavigationProperty Name="StockSeperatedDetails" Relationship="DBFMCGModel.FK_StockSeperatedDetail_UOM" FromRole="UOM" ToRole="StockSeperatedDetail" />
           <NavigationProperty Name="PurchaseRequestDetails" Relationship="DBFMCGModel.FK_PurchaseRequestDetail_UOM" FromRole="UOM" ToRole="PurchaseRequestDetail" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="UOM" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -4508,9 +4509,9 @@
           <Property Name="TypeOfUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="UserType" ToRole="CompanyDetail" />
           <NavigationProperty Name="UserAccounts" Relationship="DBFMCGModel.FK_UserAccount_UserType" FromRole="UserType" ToRole="UserAccount" />
           <NavigationProperty Name="UserTypeDetails" Relationship="DBFMCGModel.FK_UserTypeDetail_UserType" FromRole="UserType" ToRole="UserTypeDetail" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="UserType" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="UserTypeDetail">
           <Key>
@@ -4554,18 +4555,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AccountGroup_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
-          <End Type="DBFMCGModel.AccountGroup" Role="AccountGroup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AccountGroup">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Ledger_AccountGroup">
           <End Type="DBFMCGModel.AccountGroup" Role="AccountGroup" Multiplicity="1" />
           <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="*" />
@@ -4587,78 +4576,6 @@
             </Principal>
             <Dependent Role="Bank">
               <PropertyRef Name="LedgerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CompanyDetail_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CompanyDetail1">
-              <PropertyRef Name="UnderCompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomFormat_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.CustomFormat" Role="CustomFormat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CustomFormat">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductDetail_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.ProductDetail" Role="ProductDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductDetail">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StockGroup_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
-          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StockGroup">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UOM_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
-          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UOM">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserType_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
-          <End Type="DBFMCGModel.UserType" Role="UserType" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserType">
-              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5619,8 +5536,8 @@
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CompanyId" Type="Int32" />
           <Property Name="Budget" Type="Double" />
-          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_Department_CompanyDetail" FromRole="Department" ToRole="CompanyDetail" />
           <NavigationProperty Name="Staffs" Relationship="DBFMCGModel.FK_Staff_Department" FromRole="Department" ToRole="Staff" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_Department_CompanyDetail" FromRole="Department" ToRole="CompanyDetail" />
         </EntityType>
         <EntityType Name="PurchaseRequest">
           <Key>
@@ -5674,18 +5591,6 @@
           <NavigationProperty Name="Staff" Relationship="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff" FromRole="PurchaseRequestStatusDetail" ToRole="Staff" />
           <NavigationProperty Name="Staff1" Relationship="DBFMCGModel.FK_PurchaseRequestStatusDetail_Staff1" FromRole="PurchaseRequestStatusDetail" ToRole="Staff" />
         </EntityType>
-        <Association Name="FK_Department_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
-          <End Type="DBFMCGModel.Department" Role="Department" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Department">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Staff_Department">
           <End Type="DBFMCGModel.Department" Role="Department" Multiplicity="0..1" />
           <End Type="DBFMCGModel.Staff" Role="Staff" Multiplicity="*" />
@@ -5812,18 +5717,6 @@
           <Property Name="AppConnectionTypeId" Type="Int32" />
           <NavigationProperty Name="AppConnectionType" Relationship="DBFMCGModel.FK_AppConnection_AppConnectionType" FromRole="AppConnection" ToRole="AppConnectionType" />
         </EntityType>
-        <Association Name="FK_DataKeyValue_CompanyDetail">
-          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
-          <End Type="DBFMCGModel.DataKeyValue" Role="DataKeyValue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyDetail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DataKeyValue">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="AppConnectionHeader">
           <Key>
             <PropertyRef Name="Id" />
@@ -6305,6 +6198,165 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CompanyFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="AttchmentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="CompanyDetail" Relationship="DBFMCGModel.FK_CompanyFile_CompanyDetail" FromRole="CompanyFile" ToRole="CompanyDetail" />
+        </EntityType>
+        <EntityType Name="CompanyDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GSTNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="UnderCompanyId" Type="Int32" />
+          <Property Name="CompanyType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AccountGroups" Relationship="DBFMCGModel.FK_AccountGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="AccountGroup" />
+          <NavigationProperty Name="CompanyDetail1" Relationship="DBFMCGModel.FK_CompanyDetail_CompanyDetail" FromRole="CompanyDetail" ToRole="CompanyDetail1" />
+          <NavigationProperty Name="CompanyDetail2" Relationship="DBFMCGModel.FK_CompanyDetail_CompanyDetail" FromRole="CompanyDetail1" ToRole="CompanyDetail" />
+          <NavigationProperty Name="CompanyFiles" Relationship="DBFMCGModel.FK_CompanyFile_CompanyDetail" FromRole="CompanyDetail" ToRole="CompanyFile" />
+          <NavigationProperty Name="CustomFormats" Relationship="DBFMCGModel.FK_CustomFormat_CompanyDetail" FromRole="CompanyDetail" ToRole="CustomFormat" />
+          <NavigationProperty Name="DataKeyValues" Relationship="DBFMCGModel.FK_DataKeyValue_CompanyDetail" FromRole="CompanyDetail" ToRole="DataKeyValue" />
+          <NavigationProperty Name="Departments" Relationship="DBFMCGModel.FK_Department_CompanyDetail" FromRole="CompanyDetail" ToRole="Department" />
+          <NavigationProperty Name="ProductDetails" Relationship="DBFMCGModel.FK_ProductDetail_CompanyDetail" FromRole="CompanyDetail" ToRole="ProductDetail" />
+          <NavigationProperty Name="StockGroups" Relationship="DBFMCGModel.FK_StockGroup_CompanyDetail" FromRole="CompanyDetail" ToRole="StockGroup" />
+          <NavigationProperty Name="UOMs" Relationship="DBFMCGModel.FK_UOM_CompanyDetail" FromRole="CompanyDetail" ToRole="UOM" />
+          <NavigationProperty Name="UserTypes" Relationship="DBFMCGModel.FK_UserType_CompanyDetail" FromRole="CompanyDetail" ToRole="UserType" />
+        </EntityType>
+        <Association Name="FK_AccountGroup_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.AccountGroup" Role="AccountGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountGroup">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyDetail_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompanyDetail1">
+              <PropertyRef Name="UnderCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyFile_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.CompanyFile" Role="CompanyFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompanyFile">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomFormat_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.CustomFormat" Role="CustomFormat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomFormat">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataKeyValue_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.DataKeyValue" Role="DataKeyValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataKeyValue">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Department" Role="Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductDetail_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.ProductDetail" Role="ProductDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductDetail">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockGroup_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.StockGroup" Role="StockGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockGroup">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UOM_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.UOM" Role="UOM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UOM">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserType_CompanyDetail">
+          <End Type="DBFMCGModel.CompanyDetail" Role="CompanyDetail" Multiplicity="1" />
+          <End Type="DBFMCGModel.UserType" Role="UserType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserType">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6328,26 +6380,6 @@
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="BankAccountName" ColumnName="BankAccountName" />
                 <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CompanyDetails">
-            <EntityTypeMapping TypeName="DBFMCGModel.CompanyDetail">
-              <MappingFragment StoreEntitySet="CompanyDetail">
-                <ScalarProperty Name="CompanyType" ColumnName="CompanyType" />
-                <ScalarProperty Name="UnderCompanyId" ColumnName="UnderCompanyId" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Logo" ColumnName="Logo" />
-                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
-                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
-                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -7362,6 +7394,35 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="LedgerId" ColumnName="LedgerId" />
                 <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyFiles">
+            <EntityTypeMapping TypeName="DBFMCGModel.CompanyFile">
+              <MappingFragment StoreEntitySet="CompanyFile">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="AttchmentCode" ColumnName="AttchmentCode" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyDetails">
+            <EntityTypeMapping TypeName="DBFMCGModel.CompanyDetail">
+              <MappingFragment StoreEntitySet="CompanyDetail">
+                <ScalarProperty Name="CompanyType" ColumnName="CompanyType" />
+                <ScalarProperty Name="UnderCompanyId" ColumnName="UnderCompanyId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
+                <ScalarProperty Name="EMailId" ColumnName="EMailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

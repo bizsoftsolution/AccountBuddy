@@ -478,7 +478,9 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public string lblExtra
+		
+
+		public string lblExtra
         {
             get
             {
@@ -729,9 +731,12 @@ namespace AccountBuddy.BLL
 
         }
 
+		public void setEntryNo()
+		{
+			RefNo = FMCGHubClient.HubCaller.Invoke<string>("Purchase_NewRefNo", PurchaseDate).Result;
+		}
 
+		#endregion
 
-        #endregion
-
-    }
+	}
 }

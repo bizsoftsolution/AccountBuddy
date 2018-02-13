@@ -55,6 +55,7 @@
     <Compile Include="Bank.cs" />
     <Compile Include="BankReconcilation.cs" />
     <Compile Include="CompanyDetail.cs" />
+    <Compile Include="CompanyFile.cs" />
     <Compile Include="CreditLimitType.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerWiseReport.cs" />

@@ -29,6 +29,7 @@ namespace AccountBuddy.BLL
             D.TelephoneNo = S.TelephoneNo;
             D.UnderCompanyId = S.UnderCompanyId;
             D.UserId = S.UserId;
+			D.CFiles = S.CFiles;
 
             return D;
         }
