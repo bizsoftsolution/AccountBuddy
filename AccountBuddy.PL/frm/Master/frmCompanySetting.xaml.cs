@@ -54,10 +54,11 @@ namespace AccountBuddy.PL.frm.Master
                     {
                         iBImage.Source = AppLib.ViewImage(b.Image);
                         iBImage.Tag = b.Image;
-                        
+                        frmWelcome frm = new frmWelcome();
+                        frm.imgBackground.ImageSource = Common.AppLib.ViewImage(b.Image);
                     }
-                    
-				}
+
+                }
 
 				if (data.CompanyType == "Company")
 				{

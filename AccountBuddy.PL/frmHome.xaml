@@ -15,7 +15,7 @@
         mc:Ignorable="d"
         Title="Account Buddy" Height="600" Width="1100"
                        
-        BorderThickness="0" GlowBrush="Black" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" Activated="MetroWindow_Activated" Loaded="MetroWindow_Loaded" Deactivated="MetroWindow_Deactivated" WindowState="Maximized" Icon="Images/Aboorvas/aboorvas logo 256.ico" >
+        BorderThickness="0" GlowBrush="Black" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" Activated="MetroWindow_Activated" Loaded="MetroWindow_Loaded" Deactivated="MetroWindow_Deactivated" WindowState="Maximized"  >
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"

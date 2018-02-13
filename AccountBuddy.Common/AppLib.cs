@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 
@@ -17,19 +18,19 @@ namespace AccountBuddy.Common
 
         public static decimal GSTPer = (decimal)0.06;
 
-        public static int userId=0;
+        public static int userId = 0;
         public static string WriteLogState = "";
         public static string SLPath = "";
         public static string SLTransport = "";
         public static string AppName = "";
-        public static string AppIdKey = "";        
+        public static string AppIdKey = "";
         public static string AppIdValue = "";
         public static bool IsAppApproved = false;
 
         public static int BankId;
         public static string BankName;
 
-       
+
 
         public static string CurrencyToWordPrefix;
         public static string CurrencyToWordSuffix;
@@ -101,11 +102,11 @@ namespace AccountBuddy.Common
                 string[] Nums = string.Format("{0:0.00}", Number).Split('.');
 
                 int number1 = int.Parse(Nums[0]);
-                int number2 = int.Parse(Nums[1]);                
+                int number2 = int.Parse(Nums[1]);
 
-                words = string.Format("{0}{1}{2}",CurrencyToWordPrefix, number1.ToWords(), CurrencyToWordSuffix);
+                words = string.Format("{0}{1}{2}", CurrencyToWordPrefix, number1.ToWords(), CurrencyToWordSuffix);
 
-                if (number2 > 0) words = string.Format("{0} AND {1}{2}{3}", words,DecimalToWordPrefix??"", number2.ToWords(), DecimalToWordSuffix??"");
+                if (number2 > 0) words = string.Format("{0} AND {1}{2}{3}", words, DecimalToWordPrefix ?? "", number2.ToWords(), DecimalToWordSuffix ?? "");
 
                 if (IsDisplayWithOnlyOnSuffix)
                 {
@@ -115,7 +116,7 @@ namespace AccountBuddy.Common
 
                 CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
                 TextInfo textInfo = cultureInfo.TextInfo;
-                
+
                 if (CurrencyCaseSensitive == 0)
                 {
                     return textInfo.ToLower(words);
@@ -132,7 +133,7 @@ namespace AccountBuddy.Common
                 {
                     return words.ToUpper();
                 }
-                
+
             }
 
             catch (Exception ex)
@@ -156,7 +157,7 @@ namespace AccountBuddy.Common
         {
             try
             {
-                return string.Format("{0}{1}{2}", Number>=0? CurrencyPositiveSymbolPrefix : CurrencyNegativeSymbolPrefix, Math.Abs(Number), Number>=0? CurrencyPositiveSymbolSuffix:CurrencyNegativeSymbolSuffix);
+                return string.Format("{0}{1}{2}", Number >= 0 ? CurrencyPositiveSymbolPrefix : CurrencyNegativeSymbolPrefix, Math.Abs(Number), Number >= 0 ? CurrencyPositiveSymbolSuffix : CurrencyNegativeSymbolSuffix);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return "";
@@ -165,12 +166,12 @@ namespace AccountBuddy.Common
         public static string ToNumberFormat(this decimal? Number)
         {
             return Number == null ? "" : Number.Value.ToNumberFormat();
-       
+
         }
 
         public static string ToNumberFormat(this decimal Number)
         {
-            return string.Format("{0} {1:0.00}",CurrencyPositiveSymbolPrefix, Number);
+            return string.Format("{0} {1:0.00}", CurrencyPositiveSymbolPrefix, Number);
         }
 
         public static string ToDateFormat(this DateTime? dt)
@@ -179,9 +180,9 @@ namespace AccountBuddy.Common
         }
 
         public static string ToDateFormat(this DateTime dt)
-        {            
-           
-            return  string.Format("{0:yyyy}",dt);
+        {
+
+            return string.Format("{0:yyyy}", dt);
         }
 
 
@@ -315,15 +316,18 @@ namespace AccountBuddy.Common
 
                 img.BeginInit();
                 img.StreamSource = stream;
+                img.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                img.CacheOption = BitmapCacheOption.OnLoad;
+                img.UriSource = null;
                 img.EndInit();
             }
-
+            img.Freeze();
             return img;
         }
-
+        
         public static void WriteLog(String str)
         {
-            if(Common.AppLib.WriteLogState.ToLower()!="off")
+            if (Common.AppLib.WriteLogState.ToLower() != "off")
             {
                 try
                 {
@@ -338,7 +342,7 @@ namespace AccountBuddy.Common
         }
         public static void WriteLog(Exception ex)
         {
-            WriteLog(string.Format("Error=> ExMessage:{0},StackTrace:{1}", ex.Message,ex.StackTrace));            
+            WriteLog(string.Format("Error=> ExMessage:{0},StackTrace:{1}", ex.Message, ex.StackTrace));
         }
-    }   
+    }
 }
