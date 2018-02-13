@@ -33,34 +33,49 @@ namespace AccountBuddy.PL.frm.Master
 		}
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
-		{
-			BLL.CompanyDetail.Init();
-
-			data.Find(BLL.UserAccount.User.UserType.Company.Id);
-			iLogoImage.Source = AppLib.ViewImage(data.Logo);
-			iLogoImage.Tag = data.Logo;
-			if (data.CompanyType == "Company")
+		{try
 			{
-				var lstCompany = BLL.CompanyDetail.ToList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
-				dgvWarehouse.ItemsSource = lstCompany;
-				dgvDealer.ItemsSource = BLL.CompanyDetail.ToList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
+				BLL.CompanyDetail.Init();
+
+				data.Find(BLL.UserAccount.User.UserType.Company.Id);
+
+				if (data.CFiles.Count != 0)
+				{
+
+					Byte[] i = data.CFiles.Where(x => x.AttchmentCode == DataKeyValue.Logo_Key).FirstOrDefault().Image;
+					iLogoImage.Source = AppLib.ViewImage(i);
+					iLogoImage.Tag = i;
+					Byte[] b = data.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault().Image;
+					iLogoImage.Source = AppLib.ViewImage(b);
+					iLogoImage.Tag = b;
+				}
+
+				if (data.CompanyType == "Company")
+				{
+					var lstCompany = BLL.CompanyDetail.ToList.Where(x => x.CompanyType == "Warehouse" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true);
+					dgvWarehouse.ItemsSource = lstCompany;
+					dgvDealer.ItemsSource = BLL.CompanyDetail.ToList.Where(x => x.CompanyType == "Dealer" && x.UnderCompanyId == BLL.UserAccount.User.UserType.Company.Id && x.IsActive == true).ToList();
+				}
+				else
+				{
+					gbxWareHouse.Visibility = Visibility.Collapsed;
+					gbxDealer.Visibility = Visibility.Collapsed;
+					btnUser.Visibility = Visibility.Collapsed;
+					btnDelete.Visibility = Visibility.Collapsed;
+				}
+
+				var l = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.BankAccounts_Key).ToList();
+				cmbBank.ItemsSource = l;
+				cmbBank.DisplayMemberPath = "LedgerName";
+				cmbBank.SelectedValuePath = "Id";
+				cmbBank.SelectedItem = l.FirstOrDefault();
+				btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
+				btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
 			}
-			else
+			catch (Exception ex)
 			{
-				gbxWareHouse.Visibility = Visibility.Collapsed;
-				gbxDealer.Visibility = Visibility.Collapsed;
-				btnUser.Visibility = Visibility.Collapsed;
-				btnDelete.Visibility = Visibility.Collapsed;
+				Common.AppLib.WriteLog(ex);
 			}
-
-			var l = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.BankAccounts_Key).ToList();
-			cmbBank.ItemsSource = l;
-			cmbBank.DisplayMemberPath = "LedgerName";
-			cmbBank.SelectedValuePath = "Id";
-			cmbBank.SelectedItem = l.FirstOrDefault();
-			btnSave.Visibility = (BLL.CompanyDetail.UserPermission.AllowInsert || BLL.CompanyDetail.UserPermission.AllowUpdate) ? Visibility.Visible : Visibility.Collapsed;
-			btnDelete.Visibility = BLL.CompanyDetail.UserPermission.AllowDelete ? Visibility.Visible : Visibility.Collapsed;
-
 		}
 		public void Grid_Refresh()
 		{
@@ -529,7 +544,7 @@ iLogoImage.Source = imageSource;
 					ImageSource imageSource = new BitmapImage(new Uri(sFileName));
 					iBImage.Source = imageSource;
 					iBImage.Tag = AppLib.ReadImageFile(sFileName);
-					data.companyFile.AttchmentCode = DataKeyValue.BankAccounts_Key;
+					
 					data.AddFiles(AppLib.ReadImageFile(sFileName), DataKeyValue.BackGround_Key);
 				}
 

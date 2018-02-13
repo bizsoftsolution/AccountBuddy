@@ -646,15 +646,14 @@ namespace AccountBuddy.BLL
 
 		public void AddFiles(byte[] image, string ACode)
 		{
-			if (companyFile.AttchmentCode == DataKeyValue.Logo_Key)
-			{
+			
 				CompanyFile pod = new CompanyFile()
 				{
 					AttchmentCode = ACode,
 					Image = image
 				};
 				CFiles.Add(pod);
-			}
+			
 		}
 	}
 	#endregion

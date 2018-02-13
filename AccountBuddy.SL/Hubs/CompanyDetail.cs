@@ -15,9 +15,24 @@ namespace AccountBuddy.SL.Hubs
 
 		BLL.CompanyDetail CompanyDetailDAL_BLL(DAL.CompanyDetail d)
 		{
-			return d.ToMap(new BLL.CompanyDetail());
-		}
+			BLL.CompanyDetail c = new CompanyDetail();
+			d.ToMap(c);
+			foreach (var c1 in d.CompanyFiles)
+			{
+				c.companyFile = CompanyFileDAL_BLL(c1);
+				c.CFiles.Add(CompanyFileDAL_BLL(c1));
+			}
 
+			return c;
+
+		}
+		BLL.CompanyFile CompanyFileDAL_BLL(DAL.CompanyFile d)
+		{
+			BLL.CompanyFile c = new BLL.CompanyFile();
+			d.ToMap(c);
+			return c;
+
+		}
 		public List<string> CompanyDetail_AcYearList()
 		{
 			List<string> AcYearList = new List<string>();

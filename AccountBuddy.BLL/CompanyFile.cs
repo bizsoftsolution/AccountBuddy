@@ -18,7 +18,7 @@ namespace AccountBuddy.BLL
 
 		
 		private int _id;
-		private string _CompanyId;
+		private int? _CompanyId;
 		private string _AttchmentCode;
 		private byte[] _Image;
 
@@ -64,7 +64,7 @@ namespace AccountBuddy.BLL
 			}
 		}
 
-		public string CompanyId
+		public int? CompanyId
 		{
 			get
 			{

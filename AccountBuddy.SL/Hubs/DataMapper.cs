@@ -50,10 +50,20 @@ namespace AccountBuddy.SL.Hubs
 
             return D;
         }
-        #endregion
 
-        #region CustomFormat
-        public static DAL.CustomFormat ToMap(this BLL.CustomFormat S, DAL.CustomFormat D)
+		public static BLL.CompanyFile ToMap(this DAL.CompanyFile S, BLL.CompanyFile D)
+		{
+			if (S == null) return D;
+			D.Id = S.Id;
+			D.CompanyId = S.CompanyId;
+			D.AttchmentCode = S.AttchmentCode;
+			D.Image = S.Image;
+			return D;
+		}
+			#endregion
+
+			#region CustomFormat
+			public static DAL.CustomFormat ToMap(this BLL.CustomFormat S, DAL.CustomFormat D)
         {
             D.CompanyId = S.CompanyId;
             D.CurrencyCaseSensitive = S.CurrencyCaseSensitive;
