@@ -52,6 +52,8 @@ namespace AccountBuddy.Common
         public static int DigitGroupingBy;
         public static int CurrencyCaseSensitive;
 
+      
+
         public static T ToMap<T>(this object objSource, T objDestination)
         {
 
@@ -344,5 +346,9 @@ namespace AccountBuddy.Common
         {
             WriteLog(string.Format("Error=> ExMessage:{0},StackTrace:{1}", ex.Message, ex.StackTrace));
         }
+
+        
+      
+
     }
 }

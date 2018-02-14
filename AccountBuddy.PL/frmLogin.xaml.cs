@@ -69,10 +69,16 @@ namespace AccountBuddy.PL
                     App.frmLogin.Hide();
                     App.frmHome.Show();
                     var s = BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).FirstOrDefault();
-                    byte[] ic= s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.Logo_Key).FirstOrDefault().Image;
-                    App.frmHome.Icon = Common.AppLib.ViewImage(ic);
+                    if(s.CFiles.Count!=0)
+                    {
+                        byte[] ic = s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.Logo_Key).FirstOrDefault().Image;
+                       if(ic!=null) App.frmHome.Icon = Common.AppLib.ViewImage(ic);
+
+                    }
+
                     frmWelcome frm = new frmWelcome();
                     byte[] v = s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault().Image;
+
                     if (v != null)
                     {
                         frm.imgBackground.ImageSource = Common.AppLib.ViewImage(v);
