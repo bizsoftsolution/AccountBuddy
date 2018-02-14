@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.AspNet.SignalR.Client;
 using AccountBuddy.BLL;
+using System.IO;
 
 namespace AccountBuddy.PL
 {
@@ -67,11 +68,23 @@ namespace AccountBuddy.PL
                     App.frmHome.Title = String.Format("{0} - {1}", BLL.UserAccount.User.UserName, BLL.UserAccount.User.UserType.Company.CompanyName);
                     App.frmLogin.Hide();
                     App.frmHome.Show();
-
                     var s = BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).FirstOrDefault();
-                    //frmWelcome frm = new frmWelcome();
-                   // frm.imgBackground.ImageSource = Common.AppLib.ViewImage(s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault().Image);
+                    if(s.CFiles.Count!=0)
+                    {
+                        byte[] ic = s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.Logo_Key).FirstOrDefault().Image;
+                       if(ic!=null) App.frmHome.Icon = Common.AppLib.ViewImage(ic);
 
+                    }
+
+                    frmWelcome frm = new frmWelcome();
+                    byte[] v = s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault().Image;
+
+                    if (v != null)
+                    {
+                        frm.imgBackground.ImageSource = Common.AppLib.ViewImage(v);
+                        frm.img.Source = Common.AppLib.ViewImage(v);
+                        frm.img.Tag = v;
+                    }
 
                 }
 
@@ -221,5 +234,9 @@ namespace AccountBuddy.PL
         {
             Common.AppLib.WriteLog("frmLogin_Deactivated");
         }
+
+
+        
+
     }
 }

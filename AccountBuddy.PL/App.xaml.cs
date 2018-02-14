@@ -20,7 +20,7 @@ namespace AccountBuddy.PL
         private static frmInit _frmInit;
         private static frmLogin _frmLogin;
         private static frmHome _frmHome;
-        private static Byte[] BackGroud;
+      
         
         public static frmInit frmInit
         {
@@ -952,11 +952,24 @@ namespace AccountBuddy.PL
             #endregion
 
         }
+
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             if (HubConCaller.State==Microsoft.AspNet.SignalR.Client.ConnectionState.Connected) HubConCallerDisconnect();
             if (HubConReceiver.State == Microsoft.AspNet.SignalR.Client.ConnectionState.Connected) HubConReceiverDisconnect();
             AppLib.WriteLog("Application Exit");
         }
+
+        public static void SetBackground(Byte[] Background)
+        {
+            frmWelcome frm = new frmWelcome();
+            frm.imgBackground.ImageSource = Common.AppLib.ViewImage(Background);
+        }
+        public static void setLogo(Byte[] Logo)
+        {
+            frmHome frm = new frmHome();
+            frm.Icon = Common.AppLib.ViewImage(Logo);
+        }
+
     }
 }
