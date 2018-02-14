@@ -69,8 +69,8 @@ namespace AccountBuddy.PL
                     App.frmHome.Show();
 
                     var s = BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).FirstOrDefault();
-                    frmWelcome frm = new frmWelcome();
-                    frm.imgBackground.ImageSource = Common.AppLib.ViewImage(s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault().Image);
+                    //frmWelcome frm = new frmWelcome();
+                   // frm.imgBackground.ImageSource = Common.AppLib.ViewImage(s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault().Image);
 
 
                 }
