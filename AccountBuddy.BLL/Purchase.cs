@@ -46,6 +46,7 @@ namespace AccountBuddy.BLL
         private string _lblDiscount;
         private string _lblExtra;
         private ObservableCollection<TaxMaster> _TaxDetails;
+        private static ObservableCollection<Purchase> _toList;
 
         #endregion
 
@@ -67,6 +68,24 @@ namespace AccountBuddy.BLL
                 {
                     _UserPermission = value;
                 }
+            }
+        }
+        public static ObservableCollection<Purchase> toList
+        {
+            get
+            {
+                try
+                {
+                    if (_toList == null) _toList = new ObservableCollection<Purchase>(FMCGHubClient.HubCaller.Invoke<List<Purchase>>("Purchase_List").Result);
+
+                }
+                catch (Exception ex)
+                { Common.AppLib.WriteLog(ex); }
+                return _toList;
+            }
+            set
+            {
+                _toList = value;
             }
         }
 
@@ -535,6 +554,7 @@ namespace AccountBuddy.BLL
 
         public bool Save()
         {
+            if (!isValid()) return false;
             try
             {
                 return FMCGHubClient.HubCaller.Invoke<bool>("Purchase_Save", this).Result;
@@ -642,6 +662,18 @@ namespace AccountBuddy.BLL
                 Common.AppLib.WriteLog(ex); return false;
             }
         }
+
+        public bool isValid()
+        {
+            bool RValue = true;
+            if (toList.Where(x => x.RefNo== RefNo && x.Id != Id).Count() > 0)
+            {
+                RValue = false;
+            }
+            return RValue;
+
+        }
+
         #endregion
 
         #region Detail

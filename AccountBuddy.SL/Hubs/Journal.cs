@@ -233,6 +233,8 @@ namespace AccountBuddy.SL.Hubs
             var l = DB.TaxMasters.Where(x => x.LedgerId == LId && x.Ledger.AccountGroup.CompanyId == CompanyId).FirstOrDefault();
             return l == null ? 0 : l.TaxPercentage;
         }
+      
+        
         #region Purchase
         void Journal_SaveByPurchase(DAL.Purchase P, List<BLL.TaxMaster> TaxDetail)
         {
@@ -323,6 +325,8 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
                     if (j.JournalDetails.Count != TaxDetail.Count)
                     {
                         foreach (var s in j.JournalDetails.ToList())
@@ -461,6 +465,7 @@ namespace AccountBuddy.SL.Hubs
 
         #endregion
 
+
         #region sales return 
         public void Journal_SaveBySalesReturn(DAL.SalesReturn SR, List<BLL.TaxMaster> TaxDetail)
         {
@@ -555,7 +560,8 @@ namespace AccountBuddy.SL.Hubs
             }
             else
             {
-                if (j.JournalDetails.Count != TaxDetail.Count)
+                j.EntryNo = SR.RefNo;//Journal_NewRefNoByCompanyId(CId);
+                j.RefCode = RefCode; if (j.JournalDetails.Count != TaxDetail.Count)
                 {
                     foreach (var s in j.JournalDetails.ToList())
                     {
@@ -777,6 +783,9 @@ namespace AccountBuddy.SL.Hubs
             }
             else
             {
+                j.EntryNo = S.RefNo;//Journal_NewRefNoByCompanyId(CId);
+                j.RefCode = RefCode;
+                j.JournalDate = S.SalesDate;
                 if (j.JournalDetails.Count != TaxDetails.Count)
                 {
                     foreach (var s in j.JournalDetails.ToList())
@@ -1002,6 +1011,8 @@ namespace AccountBuddy.SL.Hubs
             }
             else
             {
+                j.EntryNo = PR.RefNo;//Journal_NewRefNoByCompanyId(CId);
+                j.RefCode = RefCode;
                 if (j.JournalDetails.Count != TaxDetails.Count)
                 {
                     foreach (var s in j.JournalDetails.ToList())
@@ -1307,6 +1318,9 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    j.EntryNo = STout.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
+
                     foreach (var jd in j.JournalDetails)
                     {
                         jd.Particulars = STout.Narration;
@@ -1381,6 +1395,10 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    j.EntryNo = STIn.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
+
+
                     foreach (var jd in j.JournalDetails)
                     {
                         jd.Particulars = STIn.Narration;
@@ -1464,6 +1482,8 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    j.EntryNo = P.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
                     if (j.JournalDetails.Count != TaxDetail.Count)
                     {
                         foreach (var s in j.JournalDetails.ToList())
@@ -1598,6 +1618,9 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    j.EntryNo = S.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
+
                     if (j.JournalDetails.Count != TaxDetail.Count)
                     {
                         foreach (var s in j.JournalDetails.ToList())
@@ -1723,6 +1746,8 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    j.EntryNo = S.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
                     foreach (var jd in j.JournalDetails)
                     {
                         jd.Particulars = S.Narration;
@@ -1798,6 +1823,8 @@ namespace AccountBuddy.SL.Hubs
                 }
                 else
                 {
+                    j.EntryNo = S.RefNo;// Journal_NewRefNoByCompanyId(CId);
+                    j.RefCode = RefCode;
                     foreach (var jd in j.JournalDetails)
                     {
                         jd.Particulars = S.Narration;

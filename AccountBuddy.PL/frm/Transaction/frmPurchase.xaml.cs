@@ -352,7 +352,7 @@ namespace AccountBuddy.PL.frm.Transaction
 			}
 			else
 			{
-				if (dtpDate.IsMouseCaptured)
+				if (dtpDate.IsMouseOver)
 				{
 					if (MessageBox.Show("Click YES to change Ref No?", "PERMISSION", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
 					{

@@ -11,12 +11,10 @@
     <Grid>
         
         <Grid.Background>
-            <ImageBrush x:Name="imgBackground"  Stretch="None"/>
+            <ImageBrush x:Name="imgBackground" Stretch="None"/>
             
         </Grid.Background>
-        <Grid>
-            <Image x:Name="img"></Image>
-        </Grid>
+      
 
     </Grid>
 </UserControl>

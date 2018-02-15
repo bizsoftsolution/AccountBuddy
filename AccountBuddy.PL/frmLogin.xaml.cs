@@ -74,17 +74,17 @@ namespace AccountBuddy.PL
                         byte[] ic = s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.Logo_Key).FirstOrDefault().Image;
                        if(ic!=null) App.frmHome.Icon = Common.AppLib.ViewImage(ic);
 
+                        frmWelcome frm = new frmWelcome();
+                        byte[] v = s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault().Image;
+
+                        if (v != null)
+                        {
+                            frm.imgBackground.ImageSource = Common.AppLib.ViewImage(v);
+
+                        }
                     }
 
-                    frmWelcome frm = new frmWelcome();
-                    byte[] v = s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault().Image;
-
-                    if (v != null)
-                    {
-                        frm.imgBackground.ImageSource = Common.AppLib.ViewImage(v);
-                        frm.img.Source = Common.AppLib.ViewImage(v);
-                        frm.img.Tag = v;
-                    }
+                   
 
                 }
 

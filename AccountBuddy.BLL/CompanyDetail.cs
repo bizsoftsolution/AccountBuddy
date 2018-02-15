@@ -646,12 +646,10 @@ namespace AccountBuddy.BLL
 
         public void AddFiles(byte[] image, string ACode)
         {
-            CompanyFile pod = CFiles.Where(x => x.AttchmentCode == ACode).FirstOrDefault();
-            if (pod == null)
-            {
-                pod = new CompanyFile();
-
-            }
+           
+            CompanyFile c = CFiles.Where(x => x.AttchmentCode == ACode).FirstOrDefault();
+            CFiles.Remove(c);
+            CompanyFile pod = new CompanyFile();
             pod.AttchmentCode = ACode;
             pod.Image = image;
             CFiles.Add(pod);

@@ -327,7 +327,7 @@
 
 							</StackPanel>
 							<Border Margin="50,50,50,60" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-								<Image x:Name="iLogoImage" Tag="{Binding companyFile.Image, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="147" Height="99" Margin="-23,-3,-19,-1"  />
+								<Image x:Name="iLogoImage" Tag="{Binding companyFile.Image, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"  Width="150" Height="100" Margin="20"  />
 							</Border>
 						</Grid>
 						<Grid Grid.Column="1">
@@ -343,7 +343,7 @@
 							</StackPanel>
 							<Border Margin="50,50,50,60" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
 								<StackPanel>
-									<Image x:Name="iBImage" Width="Auto" Height="Auto" Tag="{Binding companyFile.Image, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"   Margin="10"  />
+                                    <Image x:Name="iBImage" Tag="{Binding companyFile.Image, Mode=TwoWay}" HorizontalAlignment="Center"   VerticalAlignment="Center"     Width="150" Height="100" Margin="20,30,20,20"   />
 
 								</StackPanel>
 									</Border>

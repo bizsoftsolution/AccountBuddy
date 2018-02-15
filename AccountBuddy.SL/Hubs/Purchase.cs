@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 using AccountBuddy.Common;
@@ -380,7 +381,13 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return lstPurchase;
         }
-
+        public List<BLL.Purchase> Purchase_List()
+        {
+            List<BLL.Purchase> c = new List<BLL.Purchase>();
+            c=DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList()
+                .Select(x=>Purchase_DALtoBLL(x)).ToList();
+            return c;
+        }
 
         #endregion
     }

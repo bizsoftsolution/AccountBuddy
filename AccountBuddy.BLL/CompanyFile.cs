@@ -12,8 +12,7 @@ namespace AccountBuddy.BLL
 	{
 
 		#region Field
-		bool isServerCall = false;
-
+		
 		private static ObservableCollection<CompanyFile> _toList;
 
 		
