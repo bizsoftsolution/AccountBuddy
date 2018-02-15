@@ -42,7 +42,11 @@ namespace AccountBuddy.SL.Hubs
 
 			return string.Format("{0}{1:x5}", Prefix, No + 1);
 		}
-		public bool Sales_Save(BLL.Sale P)
+
+
+      
+
+        public bool Sales_Save(BLL.Sale P)
         {
             try
             {

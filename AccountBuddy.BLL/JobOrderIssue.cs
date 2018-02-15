@@ -667,6 +667,10 @@ namespace AccountBuddy.BLL
 
         }
 
+        public void setEntryNo()
+        {
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("JobOrderIssue_NewRefNo", JODate).Result;
+        }
 
         #endregion
     }

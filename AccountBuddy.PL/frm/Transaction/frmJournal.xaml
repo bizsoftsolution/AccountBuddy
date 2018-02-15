@@ -79,7 +79,7 @@
             </Grid.RowDefinitions>
             <StackPanel Orientation="Vertical" Margin="0,25,0,0" Grid.ColumnSpan="2" Grid.Row="0">
                 <StackPanel Orientation="Horizontal" >
-                    <DatePicker x:Name="dtpJournalDate" materialDesign:HintAssist.Hint="Date"  SelectedDate="{Binding JournalDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,0,0" Width="100" FontWeight="Bold"  />
+                    <DatePicker x:Name="dtpJournalDate" materialDesign:HintAssist.Hint="Date"  SelectedDate="{Binding JournalDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,15,0,0" Width="100" FontWeight="Bold" SelectedDateChanged="dtpDate_SelectedDateChanged"  />
                     <TextBox  x:Name="txtEntryNo" MaxLength="50" IsReadOnly="True"  Text="{Binding EntryNo, Mode=TwoWay}" Width="120" materialDesign:HintAssist.Hint="Entry Code" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="10,0,0,0" FontWeight="Bold"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">

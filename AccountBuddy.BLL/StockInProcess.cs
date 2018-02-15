@@ -589,7 +589,10 @@ namespace AccountBuddy.BLL
 
         }
 
-
+        public void setEntryNo()
+        {
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("StockInProcess_NewRefNo", SPDate).Result;
+        }
 
         #endregion
     }

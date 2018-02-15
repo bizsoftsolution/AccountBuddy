@@ -321,5 +321,23 @@ namespace AccountBuddy.PL.frm.Transaction
                 Common.AppLib.WriteLog(ex);
             }
         }
+        private void dtpDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (data.Id == 0)
+            {
+
+                data.setEntryNo();
+            }
+            else
+            {
+                if (dtpReceiptDate.IsMouseOver)
+                {
+                    if (MessageBox.Show("Click YES to change Ref No?", "PERMISSION", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        data.setEntryNo();
+                    }
+                }
+            }
+        }
     }
 }

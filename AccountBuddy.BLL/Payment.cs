@@ -837,6 +837,13 @@ namespace AccountBuddy.BLL
             return FMCGHubClient.HubCaller.Invoke<List<Payment>>("Payment_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
         }
 
+        public void setEntryNo()
+        {
+            EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Payment_NewRefNo", PaymentDate).Result;
+        }
+
+
+
         #region Property  Changed Event
 
         public event PropertyChangedEventHandler PropertyChanged;

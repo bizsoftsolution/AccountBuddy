@@ -705,7 +705,10 @@ namespace AccountBuddy.BLL
 
         }
 
-
+        public void setEntryNo()
+        {
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseReturn_NewRefNo", PRDate).Result;
+        }
         #endregion
     }
 }

@@ -432,6 +432,10 @@ namespace AccountBuddy.BLL
             }
             return rv;
         }
+        public void setEntryNo()
+        {
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("StockOut_NewRefNo", Date).Result;
+        }
         #endregion
     }
 }

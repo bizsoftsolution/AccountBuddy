@@ -375,5 +375,23 @@ namespace AccountBuddy.PL.frm.Transaction
             data.SetGST();
             frm.Close();
         }
+        private void dtpDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (data.Id == 0)
+            {
+
+                data.setEntryNo();
+            }
+            else
+            {
+                if (dtpDate.IsMouseOver)
+                {
+                    if (MessageBox.Show("Click YES to change Ref No?", "PERMISSION", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        data.setEntryNo();
+                    }
+                }
+            }
+        }
     }
 }

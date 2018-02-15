@@ -449,6 +449,13 @@ namespace AccountBuddy.BLL
         {
             return FMCGHubClient.HubCaller.Invoke<List<Journal>>("Journal_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
         }
+
+
+        public void setEntryNo()
+        {
+            EntryNo = FMCGHubClient.HubCaller.Invoke<string>("Journal_NewRefNo", JournalDate).Result;
+        }
+
         #endregion
     }
 }

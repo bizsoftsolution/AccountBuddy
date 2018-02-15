@@ -800,7 +800,10 @@ namespace AccountBuddy.BLL
         {
             return FMCGHubClient.HubCaller.Invoke<List<Receipt>>("Receipt_List", LedgerId, dtFrom, dtTo, EntryNo, Status, amtFrom, amtTo).Result;
         }
-
+        public void setEntryNo()
+        {
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("Receipt_NewRefNo", ReceiptDate).Result;
+        }
 
         #region Property  Changed Event
 

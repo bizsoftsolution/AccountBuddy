@@ -48,7 +48,7 @@
                 <!--#region  Master -->
                 <Grid Grid.Row="0">
                     <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" VerticalAlignment="Top"  Height="79" >
-                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding SODate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="5,27,10,24" Width="100" FontWeight="Bold"  />
+                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding SODate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="5,27,10,24" Width="100" FontWeight="Bold"  SelectedDateChanged="dtpDate_SelectedDateChanged"/>
                         <ComboBox x:Name="cmbCustomer" Loaded="cmbCustomer_Loaded" Text="{Binding LedgerName}" SelectedValue="{Binding LedgerId, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" FontSize="14" Width="300" Height="43" Margin="10,10,10,24">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">

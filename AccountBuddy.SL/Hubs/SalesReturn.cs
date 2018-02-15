@@ -13,6 +13,7 @@ namespace AccountBuddy.SL.Hubs
         {
             return SalesReturn_NewRefNoByCompanyId(Caller.CompanyId);
         }
+
         public string SalesReturn_NewRefNoByCompanyId(int CompanyId)
         {
             DateTime dt = DateTime.Now;
@@ -27,6 +28,22 @@ namespace AccountBuddy.SL.Hubs
 
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
+
+        public string SalesReturn_NewRefNo(DateTime dt)
+        {
+            string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.SalesReturn, dt, dt.Month);
+            long No = 0;
+
+            var d1 = DB.SalesReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix) && x.SRDate.Month == dt.Month).Select(x => x.RefNo).ToList();
+            if (d1.Count() > 0)
+            {
+                No = d1.Select(x => Convert.ToInt64(x.Substring(Prefix.Length), 16)).Max();
+            }
+
+            return string.Format("{0}{1:x5}", Prefix, No + 1);
+        }
+
+
         public bool SalesReturn_Save(BLL.SalesReturn P)
         {
             try

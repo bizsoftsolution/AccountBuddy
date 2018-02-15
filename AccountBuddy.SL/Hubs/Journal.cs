@@ -31,6 +31,20 @@ namespace AccountBuddy.SL.Hubs
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
 
+        public string Journal_NewRefNo(DateTime dt)
+        {
+            string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Journal, dt, dt.Month);
+            long No = 0;
+
+            var d1 = DB.JournalDetails.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.Journal.EntryNo.StartsWith(Prefix) && x.Journal.JournalDate.Month == dt.Month).Select(x => x.Journal.EntryNo).ToList();
+            if (d1.Count() > 0)
+            {
+                No = d1.Select(x => Convert.ToInt64(x.Substring(Prefix.Length), 16)).Max();
+            }
+
+            return string.Format("{0}{1:x5}", Prefix, No + 1);
+        }
+
         public bool Journal_Save(BLL.Journal PO)
         {
             try
@@ -234,7 +248,6 @@ namespace AccountBuddy.SL.Hubs
             return l == null ? 0 : l.TaxPercentage;
         }
       
-        
         #region Purchase
         void Journal_SaveByPurchase(DAL.Purchase P, List<BLL.TaxMaster> TaxDetail)
         {
@@ -464,8 +477,7 @@ namespace AccountBuddy.SL.Hubs
         }
 
         #endregion
-
-
+        
         #region sales return 
         public void Journal_SaveBySalesReturn(DAL.SalesReturn SR, List<BLL.TaxMaster> TaxDetail)
         {
@@ -490,7 +502,7 @@ namespace AccountBuddy.SL.Hubs
                 Mode = "Cheque";
                 status = "Process";
             }
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == SR.RefNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();
@@ -798,7 +810,7 @@ namespace AccountBuddy.SL.Hubs
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
                             LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId),
-                            DrAmt = S.TotalAmount,
+                            CrAmt = S.TotalAmount,
                             TransactionMode = "Cash",
                             Particulars = S.Narration
                         });
@@ -808,7 +820,7 @@ namespace AccountBuddy.SL.Hubs
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
                             LedgerId = S.LedgerId,
-                            DrAmt = S.TotalAmount,
+                            CrAmt = S.TotalAmount,
                             TransactionMode = "Credit",
                             Particulars = S.Narration
                         });
@@ -818,7 +830,7 @@ namespace AccountBuddy.SL.Hubs
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
                             LedgerId = DB.Banks.FirstOrDefault().LedgerId,
-                            DrAmt = S.TotalAmount,
+                            CrAmt = S.TotalAmount,
                             Particulars = S.Narration,
                             TransactionMode = "Cheque",
                             ChequeDate = S.ChequeDate,
@@ -829,7 +841,7 @@ namespace AccountBuddy.SL.Hubs
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
                         LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.SalesAccount_Ledger_Key, CId),
-                        CrAmt = S.ItemAmount - S.DiscountAmount + S.ExtraAmount,
+                        DrAmt = S.ItemAmount - S.DiscountAmount + S.ExtraAmount,
                         TransactionMode = Mode,
                         ChequeDate = S.ChequeDate,
                         ChequeNo = S.ChequeNo,
@@ -841,7 +853,7 @@ namespace AccountBuddy.SL.Hubs
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
                             LedgerId = t.Ledger.Id,
-                            CrAmt = t.TaxAmount,
+                            DrAmt = t.TaxAmount,
                             TransactionMode = Mode,
                             ChequeDate = S.ChequeDate,
                             ChequeNo = S.ChequeNo,
@@ -862,21 +874,21 @@ namespace AccountBuddy.SL.Hubs
                             if (S.TransactionTypeId == 1)
                             {
                                 jd.LedgerId = LedgerIdByKeyAndCompany(BLL.DataKeyValue.CashLedger_Key, CId);
-                                jd.DrAmt = S.TotalAmount;
+                                jd.CrAmt = S.TotalAmount;
                                 jd.TransactionMode = "Cash";
                                 jd.Particulars = S.Narration;
                             }
                             else if (S.TransactionTypeId == 2)
                             {
                                 jd.LedgerId = S.LedgerId;
-                                jd.DrAmt = S.TotalAmount;
+                                jd.CrAmt = S.TotalAmount;
                                 jd.TransactionMode = "Credit";
                                 jd.Particulars = S.Narration;
                             }
                             else
                             {
                                 jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
-                                jd.DrAmt = S.TotalAmount;
+                                jd.CrAmt = S.TotalAmount;
                                 jd.TransactionMode = "Cheque";
                                 jd.Particulars = S.Narration;
                                 jd.ChequeDate = S.ChequeDate;
@@ -888,13 +900,13 @@ namespace AccountBuddy.SL.Hubs
                         {
                             if (jd.LedgerId == LedgerIdByKeyAndCompany(BLL.DataKeyValue.SalesAccount_Ledger_Key, CId))
                             {
-                                jd.CrAmt = S.ItemAmount - S.DiscountAmount + S.ExtraAmount;
+                                jd.DrAmt = S.ItemAmount - S.DiscountAmount + S.ExtraAmount;
                             }
                             else
                             {
                                 if (S.LedgerId == TaxIdByCompany_LedgerId(Caller.CompanyId, jd.LedgerId))
                                 {
-                                    jd.CrAmt = TaxDetails.Where(x => x.Ledger.Id == S.LedgerId).Select(x => x.TaxAmount).FirstOrDefault();
+                                    jd.DrAmt = TaxDetails.Where(x => x.Ledger.Id == S.LedgerId).Select(x => x.TaxAmount).FirstOrDefault();
                                 }
 
                             }
@@ -940,7 +952,7 @@ namespace AccountBuddy.SL.Hubs
                 Mode = "Cheque";
                 status = "Process";
             }
-            DAL.Journal j = DB.Journals.Where(x => x.EntryNo == PR.RefNo).FirstOrDefault();
+            DAL.Journal j = DB.Journals.Where(x => x.RefCode == RefCode).FirstOrDefault();
             if (j == null)
             {
                 j = new DAL.Journal();

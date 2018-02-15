@@ -580,7 +580,10 @@ namespace AccountBuddy.BLL
             return rv;
 
         }
-      
+        public void setEntryNo()
+        {
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("PurchaseOrder_NewRefNo", PODate).Result;
+        }
         #endregion
     }
 }

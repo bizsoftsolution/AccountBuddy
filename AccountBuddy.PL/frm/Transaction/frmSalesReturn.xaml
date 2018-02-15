@@ -50,7 +50,7 @@
                 <!--#region  Master -->
                 <Grid Grid.Row="0">
                     <StackPanel Grid.Row="0"  x:Name="stkPurchaseMaster"  Orientation="Horizontal" VerticalAlignment="Top"  Height="79" >
-                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding SRDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,10,24" Width="100" FontWeight="Bold"  />
+                        <DatePicker x:Name="dtpDate"  SelectedDate="{Binding SRDate}" Style="{DynamicResource MaterialDesignFloatingHintDatePicker}" Margin="10,27,10,24" Width="100" FontWeight="Bold" SelectedDateChanged="dtpDate_SelectedDateChanged" />
                         <ComboBox x:Name="cmbPType" Text="{Binding TransactionType}" SelectedValue="{Binding TransactionTypeId , Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontWeight="Bold" Margin="10,12,20,24" FontSize="14" Width="123" Height="43">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal">

@@ -554,8 +554,7 @@ namespace AccountBuddy.BLL
 
         public bool Save()
         {
-            if (!isValid()) return false;
-            try
+           try
             {
                 return FMCGHubClient.HubCaller.Invoke<bool>("Purchase_Save", this).Result;
             }

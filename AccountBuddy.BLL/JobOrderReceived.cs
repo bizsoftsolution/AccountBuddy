@@ -649,7 +649,10 @@ namespace AccountBuddy.BLL
             return rv;
 
         }
-
+        public void setEntryNo()
+        {
+            RefNo = FMCGHubClient.HubCaller.Invoke<string>("JobOrderReceived_NewRefNo", JRDate).Result;
+        }
         #endregion
 
     }

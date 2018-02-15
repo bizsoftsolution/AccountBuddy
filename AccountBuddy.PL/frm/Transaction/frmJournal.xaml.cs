@@ -318,5 +318,23 @@ namespace AccountBuddy.PL.frm.Transaction
             textBox.SelectionStart = selectionStart <= textBox.Text.Length ? selectionStart : textBox.Text.Length;
 
         }
+        private void dtpDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (data.Id == 0)
+            {
+
+                data.setEntryNo();
+            }
+            else
+            {
+                if (dtpJournalDate.IsMouseOver)
+                {
+                    if (MessageBox.Show("Click YES to change Ref No?", "PERMISSION", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        data.setEntryNo();
+                    }
+                }
+            }
+        }
     }
 }

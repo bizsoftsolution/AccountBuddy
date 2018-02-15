@@ -593,6 +593,8 @@ namespace AccountBuddy.BLL
             D.lblDiscount = S.lblDiscount;
             D.lblExtra = S.lblExtra;
             D.Status = S.Status;
+            D.SODetail = S.SODetail;
+            D.SODetails = S.SODetails;
             return D;
         }
         public static SalesOrderDetail ToMap(this SalesOrderDetail S, SalesOrderDetail D)
@@ -608,6 +610,7 @@ namespace AccountBuddy.BLL
             D.UOMId = S.UOMId;
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
+            D.SOId = S.SOId;
             D.UOMName = S.UOMName;
 
             return D;

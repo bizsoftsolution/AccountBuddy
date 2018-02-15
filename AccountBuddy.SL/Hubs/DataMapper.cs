@@ -795,7 +795,7 @@ namespace AccountBuddy.SL.Hubs
             D.Quantity = S.Quantity ?? 0;
             D.UnitPrice = S.UnitPrice ?? 0;
             D.UOMId = S.UOMId ?? 0;
-            D.SOId = S.SOId.Value;
+            D.SOId = S.SOId??0;
             return D;
         }
         #endregion

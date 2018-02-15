@@ -27,6 +27,22 @@ namespace AccountBuddy.SL.Hubs
 
             return string.Format("{0}{1:X5}", Prefix, No + 1);
         }
+
+        public string PurchaseReturn_NewRefNo(DateTime dt)
+        {
+            //  string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Payment, dt, dt.Month);
+            string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.PurchaseReturn, dt, dt.Month);
+            long No = 0;
+
+            var d1 = DB.PurchaseReturns.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix) && x.PRDate.Month == dt.Month).Select(x => x.RefNo).ToList();
+            if (d1.Count() > 0)
+            {
+                No = d1.Select(x => Convert.ToInt64(x.Substring(Prefix.Length), 16)).Max();
+            }
+
+            return string.Format("{0}{1:x5}", Prefix, No + 1);
+        }
+
         public bool PurchaseReturn_Save(BLL.PurchaseReturn P)
         {
             try
