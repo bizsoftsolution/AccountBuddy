@@ -16,6 +16,8 @@ namespace AccountBuddy.SL.Hubs
 		BLL.CompanyDetail CompanyDetailDAL_BLL(DAL.CompanyDetail d)
 		{
 			BLL.CompanyDetail c = new CompanyDetail();
+            var i = d.CompanyFiles.Where(x => x.AttchmentCode == DataKeyValue.Logo_Key).FirstOrDefault();
+            if (i != null) c.Logo = i.Image;
 			d.ToMap(c);
 			foreach (var c1 in d.CompanyFiles)
 			{

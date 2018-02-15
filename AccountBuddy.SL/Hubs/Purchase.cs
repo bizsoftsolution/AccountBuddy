@@ -34,7 +34,7 @@ namespace AccountBuddy.SL.Hubs
 			string Prefix = string.Format("{0}{1:yy}{2:X}", BLL.FormPrefix.Purchase, dt, dt.Month);
 			long No = 0;
 
-			var d1 = DB.Sales.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix) && x.SalesDate.Month == dt.Month).Select(x => x.RefNo).ToList();
+			var d1 = DB.Purchases.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId && x.RefNo.StartsWith(Prefix) && x.PurchaseDate.Month == dt.Month).Select(x => x.RefNo).ToList();
 			if (d1.Count() > 0)
 			{
 				No = d1.Select(x => Convert.ToInt64(x.Substring(Prefix.Length), 16)).Max();
