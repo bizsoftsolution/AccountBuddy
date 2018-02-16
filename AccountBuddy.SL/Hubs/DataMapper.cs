@@ -620,7 +620,9 @@ namespace AccountBuddy.SL.Hubs
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
             D.TransactionTypeId = S.TransactionTypeId;
-
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
             return D;
         }
         public static DAL.Purchase ToMap(this BLL.Purchase S, DAL.Purchase D)
@@ -637,7 +639,9 @@ namespace AccountBuddy.SL.Hubs
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
             D.TransactionTypeId = S.TransactionTypeId;
-
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
             return D;
         }
 
@@ -686,7 +690,9 @@ namespace AccountBuddy.SL.Hubs
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
             D.TransactionTypeId = S.TransactionTypeId;
-            return D;
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo; return D;
         }
         public static DAL.PurchaseReturn ToMap(this BLL.PurchaseReturn S, DAL.PurchaseReturn D)
         {
@@ -702,7 +708,9 @@ namespace AccountBuddy.SL.Hubs
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
             D.TransactionTypeId = S.TransactionTypeId;
-
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
             return D;
         }
 
@@ -815,7 +823,9 @@ namespace AccountBuddy.SL.Hubs
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
-
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
             return D;
         }
         public static DAL.Sale ToMap(this BLL.Sale S, DAL.Sale D)
@@ -832,7 +842,9 @@ namespace AccountBuddy.SL.Hubs
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
-
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
             return D;
         }
 
@@ -866,6 +878,9 @@ namespace AccountBuddy.SL.Hubs
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
             D.TransactionTypeId = S.TransactionTypeId;
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
             return D;
         }
         public static DAL.SalesReturn ToMap(this BLL.SalesReturn S, DAL.SalesReturn D)
@@ -882,7 +897,9 @@ namespace AccountBuddy.SL.Hubs
             D.RefNo = S.RefNo;
             D.TotalAmount = S.TotalAmount;
             D.TransactionTypeId = S.TransactionTypeId;
-
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
             return D;
         }
 
@@ -1058,7 +1075,7 @@ namespace AccountBuddy.SL.Hubs
             D.RefCode = S.RefCode;
             D.RefNo = S.RefNo;
             D.ItemAmount = S.ItemAmount;
-
+           
             return D;
         }
         public static DAL.StockIn ToMap(BLL.StockIn S, DAL.StockIn D)

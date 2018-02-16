@@ -549,7 +549,10 @@ namespace AccountBuddy.BLL
             D.lblExtra = S.lblExtra;
             D.PaidAmount = S.PaidAmount;
             D.PayAmount = S.PayAmount;
-
+            
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
             return D;
         }
         public static PurchaseReturnDetail ToMap(this PurchaseReturnDetail S, BLL.PurchaseReturnDetail D)
@@ -570,6 +573,7 @@ namespace AccountBuddy.BLL
             D.ProductName = S.ProductName;
             D.SNo = S.SNo;
             D.UOMName = S.UOMName;
+         
             return D;
         }
         #endregion
@@ -578,23 +582,23 @@ namespace AccountBuddy.BLL
         public static SalesOrder ToMap(this SalesOrder S, SalesOrder D)
         {
             D.Id = S.Id;
-            D.LedgerId = S.LedgerId;
-            D.SODate = S.SODate;
-            D.RefCode = S.RefCode;
-            D.RefNo = S.RefNo;
-
+            D.AmountInwords = S.AmountInwords;
             D.DiscountAmount = S.DiscountAmount;
             D.ExtraAmount = S.ExtraAmount;
             D.GSTAmount = S.GSTAmount;
             D.ItemAmount = S.ItemAmount;
-            D.TotalAmount = S.TotalAmount;
-
-            D.Narration = S.Narration;
             D.lblDiscount = S.lblDiscount;
             D.lblExtra = S.lblExtra;
-            D.Status = S.Status;
+            D.LedgerId = S.LedgerId;
+            D.LedgerName = S.LedgerName;
+            D.Narration = S.Narration;
+            D.SODate = S.SODate;
             D.SODetail = S.SODetail;
             D.SODetails = S.SODetails;
+            D.RefCode = S.RefCode;
+            D.RefNo = S.RefNo;
+            D.Status = S.Status;
+            D.TotalAmount = S.TotalAmount;
             return D;
         }
         public static SalesOrderDetail ToMap(this SalesOrderDetail S, SalesOrderDetail D)
@@ -682,6 +686,9 @@ namespace AccountBuddy.BLL
             D.TotalAmount = S.TotalAmount;
             D.TransactionTypeId = S.TransactionTypeId;
             D.TransactionType = S.TransactionType;
+            D.BankName = S.BankName;
+            D.ChequeDate = S.ChequeDate;
+            D.ChequeNo = S.ChequeNo;
             return D;
         }
         public static SalesReturnDetail ToMap(this SalesReturnDetail S, SalesReturnDetail D)

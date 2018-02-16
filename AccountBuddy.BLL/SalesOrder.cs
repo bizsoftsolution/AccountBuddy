@@ -476,7 +476,7 @@ namespace AccountBuddy.BLL
                 _SODetail = new SalesOrderDetail();
                 _SODetails = new ObservableCollection<SalesOrderDetail>();
 
-                SODate = DateTime.Now;
+                this.SODate = DateTime.Now;
                 RefNo = FMCGHubClient.HubCaller.Invoke<string>("SalesOrder_NewRefNo").Result;
                 NotifyAllPropertyChanged();
             }
@@ -600,11 +600,12 @@ namespace AccountBuddy.BLL
             return rv;
 
         }
-
         public void setEntryNo()
         {
             RefNo = FMCGHubClient.HubCaller.Invoke<string>("SalesOrder_NewRefNo", SODate).Result;
+
         }
+
         #endregion
 
     }

@@ -291,7 +291,7 @@ namespace AccountBuddy.SL.Hubs
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
                             LedgerId = P.LedgerId,
-                            CrAmt = P.TotalAmount,
+                            DrAmt = P.TotalAmount,
                             Particulars = P.Narration,
                             TransactionMode = "Credit"
                         });
@@ -300,7 +300,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                            LedgerId = DB.Banks.Where(x=>x.Ledger.AccountGroup.CompanyId==Caller.CompanyId).FirstOrDefault().LedgerId,
                             DrAmt = P.TotalAmount,
                             TransactionMode = "Cheque",
                             Particulars = P.Narration,
@@ -429,7 +429,7 @@ namespace AccountBuddy.SL.Hubs
                                 }
                                 else
                                 {
-                                    jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
+                                    jd.LedgerId = DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault().LedgerId;
                                     jd.DrAmt = P.TotalAmount;
                                     jd.TransactionMode = "Cheque";
                                     jd.ChequeDate = P.ChequeDate;
@@ -534,7 +534,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                        LedgerId = DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault().LedgerId,
                         DrAmt = SR.TotalAmount,
                         TransactionMode = "Cheque",
                         Particulars = SR.Narration,
@@ -604,7 +604,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                            LedgerId = DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault().LedgerId,
                             DrAmt = SR.TotalAmount,
                             TransactionMode = "Cheque",
                             Particulars = SR.Narration,
@@ -662,7 +662,7 @@ namespace AccountBuddy.SL.Hubs
                             }
                             else
                             {
-                                jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
+                                jd.LedgerId = DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault().LedgerId;
                                 jd.DrAmt = SR.TotalAmount;
                                 jd.TransactionMode = "Cheque";
                                 jd.ChequeDate = SR.ChequeDate;
@@ -755,7 +755,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                        LedgerId = DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault().LedgerId,
                         CrAmt = S.TotalAmount,
                         Particulars = S.Narration,
                         TransactionMode = "Cheque",
@@ -829,7 +829,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                            LedgerId = DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault().LedgerId,
                             CrAmt = S.TotalAmount,
                             Particulars = S.Narration,
                             TransactionMode = "Cheque",
@@ -887,7 +887,7 @@ namespace AccountBuddy.SL.Hubs
                             }
                             else
                             {
-                                jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
+                                jd.LedgerId = DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault().LedgerId;
                                 jd.CrAmt = S.TotalAmount;
                                 jd.TransactionMode = "Cheque";
                                 jd.Particulars = S.Narration;
@@ -983,8 +983,9 @@ namespace AccountBuddy.SL.Hubs
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        LedgerId = DB.Banks.FirstOrDefault().LedgerId,
-                        CrAmt = PR.TotalAmount,
+                        LedgerId = DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault().LedgerId,
+
+                    CrAmt = PR.TotalAmount,
                         TransactionMode = "Cheque",
                         Particulars = PR.Narration,
                         ChequeDate = PR.ChequeDate,
@@ -1056,7 +1057,8 @@ namespace AccountBuddy.SL.Hubs
                     {
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            LedgerId = DB.Banks.FirstOrDefault().LedgerId,
+                            LedgerId = DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault().LedgerId,
+
                             CrAmt = PR.TotalAmount,
                             Particulars = PR.Narration,
                             TransactionMode = "Cheque",
@@ -1114,7 +1116,8 @@ namespace AccountBuddy.SL.Hubs
                             }
                             else
                             {
-                                jd.LedgerId = DB.Banks.FirstOrDefault().LedgerId;
+                                jd.LedgerId = DB.Banks.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).FirstOrDefault().LedgerId;
+
                                 jd.CrAmt = PR.TotalAmount;
                                 jd.TransactionMode = "Cheque";
                                 jd.Particulars = PR.Narration;
