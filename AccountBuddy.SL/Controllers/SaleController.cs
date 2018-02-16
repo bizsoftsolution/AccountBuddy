@@ -14,6 +14,7 @@ namespace AccountBuddy.SL.Controllers
         {
             return View();
         }
+
         public JsonResult Save(int LedgerId, string PayMode,string RefCode, string SaleDetails, bool IsGST, string ChqNo, DateTime? ChqDate, string ChqBankName, decimal DiscountAmount, List<BLL.TaxMaster> TDetails)
         {
             try
