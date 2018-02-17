@@ -443,7 +443,7 @@ namespace AccountBuddy.BLL
             D.Status = S.Status;
             D.TotalAmount = S.TotalAmount;
 
-
+            D.TaxDetails = S.TaxDetails;
             return D;
         }
         public static PurchaseOrderDetail ToMap(this PurchaseOrderDetail S, PurchaseOrderDetail D)
@@ -467,6 +467,20 @@ namespace AccountBuddy.BLL
 
             return D;
         }
+
+        public static Purchase_Order_TaxDetail ToMap(this Purchase_Order_TaxDetail S, Purchase_Order_TaxDetail D)
+        {
+            D.Id = S.Id;
+            D.Ledger = S.Ledger;
+            D.PO_ID = S.PO_ID;
+            D.TaxAmount = S.TaxAmount;
+            D.TaxId = S.TaxId;
+            D.TaxMaster = S.TaxMaster;
+            D.TaxName = S.TaxName;
+            D.TaxPercentage = S.TaxPercentage;
+            return D;
+        }
+
         #endregion
 
         #region Purchase
@@ -599,6 +613,7 @@ namespace AccountBuddy.BLL
             D.RefNo = S.RefNo;
             D.Status = S.Status;
             D.TotalAmount = S.TotalAmount;
+            D.TaxDetails = S.TaxDetails;
             return D;
         }
         public static SalesOrderDetail ToMap(this SalesOrderDetail S, SalesOrderDetail D)
@@ -619,6 +634,20 @@ namespace AccountBuddy.BLL
 
             return D;
         }
+    
+        public static Sales_Order_TaxDetail ToMap(this Sales_Order_TaxDetail S, Sales_Order_TaxDetail D)
+        {
+            D.Id = S.Id;
+            D.Ledger = S.Ledger;
+            D.SO_ID = S.SO_ID;
+            D.TaxAmount = S.TaxAmount;
+            D.TaxId = S.TaxId;
+            D.TaxMaster = S.TaxMaster;
+            D.TaxName = S.TaxName;
+            D.TaxPercentage = S.TaxPercentage;
+            return D;
+        }
+        
         #endregion
 
         #region Sales

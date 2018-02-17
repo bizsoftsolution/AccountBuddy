@@ -15,7 +15,7 @@ namespace AccountBuddy.SL.Controllers
             return View();
         }
 
-        public JsonResult Save(int LedgerId, string PayMode,string RefCode, string SaleReturnDetails, bool IsGST,string ChqNo, DateTime? ChqDate, string ChqBankName, decimal DiscountAmount)
+        public JsonResult Save(int LedgerId, string PayMode,string RefCode, string SaleReturnDetails, bool IsGST,string ChqNo, DateTime? ChqDate, string ChqBankName, decimal DiscountAmount, List<BLL.TaxMaster> TDetails)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace AccountBuddy.SL.Controllers
                 db.SaveChanges();
 
                
-                //ab.Journal_SaveBySalesReturn(sal);
+               ab.Journal_SaveBySalesReturn(sal, TDetails);
                 return Json(new { Id = sal.Id, HasError = false }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -128,6 +128,7 @@ namespace AccountBuddy.SL.Controllers
                 return Json(new { HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
 
     }
 }

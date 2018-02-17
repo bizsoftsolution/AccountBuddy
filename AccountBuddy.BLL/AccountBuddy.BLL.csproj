@@ -100,6 +100,7 @@
     <Compile Include="PurchaseRequestStatusDetail.cs" />
     <Compile Include="PurchaseReturn.cs" />
     <Compile Include="PurchaseReturnDetail.cs" />
+    <Compile Include="Purchase_Order_TaxDetail.cs" />
     <Compile Include="Receipt.cs" />
     <Compile Include="ReceiptAndPayment.cs" />
     <Compile Include="ReceiptDetail.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="SalesReportNew.cs" />
     <Compile Include="SalesReturn.cs" />
     <Compile Include="SalesReturnDetail.cs" />
+    <Compile Include="Sales_Order_TaxDetail.cs" />
     <Compile Include="SOPending.cs" />
     <Compile Include="Staff.cs" />
     <Compile Include="StockGroup.cs" />

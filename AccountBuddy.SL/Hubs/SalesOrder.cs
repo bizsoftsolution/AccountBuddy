@@ -62,6 +62,14 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.ToMap(d_pod);
                         d.SalesOrderDetails.Add(d_pod);
                     }
+                    foreach (var td in SO.TaxDetails.Where(x=>x.TaxAmount>0))
+                    {
+                        DAL.Sales_Order_TaxDetail sd = new DAL.Sales_Order_TaxDetail();
+                        sd.TaxAmount = td.TaxAmount;
+                        sd.TaxId = td.Id;
+                        sd.TaxPercentage = td.TaxPercentage;
+                        d.Sales_Order_TaxDetail.Add(sd);
+                    }
                     DB.SaveChanges();
                     SO.Id = d.Id;
                     LogDetailStore(SO, LogDetailType.INSERT);
@@ -75,6 +83,7 @@ namespace AccountBuddy.SL.Hubs
                     //}
                     decimal rd = SO.SODetails.Select(X => X.SOId).FirstOrDefault().Value;
                     DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails.Where(x => x.SOId == rd).ToList());
+                    DB.Sales_Order_TaxDetail.RemoveRange(d.Sales_Order_TaxDetail.Where(x => x.SO_ID == d.Id).ToList());
 
                     SO.ToMap( d);
                     foreach (var b_SOd in SO.SODetails)
@@ -86,6 +95,14 @@ namespace AccountBuddy.SL.Hubs
                         d.SalesOrderDetails.Add(d_SOd);
                         //  }
                         b_SOd.ToMap(d_SOd);
+                    }
+                    foreach (var td in SO.TaxDetails.Where(x => x.TaxAmount > 0))
+                    {
+                        DAL.Sales_Order_TaxDetail sd = new DAL.Sales_Order_TaxDetail();
+                        sd.TaxAmount = td.TaxAmount;
+                        sd.TaxId = td.Id;
+                        sd.TaxPercentage = td.TaxPercentage;
+                        d.Sales_Order_TaxDetail.Add(sd);
                     }
                     LogDetailStore(SO, LogDetailType.UPDATE);
 
@@ -118,7 +135,7 @@ namespace AccountBuddy.SL.Hubs
                 S.ExtraAmount = SO.ExtraAmount.Value;
                 S.TotalAmount = SO.TotalAmount.Value;
                 S.Narration = SO.Narration;
-
+                S.TaxDetails = SO.TaxDetails;
 
                 foreach (var SOd in SO.SODetails)
                 {
@@ -144,9 +161,7 @@ namespace AccountBuddy.SL.Hubs
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return true;
         }
-
-
-
+        
 
         public BLL.SalesOrder SalesOrder_Find(string SearchText)
         {
@@ -173,7 +188,35 @@ namespace AccountBuddy.SL.Hubs
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         SO.Status = d.SalesOrderDetails.FirstOrDefault().SalesDetails.Count() > 0 ? "Sold" : "Pending";
                     }
+                    foreach (var t in d.Sales_Order_TaxDetail)
+                    {
+                        BLL.TaxMaster tm = new BLL.TaxMaster();
+                        tm.Id = t.TaxId.Value;
+                        tm.LedgerId = LedgerIdByCompany_TaxId(Caller.CompanyId, t.TaxId.Value);
+                        tm.Status = true;
+                        tm.TaxAmount = t.TaxAmount.Value;
+                        tm.TaxName = string.Format("{0}({1})", t.TaxMaster.Ledger.LedgerName, t.TaxMaster.TaxPercentage);
+                        tm.TaxPercentage = t.TaxMaster.TaxPercentage;
+                        
+                        SO.TaxDetails.Add(tm);
+                    }
+                    var tl = DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+                    var t2 = tl.Where(p => !SO.TaxDetails.Any(p2 => p2.Id == p.Id)).ToList();
 
+                    foreach (var t1 in t2)
+                    {
+                        SO.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t1.LedgerId),
+                            LedgerId = t1.LedgerId,
+                            Status = false,
+                            Ledger = LedgerDAL_BLL(t1.Ledger),
+                            TaxPercentage = t1.TaxPercentage,
+                            TaxAmount = 0,
+                            TaxName = string.Format("{0}({1})", t1.Ledger.LedgerName, t1.TaxPercentage.ToString()),
+
+                        });
+                    }
                 }
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
@@ -189,6 +232,7 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
                     var s = SalesOrder_DALtoBLL(d);
+                    DB.Sales_Order_TaxDetail.RemoveRange(DB.Sales_Order_TaxDetail.Where(x => x.SO_ID == d.Id).ToList());
                     DB.SalesOrderDetails.RemoveRange(d.SalesOrderDetails);
                     DB.SalesOrders.Remove(d);
                     DB.SaveChanges();
@@ -284,6 +328,7 @@ namespace AccountBuddy.SL.Hubs
                         }
                         else
                         {
+                            DB.Sales_Order_TaxDetail.RemoveRange(s.Sales_Order_TaxDetail);
                             DB.SalesOrderDetails.RemoveRange(s.SalesOrderDetails);
                         }
 
@@ -299,6 +344,12 @@ namespace AccountBuddy.SL.Hubs
                             DAL.SalesOrderDetail d_pod = new DAL.SalesOrderDetail();
                             b_pod.ToMap(d_pod);
                             s.SalesOrderDetails.Add(d_pod);
+                        }
+                        foreach (var td in P.Purchase_Order_TaxDetail)
+                        {
+                            DAL.Sales_Order_TaxDetail sd = new DAL.Sales_Order_TaxDetail();
+                            td.ToMap(sd);
+                            s.Sales_Order_TaxDetail.Add(sd);
                         }
                         DB.SaveChanges();
 

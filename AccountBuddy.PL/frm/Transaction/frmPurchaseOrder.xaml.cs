@@ -345,5 +345,16 @@ namespace AccountBuddy.PL.frm.Transaction
                 }
             }
         }
+
+        private void btnAddGST_Click(object sender, RoutedEventArgs e)
+        {
+            frmTaxList frm = new frmTaxList();
+
+            frm.dgvTax.ItemsSource = data.TaxDetails;
+            frm.Amount = data.ItemAmount.Value - data.DiscountAmount.Value;
+            frm.ShowDialog();
+            data.SetGST();
+            frm.Close();
+        }
     }
 }

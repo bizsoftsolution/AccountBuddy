@@ -15,10 +15,10 @@ namespace AccountBuddy.SL.Controllers
         {
             return View();
         }
-        public JsonResult toList(int CompanyId)
+        public JsonResult toList(int DealerId)
         {
 
-            var l1 = DB.Customers.Where(x => x.Ledger.AccountGroup.CompanyId == CompanyId)
+            var l1 = DB.Customers.Where(x => x.Ledger.AccountGroup.CompanyId == DealerId)
                                        .ToList();
 
             BLL.Ledger led = new BLL.Ledger();

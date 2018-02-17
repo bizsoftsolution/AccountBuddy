@@ -10,6 +10,7 @@ namespace AccountBuddy.SL.Controllers
     public class SaleOrderController : Controller
     {
         // GET: SaleOrder
+        DAL.DBFMCGEntities DB = new DAL.DBFMCGEntities();
         public ActionResult Index()
         {
             return View();
@@ -18,8 +19,7 @@ namespace AccountBuddy.SL.Controllers
         {
             try
             {
-                DAL.DBFMCGEntities DB = new DAL.DBFMCGEntities();
-
+           
                 dynamic l1 = JsonConvert.DeserializeObject(SaleOrderDetails);
                 DAL.SalesOrder sal = new DAL.SalesOrder();
                 foreach (dynamic d1 in l1)
@@ -62,5 +62,7 @@ namespace AccountBuddy.SL.Controllers
                 return Json(new { Id = 0, HasError = true, ErrMsg = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+     
     }
 }

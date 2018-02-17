@@ -488,6 +488,16 @@
           <Property Name="TotalAmount" Type="money" Nullable="false" />
           <Property Name="Narration" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="Purchase_Order_TaxDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PO_ID" Type="bigint" Nullable="false" />
+          <Property Name="TaxId" Type="int" />
+          <Property Name="TaxPercentage" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TaxAmount" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
         <EntityType Name="PurchaseDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -674,6 +684,16 @@
           <Property Name="ExtraAmount" Type="money" Nullable="false" />
           <Property Name="TotalAmount" Type="money" Nullable="false" />
           <Property Name="Narration" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Sales_Order_TaxDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SO_ID" Type="bigint" />
+          <Property Name="TaxId" Type="int" />
+          <Property Name="TaxPercentage" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TaxAmount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="SalesDetail">
           <Key>
@@ -1627,6 +1647,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Purchase_Order_TaxDetail_PurchaseOrder">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="1" />
+          <End Role="Purchase_Order_TaxDetail" Type="Self.Purchase_Order_TaxDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase_Order_TaxDetail">
+              <PropertyRef Name="PO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purchase_Order_TaxDetail_TaxMaster">
+          <End Role="TaxMaster" Type="Self.TaxMaster" Multiplicity="0..1" />
+          <End Role="Purchase_Order_TaxDetail" Type="Self.Purchase_Order_TaxDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase_Order_TaxDetail">
+              <PropertyRef Name="TaxId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Purchase_TransactionType">
           <End Role="TransactionType" Type="Self.TransactionType" Multiplicity="1" />
           <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
@@ -1960,6 +2004,30 @@
             </Principal>
             <Dependent Role="Sale">
               <PropertyRef Name="TransactionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Order_TaxDetail_SalesOrder">
+          <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="0..1" />
+          <End Role="Sales_Order_TaxDetail" Type="Self.Sales_Order_TaxDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales_Order_TaxDetail">
+              <PropertyRef Name="SO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Order_TaxDetail_TaxMaster">
+          <End Role="TaxMaster" Type="Self.TaxMaster" Multiplicity="0..1" />
+          <End Role="Sales_Order_TaxDetail" Type="Self.Sales_Order_TaxDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales_Order_TaxDetail">
+              <PropertyRef Name="TaxId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2521,6 +2589,7 @@
           <EntitySet Name="Product_Spec_Process_Detail" EntityType="Self.Product_Spec_Process_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductDetail" EntityType="Self.ProductDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Purchase_Order_TaxDetail" EntityType="Self.Purchase_Order_TaxDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrderDetail" EntityType="Self.PurchaseOrderDetail" Schema="dbo" store:Type="Tables" />
@@ -2533,6 +2602,7 @@
           <EntitySet Name="Receipt_Tax_Detail" EntityType="Self.Receipt_Tax_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReceiptDetail" EntityType="Self.ReceiptDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sales_Order_TaxDetail" EntityType="Self.Sales_Order_TaxDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalesDetail" EntityType="Self.SalesDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalesOrder" EntityType="Self.SalesOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalesOrderDetail" EntityType="Self.SalesOrderDetail" Schema="dbo" store:Type="Tables" />
@@ -2770,6 +2840,14 @@
             <End Role="Ledger" EntitySet="Ledger" />
             <End Role="Purchase" EntitySet="Purchase" />
           </AssociationSet>
+          <AssociationSet Name="FK_Purchase_Order_TaxDetail_PurchaseOrder" Association="Self.FK_Purchase_Order_TaxDetail_PurchaseOrder">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+            <End Role="Purchase_Order_TaxDetail" EntitySet="Purchase_Order_TaxDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purchase_Order_TaxDetail_TaxMaster" Association="Self.FK_Purchase_Order_TaxDetail_TaxMaster">
+            <End Role="TaxMaster" EntitySet="TaxMaster" />
+            <End Role="Purchase_Order_TaxDetail" EntitySet="Purchase_Order_TaxDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_Purchase_TransactionType" Association="Self.FK_Purchase_TransactionType">
             <End Role="TransactionType" EntitySet="TransactionType" />
             <End Role="Purchase" EntitySet="Purchase" />
@@ -2881,6 +2959,14 @@
           <AssociationSet Name="FK_Sale_TransactionType" Association="Self.FK_Sale_TransactionType">
             <End Role="TransactionType" EntitySet="TransactionType" />
             <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Order_TaxDetail_SalesOrder" Association="Self.FK_Sales_Order_TaxDetail_SalesOrder">
+            <End Role="SalesOrder" EntitySet="SalesOrder" />
+            <End Role="Sales_Order_TaxDetail" EntitySet="Sales_Order_TaxDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Order_TaxDetail_TaxMaster" Association="Self.FK_Sales_Order_TaxDetail_TaxMaster">
+            <End Role="TaxMaster" EntitySet="TaxMaster" />
+            <End Role="Sales_Order_TaxDetail" EntitySet="Sales_Order_TaxDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_SalesDetail_Product" Association="Self.FK_SalesDetail_Product">
             <End Role="Product" EntitySet="Product" />
@@ -3634,6 +3720,24 @@
             <End Role="CompanyDetail" EntitySet="CompanyDetails" />
             <End Role="UserType" EntitySet="UserTypes" />
           </AssociationSet>
+          <EntitySet Name="Purchase_Order_TaxDetail" EntityType="DBFMCGModel.Purchase_Order_TaxDetail" />
+          <EntitySet Name="Sales_Order_TaxDetail" EntityType="DBFMCGModel.Sales_Order_TaxDetail" />
+          <AssociationSet Name="FK_Purchase_Order_TaxDetail_PurchaseOrder" Association="DBFMCGModel.FK_Purchase_Order_TaxDetail_PurchaseOrder">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="Purchase_Order_TaxDetail" EntitySet="Purchase_Order_TaxDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purchase_Order_TaxDetail_TaxMaster" Association="DBFMCGModel.FK_Purchase_Order_TaxDetail_TaxMaster">
+            <End Role="TaxMaster" EntitySet="TaxMasters" />
+            <End Role="Purchase_Order_TaxDetail" EntitySet="Purchase_Order_TaxDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Order_TaxDetail_SalesOrder" Association="DBFMCGModel.FK_Sales_Order_TaxDetail_SalesOrder">
+            <End Role="SalesOrder" EntitySet="SalesOrders" />
+            <End Role="Sales_Order_TaxDetail" EntitySet="Sales_Order_TaxDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Order_TaxDetail_TaxMaster" Association="DBFMCGModel.FK_Sales_Order_TaxDetail_TaxMaster">
+            <End Role="TaxMaster" EntitySet="TaxMasters" />
+            <End Role="Sales_Order_TaxDetail" EntitySet="Sales_Order_TaxDetail" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountGroup">
           <Key>
@@ -4061,6 +4165,7 @@
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_PurchaseOrder_Ledger" FromRole="PurchaseOrder" ToRole="Ledger" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="DBFMCGModel.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
+          <NavigationProperty Name="Purchase_Order_TaxDetail" Relationship="DBFMCGModel.FK_Purchase_Order_TaxDetail_PurchaseOrder" FromRole="PurchaseOrder" ToRole="Purchase_Order_TaxDetail" />
         </EntityType>
         <EntityType Name="PurchaseOrderDetail">
           <Key>
@@ -4207,6 +4312,7 @@
           <Property Name="Narration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_SalesOrder_Ledger" FromRole="SalesOrder" ToRole="Ledger" />
           <NavigationProperty Name="SalesOrderDetails" Relationship="DBFMCGModel.FK_SalesOrderDetail_SalesOrder" FromRole="SalesOrder" ToRole="SalesOrderDetail" />
+          <NavigationProperty Name="Sales_Order_TaxDetail" Relationship="DBFMCGModel.FK_Sales_Order_TaxDetail_SalesOrder" FromRole="SalesOrder" ToRole="Sales_Order_TaxDetail" />
         </EntityType>
         <EntityType Name="SalesOrderDetail">
           <Key>
@@ -6058,6 +6164,8 @@
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Ledger" Relationship="DBFMCGModel.FK_TaxMaster_Ledger" FromRole="TaxMaster" ToRole="Ledger" />
           <NavigationProperty Name="Receipt_Tax_Detail" Relationship="DBFMCGModel.FK_Receipt_Tax_Detail_TaxMaster" FromRole="TaxMaster" ToRole="Receipt_Tax_Detail" />
+          <NavigationProperty Name="Purchase_Order_TaxDetail" Relationship="DBFMCGModel.FK_Purchase_Order_TaxDetail_TaxMaster" FromRole="TaxMaster" ToRole="Purchase_Order_TaxDetail" />
+          <NavigationProperty Name="Sales_Order_TaxDetail" Relationship="DBFMCGModel.FK_Sales_Order_TaxDetail_TaxMaster" FromRole="TaxMaster" ToRole="Sales_Order_TaxDetail" />
         </EntityType>
         <Association Name="FK_TaxMaster_Ledger">
           <End Type="DBFMCGModel.Ledger" Role="Ledger" Multiplicity="1" />
@@ -6354,6 +6462,78 @@
             </Principal>
             <Dependent Role="UserType">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Purchase_Order_TaxDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PO_ID" Type="Int64" Nullable="false" />
+          <Property Name="TaxId" Type="Int32" />
+          <Property Name="TaxPercentage" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TaxAmount" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="DBFMCGModel.FK_Purchase_Order_TaxDetail_PurchaseOrder" FromRole="Purchase_Order_TaxDetail" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="TaxMaster" Relationship="DBFMCGModel.FK_Purchase_Order_TaxDetail_TaxMaster" FromRole="Purchase_Order_TaxDetail" ToRole="TaxMaster" />
+        </EntityType>
+        <EntityType Name="Sales_Order_TaxDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SO_ID" Type="Int64" />
+          <Property Name="TaxId" Type="Int32" />
+          <Property Name="TaxPercentage" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TaxAmount" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="SalesOrder" Relationship="DBFMCGModel.FK_Sales_Order_TaxDetail_SalesOrder" FromRole="Sales_Order_TaxDetail" ToRole="SalesOrder" />
+          <NavigationProperty Name="TaxMaster" Relationship="DBFMCGModel.FK_Sales_Order_TaxDetail_TaxMaster" FromRole="Sales_Order_TaxDetail" ToRole="TaxMaster" />
+        </EntityType>
+        <Association Name="FK_Purchase_Order_TaxDetail_PurchaseOrder">
+          <End Type="DBFMCGModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="1" />
+          <End Type="DBFMCGModel.Purchase_Order_TaxDetail" Role="Purchase_Order_TaxDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase_Order_TaxDetail">
+              <PropertyRef Name="PO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purchase_Order_TaxDetail_TaxMaster">
+          <End Type="DBFMCGModel.TaxMaster" Role="TaxMaster" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Purchase_Order_TaxDetail" Role="Purchase_Order_TaxDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase_Order_TaxDetail">
+              <PropertyRef Name="TaxId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Order_TaxDetail_SalesOrder">
+          <End Type="DBFMCGModel.SalesOrder" Role="SalesOrder" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Sales_Order_TaxDetail" Role="Sales_Order_TaxDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales_Order_TaxDetail">
+              <PropertyRef Name="SO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Order_TaxDetail_TaxMaster">
+          <End Type="DBFMCGModel.TaxMaster" Role="TaxMaster" Multiplicity="0..1" />
+          <End Type="DBFMCGModel.Sales_Order_TaxDetail" Role="Sales_Order_TaxDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales_Order_TaxDetail">
+              <PropertyRef Name="TaxId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7423,6 +7603,28 @@
                 <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
                 <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Purchase_Order_TaxDetail">
+            <EntityTypeMapping TypeName="DBFMCGModel.Purchase_Order_TaxDetail">
+              <MappingFragment StoreEntitySet="Purchase_Order_TaxDetail">
+                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+                <ScalarProperty Name="TaxPercentage" ColumnName="TaxPercentage" />
+                <ScalarProperty Name="TaxId" ColumnName="TaxId" />
+                <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales_Order_TaxDetail">
+            <EntityTypeMapping TypeName="DBFMCGModel.Sales_Order_TaxDetail">
+              <MappingFragment StoreEntitySet="Sales_Order_TaxDetail">
+                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+                <ScalarProperty Name="TaxPercentage" ColumnName="TaxPercentage" />
+                <ScalarProperty Name="TaxId" ColumnName="TaxId" />
+                <ScalarProperty Name="SO_ID" ColumnName="SO_ID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -18,6 +18,7 @@ namespace AccountBuddy.DAL
         public PurchaseOrder()
         {
             this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
+            this.Purchase_Order_TaxDetail = new HashSet<Purchase_Order_TaxDetail>();
         }
     
         public long Id { get; set; }
@@ -35,5 +36,7 @@ namespace AccountBuddy.DAL
         public virtual Ledger Ledger { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Purchase_Order_TaxDetail> Purchase_Order_TaxDetail { get; set; }
     }
 }

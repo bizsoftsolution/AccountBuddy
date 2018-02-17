@@ -325,7 +325,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            LedgerId = t.Ledger.Id,
+                            LedgerId = LedgerIdByCompany_TaxId(Caller.CompanyId, t.Id),
                             CrAmt = t.TaxAmount,
                             TransactionMode = Mode,
                             ChequeDate = P.ChequeDate,
@@ -558,7 +558,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        LedgerId = t.Ledger.Id,
+                        LedgerId = LedgerIdByCompany_TaxId(Caller.CompanyId, t.Id),
                         CrAmt = t.TaxAmount,
                         TransactionMode = Mode,
                         ChequeDate = SR.ChequeDate,
@@ -628,7 +628,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            LedgerId = t.Ledger.Id,
+                            LedgerId = LedgerIdByCompany_TaxId(Caller.CompanyId, t.Id),
                             CrAmt = t.TaxAmount,
                             TransactionMode = Mode,
                             ChequeDate = SR.ChequeDate,
@@ -852,7 +852,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         j.JournalDetails.Add(new DAL.JournalDetail()
                         {
-                            LedgerId = t.Ledger.Id,
+                            LedgerId = LedgerIdByCompany_TaxId(Caller.CompanyId, t.Id),
                             DrAmt = t.TaxAmount,
                             TransactionMode = Mode,
                             ChequeDate = S.ChequeDate,

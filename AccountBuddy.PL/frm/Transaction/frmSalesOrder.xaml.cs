@@ -41,21 +41,28 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            var max = data.SODetail.Product.MaxSellingRate;
-            var min = data.SODetail.Product.MinSellingRate;
+            try
+            {
+                var max = data.SODetail.Product.MaxSellingRate;
+                var min = data.SODetail.Product.MinSellingRate;
 
-            if (data.SODetail.ProductId == null)
-            {
-                MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                if (data.SODetail.ProductId == null)
+                {
+                    MessageBox.Show(string.Format(Message.PL.Empty_Record, "Product"), FormName, MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else if (data.SODetail.Product.MinSellingRate > data.SODetail.UnitPrice || data.SODetail.Product.MaxSellingRate < data.SODetail.UnitPrice)
+                {
+                    MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    txtRate.Focus();
+                }
+                else
+                {
+                    data.SaveDetail();
+                }
             }
-            else if (data.SODetail.Product.MinSellingRate > data.SODetail.UnitPrice || data.SODetail.Product.MaxSellingRate < data.SODetail.UnitPrice)
+            catch(Exception ex)
             {
-                MessageBox.Show(String.Format(Message.PL.Transaction_Selling_Rate, min, max), FormName, MessageBoxButton.OK, MessageBoxImage.Error);
-                txtRate.Focus();
-            }
-            else
-            {
-                data.SaveDetail();
+
             }
         }
 
@@ -332,6 +339,17 @@ namespace AccountBuddy.PL.frm.Transaction
                     }
                 }
             }
+        }
+
+        private void btnAddGST_Click(object sender, RoutedEventArgs e)
+        {
+            frmTaxList frm = new frmTaxList();
+
+            frm.dgvTax.ItemsSource = data.TaxDetails;
+            frm.Amount = data.ItemAmount.Value - data.DiscountAmount.Value;
+            frm.ShowDialog();
+            data.SetGST();
+            frm.Close();
         }
     }
 }

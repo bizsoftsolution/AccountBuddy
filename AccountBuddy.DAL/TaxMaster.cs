@@ -18,6 +18,8 @@ namespace AccountBuddy.DAL
         public TaxMaster()
         {
             this.Receipt_Tax_Detail = new HashSet<Receipt_Tax_Detail>();
+            this.Purchase_Order_TaxDetail = new HashSet<Purchase_Order_TaxDetail>();
+            this.Sales_Order_TaxDetail = new HashSet<Sales_Order_TaxDetail>();
         }
     
         public int Id { get; set; }
@@ -28,5 +30,9 @@ namespace AccountBuddy.DAL
         public virtual Ledger Ledger { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receipt_Tax_Detail> Receipt_Tax_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Purchase_Order_TaxDetail> Purchase_Order_TaxDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sales_Order_TaxDetail> Sales_Order_TaxDetail { get; set; }
     }
 }

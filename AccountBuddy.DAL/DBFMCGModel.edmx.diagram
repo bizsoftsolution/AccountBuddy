@@ -207,6 +207,12 @@
         <AssociationConnector Association="DBFMCGModel.FK_StockGroup_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_UOM_CompanyDetail" />
         <AssociationConnector Association="DBFMCGModel.FK_UserType_CompanyDetail" />
+        <EntityTypeShape EntityType="DBFMCGModel.Purchase_Order_TaxDetail" Width="1.5" PointX="10.5" PointY="75.875" />
+        <EntityTypeShape EntityType="DBFMCGModel.Sales_Order_TaxDetail" Width="1.5" PointX="7.5" PointY="64.875" />
+        <AssociationConnector Association="DBFMCGModel.FK_Purchase_Order_TaxDetail_PurchaseOrder" />
+        <AssociationConnector Association="DBFMCGModel.FK_Purchase_Order_TaxDetail_TaxMaster" />
+        <AssociationConnector Association="DBFMCGModel.FK_Sales_Order_TaxDetail_SalesOrder" />
+        <AssociationConnector Association="DBFMCGModel.FK_Sales_Order_TaxDetail_TaxMaster" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

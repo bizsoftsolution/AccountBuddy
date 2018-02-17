@@ -603,6 +603,31 @@ namespace AccountBuddy.SL.Hubs
             D.UOMId = S.UOMId;
             return D;
         }
+
+
+        public static BLL.Purchase_Order_TaxDetail ToMap(this DAL.Purchase_Order_TaxDetail S, BLL.Purchase_Order_TaxDetail D)
+        {
+            D.Id = S.Id;
+            D.PO_ID = S.PO_ID;
+            D.TaxAmount = S.TaxAmount.Value;
+            D.TaxId = S.TaxId.Value;
+            D.TaxPercentage = S.TaxPercentage.Value;
+       
+            return D;
+        }
+        public static DAL.Purchase_Order_TaxDetail ToMap(this BLL.Purchase_Order_TaxDetail S, DAL.Purchase_Order_TaxDetail D)
+        {
+            D.Id = S.Id;
+            D.PO_ID = S.PO_ID;
+            D.TaxAmount = S.TaxAmount;
+            D.TaxId = S.TaxId;
+            D.TaxPercentage = S.TaxPercentage;
+
+            return D;
+        }
+
+
+
         #endregion
 
         #region Purchase
@@ -804,6 +829,26 @@ namespace AccountBuddy.SL.Hubs
             D.UnitPrice = S.UnitPrice ?? 0;
             D.UOMId = S.UOMId ?? 0;
             D.SOId = S.SOId??0;
+            return D;
+        }
+        public static BLL.Sales_Order_TaxDetail ToMap(this DAL.Sales_Order_TaxDetail S, BLL.Sales_Order_TaxDetail D)
+        {
+            D.Id = S.Id;
+            D.SO_ID = S.SO_ID.Value;
+            D.TaxAmount = S.TaxAmount.Value;
+            D.TaxId = S.TaxId.Value;
+            D.TaxPercentage = S.TaxPercentage.Value;
+
+            return D;
+        }
+        public static DAL.Sales_Order_TaxDetail ToMap(this BLL.Sales_Order_TaxDetail S, DAL.Sales_Order_TaxDetail D)
+        {
+            D.Id = S.Id;
+            D.SO_ID = S.SO_ID;
+            D.TaxAmount = S.TaxAmount;
+            D.TaxId = S.TaxId;
+            D.TaxPercentage = S.TaxPercentage;
+
             return D;
         }
         #endregion

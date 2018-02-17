@@ -103,5 +103,7 @@ namespace AccountBuddy.DAL
         public virtual DbSet<ReceiptDetail> ReceiptDetails { get; set; }
         public virtual DbSet<CompanyFile> CompanyFiles { get; set; }
         public virtual DbSet<CompanyDetail> CompanyDetails { get; set; }
+        public virtual DbSet<Purchase_Order_TaxDetail> Purchase_Order_TaxDetail { get; set; }
+        public virtual DbSet<Sales_Order_TaxDetail> Sales_Order_TaxDetail { get; set; }
     }
 }

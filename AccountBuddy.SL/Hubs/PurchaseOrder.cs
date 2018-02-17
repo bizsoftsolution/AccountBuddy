@@ -45,7 +45,7 @@ namespace AccountBuddy.SL.Hubs
         public bool PurchaseOrder_Save(BLL.PurchaseOrder PO)
         {
             try
-            {                
+            {
 
                 DAL.PurchaseOrder d = DB.PurchaseOrders.Where(x => x.Id == PO.Id).FirstOrDefault();
 
@@ -55,13 +55,21 @@ namespace AccountBuddy.SL.Hubs
                     d = new DAL.PurchaseOrder();
                     DB.PurchaseOrders.Add(d);
 
-                    AppLib.ToMap(PO, d);
+                    PO.ToMap(d);
 
                     foreach (var b_pod in PO.PODetails)
                     {
                         DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
-                        AppLib.ToMap(b_pod, d_pod);
+                        b_pod.ToMap(d_pod);
                         d.PurchaseOrderDetails.Add(d_pod);
+                    }
+                    foreach (var td in PO.TaxDetails.Where(x=>x.TaxAmount>0))
+                    {
+                        DAL.Purchase_Order_TaxDetail sd = new DAL.Purchase_Order_TaxDetail();
+                        sd.TaxAmount = td.TaxAmount;
+                        sd.TaxId = td.Id;
+                        sd.TaxPercentage = td.TaxPercentage;
+                        d.Purchase_Order_TaxDetail.Add(sd);
                     }
                     DB.SaveChanges();
                     PO.Id = d.Id;
@@ -72,14 +80,24 @@ namespace AccountBuddy.SL.Hubs
                     decimal rd = PO.PODetails.Select(X => X.POId).FirstOrDefault();
                     DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails.Where(x => x.POId == rd).ToList());
 
+                     DB.Purchase_Order_TaxDetail.RemoveRange(d.Purchase_Order_TaxDetail.Where(x => x.PO_ID == d.Id).ToList());
 
-                    AppLib.ToMap(PO, d);
+
+                    PO.ToMap(d);
                     foreach (var b_pod in PO.PODetails)
                     {
                         DAL.PurchaseOrderDetail d_pod = new DAL.PurchaseOrderDetail();
-                        AppLib.ToMap(b_pod, d_pod);
-                       
+                        b_pod.ToMap(d_pod);
+
                         d.PurchaseOrderDetails.Add(d_pod);
+                    }
+                    foreach (var td in PO.TaxDetails.Where(x => x.TaxAmount > 0))
+                    {
+                        DAL.Purchase_Order_TaxDetail sd = new DAL.Purchase_Order_TaxDetail();
+                        sd.TaxAmount = td.TaxAmount;
+                        sd.TaxId = td.Id;
+                        sd.TaxPercentage = td.TaxPercentage;
+                        d.Purchase_Order_TaxDetail.Add(sd);
                     }
                     DB.SaveChanges();
                     LogDetailStore(PO, LogDetailType.UPDATE);
@@ -111,7 +129,7 @@ namespace AccountBuddy.SL.Hubs
                 P.ExtraAmount = PO.Extras.Value;
                 P.TotalAmount = PO.TotalAmount.Value;
                 P.Narration = PO.Narration;
-
+                P.TaxDetails = PO.TaxDetails;
 
                 foreach (var pod in PO.PODetails)
                 {
@@ -132,13 +150,14 @@ namespace AccountBuddy.SL.Hubs
 
                     P.PDetails.Add(PD);
                 }
+                
                 return Purchase_Save(P);
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
             return true;
         }
 
-        #region SalesOrder
+        #region PurchaseOrder
 
         void PurchaseOrder_SaveBySalesOrder(DAL.SalesOrder S)
         {
@@ -168,6 +187,8 @@ namespace AccountBuddy.SL.Hubs
                         }
                         else
                         {
+                            DB.Purchase_Order_TaxDetail.RemoveRange(p.Purchase_Order_TaxDetail);
+
                             DB.PurchaseOrderDetails.RemoveRange(p.PurchaseOrderDetails);
                         }
 
@@ -191,7 +212,7 @@ namespace AccountBuddy.SL.Hubs
 
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
-            
+
         }
         public bool PurchaseOrder_DeleteBySalesOrder(DAL.SalesOrder s)
         {
@@ -223,22 +244,50 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
 
-                    AppLib.ToMap(d, PO);
+                    d.ToMap(PO);
                     PO.LedgerName = (d.Ledger ?? DB.Ledgers.Find(d.LedgerId) ?? new DAL.Ledger()).LedgerName;
                     int i = 0;
-                    foreach (var d_pod in DB.PurchaseOrderDetails.Where(x=>x.POId==d.Id).ToList())
+                    foreach (var d_pod in DB.PurchaseOrderDetails.Where(x => x.POId == d.Id).ToList())
                     {
                         BLL.PurchaseOrderDetail b_pod = new BLL.PurchaseOrderDetail();
-                        AppLib.ToMap(d_pod, b_pod);
+                        d_pod.ToMap(b_pod);
                         b_pod.SNo = ++i;
                         PO.PODetails.Add(b_pod);
-                        
+
                         b_pod.ProductName = (d_pod.Product ?? DB.Products.Find(d_pod.ProductId) ?? new DAL.Product()).ProductName;
                         b_pod.UOMName = (d_pod.UOM ?? DB.UOMs.Find(d_pod.UOMId) ?? new DAL.UOM()).Symbol;
                         PO.Status = d.PurchaseOrderDetails.FirstOrDefault().PurchaseDetails.Count() > 0 ? "Purchased" : "Pending";
 
                     }
+                    foreach (var t in DB.Purchase_Order_TaxDetail.Where(x => x.PO_ID == d.Id).ToList())
+                    {
+                        BLL.TaxMaster tm = new BLL.TaxMaster();
+                        tm.Id = t.TaxId.Value;
+                        tm.LedgerId = LedgerIdByCompany_TaxId(Caller.CompanyId, t.TaxId.Value);
+                        tm.Status = true;
+                        tm.TaxAmount = t.TaxAmount.Value;
+                        tm.TaxName = string.Format("{0}({1})", t.TaxMaster.Ledger.LedgerName, t.TaxMaster.TaxPercentage);
+                        tm.TaxPercentage = t.TaxMaster.TaxPercentage;
+                  
+                        PO.TaxDetails.Add(tm);
+                    }
+                    var tl = DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList();
+                    var t2 = tl.Where(p => !PO.TaxDetails.Any(p2 => p2.Id== p.Id)).ToList();
 
+                    foreach (var t1 in t2)
+                    {
+                        PO.TaxDetails.Add(new BLL.TaxMaster()
+                        {
+                            Id = TaxIdByCompany_LedgerId(Caller.CompanyId, t1.LedgerId),
+                            LedgerId = t1.LedgerId,
+                            Status = false,
+                            Ledger = LedgerDAL_BLL(t1.Ledger),
+                            TaxPercentage = t1.TaxPercentage,
+                            TaxAmount = 0,
+                            TaxName = string.Format("{0}({1})", t1.Ledger.LedgerName, t1.TaxPercentage.ToString()),
+
+                        });
+                    }
                 }
             }
             catch (Exception ex) { Common.AppLib.WriteLog(ex); }
@@ -254,6 +303,7 @@ namespace AccountBuddy.SL.Hubs
                 if (d != null)
                 {
                     var P = PurchaseOrder_DALtoBLL(d);
+                    DB.Purchase_Order_TaxDetail.RemoveRange(DB.Purchase_Order_TaxDetail.Where(x => x.PO_ID == d.Id).ToList());
                     DB.PurchaseOrderDetails.RemoveRange(d.PurchaseOrderDetails);
                     DB.PurchaseOrders.Remove(d);
                     DB.SaveChanges();
@@ -288,7 +338,7 @@ namespace AccountBuddy.SL.Hubs
                 PO.Status = d.PurchaseOrderDetails.FirstOrDefault().PurchaseDetails.Count() > 0 ? "Purchased" : "Pending";
                 return PO;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.AppLib.WriteLog(ex);
                 return PO;
@@ -312,21 +362,21 @@ namespace AccountBuddy.SL.Hubs
         public List<BLL.PurchaseOrder> PurchaseOrder_List(int? LedgerId, DateTime dtFrom, DateTime dtTo, string BillNo, decimal amtFrom, decimal amtTo)
         {
             List<BLL.PurchaseOrder> lstPurchaseOrder = new List<BLL.PurchaseOrder>();
-            
+
             BLL.PurchaseOrder rp = new BLL.PurchaseOrder();
             try
             {
                 foreach (var l in DB.PurchaseOrders.
                       Where(x => x.PODate >= dtFrom && x.PODate <= dtTo
                       && (x.LedgerId == LedgerId || LedgerId == null)
-                      
+
                       && (BillNo == "" || x.RefNo == BillNo)
                       && (x.TotalAmount >= amtFrom && x.TotalAmount <= amtTo) &&
                       x.Ledger.AccountGroup.CompanyId == Caller.CompanyId).ToList())
                 {
                     rp = new BLL.PurchaseOrder();
                     rp.TotalAmount = l.TotalAmount;
-                   
+
                     rp.RefNo = l.RefNo;
 
                     rp.Id = l.Id;

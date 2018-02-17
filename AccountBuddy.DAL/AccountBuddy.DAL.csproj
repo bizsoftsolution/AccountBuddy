@@ -222,6 +222,9 @@
     <Compile Include="PurchaseReturnDetail.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Purchase_Order_TaxDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Receipt.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
@@ -247,6 +250,9 @@
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SalesReturnDetail.cs">
+      <DependentUpon>DBFMCGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sales_Order_TaxDetail.cs">
       <DependentUpon>DBFMCGModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Staff.cs">
