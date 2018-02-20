@@ -275,7 +275,7 @@ namespace AccountBuddy.SL.Hubs
                     {
                         ProductName = p.ProductName,
                         TransactionType = "04-Purchase Return",
-                        Qty = SR
+                        Qty = PR
                     });
                 }
                 if (SR != 0)

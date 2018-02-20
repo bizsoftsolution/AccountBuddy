@@ -238,8 +238,8 @@ namespace AccountBuddy.SL.Hubs
         }
         int LedgerIdByCompany_TaxId(int CompanyId, int TaxId)
         {
-            var l = DB.Ledgers.Where(x => x.Id == TaxId && x.AccountGroup.CompanyId == CompanyId).FirstOrDefault();
-            return l == null ? 0 : l.Id;
+            var l = DB.TaxMasters.Where(x => x.Id == TaxId && x.Ledger.AccountGroup.CompanyId == CompanyId).FirstOrDefault();
+            return l == null ? 0 : l.LedgerId;
         }
 
         decimal TaxPercentByCompany_LedgerId(int CompanyId, int LId)
@@ -709,7 +709,7 @@ namespace AccountBuddy.SL.Hubs
         {
             string RefCode = string.Format("{0}{1}", BLL.FormPrefix.Sales, S.Id);
             string Mode = null, status = null;
-            var CId = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault().AccountGroup.CompanyId; ;
+            var CId = DB.Ledgers.Where(x => x.Id == S.LedgerId).FirstOrDefault().AccountGroup.CompanyId; 
             if (S.TransactionTypeId == 1)
             {
                 Mode = "Cash";
@@ -779,7 +779,7 @@ namespace AccountBuddy.SL.Hubs
                 {
                     j.JournalDetails.Add(new DAL.JournalDetail()
                     {
-                        LedgerId = t.Ledger.Id,
+                        LedgerId = LedgerIdByCompany_TaxId(CId, t.Id),
                         DrAmt = t.TaxAmount,
                         TransactionMode = Mode,
                         ChequeDate = S.ChequeDate,
