@@ -14,11 +14,11 @@ namespace AccountBuddy.BLL
         private long? _SOId;
         private int? _ProductId;
         private int? _UOMId;
-        private double? _Quantity;
-        private decimal? _UnitPrice;
+        private double _Quantity;
+        private decimal _UnitPrice;
         private decimal _DiscountAmount;
         private decimal? _GSTAmount;
-        private decimal? _Amount;
+        private decimal _Amount;
 
 
         private string _ItemCode;
@@ -126,7 +126,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public double? Quantity
+        public double Quantity
         {
             get
             {
@@ -145,7 +145,7 @@ namespace AccountBuddy.BLL
         }
 
      
-        public decimal? UnitPrice
+        public decimal UnitPrice
         {
             get
             {
@@ -196,7 +196,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public decimal? Amount
+        public decimal Amount
         {
             get
             {

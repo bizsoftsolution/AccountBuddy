@@ -73,14 +73,18 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
+            Clear();
+        }
+        private void Clear()
+        {
             data.Clear();
             btnMakesales.IsEnabled = false;
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
+            data.SODate = DateTime.Now;
             data.setLabel();
         }
-
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show(string.Format(Message.PL.Delete_confirmation, data.RefNo), FormName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -89,7 +93,7 @@ namespace AccountBuddy.PL.frm.Transaction
                 if (rv == true)
                 {
                     MessageBox.Show(Message.PL.Delete_Alert, FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                    data.Clear();
+                    Clear();
                 }
             }
 
@@ -132,7 +136,7 @@ namespace AccountBuddy.PL.frm.Transaction
                         Print();
                     }
 
-                    data.Clear();
+                    Clear();
 
                     btnPrint.IsEnabled = false;
 
@@ -346,7 +350,7 @@ namespace AccountBuddy.PL.frm.Transaction
             frmTaxList frm = new frmTaxList();
 
             frm.dgvTax.ItemsSource = data.TaxDetails;
-            frm.Amount = data.ItemAmount.Value - data.DiscountAmount.Value;
+            frm.Amount = data.ItemAmount- data.DiscountAmount;
             frm.ShowDialog();
             data.SetGST();
             frm.Close();

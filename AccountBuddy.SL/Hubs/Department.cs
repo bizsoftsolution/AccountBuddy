@@ -73,8 +73,9 @@ namespace AccountBuddy.SL.Hubs
         {
             var rv = false;
             try
-            {
-                var d = DB.Departments.Where(x => x.Id == pk).FirstOrDefault();                
+            { 
+                var d = DB.Departments.Where(x => x.Id == pk).FirstOrDefault();
+                
                 if (d != null)
                 {
                     DB.Departments.Remove(d);

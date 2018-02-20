@@ -118,13 +118,13 @@ namespace AccountBuddy.SL.Hubs
             {
                 BLL.Purchase P = new BLL.Purchase();
 
-                P.PurchaseDate = PO.PODate.Value;
+                P.PurchaseDate = PO.PODate;
                 P.RefNo = Purchase_NewRefNo();
                 P.LedgerId = PO.LedgerId;
                 P.TransactionType = "Cash";
                 P.TransactionTypeId = 1;
-                P.ItemAmount = PO.ItemAmount.Value;
-                P.DiscountAmount = PO.DiscountAmount.Value;
+                P.ItemAmount = PO.ItemAmount;
+                P.DiscountAmount = PO.DiscountAmount;
                 P.GSTAmount = PO.GSTAmount.Value;
                 P.ExtraAmount = PO.Extras.Value;
                 P.TotalAmount = PO.TotalAmount.Value;

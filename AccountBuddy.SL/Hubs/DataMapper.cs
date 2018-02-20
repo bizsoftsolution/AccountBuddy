@@ -488,7 +488,7 @@ namespace AccountBuddy.SL.Hubs
         {
             D.Id = S.Id;
             D.Budget = S.Budget;
-            D.CompanyId = S.CompanyId.Value;
+            D.CompanyId = S.CompanyId??0;
             D.DepartmentName = S.DepartmentName;
             D.Description = S.Description;
             return D;
@@ -563,10 +563,10 @@ namespace AccountBuddy.SL.Hubs
         public static DAL.PurchaseOrder ToMap(this BLL.PurchaseOrder S, DAL.PurchaseOrder D)
         {
             D.Id = S.Id;
-            D.DiscountAmount = S.DiscountAmount ?? 0;
+            D.DiscountAmount = S.DiscountAmount ;
             D.Extras = S.Extras ?? 0;
             D.GSTAmount = S.GSTAmount ?? 0;
-            D.ItemAmount = S.ItemAmount ?? 0;
+            D.ItemAmount = S.ItemAmount ;
             D.LedgerId = S.LedgerId;
             D.Narration = S.Narration;
             D.PODate = (DateTime)S.PODate;
@@ -791,10 +791,10 @@ namespace AccountBuddy.SL.Hubs
         public static DAL.SalesOrder ToMap(this BLL.SalesOrder S, DAL.SalesOrder D)
         {
             D.Id = S.Id;
-            D.DiscountAmount = S.DiscountAmount ?? 0;
+            D.DiscountAmount = S.DiscountAmount;
             D.ExtraAmount = S.ExtraAmount ?? 0;
             D.GSTAmount = S.GSTAmount ?? 0;
-            D.ItemAmount = S.ItemAmount ?? 0;
+            D.ItemAmount = S.ItemAmount;
             D.LedgerId = S.LedgerId ?? 0;
             D.Narration = S.Narration;
             D.SODate = (DateTime)S.SODate;
@@ -821,12 +821,12 @@ namespace AccountBuddy.SL.Hubs
         public static DAL.SalesOrderDetail ToMap(this BLL.SalesOrderDetail S, DAL.SalesOrderDetail D)
         {
             D.Id = S.Id;
-            D.Amount = S.Amount ?? 0;
+            D.Amount = S.Amount ;
             D.DiscountAmount = S.DiscountAmount;
             D.GSTAmount = S.GSTAmount ?? 0;
             D.ProductId = S.ProductId ?? 0;
-            D.Quantity = S.Quantity ?? 0;
-            D.UnitPrice = S.UnitPrice ?? 0;
+            D.Quantity = S.Quantity;
+            D.UnitPrice = S.UnitPrice;
             D.UOMId = S.UOMId ?? 0;
             D.SOId = S.SOId??0;
             return D;

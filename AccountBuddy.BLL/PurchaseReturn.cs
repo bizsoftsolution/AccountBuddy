@@ -232,7 +232,7 @@ namespace AccountBuddy.BLL
                 {
                     _DiscountAmount = value;
                     NotifyPropertyChanged(nameof(DiscountAmount));
-                     SetAmount();
+                     SetGST();
                 }
             }
         }

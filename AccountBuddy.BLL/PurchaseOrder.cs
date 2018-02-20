@@ -15,11 +15,11 @@ namespace AccountBuddy.BLL
         private static ObservableCollection<PurchaseOrder> _POPendingList;
 
         private long _Id;
-        private DateTime? _PODate;
+        private DateTime _PODate;
         private string _RefNo;
         private int _LedgerId;
-        private decimal? _ItemAmount;
-        private decimal? _DiscountAmount;
+        private decimal _ItemAmount;
+        private decimal _DiscountAmount;
         private decimal? _GSTAmount;
         private decimal? _Extras;
         private decimal? _TotalAmount;
@@ -135,7 +135,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public DateTime? PODate
+        public DateTime PODate
         {
             get
             {
@@ -197,7 +197,7 @@ namespace AccountBuddy.BLL
             }
         }
 
-        public decimal? ItemAmount
+        public decimal ItemAmount
         {
             get
             {
@@ -218,7 +218,7 @@ namespace AccountBuddy.BLL
 
        
 
-        public decimal? DiscountAmount
+        public decimal DiscountAmount
         {
             get
             {
@@ -603,7 +603,7 @@ namespace AccountBuddy.BLL
         private void SetAmount()
         {
 
-            TotalAmount = (ItemAmount ?? 0) - (DiscountAmount ?? 0) + GSTAmount + (Extras ?? 0);
+            TotalAmount = (ItemAmount  - DiscountAmount) + GSTAmount + (Extras ?? 0);
             setLabel();
         }
 
@@ -642,7 +642,7 @@ namespace AccountBuddy.BLL
 
         public void SetGST()
         {
-            GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount??0 - DiscountAmount??0);
+            GSTAmount = TaxMaster.SetGST(TaxDetails, ItemAmount - DiscountAmount);
             SetAmount();
         }
 

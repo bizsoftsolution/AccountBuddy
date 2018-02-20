@@ -129,8 +129,8 @@ namespace AccountBuddy.SL.Hubs
                 S.LedgerId = SO.LedgerId.Value;
                 S.TransactionType = "Cash";
                 S.TransactionTypeId = 1;
-                S.ItemAmount = SO.ItemAmount.Value;
-                S.DiscountAmount = SO.DiscountAmount.Value;
+                S.ItemAmount = SO.ItemAmount;
+                S.DiscountAmount = SO.DiscountAmount;
                 S.GSTAmount = SO.GSTAmount.Value;
                 S.ExtraAmount = SO.ExtraAmount.Value;
                 S.TotalAmount = SO.TotalAmount.Value;
@@ -145,12 +145,12 @@ namespace AccountBuddy.SL.Hubs
                         ProductId = SOd.ProductId.Value,
                         UOMId = SOd.UOMId.Value,
                         UOMName = SOd.UOMName,
-                        Quantity = SOd.Quantity.Value,
-                        UnitPrice = SOd.UnitPrice.Value,
+                        Quantity = SOd.Quantity,
+                        UnitPrice = SOd.UnitPrice,
                         DiscountAmount = SOd.DiscountAmount,
                         GSTAmount = SOd.GSTAmount.Value,
                         ProductName = SOd.ProductName,
-                        Amount = SOd.Amount.Value
+                        Amount = SOd.Amount
                     };
 
 

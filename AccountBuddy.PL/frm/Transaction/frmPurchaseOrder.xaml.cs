@@ -36,11 +36,7 @@ namespace AccountBuddy.PL.frm.Transaction
             CultureInfo cultureInfo = new CultureInfo("en-US");  
 
             data.Clear();
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-MY");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-MY");
-            DateTimeFormatInfo dateInfo = new DateTimeFormatInfo();
-            dateInfo.ShortDatePattern = "MM/yyyy";
-            cultureInfo.DateTimeFormat = dateInfo;
+           
             data.setLabel();
         }
 
@@ -75,6 +71,7 @@ namespace AccountBuddy.PL.frm.Transaction
         {
             data.Clear();
             data.setLabel();
+            data.PODate = DateTime.Now;
             btnMakepurchase.IsEnabled = false;
             btnPrint.IsEnabled = false;
             btnSave.IsEnabled = true;
@@ -91,7 +88,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     if (rv == true)
                     {
                         MessageBox.Show(string.Format(Message.PL.Delete_Alert), FormName, MessageBoxButton.OK, MessageBoxImage.Information);
-                        data.Clear(); Clear();
+                       Clear();
                     }
                 }
             }
@@ -135,7 +132,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     {
                         LoadReport();
                     }
-                    data.Clear();
+                   
                     Clear();
                 }
             }
@@ -351,7 +348,7 @@ namespace AccountBuddy.PL.frm.Transaction
             frmTaxList frm = new frmTaxList();
 
             frm.dgvTax.ItemsSource = data.TaxDetails;
-            frm.Amount = data.ItemAmount.Value - data.DiscountAmount.Value;
+            frm.Amount = data.ItemAmount- data.DiscountAmount;
             frm.ShowDialog();
             data.SetGST();
             frm.Close();
