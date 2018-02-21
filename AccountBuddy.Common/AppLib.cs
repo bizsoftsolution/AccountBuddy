@@ -322,6 +322,8 @@ namespace AccountBuddy.Common
                 img.CacheOption = BitmapCacheOption.OnLoad;
                 img.UriSource = null;
                 img.EndInit();
+               
+               
             }
             img.Freeze();
             return img;

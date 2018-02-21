@@ -14,13 +14,23 @@ namespace AccountBuddy.SL.Hubs
         public BLL.Product Product_DALtoBLL(DAL.Product ProductsFrom)
         {
             BLL.Product ProductsTo = ProductsFrom.ToMap(new BLL.Product());
+            var st = ProductsFrom.StockGroup;
+            var uom = ProductsFrom.UOM;
             try
             {
-                ProductsTo.StockGroup = StockGroup_DALtoBLL(ProductsFrom.StockGroup);
+                if(ProductsFrom.StockGroup==null && ProductsFrom.StockGroupId!=0)
+                {
+                    st = DB.StockGroups.Where(x => x.CompanyId == Caller.CompanyId).FirstOrDefault();
+                }
+                if (ProductsFrom.UOM ==null && ProductsFrom.UOMId != 0)
+                {
+                    uom = DB.UOMs.Where(x => x.CompanyId == Caller.CompanyId).FirstOrDefault();
+                }
+                ProductsTo.StockGroup = StockGroup_DALtoBLL(st);
                 var pd = ProductsFrom.ProductDetails.Where(x => x.CompanyId == Caller.CompanyId).FirstOrDefault();
                 if (pd == null) pd = new DAL.ProductDetail();
 
-                ProductsTo.UOM = ProductsFrom.UOM == null ? null : UOM_DALtoBLL(ProductsFrom.UOM);
+                ProductsTo.UOM = ProductsFrom.UOM == null ? null : UOM_DALtoBLL(uom);
                 ProductsTo.OpeningStock = pd.OpeningStock;
                 ProductsTo.ReOrderLevel = pd.ReorderLevel;
                 ProductsTo.POQty = ProductsFrom.PurchaseOrderDetails.Where(x => x.PurchaseOrder.Ledger.AccountGroup.CompanyId == Caller.CompanyId).Sum(x => x.Quantity);

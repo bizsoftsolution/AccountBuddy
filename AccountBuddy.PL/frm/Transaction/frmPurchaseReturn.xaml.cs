@@ -73,10 +73,11 @@ namespace AccountBuddy.PL.frm.Transaction
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            data.setLabel();
+            
 
             data.Clear();
-              btnPrint.IsEnabled = true;
+            data.setLabel();
+            btnPrint.IsEnabled = true;
              btnSave.IsEnabled = true;
             btnDelete.IsEnabled = true;
         }
@@ -142,7 +143,7 @@ namespace AccountBuddy.PL.frm.Transaction
                     }
 
                     data.Clear();
-
+                    data.setLabel();
                     btnPrint.IsEnabled = false;
 
                 }

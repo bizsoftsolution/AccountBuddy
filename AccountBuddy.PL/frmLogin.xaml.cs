@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Microsoft.AspNet.SignalR.Client;
 using AccountBuddy.BLL;
 using System.IO;
+using System.Drawing;
 
 namespace AccountBuddy.PL
 {
@@ -79,7 +80,7 @@ namespace AccountBuddy.PL
 							if (v!= null)
                         {
                             frm.imgBackground.ImageSource = Common.AppLib.ViewImage(v.Image);
-
+                            
                         }
                     }
 

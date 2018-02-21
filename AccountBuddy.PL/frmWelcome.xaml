@@ -9,12 +9,11 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
     <Grid>
-        
+
         <Grid.Background>
             <ImageBrush x:Name="imgBackground" Stretch="None"/>
-            
+
         </Grid.Background>
-      
 
     </Grid>
 </UserControl>
