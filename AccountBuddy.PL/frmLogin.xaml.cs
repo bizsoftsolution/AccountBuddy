@@ -31,7 +31,7 @@ namespace AccountBuddy.PL
             Common.AppLib.WriteLog("frmLogin_Init");
         }
 
-     
+
 
         #region Button Events
 
@@ -70,22 +70,18 @@ namespace AccountBuddy.PL
                     App.frmLogin.Hide();
                     App.frmHome.Show();
                     var s = BLL.CompanyDetail.ToList.Where(x => x.Id == BLL.UserAccount.User.UserType.CompanyId).FirstOrDefault();
-                    if(s.CFiles.Count!=0)
+                    if (s.CFiles.Count != 0)
                     {
                         byte[] ic = s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.Logo_Key).FirstOrDefault().Image;
-                       if(ic!=null) App.frmHome.Icon = Common.AppLib.ViewImage(ic);
+                        if (ic != null) App.frmHome.Icon = Common.AppLib.ViewImage(ic);
 
                         frmWelcome frm = new frmWelcome();
-						var v = s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault();
-							if (v!= null)
+                        var v = s.CFiles.Where(x => x.AttchmentCode == DataKeyValue.BackGround_Key).FirstOrDefault();
+                        if (v != null)
                         {
                             frm.imgBackground.ImageSource = Common.AppLib.ViewImage(v.Image);
-                            
                         }
                     }
-
-                   
-
                 }
 
                 else
@@ -236,7 +232,7 @@ namespace AccountBuddy.PL
         }
 
 
-        
+
 
     }
 }

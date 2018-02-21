@@ -6,14 +6,12 @@
              xmlns:local="clr-namespace:AccountBuddy.PL"
              mc:Ignorable="d" 
              xmlns:common="clr-namespace:AccountBuddy.Common;assembly=AccountBuddy.Common"
+             xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
              d:DesignHeight="300" d:DesignWidth="300">
 
     <Grid>
-
         <Grid.Background>
             <ImageBrush x:Name="imgBackground" Stretch="None"/>
-
         </Grid.Background>
-
     </Grid>
 </UserControl>

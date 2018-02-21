@@ -22,7 +22,12 @@ namespace AccountBuddy.SL.Hubs
             return DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyDetail.Id == Caller.CompanyId).ToList()
                              .Select(x => TaxMaster_DALtoBLL(x)).ToList();
         }
-
+        public List<BLL.TaxMaster> TaxMaster_List_DW()
+        {
+            return DB.TaxMasters.Where(x => x.Ledger.AccountGroup.CompanyDetail.UnderCompanyId == Caller.CompanyId).ToList()
+                             .Select(x => TaxMaster_DALtoBLL(x)).ToList();
+        }
+        
         public BLL.TaxMaster TaxMaster_Save(BLL.TaxMaster cus)
         {
             try

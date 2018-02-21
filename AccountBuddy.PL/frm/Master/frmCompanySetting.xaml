@@ -187,7 +187,7 @@
 						</Setter>
 					</Style>
 				</TabControl.Resources>
-				<TabItem Header="Warehouse And Dealer">
+				<TabItem x:Name="tabWD" Header="Warehouse And Dealer">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="50*"/>
@@ -308,7 +308,7 @@
 						</GroupBox>
 					</Grid>
 				</TabItem>
-				<TabItem Header="Logo">
+				<TabItem x:Name="tabLogo" Header="Logo">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="50*"/>

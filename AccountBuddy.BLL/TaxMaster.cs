@@ -25,6 +25,7 @@ namespace AccountBuddy.BLL
         private bool _IsEnabled;
         private bool _Status;
         private string _TaxName;
+        private static ObservableCollection<TaxMaster> _toList_DW;
         #endregion
 
         #region Property
@@ -74,7 +75,31 @@ namespace AccountBuddy.BLL
                 _toList = value;
             }
         }
+        public static ObservableCollection<TaxMaster> toList_DW
+        {
+            get
+            {
+                try
+                {
+                    if (_toList_DW == null)
+                    {
+                        _toList_DW = new ObservableCollection<TaxMaster>();
+                        var l1 = FMCGHubClient.HubCaller.Invoke<List<TaxMaster>>("TaxMaster_List_DW").Result;
+                        _toList_DW = new ObservableCollection<TaxMaster>(l1.OrderBy(x => x.Ledger.LedgerName));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Common.AppLib.WriteLog(ex);
+                }
 
+                return _toList_DW;
+            }
+            set
+            {
+                _toList_DW = value;
+            }
+        }
         public int Id
         {
             get
@@ -365,13 +390,11 @@ namespace AccountBuddy.BLL
 
             return rv;
         }
-
-    
+        
         public static void Init()
         {
             _toList = null;
         }
-
 
         public static decimal SetGST(ObservableCollection<TaxMaster> TDetails, decimal Amount)
         {            

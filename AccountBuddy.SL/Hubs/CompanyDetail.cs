@@ -105,8 +105,7 @@ namespace AccountBuddy.SL.Hubs
 					DB.CompanyDetails.Add(d);
 
 					cm.ToMap(d);
-
-					
+                    
 					DB.SaveChanges();
 
 					cm.Id = d.Id;
@@ -258,13 +257,7 @@ namespace AccountBuddy.SL.Hubs
 			AccountSetup(sgp);
 
 		}
-		private void CompanyFile(BLL.CompanyDetail sgp)
-		{
-
-
-
-
-		}
+		
 		void UserSetup(BLL.CompanyDetail cmp)
 		{
 			DAL.UserAccount ua = new DAL.UserAccount();

@@ -73,6 +73,8 @@ namespace AccountBuddy.PL.frm.Master
                     gbxDealer.Visibility = Visibility.Collapsed;
                     btnUser.Visibility = Visibility.Collapsed;
                     btnDelete.Visibility = Visibility.Collapsed;
+                    tabWD.Visibility = Visibility.Collapsed;
+                    tabLogo.IsSelected = true;
                 }
 
                 var l = BLL.Ledger.toList.Where(x => x.AccountGroup.GroupName == BLL.DataKeyValue.BankAccounts_Key).ToList();
